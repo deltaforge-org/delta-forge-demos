@@ -135,10 +135,10 @@ ORDER BY associate_id;
 -- ============================================================================
 -- 9. TWO-HOP REACHABILITY FROM NODE 0 — How far does association reach?
 -- ============================================================================
--- Node 0 has 6 direct neighbors. Through them, 27 distinct nodes are
--- reachable in 1–2 hops (43% of the 62-node graph).
+-- Node 0 has 6 direct neighbors. Through them, 28 distinct nodes are
+-- reachable in 1–2 hops (45% of the graph) — includes 0 itself via loop-back.
 
-ASSERT VALUE reachable_in_2_hops = 27
+ASSERT VALUE reachable_in_2_hops = 28
 USE {{zone_name}}.dolphins.dolphins_social
 MATCH (a)-[*1..2]->(b)
 WHERE a.id = 0
@@ -193,12 +193,12 @@ LIMIT 10;
 -- Dolphins that bridge sub-communities will have the highest betweenness.
 -- Betweenness is deterministic for a fixed graph topology.
 
--- Betweenness: node 36 is the top bridge (908.55), followed by node 1 (780.77).
+-- Betweenness (normalized): node 36 is the top bridge (~0.248), node 1 second (~0.213).
 -- These two bridge the main sub-communities despite not having the highest degree.
 ASSERT VALUE rank = 1 WHERE node_id = 36
 ASSERT VALUE rank = 2 WHERE node_id = 1
-ASSERT VALUE centrality >= 900.0 WHERE node_id = 36
-ASSERT VALUE centrality >= 750.0 WHERE node_id = 1
+ASSERT VALUE centrality >= 0.24 WHERE node_id = 36
+ASSERT VALUE centrality >= 0.21 WHERE node_id = 1
 USE {{zone_name}}.dolphins.dolphins_social
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
