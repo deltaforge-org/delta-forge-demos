@@ -59,6 +59,9 @@ RETURN count(r) AS total_connections;
 
 ASSERT ROW_COUNT = 20
 ASSERT VALUE headcount = 50000 WHERE department = 'Engineering'
+ASSERT VALUE headcount = 50000 WHERE department = 'Sales'
+-- Non-deterministic: float average may vary slightly across engines
+ASSERT WARNING VALUE avg_age BETWEEN 40.5 AND 41.5 WHERE department = 'Engineering'
 USE {{zone_name}}.graph.stress_test_network
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount,
@@ -84,7 +87,9 @@ ORDER BY headcount DESC;
 -- Understanding the connection type mix across 5M+ edges reveals
 -- organizational patterns at enterprise scale.
 
-ASSERT ROW_COUNT = 22
+ASSERT ROW_COUNT = 18
+ASSERT VALUE count = 750000 WHERE type = 'colleague'
+ASSERT VALUE count = 550000 WHERE type = 'mentor'
 USE {{zone_name}}.graph.stress_test_network
 MATCH (a)-[r]->(b)
 RETURN r.relationship_type AS type, count(r) AS count,
@@ -99,6 +104,7 @@ ORDER BY count DESC;
 -- could mentor the next generation.
 
 ASSERT ROW_COUNT = 25
+ASSERT VALUE age = 60
 USE {{zone_name}}.graph.stress_test_network
 MATCH (n)
 WHERE n.department = 'Engineering' AND n.age > 50
@@ -193,7 +199,9 @@ LIMIT 25;
 -- A healthy program has senior staff (L5+) mentoring people 1-2 levels
 -- below. If VPs only mentor other VPs, the program isn't reaching juniors.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 14
+ASSERT VALUE mentorship_count = 192000 WHERE mentor_level = 'L6'
+ASSERT VALUE mentorship_count = 120000 WHERE mentor_level = 'L5'
 USE {{zone_name}}.graph.stress_test_network
 MATCH (mentor)-[r]->(mentee)
 WHERE r.relationship_type = 'mentor'
@@ -223,6 +231,8 @@ LIMIT 20;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE connections = 3125998
+-- Non-deterministic: float average may vary slightly across engines
+ASSERT WARNING VALUE avg_strength BETWEEN 0.7 AND 0.8
 USE {{zone_name}}.graph.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.department = b.department
@@ -236,6 +246,8 @@ RETURN 'within_department' AS scope, count(r) AS connections,
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE connections = 1934000
+-- Non-deterministic: float average may vary slightly across engines
+ASSERT WARNING VALUE avg_strength BETWEEN 0.35 AND 0.45
 USE {{zone_name}}.graph.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
@@ -257,6 +269,8 @@ RETURN 'cross_department' AS scope, count(r) AS connections,
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
+ASSERT VALUE total_degree = 194
+ASSERT VALUE out_degree = 178
 USE {{zone_name}}.graph.stress_test_network
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
@@ -287,6 +301,7 @@ LIMIT 25;
 -- components indicate truly disconnected groups.
 
 ASSERT ROW_COUNT >= 1
+ASSERT VALUE community_size = 1000000
 USE {{zone_name}}.graph.stress_test_network
 CALL algo.connectedComponents()
 YIELD node_id, component_id
@@ -406,6 +421,7 @@ LIMIT 25;
 -- that still connects every employee. Reveals the organizational skeleton.
 
 ASSERT ROW_COUNT = 1
+ASSERT VALUE backbone_edges = 999999
 USE {{zone_name}}.graph.stress_test_network
 CALL algo.mst()
 YIELD sourceId, targetId, weight
