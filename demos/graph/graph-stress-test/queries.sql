@@ -404,10 +404,11 @@ LIMIT 25;
 -- ============================================================================
 -- High closeness = good candidate for company-wide announcements or
 -- change agent roles.
+-- Uses samplingSize for approximate mode (exact is O(n·m), infeasible at 1M).
 
 ASSERT ROW_COUNT = 25
 USE {{zone_name}}.graph.stress_test_network
-CALL algo.closeness()
+CALL algo.closeness({samplingSize: 1000})
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
 ORDER BY closeness DESC
