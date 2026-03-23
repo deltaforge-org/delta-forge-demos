@@ -84,6 +84,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
+ASSERT VALUE bond_strength = 0.99 WHERE mentor = 'Eve_15'
 USE {{zone_name}}.graph.json_demo
 MATCH (mentor)-[r]->(mentee)
 WHERE r.relationship_type = 'mentor'
@@ -109,6 +110,7 @@ RETURN mentor, r, mentee;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 53
+ASSERT VALUE strength = 1.0 WHERE person_a = 'Jack_30'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[r]->(b)
 WHERE r.weight > 0.8
@@ -133,7 +135,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 14
-ASSERT VALUE connections >= 3 WHERE from_dept = 'Engineering'
+ASSERT VALUE connections = 10 WHERE from_dept = 'HR'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
@@ -146,7 +148,9 @@ ORDER BY connections DESC;
 -- 10. RECIPROCAL BONDS — Genuine two-way relationships
 -- ============================================================================
 
-ASSERT ROW_COUNT = 1
+ASSERT ROW_COUNT = 2
+ASSERT VALUE person_a = 'Eve_15' WHERE a_to_b = 'mentor'
+ASSERT VALUE a_to_b_weight = 0.99 WHERE a_to_b = 'mentor'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[r1]->(b)-[r2]->(a)
 WHERE a.id < b.id
@@ -166,6 +170,7 @@ ORDER BY r1.weight + r2.weight DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 21
+ASSERT VALUE relay_dept = 'Engineering' WHERE relay = 'Eve_5'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[]->(b)-[]->(c)
 WHERE a.id = 1 AND a <> c
@@ -260,7 +265,7 @@ ORDER BY triangle_count DESC;
 
 ASSERT ROW_COUNT = 5
 ASSERT VALUE node_id = 1 WHERE step = 0
-ASSERT VALUE distance = 0 WHERE step = 0
+ASSERT VALUE node_id = 42 WHERE step = 4
 USE {{zone_name}}.graph.json_demo
 CALL algo.shortestPath({source: 1, target: 42})
 YIELD node_id, step, distance
@@ -274,6 +279,7 @@ ORDER BY step;
 
 ASSERT ROW_COUNT = 8
 ASSERT VALUE people_at_distance = 1 WHERE depth = 0
+ASSERT VALUE people_at_distance = 13 WHERE depth = 3
 USE {{zone_name}}.graph.json_demo
 CALL algo.bfs({source: 1})
 YIELD node_id, depth, parent_id

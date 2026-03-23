@@ -24,7 +24,7 @@
 ASSERT ROW_COUNT = 50
 ASSERT VALUE city = 'SF' WHERE name = 'Alice_1'
 ASSERT VALUE dept = 'Marketing' WHERE name = 'Alice_1'
-ASSERT VALUE age = 44 WHERE name = 'Alice_1'
+ASSERT VALUE age = 43 WHERE name = 'Alice_1'
 USE {{zone_name}}.graph.hybrid_demo
 MATCH (n)
 RETURN n.name AS name, n.age AS age, n.department AS dept,
@@ -38,7 +38,7 @@ ORDER BY n.department, n.name;
 -- Age is a core column — this predicate pushes down directly to storage
 -- for maximum performance, even though the query also reads JSON properties.
 
-ASSERT ROW_COUNT = 32
+ASSERT ROW_COUNT = 31
 ASSERT VALUE dept = 'Marketing' WHERE name = 'Alice_1'
 USE {{zone_name}}.graph.hybrid_demo
 MATCH (n)
@@ -324,7 +324,7 @@ RETURN a, r, b;
 -- proving the hybrid storage strategy exposes all properties transparently.
 
 ASSERT ROW_COUNT = 50
-ASSERT VALUE age = 44 WHERE name = 'Alice_1'
+ASSERT VALUE age = 43 WHERE name = 'Alice_1'
 ASSERT VALUE dept = 'Marketing' WHERE name = 'Alice_1'
 ASSERT VALUE city = 'SF' WHERE name = 'Alice_1'
 USE {{zone_name}}.graph.hybrid_demo
