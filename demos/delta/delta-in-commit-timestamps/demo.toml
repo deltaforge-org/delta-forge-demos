@@ -1,21 +1,23 @@
 [demo]
 id = "delta-in-commit-timestamps"
 name = "Delta In-Commit Timestamps — Reliable Version Timing"
-version = "1.0.0"
+version = "2.0.0"
 author = "Delta Forge Team"
 description = """
 In-commit timestamps embed a reliable, monotonically increasing timestamp \
 directly into each Delta transaction log commit, solving the problem of \
-clock skew between distributed writers. Without this feature, TIMESTAMP \
-AS OF time travel queries can return incorrect results when writer clocks \
-disagree. This demo enables in-commit timestamps on a deployment log and \
-performs multi-batch inserts and updates across environments to build a \
-rich version history suitable for time travel.
+clock skew between distributed writers. Without this feature, Delta derives \
+version timestamps from file modification times, which can be inaccurate \
+when multiple CI/CD systems or writers have misaligned clocks. This demo \
+enables in-commit timestamps on a release tracker, builds a multi-version \
+history through inserts and updates, then uses DESCRIBE HISTORY to inspect \
+commit timestamps and VERSION AS OF to perform time travel queries that \
+depend on reliable version timing.
 """
 categories = ["delta-table"]
-tags = ["delta-table", "advanced", "in-commit-timestamps", "time-travel", "versioning", "deployment"]
+tags = ["delta-table", "advanced", "in-commit-timestamps", "time-travel", "versioning", "describe-history"]
 difficulty = "advanced"
-estimated_time_minutes = 10
+estimated_time_minutes = 8
 
 [demo.variables]
 data_path = { description = "Root path where Delta table data is stored", required = true }
@@ -23,4 +25,4 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.deployment_log"
+name = "{{zone_name}}.delta_demos.release_tracker"

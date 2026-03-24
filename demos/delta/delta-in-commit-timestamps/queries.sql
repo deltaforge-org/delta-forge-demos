@@ -13,133 +13,154 @@
 
 
 -- ============================================================================
--- EXPLORE: Deployment Log Overview
+-- EXPLORE: Verify In-Commit Timestamps Are Enabled
 -- ============================================================================
--- The deployment_log table was created with in-commit timestamps enabled.
--- It tracks deployments across 3 environments with various outcomes.
--- Each batch INSERT and UPDATE created a new version in the transaction
--- log, each with a reliable in-commit timestamp.
+-- The first step is confirming the table property is active. SHOW TBLPROPERTIES
+-- reads the Delta metadata configuration. The key property is
+-- delta.enableInCommitTimestamps — when 'true', every commit written to
+-- the _delta_log includes a reliable, monotonically increasing timestamp.
 
--- Verify deployment counts per environment
-ASSERT VALUE deployment_count = 10 WHERE environment = 'development'
-ASSERT VALUE deployment_count = 20 WHERE environment = 'production'
-ASSERT VALUE deployment_count = 10 WHERE environment = 'staging'
+ASSERT VALUE value = 'true' WHERE key = 'delta.enableInCommitTimestamps'
+SHOW TBLPROPERTIES {{zone_name}}.delta_demos.release_tracker;
+
+
+-- ============================================================================
+-- LEARN: Inspect the Version Timeline with DESCRIBE HISTORY
+-- ============================================================================
+-- DESCRIBE HISTORY reveals the full commit history of the table. Each row
+-- is a version with its commit timestamp, operation type, and metrics.
+-- Because in-commit timestamps are enabled, these timestamps are reliable
+-- and monotonically increasing — critical for TIMESTAMP AS OF queries.
+--
+-- The setup created 6 versions:
+--   V0: CREATE TABLE (schema definition, ICT property set)
+--   V1: INSERT 15 production releases
+--   V2: INSERT 10 staging releases
+--   V3: INSERT 5 development releases
+--   V4: UPDATE 3 releases → rolled_back
+--   V5: UPDATE 2 releases → failed
+
+ASSERT ROW_COUNT = 6
+DESCRIBE HISTORY {{zone_name}}.delta_demos.release_tracker;
+
+
+-- ============================================================================
+-- EXPLORE: Time Travel to Production-Only Snapshot (Version 1)
+-- ============================================================================
+-- VERSION AS OF lets us query the table at any historical version.
+-- At V1, only the first INSERT batch (15 production releases) existed.
+-- The reliability of this query depends on accurate commit timestamps —
+-- if timestamps were derived from unreliable file modification times,
+-- version resolution could return wrong results.
+
+ASSERT ROW_COUNT = 15
+ASSERT VALUE app_count = 5
+SELECT COUNT(*) AS row_count,
+       COUNT(DISTINCT app_name) AS app_count,
+       COUNT(DISTINCT environment) AS env_count
+FROM {{zone_name}}.delta_demos.release_tracker VERSION AS OF 1;
+
+
+-- ============================================================================
+-- LEARN: Pre-Update State — All Releases Successful (Version 3)
+-- ============================================================================
+-- At V3, all 30 releases had been inserted but no status updates applied.
+-- Every release was still 'success'. This is the last "clean" version
+-- before rollbacks and failures were recorded in V4 and V5.
+
 ASSERT ROW_COUNT = 3
+ASSERT VALUE release_count = 15 WHERE environment = 'production'
+ASSERT VALUE release_count = 10 WHERE environment = 'staging'
+ASSERT VALUE release_count = 5 WHERE environment = 'development'
 SELECT environment,
-       COUNT(*) AS deployment_count,
-       COUNT(*) FILTER (WHERE status = 'success') AS successful,
-       COUNT(*) FILTER (WHERE status = 'rollback') AS rolled_back,
-       COUNT(*) FILTER (WHERE status = 'failed') AS failed
-FROM {{zone_name}}.delta_demos.deployment_log
+       COUNT(*) AS release_count,
+       COUNT(*) FILTER (WHERE status = 'success') AS all_success
+FROM {{zone_name}}.delta_demos.release_tracker VERSION AS OF 3
 GROUP BY environment
 ORDER BY environment;
 
 
 -- ============================================================================
--- LEARN: Why In-Commit Timestamps Matter for Time Travel
+-- EXPLORE: Before vs After — Affected Releases Across Versions
 -- ============================================================================
--- This table was built through multiple INSERT and UPDATE operations,
--- each creating a new Delta version. The in-commit timestamp on each
--- version means you could use TIMESTAMP AS OF to query the table at
--- any point in its history — for example, seeing the state before
--- rollbacks were applied or before staging deployments were added.
---
--- The setup created these versions:
---   V0: CREATE TABLE
---   V1-V5: INSERT production batches (4 services x 4 deploys + 1 batch)
---   V6: INSERT staging batch
---   V7: INSERT development batch
---   V8-V15: UPDATE operations (rollbacks and failures)
---
--- Let's examine the services and their deployment history:
+-- These 5 releases (ids 3, 9, 12, 20, 22) were updated in V4 and V5.
+-- At V3 they were all 'success'. Now they show rolled_back or failed.
+-- With in-commit timestamps, you can pinpoint exactly when each status
+-- change was committed — not when the deployer claimed it happened
+-- (deployed_at), but when the Delta commit was actually written.
 
+-- V3: All 5 affected releases were still successful
 ASSERT ROW_COUNT = 5
-ASSERT VALUE total_deploys = 8 WHERE service = 'payment-engine'
-ASSERT VALUE avg_duration_sec = 221 WHERE service = 'payment-engine'
-ASSERT VALUE total_deploys = 8 WHERE service = 'api-gateway'
-ASSERT VALUE avg_duration_sec = 92 WHERE service = 'api-gateway'
-SELECT service,
-       COUNT(*) AS total_deploys,
-       COUNT(DISTINCT environment) AS environments_deployed_to,
-       ROUND(AVG(duration_seconds), 0) AS avg_duration_sec,
-       MIN(deploy_timestamp) AS first_deploy,
-       MAX(deploy_timestamp) AS last_deploy
-FROM {{zone_name}}.delta_demos.deployment_log
-GROUP BY service
-ORDER BY service;
+ASSERT VALUE status = 'success' WHERE id = 3
+ASSERT VALUE status = 'success' WHERE id = 12
+SELECT id, app_name, environment, status
+FROM {{zone_name}}.delta_demos.release_tracker VERSION AS OF 3
+WHERE id IN (3, 9, 12, 20, 22)
+ORDER BY id;
 
-
--- ============================================================================
--- EXPLORE: Deployment Outcomes Across Environments
--- ============================================================================
--- Rollbacks and failures were applied via UPDATE after initial inserts.
--- In the transaction log, each UPDATE created a new version with its
--- own in-commit timestamp, enabling precise identification of when
--- each status change occurred.
-
--- Verify 5 rollbacks + 3 failures = 8 non-success deployments
-ASSERT ROW_COUNT = 8
-SELECT id, service, environment, version_str, status, duration_seconds
-FROM {{zone_name}}.delta_demos.deployment_log
-WHERE status IN ('rollback', 'failed')
+-- Current: Same releases now reflect their true outcomes
+ASSERT ROW_COUNT = 5
+ASSERT VALUE status = 'rolled_back' WHERE id = 3
+ASSERT VALUE status = 'failed' WHERE id = 12
+SELECT id, app_name, environment, status
+FROM {{zone_name}}.delta_demos.release_tracker
+WHERE id IN (3, 9, 12, 20, 22)
 ORDER BY id;
 
 
 -- ============================================================================
--- LEARN: Deployer Activity and Version Correlation
+-- LEARN: Current State — Deployment Outcomes Summary
 -- ============================================================================
--- Each deployer's commits correspond to specific Delta versions.
--- With in-commit timestamps, you could audit exactly when each
--- deployer's changes were committed to the table, independent of
--- the deploy_timestamp field in the data itself.
+-- The final state (V5) shows the complete picture after all updates.
+-- 25 successful, 3 rolled back, 2 failed across all environments.
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE deployments = 15 WHERE deployer = 'alice'
-ASSERT VALUE successes = 14 WHERE deployer = 'alice'
-ASSERT VALUE deployments = 13 WHERE deployer = 'bob'
-ASSERT VALUE issues = 3 WHERE deployer = 'bob'
-SELECT deployer,
-       COUNT(*) AS deployments,
-       COUNT(*) FILTER (WHERE status = 'success') AS successes,
-       COUNT(*) FILTER (WHERE status != 'success') AS issues,
-       COUNT(DISTINCT service) AS services_touched
-FROM {{zone_name}}.delta_demos.deployment_log
-GROUP BY deployer
-ORDER BY deployments DESC;
+ASSERT VALUE cnt = 2 WHERE status = 'failed'
+ASSERT VALUE cnt = 3 WHERE status = 'rolled_back'
+ASSERT VALUE cnt = 25 WHERE status = 'success'
+SELECT status,
+       COUNT(*) AS cnt
+FROM {{zone_name}}.delta_demos.release_tracker
+GROUP BY status
+ORDER BY status;
 
 
 -- ============================================================================
 -- VERIFY: All Checks
 -- ============================================================================
 
--- Verify total_row_count: 40 deployments total
-ASSERT ROW_COUNT = 40
-SELECT * FROM {{zone_name}}.delta_demos.deployment_log;
+-- Verify total_rows: 30 releases across all versions
+ASSERT ROW_COUNT = 30
+SELECT * FROM {{zone_name}}.delta_demos.release_tracker;
 
--- Verify production_count: 20 production deployments
-ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.deployment_log WHERE environment = 'production';
+-- Verify production_count: 15 production releases
+ASSERT VALUE cnt = 15
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.release_tracker WHERE environment = 'production';
 
--- Verify staging_count: 10 staging deployments
+-- Verify staging_count: 10 staging releases
 ASSERT VALUE cnt = 10
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.deployment_log WHERE environment = 'staging';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.release_tracker WHERE environment = 'staging';
 
--- Verify development_count: 10 development deployments
-ASSERT VALUE cnt = 10
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.deployment_log WHERE environment = 'development';
-
--- Verify rollback_count: 5 deployments rolled back
+-- Verify development_count: 5 development releases
 ASSERT VALUE cnt = 5
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.deployment_log WHERE status = 'rollback';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.release_tracker WHERE environment = 'development';
 
--- Verify failed_count: 3 deployments failed
+-- Verify rolled_back_count: 3 rolled back (ids 3, 9, 22)
 ASSERT VALUE cnt = 3
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.deployment_log WHERE status = 'failed';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.release_tracker WHERE status = 'rolled_back';
 
--- Verify success_count: 32 successful deployments
-ASSERT VALUE cnt = 32
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.deployment_log WHERE status = 'success';
+-- Verify failed_count: 2 failed (ids 12, 20)
+ASSERT VALUE cnt = 2
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.release_tracker WHERE status = 'failed';
 
--- Verify distinct_services: 5 different services deployed
+-- Verify success_count: 25 successful
+ASSERT VALUE cnt = 25
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.release_tracker WHERE status = 'success';
+
+-- Verify distinct_apps: 5 different applications
 ASSERT VALUE cnt = 5
-SELECT COUNT(DISTINCT service) AS cnt FROM {{zone_name}}.delta_demos.deployment_log;
+SELECT COUNT(DISTINCT app_name) AS cnt FROM {{zone_name}}.delta_demos.release_tracker;
+
+-- Verify version_count: 6 versions in history (V0-V5)
+ASSERT ROW_COUNT = 6
+DESCRIBE HISTORY {{zone_name}}.delta_demos.release_tracker;
