@@ -1,0 +1,27 @@
+[demo]
+id = "delta-audit-trail-versioning"
+name = "Delta Audit Trail — Native Version-Based Compliance"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Financial regulators demand a tamper-proof record of every account event. \
+Instead of building manual audit columns, this demo leverages Delta's native \
+transaction log as the audit trail itself. DESCRIBE HISTORY reveals every \
+commit with timestamps, and VERSION AS OF lets auditors reconstruct the exact \
+state of all accounts at any point in time. A MERGE operation reconciles a \
+late-arriving batch, creating a new version that auditors can diff against \
+the previous state. The result: immutable, version-stamped compliance without \
+any application-level bookkeeping.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "audit", "compliance", "versioning", "time-travel", "describe-history", "merge"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.audit_demos.compliance_events"

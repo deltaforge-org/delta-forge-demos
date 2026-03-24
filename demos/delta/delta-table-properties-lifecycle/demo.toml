@@ -1,0 +1,26 @@
+[demo]
+id = "delta-table-properties-lifecycle"
+name = "Delta Table Properties — Configuration Lifecycle"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Delta tables are configured through TBLPROPERTIES that control storage \
+behavior, optimization, and data protection. This demo walks through the \
+full lifecycle: creating a table with properties, inspecting them with SHOW \
+TABLE PROPERTIES, modifying them with ALTER TABLE SET/UNSET, and observing \
+their effects on DML operations. A building-supply warehouse inventory \
+provides the real-world context — price adjustments, restocking, and \
+discontinuation all interact with the table's configuration.
+"""
+categories = ["delta-table", "delta-fundamentals"]
+tags = ["delta-table", "intermediate", "tblproperties", "alter-table", "configuration", "show-properties", "version-as-of"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.props_demos.inventory_items"

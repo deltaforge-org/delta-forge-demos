@@ -1,0 +1,27 @@
+[demo]
+id = "delta-update-expressions"
+name = "Delta UPDATE Expressions — Portfolio Rebalancing"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+UPDATE statements in Delta go beyond simple value assignment. This demo \
+showcases computed expressions in SET clauses: arithmetic adjustments \
+(market price appreciation), CASE WHEN reclassification (dynamic risk \
+ratings based on value thresholds), and percentage-based recalculations. \
+A three-portfolio investment management scenario drives 20 holdings through \
+a quarterly rebalancing cycle where equities appreciate, risk ratings are \
+recomputed, and bond prices decline — all via expressive UPDATE statements. \
+VERSION AS OF compares pre- and post-rebalancing snapshots.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "update", "expressions", "case-when", "arithmetic", "version-as-of", "portfolio"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.update_demos.portfolio_holdings"

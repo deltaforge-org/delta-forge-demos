@@ -1346,11 +1346,11 @@
       "updatedAt": "2026-03-09T12:00:00Z"
     },
     {
-      "id": "delta-row-tracking",
-      "path": "demos/delta/delta-row-tracking",
-      "iconPath": "icons/delta-row-tracking.svg",
-      "name": "Delta Row Tracking \u2014 Stable Row IDs & Audit Trail",
-      "summary": "Row tracking is a Delta Lake protocol feature that assigns stable, unique \\ identifiers to each row so that changes can be traced across versions. It \\ enables fine-grained change detection for...",
+      "id": "delta-audit-trail-versioning",
+      "path": "demos/delta/delta-audit-trail-versioning",
+      "iconPath": "icons/delta-audit-trail-versioning.svg",
+      "name": "Delta Audit Trail \u2014 Native Version-Based Compliance",
+      "summary": "Uses Delta's native transaction log and time travel as a tamper-proof audit trail for financial compliance. DESCRIBE HISTORY reveals every commit, VERSION AS OF reconstructs past states, and MERGE reconciles late-arriving event batches \u2014 all without manual audit columns. 42 events across 10 accounts and 4 Delta versions demonstrate immutable, version-stamped compliance.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -1358,19 +1358,75 @@
       "tags": [
         "delta-table",
         "advanced",
-        "row-tracking",
         "audit",
         "compliance",
         "versioning",
-        "lineage"
+        "time-travel",
+        "describe-history",
+        "merge"
       ],
       "difficulty": "advanced",
-      "estimatedTimeMinutes": 10,
+      "estimatedTimeMinutes": 12,
       "dataSizeBytes": 0,
-      "fileCount": 5,
+      "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-table-properties-lifecycle",
+      "path": "demos/delta/delta-table-properties-lifecycle",
+      "iconPath": "icons/delta-table-properties-lifecycle.svg",
+      "name": "Delta Table Properties \u2014 Configuration Lifecycle",
+      "summary": "Walks through the full TBLPROPERTIES lifecycle: creating a table with enableChangeDataFeed, optimizeWrite, and checkpointInterval; inspecting with SHOW TABLE PROPERTIES; modifying with ALTER TABLE SET/UNSET; and observing effects via DESCRIBE HISTORY and DESCRIBE DETAIL. A building-supply warehouse inventory with price adjustments, restocking, and discontinuation provides the real-world context.",
+      "categories": [
+        "delta-table",
+        "delta-fundamentals"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "tblproperties",
+        "alter-table",
+        "configuration",
+        "show-properties",
+        "version-as-of"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-update-expressions",
+      "path": "demos/delta/delta-update-expressions",
+      "iconPath": "icons/delta-update-expressions.svg",
+      "name": "Delta UPDATE Expressions \u2014 Portfolio Rebalancing",
+      "summary": "Showcases computed expressions in UPDATE SET clauses: arithmetic adjustments (equity +5% appreciation), CASE WHEN reclassification (dynamic risk ratings based on value thresholds), and percentage-based recalculations (bond -2% decline). Three investment portfolios with 20 holdings go through a quarterly rebalancing cycle. VERSION AS OF and DESCRIBE HISTORY compare pre- and post-rebalancing snapshots.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "update",
+        "expressions",
+        "case-when",
+        "arithmetic",
+        "version-as-of",
+        "portfolio"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
     },
     {
       "id": "delta-schema-drop-columns",
