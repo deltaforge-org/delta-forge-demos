@@ -1,0 +1,29 @@
+[demo]
+id = "delta-merge-idempotent"
+name = "Delta MERGE — Idempotent Pipeline (Timestamp Guards)"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Production data pipelines must handle retries gracefully. An idempotent \
+MERGE uses timestamp guards (source.recorded_at > target.recorded_at) to \
+ensure that re-running the same batch produces identical results. This \
+demo merges IoT sensor telemetry into a readings table, demonstrating \
+safe retry behavior: the first run applies all changes, the second run \
+is a no-op because no source rows are newer than the already-updated target.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "advanced", "merge", "idempotent", "pipeline", "retry", "timestamp", "iot", "telemetry"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sensor_readings"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sensor_batch"

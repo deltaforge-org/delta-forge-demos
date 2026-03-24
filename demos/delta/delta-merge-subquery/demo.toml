@@ -1,0 +1,29 @@
+[demo]
+id = "delta-merge-subquery"
+name = "Delta MERGE — Subquery & CTE Source Patterns"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Real-world MERGE sources are rarely clean tables — they require deduplication, \
+aggregation, or joins before merging. This demo merges aggregated e-commerce \
+order events into a daily revenue summary table using a CTE (Common Table \
+Expression) as the MERGE source. The CTE groups raw events by product and day, \
+computes totals, and the MERGE upserts the results — a pattern used in every \
+analytics pipeline that maintains materialized summaries.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "advanced", "merge", "subquery", "cte", "aggregation", "analytics", "ecommerce", "pipeline"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.daily_revenue"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.order_events"

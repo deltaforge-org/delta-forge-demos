@@ -82,8 +82,8 @@
       "id": "xml-books-schema-evolution",
       "path": "demos/xml/books-schema-evolution",
       "iconPath": "icons/xml-books-schema-evolution.svg",
-      "name": "XML Books — Schema Evolution",
-      "summary": "Demonstrates XML schema evolution across 5 catalog export files spanning 2000–2004. Each year adds new elements (isbn, publisher, rating, edition, series) and one drops description. Verifies the union schema, NULL filling, and attribute extraction.",
+      "name": "XML Books \u2014 Schema Evolution",
+      "summary": "Demonstrates XML schema evolution across 5 catalog export files spanning 2000\u20132004. Each year adds new elements (isbn, publisher, rating, edition, series) and one drops description. Verifies the union schema, NULL filling, and attribute extraction.",
       "categories": [
         "xml"
       ],
@@ -106,7 +106,7 @@
       "id": "xml-nyt-news-rss",
       "path": "demos/xml/nyt-news-rss",
       "iconPath": "icons/xml-nyt-news-rss.svg",
-      "name": "XML NYT News — RSS Feed Analysis",
+      "name": "XML NYT News \u2014 RSS Feed Analysis",
       "summary": "Demonstrates XML namespace handling (4 namespaces: dc, media, atom, nyt), repeating element modes (JoinComma and Explode), self-closing element attributes, column_mappings, exclude_paths, and multi-file reading across 7 NYT RSS feed exports with 231 news articles and 2023 category keywords.",
       "categories": [
         "xml"
@@ -133,7 +133,7 @@
       "id": "xml-ecommerce-order-lines",
       "path": "demos/xml/ecommerce-order-lines",
       "iconPath": "icons/xml-ecommerce-order-lines.svg",
-      "name": "XML E-Commerce — Order Line Explosion",
+      "name": "XML E-Commerce \u2014 Order Line Explosion",
       "summary": "Demonstrates deep XML nesting (3+ levels), explode_paths for one-row-per-line-item, CDATA sections, exclude_paths, column_mappings, and self-closing flag elements on e-commerce order batch data with 5 orders and 11 line items.",
       "categories": [
         "xml",
@@ -161,7 +161,7 @@
       "id": "xml-subtree-capture",
       "path": "demos/xml/xml-subtree-capture",
       "iconPath": "icons/xml-subtree-capture.svg",
-      "name": "XML Subtree Capture — xml_paths & nested_output_format",
+      "name": "XML Subtree Capture \u2014 xml_paths & nested_output_format",
       "summary": "Demonstrates xml_paths for capturing complex XML subtrees as serialized string columns instead of flattening. Two tables show the same product catalog with subtrees (specifications, supplier) captured as JSON objects or raw XML fragments via nested_output_format. Top-level fields are flattened normally alongside captured subtrees.",
       "categories": [
         "xml"
@@ -215,8 +215,8 @@
       "id": "h3-point-in-polygon",
       "path": "demos/spatial/h3-point-in-polygon",
       "iconPath": "icons/h3-point-in-polygon.svg",
-      "name": "H3 Point-in-Polygon — 1M Row Performance",
-      "summary": "Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial indexing. 1,000,000 ride-share driver GPS positions are checked against 12 pricing zones across 8 world cities using O(1) H3 cell matching instead of O(n×m) polygon intersection. Progressive queries build from 'what is H3' to million-row analytics with 10 automated PASS/FAIL checks.",
+      "name": "H3 Point-in-Polygon \u2014 1M Row Performance",
+      "summary": "Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial indexing. 1,000,000 ride-share driver GPS positions are checked against 12 pricing zones across 8 world cities using O(1) H3 cell matching instead of O(n\u00d7m) polygon intersection. Progressive queries build from 'what is H3' to million-row analytics with 10 automated PASS/FAIL checks.",
       "categories": [
         "geospatial",
         "iot"
@@ -243,8 +243,8 @@
       "id": "json-customers-basics",
       "path": "demos/json/customers-basics",
       "iconPath": "icons/json-customers-basics.svg",
-      "name": "JSON Customers — Basics",
-      "summary": "Demonstrates JSON fundamentals: creating an external table from a JSON array file, applying column_mappings for clean names ($.first → first_name, $.last → last_name), and using type inference for proper timestamp handling. 200 CRM customer records with include_paths, max_depth, and file_metadata.",
+      "name": "JSON Customers \u2014 Basics",
+      "summary": "Demonstrates JSON fundamentals: creating an external table from a JSON array file, applying column_mappings for clean names ($.first \u2192 first_name, $.last \u2192 last_name), and using type inference for proper timestamp handling. 200 CRM customer records with include_paths, max_depth, and file_metadata.",
       "categories": [
         "json"
       ],
@@ -267,7 +267,7 @@
       "id": "json-music-catalog",
       "path": "demos/json/music-catalog",
       "iconPath": "icons/json-music-catalog.svg",
-      "name": "JSON Music Catalog — Nested Arrays & Explode",
+      "name": "JSON Music Catalog \u2014 Nested Arrays & Explode",
       "summary": "Demonstrates nested JSON flattening with array explosion. 347 music albums with nested vendor objects and track detail arrays across 3 genre-based catalog files. Two tables: album_tracks (exploded, 3,503 rows) and album_summary (347 rows with vendor as JSON blob). Covers explode_paths, json_paths, column_mappings, default_array_handling, and multi-file reading.",
       "categories": [
         "json"
@@ -293,7 +293,7 @@
       "id": "json-subtree-capture",
       "path": "demos/json/json-subtree-capture",
       "iconPath": "icons/json-subtree-capture.svg",
-      "name": "JSON Subtree Capture — json_paths",
+      "name": "JSON Subtree Capture \u2014 json_paths",
       "summary": "Demonstrates json_paths for capturing complex JSON subtrees as serialized string columns instead of flattening. Two tables show the same property listing data: one with location and pricing subtrees captured as JSON blobs (json_paths), one fully flattened for comparison. Covers json_paths, column_mappings, include_paths, and multi-file reading.",
       "categories": [
         "json"
@@ -318,7 +318,7 @@
       "id": "json-country-factbook",
       "path": "demos/json/country-factbook",
       "iconPath": "icons/json-country-factbook.svg",
-      "name": "JSON Country Factbook — Deep Nesting & Schema Evolution",
+      "name": "JSON Country Factbook \u2014 Deep Nesting & Schema Evolution",
       "summary": "Demonstrates deep JSON nesting (3+ levels), schema evolution with NULL filling, and selective path extraction using CIA World Factbook data for 10 African countries. One-object-per-file format with optional Terrorism/Space sections. Two tables: countries (flattened overview with preserve_original) and country_economy (GDP, sectors, trade). Covers exclude_paths, column_mappings, max_depth, and multi-file reading.",
       "categories": [
         "json"
@@ -345,8 +345,8 @@
       "id": "excel-sales-analytics",
       "path": "demos/excel/sales-analytics",
       "iconPath": "icons/excel-sales-analytics.svg",
-      "name": "Excel Sales Analytics — Superstore Orders",
-      "summary": "Demonstrates all Excel reading features using 4 years of Superstore sales data (2014–2017, 16,676 orders). Five tables exercise sheet_name, has_header, skip_rows, max_rows, range, trim_whitespace, null_values, empty_cell_handling, infer_schema_rows, file_filter, multi-file reading, file_metadata, and automatic type inference for dates, numbers, and strings.",
+      "name": "Excel Sales Analytics \u2014 Superstore Orders",
+      "summary": "Demonstrates all Excel reading features using 4 years of Superstore sales data (2014\u20132017, 16,676 orders). Five tables exercise sheet_name, has_header, skip_rows, max_rows, range, trim_whitespace, null_values, empty_cell_handling, infer_schema_rows, file_filter, multi-file reading, file_metadata, and automatic type inference for dates, numbers, and strings.",
       "categories": [
         "excel",
         "retail"
@@ -372,8 +372,8 @@
       "id": "parquet-supply-chain",
       "path": "demos/parquet/supply-chain",
       "iconPath": "icons/parquet-supply-chain.svg",
-      "name": "Parquet Supply Chain — Order Analytics",
-      "summary": "Demonstrates Parquet reading features using 14 quarterly order files (2012–2016, 73,089 rows) organized in year-based subdirectories. Four tables exercise recursive directory scanning, file_filter for year/quarter extraction, max_rows for sampling, row_group_filter for predicate pushdown, file_metadata for traceability, and Parquet's self-describing schema.",
+      "name": "Parquet Supply Chain \u2014 Order Analytics",
+      "summary": "Demonstrates Parquet reading features using 14 quarterly order files (2012\u20132016, 73,089 rows) organized in year-based subdirectories. Four tables exercise recursive directory scanning, file_filter for year/quarter extraction, max_rows for sampling, row_group_filter for predicate pushdown, file_metadata for traceability, and Parquet's self-describing schema.",
       "categories": [
         "parquet",
         "retail"
@@ -399,8 +399,8 @@
       "id": "avro-iot-sensors",
       "path": "demos/avro/iot-sensors",
       "iconPath": "icons/avro-iot-sensors.svg",
-      "name": "Avro IoT Sensors — Smart Building Telemetry",
-      "summary": "Demonstrates Avro reading features using 5 building-floor sensor files (2,500 rows) with schema evolution (v1→v2 adds battery_pct, firmware_version) and mixed compression codecs (null, deflate). Three tables exercise multi-file reading, file_filter for single-floor extraction, max_rows for sampling, file_metadata, and Avro's self-describing schema with automatic type detection.",
+      "name": "Avro IoT Sensors \u2014 Smart Building Telemetry",
+      "summary": "Demonstrates Avro reading features using 5 building-floor sensor files (2,500 rows) with schema evolution (v1\u2192v2 adds battery_pct, firmware_version) and mixed compression codecs (null, deflate). Three tables exercise multi-file reading, file_filter for single-floor extraction, max_rows for sampling, file_metadata, and Avro's self-describing schema with automatic type detection.",
       "categories": [
         "avro",
         "iot"
@@ -426,8 +426,8 @@
       "id": "orc-server-logs",
       "path": "demos/orc/server-logs",
       "iconPath": "icons/orc-server-logs.svg",
-      "name": "ORC Server Logs — HTTP Access Analytics",
-      "summary": "Demonstrates ORC reading features using 5 server access log files (2,500 rows) with schema evolution (v1→v2 adds request_body_bytes, cache_hit). Three tables exercise multi-file reading, file_filter for single-server extraction, max_rows for sampling, file_metadata, and ORC's self-describing schema with automatic type detection from file footers.",
+      "name": "ORC Server Logs \u2014 HTTP Access Analytics",
+      "summary": "Demonstrates ORC reading features using 5 server access log files (2,500 rows) with schema evolution (v1\u2192v2 adds request_body_bytes, cache_hit). Three tables exercise multi-file reading, file_filter for single-server extraction, max_rows for sampling, file_metadata, and ORC's self-describing schema with automatic type detection from file footers.",
       "categories": [
         "orc",
         "iot"
@@ -452,7 +452,7 @@
       "id": "fhir-patient-demographics",
       "path": "demos/fhir/fhir-patient-demographics",
       "iconPath": "icons/fhir-patient-demographics.svg",
-      "name": "FHIR Patient Demographics — Basics",
+      "name": "FHIR Patient Demographics \u2014 Basics",
       "summary": "Demonstrates FHIR R5 Patient resource ingestion from both bulk NDJSON exports (50 patients) and individual JSON files (7 detailed patients). Two tables show flat bulk demographics vs rich nested FHIR data with names, telecom, addresses, and managing organizations. Covers NDJSON format, column_mappings, schema evolution, and file_metadata.",
       "categories": [
         "healthcare",
@@ -481,7 +481,7 @@
       "id": "fhir-clinical-observations",
       "path": "demos/fhir/fhir-clinical-observations",
       "iconPath": "icons/fhir-clinical-observations.svg",
-      "name": "FHIR Clinical Observations — Vital Signs & Lab Results",
+      "name": "FHIR Clinical Observations \u2014 Vital Signs & Lab Results",
       "summary": "Demonstrates FHIR R5 Observation resource ingestion across vital signs (body weight, height, BMI, blood pressure, temperature, SpO2), lab results (glucose, CO2, hemoglobin), and clinical assessments (Glasgow Coma Scale). 100 bulk heart rate readings plus 14 individual clinical observations. Covers deep nested JSON flattening, schema evolution across observation types, and multi-file reading.",
       "categories": [
         "healthcare",
@@ -511,7 +511,7 @@
       "id": "fhir-medications-prescriptions",
       "path": "demos/fhir/fhir-medications-prescriptions",
       "iconPath": "icons/fhir-medications-prescriptions.svg",
-      "name": "FHIR Medications — Prescriptions & Coverage",
+      "name": "FHIR Medications \u2014 Prescriptions & Coverage",
       "summary": "Demonstrates FHIR R5 MedicationRequest and Coverage resource ingestion. 12 prescriptions with contained Medication resources, dosage instructions, dispense requests, and substitution rules. 4 Coverage resources with insurance classes and beneficiary references. Covers json_paths for preserving complex subtrees, contained resources, and deep FHIR nesting.",
       "categories": [
         "healthcare",
@@ -542,7 +542,7 @@
       "id": "fhir-clinical-records",
       "path": "demos/fhir/fhir-clinical-records",
       "iconPath": "icons/fhir-clinical-records.svg",
-      "name": "FHIR Clinical Records — Conditions, Procedures & Allergies",
+      "name": "FHIR Clinical Records \u2014 Conditions, Procedures & Allergies",
       "summary": "Demonstrates advanced FHIR R5 resource ingestion across three clinical resource types: 8 Condition resources (diagnoses with SNOMED CT coding, severity, body site), 8 Procedure resources (surgeries with performers and outcomes), and 6 AllergyIntolerance resources (allergies with reaction history and criticality). Three tables showcase multi-resource-type directory scanning, deep nested arrays, and cross-resource references.",
       "categories": [
         "healthcare",
@@ -574,7 +574,7 @@
       "id": "fhir-xml-clinical-resources",
       "path": "demos/fhir/fhir-xml-clinical-resources",
       "iconPath": "icons/fhir-xml-clinical-resources.svg",
-      "name": "FHIR XML — Clinical Patients & Observations",
+      "name": "FHIR XML \u2014 Clinical Patients & Observations",
       "summary": "Demonstrates HL7 FHIR R4 clinical data in native XML format. FHIR XML stores all primitive values as @value attributes. 8 Patient and 8 Observation XML files showcase FHIR namespace handling, @value extraction, exclude_paths for narrative XHTML, xml_paths for component/referenceRange subtrees, repeating element join_comma, deep XPath column_mappings, and schema evolution.",
       "categories": [
         "healthcare",
@@ -605,7 +605,7 @@
       "id": "pseudonymisation-healthcare",
       "path": "demos/pseudonymisation/pseudonymisation-healthcare",
       "iconPath": "icons/pseudonymisation-healthcare.svg",
-      "name": "Pseudonymisation — Healthcare HL7, FHIR & EDI",
+      "name": "Pseudonymisation \u2014 Healthcare HL7, FHIR & EDI",
       "summary": "Demonstrates GDPR-compliant pseudonymisation across HL7 v2 ADT patients, FHIR R4 Patient resources, and EDI HIPAA X12 claims. All 7 transform types (keyed_hash, encrypt, redact, generalize, tokenize, mask, hash), wildcard column patterns (address_*, *_name), scoped linkability (person, relationship, transaction), APPLY for permanent de-identification, and HIPAA Safe Harbor compliance mapping.",
       "categories": [
         "healthcare",
@@ -640,7 +640,7 @@
       "id": "edi-edifact-international-trade",
       "path": "demos/edi/edi-edifact-international-trade",
       "iconPath": "icons/edi-edifact-international-trade.svg",
-      "name": "EDI EDIFACT — International Trade & Logistics",
+      "name": "EDI EDIFACT \u2014 International Trade & Logistics",
       "summary": "Demonstrates UN/EDIFACT and EANCOM message parsing across 22 files covering international trade, logistics, customs clearance, and passenger data from 7 directory versions (D:96A through D:13B) and 6 syntax identifiers. 17 distinct message types (ORDERS, INVOIC, IFCSUM, CUSCAR, PAXLST, etc.) with materialized field extraction, multi-message files, and full JSON transaction access.",
       "categories": [
         "edi"
@@ -668,7 +668,7 @@
       "id": "edi-hipaa-healthcare",
       "path": "demos/edi/edi-hipaa-healthcare",
       "iconPath": "icons/edi-hipaa-healthcare.svg",
-      "name": "EDI HIPAA Healthcare — Claims Lifecycle",
+      "name": "EDI HIPAA Healthcare \u2014 Claims Lifecycle",
       "summary": "Demonstrates X12 EDI transaction parsing for the healthcare claims lifecycle. 11 transactions spanning 9 HIPAA 5010 transaction types: eligibility verification (270/271), claim status (276/277), healthcare claims (837 Professional/Dental/Institutional), payment remittance (835), benefit enrollment (834), prior authorization (278), and payment order (820). Covers materialized path extraction and full JSON access.",
       "categories": [
         "edi",
@@ -697,7 +697,7 @@
       "id": "edi-supply-chain-x12",
       "path": "demos/edi/edi-supply-chain-x12",
       "iconPath": "icons/edi-supply-chain-x12.svg",
-      "name": "EDI X12 Supply Chain — Order-to-Cash Lifecycle",
+      "name": "EDI X12 Supply Chain \u2014 Order-to-Cash Lifecycle",
       "summary": "Demonstrates X12 EDI transactions spanning the full supply chain order-to-cash lifecycle. 14 real-world transactions across 8 types: purchase orders (850), invoices (810), PO acknowledgments (855), ship notices (856), shipment & billing (857), receiving advice (861), functional acknowledgment (997), and application advice (824). Multi-version X12 (00204, 00401) with trading partner diversity.",
       "categories": [
         "edi",
@@ -725,8 +725,8 @@
       "id": "edi-tradacoms-uk-retail",
       "path": "demos/edi/edi-tradacoms-uk-retail",
       "iconPath": "icons/edi-tradacoms-uk-retail.svg",
-      "name": "EDI TRADACOMS — UK Retail Orders & Utilities",
-      "summary": "Demonstrates TRADACOMS — the UK-specific EDI standard used in retail and utilities. 4 files containing 15 total messages cover purchase orders, product planning forecasts, and utility bills. Features multi-message file parsing, STX envelope extraction, TRADACOMS escape character decoding (?' and ?+), and EAN-13 product codes.",
+      "name": "EDI TRADACOMS \u2014 UK Retail Orders & Utilities",
+      "summary": "Demonstrates TRADACOMS \u2014 the UK-specific EDI standard used in retail and utilities. 4 files containing 15 total messages cover purchase orders, product planning forecasts, and utility bills. Features multi-message file parsing, STX envelope extraction, TRADACOMS escape character decoding (?' and ?+), and EAN-13 product codes.",
       "categories": [
         "edi",
         "retail"
@@ -753,7 +753,7 @@
       "id": "edi-transportation-logistics",
       "path": "demos/edi/edi-transportation-logistics",
       "iconPath": "icons/edi-transportation-logistics.svg",
-      "name": "EDI X12 Transportation — Freight Lifecycle",
+      "name": "EDI X12 Transportation \u2014 Freight Lifecycle",
       "summary": "Demonstrates X12 EDI transactions spanning the full freight lifecycle. 12 files across 8 types: load tendering (204), freight invoicing (210), shipment tracking (214), rail transport (404), warehouse operations (945), payment remittance (820), price catalogs (832), and load tender response (990). Multi-version X12 (00204 through 005010) with multi-modal transportation.",
       "categories": [
         "edi"
@@ -780,8 +780,8 @@
       "id": "hl7-patient-admin",
       "path": "demos/hl7/hl7-patient-admin",
       "iconPath": "icons/hl7-patient-admin.svg",
-      "name": "HL7 Patient Administration — ADT Lifecycle",
-      "summary": "Demonstrates HL7 v2 ADT (Admit-Discharge-Transfer) messages from 6 EHR systems across 5 HL7 versions (2.3–2.6). 8 real-world messages cover admission (A01), demographics update (A08), and discharge (A03). Features MSH header extraction, materialized PID/PV1/EVN paths, escape sequence decoding, Z-segment preservation, and cross-EHR field mapping.",
+      "name": "HL7 Patient Administration \u2014 ADT Lifecycle",
+      "summary": "Demonstrates HL7 v2 ADT (Admit-Discharge-Transfer) messages from 6 EHR systems across 5 HL7 versions (2.3\u20132.6). 8 real-world messages cover admission (A01), demographics update (A08), and discharge (A03). Features MSH header extraction, materialized PID/PV1/EVN paths, escape sequence decoding, Z-segment preservation, and cross-EHR field mapping.",
       "categories": [
         "healthcare",
         "hl7"
@@ -808,8 +808,8 @@
       "id": "hl7-lab-orders-results",
       "path": "demos/hl7/hl7-lab-orders-results",
       "iconPath": "icons/hl7-lab-orders-results.svg",
-      "name": "HL7 Lab Orders & Results — ORM/ORU Workflow",
-      "summary": "Models the complete laboratory workflow using HL7 v2 ORM (Order) and ORU (Observation Result) messages. 3 ORM orders and 5 ORU results from 4+ LIS/EHR systems across HL7 versions 2.3–2.5.1. Covers materialized PID/OBR/OBX extraction, value type handling (NM, ST, TX, SN), abnormal flag detection, escape sequence decoding, and cross-system unification.",
+      "name": "HL7 Lab Orders & Results \u2014 ORM/ORU Workflow",
+      "summary": "Models the complete laboratory workflow using HL7 v2 ORM (Order) and ORU (Observation Result) messages. 3 ORM orders and 5 ORU results from 4+ LIS/EHR systems across HL7 versions 2.3\u20132.5.1. Covers materialized PID/OBR/OBX extraction, value type handling (NM, ST, TX, SN), abnormal flag detection, escape sequence decoding, and cross-system unification.",
       "categories": [
         "healthcare",
         "hl7"
@@ -837,7 +837,7 @@
       "id": "hl7-clinical-workflows",
       "path": "demos/hl7/hl7-clinical-workflows",
       "iconPath": "icons/hl7-clinical-workflows.svg",
-      "name": "HL7 Clinical Workflows — Documents, Scheduling & Edge Cases",
+      "name": "HL7 Clinical Workflows \u2014 Documents, Scheduling & Edge Cases",
       "summary": "Demonstrates HL7 v2 clinical workflow messages beyond core ADT and lab types. MDM^T02 document management with full History & Physical narrative, SIU^S12 appointment scheduling from two systems, and comprehensive edge-case testing with escape sequences (\\F\\, \\T\\, \\S\\, \\R\\, \\E\\, \\X0D\\), empty fields, and multi-line text.",
       "categories": [
         "healthcare",
@@ -866,7 +866,7 @@
       "id": "protobuf-addressbook-contacts",
       "path": "demos/protobuf/addressbook-contacts",
       "iconPath": "icons/protobuf-addressbook-contacts.svg",
-      "name": "Protobuf Address Book — Contact Directory",
+      "name": "Protobuf Address Book \u2014 Contact Directory",
       "summary": "Demonstrates Protocol Buffers (proto3) binary file reading using the classic Google addressbook schema. 3 team roster files (13 contacts, 22 phone numbers) read into flattened contacts and exploded phone-number tables. Covers nested message flattening, repeated field handling (join vs. explode), enum decoding (PhoneType), well-known types (Timestamp to ISO 8601), sparse data, and column mappings.",
       "categories": [
         "protobuf"
@@ -893,8 +893,8 @@
       "id": "graph-flattened-mode",
       "path": "demos/graph/graph-flattened-mode",
       "iconPath": "icons/graph-flattened-mode.svg",
-      "name": "Graph Flattened Mode — Direct Column Access",
-      "summary": "Demonstrates the flattened property storage mode for graph tables. All vertex and edge properties stored as individual columns — fastest mode with full predicate pushdown. 5-person social graph with 6 directed friendships. Queries cover traversal, aggregation, 2-hop neighbors, reciprocal edges, and department connectivity.",
+      "name": "Graph Flattened Mode \u2014 Direct Column Access",
+      "summary": "Demonstrates the flattened property storage mode for graph tables. All vertex and edge properties stored as individual columns \u2014 fastest mode with full predicate pushdown. 5-person social graph with 6 directed friendships. Queries cover traversal, aggregation, 2-hop neighbors, reciprocal edges, and department connectivity.",
       "categories": [
         "graph"
       ],
@@ -919,8 +919,8 @@
       "id": "graph-json-mode",
       "path": "demos/graph/graph-json-mode",
       "iconPath": "icons/graph-json-mode.svg",
-      "name": "Graph JSON Mode — Schema-Free Properties",
-      "summary": "Demonstrates the JSON property storage mode for graph tables. All vertex and edge properties in a single JSON string column — most flexible mode for schema-free evolution. Same 5-person social graph with JSON extraction functions (json_get_str, json_get_int, json_get_float), dynamic property discovery, and array access.",
+      "name": "Graph JSON Mode \u2014 Schema-Free Properties",
+      "summary": "Demonstrates the JSON property storage mode for graph tables. All vertex and edge properties in a single JSON string column \u2014 most flexible mode for schema-free evolution. Same 5-person social graph with JSON extraction functions (json_get_str, json_get_int, json_get_float), dynamic property discovery, and array access.",
       "categories": [
         "graph"
       ],
@@ -945,7 +945,7 @@
       "id": "graph-hybrid-mode",
       "path": "demos/graph/graph-hybrid-mode",
       "iconPath": "icons/graph-hybrid-mode.svg",
-      "name": "Graph Hybrid Mode — Columns + JSON Extras",
+      "name": "Graph Hybrid Mode \u2014 Columns + JSON Extras",
       "summary": "Demonstrates the hybrid property storage mode for graph tables. Frequently queried properties as columns for fast access, optional/extensible properties in a JSON extras column. Same 5-person social graph showing mixed column + JSON access patterns and the balanced trade-off between performance and flexibility.",
       "categories": [
         "graph"
@@ -971,7 +971,7 @@
       "id": "graph-social-network",
       "path": "demos/graph/graph-social-network",
       "iconPath": "icons/graph-social-network.svg",
-      "name": "Graph Social Network — 100-Node Company Graph",
+      "name": "Graph Social Network \u2014 100-Node Company Graph",
       "summary": "Large-scale graph analytics on a 100-employee company social network with 300+ directed connections across 8 departments and 5 cities. Deterministic generate_series() data generation. Queries cover degree centrality, department cross-pollination, influence scoring, 2-hop neighborhoods, team clustering, bridge detection, and mentor network analysis.",
       "categories": [
         "graph"
@@ -997,7 +997,7 @@
       "id": "graph-cypher-queries",
       "path": "demos/graph/graph-cypher-queries",
       "iconPath": "icons/graph-cypher-queries.svg",
-      "name": "Graph Cypher Queries — Pattern Matching & Algorithms",
+      "name": "Graph Cypher Queries \u2014 Pattern Matching & Algorithms",
       "summary": "Cypher query language demo on a 5-person social graph. Pattern matching (MATCH, WHERE, RETURN), variable-length paths, and 15+ graph algorithm procedures: PageRank, betweenness, closeness, degree centrality, connected components, Louvain community detection, triangle counting, shortest path, BFS/DFS, MST, and KNN similarity.",
       "categories": [
         "graph"
@@ -1023,7 +1023,7 @@
       "id": "graph-stress-test",
       "path": "demos/graph/graph-stress-test",
       "iconPath": "icons/graph-stress-test.svg",
-      "name": "Graph Stress Test — 1M-Node Performance Benchmark",
+      "name": "Graph Stress Test \u2014 1M-Node Performance Benchmark",
       "summary": "Extreme-scale graph performance benchmark: 1,000,000 vertex nodes and 5,000,000+ directed edges across 20 departments, 15 cities, and 200 project teams. Stress-tests graph rendering, layout algorithms, Cypher engine algorithms (PageRank, Louvain, BFS, shortest path, MST), and memory handling at massive scale.",
       "categories": [
         "graph"
@@ -1051,7 +1051,7 @@
       "id": "graph-ldbc-snb",
       "path": "demos/graph/graph-ldbc-snb",
       "iconPath": "icons/graph-ldbc-snb.svg",
-      "name": "LDBC Social Network Benchmark — Full Model Graph Verification",
+      "name": "LDBC Social Network Benchmark \u2014 Full Model Graph Verification",
       "summary": "Full LDBC Social Network Benchmark (SF0.1) with 8 entity types, 23 relationship types, and ~1.2M rows. Verifies graph algorithms (PageRank, shortest path, Louvain, centrality, BFS) and Cypher/SQL queries against official LDBC golden values. Demonstrates mixed SQL + Cypher queries joining graph algorithm results with Delta tables.",
       "categories": [
         "graph"
@@ -1080,7 +1080,7 @@
       "id": "graph-karate-club",
       "path": "demos/graph/graph-karate-club",
       "iconPath": "icons/graph-karate-club.svg",
-      "name": "Zachary's Karate Club — Classic Graph Benchmark",
+      "name": "Zachary's Karate Club \u2014 Classic Graph Benchmark",
       "summary": "The most studied graph in network science (Zachary, 1977). 34 club members, 78 undirected edges. Ground-truth 2-faction split for community detection verification. Known centrality values, degree distribution, and connected component structure.",
       "categories": [
         "graph"
@@ -1106,7 +1106,7 @@
       "id": "graph-dolphins",
       "path": "demos/graph/graph-dolphins",
       "iconPath": "icons/graph-dolphins.svg",
-      "name": "Dolphins Social Network — Marine Biology Graph",
+      "name": "Dolphins Social Network \u2014 Marine Biology Graph",
       "summary": "Social associations between 62 bottlenose dolphins in Doubtful Sound, New Zealand (Lusseau et al., 2003). 159 undirected edges. Known community structure, triangle count (285), and max degree (12).",
       "categories": [
         "graph"
@@ -1131,7 +1131,7 @@
       "id": "graph-polbooks",
       "path": "demos/graph/graph-polbooks",
       "iconPath": "icons/graph-polbooks.svg",
-      "name": "Political Books — Partisan Co-Purchasing Network",
+      "name": "Political Books \u2014 Partisan Co-Purchasing Network",
       "summary": "105 US political books with 441 co-purchasing edges from Amazon (Krebs/Newman). Ground-truth 3-community partition (liberal/neutral/conservative). Max degree 25, avg clustering ~0.488.",
       "categories": [
         "graph"
@@ -1156,7 +1156,7 @@
       "id": "graph-netscience",
       "path": "demos/graph/graph-netscience",
       "iconPath": "icons/graph-netscience.svg",
-      "name": "NetScience — Coauthorship Network",
+      "name": "NetScience \u2014 Coauthorship Network",
       "summary": "Coauthorship network of 1,461 network-science researchers with 2,742 weighted edges (Newman, 2006). Multiple disconnected components, non-uniform weights, and modularity ~0.95 reflecting clear research-group structure.",
       "categories": [
         "graph"
@@ -1182,7 +1182,7 @@
       "id": "graph-email-eu-core",
       "path": "demos/graph/graph-email-eu-core",
       "iconPath": "icons/graph-email-eu-core.svg",
-      "name": "Email-Eu-core — European Research Institution",
+      "name": "Email-Eu-core \u2014 European Research Institution",
       "summary": "Directed email communication network from a European research institution (SNAP). 1,005 persons, 25,571 directed edges. 42 ground-truth department communities. 10 weakly connected components, 105,461 triangles, diameter 7.",
       "categories": [
         "graph"
@@ -1208,7 +1208,7 @@
       "id": "delta-advanced-sql",
       "path": "demos/delta/delta-advanced-sql",
       "iconPath": "icons/delta-advanced-sql.svg",
-      "name": "Delta Advanced SQL — Windows, CTEs & Analytics",
+      "name": "Delta Advanced SQL \u2014 Windows, CTEs & Analytics",
       "summary": "Delta tables support the full power of SQL analytics including window \\ functions, CTEs, and advanced aggregations, making them a drop-in \\ replacement for traditional data warehouses. This...",
       "categories": [
         "delta-table",
@@ -1236,7 +1236,7 @@
       "id": "delta-auto-optimize",
       "path": "demos/delta/delta-auto-optimize",
       "iconPath": "icons/delta-auto-optimize.svg",
-      "name": "Delta Auto-Optimize — Automatic Compaction & Write Optimization",
+      "name": "Delta Auto-Optimize \u2014 Automatic Compaction & Write Optimization",
       "summary": "Delta Auto-Optimize uses the table properties 'delta.autoOptimize.optimizeWrite' \\ and 'delta.autoOptimize.autoCompact' to automatically coalesce small Parquet files \\ into larger ones during...",
       "categories": [
         "delta-table",
@@ -1263,8 +1263,8 @@
       "id": "delta-basics-crud",
       "path": "demos/delta/delta-basics-crud",
       "iconPath": "icons/delta-basics-crud.svg",
-      "name": "Delta Basics — Create, Insert, Update, Delete",
-      "summary": "Delta Lake extends Parquet with a transaction log that enables full CRUD \\ (Create, Read, Update, Delete) operations — something plain Parquet cannot do. \\ Each mutation (INSERT, UPDATE, DELETE)...",
+      "name": "Delta Basics \u2014 Create, Insert, Update, Delete",
+      "summary": "Delta Lake extends Parquet with a transaction log that enables full CRUD \\ (Create, Read, Update, Delete) operations \u2014 something plain Parquet cannot do. \\ Each mutation (INSERT, UPDATE, DELETE)...",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -1349,7 +1349,7 @@
       "id": "delta-bloom-filters",
       "path": "demos/delta/delta-bloom-filters",
       "iconPath": "icons/delta-bloom-filters.svg",
-      "name": "Delta Bloom Filters — Probabilistic Index for Fast Lookups",
+      "name": "Delta Bloom Filters \u2014 Probabilistic Index for Fast Lookups",
       "summary": "Bloom filters are probabilistic data structures stored alongside Delta \\ data files that enable data-skipping for point lookups on high-cardinality \\ columns like transaction IDs. When a query...",
       "categories": [
         "delta-table",
@@ -1376,7 +1376,7 @@
       "id": "delta-change-data-feed",
       "path": "demos/delta/delta-change-data-feed",
       "iconPath": "icons/delta-change-data-feed.svg",
-      "name": "Delta Change Data Feed — Track Row-Level Changes",
+      "name": "Delta Change Data Feed \u2014 Track Row-Level Changes",
       "summary": "Delta Change Data Feed (CDF) tracks row-level changes (inserts, updates, \\ deletes) across table versions, enabling efficient incremental ETL pipelines. \\ Without CDF, downstream consumers must...",
       "categories": [
         "delta-table",
@@ -1403,8 +1403,8 @@
       "id": "delta-collations",
       "path": "demos/delta/delta-collations",
       "iconPath": "icons/delta-collations.svg",
-      "name": "Delta Collations — Language-Aware Sorting & Comparison",
-      "summary": "Collation defines how strings are compared, sorted, and matched — critical for \\ multilingual data where naive byte-order sorting produces incorrect results \\ (e.g., placing umlauts after 'z')....",
+      "name": "Delta Collations \u2014 Language-Aware Sorting & Comparison",
+      "summary": "Collation defines how strings are compared, sorted, and matched \u2014 critical for \\ multilingual data where naive byte-order sorting produces incorrect results \\ (e.g., placing umlauts after 'z')....",
       "categories": [
         "delta-table",
         "delta-schema-types"
@@ -1429,7 +1429,7 @@
       "id": "delta-column-mapping",
       "path": "demos/delta/delta-column-mapping",
       "iconPath": "icons/delta-column-mapping.svg",
-      "name": "Delta Column Mapping — Physical & Logical Names",
+      "name": "Delta Column Mapping \u2014 Physical & Logical Names",
       "summary": "Delta Column Mapping (mode 'name') decouples logical column names in the \\ schema from physical column names in Parquet files, enabling ALTER TABLE \\ operations like column rename, drop, and add...",
       "categories": [
         "delta-table",
@@ -1457,8 +1457,8 @@
       "id": "delta-complex-types",
       "path": "demos/delta/delta-complex-types",
       "iconPath": "icons/delta-complex-types.svg",
-      "name": "Delta Complex Types — Structs, Arrays & Maps",
-      "summary": "Delta Lake supports complex data modelling through struct-like multi-column \\ patterns, array-like delimited strings, and map-like key=value pairs — \\ reflecting how real-world data often has...",
+      "name": "Delta Complex Types \u2014 Structs, Arrays & Maps",
+      "summary": "Delta Lake supports complex data modelling through struct-like multi-column \\ patterns, array-like delimited strings, and map-like key=value pairs \u2014 \\ reflecting how real-world data often has...",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -1484,7 +1484,7 @@
       "id": "delta-computed-columns",
       "path": "demos/delta/delta-computed-columns",
       "iconPath": "icons/delta-computed-columns.svg",
-      "name": "Delta Computed Fields — Formulas, Defaults & Derived Values",
+      "name": "Delta Computed Fields \u2014 Formulas, Defaults & Derived Values",
       "summary": "Computed columns are derived values calculated from other columns using \\ SQL expressions, ensuring consistency without storing redundant data. \\ Without a disciplined approach, formulas like...",
       "categories": [
         "delta-table",
@@ -1511,7 +1511,7 @@
       "id": "delta-constraint-enforcement",
       "path": "demos/delta/delta-constraint-enforcement",
       "iconPath": "icons/delta-constraint-enforcement.svg",
-      "name": "Delta Constraint Enforcement — NOT NULL & CHECK",
+      "name": "Delta Constraint Enforcement \u2014 NOT NULL & CHECK",
       "summary": "Delta Lake CHECK constraints enforce data quality invariants at the protocol \\ level, rejecting any commit whose rows violate the declared expressions. \\ Without constraints, bad data silently...",
       "categories": [
         "delta-table",
@@ -1565,8 +1565,8 @@
       "id": "delta-constraints-lifecycle",
       "path": "demos/delta/delta-constraints-lifecycle",
       "iconPath": "icons/delta-constraints-lifecycle.svg",
-      "name": "Delta Constraints Lifecycle — Validate, Mutate, Verify",
-      "summary": "CHECK constraints protect data quality, but the real proof is that they \\ survive every DML operation. This demo creates a product catalog with three \\ constraints, performs bulk UPDATEs, discontinues and deletes items, and \\ re-validates after each step — proving constraints hold through the full \\ mutation lifecycle.",
+      "name": "Delta Constraints Lifecycle \u2014 Validate, Mutate, Verify",
+      "summary": "CHECK constraints protect data quality, but the real proof is that they \\ survive every DML operation. This demo creates a product catalog with three \\ constraints, performs bulk UPDATEs, discontinues and deletes items, and \\ re-validates after each step \u2014 proving constraints hold through the full \\ mutation lifecycle.",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -1594,7 +1594,7 @@
       "path": "demos/delta/delta-append-only-event-sourcing",
       "iconPath": "icons/delta-append-only-event-sourcing.svg",
       "name": "Delta Append-Only Event Sourcing",
-      "summary": "Append-only Delta tables reject UPDATE and DELETE, making them ideal for \\ immutable event logs. This demo builds a 60-event order stream, reconstructs \\ order lifecycles, uses window functions to measure processing times, derives \\ current state from event history, appends a new batch, and proves the log \\ only grows — never shrinks.",
+      "summary": "Append-only Delta tables reject UPDATE and DELETE, making them ideal for \\ immutable event logs. This demo builds a 60-event order stream, reconstructs \\ order lifecycles, uses window functions to measure processing times, derives \\ current state from event history, appends a new batch, and proves the log \\ only grows \u2014 never shrinks.",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -1620,7 +1620,7 @@
       "id": "delta-convert-to-delta",
       "path": "demos/delta/delta-convert-to-delta",
       "iconPath": "icons/delta-convert-to-delta.svg",
-      "name": "Delta Convert to Delta — Migrating from Raw Parquet",
+      "name": "Delta Convert to Delta \u2014 Migrating from Raw Parquet",
       "summary": "Converting Parquet files to Delta Lake adds a transaction log (_delta_log) \\ on top of existing data files, unlocking ACID transactions, schema \\ enforcement, and time travel that raw Parquet...",
       "categories": [
         "delta-table",
@@ -1700,7 +1700,7 @@
       "id": "delta-deletion-vectors",
       "path": "demos/delta/delta-deletion-vectors",
       "iconPath": "icons/delta-deletion-vectors.svg",
-      "name": "Delta Deletion Vectors — Efficient Soft Deletes",
+      "name": "Delta Deletion Vectors \u2014 Efficient Soft Deletes",
       "summary": "Deletion vectors (DVs) are a Delta Lake protocol feature that marks individual \\ rows as deleted using lightweight bitmap files, avoiding the costly rewrite of \\ entire Parquet data files. Without...",
       "categories": [
         "delta-table",
@@ -1726,7 +1726,7 @@
       "id": "delta-dml-patterns",
       "path": "demos/delta/delta-dml-patterns",
       "iconPath": "icons/delta-dml-patterns.svg",
-      "name": "Delta DML Patterns — Complex DELETE & UPDATE",
+      "name": "Delta DML Patterns \u2014 Complex DELETE & UPDATE",
       "summary": "Delta Lake supports full DML (INSERT, UPDATE, DELETE) on top of immutable \\ Parquet files by recording add/remove file actions in the transaction log, \\ whereas traditional data lakes are...",
       "categories": [
         "delta-table",
@@ -1752,7 +1752,7 @@
       "id": "delta-dynamic-partition-pruning",
       "path": "demos/delta/delta-dynamic-partition-pruning",
       "iconPath": "icons/delta-dynamic-partition-pruning.svg",
-      "name": "Delta Dynamic Partition Pruning — Smart Query Filtering",
+      "name": "Delta Dynamic Partition Pruning \u2014 Smart Query Filtering",
       "summary": "Dynamic partition pruning is a query optimization where the engine skips \\ entire partitions of a fact table based on filter values derived from a \\ joined dimension table, dramatically reducing...",
       "categories": [
         "delta-table",
@@ -1779,7 +1779,7 @@
       "id": "delta-edge-cases",
       "path": "demos/delta/delta-edge-cases",
       "iconPath": "icons/delta-edge-cases.svg",
-      "name": "Delta Edge Cases — Empty, Wide & Minimal Tables",
+      "name": "Delta Edge Cases \u2014 Empty, Wide & Minimal Tables",
       "summary": "Delta tables gracefully handle boundary conditions that often trip up \\ traditional data systems, including single-row tables, wide schemas, \\ and empty tables. Understanding these edge cases is...",
       "categories": [
         "delta-table",
@@ -1833,7 +1833,7 @@
       "id": "delta-in-commit-timestamps",
       "path": "demos/delta/delta-in-commit-timestamps",
       "iconPath": "icons/delta-in-commit-timestamps.svg",
-      "name": "Delta In-Commit Timestamps — Reliable Version Timing",
+      "name": "Delta In-Commit Timestamps \u2014 Reliable Version Timing",
       "summary": "In-commit timestamps embed a reliable, monotonically increasing timestamp \\ directly into each Delta transaction log commit, solving the problem of \\ clock skew between distributed writers....",
       "categories": [
         "delta-table",
@@ -1859,7 +1859,7 @@
       "id": "delta-merge-advanced",
       "path": "demos/delta/delta-merge-advanced",
       "iconPath": "icons/delta-merge-advanced.svg",
-      "name": "Delta MERGE — Advanced Patterns & Conditional Logic",
+      "name": "Delta MERGE \u2014 Advanced Patterns & Conditional Logic",
       "summary": "Delta MERGE INTO supports multiple WHEN MATCHED clauses with conditional \\ predicates, enabling complex write patterns in a single atomic operation. \\ This solves the common ETL problem of needing...",
       "categories": [
         "delta-table",
@@ -1886,7 +1886,7 @@
       "id": "delta-merge-comprehensive",
       "path": "demos/delta/delta-merge-comprehensive",
       "iconPath": "icons/delta-merge-comprehensive.svg",
-      "name": "Delta MERGE Comprehensive — All Clause Patterns",
+      "name": "Delta MERGE Comprehensive \u2014 All Clause Patterns",
       "summary": "Delta MERGE INTO combines update, delete, and insert logic into a single \\ atomic transaction, which is critical for maintaining consistency in CRM \\ and master data management systems. This demo...",
       "categories": [
         "delta-table",
@@ -1915,7 +1915,7 @@
       "id": "delta-merge-upsert",
       "path": "demos/delta/delta-merge-upsert",
       "iconPath": "icons/delta-merge-upsert.svg",
-      "name": "Delta MERGE — Upsert, Conditional Update & Delete",
+      "name": "Delta MERGE \u2014 Upsert, Conditional Update & Delete",
       "summary": "The MERGE INTO upsert pattern is the foundation of change data capture \\ (CDC) pipelines, atomically applying inserts, updates, and deletes from \\ a staging source to a target table. The WHEN NOT...",
       "categories": [
         "delta-table",
@@ -1939,10 +1939,97 @@
       "updatedAt": "2026-03-09T12:00:00Z"
     },
     {
+      "id": "delta-merge-scd2",
+      "path": "demos/delta/delta-merge-scd2",
+      "iconPath": "icons/delta-merge-scd2.svg",
+      "name": "Delta MERGE \u2014 SCD Type 2 (Slowly Changing Dimensions)",
+      "summary": "Slowly Changing Dimension Type 2 preserves full history by expiring the current row and inserting a new version. This demo merges HR changes (promotions, transfers, salary adjustments) into an employee dimension, maintaining a complete audit trail.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "merge",
+        "scd",
+        "scd2",
+        "slowly-changing-dimension",
+        "data-warehouse",
+        "history",
+        "audit"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 15,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-merge-idempotent",
+      "path": "demos/delta/delta-merge-idempotent",
+      "iconPath": "icons/delta-merge-idempotent.svg",
+      "name": "Delta MERGE \u2014 Idempotent Pipeline (Timestamp Guards)",
+      "summary": "Production pipelines must handle retries gracefully. This demo uses timestamp guards to ensure re-running the same IoT sensor batch is safe \u2014 the first run applies changes, the second run is a verified no-op.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "merge",
+        "idempotent",
+        "pipeline",
+        "retry",
+        "timestamp",
+        "iot",
+        "telemetry"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-merge-subquery",
+      "path": "demos/delta/delta-merge-subquery",
+      "iconPath": "icons/delta-merge-subquery.svg",
+      "name": "Delta MERGE \u2014 Subquery & CTE Source Patterns",
+      "summary": "Real-world MERGE sources require deduplication and aggregation before merging. This demo uses a CTE to aggregate raw e-commerce order events and upsert into a daily revenue summary \u2014 the pattern behind every analytics pipeline.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "merge",
+        "subquery",
+        "cte",
+        "aggregation",
+        "analytics",
+        "ecommerce",
+        "pipeline"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
       "id": "delta-partitioning",
       "path": "demos/delta/delta-partitioning",
       "iconPath": "icons/delta-partitioning.svg",
-      "name": "Delta Partitioning — Organize & Query by Region",
+      "name": "Delta Partitioning \u2014 Organize & Query by Region",
       "summary": "Delta table partitioning physically organizes data files into directories \\ by partition column values, enabling partition pruning that skips entire \\ file groups during queries. This dramatically...",
       "categories": [
         "delta-table",
@@ -1995,7 +2082,7 @@
       "id": "delta-restore-advanced",
       "path": "demos/delta/delta-restore-advanced",
       "iconPath": "icons/delta-restore-advanced.svg",
-      "name": "Delta RESTORE — Advanced Recovery Scenarios",
+      "name": "Delta RESTORE \u2014 Advanced Recovery Scenarios",
       "summary": "Delta RESTORE TO VERSION rolls an entire table back to a previous \\ transaction log version, undoing all intermediate commits in a single \\ atomic operation. This is a safety net for recovering...",
       "categories": [
         "delta-table",
@@ -2022,7 +2109,7 @@
       "id": "delta-restore-rollback",
       "path": "demos/delta/delta-restore-rollback",
       "iconPath": "icons/delta-restore-rollback.svg",
-      "name": "Delta RESTORE — Rollback to Previous Versions",
+      "name": "Delta RESTORE \u2014 Rollback to Previous Versions",
       "summary": "RESTORE is a Delta Lake operation that rewinds a table to any previous \\ version by writing a new commit that recreates the old snapshot. It solves \\ the problem of accidental data loss: a...",
       "categories": [
         "delta-table",
@@ -2049,7 +2136,7 @@
       "id": "delta-row-tracking",
       "path": "demos/delta/delta-row-tracking",
       "iconPath": "icons/delta-row-tracking.svg",
-      "name": "Delta Row Tracking — Stable Row IDs & Audit Trail",
+      "name": "Delta Row Tracking \u2014 Stable Row IDs & Audit Trail",
       "summary": "Row tracking is a Delta Lake protocol feature that assigns stable, unique \\ identifiers to each row so that changes can be traced across versions. It \\ enables fine-grained change detection for...",
       "categories": [
         "delta-table",
@@ -2076,7 +2163,7 @@
       "id": "delta-schema-drop-columns",
       "path": "demos/delta/delta-schema-drop-columns",
       "iconPath": "icons/delta-schema-drop-columns.svg",
-      "name": "Delta Schema Evolution — Drop Columns & GDPR Cleanup",
+      "name": "Delta Schema Evolution \u2014 Drop Columns & GDPR Cleanup",
       "summary": "Delta Lake's schema evolution supports column-level changes that enable \\ GDPR \"right to erasure\" compliance without rebuilding tables. This matters \\ because privacy regulations require the...",
       "categories": [
         "delta-table",
@@ -2103,7 +2190,7 @@
       "id": "delta-schema-evolution",
       "path": "demos/delta/delta-schema-evolution",
       "iconPath": "icons/delta-schema-evolution.svg",
-      "name": "Delta Schema Evolution — Add Columns & NULL Filling",
+      "name": "Delta Schema Evolution \u2014 Add Columns & NULL Filling",
       "summary": "Schema evolution lets you add new columns to a Delta table without \\ rewriting existing data files. This solves the real-world problem of \\ evolving requirements: as your data model grows, old...",
       "categories": [
         "delta-table",
@@ -2129,7 +2216,7 @@
       "id": "delta-schema-evolution-advanced",
       "path": "demos/delta/delta-schema-evolution-advanced",
       "iconPath": "icons/delta-schema-evolution-advanced.svg",
-      "name": "Delta Advanced Schema Evolution — Add, Widen & Restructure",
+      "name": "Delta Advanced Schema Evolution \u2014 Add, Widen & Restructure",
       "summary": "Advanced schema evolution demonstrates multiple rounds of ALTER TABLE ADD \\ COLUMN on a single table, evolving from 5 to 8 columns across separate \\ phases. This mirrors real production systems...",
       "categories": [
         "delta-table",
@@ -2157,7 +2244,7 @@
       "id": "delta-statistics",
       "path": "demos/delta/delta-statistics",
       "iconPath": "icons/delta-statistics.svg",
-      "name": "Delta Statistics — Min/Max & Data Skipping",
+      "name": "Delta Statistics \u2014 Min/Max & Data Skipping",
       "summary": "Delta Lake stores per-file column statistics (min, max, null count, row \\ count) in the transaction log, enabling data skipping that avoids reading \\ irrelevant Parquet files entirely. This is one...",
       "categories": [
         "delta-table",
@@ -2211,7 +2298,7 @@
       "id": "delta-time-travel-deep",
       "path": "demos/delta/delta-time-travel-deep",
       "iconPath": "icons/delta-time-travel-deep.svg",
-      "name": "Delta Time Travel — Version History Deep Dive",
+      "name": "Delta Time Travel \u2014 Version History Deep Dive",
       "summary": "Time travel is Delta Lake's ability to query any previous version of a \\ table using VERSION AS OF, giving you instant access to historical \\ snapshots without maintaining separate copies. It...",
       "categories": [
         "delta-table",
@@ -2237,7 +2324,7 @@
       "id": "delta-time-travel-optimize",
       "path": "demos/delta/delta-time-travel-optimize",
       "iconPath": "icons/delta-time-travel-optimize.svg",
-      "name": "Delta Time Travel & OPTIMIZE — Version History",
+      "name": "Delta Time Travel & OPTIMIZE \u2014 Version History",
       "summary": "OPTIMIZE is a Delta Lake maintenance command that compacts many small \\ Parquet files into fewer, larger ones for dramatically faster read \\ performance. Frequent writes (inserts, updates,...",
       "categories": [
         "delta-table",
@@ -2263,7 +2350,7 @@
       "id": "delta-timestamp-ntz",
       "path": "demos/delta/delta-timestamp-ntz",
       "iconPath": "icons/delta-timestamp-ntz.svg",
-      "name": "Delta Timestamps — Timezone-Free & Precision Handling",
+      "name": "Delta Timestamps \u2014 Timezone-Free & Precision Handling",
       "summary": "Timestamp NTZ (No TimeZone) is a Delta protocol feature that stores timestamps \\ without embedded timezone information, preserving the literal date and time as written. \\ This matters because...",
       "categories": [
         "delta-table",
@@ -2289,7 +2376,7 @@
       "id": "delta-type-widening",
       "path": "demos/delta/delta-type-widening",
       "iconPath": "icons/delta-type-widening.svg",
-      "name": "Delta Type Widening — Numeric Precision & Ranges",
+      "name": "Delta Type Widening \u2014 Numeric Precision & Ranges",
       "summary": "Type widening is a Delta protocol feature that allows a column's data type to \\ be safely promoted to a wider type (e.g., INT to BIGINT, FLOAT to DOUBLE) \\ without rewriting existing data files. \\...",
       "categories": [
         "delta-table",
@@ -2316,7 +2403,7 @@
       "id": "delta-unicode-encoding",
       "path": "demos/delta/delta-unicode-encoding",
       "iconPath": "icons/delta-unicode-encoding.svg",
-      "name": "Delta Unicode & Encoding — International Data",
+      "name": "Delta Unicode & Encoding \u2014 International Data",
       "summary": "Delta tables inherit Parquet's native UTF-8 encoding, which means full Unicode \\ support for strings including CJK, Arabic, Cyrillic, and Latin diacritics. \\ This is critical for any global...",
       "categories": [
         "delta-table",
@@ -2343,7 +2430,7 @@
       "id": "delta-vacuum-cdc-interaction",
       "path": "demos/delta/delta-vacuum-cdc-interaction",
       "iconPath": "icons/delta-vacuum-cdc-interaction.svg",
-      "name": "Delta VACUUM & CDC Interaction — Retention & Change Tracking",
+      "name": "Delta VACUUM & CDC Interaction \u2014 Retention & Change Tracking",
       "summary": "Change Data Feed (CDF) records row-level changes (inserts, updates, deletes) in \\ special _change_data files alongside the main Delta data, enabling downstream \\ consumers to replay incremental...",
       "categories": [
         "delta-table",
@@ -2370,7 +2457,7 @@
       "id": "delta-vacuum-cleanup",
       "path": "demos/delta/delta-vacuum-cleanup",
       "iconPath": "icons/delta-vacuum-cleanup.svg",
-      "name": "Delta VACUUM — Cleanup Orphaned Files",
+      "name": "Delta VACUUM \u2014 Cleanup Orphaned Files",
       "summary": "VACUUM is a Delta Lake maintenance command that removes data files no longer \\ referenced by the current table version, reclaiming storage after UPDATEs, \\ DELETEs, and OPTIMIZE operations...",
       "categories": [
         "delta-table",
@@ -2397,7 +2484,7 @@
       "id": "delta-variant-type",
       "path": "demos/delta/delta-variant-type",
       "iconPath": "icons/delta-variant-type.svg",
-      "name": "Delta Variant Data Type — Semi-Structured Data",
+      "name": "Delta Variant Data Type \u2014 Semi-Structured Data",
       "summary": "The VARIANT type (modeled here via VARCHAR with JSON strings) enables storing \\ semi-structured data with different shapes in the same column, avoiding the \\ need to define rigid schemas for every...",
       "categories": [
         "delta-table",
@@ -2424,7 +2511,7 @@
       "id": "delta-zorder-deep",
       "path": "demos/delta/delta-zorder-deep",
       "iconPath": "icons/delta-zorder-deep.svg",
-      "name": "Delta Z-ORDER — Multi-Column Data Layout Optimization",
+      "name": "Delta Z-ORDER \u2014 Multi-Column Data Layout Optimization",
       "summary": "Z-ORDER is a Delta Lake optimization that reorganizes data files using a \\ space-filling curve to co-locate rows with similar values across multiple \\ columns, enabling efficient data skipping for...",
       "categories": [
         "delta-table",

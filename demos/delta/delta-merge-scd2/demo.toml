@@ -1,0 +1,29 @@
+[demo]
+id = "delta-merge-scd2"
+name = "Delta MERGE — SCD Type 2 (Slowly Changing Dimensions)"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Slowly Changing Dimension Type 2 is the standard pattern for tracking \
+historical changes in dimension tables. When an attribute changes, the \
+current row is expired (valid_to set) and a new row is inserted with \
+updated values. Delta MERGE handles both the expire and insert in a \
+single atomic operation — critical for insurance, finance, and any \
+regulated industry where audit trails are mandatory.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "advanced", "merge", "scd", "scd2", "slowly-changing-dimension", "history", "audit", "insurance", "data-warehouse"]
+difficulty = "advanced"
+estimated_time_minutes = 15
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.policy_dim"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.policy_changes"
