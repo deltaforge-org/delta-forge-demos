@@ -33,7 +33,7 @@ ASSERT WARNING VALUE order_count = 28 WHERE company_name = 'QUICK-Stop'
 SELECT
     c.company_name,
     COUNT(DISTINCT o.order_id) AS order_count,
-    CAST(ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS DOUBLE) AS total_value
+    ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS total_value
 FROM {{zone_name}}.csv.nw_customers c
 JOIN {{zone_name}}.csv.nw_orders o ON c.customer_id = o.customer_id
 JOIN {{zone_name}}.csv.nw_order_details od ON o.order_id = od.order_id
@@ -69,7 +69,7 @@ ASSERT WARNING VALUE total_revenue = 95744.59 WHERE category_name = 'Grains/Cere
 SELECT
     cat.category_name,
     COUNT(DISTINCT p.product_id) AS product_count,
-    CAST(ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS DOUBLE) AS total_revenue
+    ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS total_revenue
 FROM {{zone_name}}.csv.nw_order_details od
 JOIN {{zone_name}}.csv.nw_products p ON od.product_id = p.product_id
 JOIN {{zone_name}}.csv.nw_categories cat ON p.category_id = cat.category_id
@@ -103,7 +103,7 @@ SELECT
     e.first_name || ' ' || e.last_name AS employee_name,
     e.title,
     COUNT(DISTINCT o.order_id) AS orders_handled,
-    CAST(ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS DOUBLE) AS total_sales
+    ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS total_sales
 FROM {{zone_name}}.csv.nw_employees e
 JOIN {{zone_name}}.csv.nw_orders o ON e.employee_id = o.employee_id
 JOIN {{zone_name}}.csv.nw_order_details od ON o.order_id = od.order_id
@@ -133,7 +133,7 @@ SELECT
     EXTRACT(YEAR FROM o.order_date) AS year,
     EXTRACT(MONTH FROM o.order_date) AS month,
     COUNT(*) AS order_count,
-    CAST(ROUND(SUM(CAST(o.freight AS NUMERIC)), 2) AS DOUBLE) AS total_freight
+    ROUND(SUM(CAST(o.freight AS NUMERIC)), 2) AS total_freight
 FROM {{zone_name}}.csv.nw_orders o
 GROUP BY year, month
 ORDER BY year, month;
@@ -189,8 +189,8 @@ ASSERT WARNING VALUE total_order_value = 348839.94 WHERE shipper = 'Speedy Expre
 SELECT
     sh.company_name AS shipper,
     COUNT(DISTINCT o.order_id) AS shipments,
-    CAST(ROUND(AVG(CAST(o.freight AS NUMERIC)), 2) AS DOUBLE) AS avg_freight,
-    CAST(ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS DOUBLE) AS total_order_value
+    ROUND(AVG(CAST(o.freight AS NUMERIC)), 2) AS avg_freight,
+    ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS total_order_value
 FROM {{zone_name}}.csv.nw_orders o
 JOIN {{zone_name}}.csv.nw_shippers sh ON o.ship_via = sh.shipper_id
 JOIN {{zone_name}}.csv.nw_order_details od ON o.order_id = od.order_id
@@ -219,7 +219,7 @@ SELECT
     c.country,
     COUNT(DISTINCT c.customer_id) AS customer_count,
     COUNT(DISTINCT o.order_id) AS order_count,
-    CAST(ROUND(AVG(CAST(o.freight AS NUMERIC)), 2) AS DOUBLE) AS avg_freight
+    ROUND(AVG(CAST(o.freight AS NUMERIC)), 2) AS avg_freight
 FROM {{zone_name}}.csv.nw_customers c
 JOIN {{zone_name}}.csv.nw_orders o ON c.customer_id = o.customer_id
 GROUP BY c.country
@@ -278,7 +278,7 @@ SELECT
     s.company_name AS supplier,
     s.country,
     COUNT(DISTINCT p.product_id) AS products_supplied,
-    CAST(ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS DOUBLE) AS total_revenue
+    ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS total_revenue
 FROM {{zone_name}}.csv.nw_suppliers s
 JOIN {{zone_name}}.csv.nw_products p ON s.supplier_id = p.supplier_id
 JOIN {{zone_name}}.csv.nw_order_details od ON p.product_id = od.product_id
@@ -327,7 +327,7 @@ ASSERT WARNING VALUE grand_total_revenue = 1265793.04
 SELECT
     COUNT(DISTINCT o.order_id) AS total_orders,
     COUNT(DISTINCT c.customer_id) AS total_customers,
-    CAST(ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS DOUBLE) AS grand_total_revenue
+    ROUND(SUM(CAST(od.unit_price AS NUMERIC) * CAST(od.quantity AS INT) * (1 - CAST(od.discount AS NUMERIC))), 2) AS grand_total_revenue
 FROM {{zone_name}}.csv.nw_order_details od
 JOIN {{zone_name}}.csv.nw_orders o ON od.order_id = o.order_id
 JOIN {{zone_name}}.csv.nw_customers c ON o.customer_id = c.customer_id;
