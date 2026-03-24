@@ -3,14 +3,14 @@
 -- ============================================================================
 -- An IoT platform ingests sensor data in small batches. Each batch represents
 -- a different metric type. Without auto-optimize, each small INSERT creates a
--- tiny file, leading to the "small files problem". By enabling optimizeWrite
--- and autoCompact table properties, Delta automatically coalesces small writes
--- into optimally-sized files.
+-- tiny file, leading to the "small files problem". By enabling autoCompact
+-- via SET AUTO OPTIMIZE, Delta automatically coalesces small files into larger
+-- ones after each write.
 --
--- This setup creates the table with auto-optimize TBLPROPERTIES and inserts
--- one initial batch of temperature data. The remaining 6 batches, UPDATE, and
--- analytical queries are in queries.sql so you can run them interactively and
--- observe auto-optimize compaction after each write.
+-- This demo creates the table WITHOUT auto-optimize (it is off by default),
+-- then explicitly enables it with SET AUTO OPTIMIZE ON. We also lower the
+-- compaction threshold to 3 files so you can observe compaction happening
+-- within this demo's 7 batches.
 -- ============================================================================
 
 -- STEP 1: Zone & Schema
@@ -22,8 +22,10 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 
 
 -- ============================================================================
--- CREATE TABLE with auto-optimize TBLPROPERTIES
+-- CREATE TABLE — no auto-optimize (off by default)
 -- ============================================================================
+-- We set the minNumFiles threshold to 3 so compaction triggers within this
+-- demo (default is 50, which would require many more writes).
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.iot_readings (
     id          INT,
     device_id   VARCHAR,
@@ -35,18 +37,27 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.iot_readings (
     recorded_at VARCHAR
 ) LOCATION '{{data_path}}/iot_readings'
 TBLPROPERTIES (
-    'delta.autoOptimize.optimizeWrite' = 'true',
-    'delta.autoOptimize.autoCompact' = 'true'
+    'spark.databricks.delta.autoCompact.minNumFiles' = '3'
 );
 
 GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.iot_readings TO USER {{current_user}};
 
 
 -- ============================================================================
+-- ENABLE AUTO-OPTIMIZE — explicitly opt in
+-- ============================================================================
+-- Auto-optimize is OFF by default. The user must enable it. This command
+-- persists delta.autoOptimize.autoCompact = true and
+-- delta.autoOptimize.optimizeWrite = true as table properties.
+SET AUTO OPTIMIZE {{zone_name}}.delta_demos.iot_readings ON;
+
+
+-- ============================================================================
 -- BATCH 1: Temperature readings (10 rows) — baseline data
 -- ============================================================================
--- This initial batch seeds the table. The remaining 6 batches are in
--- queries.sql so you can observe auto-optimize compacting after each write.
+-- This initial batch seeds the table. With auto-optimize now enabled, each
+-- subsequent write will check if small files have accumulated past the
+-- threshold (3 files) and compact them automatically.
 INSERT INTO {{zone_name}}.delta_demos.iot_readings VALUES
     (1,  'DEV-001', 'temperature', 22.5,  'celsius', 'good', 1, '2025-01-15 08:00:00'),
     (2,  'DEV-002', 'temperature', 23.1,  'celsius', 'good', 1, '2025-01-15 08:01:00'),

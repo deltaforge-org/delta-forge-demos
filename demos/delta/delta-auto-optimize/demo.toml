@@ -4,12 +4,12 @@ name = "Delta Auto-Optimize — Automatic Compaction & Write Optimization"
 version = "1.0.0"
 author = "Delta Forge Team"
 description = """
-Delta Auto-Optimize uses the table properties 'delta.autoOptimize.optimizeWrite' \
-and 'delta.autoOptimize.autoCompact' to automatically coalesce small Parquet files \
-into larger ones during writes. Without it, frequent small INSERTs create a "small \
-files problem" that degrades read performance due to excessive file-open overhead. \
-This demo ingests IoT sensor data across 7 small batches to show how auto-optimize \
-transparently compacts files behind the scenes.
+Delta Auto-Optimize uses SET AUTO OPTIMIZE to enable automatic post-write \
+compaction. Without it, frequent small INSERTs create a "small files problem" \
+that degrades read performance. This demo creates a table with auto-optimize \
+OFF (the default), then explicitly enables it with a low compaction threshold \
+(3 files). As IoT sensor data is ingested across 7 batches, auto-optimize \
+transparently compacts small files after each write.
 """
 categories = ["delta-table"]
 tags = ["delta-table", "intermediate", "auto-optimize", "compaction", "small-files", "iot", "performance"]

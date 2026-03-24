@@ -4,43 +4,38 @@
 -- WHAT: Auto-optimize automatically compacts small files during writes
 -- WHY:  Frequent small INSERTs create many tiny Parquet files, degrading read
 --       performance due to file-open overhead and metadata bloat
--- HOW:  The TBLPROPERTIES 'delta.autoOptimize.optimizeWrite' bins data into
---       optimally-sized files at write time, while 'delta.autoOptimize.autoCompact'
---       triggers background compaction after writes
+-- HOW:  SET AUTO OPTIMIZE enables delta.autoOptimize.autoCompact, which
+--       triggers a post-write compaction job when the small file count
+--       exceeds the threshold (lowered to 3 for this demo)
 --
 -- This demo walks through 6 incremental INSERT batches (batches 2-7), an
--- UPDATE for quality flagging, and SELECT queries between operations so you
--- can observe how auto-optimize handles each write.
+-- UPDATE for quality flagging, and SELECT queries to verify data integrity.
+-- Auto-optimize compacts files behind the scenes after writes that push
+-- the small file count past the threshold.
 -- ============================================================================
 
 
 -- ============================================================================
 -- CHECK: Baseline state after setup (batch 1 already loaded)
 -- ============================================================================
--- Setup inserted 10 temperature readings (batch 1). Let's confirm the
--- starting state before we begin adding more batches.
+-- Setup inserted 10 temperature readings (batch 1) and enabled auto-optimize
+-- via SET AUTO OPTIMIZE ON. Let's confirm the starting state.
 
 -- Verify baseline: 10 temperature readings in batch 1
 ASSERT VALUE baseline_count = 10
 SELECT COUNT(*) AS baseline_count FROM {{zone_name}}.delta_demos.iot_readings;
 
-ASSERT ROW_COUNT = 1
-SELECT batch_id,
-       metric,
-       COUNT(*) AS row_count,
-       MIN(recorded_at) AS first_reading,
-       MAX(recorded_at) AS last_reading
-FROM {{zone_name}}.delta_demos.iot_readings
-GROUP BY batch_id, metric
-ORDER BY batch_id;
+-- Verify auto-optimize is enabled on this table
+ASSERT ROW_COUNT = 5
+SELECT * FROM (DESCRIBE AUTO OPTIMIZE {{zone_name}}.delta_demos.iot_readings);
 
 
 -- ============================================================================
 -- BATCH 2: Humidity readings (10 rows) — 1 extreme value (> 90%)
 -- ============================================================================
--- Each INSERT creates new data files. With optimizeWrite enabled, the writer
--- produces optimally-sized files instead of tiny ones. With autoCompact, a
--- post-commit job merges any remaining small files.
+-- Each INSERT creates new data files. With autoCompact enabled and a low
+-- threshold of 3 files, compaction will trigger once we accumulate enough
+-- small files.
 
 INSERT INTO {{zone_name}}.delta_demos.iot_readings VALUES
     (11, 'DEV-001', 'humidity', 55.0, 'percent', 'good', 2, '2025-01-15 09:00:00'),
@@ -55,7 +50,7 @@ INSERT INTO {{zone_name}}.delta_demos.iot_readings VALUES
     (20, 'DEV-010', 'humidity', 60.0, 'percent', 'good', 2, '2025-01-15 09:09:00');
 
 
--- Observe: we now have 2 batches (20 rows). Check how the data is organized.
+-- Observe: we now have 2 batches (20 rows).
 ASSERT ROW_COUNT = 2
 SELECT batch_id,
        metric,
@@ -150,7 +145,8 @@ INSERT INTO {{zone_name}}.delta_demos.iot_readings VALUES
 -- BATCH 7: Vibration readings (10 rows) — 1 extreme value (> 8.0 mm/s)
 -- ============================================================================
 -- This is the final batch. After this INSERT, all 70 rows are loaded across
--- 7 metric types. Auto-optimize has been compacting files after each write.
+-- 7 metric types. Auto-optimize has been compacting files after each write
+-- that pushed small file count past the threshold of 3.
 
 INSERT INTO {{zone_name}}.delta_demos.iot_readings VALUES
     (61, 'DEV-001', 'vibration', 2.1, 'mm/s', 'good', 7, '2025-01-15 14:00:00'),
@@ -219,16 +215,14 @@ ORDER BY metric, id;
 
 
 -- ============================================================================
--- LEARN: How Auto-Optimize Works in the Delta Protocol
+-- LEARN: How Auto-Optimize Works
 -- ============================================================================
--- Delta records table properties in the transaction log's metadata action.
--- When 'delta.autoOptimize.optimizeWrite' = 'true', the writer attempts to
--- produce ~128MB files (the target size), redistributing data across partitions.
--- When 'delta.autoOptimize.autoCompact' = 'true', a post-commit compaction
--- job merges files smaller than the target into larger ones.
---
--- Let's examine the IoT data by device to see how readings span all metrics.
--- Each device has 7 readings across 7 metrics. DEV-005 has 7 poor readings.
+-- When delta.autoOptimize.autoCompact is enabled, a post-write compaction
+-- job runs after each INSERT/UPDATE/DELETE. It checks if the number of small
+-- files (< 64 MB) exceeds the threshold (spark.databricks.delta.autoCompact
+-- .minNumFiles, set to 3 for this demo). If so, OPTIMIZE runs automatically,
+-- merging small files into larger ones — eliminating the small files problem
+-- without manual intervention.
 
 -- Verify DEV-005 has 7 poor-quality readings (one extreme per metric)
 ASSERT VALUE poor_readings = 7
