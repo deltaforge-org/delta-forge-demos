@@ -6,8 +6,11 @@
 -- readings three times per month over six months (Jan-Jun 2024).
 -- ============================================================================
 
-CREATE ZONE IF NOT EXISTS {{zone_name}} WITH DATA_PATH = '{{data_path}}';
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos;
+CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
+    COMMENT 'External and Delta tables — demo datasets';
+
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
+    COMMENT 'Delta table management tutorial demos';
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.line_metrics (
     id              INT,
@@ -17,10 +20,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.line_metrics (
     line_name       VARCHAR,
     recorded_at     VARCHAR,
     year_month      VARCHAR
-) PARTITIONED BY (year_month)
-  LOCATION '{{data_path}}/delta_demos/line_metrics';
+) LOCATION '{{data_path}}/line_metrics'
+PARTITIONED BY (year_month);
 
-GRANT ADMIN ON {{zone_name}}.delta_demos.line_metrics;
+GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.line_metrics TO USER {{current_user}};
 
 -- ============================================================================
 -- January 2024 — Coldest month (base temperatures, no seasonal offset)
