@@ -120,8 +120,8 @@ USING (VALUES
     (40, 'ACCT-1006', 'Ironclad Securities',      'transfer',   100000.00, 400000.00,  's.williams', 'westside',  '2024-04-03 15:00:00'),
     (41, 'ACCT-1007', 'BlueSky Investments',      'deposit',    200000.00, 700000.00,  'm.torres',   'eastpoint', '2024-04-05 11:15:00'),
     (42, 'ACCT-1004', 'Pinnacle Trust Co',        'deposit',    60000.00,  300000.00,  'j.chen',     'downtown',  '2024-04-08 08:45:00')
-) AS staging(event_id, account_id, account_name, event_type, amount, balance, officer, branch, event_date)
-ON target.event_id = staging.event_id
+) AS source(event_id, account_id, account_name, event_type, amount, balance, officer, branch, event_date)
+ON target.event_id = source.event_id
 WHEN NOT MATCHED THEN INSERT (event_id, account_id, account_name, event_type, amount, balance, officer, branch, event_date)
-    VALUES (staging.event_id, staging.account_id, staging.account_name, staging.event_type,
-            staging.amount, staging.balance, staging.officer, staging.branch, staging.event_date);
+    VALUES (source.event_id, source.account_id, source.account_name, source.event_type,
+            source.amount, source.balance, source.officer, source.branch, source.event_date);
