@@ -21,20 +21,21 @@
 -- In Delta, each UPDATE creates a new version in the transaction log,
 -- so you get full version history even for a single row.
 --
--- After setup, the config_singleton table has version 1 (the baseline).
--- Let's see it before any updates:
+-- After setup, the config_singleton table has version 1 (the baseline):
 
 ASSERT ROW_COUNT = 1
+ASSERT VALUE version = 1
+ASSERT VALUE updated_by = 'admin'
 SELECT config_key, config_value, version, updated_by, updated_at
 FROM {{zone_name}}.delta_demos.config_singleton;
 
 
 -- ============================================================================
--- EVOLVE: Update config to version 2 — increase timeout
+-- EVOLVE: Update Config — Increase Timeout
 -- ============================================================================
--- The ops team doubles the timeout from 5000ms to 10000ms.
--- This UPDATE replaces the single Parquet file and creates a new Delta
--- transaction log entry — version 2.
+-- The ops team doubles the timeout from 5000ms to 10000ms and bumps
+-- the version. This UPDATE replaces the single Parquet file and creates
+-- a new Delta transaction log entry — version 2.
 
 ASSERT ROW_COUNT = 1
 UPDATE {{zone_name}}.delta_demos.config_singleton
@@ -43,72 +44,65 @@ SET config_value = '{"max_connections":100,"timeout_ms":10000,"debug":false}',
     updated_by = 'ops-team',
     updated_at = '2025-01-15 10:00:00';
 
--- Observe the config after the timeout increase:
-ASSERT ROW_COUNT = 1
-ASSERT VALUE version = 2
-ASSERT VALUE updated_by = 'ops-team'
-SELECT config_key, config_value, version, updated_by, updated_at
-FROM {{zone_name}}.delta_demos.config_singleton;
-
 
 -- ============================================================================
--- EVOLVE: Update config to version 3 — enable debug mode
+-- EVOLVE: Optimistic Locking — Update Only If Version Matches
 -- ============================================================================
--- The dev lead enables debug mode for troubleshooting.
--- Another new version in the transaction log — version 3.
-
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.config_singleton
-SET config_value = '{"max_connections":100,"timeout_ms":10000,"debug":true}',
-    version = 3,
-    updated_by = 'dev-lead',
-    updated_at = '2025-02-01 14:30:00';
-
--- Observe the config after enabling debug:
-ASSERT ROW_COUNT = 1
-ASSERT VALUE version = 3
-ASSERT VALUE updated_by = 'dev-lead'
-SELECT config_key, config_value, version, updated_by, updated_at
-FROM {{zone_name}}.delta_demos.config_singleton;
-
-
--- ============================================================================
--- EVOLVE: Update config to version 4 — increase max connections
--- ============================================================================
--- The SRE team scales up max_connections from 100 to 200 for higher load.
--- This is the final update — version 4.
+-- The dev lead wants to enable debug mode, but only if no one else has
+-- changed the config since they last read it. The WHERE version = 2
+-- clause acts as an optimistic lock — if another process had already
+-- bumped the version, this UPDATE would affect 0 rows instead of 1.
 
 ASSERT ROW_COUNT = 1
 UPDATE {{zone_name}}.delta_demos.config_singleton
 SET config_value = '{"max_connections":200,"timeout_ms":10000,"debug":true}',
-    version = 4,
-    updated_by = 'sre-team',
-    updated_at = '2025-03-01 09:00:00';
+    version = 3,
+    updated_by = 'dev-lead',
+    updated_at = '2025-02-01 14:30:00'
+WHERE version = 2;
 
--- Observe the final config state:
+-- Verify the optimistic lock worked — version is now 3:
 ASSERT ROW_COUNT = 1
-ASSERT VALUE version = 4
-ASSERT VALUE updated_by = 'sre-team'
-SELECT config_key, config_value, version, updated_by, updated_at
+ASSERT VALUE version = 3
+ASSERT VALUE updated_by = 'dev-lead'
+SELECT version, updated_by, config_value
 FROM {{zone_name}}.delta_demos.config_singleton;
 
 
 -- ============================================================================
--- LEARN: How Delta Handles In-Place Updates on Single Rows
+-- EVOLVE: Full Row Replace — DELETE + Re-INSERT
 -- ============================================================================
--- Even though this table has only 1 row, Delta created multiple versions
--- in the transaction log (one per UPDATE). Each version wrote a new Parquet
--- file and marked the old one as removed. This means you could time-travel
--- back to any previous configuration state.
---
--- Let's verify the final state reflects the 4th update:
+-- Sometimes you want to replace the entire row rather than update
+-- individual columns — for example, when migrating to a new config
+-- schema. Delta handles this as two separate transactions: a DELETE
+-- (marking the old Parquet file as removed) and an INSERT (writing
+-- a new one).
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE config_version = 4
-ASSERT VALUE last_updater = 'sre-team'
-SELECT version AS config_version,
-       updated_by AS last_updater,
-       updated_at AS last_update_time
+DELETE FROM {{zone_name}}.delta_demos.config_singleton;
+
+ASSERT ROW_COUNT = 1
+INSERT INTO {{zone_name}}.delta_demos.config_singleton VALUES
+    ('app_settings', '{"max_connections":250,"timeout_ms":3000,"debug":true,"region":"us-east-1"}', 1, 'sre-team', '2025-03-15 12:00:00');
+
+
+-- ============================================================================
+-- LEARN: Aggregation on a Single Row
+-- ============================================================================
+-- Aggregation functions work correctly on a 1-row table. COUNT returns 1,
+-- and AVG/SUM/MIN/MAX all return the single value. This matters for
+-- dashboards that compute averages — a singleton config or status table
+-- should not break an aggregation pipeline.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE cnt = 1
+ASSERT VALUE avg_version = 1
+ASSERT VALUE sum_version = 1
+SELECT COUNT(*) AS cnt,
+       AVG(version) AS avg_version,
+       SUM(version) AS sum_version,
+       MIN(updated_by) AS min_updater,
+       MAX(updated_at) AS max_update_time
 FROM {{zone_name}}.delta_demos.config_singleton;
 
 
@@ -128,32 +122,64 @@ ORDER BY id;
 
 
 -- ============================================================================
--- LEARN: Columnar Advantage with Wide Tables
+-- EVOLVE: Surgical Column Update — Correct a Single Metric
 -- ============================================================================
--- With 30 columns in Parquet format, queries that filter or project a
--- subset of columns benefit from columnar pruning — only the needed
--- column chunks are read from disk. Let's compute a cross-column
--- metric to show all columns are accessible:
+-- Wide tables often need targeted corrections — fix one metric without
+-- touching the other 29 columns. Delta rewrites only the affected Parquet
+-- file, not the entire table. Here we correct January's revenue figure
+-- and recalculate the derived columns:
 
-ASSERT ROW_COUNT = 12
-SELECT name,
-       m01_revenue,
-       m02_cost,
-       m03_profit,
-       ROUND(m03_profit / m01_revenue * 100, 1) AS computed_margin_pct,
-       m04_margin_pct AS stored_margin_pct
-FROM {{zone_name}}.delta_demos.wide_metrics
-WHERE m01_revenue > 150000
-ORDER BY m03_profit DESC;
+ASSERT ROW_COUNT = 1
+UPDATE {{zone_name}}.delta_demos.wide_metrics
+SET m01_revenue = 131000.0,
+    m03_profit = 46000.0,
+    m04_margin_pct = 35.1
+WHERE id = 1;
+
+
+-- ============================================================================
+-- EVOLVE: Pruning Rows — Remove Provisional Data
+-- ============================================================================
+-- The last two months (Jul-2025, Aug-2025) were provisional estimates.
+-- Now that actuals are in, we delete the provisional rows before loading
+-- the real data. This is a common pattern in financial reporting pipelines.
+
+ASSERT ROW_COUNT = 2
+DELETE FROM {{zone_name}}.delta_demos.wide_metrics
+WHERE id > 18;
+
+
+-- ============================================================================
+-- LEARN: Cross-Column Analytics on a Wide Table
+-- ============================================================================
+-- With 18 remaining months and 30 columns, let's compute a blended
+-- summary that spans revenue, profit, satisfaction, and error metrics.
+-- This demonstrates that wide Delta tables support complex analytical
+-- queries across many columns efficiently:
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE months = 18
+ASSERT VALUE total_revenue = 2782000.0
+ASSERT VALUE total_profit = 1039000.0
+ASSERT VALUE blended_margin_pct = 37.3
+SELECT COUNT(*) AS months,
+       SUM(m01_revenue) AS total_revenue,
+       SUM(m03_profit) AS total_profit,
+       ROUND(SUM(m03_profit) * 100.0 / SUM(m01_revenue), 1) AS blended_margin_pct,
+       ROUND(AVG(m12_satisfaction), 2) AS avg_satisfaction,
+       SUM(m05_units_sold) AS total_units,
+       MIN(m19_error_rate) AS best_error_rate,
+       MAX(m01_revenue) AS peak_revenue
+FROM {{zone_name}}.delta_demos.wide_metrics;
 
 
 -- ============================================================================
 -- EXPLORE: Empty Tables — Schema Without Data
 -- ============================================================================
 -- An empty Delta table has a valid transaction log with schema metadata
--- but zero data files. This is common for staging tables created before
--- data arrives. Queries against empty tables return zero rows (not errors),
--- and aggregates return NULL:
+-- but zero data files. Queries against empty tables return zero rows
+-- (not errors), and aggregates return NULL — exactly what downstream
+-- pipelines expect:
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE row_count = 0
@@ -165,63 +191,122 @@ FROM {{zone_name}}.delta_demos.empty_staging;
 
 
 -- ============================================================================
--- LEARN: Why Empty Tables Matter in Delta
+-- EVOLVE: Populate the Staging Table — Empty to Loaded
 -- ============================================================================
--- An empty Delta table is not the same as a nonexistent table. The
--- transaction log records the CREATE TABLE action with full schema
--- information. This means:
---   1. Schema enforcement is already active (inserts must match the schema)
---   2. The table can participate in MERGE, JOIN, or UNION queries
---   3. Downstream tools can discover the schema without waiting for data
---
--- Let's confirm the schema exists by selecting with a false predicate:
+-- The staging table receives its first batch of incoming events. Delta
+-- writes the first Parquet data file and advances the transaction log
+-- from version 0 (schema-only) to version 1 (schema + data):
+
+ASSERT ROW_COUNT = 3
+INSERT INTO {{zone_name}}.delta_demos.empty_staging VALUES
+    (1, 'crm',  '{"event":"signup","user":"alice"}',   'pending', '2025-03-15 08:00:00'),
+    (2, 'erp',  '{"event":"order","amount":249.99}',   'pending', '2025-03-15 08:01:00'),
+    (3, 'crm',  '{"event":"login","user":"bob"}',      'pending', '2025-03-15 08:02:00');
+
+
+-- ============================================================================
+-- EVOLVE: Clear the Staging Table — Back to Empty
+-- ============================================================================
+-- After the staging data has been processed downstream, we clear the
+-- table for the next batch. The DELETE creates a new transaction log
+-- version that removes all data files. The table is empty again but
+-- retains its full schema and version history.
+
+ASSERT ROW_COUNT = 3
+DELETE FROM {{zone_name}}.delta_demos.empty_staging;
+
+
+-- ============================================================================
+-- LEARN: Empty Again — Same Behavior, Higher Version
+-- ============================================================================
+-- The table is now back to zero rows, but its transaction log has
+-- grown: version 0 (create), version 1 (insert 3 rows), version 2
+-- (delete all). Aggregates return NULL again, just like before the
+-- first insert — proving that Delta's empty-table semantics are
+-- consistent regardless of history:
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE row_count = 0
+ASSERT VALUE max_id IS NULL
+SELECT COUNT(*) AS row_count,
+       MAX(id) AS max_id,
+       MIN(source_system) AS first_source
+FROM {{zone_name}}.delta_demos.empty_staging;
+
+
+-- ============================================================================
+-- EDGE: No-Op Update — WHERE Matches Zero Rows
+-- ============================================================================
+-- A WHERE clause that matches zero rows is not an error — it's a valid
+-- no-op. Delta still creates a new transaction log entry (a commit with
+-- zero actions), but no Parquet files are rewritten. This is important
+-- for idempotent pipelines that run UPDATE statements unconditionally:
 
 ASSERT ROW_COUNT = 0
-SELECT id, source_system, raw_data, status, received_at
-FROM {{zone_name}}.delta_demos.empty_staging
-WHERE 1 = 0;
+UPDATE {{zone_name}}.delta_demos.wide_metrics
+SET m01_revenue = 999999.0
+WHERE id = 999;
+
+
+-- ============================================================================
+-- EDGE: Cross-Table JOIN — Wide Data Meets Empty Table
+-- ============================================================================
+-- LEFT JOIN with an empty table produces NULL for all right-side
+-- columns. This is expected SQL behavior, but it's worth confirming
+-- that Delta handles it correctly across two separate transaction
+-- logs. Pipelines often JOIN a fact table with a staging or lookup
+-- table that may not have data yet:
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE staging_source IS NULL
+SELECT w.id, w.name, w.m01_revenue,
+       s.source_system AS staging_source
+FROM {{zone_name}}.delta_demos.wide_metrics w
+LEFT JOIN {{zone_name}}.delta_demos.empty_staging s ON w.id = s.id
+WHERE w.id <= 3
+ORDER BY w.id;
 
 
 -- ============================================================================
 -- VERIFY: All Checks
 -- ============================================================================
 
--- Verify singleton_row_count: exactly 1 row in singleton table
+-- Verify singleton_row_count: exactly 1 row after DELETE + re-INSERT
 ASSERT ROW_COUNT = 1
 SELECT * FROM {{zone_name}}.delta_demos.config_singleton;
 
--- Verify singleton_version: config updated to version 4
-ASSERT VALUE version = 4
+-- Verify singleton_version: reset to 1 after full row replace
+ASSERT VALUE version = 1
 SELECT version FROM {{zone_name}}.delta_demos.config_singleton;
 
--- Verify singleton_updater: last update by sre-team
+-- Verify singleton_updater: last inserted by sre-team
 ASSERT VALUE updated_by = 'sre-team'
 SELECT updated_by FROM {{zone_name}}.delta_demos.config_singleton;
 
--- Verify singleton_config_value: final config JSON is correct
-ASSERT VALUE config_value = '{"max_connections":200,"timeout_ms":10000,"debug":true}'
+-- Verify singleton_config: new config with region field
+ASSERT VALUE config_value = '{"max_connections":250,"timeout_ms":3000,"debug":true,"region":"us-east-1"}'
 SELECT config_value FROM {{zone_name}}.delta_demos.config_singleton;
 
--- Verify wide_row_count: 20 rows in wide_metrics
-ASSERT VALUE cnt = 20
+-- Verify wide_row_count: 18 rows after deleting 2 provisional months
+ASSERT VALUE cnt = 18
 SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.wide_metrics;
 
--- Verify wide_revenue_dec: id=12 revenue is 180000.0
-ASSERT VALUE m01_revenue = 180000.0
-SELECT m01_revenue FROM {{zone_name}}.delta_demos.wide_metrics WHERE id = 12;
+-- Verify wide_updated_revenue: id=1 revenue corrected to 131000
+ASSERT VALUE m01_revenue = 131000.0
+SELECT m01_revenue FROM {{zone_name}}.delta_demos.wide_metrics WHERE id = 1;
 
--- Verify wide_max_revenue: maximum revenue is 190000.0
+-- Verify wide_max_revenue: peak is still 190000 (Jun-2025, id=18)
 ASSERT VALUE max_rev = 190000.0
 SELECT MAX(m01_revenue) AS max_rev FROM {{zone_name}}.delta_demos.wide_metrics;
 
--- Verify wide_total_profit: sum of all profits is 1168000.0
-ASSERT VALUE total = 1168000.0
+-- Verify wide_total_profit: sum reflects corrected id=1 profit
+ASSERT VALUE total = 1039000.0
 SELECT SUM(m03_profit) AS total FROM {{zone_name}}.delta_demos.wide_metrics;
 
--- Verify empty_row_count: empty_staging has 0 rows
+-- Verify empty_row_count: staging is empty after full cycle
 ASSERT ROW_COUNT = 0
 SELECT * FROM {{zone_name}}.delta_demos.empty_staging;
 
--- Verify empty_max_is_null: MAX(id) on empty table returns NULL
+-- Verify empty_max_is_null: NULL aggregates on empty table
 ASSERT VALUE max_id IS NULL
 SELECT MAX(id) AS max_id FROM {{zone_name}}.delta_demos.empty_staging;
