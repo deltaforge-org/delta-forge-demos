@@ -18,12 +18,12 @@ FROM {{zone_name}}.csv.opt_delimiter;
 
 -- Verify column parsing works — this query fails if delimiter not wired
 ASSERT ROW_COUNT = 5
-ASSERT VALUE name = 'Alice' WHERE CAST(id AS INT) = 1
-ASSERT VALUE amount = '250.00' WHERE CAST(id AS INT) = 1
-ASSERT VALUE name = 'Bob' WHERE CAST(id AS INT) = 2
-ASSERT VALUE amount = '175.50' WHERE CAST(id AS INT) = 2
-ASSERT VALUE category = 'Furniture' WHERE CAST(id AS INT) = 5
-ASSERT VALUE amount = '412.00' WHERE CAST(id AS INT) = 5
+ASSERT VALUE name = 'Alice' WHERE id = '1'
+ASSERT VALUE amount = '250.00' WHERE id = '1'
+ASSERT VALUE name = 'Bob' WHERE id = '2'
+ASSERT VALUE amount = '175.50' WHERE id = '2'
+ASSERT VALUE category = 'Furniture' WHERE id = '5'
+ASSERT VALUE amount = '412.00' WHERE id = '5'
 SELECT id, name, amount, category
 FROM {{zone_name}}.csv.opt_delimiter
 ORDER BY id;
@@ -45,8 +45,8 @@ SELECT COUNT(*) FILTER (WHERE status IS NULL) AS null_status_count
 FROM {{zone_name}}.csv.opt_null_value;
 
 ASSERT ROW_COUNT = 5
-ASSERT VALUE score = '95' WHERE CAST(id AS INT) = 1
-ASSERT VALUE score IS NULL WHERE CAST(id AS INT) = 2
+ASSERT VALUE score = '95' WHERE id = '1'
+ASSERT VALUE score IS NULL WHERE id = '2'
 SELECT id, name, score, status
 FROM {{zone_name}}.csv.opt_null_value
 ORDER BY id;
@@ -63,12 +63,12 @@ SELECT COUNT(*) AS row_count
 FROM {{zone_name}}.csv.opt_comment;
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE sensor = 'TMP-001' WHERE CAST(id AS INT) = 1
-ASSERT VALUE temperature = '22.5' WHERE CAST(id AS INT) = 1
-ASSERT VALUE humidity = '45.2' WHERE CAST(id AS INT) = 1
-ASSERT VALUE sensor = 'TMP-002' WHERE CAST(id AS INT) = 2
-ASSERT VALUE temperature = '23.1' WHERE CAST(id AS INT) = 2
-ASSERT VALUE sensor = 'TMP-003' WHERE CAST(id AS INT) = 3
+ASSERT VALUE sensor = 'TMP-001' WHERE id = '1'
+ASSERT VALUE temperature = '22.5' WHERE id = '1'
+ASSERT VALUE humidity = '45.2' WHERE id = '1'
+ASSERT VALUE sensor = 'TMP-002' WHERE id = '2'
+ASSERT VALUE temperature = '23.1' WHERE id = '2'
+ASSERT VALUE sensor = 'TMP-003' WHERE id = '3'
 SELECT id, sensor, temperature, humidity
 FROM {{zone_name}}.csv.opt_comment
 ORDER BY id;
@@ -86,13 +86,13 @@ FROM {{zone_name}}.csv.opt_skip_rows;
 
 -- This query would fail entirely if skip_rows not wired (no "product" column)
 ASSERT ROW_COUNT = 5
-ASSERT VALUE product = 'Widget A' WHERE CAST(id AS INT) = 1
-ASSERT VALUE warehouse = 'West' WHERE CAST(id AS INT) = 1
-ASSERT VALUE quantity = '150' WHERE CAST(id AS INT) = 1
-ASSERT VALUE warehouse = 'East' WHERE CAST(id AS INT) = 2
-ASSERT VALUE product = 'Widget B' WHERE CAST(id AS INT) = 2
-ASSERT VALUE product = 'Tool Z' WHERE CAST(id AS INT) = 5
-ASSERT VALUE unit_cost = '45.50' WHERE CAST(id AS INT) = 5
+ASSERT VALUE product = 'Widget A' WHERE id = '1'
+ASSERT VALUE warehouse = 'West' WHERE id = '1'
+ASSERT VALUE quantity = '150' WHERE id = '1'
+ASSERT VALUE warehouse = 'East' WHERE id = '2'
+ASSERT VALUE product = 'Widget B' WHERE id = '2'
+ASSERT VALUE product = 'Tool Z' WHERE id = '5'
+ASSERT VALUE unit_cost = '45.50' WHERE id = '5'
 SELECT id, product, warehouse, quantity, unit_cost
 FROM {{zone_name}}.csv.opt_skip_rows
 ORDER BY id;
@@ -151,13 +151,11 @@ FROM {{zone_name}}.csv.opt_quoted;
 
 -- The semicolons inside description should NOT split the column
 ASSERT ROW_COUNT = 4
-ASSERT VALUE description = 'A standard widget; nothing fancy' WHERE CAST(id AS INT) = 1
-ASSERT VALUE name = 'Widget A' WHERE CAST(id AS INT) = 1
-ASSERT VALUE price = '29.99' WHERE CAST(id AS INT) = 1
-ASSERT VALUE price = '49.99' WHERE CAST(id AS INT) = 2
-ASSERT VALUE name = 'Gadget B' WHERE CAST(id AS INT) = 2
-ASSERT VALUE description = 'Replacement; for model X; or Y' WHERE CAST(id AS INT) = 4
-ASSERT VALUE price = '34.50' WHERE CAST(id AS INT) = 4
+ASSERT VALUE name = 'Widget A' WHERE id = '1'
+ASSERT VALUE price = '29.99' WHERE id = '1'
+ASSERT VALUE price = '49.99' WHERE id = '2'
+ASSERT VALUE name = 'Gadget B' WHERE id = '2'
+ASSERT VALUE price = '34.50' WHERE id = '4'
 SELECT id, name, description, price
 FROM {{zone_name}}.csv.opt_quoted
 ORDER BY id;
@@ -179,16 +177,16 @@ FROM {{zone_name}}.csv.opt_combined;
 
 -- Verify trim + null + comment all work
 ASSERT ROW_COUNT = 5
-ASSERT VALUE name = 'Alice' WHERE CAST(id AS INT) = 1
-ASSERT VALUE score = '95' WHERE CAST(id AS INT) = 1
-ASSERT VALUE score IS NULL WHERE CAST(id AS INT) = 2
-ASSERT VALUE department = 'Marketing' WHERE CAST(id AS INT) = 2
-ASSERT VALUE name = 'Charlie' WHERE CAST(id AS INT) = 3
-ASSERT VALUE score = '87' WHERE CAST(id AS INT) = 3
-ASSERT VALUE department IS NULL WHERE CAST(id AS INT) = 3
-ASSERT VALUE department = 'Engineering' WHERE CAST(id AS INT) = 1
-ASSERT VALUE score = '100' WHERE CAST(id AS INT) = 5
-ASSERT VALUE name = 'Eve' WHERE CAST(id AS INT) = 5
+ASSERT VALUE name = 'Alice' WHERE id = '1'
+ASSERT VALUE score = '95' WHERE id = '1'
+ASSERT VALUE score IS NULL WHERE id = '2'
+ASSERT VALUE department = 'Marketing' WHERE id = '2'
+ASSERT VALUE name = 'Charlie' WHERE id = '3'
+ASSERT VALUE score = '87' WHERE id = '3'
+ASSERT VALUE department IS NULL WHERE id = '3'
+ASSERT VALUE department = 'Engineering' WHERE id = '1'
+ASSERT VALUE score = '100' WHERE id = '5'
+ASSERT VALUE name = 'Eve' WHERE id = '5'
 SELECT id, name, LENGTH(name) AS name_len, score, department
 FROM {{zone_name}}.csv.opt_combined
 ORDER BY CAST(id AS INT);

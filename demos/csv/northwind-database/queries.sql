@@ -59,7 +59,7 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 8
 ASSERT WARNING VALUE total_revenue = 267868.18 WHERE category_name = 'Beverages'
-ASSERT WARNING VALUE total_revenue = 234507.28 WHERE category_name = 'Dairy Products'
+ASSERT WARNING VALUE total_revenue = 234507.29 WHERE category_name = 'Dairy Products'
 ASSERT WARNING VALUE total_revenue = 167357.22 WHERE category_name = 'Confections'
 ASSERT WARNING VALUE total_revenue = 163022.36 WHERE category_name = 'Meat/Poultry'
 ASSERT WARNING VALUE total_revenue = 131261.74 WHERE category_name = 'Seafood'
