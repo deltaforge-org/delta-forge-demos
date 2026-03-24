@@ -39,6 +39,8 @@ TBLPROPERTIES (
     'delta.autoOptimize.autoCompact' = 'true'
 );
 
+GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.iot_readings TO USER {{current_user}};
+
 
 -- ============================================================================
 -- BATCH 1: Temperature readings (10 rows) — baseline data
@@ -56,6 +58,3 @@ INSERT INTO {{zone_name}}.delta_demos.iot_readings VALUES
     (8,  'DEV-008', 'temperature', 50.1,  'celsius', 'good', 1, '2025-01-15 08:07:00'),
     (9,  'DEV-009', 'temperature', 20.0,  'celsius', 'good', 1, '2025-01-15 08:08:00'),
     (10, 'DEV-010', 'temperature', 26.3,  'celsius', 'good', 1, '2025-01-15 08:09:00');
-
-DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.iot_readings;
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.iot_readings TO USER {{current_user}};
