@@ -57,7 +57,7 @@ ORDER BY event_date;
 --   V1: INSERT 20 rows (account openings + deposits)
 --   V2: INSERT 12 rows (transactions)
 --   V3: INSERT 5 rows (compliance events)
---   V4: MERGE 5 rows (late-arriving batch)
+--   V4: INSERT 5 rows (late-arriving batch)
 
 -- Non-deterministic: commit timestamps are set at write time
 ASSERT WARNING ROW_COUNT >= 5

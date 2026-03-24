@@ -15,7 +15,7 @@
 --   3. INSERT — 20 account openings and initial deposits (Version 1)
 --   4. INSERT — 12 transactions: deposits, withdrawals, transfers (Version 2)
 --   5. INSERT — 5 compliance events: freezes, closures, large movements (Version 3)
---   6. MERGE  — 5 late-arriving events reconciled from staging batch (Version 4)
+--   6. INSERT — 5 late-arriving events from offline branch system (Version 4)
 -- ============================================================================
 
 -- STEP 1: Zone & Schema
@@ -109,19 +109,13 @@ INSERT INTO {{zone_name}}.audit_demos.compliance_events VALUES
 
 
 -- ============================================================================
--- VERSION 4: MERGE — Late-arriving events reconciled from staging batch
+-- VERSION 4: Late-arriving events from an offline branch system (5 rows)
 -- ============================================================================
 -- April: a batch of 5 events arrives from a branch system that was offline.
--- MERGE ensures idempotent ingestion — only new event_ids are inserted.
-MERGE INTO {{zone_name}}.audit_demos.compliance_events AS target
-USING (VALUES
-    (CAST(38 AS INT), 'ACCT-1001', 'Meridian Holdings LLC',    'deposit',    100000.00, 305000.00,  'j.chen',     'downtown',  '2024-04-01 09:00:00'),
-    (CAST(39 AS INT), 'ACCT-1003', 'Cascade Financial Group',  'withdrawal', 75000.00,  350000.00,  's.williams', 'westside',  '2024-04-02 10:30:00'),
-    (CAST(40 AS INT), 'ACCT-1006', 'Ironclad Securities',      'transfer',   100000.00, 400000.00,  's.williams', 'westside',  '2024-04-03 15:00:00'),
-    (CAST(41 AS INT), 'ACCT-1007', 'BlueSky Investments',      'deposit',    200000.00, 700000.00,  'm.torres',   'eastpoint', '2024-04-05 11:15:00'),
-    (CAST(42 AS INT), 'ACCT-1004', 'Pinnacle Trust Co',        'deposit',    60000.00,  300000.00,  'j.chen',     'downtown',  '2024-04-08 08:45:00')
-) AS source(event_id, account_id, account_name, event_type, amount, balance, officer, branch, event_date)
-ON target.event_id = source.event_id
-WHEN NOT MATCHED THEN INSERT (event_id, account_id, account_name, event_type, amount, balance, officer, branch, event_date)
-    VALUES (source.event_id, source.account_id, source.account_name, source.event_type,
-            source.amount, source.balance, source.officer, source.branch, source.event_date);
+-- Each creates a new Delta version entry that auditors can trace.
+INSERT INTO {{zone_name}}.audit_demos.compliance_events VALUES
+    (38, 'ACCT-1001', 'Meridian Holdings LLC',    'deposit',    100000.00, 305000.00,  'j.chen',     'downtown',  '2024-04-01 09:00:00'),
+    (39, 'ACCT-1003', 'Cascade Financial Group',  'withdrawal', 75000.00,  350000.00,  's.williams', 'westside',  '2024-04-02 10:30:00'),
+    (40, 'ACCT-1006', 'Ironclad Securities',      'transfer',   100000.00, 400000.00,  's.williams', 'westside',  '2024-04-03 15:00:00'),
+    (41, 'ACCT-1007', 'BlueSky Investments',      'deposit',    200000.00, 700000.00,  'm.torres',   'eastpoint', '2024-04-05 11:15:00'),
+    (42, 'ACCT-1004', 'Pinnacle Trust Co',        'deposit',    60000.00,  300000.00,  'j.chen',     'downtown',  '2024-04-08 08:45:00');
