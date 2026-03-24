@@ -28,11 +28,72 @@ LIMIT 10;
 
 
 -- ============================================================================
+-- LEARN: What Happens Without Defaults — The Anti-Pattern
+-- ============================================================================
+-- An application pushes 5 audit entries without applying defaults.
+-- Some rows have user_name, severity, retry_count, or notes missing.
+-- Without COALESCE, NULLs flow directly into the Delta table.
+
+ASSERT ROW_COUNT = 5
+INSERT INTO {{zone_name}}.delta_demos.audit_log
+SELECT * FROM (VALUES
+    (100, 'test.ping',   NULL,    NULL,      NULL, 0, '2024-01-10 01:00:00', NULL),
+    (101, 'test.health', 'admin', NULL,      NULL, 0, '2024-01-10 02:00:00', NULL),
+    (102, 'test.metric', NULL,    'error',   NULL, 0, '2024-01-10 03:00:00', NULL),
+    (103, 'test.alert',  NULL,    NULL,      NULL, 0, '2024-01-10 04:00:00', NULL),
+    (104, 'test.sync',   'jdoe',  'warning', NULL, 0, '2024-01-10 05:00:00', NULL)
+) AS t(id, action, user_name, severity, retry_count, is_archived, created_at, notes);
+
+
+-- ============================================================================
+-- EXPLORE: NULL Contamination — Silent Data Corruption
+-- ============================================================================
+-- NULLs are invisible poison in analytics pipelines. COUNT(*) says 30 rows,
+-- but COUNT(column) silently gives different numbers for each column.
+-- Downstream dashboards and reports produce wrong numbers without any error.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE total_rows = 30
+ASSERT VALUE users_counted = 27
+ASSERT VALUE severities_counted = 27
+ASSERT VALUE retries_counted = 25
+SELECT
+    COUNT(*)           AS total_rows,
+    COUNT(user_name)   AS users_counted,
+    COUNT(severity)    AS severities_counted,
+    COUNT(retry_count) AS retries_counted
+FROM {{zone_name}}.delta_demos.audit_log;
+
+-- GROUP BY creates a phantom NULL bucket that breaks category reports.
+-- We had 4 severity levels; now there are 5 groups — the 5th is NULL.
+ASSERT ROW_COUNT = 5
+SELECT severity,
+       COUNT(*) AS entry_count
+FROM {{zone_name}}.delta_demos.audit_log
+GROUP BY severity
+ORDER BY entry_count DESC;
+
+
+-- ============================================================================
+-- LEARN: Cleaning Up NULL Contamination
+-- ============================================================================
+-- The only fix is to DELETE the corrupted rows and re-insert with defaults.
+-- In production this means downtime, reprocessing, and data reconciliation.
+-- Prevention (applying defaults at insert time) is far cheaper than cure.
+
+ASSERT ROW_COUNT = 5
+DELETE FROM {{zone_name}}.delta_demos.audit_log WHERE id >= 100;
+
+-- Confirm baseline restored — 25 clean rows remain
+ASSERT VALUE clean_count = 25
+SELECT COUNT(*) AS clean_count FROM {{zone_name}}.delta_demos.audit_log;
+
+
+-- ============================================================================
 -- LEARN: The COALESCE Default Pattern — Batch 2 (ids 26-35)
 -- ============================================================================
--- When a column cannot have a DEFAULT in CREATE TABLE, we simulate it with
--- a CTE that wraps raw VALUES. NULLs in the source data are replaced by
--- defaults via COALESCE before the INSERT reaches the table:
+-- Now let's do it right. A CTE wraps raw VALUES with COALESCE so NULLs
+-- are replaced by defaults BEFORE the INSERT reaches the table:
 --
 --   COALESCE(user_name, 'system')  AS user_name
 --   COALESCE(severity, 'info')     AS severity
@@ -264,3 +325,8 @@ SELECT COUNT(*) AS warning_count FROM {{zone_name}}.delta_demos.audit_log WHERE 
 -- Verify notes default count
 ASSERT VALUE notes_default_count = 20
 SELECT COUNT(*) AS notes_default_count FROM {{zone_name}}.delta_demos.audit_log WHERE notes = 'N/A';
+
+-- Verify no NULLs in any defaultable column (the COALESCE guarantee)
+ASSERT VALUE null_count = 0
+SELECT COUNT(*) AS null_count FROM {{zone_name}}.delta_demos.audit_log
+WHERE user_name IS NULL OR severity IS NULL OR retry_count IS NULL OR notes IS NULL;

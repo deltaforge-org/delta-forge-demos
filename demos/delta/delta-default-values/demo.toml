@@ -4,12 +4,14 @@ name = "Delta Column Default Values"
 version = "1.0.0"
 author = "Delta Forge Team"
 description = """
-Column default values fill in missing fields automatically during INSERT, \
-reducing boilerplate and preventing NULL values from propagating through \
-analytics pipelines. When CREATE TABLE does not support the DEFAULT keyword, \
-CTEs with COALESCE provide an equivalent pattern at the SQL level. This demo \
-applies defaults for severity, user_name, retry_count, and notes across \
-multiple insert batches, then uses UPDATE to archive old entries.
+NULLs in analytics pipelines silently corrupt COUNT, SUM, and GROUP BY \
+results. This demo first shows the damage — inserting rows without defaults, \
+observing how COUNT(*) and COUNT(column) diverge, and how GROUP BY creates \
+phantom NULL buckets. After cleaning up the contaminated data, it introduces \
+the COALESCE/CTE pattern: a CTE wraps raw VALUES with COALESCE expressions \
+that replace NULLs before the INSERT reaches the Delta table. Three batches \
+demonstrate the pattern with varying mixes of explicit and defaulted columns, \
+followed by an UPDATE to archive old entries.
 """
 categories = ["delta-table"]
 tags = ["delta-table", "intermediate", "default-values", "coalesce", "cte", "audit"]
