@@ -184,15 +184,23 @@ SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.vendors WHERE status_note 
 
 -- Verify verified_count: 6 verified vendors
 ASSERT VALUE cnt = 6
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.vendors WHERE status_note = 'verified' AND last_verified = '2025-02-15';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.vendors WHERE status_note = 'verified';
 
--- Verify lambda_reviewed: Lambda Cloud (150K) flagged, not deactivated
-ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.vendors WHERE id = 11 AND is_active = 1 AND status_note = 'review_needed';
+-- Verify lambda_active: Lambda Cloud (150K) still active
+ASSERT VALUE is_active = 1 WHERE id = 11
+SELECT id, is_active FROM {{zone_name}}.delta_demos.vendors WHERE id = 11;
 
--- Verify eta_deactivated: Eta Packaging (18K) deactivated
-ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.vendors WHERE id = 7 AND is_active = 0 AND status_note = 'deactivated';
+-- Verify lambda_status: Lambda Cloud flagged for review
+ASSERT VALUE status_note = 'review_needed' WHERE id = 11
+SELECT id, status_note FROM {{zone_name}}.delta_demos.vendors WHERE id = 11;
+
+-- Verify eta_inactive: Eta Packaging (18K) deactivated
+ASSERT VALUE is_active = 0 WHERE id = 7
+SELECT id, is_active FROM {{zone_name}}.delta_demos.vendors WHERE id = 7;
+
+-- Verify eta_status: Eta Packaging marked as deactivated
+ASSERT VALUE status_note = 'deactivated' WHERE id = 7
+SELECT id, status_note FROM {{zone_name}}.delta_demos.vendors WHERE id = 7;
 
 -- Verify all_dates_updated: every vendor has last_verified = 2025-02-15
 ASSERT VALUE cnt = 16

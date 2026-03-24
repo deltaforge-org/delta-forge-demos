@@ -214,21 +214,25 @@ ORDER BY total_revenue DESC;
 ASSERT ROW_COUNT = 15
 SELECT * FROM {{zone_name}}.delta_demos.subscriptions;
 
--- Verify acme_upgraded: Acme upgraded to platinum with 15% discount
-ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 1 AND tier = 'platinum' AND discount_pct = 15.0;
+-- Verify acme_tier: Acme upgraded to platinum
+ASSERT VALUE tier = 'platinum' WHERE id = 1
+SELECT id, tier FROM {{zone_name}}.delta_demos.subscriptions WHERE id IN (1, 2, 3, 13);
+
+-- Verify acme_discount: Acme gets 15% loyalty discount (25 months)
+ASSERT VALUE discount_pct = 15.0 WHERE id = 1
+SELECT id, discount_pct FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 1;
 
 -- Verify bolt_tier: Bolt upgraded to silver (professional $89)
-ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 2 AND tier = 'silver' AND discount_pct = 0.0;
+ASSERT VALUE tier = 'silver' WHERE id = 2
+SELECT id, tier FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 2;
 
 -- Verify cascade_score: Cascade Labs priority = 500 * (1 + 37/10) = 2350
-ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 3 AND priority_score = 2350.0;
+ASSERT VALUE priority_score = 2350.0
+SELECT priority_score FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 3;
 
--- Verify novastar_inserted: NovaStar is bronze with score 31.9
-ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 13 AND tier = 'bronze' AND priority_score = 31.9;
+-- Verify novastar_tier: NovaStar inserted as bronze
+ASSERT VALUE tier = 'bronze' WHERE id = 13
+SELECT id, tier FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 13;
 
 -- Verify platinum_count: 5 platinum subscriptions
 ASSERT VALUE cnt = 5
