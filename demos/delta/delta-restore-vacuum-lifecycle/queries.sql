@@ -111,7 +111,8 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
 -- but simply deleting them would create version V4 without preserving the
 -- clean V2 state. RESTORE is the correct approach.
 
-ASSERT ROW_COUNT = 40
+ASSERT VALUE total_rows = 40
+ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
 FROM {{zone_name}}.delta_demos.sensor_readings;
 
@@ -158,7 +159,8 @@ ORDER BY room;
 -- calibrated data (30 rows, no alerts, room_a temps adjusted by +0.3°C).
 -- This is the last known-good version before the bad import.
 
-ASSERT ROW_COUNT = 30
+ASSERT VALUE row_count = 30
+ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS row_count
 FROM {{zone_name}}.delta_demos.sensor_readings VERSION AS OF 2;
 
@@ -196,7 +198,8 @@ RESTORE {{zone_name}}.delta_demos.sensor_readings TO VERSION 2;
 -- V2 is intact (room_a temperatures still show the +0.3°C offset). The bad
 -- import data from V3 is no longer visible in the current version.
 
-ASSERT ROW_COUNT = 30
+ASSERT VALUE total_rows = 30
+ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
 FROM {{zone_name}}.delta_demos.sensor_readings;
 
@@ -255,7 +258,8 @@ VACUUM {{zone_name}}.delta_demos.sensor_readings;
 -- time travel to V3 (the bad import) will now fail because those files
 -- have been permanently deleted.
 
-ASSERT ROW_COUNT = 30
+ASSERT VALUE total_rows = 30
+ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
 FROM {{zone_name}}.delta_demos.sensor_readings;
 
@@ -294,7 +298,8 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
 -- The faulty sensor batch data is completely gone from both the current
 -- version and the physical files.
 
-ASSERT ROW_COUNT = 35
+ASSERT VALUE total_rows = 35
+ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
 FROM {{zone_name}}.delta_demos.sensor_readings;
 
