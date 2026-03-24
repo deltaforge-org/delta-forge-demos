@@ -158,7 +158,7 @@ FROM {{zone_name}}.delta_demos.config_settings;
 -- forward commit that happens to reproduce an earlier state. This means
 -- you could even RESTORE the RESTORE if needed.
 
-RESTORE {{zone_name}}.delta_demos.config_settings TO VERSION 1;
+RESTORE {{zone_name}}.delta_demos.config_settings TO VERSION 2;
 
 -- Observe V4: Back to 35 rows — V2's inserts are gone, V3's deletes are undone
 ASSERT ROW_COUNT = 5
