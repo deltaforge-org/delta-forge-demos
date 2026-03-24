@@ -9,12 +9,13 @@
 --       RESTORE itself is also reversible.
 --
 -- Version history we will build:
---   V0: CREATE + INSERT 30 products (done in setup.sql)
---   V1: UPDATE — 10% price increase for Electronics
---   V2: UPDATE — set status='discontinued' for 5 items
---   V3: DELETE — remove discontinued items (ACCIDENT!)
---   V4: RESTORE TO VERSION 2 — undo the accidental delete
---   V5: UPDATE — reactivate recovered items with clearance discount
+--   V0: CREATE empty delta table (done in setup.sql)
+--   V1: INSERT 30 products (done in setup.sql)
+--   V2: UPDATE — 10% price increase for Electronics
+--   V3: UPDATE — set status='discontinued' for 5 items
+--   V4: DELETE — remove discontinued items (ACCIDENT!)
+--   V5: RESTORE TO VERSION 3 — undo the accidental delete
+--   V6: UPDATE — reactivate recovered items with clearance discount
 -- ============================================================================
 
 
@@ -114,22 +115,22 @@ WHERE id IN (8, 11, 23, 24, 29);
 
 
 -- ============================================================================
--- V4: RESTORE TO VERSION 2 — Undo the accidental delete
+-- V4: RESTORE TO VERSION 3 — Undo the accidental delete
 -- ============================================================================
--- RESTORE rolls the table back to V2 state where discontinued items still
--- exist. All 30 rows are recovered, with V1 price increases AND V2
+-- RESTORE rolls the table back to V3 state where discontinued items still
+-- exist. All 30 rows are recovered, with V2 price increases AND V3
 -- discontinuation status intact.
 --
 -- Under the hood, Delta:
---   1. Reads the snapshot metadata at version 2
---   2. Computes the diff between current state and version 2
---   3. Writes a NEW commit (V4) with Add/Remove actions to recreate V2's state
---   4. The transaction log now has V0..V4 — nothing is deleted
+--   1. Reads the snapshot metadata at version 3
+--   2. Computes the diff between current state and version 3
+--   3. Writes a NEW commit (V5) with Add/Remove actions to recreate V3's state
+--   4. The transaction log now has V0..V5 — nothing is deleted
 --
 -- This means RESTORE is safe: it is just another commit. You can even
 -- RESTORE away a RESTORE if you change your mind.
 
-RESTORE {{zone_name}}.delta_demos.product_inventory TO VERSION 2;
+RESTORE {{zone_name}}.delta_demos.product_inventory TO VERSION 3;
 
 -- Verify V4: All 30 rows are back, 5 still marked as discontinued
 ASSERT ROW_COUNT = 1
@@ -180,9 +181,9 @@ ORDER BY id;
 -- LEARN: RESTORE Preserves All Previous Versions
 -- ============================================================================
 -- A common misconception is that RESTORE erases versions. It does not.
--- The version log is append-only. After RESTORE TO VERSION 2, the history is:
---   V0 -> V1 -> V2 -> V3 (accidental delete) -> V4 (RESTORE) -> V5 (update)
--- You could still travel back to V3 to see the accidentally-deleted state.
+-- The version log is append-only. After RESTORE TO VERSION 3, the history is:
+--   V0 -> V1 -> V2 -> V3 -> V4 (accidental delete) -> V5 (RESTORE) -> V6 (update)
+-- You could still travel back to V4 to see the accidentally-deleted state.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE current_row_count = 30
@@ -216,8 +217,8 @@ ORDER BY id;
 -- ============================================================================
 -- EXPLORE: Category Price Summary
 -- ============================================================================
--- Electronics got a 10% price increase in V1, which persisted through RESTORE.
--- The 5 recovered items (non-Electronics) got a 25% clearance discount in V5.
+-- Electronics got a 10% price increase in V2, which persisted through RESTORE.
+-- The 5 recovered items (non-Electronics) got a 25% clearance discount in V6.
 -- Other items remained unchanged throughout.
 
 ASSERT ROW_COUNT = 5
