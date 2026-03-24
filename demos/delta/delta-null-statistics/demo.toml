@@ -1,0 +1,25 @@
+[demo]
+id = "delta-null-statistics"
+name = "NULL Statistics — NULL-Aware Query Optimization"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Healthcare patient records have optional fields (diagnosis_code, discharge_date, \
+secondary_insurance) that start NULL and get populated over time. Delta tracks \
+per-file NULL counts in the transaction log. When filtering IS NULL or IS NOT NULL, \
+the engine uses these counts to skip files with zero NULLs or all-NULL columns \
+entirely. This demo shows how NULL distribution across batches enables file pruning \
+and demonstrates a data backfill workflow that changes NULL patterns.
+"""
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "intermediate", "statistics", "null-count", "data-skipping", "healthcare", "performance"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.null_demos.patient_records"

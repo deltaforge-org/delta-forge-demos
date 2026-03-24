@@ -1,0 +1,25 @@
+[demo]
+id = "delta-string-statistics"
+name = "String Statistics — Truncation & Bloom Filter Bridge"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Delta stores min/max statistics for string columns, but only the first 32 \
+characters. Short strings like SKU codes get full statistics and efficient data \
+skipping. Long strings like product URLs share the same 32-char prefix, making \
+min/max stats useless for filtering. This demo uses an IT product catalog to \
+show exactly where string statistics help, where they break down due to \
+truncation, and why Bloom filters are the solution for long-string point lookups.
+"""
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "intermediate", "statistics", "string-truncation", "bloom-filter", "data-skipping", "performance"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.string_demos.product_catalog"

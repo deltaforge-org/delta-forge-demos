@@ -1,0 +1,24 @@
+[demo]
+id = "delta-statistics-skipping"
+name = "Data Skipping — Range Statistics in Action"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+E-commerce order data arrives in monthly batches with naturally non-overlapping \
+price ranges. Per-file min/max statistics allow the query engine to skip entire \
+files when filters don't overlap a file's value range. This demo shows how \
+time-ordered ingestion creates effective statistics, verifies data skipping with \
+range queries, and demonstrates why data layout matters for query performance.
+"""
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "intermediate", "statistics", "min-max", "data-skipping", "performance", "range-filter"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.skipping_demos.orders"
