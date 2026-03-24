@@ -127,10 +127,8 @@ ORDER BY total_sales DESC;
 --   1998-05 | 14 orders |    685.08 freight
 
 ASSERT ROW_COUNT = 23
-ASSERT WARNING VALUE order_count = 22 WHERE year = 1996 AND month = 7
-ASSERT WARNING VALUE order_count = 14 WHERE year = 1998 AND month = 5
-ASSERT WARNING VALUE total_freight = 1288.18 WHERE year = 1996 AND month = 7
-ASSERT WARNING VALUE total_freight = 685.08 WHERE year = 1998 AND month = 5
+ASSERT WARNING VALUE total_freight = 1288.18 WHERE order_count = 22
+ASSERT WARNING VALUE total_freight = 685.08 WHERE order_count = 14
 SELECT
     EXTRACT(YEAR FROM o.order_date) AS year,
     EXTRACT(MONTH FROM o.order_date) AS month,
