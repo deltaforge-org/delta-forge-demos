@@ -23,6 +23,8 @@
 -- Each precision is chosen to match the domain requirements.
 
 ASSERT ROW_COUNT = 10
+ASSERT VALUE amount = 10000.0000 WHERE id = 1
+ASSERT VALUE balance = 10000.000000 WHERE id = 1
 SELECT id, account, description, amount, balance, exchange_rate, currency
 FROM {{zone_name}}.delta_demos.financial_ledger
 WHERE currency = 'USD'
@@ -64,6 +66,10 @@ ORDER BY currency;
 -- recomputing from scratch and checking for any drift.
 
 ASSERT ROW_COUNT = 10
+ASSERT VALUE stored_balance = 13568.415125 WHERE id = 16
+ASSERT VALUE drift = 0.000000 WHERE id = 16
+ASSERT VALUE stored_balance = 5721.534000 WHERE id = 21
+ASSERT VALUE drift = 0.000000 WHERE id = 21
 SELECT id, currency, amount, exchange_rate,
        balance AS stored_balance,
        ROUND(amount * exchange_rate, 6) AS recomputed_balance,
@@ -83,6 +89,8 @@ ORDER BY currency, id;
 
 -- Verify exactly 5 refund transactions (ids 26-30) with negative amounts
 ASSERT ROW_COUNT = 5
+ASSERT VALUE amount = -1875.2500 WHERE id = 26
+ASSERT VALUE amount = -3100.7500 WHERE id = 29
 SELECT id, description, amount, balance
 FROM {{zone_name}}.delta_demos.financial_ledger
 WHERE amount < 0
@@ -95,8 +103,9 @@ ORDER BY id;
 -- DECIMAL SUM operations are exact within the declared precision, unlike
 -- DOUBLE where summing many values can accumulate rounding errors.
 
--- Verify 5 distinct currencies and USD total matches expected sum
+-- Verify 5 distinct currencies and totals match expected sums
 ASSERT VALUE total_amount = 128908.1524 WHERE currency = 'USD'
+ASSERT VALUE total_balance_usd = 19835.604789 WHERE currency = 'GBP'
 ASSERT ROW_COUNT = 5
 SELECT currency,
        COUNT(*) AS transaction_count,
@@ -115,6 +124,8 @@ ORDER BY currency;
 -- for id=33 (5943.423339) uses all 6 decimal places of DECIMAL(18,6).
 
 ASSERT ROW_COUNT = 5
+ASSERT VALUE exchange_rate = 0.00667800 WHERE id = 31
+ASSERT VALUE balance = 5943.423339 WHERE id = 33
 SELECT id, currency, amount, exchange_rate, balance
 FROM {{zone_name}}.delta_demos.financial_ledger
 WHERE currency = 'JPY'
@@ -156,3 +167,11 @@ SELECT COUNT(DISTINCT currency) AS currency_count FROM {{zone_name}}.delta_demos
 -- Verify EUR balance sum
 ASSERT VALUE eur_balance_sum = 38806.209994
 SELECT SUM(balance) AS eur_balance_sum FROM {{zone_name}}.delta_demos.financial_ledger WHERE currency = 'EUR';
+
+-- Verify GBP balance sum
+ASSERT VALUE gbp_balance_sum = 19835.604789
+SELECT SUM(balance) AS gbp_balance_sum FROM {{zone_name}}.delta_demos.financial_ledger WHERE currency = 'GBP';
+
+-- Verify zero drift across all converted rows (EUR + GBP)
+ASSERT VALUE total_drift = 0.000000
+SELECT SUM(balance - ROUND(amount * exchange_rate, 6)) AS total_drift FROM {{zone_name}}.delta_demos.financial_ledger WHERE currency IN ('EUR', 'GBP');
