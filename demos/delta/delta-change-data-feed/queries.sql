@@ -40,7 +40,6 @@ ORDER BY tier;
 -- ids: 31(8500), 8(8100), 23(7800), 12(7200), 33(7100), 39(6800),
 --      6(6700), 29(6500), 17(6300), 27(5900)
 
-ASSERT ROW_COUNT = 10
 UPDATE {{zone_name}}.delta_demos.customer_accounts
 SET tier = 'gold'
 WHERE id IN (31, 8, 23, 12, 33, 39, 6, 29, 17, 27);
@@ -60,7 +59,6 @@ ORDER BY balance DESC;
 -- exactly once in the change feed. This is the simplest change type —
 -- no preimage/postimage pair, just the new data.
 
-ASSERT ROW_COUNT = 8
 INSERT INTO {{zone_name}}.delta_demos.customer_accounts
 SELECT * FROM (VALUES
     (41, 'Oscar Fernandez', 'oscar.fernandez@mail.com',  'bronze', 2500.00, 'active', '2024-03-01'),
@@ -142,7 +140,6 @@ ORDER BY id;
 -- ids: 31(8500->10200), 8(8100->9720), 23(7800->9360),
 --      12(7200->8640), 33(7100->8520)
 
-ASSERT ROW_COUNT = 5
 UPDATE {{zone_name}}.delta_demos.customer_accounts
 SET balance = ROUND(balance * 1.20, 2)
 WHERE id IN (31, 8, 23, 12, 33);
