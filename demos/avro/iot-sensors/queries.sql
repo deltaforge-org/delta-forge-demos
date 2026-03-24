@@ -116,15 +116,15 @@ ORDER BY floor, zone;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 5
-ASSERT VALUE total_readings = 500 WHERE floor = 1
-ASSERT VALUE total_readings = 500 WHERE floor = 2
-ASSERT VALUE total_readings = 500 WHERE floor = 3
-ASSERT VALUE total_readings = 500 WHERE floor = 4
-ASSERT VALUE total_readings = 500 WHERE floor = 5
-ASSERT VALUE occupied_readings = 364 WHERE floor = 1
-ASSERT VALUE occupancy_pct = 72.8 WHERE floor = 1
-ASSERT VALUE occupied_readings = 333 WHERE floor = 4
-ASSERT VALUE occupancy_pct = 66.6 WHERE floor = 4
+ASSERT VALUE total_readings = 500 WHERE "floor" = 1
+ASSERT VALUE total_readings = 500 WHERE "floor" = 2
+ASSERT VALUE total_readings = 500 WHERE "floor" = 3
+ASSERT VALUE total_readings = 500 WHERE "floor" = 4
+ASSERT VALUE total_readings = 500 WHERE "floor" = 5
+ASSERT VALUE occupied_readings = 364 WHERE "floor" = 1
+ASSERT VALUE occupancy_pct = 72.8 WHERE "floor" = 1
+ASSERT VALUE occupied_readings = 333 WHERE "floor" = 4
+ASSERT VALUE occupancy_pct = 66.6 WHERE "floor" = 4
 SELECT floor,
        COUNT(*) AS total_readings,
        SUM(CASE WHEN CAST(occupancy AS BOOLEAN) THEN 1 ELSE 0 END) AS occupied_readings,
@@ -207,12 +207,12 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 9: Column count — 8 data columns + 2 metadata = 10
-    SELECT 'column_count_10' AS check_name,
+    -- Check 9: Column count — 10 data columns (8 v1 + 2 v2) + 2 metadata = 12
+    SELECT 'column_count_12' AS check_name,
            CASE WHEN (
                SELECT COUNT(*) FROM information_schema.columns
                WHERE table_schema = 'avro' AND table_name = 'all_readings'
-           ) = 10 THEN 'PASS' ELSE 'FAIL' END AS result
+           ) = 12 THEN 'PASS' ELSE 'FAIL' END AS result
 
     UNION ALL
 
