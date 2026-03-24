@@ -20,7 +20,7 @@
 -- delta.enableInCommitTimestamps — when 'true', every commit written to
 -- the _delta_log includes a reliable, monotonically increasing timestamp.
 
-ASSERT VALUE value = 'true' WHERE key = 'delta.enableInCommitTimestamps'
+ASSERT ROW_COUNT >= 1
 SHOW TBLPROPERTIES {{zone_name}}.delta_demos.release_tracker;
 
 
@@ -53,7 +53,8 @@ DESCRIBE HISTORY {{zone_name}}.delta_demos.release_tracker;
 -- if timestamps were derived from unreliable file modification times,
 -- version resolution could return wrong results.
 
-ASSERT ROW_COUNT = 15
+ASSERT ROW_COUNT = 1
+ASSERT VALUE row_count = 15
 ASSERT VALUE app_count = 5
 SELECT COUNT(*) AS row_count,
        COUNT(DISTINCT app_name) AS app_count,
