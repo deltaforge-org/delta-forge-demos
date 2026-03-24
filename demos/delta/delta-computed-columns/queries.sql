@@ -267,7 +267,7 @@ SELECT COUNT(*) FILTER (WHERE ABS(total - (subtotal - discount_amt)) > 0.01) AS 
 FROM {{zone_name}}.delta_demos.sales_invoices;
 
 -- Verify Laptop Pro total
-ASSERT VALUE laptop_pro_check = true
+ASSERT VALUE laptop_pro_check = TRUE
 SELECT ABS(total - 1899.98) < 0.01 AS laptop_pro_check FROM {{zone_name}}.delta_demos.sales_invoices WHERE id = 1;
 
 -- Verify Sarah's bonus commission (8% on orders > $500)
