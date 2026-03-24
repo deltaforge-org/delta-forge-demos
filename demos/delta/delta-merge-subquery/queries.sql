@@ -86,7 +86,7 @@ daily_agg AS (
            product_name,
            CAST(SUBSTRING(event_timestamp, 1, 10) AS VARCHAR) AS sale_date,
            ROUND(SUM(quantity * unit_price), 2) AS batch_revenue,
-           COUNT(*) AS batch_orders,
+           CAST(COUNT(*) AS INT) AS batch_orders,
            MAX(event_timestamp) AS latest_event
     FROM deduped
     GROUP BY product_id, product_name, CAST(SUBSTRING(event_timestamp, 1, 10) AS VARCHAR)
@@ -124,7 +124,7 @@ USING (
                product_name,
                CAST(SUBSTRING(event_timestamp, 1, 10) AS VARCHAR) AS sale_date,
                ROUND(SUM(quantity * unit_price), 2) AS batch_revenue,
-               COUNT(*) AS batch_orders,
+               CAST(COUNT(*) AS INT) AS batch_orders,
                MAX(event_timestamp) AS latest_event
         FROM deduped
         GROUP BY product_id, product_name, CAST(SUBSTRING(event_timestamp, 1, 10) AS VARCHAR)
