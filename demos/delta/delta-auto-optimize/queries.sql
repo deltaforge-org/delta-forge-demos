@@ -104,6 +104,49 @@ ORDER BY device_id;
 
 
 -- ============================================================================
+-- POST-COMPACTION INTEGRITY CHECK
+-- ============================================================================
+-- Auto-compact has triggered after the 3rd+ INSERT (threshold = 3 files).
+-- Verify that compaction preserved all data — no rows lost, no values changed.
+-- This is the critical test: compaction must be lossless.
+
+ASSERT VALUE row_count = 40
+ASSERT VALUE device_count = 10
+ASSERT VALUE batch_count = 4
+ASSERT VALUE metric_count = 4
+ASSERT VALUE min_id = 1
+ASSERT VALUE max_id = 40
+SELECT COUNT(*) AS row_count,
+       COUNT(DISTINCT device_id) AS device_count,
+       COUNT(DISTINCT batch_id) AS batch_count,
+       COUNT(DISTINCT metric) AS metric_count,
+       MIN(id) AS min_id,
+       MAX(id) AS max_id
+FROM {{zone_name}}.delta_demos.iot_readings;
+
+-- Verify per-batch row counts survived compaction
+ASSERT VALUE batch_1_rows = 10
+ASSERT VALUE batch_2_rows = 10
+ASSERT VALUE batch_3_rows = 10
+ASSERT VALUE batch_4_rows = 10
+SELECT SUM(CASE WHEN batch_id = 1 THEN 1 ELSE 0 END) AS batch_1_rows,
+       SUM(CASE WHEN batch_id = 2 THEN 1 ELSE 0 END) AS batch_2_rows,
+       SUM(CASE WHEN batch_id = 3 THEN 1 ELSE 0 END) AS batch_3_rows,
+       SUM(CASE WHEN batch_id = 4 THEN 1 ELSE 0 END) AS batch_4_rows
+FROM {{zone_name}}.delta_demos.iot_readings;
+
+-- Spot-check specific values survived compaction (one row from each batch)
+ASSERT VALUE value = 22.5 WHERE id = 1
+ASSERT VALUE value = 55.0 WHERE id = 11
+ASSERT VALUE value = 1013.2 WHERE id = 21
+ASSERT VALUE value = 12.3 WHERE id = 31
+SELECT id, device_id, metric, value
+FROM {{zone_name}}.delta_demos.iot_readings
+WHERE id IN (1, 11, 21, 31)
+ORDER BY id;
+
+
+-- ============================================================================
 -- BATCH 5: Light readings (10 rows) — 1 extreme value (> 900 lux)
 -- ============================================================================
 
