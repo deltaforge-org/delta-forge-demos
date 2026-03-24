@@ -1,15 +1,16 @@
 -- ============================================================================
--- Delta DML Patterns — Complex DELETE & UPDATE — Setup Script
+-- Delta DML Patterns — INSERT, UPDATE & DELETE — Setup Script
 -- ============================================================================
 -- Creates an order management system with 60 baseline orders across 4 regions
--- and mixed statuses. The DML operations (DELETE, UPDATE) are in queries.sql.
+-- and mixed statuses. The DML operations are in queries.sql.
 --
 -- Tables created:
---   1. order_history — 60 orders across 4 regions, mixed statuses
+--   1. order_history  — 60 orders across 4 regions, mixed statuses
+--   2. order_archive  — empty archive table (same schema, used by DML queries)
 --
 -- Operations performed:
 --   1. CREATE ZONE + SCHEMA
---   2. CREATE DELTA TABLE with explicit schema
+--   2. CREATE DELTA TABLEs with explicit schema
 --   3. INSERT 60 rows — baseline orders
 -- ============================================================================
 
@@ -36,6 +37,24 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_history (
 ) LOCATION '{{data_path}}/order_history';
 
 GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_history TO USER {{current_user}};
+
+
+-- ============================================================================
+-- TABLE: order_archive — empty archive for cancelled-order DML demo
+-- ============================================================================
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_archive (
+    id          INT,
+    customer    VARCHAR,
+    product     VARCHAR,
+    qty         INT,
+    price       DOUBLE,
+    status      VARCHAR,
+    region      VARCHAR,
+    order_date  VARCHAR
+) LOCATION '{{data_path}}/order_archive';
+
+GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_archive TO USER {{current_user}};
+
 
 -- STEP 2: Insert 60 known orders
 INSERT INTO {{zone_name}}.delta_demos.order_history VALUES

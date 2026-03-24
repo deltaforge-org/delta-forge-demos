@@ -1,20 +1,21 @@
 [demo]
 id = "delta-dml-patterns"
-name = "Delta DML Patterns — Complex DELETE & UPDATE"
-version = "1.0.0"
+name = "Delta DML Patterns — INSERT, UPDATE & DELETE"
+version = "2.0.0"
 author = "Delta Forge Team"
 description = """
 Delta Lake supports full DML (INSERT, UPDATE, DELETE) on top of immutable \
 Parquet files by recording add/remove file actions in the transaction log, \
 whereas traditional data lakes are append-only. This demo exercises advanced \
-DML patterns — multi-predicate DELETEs, region-scoped bulk UPDATEs, and \
-product-category price adjustments — on an order management table to show \
-how Delta maintains ACID integrity across complex mutation sequences.
+DML patterns — INSERT INTO...SELECT for archiving, multi-predicate DELETEs, \
+CASE-based tiered UPDATEs, and zero-match edge cases — on an order management \
+table to show how Delta maintains ACID integrity across complex mutation \
+sequences.
 """
 categories = ["data-manipulation", "delta-table"]
-tags = ["delta-table", "intermediate", "delete", "update", "dml", "multi-predicate"]
+tags = ["delta-table", "intermediate", "insert-select", "delete", "update", "dml", "case-expression", "multi-predicate"]
 difficulty = "intermediate"
-estimated_time_minutes = 10
+estimated_time_minutes = 12
 
 [demo.variables]
 data_path = { description = "Root path where Delta table data is stored", required = true }
@@ -23,3 +24,7 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 [[demo.target_objects]]
 type = "delta_table"
 name = "{{zone_name}}.delta_demos.order_history"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.order_archive"
