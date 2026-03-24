@@ -1,0 +1,24 @@
+[demo]
+id = "delta-append-only-event-sourcing"
+name = "Delta Append-Only Event Sourcing"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Append-only Delta tables (delta.appendOnly = true) reject UPDATE and DELETE, \
+making them ideal for immutable event logs. This demo builds a 60-event order \
+stream, reconstructs order lifecycles, uses window functions (LAG) to measure \
+processing times, derives current state from event history, appends a new batch, \
+and proves the log only grows — never shrinks.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "append-only", "tblproperties", "event-sourcing", "immutable", "window-functions"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.order_events"

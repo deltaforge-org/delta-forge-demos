@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cl" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield shape for constraint protection -->
+  <path d="M40 6L62 18V42C62 56 52 66 40 72C28 66 18 56 18 42V18L40 6Z" stroke="url(#cl)" stroke-width="2" fill="url(#cl)" fill-opacity=".10"/>
+  <!-- Circular arrows (lifecycle) -->
+  <path d="M32 30C32 25.6 35.6 22 40 22C43.2 22 45.9 24 47 26.8" stroke="url(#cl)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M47 26.8L49 23.5" stroke="url(#cl)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M47 26.8L43.5 25" stroke="url(#cl)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M48 38C48 42.4 44.4 46 40 46C36.8 46 34.1 44 33 41.2" stroke="url(#cl)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M33 41.2L31 44.5" stroke="url(#cl)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M33 41.2L36.5 43" stroke="url(#cl)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Checkmark in center -->
+  <path d="M36 34L39 37.5L45 30" stroke="url(#cl)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Constraint lines at bottom -->
+  <line x1="26" y1="56" x2="54" y2="56" stroke="url(#cl)" stroke-width="1.5" opacity=".35"/>
+  <line x1="30" y1="60" x2="50" y2="60" stroke="url(#cl)" stroke-width="1.5" opacity=".25"/>
+</svg>

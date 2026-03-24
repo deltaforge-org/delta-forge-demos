@@ -1,0 +1,24 @@
+[demo]
+id = "delta-constraints-lifecycle"
+name = "Delta Constraints Lifecycle — Validate, Mutate, Verify"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+CHECK constraints protect data quality, but the real proof is that they \
+survive every DML operation. This demo creates a product catalog with three \
+constraints (price > 0, stock >= 0, discount >= 0), performs a bulk price \
+increase, discontinues items by zeroing stock, deletes them, and re-validates \
+after each step — proving constraints hold through the full mutation lifecycle.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "constraints", "check", "tblproperties", "data-quality", "dml", "lifecycle"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.products"

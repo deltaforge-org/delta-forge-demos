@@ -1562,6 +1562,61 @@
       "updatedAt": "2026-03-09T12:00:00Z"
     },
     {
+      "id": "delta-constraints-lifecycle",
+      "path": "demos/delta/delta-constraints-lifecycle",
+      "iconPath": "icons/delta-constraints-lifecycle.svg",
+      "name": "Delta Constraints Lifecycle — Validate, Mutate, Verify",
+      "summary": "CHECK constraints protect data quality, but the real proof is that they \\ survive every DML operation. This demo creates a product catalog with three \\ constraints, performs bulk UPDATEs, discontinues and deletes items, and \\ re-validates after each step — proving constraints hold through the full \\ mutation lifecycle.",
+      "categories": [
+        "delta-table",
+        "delta-fundamentals"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "constraints",
+        "check",
+        "tblproperties",
+        "data-quality",
+        "dml",
+        "lifecycle"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-append-only-event-sourcing",
+      "path": "demos/delta/delta-append-only-event-sourcing",
+      "iconPath": "icons/delta-append-only-event-sourcing.svg",
+      "name": "Delta Append-Only Event Sourcing",
+      "summary": "Append-only Delta tables reject UPDATE and DELETE, making them ideal for \\ immutable event logs. This demo builds a 60-event order stream, reconstructs \\ order lifecycles, uses window functions to measure processing times, derives \\ current state from event history, appends a new batch, and proves the log \\ only grows — never shrinks.",
+      "categories": [
+        "delta-table",
+        "delta-fundamentals"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "append-only",
+        "tblproperties",
+        "event-sourcing",
+        "immutable",
+        "window-functions"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
       "id": "delta-convert-to-delta",
       "path": "demos/delta/delta-convert-to-delta",
       "iconPath": "icons/delta-convert-to-delta.svg",
