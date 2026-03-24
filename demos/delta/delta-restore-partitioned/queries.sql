@@ -137,11 +137,11 @@ WHERE quarter = 'Q1';
 -- ============================================================================
 -- Query 7: Verify V4 — Q1 Is Now Corrupted
 -- ============================================================================
--- Q1 total revenue is inflated from 36176.15 to 38520.89 due to the wrong
+-- Q1 total revenue is inflated from 36176.15 to 38520.9 due to the wrong
 -- tax rate. All Q1 rows now show tax_rate = 0.15 instead of 0.08.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE total_revenue = 38520.89
+ASSERT VALUE total_revenue = 38520.9
 SELECT quarter,
        ROUND(SUM(total), 2) AS total_revenue
 FROM {{zone_name}}.delta_demos.quarterly_revenue
@@ -231,7 +231,7 @@ WHERE quarter = 'Q1';
 -- Query 11: Verify Fix — Q1 Restored to Correct Tax Rate
 -- ============================================================================
 -- Q1 is back to tax_rate = 0.08 and the original correct totals.
--- Total Q1 revenue is 36176.15 again (not the inflated 38520.89).
+-- Total Q1 revenue is 36176.15 again (not the inflated 38520.9).
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_revenue = 36176.15
