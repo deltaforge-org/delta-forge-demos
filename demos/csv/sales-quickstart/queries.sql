@@ -107,20 +107,19 @@ ORDER BY total_revenue DESC;
 --   2025-1 | 3 sales | 1,526.67
 
 ASSERT ROW_COUNT = 5
-ASSERT WARNING VALUE total_revenue = 859.85 WHERE year = 2024 AND quarter = 1
-ASSERT WARNING VALUE total_revenue = 773.89 WHERE year = 2024 AND quarter = 2
-ASSERT WARNING VALUE total_revenue = 901.18 WHERE year = 2024 AND quarter = 3
-ASSERT WARNING VALUE total_revenue = 1277.76 WHERE year = 2024 AND quarter = 4
-ASSERT WARNING VALUE total_revenue = 1526.67 WHERE year = 2025 AND quarter = 1
-ASSERT WARNING VALUE sale_count = 3 WHERE year = 2024 AND quarter = 1
+ASSERT WARNING VALUE total_revenue = 859.85 WHERE period = '2024-Q1'
+ASSERT WARNING VALUE total_revenue = 773.89 WHERE period = '2024-Q2'
+ASSERT WARNING VALUE total_revenue = 901.18 WHERE period = '2024-Q3'
+ASSERT WARNING VALUE total_revenue = 1277.76 WHERE period = '2024-Q4'
+ASSERT WARNING VALUE total_revenue = 1526.67 WHERE period = '2025-Q1'
+ASSERT WARNING VALUE sale_count = 3 WHERE period = '2024-Q1'
 SELECT
-    EXTRACT(YEAR FROM sale_date) AS year,
-    EXTRACT(QUARTER FROM sale_date) AS quarter,
+    CAST(EXTRACT(YEAR FROM sale_date) AS INT) || '-Q' || CAST(EXTRACT(QUARTER FROM sale_date) AS INT) AS period,
     COUNT(*) AS sale_count,
     ROUND(SUM(CAST(quantity AS INT) * CAST(unit_price AS DOUBLE)), 2) AS total_revenue
 FROM {{zone_name}}.csv.sales
-GROUP BY year, quarter
-ORDER BY year, quarter;
+GROUP BY period
+ORDER BY period;
 
 
 -- ============================================================================
@@ -192,12 +191,12 @@ ORDER BY id;
 -- Cross-cutting sanity check: total rows, grand revenue total, and key
 -- schema-evolution invariants (NULL columns from retired/added fields).
 
-ASSERT ROW_COUNT = 15
+ASSERT ROW_COUNT = 1
 ASSERT VALUE grand_total_revenue = 5339.35
-ASSERT VALUE sales_rep IS NULL WHERE id = '1'
-ASSERT VALUE territory IS NULL WHERE id = '1'
-ASSERT VALUE region IS NULL WHERE id = '10'
-ASSERT VALUE channel IS NOT NULL WHERE id = '13'
+ASSERT VALUE q1_sales_rep IS NULL
+ASSERT VALUE q1_territory IS NULL
+ASSERT VALUE q4_region IS NULL
+ASSERT VALUE q1_2025_channel IS NOT NULL
 SELECT
     COUNT(*) AS row_count,
     ROUND(SUM(CAST(quantity AS INT) * CAST(unit_price AS DOUBLE)), 2) AS grand_total_revenue,
