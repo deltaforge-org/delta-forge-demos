@@ -37,7 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.stock_prices (
     volume      BIGINT
 ) LOCATION '{{data_path}}/stock_prices';
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.stock_prices;
 GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.stock_prices TO USER {{current_user}};
 
 -- AAPL: base=185, amplitude=5
