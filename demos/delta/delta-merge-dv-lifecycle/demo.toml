@@ -1,0 +1,33 @@
+[demo]
+id = "delta-merge-dv-lifecycle"
+name = "Delta MERGE — Generating & Materializing Deletion Vectors"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A retail product catalog sync scenario demonstrating how MERGE generates \
+deletion vectors (DVs) and how OPTIMIZE materializes them. An upstream ERP \
+system sends daily product feed updates via a three-way MERGE: matched rows \
+with updated prices and stock trigger UPDATE (creating DVs for old row \
+versions), matched rows with zero stock trigger DELETE (creating DVs), and \
+unmatched rows trigger INSERT. After the MERGE, DESCRIBE DETAIL reveals \
+accumulated DV bitmap files on the data files. A weekly OPTIMIZE rewrites \
+the data files, physically removing DV-marked rows into clean compacted \
+Parquet. DESCRIBE HISTORY traces every operation in the transaction log, \
+and VACUUM purges the orphaned pre-OPTIMIZE files.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "merge", "deletion-vectors", "optimize", "etl", "catalog-sync"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.product_catalog"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.supplier_feed"

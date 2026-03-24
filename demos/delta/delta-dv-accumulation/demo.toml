@@ -1,0 +1,27 @@
+[demo]
+id = "delta-dv-accumulation"
+name = "Delta DV Accumulation — Performance Degradation & Recovery"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Deletion vectors (DVs) enable lightweight row-level deletes without rewriting \
+Parquet files, but each individual DELETE creates a new DV bitmap file. In \
+real-world systems — especially healthcare under GDPR/HIPAA — deletion \
+requests arrive in small batches over time, causing DV files to accumulate. \
+This demo simulates a patient records system where three separate compliance \
+deletion rounds create growing DV overhead, then shows how OPTIMIZE \
+materializes all accumulated DVs back into clean, compacted data files, \
+recovering query performance.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "deletion-vectors", "optimize", "compaction", "gdpr", "healthcare"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.patient_visits"

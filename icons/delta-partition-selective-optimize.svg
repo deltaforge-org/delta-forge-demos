@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pso" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Three partition columns -->
+  <rect x="6" y="12" width="20" height="40" rx="3" stroke="url(#pso)" stroke-width="1.5" fill="url(#pso)" fill-opacity=".12"/>
+  <rect x="30" y="12" width="20" height="40" rx="3" stroke="url(#pso)" stroke-width="1.5" fill="url(#pso)" fill-opacity=".12"/>
+  <rect x="54" y="12" width="20" height="40" rx="3" stroke="url(#pso)" stroke-width="1.5" fill="url(#pso)" fill-opacity=".12"/>
+  <!-- First partition: compacted (single block, checkmark) -->
+  <rect x="9" y="16" width="14" height="18" rx="2" fill="url(#pso)" opacity=".45"/>
+  <path d="M12 26L15 29L21 22" stroke="#fff" stroke-width="1.5" fill="none" opacity=".9"/>
+  <!-- Second partition: fragmented (multiple small blocks) -->
+  <rect x="33" y="16" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <rect x="33" y="23" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <rect x="33" y="30" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <rect x="33" y="37" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <!-- Third partition: fragmented (multiple small blocks) -->
+  <rect x="57" y="16" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <rect x="57" y="23" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <rect x="57" y="30" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <rect x="57" y="37" width="14" height="5" rx="1" fill="url(#pso)" opacity=".25"/>
+  <!-- Optimize arrow pointing at first partition only -->
+  <path d="M16 58L16 54" stroke="url(#pso)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M12 56L16 60L20 56" stroke="url(#pso)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pso)" opacity=".6">SELECTIVE</text>
+</svg>

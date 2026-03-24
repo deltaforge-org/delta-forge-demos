@@ -1,0 +1,25 @@
+[demo]
+id = "delta-update-cross-partition"
+name = "Cross-Partition Updates"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+When an UPDATE predicate does not align with the partition key, Delta must \
+create deletion vectors (DVs) in every partition that contains matching rows. \
+This demo uses a SaaS billing platform where pricing tier changes apply \
+globally across all regions, forcing cross-partition DV writes. Contrast this \
+with a partition-aligned update that touches only one region's files. Finally, \
+OPTIMIZE materializes all accumulated DVs back into compacted data files.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "partitions", "deletion-vectors", "update", "cross-partition", "optimize"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.subscriptions"

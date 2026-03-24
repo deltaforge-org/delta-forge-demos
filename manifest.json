@@ -573,6 +573,33 @@
       "updatedAt": "2026-03-09T12:00:00Z"
     },
     {
+      "id": "delta-dv-accumulation",
+      "path": "demos/delta/delta-dv-accumulation",
+      "iconPath": "icons/delta-dv-accumulation.svg",
+      "name": "Delta DV Accumulation \u2014 Performance Degradation & Recovery",
+      "summary": "Deletion vectors enable lightweight row-level deletes, but each DELETE creates a new DV bitmap file. In healthcare systems under GDPR/HIPAA, deletion requests arrive in small batches, causing DV files to accumulate and degrade query performance. This demo simulates three compliance deletion rounds, then recovers with OPTIMIZE.",
+      "categories": [
+        "delta-table",
+        "delta-performance"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "deletion-vectors",
+        "optimize",
+        "compaction",
+        "gdpr",
+        "healthcare"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
       "id": "delta-dml-patterns",
       "path": "demos/delta/delta-dml-patterns",
       "iconPath": "icons/delta-dml-patterns.svg",
@@ -989,6 +1016,89 @@
       "updatedAt": "2026-03-24T12:00:00Z"
     },
     {
+      "id": "delta-merge-dv-lifecycle",
+      "path": "demos/delta/delta-merge-dv-lifecycle",
+      "iconPath": "icons/delta-merge-dv-lifecycle.svg",
+      "name": "Delta MERGE \u2014 Generating & Materializing Deletion Vectors",
+      "summary": "A retail product catalog sync demonstrating how MERGE generates deletion vectors (DVs) and how OPTIMIZE materializes them. An ERP system sends daily product feed updates via a three-way MERGE: matched updates create DVs for old rows, zero-stock matches trigger deletes, and new SKUs are inserted.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "merge",
+        "deletion-vectors",
+        "optimize",
+        "etl",
+        "catalog-sync"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-partition-merge",
+      "path": "demos/delta/delta-partition-merge",
+      "iconPath": "icons/delta-partition-merge.svg",
+      "name": "Delta Partition MERGE \u2014 Catalog Sync by Category",
+      "summary": "MERGE into a partitioned Delta table demonstrates how upsert operations target only the partition directories containing matching rows. A product catalog partitioned by category receives a supplier feed that updates Electronics, Clothing, and Home — while Sports files are never opened.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "merge",
+        "partitioning",
+        "upsert",
+        "catalog",
+        "etl",
+        "partition-scoped"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-partition-replace",
+      "path": "demos/delta/delta-partition-replace",
+      "iconPath": "icons/delta-partition-replace.svg",
+      "name": "Delta Partition Replace \u2014 Monthly Sales Pipeline",
+      "summary": "The partition-replace pattern uses DELETE + INSERT to atomically swap an entire partition's data with a corrected dataset. A monthly sales table receives price corrections for February via partition replacement, then grows with an incremental April append — all without touching January or March.",
+      "categories": [
+        "delta-table",
+        "delta-fundamentals"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "partitioning",
+        "etl",
+        "replace",
+        "pipeline",
+        "time-series",
+        "incremental"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
       "id": "delta-partitioning",
       "path": "demos/delta/delta-partitioning",
       "iconPath": "icons/delta-partitioning.svg",
@@ -1040,6 +1150,62 @@
       "author": "Delta Forge Team",
       "version": "1.0.0",
       "updatedAt": "2026-03-09T12:00:00Z"
+    },
+    {
+      "id": "delta-partition-replace-dv",
+      "path": "demos/delta/delta-partition-replace-dv",
+      "iconPath": "icons/delta-partition-replace-dv.svg",
+      "name": "Delta Partition Replacement with DV Cleanup",
+      "summary": "A financial services firm processes monthly transaction settlements. Late-arriving invoice corrections reveal duplicates and incorrect amounts in January's partition. The partition-replace pattern deletes the entire month, inserts corrected rows, then OPTIMIZE cleans up the DVs.",
+      "categories": [
+        "delta-table",
+        "delta-fundamentals"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "partitioning",
+        "deletion-vectors",
+        "optimize",
+        "dv-cleanup",
+        "etl",
+        "financial",
+        "settlements"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-partition-selective-optimize",
+      "path": "demos/delta/delta-partition-selective-optimize",
+      "iconPath": "icons/delta-partition-selective-optimize.svg",
+      "name": "Partition-Scoped Maintenance",
+      "summary": "In production Delta Lake deployments, OPTIMIZE can target individual partitions using WHERE clauses. This demo models a global e-commerce system partitioned by warehouse datacenter, demonstrating that mutations create partition-scoped DVs and OPTIMIZE can compact one partition without touching others.",
+      "categories": [
+        "delta-table",
+        "delta-performance"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "partitions",
+        "optimize",
+        "deletion-vectors",
+        "selective-maintenance",
+        "compaction"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
     },
     {
       "id": "delta-restore-advanced",
@@ -1388,6 +1554,33 @@
       "author": "Delta Forge Team",
       "version": "1.0.0",
       "updatedAt": "2026-03-09T12:00:00Z"
+    },
+    {
+      "id": "delta-update-cross-partition",
+      "path": "demos/delta/delta-update-cross-partition",
+      "iconPath": "icons/delta-update-cross-partition.svg",
+      "name": "Cross-Partition Updates",
+      "summary": "When an UPDATE predicate does not align with the partition key, Delta must create deletion vectors (DVs) in every partition that contains matching rows. This demo uses a SaaS billing platform where pricing tier changes apply globally across all regions, forcing cross-partition DV writes.",
+      "categories": [
+        "delta-table",
+        "delta-performance"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "partitions",
+        "deletion-vectors",
+        "update",
+        "cross-partition",
+        "optimize"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
     },
     {
       "id": "delta-vacuum-cdc-interaction",

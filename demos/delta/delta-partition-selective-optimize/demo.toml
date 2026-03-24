@@ -1,0 +1,28 @@
+[demo]
+id = "delta-partition-selective-optimize"
+name = "Partition-Scoped Maintenance"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+In production Delta Lake deployments, tables are often partitioned by \
+business dimensions like warehouse region. Each partition's data files \
+live in separate directories, and maintenance operations like OPTIMIZE \
+can target individual partitions using WHERE clauses. This demo models \
+a global e-commerce order processing system partitioned by warehouse \
+datacenter (us-east-dc, eu-central-dc, ap-south-dc). It demonstrates \
+that DELETE/UPDATE mutations create deletion vectors scoped to their \
+partition, and that OPTIMIZE can compact one partition's files without \
+touching the others — enabling rolling maintenance windows per region.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "partitions", "optimize", "deletion-vectors", "selective-maintenance", "compaction"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.warehouse_orders"

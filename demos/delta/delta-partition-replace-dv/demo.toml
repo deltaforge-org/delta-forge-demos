@@ -1,0 +1,26 @@
+[demo]
+id = "delta-partition-replace-dv"
+name = "Delta Partition Replacement with DV Cleanup"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A financial services firm processes monthly transaction settlements. Late-arriving \
+invoice corrections reveal that January's partition contains two duplicate \
+transactions (double-booked payments) and two incorrect adjustment amounts. The \
+partition-replace pattern deletes the entire January partition — creating deletion \
+vectors for all 20 rows — then inserts 18 corrected rows (duplicates removed, \
+amounts fixed). OPTIMIZE then cleans up the DVs from the replaced partition, \
+physically removing the deleted row markers and compacting the data files.
+"""
+categories = ["delta-table", "delta-fundamentals"]
+tags = ["delta-table", "intermediate", "partitioning", "deletion-vectors", "optimize", "dv-cleanup", "etl", "financial", "settlements"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.monthly_settlements"
