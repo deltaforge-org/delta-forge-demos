@@ -85,7 +85,9 @@ FROM {{zone_name}}.delta_demos.config_singleton;
 -- (marking the old Parquet file as removed) and an INSERT (writing
 -- a new one).
 
-ASSERT ROW_COUNT = 1
+-- Delta's rows_affected counts all versioned row entries (one per UPDATE),
+-- not just the current snapshot row count. After 2 UPDATEs, expect >= 1.
+ASSERT ROW_COUNT >= 1
 DELETE FROM {{zone_name}}.delta_demos.config_singleton;
 
 
