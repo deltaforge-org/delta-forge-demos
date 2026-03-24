@@ -23,13 +23,16 @@
 ASSERT ROW_COUNT = 3
 ASSERT VALUE txn_count = 40 WHERE status = 'completed'
 -- Non-deterministic: SUM of DOUBLE column — minor float variance possible across platforms
-ASSERT WARNING VALUE total_amount BETWEEN 5829.1 AND 5829.4 WHERE status = 'completed'
+ASSERT WARNING VALUE total_amount >= 5829.1 WHERE status = 'completed'
+ASSERT WARNING VALUE total_amount <= 5829.4 WHERE status = 'completed'
 ASSERT VALUE txn_count = 5 WHERE status = 'disputed'
 -- Non-deterministic: SUM of DOUBLE column — minor float variance possible across platforms
-ASSERT WARNING VALUE total_amount BETWEEN 1778.9 AND 1779.1 WHERE status = 'disputed'
+ASSERT WARNING VALUE total_amount >= 1778.9 WHERE status = 'disputed'
+ASSERT WARNING VALUE total_amount <= 1779.1 WHERE status = 'disputed'
 ASSERT VALUE txn_count = 15 WHERE status = 'refunded'
 -- Non-deterministic: SUM of DOUBLE column — minor float variance possible across platforms
-ASSERT WARNING VALUE total_amount BETWEEN -4226.5 AND -4226.1 WHERE status = 'refunded'
+ASSERT WARNING VALUE total_amount >= -4226.5 WHERE status = 'refunded'
+ASSERT WARNING VALUE total_amount <= -4226.1 WHERE status = 'refunded'
 SELECT status,
        COUNT(*) AS txn_count,
        ROUND(SUM(amount), 2) AS total_amount,
@@ -90,10 +93,12 @@ WHERE txn_id = 'TXN-0009';
 ASSERT ROW_COUNT = 5
 ASSERT VALUE txn_count = 11 WHERE category = 'travel'
 -- Non-deterministic: SUM of DOUBLE column — minor float variance possible across platforms
-ASSERT WARNING VALUE net_amount BETWEEN 1539.9 AND 1540.1 WHERE category = 'travel'
+ASSERT WARNING VALUE net_amount >= 1539.9 WHERE category = 'travel'
+ASSERT WARNING VALUE net_amount <= 1540.1 WHERE category = 'travel'
 ASSERT VALUE txn_count = 13 WHERE category = 'electronics'
 -- Non-deterministic: SUM of DOUBLE column — minor float variance possible across platforms
-ASSERT WARNING VALUE net_amount BETWEEN 1137.9 AND 1138.1 WHERE category = 'electronics'
+ASSERT WARNING VALUE net_amount >= 1137.9 WHERE category = 'electronics'
+ASSERT WARNING VALUE net_amount <= 1138.1 WHERE category = 'electronics'
 SELECT category,
        COUNT(*) AS txn_count,
        COUNT(*) FILTER (WHERE amount > 0) AS purchases,
