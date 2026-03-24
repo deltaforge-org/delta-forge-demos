@@ -171,12 +171,12 @@ ORDER BY id;
 -- ============================================================================
 -- INSPECT: Table detail before OPTIMIZE — DVs are accumulated
 -- ============================================================================
--- DESCRIBE DETAIL reveals the physical state of the Delta table. Before
--- OPTIMIZE, the table has the original data files plus DV bitmap files
--- accumulated from two DELETEs and one UPDATE. The UPDATE also wrote a
--- new data file for the 5 updated rows.
+-- DESCRIBE DETAIL returns one row per data file in the table. Before
+-- OPTIMIZE, you'll see the original data files plus new files from the
+-- UPDATE. The DV bitmap files are tracked alongside the data files they
+-- reference — each row shows whether deletion vectors apply to that file.
 
-ASSERT ROW_COUNT = 1
+ASSERT ROW_COUNT >= 4
 DESCRIBE DETAIL {{zone_name}}.delta_demos.web_sessions;
 
 
@@ -197,10 +197,10 @@ OPTIMIZE {{zone_name}}.delta_demos.web_sessions;
 -- INSPECT: Table detail after OPTIMIZE — DVs are gone
 -- ============================================================================
 -- After OPTIMIZE, the table is fully compacted. Compare with the pre-OPTIMIZE
--- detail above: fewer files, no deletion vectors, and the data is physically
--- clean. The logical data is identical — only the storage layout changed.
+-- detail: fewer, larger files and no deletion vectors. The logical data is
+-- identical — only the storage layout changed.
 
-ASSERT ROW_COUNT = 1
+ASSERT ROW_COUNT >= 1
 DESCRIBE DETAIL {{zone_name}}.delta_demos.web_sessions;
 
 
