@@ -97,7 +97,7 @@ INSERT INTO {{zone_name}}.backfill_demos.patient_records VALUES
 -- ============================================================================
 -- Legacy system used -999 for "unknown age". NULLIF(age, -999) returns NULL
 -- when age equals -999, leaving valid ages unchanged.
-ASSERT ROW_COUNT = 6
+ASSERT ROW_COUNT = 25
 UPDATE {{zone_name}}.backfill_demos.patient_records
 SET age = NULLIF(age, -999);
 
@@ -106,7 +106,7 @@ SET age = NULLIF(age, -999);
 -- VERSION 3: NULLIF — Convert temperature sentinel (-999.00) to NULL
 -- ============================================================================
 -- Same pattern: -999.00 meant "no reading taken" in the legacy system.
-ASSERT ROW_COUNT = 6
+ASSERT ROW_COUNT = 25
 UPDATE {{zone_name}}.backfill_demos.patient_records
 SET temperature = NULLIF(temperature, -999.00);
 
@@ -169,6 +169,6 @@ SET emergency_contact = COALESCE(emergency_contact, 'UNKNOWN');
 -- ============================================================================
 -- Age = 0 is a recognized "needs verification" marker in the hospital system.
 -- CASE WHEN provides conditional logic: only NULL ages are overwritten.
-ASSERT ROW_COUNT = 6
+ASSERT ROW_COUNT = 25
 UPDATE {{zone_name}}.backfill_demos.patient_records
 SET age = CASE WHEN age IS NULL THEN 0 ELSE age END;
