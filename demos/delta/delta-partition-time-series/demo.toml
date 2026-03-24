@@ -1,0 +1,26 @@
+[demo]
+id = "delta-partition-time-series"
+name = "Delta Time-Based Partitioning — Monthly Sensor Data"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Time-based partitioning is the most common strategy in production data lakes, \
+organizing files into directories by time period (year_month, event_date, etc.). \
+This demo partitions factory sensor readings by month and demonstrates time-range \
+queries with partition pruning, partition-scoped recalibration (UPDATE), historical \
+backfill via INSERT INTO...SELECT, and monthly trend analysis. These patterns \
+mirror real-world IoT and analytics pipelines where data arrives continuously \
+and queries typically filter by time window.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "partitioning", "time-series", "iot", "backfill", "insert-into-select"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.line_metrics"

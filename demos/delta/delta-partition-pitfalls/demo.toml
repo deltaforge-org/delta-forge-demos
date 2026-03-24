@@ -1,0 +1,31 @@
+[demo]
+id = "delta-partition-pitfalls"
+name = "Delta Partition Pitfalls — Over-Partitioning & Repartitioning"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Over-partitioning is one of the most common Delta table design mistakes. When \
+a table is partitioned by a high-cardinality column (like customer_id), each \
+partition directory contains very few rows, creating hundreds or thousands of \
+tiny Parquet files. This "small files problem" degrades query performance \
+because the engine must open many files with high per-file overhead. This demo \
+creates an over-partitioned table, demonstrates the problem, then fixes it by \
+repartitioning with INSERT INTO...SELECT into a properly-partitioned table \
+organized by month.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "partitioning", "small-files", "repartitioning", "insert-into-select", "optimize"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.events_by_customer"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.events_by_month"
