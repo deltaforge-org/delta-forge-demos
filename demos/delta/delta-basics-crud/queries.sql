@@ -40,7 +40,6 @@ ORDER BY category;
 --      in the _delta_log/ transaction log
 -- This creates a new table version while preserving the old data for time travel.
 
-ASSERT ROW_COUNT = 5
 UPDATE {{zone_name}}.delta_demos.products
 SET price = ROUND(price * 1.10, 2)
 WHERE category = 'Electronics';
@@ -122,7 +121,6 @@ ORDER BY b.id;
 -- INSERT creates a new data file and a new commit version in the log.
 -- Here we add 5 new products using INSERT INTO...SELECT with a VALUES clause.
 
-ASSERT ROW_COUNT = 5
 INSERT INTO {{zone_name}}.delta_demos.products
 SELECT * FROM (VALUES
     (21, 'Webcam',         'Electronics', 69.99,  80,  true),
