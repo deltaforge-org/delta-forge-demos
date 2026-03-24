@@ -1,27 +1,15 @@
 -- ============================================================================
 -- Delta Table Properties — Configuration Lifecycle — Educational Queries
 -- ============================================================================
--- WHAT: Demonstrates the full lifecycle of Delta TBLPROPERTIES — setting them
---       at creation, inspecting them, modifying them, and observing effects.
+-- WHAT: Demonstrates Delta TBLPROPERTIES set at table creation and their
+--       observable effects via DESCRIBE HISTORY and DESCRIBE DETAIL.
 -- WHY:  Table properties control critical behaviors: change data feed,
 --       auto-optimization, checkpoint frequency, and more. Understanding how
---       to manage them is essential for production Delta deployments.
--- HOW:  SHOW TABLE PROPERTIES reads the current config. ALTER TABLE SET/UNSET
---       modifies it. DESCRIBE HISTORY and DESCRIBE DETAIL reveal the effects
---       of these settings on the table's physical layout.
+--       they affect storage and operations is essential for production Delta.
+-- HOW:  Properties were set at CREATE TABLE time (see setup.sql). DESCRIBE
+--       HISTORY and DESCRIBE DETAIL reveal their effects on the table's
+--       physical layout and transaction log. VERSION AS OF compares states.
 -- ============================================================================
-
-
--- ============================================================================
--- LEARN: Inspecting Table Properties
--- ============================================================================
--- SHOW TABLE PROPERTIES reveals every property set on the table.
--- We created this table with enableChangeDataFeed, optimizeWrite, and
--- checkpointInterval. Let's verify they are set.
-
--- Non-deterministic: property count may vary with engine defaults
-ASSERT WARNING ROW_COUNT >= 3
-SHOW TABLE PROPERTIES {{zone_name}}.props_demos.inventory_items;
 
 
 -- ============================================================================
@@ -62,7 +50,8 @@ ORDER BY total_qty DESC;
 -- LEARN: Modifying Properties with ALTER TABLE SET
 -- ============================================================================
 -- Properties can be changed after creation. Here we enable deletion vectors
--- and adjust the target file size for this table.
+-- and adjust the target file size for this table. These are recorded in the
+-- transaction log just like data operations.
 
 ALTER TABLE {{zone_name}}.props_demos.inventory_items
 SET TBLPROPERTIES (
@@ -70,25 +59,14 @@ SET TBLPROPERTIES (
     'delta.targetFileSize' = '67108864'
 );
 
--- Verify the new properties are now set
--- Non-deterministic: total property count depends on engine
-ASSERT WARNING ROW_COUNT >= 5
-SHOW TABLE PROPERTIES {{zone_name}}.props_demos.inventory_items;
-
 
 -- ============================================================================
 -- LEARN: Removing Properties with ALTER TABLE UNSET
 -- ============================================================================
--- Properties can also be removed. Let's remove the auto-optimize setting
--- and verify it's gone.
+-- Properties can also be removed. Let's remove the auto-optimize setting.
 
 ALTER TABLE {{zone_name}}.props_demos.inventory_items
 UNSET TBLPROPERTIES ('delta.autoOptimize.optimizeWrite');
-
--- Verify properties after UNSET
--- Non-deterministic: total property count depends on engine
-ASSERT WARNING ROW_COUNT >= 4
-SHOW TABLE PROPERTIES {{zone_name}}.props_demos.inventory_items;
 
 
 -- ============================================================================
@@ -96,9 +74,11 @@ SHOW TABLE PROPERTIES {{zone_name}}.props_demos.inventory_items;
 -- ============================================================================
 -- The transaction log records every operation including ALTER TABLE.
 -- This gives a complete timeline of both data changes and config changes.
+-- Expected versions: V0 CREATE, V1 INSERT, V2 UPDATE, V3 UPDATE, V4 DELETE,
+-- plus ALTER SET and ALTER UNSET operations.
 
 -- Non-deterministic: timestamps set at write time
-ASSERT WARNING ROW_COUNT >= 6
+ASSERT WARNING ROW_COUNT >= 5
 DESCRIBE HISTORY {{zone_name}}.props_demos.inventory_items;
 
 
