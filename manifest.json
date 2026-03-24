@@ -1429,31 +1429,147 @@
       "updatedAt": "2026-03-24T12:00:00Z"
     },
     {
-      "id": "delta-schema-drop-columns",
-      "path": "demos/delta/delta-schema-drop-columns",
-      "iconPath": "icons/delta-schema-drop-columns.svg",
-      "name": "Delta Schema Evolution \u2014 Drop Columns & GDPR Cleanup",
-      "summary": "Delta Lake's schema evolution supports column-level changes that enable \\ GDPR \"right to erasure\" compliance without rebuilding tables. This matters \\ because privacy regulations require the...",
+      "id": "delta-update-string-cleansing",
+      "path": "demos/delta/delta-update-string-cleansing",
+      "iconPath": "icons/delta-update-string-cleansing.svg",
+      "name": "Delta UPDATE String Cleansing \u2014 CRM Data Normalization",
+      "summary": "UPDATE statements with string functions clean messy data in place. Imports 25 customer records from a legacy CRM system \u2014 emails in mixed case, names with extra whitespace, unpadded account codes, and missing full names \u2014 then walks through 5 UPDATE passes using TRIM, LOWER, LPAD, concatenation (||), and UPPER to normalize every field.",
       "categories": [
         "delta-table",
-        "delta-schema-types"
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "update",
+        "string-functions",
+        "trim",
+        "lpad",
+        "concat",
+        "lower",
+        "upper",
+        "data-cleansing"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-update-null-backfill",
+      "path": "demos/delta/delta-update-null-backfill",
+      "iconPath": "icons/delta-update-null-backfill.svg",
+      "name": "Delta UPDATE NULL Backfill \u2014 Patient Data Recovery",
+      "summary": "After a hospital database migration, many fields arrived as NULL or with sentinel values (-999, 'N/A', ''). This demo walks through 8 UPDATE passes using NULLIF, COALESCE, CASE WHEN IS NULL, and conditional SET to replace sentinels with proper NULLs and backfill missing values with defaults across 25 patient records.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "update",
+        "null-handling",
+        "coalesce",
+        "nullif",
+        "backfill",
+        "data-recovery",
+        "sentinel-values"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-update-multi-pass",
+      "path": "demos/delta/delta-update-multi-pass",
+      "iconPath": "icons/delta-update-multi-pass.svg",
+      "name": "Delta UPDATE Multi-Pass \u2014 ETL Pipeline Stages",
+      "summary": "Sequential UPDATE passes transform 30 e-commerce orders through a 3-stage ETL pipeline: Normalize (UPPER+TRIM status codes), Classify (CASE WHEN priority/shipping assignment), Enrich (total_with_tax and estimated_profit computation). VERSION AS OF inspects data at each pipeline stage, demonstrating how Delta versioning provides built-in pipeline checkpoints.",
+      "categories": [
+        "delta-table",
+        "delta-dml-merge"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "update",
+        "multi-pass",
+        "etl",
+        "pipeline",
+        "version-as-of",
+        "case-when",
+        "sequential",
+        "enrichment"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-gdpr-data-erasure",
+      "path": "demos/delta/delta-gdpr-data-erasure",
+      "iconPath": "icons/delta-gdpr-data-erasure.svg",
+      "name": "Delta GDPR Data Erasure \u2014 Right to Erasure Lifecycle",
+      "summary": "GDPR Article 17 requires permanent deletion of personal data on request. This demo walks through a bank's compliance workflow: NULL out SSN, phone, and address for targeted customers, audit changes via DESCRIBE HISTORY, prove time travel still exposes PII in prior versions, then VACUUM to complete physical deletion.",
+      "categories": [
+        "delta-table"
       ],
       "tags": [
         "delta-table",
         "advanced",
-        "schema-evolution",
         "gdpr",
         "privacy",
-        "column-drop",
-        "views"
+        "erasure",
+        "vacuum",
+        "time-travel",
+        "compliance",
+        "audit"
       ],
       "difficulty": "advanced",
-      "estimatedTimeMinutes": 10,
+      "estimatedTimeMinutes": 12,
       "dataSizeBytes": 0,
-      "fileCount": 5,
+      "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z"
+    },
+    {
+      "id": "delta-views-data-masking",
+      "path": "demos/delta/delta-views-data-masking",
+      "iconPath": "icons/delta-views-data-masking.svg",
+      "name": "Delta Views & Data Masking \u2014 Role-Based Access Layers",
+      "summary": "Production databases serve multiple audiences with different access needs. This demo builds three role-based views on an e-commerce order table: an analyst view (no PII), a support view (masked credit cards), and an executive view (pre-aggregated regional summaries). Each view enforces its access boundary at the SQL layer.",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "views",
+        "data-masking",
+        "access-control",
+        "e-commerce",
+        "security"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-24T12:00:00Z"
     },
     {
       "id": "delta-schema-evolution",

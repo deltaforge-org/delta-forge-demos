@@ -1,0 +1,27 @@
+[demo]
+id = "delta-update-multi-pass"
+name = "Delta UPDATE Multi-Pass — ETL Pipeline Stages"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Sequential UPDATE passes transform raw e-commerce orders through a 3-stage \
+ETL pipeline: (1) Normalize — standardize status codes with UPPER(TRIM()), \
+(2) Classify — assign priority tiers and shipping methods via CASE WHEN, \
+(3) Enrich — compute derived fields like total_with_tax and estimated_profit. \
+Each stage is a separate UPDATE creating a new Delta version, and VERSION AS OF \
+lets you inspect the data at any stage. Thirty daily orders flow through the \
+pipeline, demonstrating how Delta's versioning turns UPDATE into a first-class \
+ETL primitive.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "update", "multi-pass", "etl", "pipeline", "version-as-of", "case-when", "sequential", "enrichment"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.pipeline_demos.order_pipeline"

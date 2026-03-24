@@ -1,0 +1,26 @@
+[demo]
+id = "delta-update-string-cleansing"
+name = "Delta UPDATE String Cleansing — CRM Data Normalization"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+UPDATE statements with string functions clean messy data in place. This demo \
+imports 25 customer records from a legacy CRM system — emails in mixed case, \
+names with extra whitespace, unpadded account codes, and missing full names — \
+then walks through 5 UPDATE passes using TRIM, LOWER, LPAD, concatenation (||), \
+and UPPER to normalize every field. Each pass targets a specific quality issue, \
+demonstrating how expressive SET clauses eliminate the need for ETL pipelines \
+or application-layer cleansing logic.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "update", "string-functions", "trim", "lpad", "concat", "lower", "upper", "data-cleansing"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.cleansing_demos.customer_imports"
