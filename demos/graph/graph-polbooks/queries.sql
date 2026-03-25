@@ -112,20 +112,15 @@ LIMIT 5;
 -- 8. NEIGHBORHOOD OF TOP HUB — Most connected book's co-purchases
 -- ============================================================================
 -- The most connected book has up to 25 co-purchasing links.
--- Uses SQL: Cypher multi-MATCH with intermediate ORDER BY/LIMIT is not yet
--- supported (ORDER BY/LIMIT between WITH and a second MATCH are deferred
--- to after RETURN instead of being applied inline).
 
 ASSERT ROW_COUNT = 25
-SELECT hub.src AS hub_id, hub.dst AS copurchase_id
-FROM {{zone_name}}.polbooks.edges hub
-WHERE hub.src = (
-    SELECT src
-    FROM {{zone_name}}.polbooks.edges
-    GROUP BY src
-    ORDER BY COUNT(*) DESC
-    LIMIT 1
-)
+USE {{zone_name}}.polbooks.political_books
+MATCH (a)-[r]->(b)
+WITH a, COUNT(r) AS degree
+ORDER BY degree DESC
+LIMIT 1
+MATCH (a)-[]->(c)
+RETURN a.id AS hub_id, c.id AS copurchase_id
 ORDER BY copurchase_id;
 
 
