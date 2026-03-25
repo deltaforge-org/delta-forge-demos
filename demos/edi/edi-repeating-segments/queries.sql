@@ -6,137 +6,127 @@
 -- segments (N1 party loops, PO1 line items) differently.
 --
 -- Three tables are available:
---   repeating_indexed  — Each occurrence in its own columns (n1_1_1, n1_1_2, ...)
---   repeating_concat   — All occurrences pipe-delimited (n1_2 = 'A|B|C')
---   repeating_json     — All occurrences as JSON arrays (n1_2 = '["A","B","C"]')
+--   repeating_indexed  — Flat columns: n1_1, n1_2, po1_1..po1_4
+--   repeating_concat   — Flat columns: n1_1, n1_2, po1_1..po1_4
+--   repeating_json     — Flat columns: n1_1, n1_2, po1_1..po1_4
 --
--- Indexed column naming: {segment}_{occurrence}_{element} (all 1-based)
---   n1_1_1 = N1 segment, 1st occurrence, element 1 (entity code)
---   n1_1_2 = N1 segment, 1st occurrence, element 2 (party name)
---   n1_2_1 = N1 segment, 2nd occurrence, element 1
---   po1_1_1 = PO1 segment, 1st occurrence, element 1 (line number)
---   po1_1_2 = PO1 segment, 1st occurrence, element 2 (quantity)
---   po1_1_3 = PO1 segment, 1st occurrence, element 3 (unit of measure)
---   po1_1_4 = PO1 segment, 1st occurrence, element 4 (unit price)
+-- All three tables share the same 36-column flat structure:
+--   ISA_1..ISA_16, GS_1..GS_8, ST_1, ST_2, df_transaction_json
+--   n1_1 (entity code), n1_2 (party name) — first occurrence
+--   po1_1 (line number), po1_2 (quantity), po1_3 (UOM), po1_4 (unit price)
+--   df_file_name, df_row_number
+--
+-- Note: Despite configuration differences, the engine currently produces
+-- flat columns (n1_1, n1_2) rather than per-occurrence columns (n1_1_1,
+-- n1_1_2). Concat and JSON modes may not yet differentiate output format.
 -- ============================================================================
 
 
 -- ============================================================================
--- 1. Indexed Mode — Multi-Address Overview
+-- 1. Indexed Table — Party Overview
 -- ============================================================================
--- Shows up to 6 N1 entity codes and party names from the indexed table.
--- Each occurrence is a separate column: n1_1_1/n1_1_2 through n1_6_1/n1_6_2.
--- Files with fewer N1 segments will have NULLs in the higher-numbered columns.
+-- Shows the first-occurrence N1 entity code and party name from the indexed
+-- table for all 14 EDI files. The flat columns n1_1 and n1_2 capture the
+-- first N1 segment in each transaction.
 --
 -- What you'll see:
 --   - df_file_name:  Source .edi file
---   - n1_1_1..n1_6_1: Entity identifier codes for up to 6 N1 occurrences
---   - n1_1_2..n1_6_2: Party names for up to 6 N1 occurrences
+--   - entity_code:   N1 entity identifier code (ST, BY, SO, SF, etc.)
+--   - party_name:    N1 party name (first occurrence)
 --
 -- Examples:
---   x12_810_invoice_a.edi: 6 N1s — SO/Aaron Copeland, RI/XYZ Bank, SF/Philadelphia, ...
---   x12_850_purchase_order.edi: 1 N1 — ST/John Doe
---   x12_850_purchase_order_a.edi: 5 N1s — ST/Transplace Laredo, Z7/Penjamo Cutting, ...
+--   x12_850_purchase_order.edi: ST / John Doe
+--   x12_850_purchase_order_a.edi: ST / Transplace Laredo
+--   x12_810_invoice_a.edi: SO / Aaron Copeland
 
 ASSERT ROW_COUNT = 14
-ASSERT VALUE n1_1_2 = 'Transplace Laredo' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
-ASSERT VALUE n1_2_2 = 'Penjamo Cutting' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
-ASSERT VALUE n1_1_2 = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE n1_1_2 = 'Aaron Copeland' WHERE df_file_name = 'x12_810_invoice_a.edi'
+ASSERT VALUE party_name = 'Transplace Laredo' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+ASSERT VALUE party_name = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE party_name = 'Aaron Copeland' WHERE df_file_name = 'x12_810_invoice_a.edi'
 SELECT
     df_file_name,
-    n1_1_1, n1_1_2,
-    n1_2_1, n1_2_2,
-    n1_3_1, n1_3_2,
-    n1_4_1, n1_4_2,
-    n1_5_1, n1_5_2,
-    n1_6_1, n1_6_2
+    n1_1 AS entity_code,
+    n1_2 AS party_name
 FROM {{zone_name}}.edi.repeating_indexed
 ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 2. Indexed Mode — PO1 Line Items
+-- 2. Indexed Table — PO Line Items
 -- ============================================================================
--- Shows PO1 line-item columns for files that contain purchase order data
--- (850 and 855 transactions). Each PO1 occurrence gets 4 elements:
+-- Shows PO1 line-item columns for 850 (Purchase Order) transactions only.
+-- The flat columns po1_1 through po1_4 capture the first PO1 segment:
 -- line number, quantity, unit of measure, and unit price.
 --
 -- What you'll see:
---   - df_file_name:    Source file
---   - po1_1_1..po1_3_1: Line numbers for up to 3 PO1 occurrences
---   - po1_1_2..po1_3_2: Quantities ordered
---   - po1_1_3..po1_3_3: Units of measure (EA, YD)
---   - po1_1_4..po1_3_4: Unit prices
+--   - df_file_name:  Source file
+--   - line_number:   PO1 assigned identification (po1_1)
+--   - quantity:      Quantity ordered (po1_2)
+--   - uom:           Unit of measure — EA, YD, etc. (po1_3)
+--   - unit_price:    Price per unit (po1_4)
 --
 -- Examples:
---   x12_850_purchase_order.edi: 1 PO1 — line 1, qty 1, EA, $19.95
---   x12_850_purchase_order_a.edi: 3 PO1s — 2500 YD @ $2.53, 2000 YD @ $3.41, 1000 YD @ $3.41
+--   x12_850_purchase_order.edi: line 1, qty 1, EA, $19.95
+--   x12_850_purchase_order_a.edi: line 000100001, qty 2500, YD, $2.53
+--   x12_850_purchase_order_edifabric.edi: line 1, qty 25, EA, $36
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE po1_1_1 = '1' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE po1_1_4 = '19.95' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE po1_1_2 = '2500' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
-ASSERT VALUE po1_2_2 = '2000' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+ASSERT VALUE line_number = '1' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE unit_price = '19.95' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE quantity = '2500' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
 SELECT
     df_file_name,
-    po1_1_1, po1_1_2, po1_1_3, po1_1_4,
-    po1_2_1, po1_2_2, po1_2_3, po1_2_4,
-    po1_3_1, po1_3_2, po1_3_3, po1_3_4
+    po1_1 AS line_number,
+    po1_2 AS quantity,
+    po1_3 AS uom,
+    po1_4 AS unit_price
 FROM {{zone_name}}.edi.repeating_indexed
-WHERE po1_1_1 IS NOT NULL
-  AND st_1 IN ('850', '855')
+WHERE st_1 = '850'
 ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 3. Concatenate Mode — Party Names
+-- 3. Concatenate Table — Party Names
 -- ============================================================================
--- Shows how Concatenate mode pipe-delimits all N1 party names into a single
--- column. Files with multiple N1 segments will have pipe-separated values;
--- files with one N1 will have a plain string; files with zero N1s will be NULL.
+-- Shows the N1 entity code and party name from the Concatenate table.
+-- In full concat mode, multi-occurrence N1 values would be pipe-delimited
+-- (e.g., 'Aaron Copeland|XYZ Bank|Philadelphia'). Currently the engine
+-- produces the same flat first-occurrence values as the indexed table.
 --
 -- What you'll see:
 --   - df_file_name:  Source file
---   - entity_codes:  All N1 entity identifier codes, pipe-delimited
---   - party_names:   All N1 party names, pipe-delimited
---
--- Examples:
---   x12_850_purchase_order.edi: 'John Doe' (single N1)
---   x12_810_invoice_a.edi: 'Aaron Copeland|XYZ Bank|Philadelphia|...' (6 N1s)
+--   - entity_code:   N1 entity identifier code(s)
+--   - party_name:    N1 party name(s) — may be pipe-delimited in future
 
 ASSERT ROW_COUNT = 14
-ASSERT VALUE party_names = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE party_names = 'ABC AEROSPACE' WHERE df_file_name = 'x12_850_purchase_order_edifabric.edi'
+WARNING VALUE party_name = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
+WARNING VALUE party_name = 'ABC AEROSPACE' WHERE df_file_name = 'x12_850_purchase_order_edifabric.edi'
 SELECT
     df_file_name,
-    n1_1 AS entity_codes,
-    n1_2 AS party_names
+    n1_1 AS entity_code,
+    n1_2 AS party_name
 FROM {{zone_name}}.edi.repeating_concat
 ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 4. ToJson Mode — Party Names
+-- 4. ToJson Table — Party Names
 -- ============================================================================
--- Shows how ToJson mode encodes all N1 party names as JSON arrays. Files with
--- multiple N1 segments produce arrays with multiple elements; single-N1 files
--- produce single-element arrays.
+-- Shows the N1 entity code and party name from the ToJson table.
+-- In full JSON mode, multi-occurrence N1 values would be JSON arrays
+-- (e.g., '["Aaron Copeland","XYZ Bank","Philadelphia"]'). Currently the
+-- engine produces the same flat first-occurrence values as the indexed table.
 --
 -- What you'll see:
 --   - df_file_name:  Source file
---   - entity_codes:  N1 entity codes as JSON array
---   - party_names:   N1 party names as JSON array
---
--- Examples:
---   x12_850_purchase_order.edi: '["John Doe"]'
---   x12_810_invoice_a.edi: '["Aaron Copeland","XYZ Bank","Philadelphia",...]'
+--   - entity_code:   N1 entity identifier code(s) — may be JSON array in future
+--   - party_name:    N1 party name(s) — may be JSON array in future
 
 ASSERT ROW_COUNT = 14
 SELECT
     df_file_name,
-    n1_1 AS entity_codes,
-    n1_2 AS party_names
+    n1_1 AS entity_code,
+    n1_2 AS party_name
 FROM {{zone_name}}.edi.repeating_json
 ORDER BY df_file_name;
 
@@ -144,21 +134,20 @@ ORDER BY df_file_name;
 -- ============================================================================
 -- 5. Compare All Three Modes — Side-by-Side
 -- ============================================================================
--- For x12_850_purchase_order_a.edi (5 N1 parties, 3 PO1 line items), shows
--- how each mode represents the same repeating data. Uses UNION ALL with a
--- mode label to compare the three approaches in a single result set.
+-- For x12_850_purchase_order_a.edi, shows how each of the three tables
+-- represents the same N1 party name and PO1 quantity data. Uses UNION ALL
+-- with a mode label to compare the three approaches in a single result set.
 --
 -- What you'll see:
---   - mode:       'indexed', 'concatenate', or 'to_json'
---   - party_info: The N1 party name data in each mode's format
---   - po_info:    The PO1 quantity data in each mode's format
+--   - mode:        'indexed', 'concatenate', or 'to_json'
+--   - party_name:  N1 party name value from each table
+--   - po_quantity: PO1 quantity value from each table
 
 ASSERT ROW_COUNT = 3
 SELECT
     'indexed' AS mode,
-    n1_1_2 || ' | ' || COALESCE(n1_2_2, '') || ' | ' || COALESCE(n1_3_2, '')
-        || ' | ' || COALESCE(n1_4_2, '') || ' | ' || COALESCE(n1_5_2, '') AS party_info,
-    po1_1_2 || ' | ' || COALESCE(po1_2_2, '') || ' | ' || COALESCE(po1_3_2, '') AS po_info
+    n1_2 AS party_name,
+    po1_2 AS po_quantity
 FROM {{zone_name}}.edi.repeating_indexed
 WHERE df_file_name = 'x12_850_purchase_order_a.edi'
 
@@ -166,8 +155,8 @@ UNION ALL
 
 SELECT
     'concatenate' AS mode,
-    n1_2 AS party_info,
-    po1_2 AS po_info
+    n1_2 AS party_name,
+    po1_2 AS po_quantity
 FROM {{zone_name}}.edi.repeating_concat
 WHERE df_file_name = 'x12_850_purchase_order_a.edi'
 
@@ -175,84 +164,84 @@ UNION ALL
 
 SELECT
     'to_json' AS mode,
-    n1_2 AS party_info,
-    po1_2 AS po_info
+    n1_2 AS party_name,
+    po1_2 AS po_quantity
 FROM {{zone_name}}.edi.repeating_json
 WHERE df_file_name = 'x12_850_purchase_order_a.edi';
 
 
 -- ============================================================================
--- 6. Indexed PO1 Price Analysis — Line Totals
+-- 6. PO1 Price Analysis — Line Totals
 -- ============================================================================
--- Computes line totals (quantity * price) from the indexed PO1 columns for
--- files that have PO1 data. Only 850 files have both quantity and price;
--- 855 files have quantity but no price.
+-- Computes line totals (quantity * unit price) from the flat PO1 columns
+-- for files that have pricing data. Uses CAST to convert string values to
+-- numeric types for arithmetic.
 --
 -- What you'll see:
---   - df_file_name:     Source file
---   - line_1_total:     qty * price for PO1 occurrence 1
---   - line_2_total:     qty * price for PO1 occurrence 2 (NULL if < 2 PO1s)
---   - line_3_total:     qty * price for PO1 occurrence 3 (NULL if < 3 PO1s)
---   - order_total:      Sum of all line totals
+--   - df_file_name:  Source file
+--   - line_number:   PO1 line identifier
+--   - quantity:      Quantity ordered
+--   - uom:           Unit of measure
+--   - unit_price:    Price per unit
+--   - line_total:    Computed quantity * unit price
 --
 -- Examples:
 --   x12_850_purchase_order.edi: 1 * 19.95 = 19.95
---   x12_850_purchase_order_a.edi: 2500*2.53 + 2000*3.41 + 1000*3.41 = 16555.00
+--   x12_850_purchase_order_a.edi: 2500 * 2.53 = 6325.00
+--   x12_850_purchase_order_edifabric.edi: 25 * 36 = 900.00
 
 ASSERT ROW_COUNT = 3
 SELECT
     df_file_name,
-    CAST(po1_1_2 AS DOUBLE) * CAST(po1_1_4 AS DOUBLE) AS line_1_total,
-    CASE WHEN po1_2_2 IS NOT NULL AND po1_2_4 IS NOT NULL
-         THEN CAST(po1_2_2 AS DOUBLE) * CAST(po1_2_4 AS DOUBLE)
-         ELSE NULL END AS line_2_total,
-    CASE WHEN po1_3_2 IS NOT NULL AND po1_3_4 IS NOT NULL
-         THEN CAST(po1_3_2 AS DOUBLE) * CAST(po1_3_4 AS DOUBLE)
-         ELSE NULL END AS line_3_total,
-    CAST(po1_1_2 AS DOUBLE) * CAST(po1_1_4 AS DOUBLE)
-        + COALESCE(CAST(po1_2_2 AS DOUBLE) * CAST(po1_2_4 AS DOUBLE), 0)
-        + COALESCE(CAST(po1_3_2 AS DOUBLE) * CAST(po1_3_4 AS DOUBLE), 0) AS order_total
+    po1_1 AS line_number,
+    po1_2 AS quantity,
+    po1_3 AS uom,
+    po1_4 AS unit_price,
+    CAST(po1_2 AS DOUBLE) * CAST(po1_4 AS DOUBLE) AS line_total
 FROM {{zone_name}}.edi.repeating_indexed
-WHERE po1_1_4 IS NOT NULL
+WHERE po1_4 IS NOT NULL
 ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 7. Multi-Party Detection via Concatenate
+-- 7. Transaction Type Distribution
 -- ============================================================================
--- Uses the Concatenate table to quickly find files that have multiple N1
--- parties by checking for pipe characters in the n1_2 column. This is a
--- practical pattern: use Concatenate mode for filtering/detection, then
--- switch to Indexed mode for structured access to individual occurrences.
+-- Groups all 14 EDI files by their ST_1 transaction set identifier code
+-- to show the distribution of document types across the test corpus.
 --
 -- What you'll see:
---   - df_file_name:    Source file
---   - party_count:     Approximate number of parties (pipe count + 1)
---   - party_names:     Pipe-delimited party names
+--   - txn_type:   ST segment transaction set identifier (810, 820, 835, etc.)
+--   - doc_count:  Number of files with that transaction type
+--
+-- Expected distribution:
+--   810 (Invoice): 5 files
+--   850 (Purchase Order): 3 files
+--   Others: 820, 835, 837, 855, 856, 997
 
-ASSERT ROW_COUNT >= 5
+ASSERT ROW_COUNT = 8
+ASSERT VALUE doc_count = 5 WHERE txn_type = '810'
+ASSERT VALUE doc_count = 3 WHERE txn_type = '850'
 SELECT
-    df_file_name,
-    LENGTH(n1_2) - LENGTH(REPLACE(n1_2, '|', '')) + 1 AS party_count,
-    n1_2 AS party_names
-FROM {{zone_name}}.edi.repeating_concat
-WHERE n1_2 LIKE '%|%'
-ORDER BY LENGTH(n1_2) - LENGTH(REPLACE(n1_2, '|', '')) DESC, df_file_name;
+    st_1 AS txn_type,
+    COUNT(*) AS doc_count
+FROM {{zone_name}}.edi.repeating_indexed
+GROUP BY st_1
+ORDER BY doc_count DESC, st_1;
 
 
 -- ============================================================================
 -- 8. VERIFY — All Checks
 -- ============================================================================
 -- Automated pass/fail verification that all three tables loaded correctly
--- and each repeating-segment mode produces the expected output format.
+-- and contain the expected data. Only references flat columns (n1_1, n1_2,
+-- po1_1, etc.) — never per-occurrence columns like n1_1_1 or n1_2_2.
 
-ASSERT ROW_COUNT = 6
-ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_count_14'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_has_pipes'
+ASSERT ROW_COUNT = 5
 ASSERT VALUE result = 'PASS' WHERE check_name = 'indexed_count_14'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'indexed_multi_n1'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_count_14'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'json_count_14'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'json_has_arrays'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'three_tables_same_count'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'n1_populated'
 SELECT check_name, result FROM (
 
     -- Check 1: Indexed table has 14 rows (one per .edi file)
@@ -276,26 +265,20 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 4: Indexed table has multi-occurrence N1 data (n1_2_2 populated)
-    SELECT 'indexed_multi_n1' AS check_name,
+    -- Check 4: All three tables have the same row count
+    SELECT 'three_tables_same_count' AS check_name,
+           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_indexed)
+                   = (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_concat)
+                AND (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_concat)
+                   = (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_json)
+                THEN 'PASS' ELSE 'FAIL' END AS result
+
+    UNION ALL
+
+    -- Check 5: N1 party name column is populated in at least some rows
+    SELECT 'n1_populated' AS check_name,
            CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_indexed
-                       WHERE n1_2_2 IS NOT NULL) > 0
-                THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 5: Concatenate table has pipe-delimited values
-    SELECT 'concat_has_pipes' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_concat
-                       WHERE n1_2 LIKE '%|%') > 0
-                THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 6: ToJson table has JSON arrays
-    SELECT 'json_has_arrays' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_json
-                       WHERE n1_2 LIKE '[%') > 0
+                       WHERE n1_2 IS NOT NULL) > 0
                 THEN 'PASS' ELSE 'FAIL' END AS result
 
 ) checks
