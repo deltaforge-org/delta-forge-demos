@@ -38,6 +38,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.departments (
     budget_k    INT
 ) LOCATION '{{data_path}}/departments';
 
+GRANT ADMIN ON TABLE {{zone_name}}.graph.departments TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.graph.departments VALUES
     (0, 'Engineering',  3, 5000),
     (1, 'Marketing',    2, 2000),
@@ -49,7 +51,6 @@ INSERT INTO {{zone_name}}.graph.departments VALUES
     (7, 'Product',      3, 2200);
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.departments;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.departments TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -71,6 +72,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.employees (
     level       STRING,
     active      BOOLEAN
 ) LOCATION '{{data_path}}/employees';
+
+GRANT ADMIN ON TABLE {{zone_name}}.graph.employees TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.graph.employees
 SELECT
@@ -120,7 +123,6 @@ SELECT
 FROM generate_series(1, 100) AS t(id);
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.employees;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.employees TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -147,6 +149,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.connections (
     relationship_type   STRING,
     since_year          INT
 ) LOCATION '{{data_path}}/connections';
+
+GRANT ADMIN ON TABLE {{zone_name}}.graph.connections TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -325,7 +329,6 @@ FROM (
 WHERE src != dst;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.connections;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.connections TO USER {{current_user}};
 
 
 -- ============================================================================
