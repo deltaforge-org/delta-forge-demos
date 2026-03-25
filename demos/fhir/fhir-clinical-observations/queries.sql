@@ -129,7 +129,7 @@ ORDER BY df_file_name;
 -- patient has.
 
 ASSERT ROW_COUNT = 10
-ASSERT VALUE observation_count = 6 WHERE subject = 'Patient/bulk-patient-41'
+ASSERT VALUE observation_count = 6 WHERE subject = '{"reference":"Patient/bulk-patient-41"}'
 SELECT subject, COUNT(*) AS observation_count
 FROM {{zone_name}}.fhir.observations_bulk
 GROUP BY subject
