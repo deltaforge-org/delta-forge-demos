@@ -966,33 +966,6 @@
       ]
     },
     {
-      "id": "delta-generated-identity",
-      "path": "demos/delta/delta-generated-identity",
-      "iconPath": "icons/delta-generated-identity.svg",
-      "name": "Delta Generated & Identity Columns",
-      "summary": "Generated and identity columns let Delta tables derive values automatically \\ at write time, reducing application-side logic and ensuring consistency. \\ This is essential for computed financial...",
-      "categories": [
-        "delta-table",
-        "delta-dml-merge"
-      ],
-      "tags": [
-        "delta-table",
-        "advanced",
-        "generated-columns",
-        "identity",
-        "computed",
-        "cte",
-        "sequential"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 10,
-      "dataSizeBytes": 0,
-      "fileCount": 5,
-      "author": "Delta Forge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
-    },
-    {
       "id": "delta-in-commit-timestamps",
       "path": "demos/delta/delta-in-commit-timestamps",
       "iconPath": "icons/delta-in-commit-timestamps.svg",
@@ -1453,6 +1426,47 @@
       ]
     },
     {
+      "id": "delta-multi-level-partitioning",
+      "path": "demos/delta/delta-multi-level-partitioning",
+      "iconPath": "icons/delta-multi-level-partitioning.svg",
+      "name": "{{zone_name}}.delta_demos.quarter_dim",
+      "summary": "Multi-level partitioning creates a hierarchy of partition directories \\\r(e.g., region=us-east/quarter=Q1-2024/) that enables compound pruning: \\\rthe engine can skip partitions on BOTH dimensions simultaneously. A query \\\rfiltering on region AND quarter can prune down to 1 of 16 partitions — a \\\r93.7",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "partitioning",
+        "partition-pruning",
+        "multi-level",
+        "compound",
+        "join",
+        "analytics"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sales_ml"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.region_dim"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.quarter_dim"
+        }
+      ]
+    },
+    {
       "id": "delta-null-statistics",
       "path": "demos/delta/delta-null-statistics",
       "iconPath": "icons/delta-null-statistics.svg",
@@ -1482,6 +1496,39 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.null_demos.patient_records"
+        }
+      ]
+    },
+    {
+      "id": "delta-optimize-compaction",
+      "path": "demos/delta/delta-optimize-compaction",
+      "iconPath": "icons/delta-optimize-compaction.svg",
+      "name": "{{zone_name}}.delta_demos.daily_orders",
+      "summary": "OPTIMIZE is a Delta Lake maintenance command that compacts small Parquet files \\\rinto larger, optimally-sized ones. Frequent small INSERTs — such as daily batch \\\rloads or streaming micro-batches — create a \"small files problem\" that degrades \\\rread performance due to excessive file-open overhead. \\",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "optimize",
+        "compaction",
+        "maintenance",
+        "performance",
+        "small-files",
+        "target-size"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.daily_orders"
         }
       ]
     },
@@ -1520,6 +1567,42 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.supplier_feed"
+        }
+      ]
+    },
+    {
+      "id": "delta-partition-pitfalls",
+      "path": "demos/delta/delta-partition-pitfalls",
+      "iconPath": "icons/delta-partition-pitfalls.svg",
+      "name": "{{zone_name}}.delta_demos.events_by_month",
+      "summary": "Over-partitioning is one of the most common Delta table design mistakes. When \\\ra table is partitioned by a high-cardinality column (like customer_id), each \\\rpartition directory contains very few rows, creating hundreds or thousands of \\\rtiny Parquet files. This \"small files problem\" degrades query",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "partitioning",
+        "small-files",
+        "repartitioning",
+        "insert-into-select",
+        "optimize"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.events_by_customer"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.events_by_month"
         }
       ]
     },
@@ -1622,6 +1705,38 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.warehouse_orders"
+        }
+      ]
+    },
+    {
+      "id": "delta-partition-time-series",
+      "path": "demos/delta/delta-partition-time-series",
+      "iconPath": "icons/delta-partition-time-series.svg",
+      "name": "{{zone_name}}.delta_demos.line_metrics",
+      "summary": "Time-based partitioning is the most common strategy in production data lakes, \\\rorganizing files into directories by time period (year_month, event_date, etc.). \\\rThis demo partitions factory sensor readings by month and demonstrates time-range \\\rqueries with partition pruning, partition-scoped reca",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "partitioning",
+        "time-series",
+        "iot",
+        "backfill",
+        "insert-into-select"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.line_metrics"
         }
       ]
     },
@@ -1889,6 +2004,38 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sensor_readings"
+        }
+      ]
+    },
+    {
+      "id": "delta-row-tracking",
+      "path": "demos/delta/delta-row-tracking",
+      "iconPath": "icons/delta-row-tracking.svg",
+      "name": "{{zone_name}}.delta_demos.compliance_audit",
+      "summary": "Row tracking is a Delta Lake protocol feature that assigns stable, unique \\identifiers to each row so that changes can be traced across versions. It \\enables fine-grained change detection for CDC pipelines, merge operations, \\and regulatory compliance. This demo builds a financial audit trail that \\",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "row-tracking",
+        "audit",
+        "compliance",
+        "versioning",
+        "lineage"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.compliance_audit"
         }
       ]
     },
@@ -4203,41 +4350,6 @@
           "name": "{{zone_name}}.protobuf.contact_phones"
         }
       ]
-    },
-    {
-      "id": "pseudonymisation-healthcare",
-      "path": "demos/pseudonymisation/pseudonymisation-healthcare",
-      "iconPath": "icons/pseudonymisation-healthcare.svg",
-      "name": "Pseudonymisation — Healthcare HL7, FHIR & EDI",
-      "summary": "Demonstrates GDPR-compliant pseudonymisation across HL7 v2 ADT patients, FHIR R4 Patient resources, and EDI HIPAA X12 claims. All 7 transform types (keyed_hash, encrypt, redact, generalize, tokenize, mask, hash), wildcard column patterns (address_*, *_name), scoped linkability (person, relationship, transaction), APPLY for permanent de-identification, and HIPAA Safe Harbor compliance mapping.",
-      "categories": [
-        "healthcare",
-        "pseudonymisation"
-      ],
-      "tags": [
-        "pseudonymisation",
-        "healthcare",
-        "hl7",
-        "fhir",
-        "edi",
-        "hipaa",
-        "gdpr",
-        "data-protection",
-        "keyed-hash",
-        "encrypt",
-        "redact",
-        "tokenize",
-        "mask",
-        "generalize",
-        "compliance"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 10,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "Delta Forge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
     },
     {
       "id": "sales-quickstart",
