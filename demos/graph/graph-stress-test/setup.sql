@@ -46,6 +46,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.st_departments (
     region      STRING
 ) LOCATION '{{data_path}}/st_departments';
 
+GRANT ADMIN ON TABLE {{zone_name}}.graph.st_departments TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.graph.st_departments VALUES
     (0,  'Engineering',       3, 8000, 'Americas'),
     (1,  'Marketing',         2, 3000, 'Americas'),
@@ -69,7 +71,6 @@ INSERT INTO {{zone_name}}.graph.st_departments VALUES
     (19, 'AI/ML',             5, 7000, 'APAC');
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.st_departments;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.st_departments TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -92,6 +93,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.st_people (
     salary_band     STRING,
     active          BOOLEAN
 ) LOCATION '{{data_path}}/st_people';
+
+GRANT ADMIN ON TABLE {{zone_name}}.graph.st_people TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.graph.st_people
 SELECT
@@ -178,7 +181,6 @@ SELECT
 FROM generate_series(1, 1000000) AS t(id);
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.st_people;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.st_people TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -211,6 +213,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.st_edges (
     relationship_type   STRING,
     since_year          INT
 ) LOCATION '{{data_path}}/st_edges';
+
+GRANT ADMIN ON TABLE {{zone_name}}.graph.st_edges TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -501,7 +505,6 @@ FROM (
 WHERE src != dst;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.st_edges;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.st_edges TO USER {{current_user}};
 
 
 -- ============================================================================
