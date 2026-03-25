@@ -127,7 +127,6 @@ SELECT
     st_1,
     ak3_1,
     ak3_2,
-    ak3_3,
     ak4_1,
     ak4_2,
     ak4_3
