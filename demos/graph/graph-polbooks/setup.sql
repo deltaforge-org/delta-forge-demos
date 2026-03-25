@@ -37,8 +37,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.polbooks_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.raw.polbooks_edges;
 GRANT ADMIN ON TABLE {{zone_name}}.raw.polbooks_edges TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.raw.polbooks_edges;
 
 
 -- ############################################################################
@@ -55,8 +55,8 @@ AS SELECT
     CAST(weight AS DOUBLE) AS weight
 FROM {{zone_name}}.raw.polbooks_edges;
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.polbooks.edges;
 GRANT ADMIN ON TABLE {{zone_name}}.polbooks.edges TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.polbooks.edges;
 
 
 -- === Vertex Table (derived from edges) ===
@@ -69,8 +69,8 @@ AS SELECT DISTINCT vertex_id FROM (
     SELECT dst AS vertex_id FROM {{zone_name}}.polbooks.edges
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.polbooks.vertices;
 GRANT ADMIN ON TABLE {{zone_name}}.polbooks.vertices TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.polbooks.vertices;
 
 
 -- ############################################################################
