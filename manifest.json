@@ -27,7 +27,21 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.avro.all_readings"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.avro.floor4_only"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.avro.readings_sample"
+        }
+      ]
     },
     {
       "id": "csv-options-testbench",
@@ -52,7 +66,41 @@
       "fileCount": 8,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-22T12:00:00Z"
+      "updatedAt": "2026-02-22T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_delimiter"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_null_value"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_comment"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_skip_rows"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_max_rows"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_trim"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_quoted"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.opt_combined"
+        }
+      ]
     },
     {
       "id": "delta-advanced-sql",
@@ -80,7 +128,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.stock_prices"
+        }
+      ]
     },
     {
       "id": "delta-append-only-event-sourcing",
@@ -107,7 +161,13 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.order_events"
+        }
+      ]
     },
     {
       "id": "delta-audit-trail-versioning",
@@ -135,7 +195,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.audit_demos.compliance_events"
+        }
+      ]
     },
     {
       "id": "delta-auto-optimize",
@@ -162,7 +228,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.iot_readings"
+        }
+      ]
     },
     {
       "id": "delta-basics-crud",
@@ -189,7 +261,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.products"
+        }
+      ]
     },
     {
       "id": "delta-binary-geometry",
@@ -216,7 +294,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.document_store"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.geo_locations"
+        }
+      ]
     },
     {
       "id": "delta-binary-geometry-advanced",
@@ -248,7 +336,21 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.documents"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.locations"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.audit_log"
+        }
+      ]
     },
     {
       "id": "delta-bloom-filters",
@@ -275,7 +377,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.transaction_log"
+        }
+      ]
     },
     {
       "id": "delta-change-data-feed",
@@ -302,7 +410,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.customer_accounts"
+        }
+      ]
     },
     {
       "id": "delta-collations",
@@ -328,7 +442,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.global_contacts"
+        }
+      ]
     },
     {
       "id": "delta-column-mapping",
@@ -356,7 +476,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.employee_directory"
+        }
+      ]
     },
     {
       "id": "delta-complex-types",
@@ -383,7 +509,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.employees"
+        }
+      ]
     },
     {
       "id": "delta-computed-columns",
@@ -410,7 +542,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sales_invoices"
+        }
+      ]
     },
     {
       "id": "delta-constraint-enforcement",
@@ -437,7 +575,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.validated_employees"
+        }
+      ]
     },
     {
       "id": "delta-constraints-lifecycle",
@@ -465,7 +609,13 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.products"
+        }
+      ]
     },
     {
       "id": "delta-constraints-properties",
@@ -492,7 +642,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.invoices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.event_log"
+        }
+      ]
     },
     {
       "id": "delta-convert-to-delta",
@@ -520,7 +680,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.legacy_data"
+        }
+      ]
     },
     {
       "id": "delta-decimal-precision",
@@ -546,7 +712,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.financial_ledger"
+        }
+      ]
     },
     {
       "id": "delta-default-values",
@@ -572,7 +744,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.audit_log"
+        }
+      ]
     },
     {
       "id": "delta-deletion-vectors",
@@ -598,7 +776,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.web_sessions"
+        }
+      ]
     },
     {
       "id": "delta-dml-patterns",
@@ -624,7 +808,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.order_history"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.order_archive"
+        }
+      ]
     },
     {
       "id": "delta-dv-accumulation",
@@ -651,7 +845,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.patient_visits"
+        }
+      ]
     },
     {
       "id": "delta-dynamic-partition-pruning",
@@ -678,7 +878,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sales_facts"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.region_targets"
+        }
+      ]
     },
     {
       "id": "delta-edge-cases",
@@ -705,7 +915,21 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.config_singleton"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.wide_metrics"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.empty_staging"
+        }
+      ]
     },
     {
       "id": "delta-gdpr-data-erasure",
@@ -733,7 +957,13 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.customer_accounts"
+        }
+      ]
     },
     {
       "id": "delta-generated-identity",
@@ -786,7 +1016,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.release_tracker"
+        }
+      ]
     },
     {
       "id": "delta-merge-advanced",
@@ -813,7 +1049,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.inventory_master"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.inventory_updates"
+        }
+      ]
     },
     {
       "id": "delta-merge-composite-keys",
@@ -842,7 +1088,17 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.fleet_daily_summary"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.telemetry_batch"
+        }
+      ]
     },
     {
       "id": "delta-merge-computed-columns",
@@ -869,7 +1125,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.subscriptions"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.subscription_changes"
+        }
+      ]
     },
     {
       "id": "delta-merge-dedup",
@@ -897,7 +1163,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.events"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.events_deduped"
+        }
+      ]
     },
     {
       "id": "delta-merge-dv-lifecycle",
@@ -924,7 +1200,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.product_catalog"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.supplier_feed"
+        }
+      ]
     },
     {
       "id": "delta-merge-idempotent",
@@ -953,7 +1239,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sensor_readings"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sensor_batch"
+        }
+      ]
     },
     {
       "id": "delta-merge-multi-source",
@@ -982,7 +1278,25 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.order_status"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.shipping_updates"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.payment_updates"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.return_updates"
+        }
+      ]
     },
     {
       "id": "delta-merge-scd2",
@@ -1011,7 +1325,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.policy_dim"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.policy_changes"
+        }
+      ]
     },
     {
       "id": "delta-merge-soft-delete",
@@ -1039,7 +1363,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.vendors"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.vendor_feed"
+        }
+      ]
     },
     {
       "id": "delta-merge-subquery",
@@ -1068,7 +1402,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.daily_revenue"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.order_events"
+        }
+      ]
     },
     {
       "id": "delta-merge-upsert",
@@ -1096,7 +1440,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "2.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.products"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.product_feed"
+        }
+      ]
     },
     {
       "id": "delta-null-statistics",
@@ -1123,7 +1477,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.null_demos.patient_records"
+        }
+      ]
     },
     {
       "id": "delta-partition-merge",
@@ -1151,7 +1511,17 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.product_catalog"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.supplier_feed"
+        }
+      ]
     },
     {
       "id": "delta-partition-replace",
@@ -1179,7 +1549,13 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.monthly_sales"
+        }
+      ]
     },
     {
       "id": "delta-partition-replace-dv",
@@ -1208,7 +1584,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.monthly_settlements"
+        }
+      ]
     },
     {
       "id": "delta-partition-selective-optimize",
@@ -1235,7 +1617,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.warehouse_orders"
+        }
+      ]
     },
     {
       "id": "delta-partitioning",
@@ -1261,7 +1649,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.orders"
+        }
+      ]
     },
     {
       "id": "delta-partitions-dv",
@@ -1288,7 +1682,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.cloud_events"
+        }
+      ]
     },
     {
       "id": "delta-restore-advanced",
@@ -1315,7 +1715,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.config_settings"
+        }
+      ]
     },
     {
       "id": "delta-restore-partitioned",
@@ -1343,7 +1749,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.quarterly_revenue"
+        }
+      ]
     },
     {
       "id": "delta-restore-rollback",
@@ -1370,7 +1782,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.product_inventory"
+        }
+      ]
     },
     {
       "id": "delta-restore-selective-recovery",
@@ -1398,7 +1816,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.portfolio_positions"
+        }
+      ]
     },
     {
       "id": "delta-restore-time-travel",
@@ -1426,7 +1850,13 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.course_grades"
+        }
+      ]
     },
     {
       "id": "delta-restore-vacuum-lifecycle",
@@ -1454,7 +1884,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sensor_readings"
+        }
+      ]
     },
     {
       "id": "delta-schema-evolution",
@@ -1480,7 +1916,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.contacts"
+        }
+      ]
     },
     {
       "id": "delta-schema-evolution-advanced",
@@ -1508,7 +1950,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.product_catalog"
+        }
+      ]
     },
     {
       "id": "delta-statistics-skipping",
@@ -1535,7 +1983,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.skipping_demos.orders"
+        }
+      ]
     },
     {
       "id": "delta-string-statistics",
@@ -1562,7 +2016,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.string_demos.product_catalog"
+        }
+      ]
     },
     {
       "id": "delta-table-features",
@@ -1589,7 +2049,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.feature_demo"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.audit_trail"
+        }
+      ]
     },
     {
       "id": "delta-table-properties-lifecycle",
@@ -1616,7 +2086,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.props_demos.inventory_items"
+        }
+      ]
     },
     {
       "id": "delta-time-travel-deep",
@@ -1642,7 +2118,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sensor_readings"
+        }
+      ]
     },
     {
       "id": "delta-time-travel-optimize",
@@ -1668,7 +2150,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.inventory"
+        }
+      ]
     },
     {
       "id": "delta-timestamp-ntz",
@@ -1694,7 +2182,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.flight_schedule"
+        }
+      ]
     },
     {
       "id": "delta-type-widening",
@@ -1721,7 +2215,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.measurements"
+        }
+      ]
     },
     {
       "id": "delta-unicode-encoding",
@@ -1748,7 +2248,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.global_products"
+        }
+      ]
     },
     {
       "id": "delta-update-cross-partition",
@@ -1775,7 +2281,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.subscriptions"
+        }
+      ]
     },
     {
       "id": "delta-update-expressions",
@@ -1803,7 +2315,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.update_demos.portfolio_holdings"
+        }
+      ]
     },
     {
       "id": "delta-update-multi-pass",
@@ -1833,7 +2351,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.pipeline_demos.order_pipeline"
+        }
+      ]
     },
     {
       "id": "delta-update-null-backfill",
@@ -1862,7 +2386,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.backfill_demos.patient_records"
+        }
+      ]
     },
     {
       "id": "delta-update-string-cleansing",
@@ -1892,7 +2422,13 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.cleansing_demos.customer_imports"
+        }
+      ]
     },
     {
       "id": "delta-vacuum-cdc-interaction",
@@ -1919,7 +2455,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.order_lifecycle"
+        }
+      ]
     },
     {
       "id": "delta-vacuum-cleanup",
@@ -1946,7 +2488,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.hr_employees"
+        }
+      ]
     },
     {
       "id": "delta-variant-type",
@@ -1973,7 +2521,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.api_events"
+        }
+      ]
     },
     {
       "id": "delta-views-data-masking",
@@ -1999,7 +2553,13 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-24T12:00:00Z"
+      "updatedAt": "2026-03-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.customer_orders"
+        }
+      ]
     },
     {
       "id": "delta-zorder-deep",
@@ -2027,7 +2587,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.sensor_telemetry"
+        }
+      ]
     },
     {
       "id": "delta-zorder-transactions",
@@ -2054,7 +2620,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z"
+      "updatedAt": "2026-03-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.web_analytics"
+        }
+      ]
     },
     {
       "id": "edi-edifact-international-trade",
@@ -2082,7 +2654,17 @@
       "fileCount": 22,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.edifact_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.edifact_materialized"
+        }
+      ]
     },
     {
       "id": "edi-hipaa-healthcare",
@@ -2111,7 +2693,17 @@
       "fileCount": 11,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.hipaa_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.hipaa_materialized"
+        }
+      ]
     },
     {
       "id": "edi-supply-chain-x12",
@@ -2139,7 +2731,17 @@
       "fileCount": 14,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.supply_chain_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.supply_chain_materialized"
+        }
+      ]
     },
     {
       "id": "edi-tradacoms-uk-retail",
@@ -2167,7 +2769,17 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.tradacoms_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.tradacoms_materialized"
+        }
+      ]
     },
     {
       "id": "edi-transportation-logistics",
@@ -2194,7 +2806,17 @@
       "fileCount": 12,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.logistics_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.logistics_materialized"
+        }
+      ]
     },
     {
       "id": "excel-sales-analytics",
@@ -2221,7 +2843,29 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.all_orders"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.orders_2017"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.orders_range"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.orders_trimmed"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.orders_no_header"
+        }
+      ]
     },
     {
       "id": "fhir-clinical-observations",
@@ -2251,7 +2895,17 @@
       "fileCount": 15,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.observations_bulk"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.observations_clinical"
+        }
+      ]
     },
     {
       "id": "fhir-clinical-records",
@@ -2283,7 +2937,21 @@
       "fileCount": 22,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.conditions"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.procedures"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.allergies"
+        }
+      ]
     },
     {
       "id": "fhir-medications-prescriptions",
@@ -2314,7 +2982,17 @@
       "fileCount": 16,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.prescriptions"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.coverage"
+        }
+      ]
     },
     {
       "id": "fhir-patient-demographics",
@@ -2343,7 +3021,17 @@
       "fileCount": 8,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.patients_bulk"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir.patients_detailed"
+        }
+      ]
     },
     {
       "id": "fhir-xml-clinical-resources",
@@ -2374,7 +3062,17 @@
       "fileCount": 16,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir_xml.patients_xml"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir_xml.observations_xml"
+        }
+      ]
     },
     {
       "id": "graph-cypher-queries",
@@ -2400,7 +3098,21 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-03T12:00:00Z"
+      "updatedAt": "2026-03-03T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "cypher_demo"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.friendships_cypher"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.persons_cypher"
+        }
+      ]
     },
     {
       "id": "graph-dolphins",
@@ -2425,7 +3137,21 @@
       "fileCount": 1,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-08T12:00:00Z"
+      "updatedAt": "2026-03-08T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "dolphins_social"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.dolphins.vertices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.dolphins.edges"
+        }
+      ]
     },
     {
       "id": "graph-email-eu-core",
@@ -2451,7 +3177,21 @@
       "fileCount": 1,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-08T12:00:00Z"
+      "updatedAt": "2026-03-08T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "email_eu_core"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.email_eu.vertices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.email_eu.edges"
+        }
+      ]
     },
     {
       "id": "graph-flattened-mode",
@@ -2477,7 +3217,21 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-03T12:00:00Z"
+      "updatedAt": "2026-03-03T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "flattened_demo"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.friendships_flattened"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.persons_flattened"
+        }
+      ]
     },
     {
       "id": "graph-hybrid-mode",
@@ -2503,7 +3257,21 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-03T12:00:00Z"
+      "updatedAt": "2026-03-03T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "hybrid_demo"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.friendships_hybrid"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.persons_hybrid"
+        }
+      ]
     },
     {
       "id": "graph-json-mode",
@@ -2529,7 +3297,21 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-03T12:00:00Z"
+      "updatedAt": "2026-03-03T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "json_demo"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.friendships_json"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.persons_json"
+        }
+      ]
     },
     {
       "id": "graph-karate-club",
@@ -2555,7 +3337,21 @@
       "fileCount": 1,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-08T12:00:00Z"
+      "updatedAt": "2026-03-08T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "karate_club"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.karate.vertices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.karate.edges"
+        }
+      ]
     },
     {
       "id": "graph-ldbc-snb",
@@ -2584,7 +3380,145 @@
       "fileCount": 33,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-06T12:00:00Z"
+      "updatedAt": "2026-03-06T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "ldbc_social_network"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.comment"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.post"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.forum"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.place"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.organisation"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.tag"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.tagclass"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_knows_person"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.comment_has_creator_person"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.comment_has_tag_tag"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.comment_is_located_in_place"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.comment_reply_of_comment"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.comment_reply_of_post"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.forum_container_of_post"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.forum_has_member_person"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.forum_has_moderator_person"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.forum_has_tag_tag"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_email"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_has_interest_tag"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_is_located_in_place"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_likes_comment"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_likes_post"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_speaks_language"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_study_at_organisation"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.person_work_at_organisation"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.post_has_creator_person"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.post_has_tag_tag"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.post_is_located_in_place"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.organisation_is_located_in_place"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.place_is_part_of_place"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.tag_has_type_tagclass"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.ldbc.tagclass_is_subclass_of_tagclass"
+        }
+      ]
     },
     {
       "id": "graph-netscience",
@@ -2610,7 +3544,21 @@
       "fileCount": 1,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-08T12:00:00Z"
+      "updatedAt": "2026-03-08T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "netscience_collab"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.netscience.vertices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.netscience.edges"
+        }
+      ]
     },
     {
       "id": "graph-polbooks",
@@ -2635,7 +3583,21 @@
       "fileCount": 1,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-08T12:00:00Z"
+      "updatedAt": "2026-03-08T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "political_books"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.polbooks.vertices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.polbooks.edges"
+        }
+      ]
     },
     {
       "id": "graph-social-network",
@@ -2661,7 +3623,25 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-03T12:00:00Z"
+      "updatedAt": "2026-03-03T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "social_network"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.connections"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.employees"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.departments"
+        }
+      ]
     },
     {
       "id": "graph-stress-test",
@@ -2689,7 +3669,25 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-04T12:00:00Z"
+      "updatedAt": "2026-03-04T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "stress_test_network"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.st_edges"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.st_people"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.graph.st_departments"
+        }
+      ]
     },
     {
       "id": "h3-gps-fleet-tracker",
@@ -2717,7 +3715,21 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.gps_points"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.regions"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.landmarks"
+        }
+      ]
     },
     {
       "id": "h3-point-in-polygon",
@@ -2745,7 +3757,17 @@
       "fileCount": 0,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.driver_positions"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.zones"
+        }
+      ]
     },
     {
       "id": "hl7-clinical-workflows",
@@ -2774,7 +3796,17 @@
       "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7.clinical_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7.clinical_materialized"
+        }
+      ]
     },
     {
       "id": "hl7-lab-orders-results",
@@ -2803,7 +3835,17 @@
       "fileCount": 8,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7.lab_orders"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7.lab_results"
+        }
+      ]
     },
     {
       "id": "hl7-patient-admin",
@@ -2831,7 +3873,17 @@
       "fileCount": 8,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7.adt_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7.adt_materialized"
+        }
+      ]
     },
     {
       "id": "json-country-factbook",
@@ -2858,7 +3910,17 @@
       "fileCount": 10,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.json.countries"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.json.country_economy"
+        }
+      ]
     },
     {
       "id": "json-customers-basics",
@@ -2882,7 +3944,13 @@
       "fileCount": 1,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.json.customers"
+        }
+      ]
     },
     {
       "id": "json-music-catalog",
@@ -2908,7 +3976,17 @@
       "fileCount": 3,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.json.album_tracks"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.json.album_summary"
+        }
+      ]
     },
     {
       "id": "json-subtree-capture",
@@ -2960,7 +4038,53 @@
       "fileCount": 11,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-11T12:00:00Z"
+      "updatedAt": "2026-02-11T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_employee_territories"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_territories"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_regions"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_shippers"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_suppliers"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_categories"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_products"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_order_details"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_orders"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_employees"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_customers"
+        }
+      ]
     },
     {
       "id": "orc-server-logs",
@@ -2986,7 +4110,17 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc.all_requests"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc.api01_only"
+        }
+      ]
     },
     {
       "id": "parquet-supply-chain",
@@ -3013,7 +4147,25 @@
       "fileCount": 14,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.parquet.all_orders"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.parquet.orders_2015"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.parquet.orders_sample"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.parquet.orders_q1_2014"
+        }
+      ]
     },
     {
       "id": "protobuf-addressbook-contacts",
@@ -3040,7 +4192,17 @@
       "fileCount": 3,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-27T12:00:00Z"
+      "updatedAt": "2026-02-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.protobuf.contacts"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.protobuf.contact_phones"
+        }
+      ]
     },
     {
       "id": "pseudonymisation-healthcare",
@@ -3099,7 +4261,13 @@
       "fileCount": 2,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-11T12:00:00Z"
+      "updatedAt": "2026-02-11T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.sales"
+        }
+      ]
     },
     {
       "id": "xml-books-schema-evolution",
@@ -3123,7 +4291,13 @@
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-22T12:00:00Z"
+      "updatedAt": "2026-02-22T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.xml.books_evolved"
+        }
+      ]
     },
     {
       "id": "xml-ecommerce-order-lines",
@@ -3151,7 +4325,17 @@
       "fileCount": 2,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.xml.order_lines"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.xml.order_summary"
+        }
+      ]
     },
     {
       "id": "xml-nyt-news-rss",
@@ -3178,7 +4362,17 @@
       "fileCount": 7,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z"
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.xml.news_articles"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.xml.news_categories"
+        }
+      ]
     },
     {
       "id": "xml-subtree-capture",
