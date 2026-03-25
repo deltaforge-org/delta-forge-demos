@@ -137,7 +137,8 @@ ASSERT VALUE catalog_book_title = 'Dragon''s Keep' WHERE catalog_book_attr_id = 
 ASSERT VALUE catalog_book_price = '6.95' WHERE catalog_book_attr_id = 'bk113'
 ASSERT VALUE catalog_book_attr_format = 'hardcover' WHERE catalog_book_attr_id = 'bk113'
 ASSERT VALUE catalog_book_series = 'Maeve Saga' WHERE catalog_book_attr_id = 'bk113'
-SELECT catalog_book_attr_id, catalog_book_author, catalog_book_title, catalog_book_genre, catalog_book_price
+SELECT catalog_book_attr_id, catalog_book_author, catalog_book_title, catalog_book_genre, catalog_book_price,
+       catalog_book_rating, catalog_book_attr_format, catalog_book_series
 FROM {{zone_name}}.xml.books_evolved
 WHERE catalog_book_attr_id IN ('bk101', 'bk108', 'bk113')
 ORDER BY catalog_book_attr_id;
