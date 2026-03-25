@@ -3363,6 +3363,129 @@
       ]
     },
     {
+      "id": "edi-hipaa-claim-status-tracking",
+      "path": "demos/edi/edi-hipaa-claim-status-tracking",
+      "iconPath": "icons/edi-hipaa-claim-status-tracking.svg",
+      "name": "EDI HIPAA Claim Status — Inquiry & Authorization Tracking",
+      "summary": "Demonstrates HIPAA claim status tracking and prior authorization review using CASE on composite status codes, LIKE pattern matching, and multi-table JOINs. Three transactions cover the 276/277 claim status request/response cycle and 278 health services review. Queries classify composite STC codes (P3:317 = pending, F0:3 = finalized) using LIKE, correlate request amounts with response statuses, and JOIN two specialized tables for unified lifecycle views.",
+      "categories": [
+        "edi",
+        "healthcare"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "hipaa",
+        "intermediate",
+        "healthcare",
+        "claim-status",
+        "authorization",
+        "like",
+        "join",
+        "status-codes"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 2629,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.status_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.status_details"
+        }
+      ]
+    },
+    {
+      "id": "edi-hipaa-claims-financial",
+      "path": "demos/edi/edi-hipaa-claims-financial",
+      "iconPath": "icons/edi-hipaa-claims-financial.svg",
+      "name": "EDI HIPAA Claims Financial — Charge & Remittance Analysis",
+      "summary": "Demonstrates financial analysis of HIPAA X12 healthcare claims using SUM, CAST, HAVING, and JOIN — SQL features not covered by any other EDI demo. Four transactions cover 837 professional/dental/institutional claims and 835 remittance advice. Queries compute total charges with SUM, filter with HAVING, calculate write-off percentages with CAST and arithmetic, and JOIN claim charges with remittance payments for end-to-end reconciliation.",
+      "categories": [
+        "edi",
+        "healthcare"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "hipaa",
+        "intermediate",
+        "healthcare",
+        "claims",
+        "financial",
+        "remittance",
+        "sum",
+        "cast",
+        "having",
+        "join"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 4135,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.claims_header"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.claims_remittance"
+        }
+      ]
+    },
+    {
+      "id": "edi-hipaa-eligibility-enrollment",
+      "path": "demos/edi/edi-hipaa-eligibility-enrollment",
+      "iconPath": "icons/edi-hipaa-eligibility-enrollment.svg",
+      "name": "EDI HIPAA Eligibility & Enrollment — Coverage Verification",
+      "summary": "Demonstrates HIPAA eligibility verification and benefit enrollment analysis using CTEs, JOINs, and COALESCE — SQL patterns unique across all EDI demos. Three transactions cover the 270/271 eligibility request/response cycle and 834 benefit enrollment. A CTE pairs request with response by matching TRN trace numbers, and a JOIN correlates eligibility context with enrollment plan data.",
+      "categories": [
+        "edi",
+        "healthcare"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "hipaa",
+        "intermediate",
+        "healthcare",
+        "eligibility",
+        "enrollment",
+        "cte",
+        "join",
+        "coalesce",
+        "coverage"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 1986,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.eligibility_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.enrollment_details"
+        }
+      ]
+    },
+    {
       "id": "edi-hipaa-healthcare",
       "path": "demos/edi/edi-hipaa-healthcare",
       "iconPath": "icons/edi-hipaa-healthcare.svg",
