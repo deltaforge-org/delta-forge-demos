@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ur" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular roundtrip arrow -->
+  <path d="M40 14 A22 22 0 1 1 18 36" stroke="url(#ur)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M15 30L18 36L24 33" stroke="url(#ur)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Unicode glyphs orbiting the circle -->
+  <text x="40" y="12" text-anchor="middle" font-size="7" font-family="serif" fill="url(#ur)" opacity=".9">漢</text>
+  <text x="62" y="28" text-anchor="middle" font-size="7" font-family="serif" fill="url(#ur)" opacity=".8">Ü</text>
+  <text x="62" y="50" text-anchor="middle" font-size="7" font-family="serif" fill="url(#ur)" opacity=".7">ع</text>
+  <text x="40" y="62" text-anchor="middle" font-size="7" font-family="serif" fill="url(#ur)" opacity=".8">Д</text>
+  <text x="18" y="50" text-anchor="middle" font-size="7" font-family="serif" fill="url(#ur)" opacity=".9">한</text>
+  <!-- Center checkmark -->
+  <path d="M34 38L38 42L46 34" stroke="url(#ur)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Label -->
+  <rect x="14" y="66" width="52" height="10" rx="5" fill="url(#ur)" fill-opacity=".15" stroke="url(#ur)" stroke-width="1"/>
+  <text x="40" y="73" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ur)" opacity=".7">ROUNDTRIP</text>
+</svg>

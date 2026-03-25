@@ -1,0 +1,27 @@
+[demo]
+id = "delta-vacuum-retention-governance"
+name = "Delta VACUUM Retention Governance — Compliance-Driven Data Lifecycle"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Financial regulators may request historical snapshots of trade settlement \
+data at any time. VACUUM's retention period controls how far back time \
+travel can reach — too aggressive and you lose audit capability, too \
+conservative and storage costs spiral. This demo walks through a \
+settlement lifecycle with multiple status transitions, then compares two \
+VACUUM strategies: a safe retention window (preserves all recent versions) \
+versus aggressive cleanup (RETAIN 0 HOURS). DESCRIBE HISTORY proves the \
+audit trail survives either way — only the data files are affected.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "vacuum", "retention", "governance", "compliance", "time-travel", "describe-history"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.settlement_records"

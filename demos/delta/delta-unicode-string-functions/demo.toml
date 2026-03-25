@@ -1,0 +1,27 @@
+[demo]
+id = "delta-unicode-string-functions"
+name = "Delta Unicode String Functions — Multi-Byte Operations"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A multilingual customer support platform (PolyglotDesk) receives tickets from \
+15+ countries with customer names and messages in Japanese, Greek, Cyrillic, \
+Arabic, Hebrew, Korean, Vietnamese, Turkish, and European diacritics. \
+This demo tests whether SQL string functions — LENGTH, UPPER, LOWER, SUBSTR, \
+LIKE, and CONCAT — correctly handle multi-byte UTF-8 characters. LENGTH must \
+return character count (not byte count), SUBSTR must not split multi-byte \
+sequences, UPPER must preserve diacritics (ü → Ü), and LIKE must match \
+Unicode patterns like '%%質問%%'.
+"""
+categories = ["delta-table", "delta-schema-types"]
+tags = ["delta-table", "intermediate", "unicode", "string-functions", "i18n", "utf-8", "length", "substr"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.support_tickets"

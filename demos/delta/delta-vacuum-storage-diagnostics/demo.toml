@@ -1,0 +1,26 @@
+[demo]
+id = "delta-vacuum-storage-diagnostics"
+name = "Delta VACUUM Storage Diagnostics — Measuring Cleanup Impact"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+After every UPDATE and DELETE, Delta's copy-on-write model orphans old Parquet \
+files on disk. Storage grows silently until someone asks: "How much space are \
+we wasting?" This demo walks through a product inventory lifecycle — price \
+adjustments, discontinued items, new arrivals — using DESCRIBE DETAIL at each \
+stage to track version, file count, and byte size. After VACUUM cleans up \
+orphaned files, the same diagnostic queries prove the cleanup worked while \
+data remains bit-for-bit identical.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "vacuum", "describe-detail", "storage", "diagnostics", "maintenance"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.product_inventory"

@@ -1,0 +1,26 @@
+[demo]
+id = "delta-unicode-partitioning"
+name = "Delta Unicode Partitioning — Non-ASCII Partition Keys"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A global content delivery network (StreamNet CDN) partitions content metadata \
+by region names written in their native script: 日本語, العربية, Русский, \
+Français, Português. Delta creates separate directories for each partition \
+value, and those directory names contain the raw UTF-8 partition key. \
+This demo proves that partition pruning, cross-partition queries, INSERT, \
+UPDATE, and DELETE all work correctly when partition keys are non-ASCII \
+multi-byte strings.
+"""
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "intermediate", "unicode", "partitioning", "i18n", "utf-8", "partition-pruning"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.cdn_content"

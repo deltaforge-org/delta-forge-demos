@@ -1,0 +1,27 @@
+[demo]
+id = "delta-unicode-roundtrip"
+name = "Delta Unicode Roundtrip — Mutation Fidelity Proof"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+An international e-commerce marketplace (GlobalBazaar) stores product listings \
+in sellers' native scripts — Japanese kanji, Chinese simplified, Korean hangul, \
+Arabic, Hebrew, Cyrillic, and Latin diacritics. Every DML operation (INSERT, \
+UPDATE, DELETE) must preserve multi-byte UTF-8 characters exactly. \
+This demo proves roundtrip fidelity by asserting exact Unicode values after \
+each mutation: updating product names in their local script, deleting rows \
+matched by CJK predicates, and verifying that Cyrillic and Arabic text \
+survives copy-on-write Parquet rewrites.
+"""
+categories = ["delta-table", "delta-schema-types"]
+tags = ["delta-table", "intermediate", "unicode", "encoding", "international", "i18n", "utf-8", "mutation"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.global_bazaar"
