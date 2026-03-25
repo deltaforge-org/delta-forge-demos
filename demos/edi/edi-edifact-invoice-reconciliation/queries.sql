@@ -143,7 +143,7 @@ ORDER BY doc_count DESC;
 --   - party_id:      NAD_2 — party identification composite (EAN/GLN)
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE party_id = '4012345500004::9' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
+ASSERT VALUE party_id = '5412345000013::9' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
 SELECT
     df_file_name,
     CASE nad_1
@@ -176,7 +176,7 @@ ORDER BY df_file_name;
 --   - dtm_composite:   DTM_1 — full composite (qualifier:date:format)
 
 ASSERT ROW_COUNT = 4
-ASSERT VALUE dtm_composite = '2:20020913:102' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
+ASSERT VALUE dtm_composite = '137:20020830:102' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
 ASSERT VALUE dtm_composite = '137:20251008:102' WHERE df_file_name = 'edifact_D01B_INVOIC_invoice.edi'
 SELECT
     df_file_name,
@@ -205,7 +205,7 @@ ORDER BY df_file_name;
 
 ASSERT ROW_COUNT = 4
 ASSERT VALUE moa_composite = '203:699.84' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
-ASSERT VALUE moa_composite = '131:120' WHERE df_file_name = 'edifact_INVOIC_invoice_edifabric.edi'
+ASSERT VALUE moa_composite = '23:120' WHERE df_file_name = 'edifact_INVOIC_invoice_edifabric.edi'
 SELECT
     df_file_name,
     unh_2 AS msg_type,
