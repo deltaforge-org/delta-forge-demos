@@ -247,6 +247,9 @@ ORDER BY df_file_name;
 
 ASSERT ROW_COUNT = 5
 ASSERT VALUE nad_val = 'VW' WHERE file_name = 'edifact_PAXLST_passenger_list.edi'
+ASSERT VALUE nad_val = 'CF' WHERE file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
+ASSERT VALUE nad_val = 'OS' WHERE file_name = 'edifact_CUSCAR_cargo_report.edi'
+ASSERT VALUE nad_val = 'N1' WHERE file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
 SELECT df_file_name AS file_name, nad_1 AS nad_val FROM {{zone_name}}.edi.customs_materialized ORDER BY df_file_name;
 
 
