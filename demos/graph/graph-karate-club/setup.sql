@@ -37,8 +37,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.karate_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.raw.karate_edges;
 GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_edges TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.raw.karate_edges;
 
 
 -- ############################################################################
@@ -55,8 +55,8 @@ AS SELECT
     CAST(weight AS DOUBLE) AS weight
 FROM {{zone_name}}.raw.karate_edges;
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.karate.edges;
 GRANT ADMIN ON TABLE {{zone_name}}.karate.edges TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.karate.edges;
 
 
 -- === Vertex Table (derived from edges) ===
@@ -77,8 +77,8 @@ FROM (
     SELECT dst AS vertex_id FROM {{zone_name}}.karate.edges
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.karate.vertices;
 GRANT ADMIN ON TABLE {{zone_name}}.karate.vertices TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.karate.vertices;
 
 
 -- ############################################################################

@@ -405,13 +405,13 @@ LIMIT 10;
 --   Node 7 = 0.1765, Node 13 = 0.1667
 
 ASSERT ROW_COUNT = 5
-ASSERT VALUE node_id = 1 WHERE rank = 1
-ASSERT VALUE node_id = 3 WHERE rank = 2
-ASSERT VALUE node_id = 2 WHERE rank = 3
+ASSERT VALUE neighbor_id = 1 WHERE rank = 1
+ASSERT VALUE neighbor_id = 3 WHERE rank = 2
+ASSERT VALUE neighbor_id = 2 WHERE rank = 3
 USE {{zone_name}}.karate.karate_club
 CALL algo.knn({node: 0, k: 5})
-YIELD node_id, similarity, rank
-RETURN node_id, similarity, rank
+YIELD neighbor_id, similarity, rank
+RETURN neighbor_id, similarity, rank
 ORDER BY rank;
 
 
