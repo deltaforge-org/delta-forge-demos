@@ -117,7 +117,7 @@ ASSERT ROW_COUNT = 7
 -- Each individual JSON file contains exactly one patient, so df_row_number = 1 for all detailed rows
 ASSERT VALUE df_row_number = 1 WHERE patient_id = 'f001'
 ASSERT VALUE gender = other WHERE patient_id = 'pat2'
-SELECT df_file_name, patient_id, gender, birth_date
+SELECT df_file_name, df_row_number, patient_id, gender, birth_date
 FROM {{zone_name}}.fhir.patients_detailed
 ORDER BY df_file_name;
 
