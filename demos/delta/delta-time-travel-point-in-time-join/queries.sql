@@ -109,24 +109,22 @@ ASSERT WARNING VALUE incorrect_total BETWEEN 616929.00 AND 616931.00
 ASSERT WARNING VALUE correct_total BETWEEN 617334.00 AND 617336.00
 ASSERT ROW_COUNT = 1
 SELECT ROUND(wrong.total, 2)  AS incorrect_total,
-       ROUND(pit.total, 2)    AS correct_total,
-       ROUND(wrong.total - pit.total, 2) AS valuation_error
+       ROUND(correct.total, 2) AS correct_total,
+       ROUND(wrong.total - correct.total, 2) AS valuation_error
 FROM (SELECT SUM(t.amount * r.rate) AS total
       FROM {{zone_name}}.delta_demos.fx_trades t
       JOIN {{zone_name}}.delta_demos.fx_rates r ON t.pair = r.pair) wrong,
-     (SELECT SUM(morning.val) + SUM(midday.val) + SUM(afternoon.val) AS total
-      FROM (SELECT ROUND(t.amount * r.rate, 2) AS val
-            FROM {{zone_name}}.delta_demos.fx_trades t
-            JOIN {{zone_name}}.delta_demos.fx_rates VERSION AS OF 1 r ON t.pair = r.pair
-            WHERE t.traded_at LIKE '2025-01-15 09%') morning,
-           (SELECT ROUND(t.amount * r.rate, 2) AS val
-            FROM {{zone_name}}.delta_demos.fx_trades t
-            JOIN {{zone_name}}.delta_demos.fx_rates VERSION AS OF 2 r ON t.pair = r.pair
-            WHERE t.traded_at LIKE '2025-01-15 12%') midday,
-           (SELECT ROUND(t.amount * r.rate, 2) AS val
-            FROM {{zone_name}}.delta_demos.fx_trades t
-            JOIN {{zone_name}}.delta_demos.fx_rates VERSION AS OF 3 r ON t.pair = r.pair
-            WHERE t.traded_at LIKE '2025-01-15 15%') afternoon) pit;
+     (SELECT
+        (SELECT SUM(t.amount * r.rate) FROM {{zone_name}}.delta_demos.fx_trades t
+         JOIN {{zone_name}}.delta_demos.fx_rates VERSION AS OF 1 r ON t.pair = r.pair
+         WHERE t.traded_at LIKE '2025-01-15 09%')
+      + (SELECT SUM(t.amount * r.rate) FROM {{zone_name}}.delta_demos.fx_trades t
+         JOIN {{zone_name}}.delta_demos.fx_rates VERSION AS OF 2 r ON t.pair = r.pair
+         WHERE t.traded_at LIKE '2025-01-15 12%')
+      + (SELECT SUM(t.amount * r.rate) FROM {{zone_name}}.delta_demos.fx_trades t
+         JOIN {{zone_name}}.delta_demos.fx_rates VERSION AS OF 3 r ON t.pair = r.pair
+         WHERE t.traded_at LIKE '2025-01-15 15%')
+      AS total) correct;
 
 
 -- ============================================================================
