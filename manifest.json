@@ -3563,6 +3563,154 @@
       ]
     },
     {
+      "id": "edi-compliance-validation",
+      "path": "demos/edi/edi-compliance-validation",
+      "iconPath": "icons/edi-compliance-validation.svg",
+      "name": "EDI Compliance Validation — 997/824 Error & Rejection Analysis",
+      "summary": "Demonstrates EDI compliance monitoring using 997 Functional Acknowledgment and 824 Application Advice transactions. Extracts AK1-AK9 acknowledgment segments, OTI issue codes, and TED error descriptions to track transaction acceptance rates, identify segment-level rejections (TXI segment error, element error code 7), and diagnose application-level failures (invalid part/plant/supplier). The only EDI demo focused on error detection and compliance rather than business data.",
+      "categories": [
+        "edi",
+        "compliance"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "advanced",
+        "compliance",
+        "997",
+        "824",
+        "functional-acknowledgment",
+        "error-analysis",
+        "rejection"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 19192,
+      "fileCount": 14,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.compliance_messages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.compliance_details"
+        }
+      ]
+    },
+    {
+      "id": "edi-json-segment-extraction",
+      "path": "demos/edi/edi-json-segment-extraction",
+      "iconPath": "icons/edi-json-segment-extraction.svg",
+      "name": "EDI JSON Segment Extraction — On-Demand X12 Deep Access",
+      "summary": "Demonstrates SQL JSON functions (json_array_length, json_extract_path_text, json_typeof, jsonb_pretty, #>> path operator) on EDI transaction data. Analysts explore and extract any X12 segment on-demand from df_transaction_json without pre-configuring materialized paths — the only EDI demo showcasing JSON function capabilities. Covers segment counting, type inspection, BEG/BIG field extraction via JSON paths, and formatted output.",
+      "categories": [
+        "edi",
+        "json"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "advanced",
+        "json",
+        "json-functions",
+        "segment-extraction",
+        "on-demand"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 19192,
+      "fileCount": 14,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.json_extraction_messages"
+        }
+      ]
+    },
+    {
+      "id": "edi-order-lifecycle-tracking",
+      "path": "demos/edi/edi-order-lifecycle-tracking",
+      "iconPath": "icons/edi-order-lifecycle-tracking.svg",
+      "name": "EDI Order Lifecycle Tracking — Cross-Document X12 Traceability",
+      "summary": "Demonstrates cross-document traceability by correlating 8 X12 transaction types in a single unified table. Traces the order-to-cash lifecycle: PO creation (850) → acknowledgment (855) → shipment (856/857) → invoicing (810) → receipt (861). Uses CASE/COALESCE to map document IDs and dates across BEG, BIG, BAK, BSN, and BRA segments. The only EDI demo with cross-document lifecycle queries rather than single-type analysis.",
+      "categories": [
+        "edi",
+        "supply-chain"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "advanced",
+        "lifecycle",
+        "cross-document",
+        "traceability",
+        "order-to-cash",
+        "coalesce"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 19192,
+      "fileCount": 14,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.lifecycle_tracking"
+        }
+      ]
+    },
+    {
+      "id": "edi-repeating-segments",
+      "path": "demos/edi/edi-repeating-segments",
+      "iconPath": "icons/edi-repeating-segments.svg",
+      "name": "EDI Repeating Segments — Multi-Occurrence X12 Handling",
+      "summary": "Demonstrates the repeating_segment_mode EDI option — creating 3 tables from the same X12 data with Indexed, Concatenate, and ToJson modes. Shows how multi-occurrence segments (N1 addresses, PO1 line items) are handled differently: Indexed creates separate columns per occurrence (n1_1_2, n1_2_2), Concatenate joins values with pipes, and ToJson produces JSON arrays. The only EDI demo showcasing multi-occurrence segment handling.",
+      "categories": [
+        "edi",
+        "supply-chain"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "advanced",
+        "repeating-segments",
+        "indexed",
+        "concatenate",
+        "to-json",
+        "multi-occurrence"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 19192,
+      "fileCount": 14,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.repeating_indexed"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.repeating_concat"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.edi.repeating_json"
+        }
+      ]
+    },
+    {
       "id": "edi-tradacoms-uk-retail",
       "path": "demos/edi/edi-tradacoms-uk-retail",
       "iconPath": "icons/edi-tradacoms-uk-retail.svg",

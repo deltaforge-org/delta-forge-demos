@@ -73,11 +73,11 @@ WHERE clm_1 IS NOT NULL;
 -- SQL features: COALESCE, WHERE IS NOT NULL
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE service_code = 'HC:99213' WHERE df_file_name = 'hipaa_835_claim_payment.edi'
-ASSERT VALUE service_charge = '40' WHERE df_file_name = 'hipaa_835_claim_payment.edi'
-ASSERT VALUE service_code = 'AD:D2150' WHERE df_file_name = 'hipaa_837D_dental_claim.edi'
-ASSERT VALUE service_charge = '100' WHERE df_file_name = 'hipaa_837D_dental_claim.edi'
-ASSERT VALUE service_code = '0305' WHERE df_file_name = 'hipaa_837I_institutional_claim.edi'
+ASSERT VALUE service_code = 'HC:86663' WHERE df_file_name = 'hipaa_835_claim_payment.edi'
+ASSERT VALUE service_charge = '10' WHERE df_file_name = 'hipaa_835_claim_payment.edi'
+ASSERT VALUE service_code = 'AD:D1110' WHERE df_file_name = 'hipaa_837D_dental_claim.edi'
+ASSERT VALUE service_charge = '50' WHERE df_file_name = 'hipaa_837D_dental_claim.edi'
+ASSERT VALUE service_code = '0730' WHERE df_file_name = 'hipaa_837I_institutional_claim.edi'
 SELECT
     df_file_name,
     clm_1 AS claim_id,

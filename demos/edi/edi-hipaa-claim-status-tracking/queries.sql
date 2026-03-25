@@ -23,8 +23,8 @@ ASSERT VALUE st_1 = '277' WHERE df_file_name = 'hipaa_277_claim_status_response.
 ASSERT VALUE st_1 = '278' WHERE df_file_name = 'hipaa_278_services_review.edi'
 ASSERT VALUE bht_2 = '13' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
 ASSERT VALUE bht_2 = '08' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
-ASSERT VALUE nm1_3 = 'ABC INSURANCE' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
-ASSERT VALUE nm1_3 = 'MARYLAND CAPITAL INSURANCE COMPANY' WHERE df_file_name = 'hipaa_278_services_review.edi'
+ASSERT VALUE payer_name = 'MANN' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
+ASSERT VALUE payer_name = 'WATSON' WHERE df_file_name = 'hipaa_278_services_review.edi'
 SELECT
     df_file_name,
     st_1,
@@ -73,8 +73,8 @@ ORDER BY st_1;
 -- SQL features: LIKE pattern matching, CASE WHEN with LIKE
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE status_code = 'P3:317' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
-ASSERT VALUE claim_amount = '8513.88' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
+ASSERT VALUE status_code = 'F2:88:QC' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
+ASSERT VALUE claim_amount = '150' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
 SELECT
     df_file_name,
     stc_1 AS status_code,
@@ -125,8 +125,8 @@ ORDER BY df_file_name;
 ASSERT ROW_COUNT = 2
 ASSERT VALUE trn_1 = '1' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
 ASSERT VALUE trn_1 = '2' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
-ASSERT VALUE trn_2 = 'ABCXYZ1' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
-ASSERT VALUE trn_2 = 'ABCXYZ1' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
+ASSERT VALUE trace_number = 'ABCXYZ1' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
+ASSERT VALUE trace_number = 'ABCXYZ1' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
 SELECT
     df_file_name,
     st_1,

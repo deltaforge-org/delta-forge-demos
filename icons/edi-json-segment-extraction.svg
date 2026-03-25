@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="jse" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Magnifying glass -->
+  <circle cx="34" cy="34" r="18" stroke="url(#jse)" stroke-width="2" fill="url(#jse)" fill-opacity=".1"/>
+  <line x1="47" y1="47" x2="62" y2="62" stroke="url(#jse)" stroke-width="3" stroke-linecap="round"/>
+  <!-- JSON braces inside lens -->
+  <text x="22" y="40" font-family="monospace" font-size="20" font-weight="bold" fill="url(#jse)" opacity=".8">{</text>
+  <text x="37" y="40" font-family="monospace" font-size="20" font-weight="bold" fill="url(#jse)" opacity=".8">}</text>
+  <!-- Small data dots -->
+  <circle cx="30" cy="33" r="1.5" fill="url(#jse)" opacity=".6"/>
+  <circle cx="35" cy="33" r="1.5" fill="url(#jse)" opacity=".6"/>
+  <!-- Extraction arrows -->
+  <path d="M56 18L68 18" stroke="url(#jse)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M65 15L68 18L65 21" stroke="url(#jse)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M56 26L68 26" stroke="url(#jse)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M65 23L68 26L65 29" stroke="url(#jse)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Small extracted value boxes -->
+  <rect x="69" y="14" width="8" height="8" rx="1.5" fill="url(#jse)" opacity=".3"/>
+  <rect x="69" y="22" width="8" height="8" rx="1.5" fill="url(#jse)" opacity=".3"/>
+</svg>

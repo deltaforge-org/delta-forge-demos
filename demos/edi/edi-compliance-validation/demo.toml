@@ -1,0 +1,120 @@
+[demo]
+id = "edi-compliance-validation"
+name = "EDI Compliance Validation — 997/824 Error & Rejection Analysis"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates EDI compliance monitoring using 997 (Functional Acknowledgment) \
+and 824 (Application Advice) transactions — the two X12 document types that \
+trading partners exchange to report acceptance, rejection, and error details. \
+Most EDI demos treat 997/824 as just another row in a header overview; this \
+demo digs into the acknowledgment-specific segments (AK1-AK9 for 997, \
+OTI/TED/BGN for 824) to show how EDI operations teams monitor compliance \
+rates, diagnose rejected transactions, and decode error codes. Two tables \
+demonstrate different access patterns: a compact messages table for \
+classification and counts, and a materialized details table with 997/824 \
+error-reporting segments extracted as first-class columns. Queries cover \
+compliance vs business document classification, functional group rejection \
+analysis, segment-level error diagnosis, application advice error \
+descriptions, and automated verification checks.
+"""
+categories = ["edi", "compliance"]
+tags = ["edi", "x12", "compliance", "997", "824", "functional-acknowledgment", "error-analysis", "rejection", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the directory containing X12 EDI transaction files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/x12_850_purchase_order.edi"
+format = "edi"
+description = "850 Purchase Order — Simple PO (000123456, v00401): 1 line item, ship-to John Doe, UPS Ground"
+size_bytes = 389
+
+[[demo.data_files]]
+path = "data/x12_850_purchase_order_a.edi"
+format = "edi"
+description = "850 Purchase Order — Complex PO (000123456, v00401): 3 textile line items, multiple N1 parties, international shipping"
+size_bytes = 1760
+
+[[demo.data_files]]
+path = "data/x12_850_purchase_order_edifabric.edi"
+format = "edi"
+description = "850 Purchase Order — Aerospace PO (SENDER1, v00204): defense parts, tax info, scheduled delivery"
+size_bytes = 529
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_a.edi"
+format = "edi"
+description = "810 Invoice — Music supply invoice (ABCMUSICSUPPLY, v00401): 2 line items, payment terms, remit-to bank"
+size_bytes = 2255
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_b.edi"
+format = "edi"
+description = "810 Invoice — Music supply invoice with tax (ABCMUSICSUPPLY, v00401): state and federal tax detail per line"
+size_bytes = 2564
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_c.edi"
+format = "edi"
+description = "810 Invoice — Header-level invoice (ABCMUSICSUPPLY, v00401): 1 consolidated line item, allowances and charges"
+size_bytes = 1512
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_d.edi"
+format = "edi"
+description = "810 Invoice — Multi-line header invoice (ABCMUSICSUPPLY, v00401): 2 line items with individual delivery dates"
+size_bytes = 2205
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_edifabric.edi"
+format = "edi"
+description = "810 Invoice — Aerospace invoice (SENDER1, v00204): simple 1-line invoice, ship-to ABC Aerospace"
+size_bytes = 437
+
+[[demo.data_files]]
+path = "data/x12_855_purchase_order_ack.edi"
+format = "edi"
+description = "855 PO Acknowledgment — Order confirmation (SENDER1, v00204): 3 line items, ship-from XYZ Manufacturing to Kohls"
+size_bytes = 532
+
+[[demo.data_files]]
+path = "data/x12_856_ship_notice.edi"
+format = "edi"
+description = "856 Ship Notice — Advance ship notice (SENDER1, v00204): hierarchical levels (shipment/order/pack/item), Wal-Mart DC"
+size_bytes = 1037
+
+[[demo.data_files]]
+path = "data/x12_856_ship_bill_notice.edi"
+format = "edi"
+description = "857 Shipment & Billing Notice — Combined ship/bill (SENDER1, v00204): pricing with discounts, multiple items"
+size_bytes = 607
+
+[[demo.data_files]]
+path = "data/x12_861_receiving_advice.edi"
+format = "edi"
+description = "861 Receiving Advice — Receipt confirmation (SENDER1, v00204): quantity received, part number, acceptance code"
+size_bytes = 370
+
+[[demo.data_files]]
+path = "data/x12_997_functional_acknowledgment.edi"
+format = "edi"
+description = "997 Functional Acknowledgment — EDI acknowledgment (TO->FROM, v00401): accepts 1, rejects 1 of 2 transaction sets"
+size_bytes = 318
+
+[[demo.data_files]]
+path = "data/x12_824_application_advice.edi"
+format = "edi"
+description = "824 Application Advice — Error notification (SENDER1, v00204): invalid part/plant/supplier combination error"
+size_bytes = 581
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.compliance_messages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.compliance_details"
