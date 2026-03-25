@@ -147,7 +147,7 @@ ORDER BY prescription_id;
 ASSERT ROW_COUNT = 4
 ASSERT VALUE status = active WHERE coverage_id = '9876B1'
 ASSERT VALUE kind = insurance WHERE coverage_id = '9876B1'
-ASSERT VALUE kind = self-pay WHERE coverage_id = 'SP1234'
+ASSERT VALUE kind = 'self-pay' WHERE coverage_id = 'SP1234'
 ASSERT VALUE status = active WHERE coverage_id = 'SP1234'
 SELECT coverage_id, status, kind, type, subscriber, beneficiary, period
 FROM {{zone_name}}.fhir.coverage
