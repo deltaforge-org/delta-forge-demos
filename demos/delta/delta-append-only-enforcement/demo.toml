@@ -1,0 +1,30 @@
+[demo]
+id = "delta-append-only-enforcement"
+name = "Delta Append-Only Enforcement — Immutable Compliance Ledger"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A financial services firm must prove to regulators that its transaction \
+ledger cannot be altered after the fact. This demo creates an append-only \
+Delta table and systematically tests the enforcement boundary: INSERTs \
+succeed, UPDATEs and DELETEs are rejected at the protocol level, and the \
+event count can only grow. The demo concludes by appending a new regulatory \
+batch and verifying ledger integrity — proving the immutability guarantee \
+that auditors require.
+"""
+categories = ["delta-table", "delta-compliance"]
+tags = ["delta-table", "intermediate", "append-only", "compliance", "immutable", "enforcement", "audit"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.compliance_ledger"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.mutable_ledger"

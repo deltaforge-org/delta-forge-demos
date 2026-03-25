@@ -2172,39 +2172,112 @@
       ]
     },
     {
-      "id": "delta-table-features",
-      "path": "demos/delta/delta-table-features",
-      "iconPath": "icons/delta-table-features.svg",
-      "name": "Delta Protocol & Table Features",
-      "summary": "Delta Lake's table features are protocol-level capabilities enabled via \\ TBLPROPERTIES that control how reads and writes behave. They solve the \\ problem of forward compatibility: readers and...",
+      "id": "delta-protocol-feature-inspection",
+      "path": "demos/delta/delta-protocol-feature-inspection",
+      "iconPath": "icons/delta-protocol-feature-inspection.svg",
+      "name": "Delta Protocol Feature Inspection — Metadata Forensics",
+      "summary": "A data engineering team inherits three Delta tables and must determine which protocol features are enabled before building downstream pipelines. Uses DESCRIBE DETAIL, SHOW TABLE PROPERTIES, and DESCRIBE HISTORY to inspect protocol versions, reader/writer features, and table configuration.",
       "categories": [
-        "delta-table",
-        "delta-performance"
+        "delta-table"
       ],
       "tags": [
         "delta-table",
-        "advanced",
+        "intermediate",
         "protocol",
-        "features",
+        "describe-detail",
         "tblproperties",
-        "cdc",
-        "deletion-vectors"
+        "metadata",
+        "forensics"
       ],
-      "difficulty": "advanced",
+      "difficulty": "intermediate",
       "estimatedTimeMinutes": 10,
       "dataSizeBytes": 0,
       "fileCount": 5,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z",
+      "updatedAt": "2026-03-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.feature_demo"
+          "name": "{{zone_name}}.delta_demos.inherited_plain"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.audit_trail"
+          "name": "{{zone_name}}.delta_demos.inherited_cdc"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.inherited_constrained"
+        }
+      ]
+    },
+    {
+      "id": "delta-append-only-enforcement",
+      "path": "demos/delta/delta-append-only-enforcement",
+      "iconPath": "icons/delta-append-only-enforcement.svg",
+      "name": "Delta Append-Only Enforcement — Immutable Compliance Ledger",
+      "summary": "A financial services firm must prove to regulators that its transaction ledger cannot be altered. Systematically tests the enforcement boundary: INSERTs succeed, UPDATEs and DELETEs are rejected at the protocol level, and the event count can only grow.",
+      "categories": [
+        "delta-table",
+        "delta-compliance"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "append-only",
+        "compliance",
+        "immutable",
+        "enforcement",
+        "audit"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.compliance_ledger"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.mutable_ledger"
+        }
+      ]
+    },
+    {
+      "id": "delta-feature-activation-lifecycle",
+      "path": "demos/delta/delta-feature-activation-lifecycle",
+      "iconPath": "icons/delta-feature-activation-lifecycle.svg",
+      "name": "Delta Feature Activation Lifecycle — Evolving Table Capabilities",
+      "summary": "A platform team manages a customer_events table that started plain. As requirements grow, features are activated incrementally via ALTER TABLE SET TBLPROPERTIES — first CDC for incremental ETL, then observing protocol version changes and write-time behavior at each step.",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "protocol",
+        "features",
+        "tblproperties",
+        "cdc",
+        "constraints",
+        "lifecycle"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.customer_events"
         }
       ]
     },

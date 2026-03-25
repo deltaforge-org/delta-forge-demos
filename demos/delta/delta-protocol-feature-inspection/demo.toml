@@ -1,0 +1,33 @@
+[demo]
+id = "delta-protocol-feature-inspection"
+name = "Delta Protocol Feature Inspection — Metadata Forensics"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A data engineering team inherits three Delta tables from a departed colleague \
+and must determine which protocol features are enabled before building \
+downstream pipelines. This demo uses DESCRIBE DETAIL, SHOW TABLE PROPERTIES, \
+and DESCRIBE HISTORY to inspect protocol versions, reader/writer feature \
+requirements, and table configuration — the forensic layer of Delta Lake \
+that most tutorials skip.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "protocol", "describe-detail", "tblproperties", "metadata", "forensics"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.inherited_plain"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.inherited_cdc"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.inherited_constrained"

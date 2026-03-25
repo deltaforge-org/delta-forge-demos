@@ -1,0 +1,27 @@
+[demo]
+id = "delta-feature-activation-lifecycle"
+name = "Delta Feature Activation Lifecycle — Evolving Table Capabilities"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A platform team manages a customer_events table that started as a plain \
+Delta table. As business requirements grow — first CDC for incremental ETL, \
+then CHECK constraints for data quality — each feature must be activated \
+via ALTER TABLE SET TBLPROPERTIES. This demo walks through the full \
+lifecycle: creating a baseline table, activating features one at a time, \
+verifying each activation with SHOW TABLE PROPERTIES and DESCRIBE DETAIL, \
+and observing how each feature changes the table's protocol requirements \
+and write-time behavior.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "protocol", "features", "tblproperties", "cdc", "constraints", "lifecycle"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.customer_events"
