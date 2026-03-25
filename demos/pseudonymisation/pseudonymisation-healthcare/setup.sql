@@ -20,6 +20,7 @@
 --
 -- Variables (auto-injected by Delta Forge):
 --   zone_name     — Target zone name (defaults to 'external')
+--   data_path     — Root path where demo data files are stored
 --   current_user  — Username of the current logged-in user
 -- ============================================================================
 
@@ -43,22 +44,21 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.pseudonymisation
 -- the most common HIPAA identifiers: name, DOB, SSN, address, phone.
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.hl7_patients (
-    df_message_id   VARCHAR PRIMARY KEY,
-    pid_3           VARCHAR,          -- Patient ID / MRN
-    pid_5           VARCHAR,          -- Patient name (LAST^FIRST^MIDDLE)
-    pid_7           VARCHAR,          -- Date of birth (YYYYMMDD)
-    pid_8           VARCHAR,          -- Gender (M/F)
-    pid_11          VARCHAR,          -- Address (STREET^CITY^STATE^ZIP)
-    pid_13          VARCHAR,          -- Home phone
-    pid_19          VARCHAR,          -- SSN
-    pv1_2           VARCHAR,          -- Patient class (I/O/E)
-    pv1_3           VARCHAR,          -- Assigned location
-    pv1_7           VARCHAR,          -- Attending physician
-    evn_1           VARCHAR,          -- Event type code
-    status          VARCHAR           -- Active/Discharged
-)
-COMMENT 'HL7 v2 ADT patient admissions with materialized PID fields';
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.hl7_patients (
+    df_message_id   VARCHAR,
+    pid_3           VARCHAR,
+    pid_5           VARCHAR,
+    pid_7           VARCHAR,
+    pid_8           VARCHAR,
+    pid_11          VARCHAR,
+    pid_13          VARCHAR,
+    pid_19          VARCHAR,
+    pv1_2           VARCHAR,
+    pv1_3           VARCHAR,
+    pv1_7           VARCHAR,
+    evn_1           VARCHAR,
+    status          VARCHAR
+) LOCATION '{{data_path}}/hl7_patients';
 
 INSERT INTO {{zone_name}}.pseudonymisation.hl7_patients VALUES
     ('MSG001', 'MRN-10045', 'SMITH^WILLIAM^A', '19610615', 'M', '1200 N ELM STREET^^JERUSALEM^TN^99999', '(999)999-1212', '123-45-6789', 'I', 'W4-R201-B1', 'DR JONES', 'A01', 'Active'),
@@ -76,24 +76,23 @@ GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.hl7_patients TO USER {{curre
 -- make wildcard patterns (address_*, *_name) practical for broad protection.
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.fhir_patients (
-    patient_id      VARCHAR PRIMARY KEY,
-    family_name     VARCHAR,          -- Patient last name
-    given_name      VARCHAR,          -- Patient first name
-    birth_date      DATE,             -- Date of birth
-    gender          VARCHAR,          -- male/female/other/unknown
-    email           VARCHAR,          -- Sensitive: Contact email
-    phone           VARCHAR,          -- Sensitive: Contact phone
-    address_line    VARCHAR,          -- Sensitive: Street address
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.fhir_patients (
+    patient_id      VARCHAR,
+    family_name     VARCHAR,
+    given_name      VARCHAR,
+    birth_date      DATE,
+    gender          VARCHAR,
+    email           VARCHAR,
+    phone           VARCHAR,
+    address_line    VARCHAR,
     address_city    VARCHAR,
     address_state   VARCHAR,
-    address_postal  VARCHAR,          -- Sensitive: ZIP code
-    mrn             VARCHAR,          -- Medical Record Number
-    ssn             VARCHAR,          -- Sensitive: Social Security Number
+    address_postal  VARCHAR,
+    mrn             VARCHAR,
+    ssn             VARCHAR,
     marital_status  VARCHAR,
     active          BOOLEAN
-)
-COMMENT 'FHIR R4 Patient resources with demographic fields';
+) LOCATION '{{data_path}}/fhir_patients';
 
 INSERT INTO {{zone_name}}.pseudonymisation.fhir_patients VALUES
     ('pt-fhir-001', 'Chalmers', 'Peter', '1974-12-25', 'male', 'peter.chalmers@example.com', '(03) 5555 6473', '534 Erewhon St', 'PleasantVille', 'VT', '05401', 'MRN-20001', '111-22-3333', 'M', true),
@@ -111,24 +110,23 @@ GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.fhir_patients TO USER {{curr
 -- (NM1), financial data (BPR), and claim details (CLM).
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.edi_claims (
-    df_transaction_id VARCHAR PRIMARY KEY,
-    st_1            VARCHAR,          -- Transaction type (837/835/270/271)
-    bht_2           VARCHAR,          -- Transaction purpose code
-    nm1_1           VARCHAR,          -- Entity ID code (IL=patient, 85=provider)
-    nm1_3           VARCHAR,          -- Last name or organization
-    nm1_4           VARCHAR,          -- First name
-    nm1_8           VARCHAR,          -- Identifier: SSN or Member ID
-    dmg_1           VARCHAR,          -- Date of birth (MMDDYYYY)
-    dmg_2           VARCHAR,          -- Gender code
-    clm_1           VARCHAR,          -- Patient account / claim number
-    clm_2           DOUBLE,           -- Total claim charge amount
-    bpr_1           VARCHAR,          -- Transaction handling code
-    bpr_2           DOUBLE,           -- Total payment amount
-    bpr_8           VARCHAR,          -- Sender bank account number
-    bpr_14          VARCHAR           -- Receiver bank account number
-)
-COMMENT 'EDI HIPAA X12 transactions with materialized NM1/CLM/BPR fields';
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.edi_claims (
+    df_transaction_id VARCHAR,
+    st_1            VARCHAR,
+    bht_2           VARCHAR,
+    nm1_1           VARCHAR,
+    nm1_3           VARCHAR,
+    nm1_4           VARCHAR,
+    nm1_8           VARCHAR,
+    dmg_1           VARCHAR,
+    dmg_2           VARCHAR,
+    clm_1           VARCHAR,
+    clm_2           DOUBLE,
+    bpr_1           VARCHAR,
+    bpr_2           DOUBLE,
+    bpr_8           VARCHAR,
+    bpr_14          VARCHAR
+) LOCATION '{{data_path}}/edi_claims';
 
 INSERT INTO {{zone_name}}.pseudonymisation.edi_claims VALUES
     ('TXN-837-001', '837', '00', 'IL', 'SMITH', 'FRED', '123456789A', '12101930', 'M', 'ACCT-5001', 1250.00, 'C', 1250.00, '9876543210', '1234567890'),
@@ -146,37 +144,29 @@ GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.edi_claims TO USER {{current
 -- HL7 messages contain HIPAA identifiers in PID segments. These rules
 -- protect patient identity while preserving clinical utility.
 
--- Hash the Medical Record Number (MRN) for linkable de-identification
--- SCOPE person: same MRN always produces the same hash across queries
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid_3)
     TRANSFORM keyed_hash
     SCOPE person
     PRIORITY 10
     PARAMS (salt = 'hl7_mrn_salt_2024');
 
--- Redact SSN completely — HIPAA Safe Harbor requires full removal
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid_19)
     TRANSFORM redact
     PRIORITY 20
     PARAMS (mask = '***-**-****');
 
--- Generalize date of birth to birth year (HIPAA: ages 0-89 allowed)
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid_7)
     TRANSFORM generalize
     SCOPE relationship
     PARAMS (range = 10000);
 
--- Mask phone number — show area code only (first 5 chars)
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid_13)
     TRANSFORM mask
     PARAMS (show = 5);
 
--- Hash patient address for geographic analysis without exposing location
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid_11)
     TRANSFORM hash;
 
--- Tokenize patient name — replace with reversible token for re-identification
--- SCOPE person: same name always produces the same token
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid_5)
     TRANSFORM tokenize
     SCOPE person
@@ -189,50 +179,40 @@ CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients (pid
 -- FHIR resources use human-readable field names. Wildcard patterns
 -- efficiently protect multiple columns matching a naming convention.
 
--- Encrypt email for reversible de-identification (needs key to decrypt)
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (email)
     TRANSFORM encrypt
     SCOPE person
     PRIORITY 10
     PARAMS (algorithm = 'AES256');
 
--- Tokenize patient_id for cross-resource linkage without real IDs
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (patient_id)
     TRANSFORM tokenize
     SCOPE person
     PRIORITY 10;
 
--- Hash SSN with a salt
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (ssn)
     TRANSFORM keyed_hash
     SCOPE person
     PARAMS (salt = 'fhir_ssn_salt_2024');
 
--- Mask phone: show first 4 characters, mask rest
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (phone)
     TRANSFORM mask
     PRIORITY 5
     PARAMS (show = 4);
 
--- Redact MRN
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (mrn)
     TRANSFORM redact
     PARAMS (mask = '[REDACTED]');
 
--- Wildcard pattern: protect all address columns at once
--- Matches: address_line, address_city, address_state, address_postal
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (address_*)
     TRANSFORM hash
     PRIORITY 1;
 
--- Generalize birth_date to decade
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (birth_date)
     TRANSFORM generalize
     SCOPE relationship
     PARAMS (range = 10);
 
--- Wildcard: protect all name fields
--- Matches: family_name, given_name
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (*_name)
     TRANSFORM keyed_hash
     SCOPE person
@@ -247,14 +227,12 @@ CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients (*_
 -- and claim details (CLM). Pseudonymisation must satisfy HIPAA Privacy Rule
 -- while preserving enough structure for claims processing analytics.
 
--- Hash member ID / SSN — critical HIPAA identifier
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (nm1_8)
     TRANSFORM keyed_hash
     SCOPE person
     PRIORITY 20
     PARAMS (salt = 'edi_member_id_salt_2024');
 
--- Redact bank account numbers completely
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (bpr_8)
     TRANSFORM redact
     PRIORITY 20
@@ -265,20 +243,15 @@ CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (bpr_1
     PRIORITY 20
     PARAMS (mask = '**********');
 
--- Tokenize patient account / claim number
--- SCOPE transaction: each query execution generates a different token,
--- preventing linkage across separate analyst sessions
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (clm_1)
     TRANSFORM tokenize
     SCOPE transaction
     PRIORITY 10;
 
--- Mask claim amount: show first 2 digits (preserves order of magnitude)
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (clm_2)
     TRANSFORM mask
     PARAMS (show = 2);
 
--- Hash patient names
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (nm1_3)
     TRANSFORM keyed_hash
     SCOPE person
@@ -289,7 +262,6 @@ CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (nm1_4
     SCOPE person
     PARAMS (salt = 'edi_name_salt_2024');
 
--- Generalize date of birth to decade
 CREATE PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims (dmg_1)
     TRANSFORM generalize
     SCOPE relationship

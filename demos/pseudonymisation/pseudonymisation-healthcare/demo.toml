@@ -16,6 +16,7 @@ difficulty = "intermediate"
 estimated_time_minutes = 5
 
 [demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
 zone_name = { description = "Target zone name for tables (defaults to 'demo_zone')", required = false }
 current_user = { description = "Username of the current logged-in user", required = true }
 
