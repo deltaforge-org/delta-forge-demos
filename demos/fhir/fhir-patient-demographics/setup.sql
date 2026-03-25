@@ -54,8 +54,8 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.fhir.patients_bulk;
 GRANT ADMIN ON TABLE {{zone_name}}.fhir.patients_bulk TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.fhir.patients_bulk;
 
 
 -- ============================================================================
@@ -102,5 +102,5 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.fhir.patients_detailed;
 GRANT ADMIN ON TABLE {{zone_name}}.fhir.patients_detailed TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.fhir.patients_detailed;
