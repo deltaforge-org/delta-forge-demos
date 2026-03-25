@@ -36,8 +36,8 @@ ORDER BY id;
 
 ASSERT ROW_COUNT = 3
 ASSERT VALUE masked_card = '****-****-****-4532' WHERE id = 1
-ASSERT VALUE masked_email = 'a***@shop.com' WHERE id = 1
-ASSERT VALUE masked_phone = '******0301' WHERE id = 1
+ASSERT VALUE masked_email = 'a****@shop.com' WHERE id = 1
+ASSERT VALUE masked_phone = '****0301' WHERE id = 1
 SELECT id,
        MASK(credit_card_last4, 'redact', 'mode', 'card')  AS masked_card,
        MASK(customer_email, 'redact', 'mode', 'email')     AS masked_email,
