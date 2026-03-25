@@ -10,9 +10,9 @@
 --   customs_materialized  — Enriched view: headers + BGM/TDT/NAD/LOC/CNI/GID/EQD/DOC
 --
 -- Column reference (always available — UNB interchange envelope):
---   UNB_1  = Syntax identifier (UNOB, UNOC, IATA)
---   UNB_2  = Interchange sender (DK:CUSTOMS, CARRIER1, AIRLINE1, 1A)
---   UNB_3  = Interchange recipient (DK:CARRIER1, CUSTOMS1, GOVAUTH1, USCSAPIS, TERMINAL1)
+--   UNB_1  = Syntax identifier (UNOA, IATA)
+--   UNB_2  = Interchange sender (SID, LOCK, MSC, AM)
+--   UNB_3  = Interchange recipient (RID, CBP-ACE-TEST, ECA, MXPNRGOV)
 --   UNB_4  = Date/time of preparation
 --   UNB_5  = Interchange control reference
 --
@@ -44,14 +44,14 @@
 --
 -- What you'll see:
 --   - df_file_name:  The source .edi file this row came from
---   - syntax_id:     UNB_1 — syntax identifier (UNOB, UNOC, or IATA)
+--   - syntax_id:     UNB_1 — syntax identifier (UNOA or IATA)
 --   - sender:        UNB_2 — interchange sender
 --   - recipient:     UNB_3 — interchange recipient
 --   - msg_type:      UNH_2 — message type (CUSCAR, PAXLST, PNRGOV, BAPLIE, or NULL)
 
 ASSERT ROW_COUNT = 5
-ASSERT VALUE syntax_id = 'UNOC' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
-ASSERT VALUE sender = '1A' WHERE df_file_name = 'edifact_PNRGOV_passenger_data.edi'
+ASSERT VALUE syntax_id = 'UNOA' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
+ASSERT VALUE sender = 'AM' WHERE df_file_name = 'edifact_PNRGOV_passenger_data.edi'
 ASSERT VALUE syntax_id = 'IATA' WHERE df_file_name = 'edifact_PNRGOV_passenger_data.edi'
 ASSERT VALUE msg_type = 'PAXLST' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
 ASSERT VALUE msg_type = 'BAPLIE' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
@@ -82,10 +82,10 @@ ORDER BY df_file_name;
 --   - goods_pkg:     GID_2 — package type/count description
 
 ASSERT ROW_COUNT = 2
-ASSERT VALUE doc_code = '85' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
-ASSERT VALUE doc_number = 'CRN_20180315001' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
+ASSERT VALUE doc_code = '85:::STANDARD' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
+ASSERT VALUE doc_number = 'LOCKKH04112206' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
 ASSERT VALUE cni_seq = '3741' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
-ASSERT VALUE doc_number = 'CRN_8711265489' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
+ASSERT VALUE doc_number = '201701191AB652' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
 ASSERT VALUE cni_ref = 'MSCUEK569969' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
 SELECT
     df_file_name,
@@ -96,7 +96,7 @@ SELECT
     gid_1 AS goods_item,
     gid_2 AS goods_pkg
 FROM {{zone_name}}.edi.customs_materialized
-WHERE unh_2 = 'CUSCAR' OR (unh_2 IS NULL AND df_file_name LIKE '%CUSCAR%')
+WHERE unh_2 = 'CUSCAR' OR df_file_name LIKE '%D95B%CUSCAR%'
 ORDER BY df_file_name;
 
 
@@ -110,16 +110,14 @@ ORDER BY df_file_name;
 -- What you'll see:
 --   - df_file_name:      Source file name
 --   - transport_stage:   TDT_1 — transport stage qualifier (20 = main carriage)
---   - conveyance_ref:    TDT_2 — voyage/flight number (V004, VOYAGE123, BA1234, VOY001)
+--   - conveyance_ref:    TDT_2 — voyage/flight number (123W45, AB652A, or NULL)
 --   - msg_type:          UNH_2 — message type (or COALESCE for malformed UNH)
 --
 -- 4 messages have TDT segments (all except PNRGOV)
 
 ASSERT ROW_COUNT = 4
-ASSERT VALUE conveyance_ref = 'BA1234' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
-ASSERT VALUE conveyance_ref = 'VOY001' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
-ASSERT VALUE conveyance_ref = 'VOYAGE123' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
-ASSERT VALUE conveyance_ref = 'V004' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
+ASSERT VALUE conveyance_ref = '123W45' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
+ASSERT VALUE conveyance_ref = 'AB652A' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
 SELECT
     df_file_name,
     tdt_1 AS transport_stage,
@@ -173,8 +171,8 @@ ORDER BY loc_1;
 -- 5. Equipment & Stowage — Container Details
 -- ============================================================================
 -- Extracts EQD (Equipment Detail) segments for container and equipment
--- information. Only 2 messages have EQD: the D95B CUSCAR (bill of lading
--- equipment) and the BAPLIE (container stowage).
+-- information. Only 2 messages have EQD: the CUSCAR cargo report (bill of
+-- lading equipment) and the BAPLIE (container stowage).
 --
 -- What you'll see:
 --   - df_file_name:    Source file name
@@ -184,9 +182,9 @@ ORDER BY loc_1;
 
 ASSERT ROW_COUNT = 2
 ASSERT VALUE equip_qualifier = 'CN' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
-ASSERT VALUE equip_id = 'SUDU1234569' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
-ASSERT VALUE equip_qualifier = 'BI' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
-ASSERT VALUE equip_id = '10000325' WHERE df_file_name = 'edifact_D95B_CUSCAR_customs_cargo.edi'
+ASSERT VALUE equip_id = 'SUDU1234569:6346:5' WHERE df_file_name = 'edifact_BAPLIE_bayplan_stowage.edi'
+ASSERT VALUE equip_qualifier = 'BI' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
+ASSERT VALUE equip_id = '10000325:109' WHERE df_file_name = 'edifact_CUSCAR_cargo_report.edi'
 SELECT
     df_file_name,
     eqd_1 AS equip_qualifier,
@@ -200,23 +198,23 @@ ORDER BY df_file_name;
 -- ============================================================================
 -- 6. Passenger Records — Travel Document Verification
 -- ============================================================================
--- Extracts DOC (Document/Message Details) from the PAXLST message for
--- travel document verification. Only PAXLST carries DOC segments with
--- passport/travel document data.
+-- Extracts DOC (Document/Message Details) segments for travel document
+-- and cargo document verification. PAXLST has passport data (DOC 39)
+-- and CUSCAR has cargo document references (DOC 714).
 --
 -- What you'll see:
 --   - df_file_name:  Source file name
---   - msg_type:      UNH_2 — should be PAXLST
---   - doc_code:      DOC_1 — document name code (39 = Passport)
+--   - msg_type:      UNH_2 — PAXLST or CUSCAR
+--   - doc_code:      DOC_1 — document name code (39 = Passport, 714:::61 = cargo doc)
 --   - doc_number:    DOC_2 — passport/document number
---   - bgm_code:      BGM_1 — 250 = Passenger list declaration
---   - bgm_ref:       BGM_2 — manifest reference (PAXLST001)
+--   - bgm_code:      BGM_1 — document name code from BGM segment
+--   - bgm_ref:       BGM_2 — manifest reference number
 
-ASSERT ROW_COUNT = 1
+ASSERT ROW_COUNT = 2
 ASSERT VALUE doc_code = '39' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
 ASSERT VALUE doc_number = '15504141' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
-ASSERT VALUE bgm_code = '250' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
-ASSERT VALUE bgm_ref = 'PAXLST001' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
+ASSERT VALUE bgm_code = '10' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
+ASSERT VALUE bgm_ref = 'LOCKKH04103101' WHERE df_file_name = 'edifact_PAXLST_passenger_list.edi'
 SELECT
     df_file_name,
     unh_2 AS msg_type,

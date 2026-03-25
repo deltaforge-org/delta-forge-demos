@@ -65,9 +65,9 @@ ORDER BY df_file_name;
 ASSERT ROW_COUNT = 6
 ASSERT VALUE bgm_1 = '351' WHERE df_file_name = 'eancom_DESADV_despatch_advice.edi'
 ASSERT VALUE bgm_1 = '380' WHERE df_file_name = 'eancom_INVOIC_invoice.edi'
-ASSERT VALUE bgm_2 = 'PRC20220301' WHERE df_file_name = 'eancom_PRICAT_price_catalogue.edi'
+ASSERT VALUE bgm_2 = 'PC32458' WHERE df_file_name = 'eancom_PRICAT_price_catalogue.edi'
 ASSERT VALUE bgm_2 = 'DES587441' WHERE df_file_name = 'eancom_DESADV_despatch_advice.edi'
-ASSERT VALUE bgm_2 = 'TRN2022001' WHERE df_file_name = 'eancom_instruction.edi'
+ASSERT VALUE bgm_2 = '569952' WHERE df_file_name = 'eancom_instruction.edi'
 SELECT
     df_file_name,
     unh_2 AS msg_type,
@@ -87,8 +87,8 @@ ORDER BY df_file_name;
 -- Groups by role to show how many messages involve each party type.
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE partner_count = 4 WHERE role = 'DP'
-ASSERT VALUE partner_count = 1 WHERE role = 'SU'
+ASSERT VALUE partner_count = 3 WHERE role = 'DP'
+ASSERT VALUE partner_count = 2 WHERE role = 'SU'
 ASSERT VALUE partner_count = 1 WHERE role = 'SH'
 SELECT
     nad_1 AS role,
@@ -107,8 +107,8 @@ ORDER BY partner_count DESC;
 -- LIN_1 = line item number, LIN_3 = GTIN/EAN article number.
 
 ASSERT ROW_COUNT = 4
-ASSERT VALUE lin_3 = '5411234000021' WHERE df_file_name = 'eancom_PRICAT_price_catalogue.edi'
-ASSERT VALUE lin_3 = '4000862141404' WHERE df_file_name = 'eancom_DESADV_despatch_advice.edi'
+ASSERT VALUE lin_3 = '5410738377117:SRV' WHERE df_file_name = 'eancom_PRICAT_price_catalogue.edi'
+ASSERT VALUE lin_3 = '5410738000183:SRV' WHERE df_file_name = 'eancom_DESADV_despatch_advice.edi'
 ASSERT VALUE lin_1 = '5' WHERE df_file_name = 'eancom_PRICAT_price_catalogue.edi'
 ASSERT VALUE lin_1 = '2' WHERE df_file_name = 'eancom_INVOIC_invoice.edi'
 SELECT
@@ -129,11 +129,11 @@ ORDER BY df_file_name;
 -- reference, line items with GTINs, and the supplier (NAD) identification.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE bgm_2 = 'PRC20220301'
+ASSERT VALUE bgm_2 = 'PC32458'
 ASSERT VALUE lin_1 = '5'
-ASSERT VALUE lin_3 = '5411234000021'
+ASSERT VALUE lin_3 = '5410738377117:SRV'
 ASSERT VALUE nad_1 = 'SU'
-ASSERT VALUE nad_2 = '5411234000007'
+ASSERT VALUE nad_2 = '4012345500004::9'
 SELECT
     df_file_name,
     bgm_2,
@@ -157,9 +157,9 @@ ORDER BY df_file_name;
 ASSERT ROW_COUNT = 1
 ASSERT VALUE bgm_2 = 'DES587441'
 ASSERT VALUE cps_1 = '3'
-ASSERT VALUE nad_1 = 'DP'
-ASSERT VALUE lin_1 = '2'
-ASSERT VALUE lin_3 = '4000862141404'
+ASSERT VALUE nad_1 = 'SH'
+ASSERT VALUE lin_1 = '4'
+ASSERT VALUE lin_3 = '5410738000183:SRV'
 SELECT
     df_file_name,
     bgm_2,
@@ -182,9 +182,9 @@ ORDER BY df_file_name;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE sts_1 = '1'
-ASSERT VALUE bgm_2 = 'SHP202201'
+ASSERT VALUE bgm_2 = '95-455'
 ASSERT VALUE nad_1 = 'DP'
-ASSERT VALUE nad_2 = '5411234000014'
+ASSERT VALUE nad_2 = '5411111123451::9'
 SELECT
     df_file_name,
     bgm_2,

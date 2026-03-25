@@ -23,10 +23,10 @@
 --
 -- Materialized columns (commerce_materialized table only):
 --   BGM_1 = Document name code    BGM_2 = Document number
---   NAD_1 = Party qualifier       NAD_2 = Party identification
---   LIN_1 = Line item number      LIN_3 = Item number (EAN composite)
---   DTM_1 = Date qualifier        DTM_2 = Date value
---   MOA_1 = Monetary amount (composite: qualifier:amount)
+--   NAD_1 = Party qualifier       NAD_2 = Party identification (full composite)
+--   LIN_1 = Line item number      LIN_3 = Item number (full composite)
+--   DTM_1 = Date/time composite (qualifier:value:format, e.g. '137:20251008:102')
+--   MOA_1 = Monetary amount composite (qualifier:amount, e.g. '203:699.84')
 --   TAX_1 = Tax type qualifier
 -- ============================================================================
 
@@ -127,7 +127,8 @@ ORDER BY doc_count DESC;
 -- 4. Trading Partners (NAD)
 -- ============================================================================
 -- The NAD (Name and Address) segment identifies trading partners. NAD_1
--- is the party qualifier and NAD_2 is the party identification (EAN/GLN).
+-- is the party qualifier and NAD_2 is the party identification composite
+-- (EAN/GLN with qualifier, e.g. '4012345500004::9'). Last NAD wins.
 -- The D01B INVOIC has no NAD segments, so it is excluded.
 --
 -- Party qualifiers:
@@ -139,10 +140,10 @@ ORDER BY doc_count DESC;
 --   - df_file_name:  Source file
 --   - party_role:    NAD_1 decoded to human-readable role
 --   - party_code:    NAD_1 — raw qualifier code
---   - party_id:      NAD_2 — party identification (EAN/GLN)
+--   - party_id:      NAD_2 — party identification composite (EAN/GLN)
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE party_id = '4012345500004' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
+ASSERT VALUE party_id = '4012345500004::9' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
 SELECT
     df_file_name,
     CASE nad_1
@@ -161,33 +162,25 @@ ORDER BY df_file_name;
 -- ============================================================================
 -- 5. Timeline (DTM)
 -- ============================================================================
--- The DTM (Date/Time/Period) segment records key dates. DTM_1 is the date
--- qualifier and DTM_2 is the date value.
+-- The DTM (Date/Time/Period) segment carries date info as a single composite
+-- element: qualifier:value:format (e.g. '137:20251008:102'). DTM_1 holds the
+-- full composite. Last DTM occurrence per message wins.
 --
--- Date qualifiers:
+-- Date qualifiers (first component):
 --   2   = Delivery date (requested)
 --   137 = Document/message date
 --   171 = Reference date/time
 --
 -- What you'll see:
---   - df_file_name:  Source file
---   - date_type:     DTM_1 decoded to human-readable type
---   - date_qual:     DTM_1 — raw qualifier code
---   - date_value:    DTM_2 — date in YYYYMMDD or YYYYMMDDHHMM format
+--   - df_file_name:    Source file
+--   - dtm_composite:   DTM_1 — full composite (qualifier:date:format)
 
 ASSERT ROW_COUNT = 4
-ASSERT VALUE date_value = '20020913' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
-ASSERT VALUE date_qual = '137' WHERE df_file_name = 'edifact_D01B_INVOIC_invoice.edi'
+ASSERT VALUE dtm_composite = '2:20020913:102' WHERE df_file_name = 'edifact_ORDERS_purchase_order.edi'
+ASSERT VALUE dtm_composite = '137:20251008:102' WHERE df_file_name = 'edifact_D01B_INVOIC_invoice.edi'
 SELECT
     df_file_name,
-    CASE dtm_1
-        WHEN '2'   THEN 'Delivery date'
-        WHEN '137' THEN 'Document date'
-        WHEN '171' THEN 'Reference date'
-        ELSE dtm_1
-    END AS date_type,
-    dtm_1 AS date_qual,
-    dtm_2 AS date_value
+    dtm_1 AS dtm_composite
 FROM {{zone_name}}.edi.commerce_materialized
 WHERE dtm_1 IS NOT NULL
 ORDER BY df_file_name;
