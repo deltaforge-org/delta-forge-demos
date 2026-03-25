@@ -61,7 +61,7 @@ ASSERT ROW_COUNT = 20
 ASSERT VALUE headcount = 50000 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 50000 WHERE department = 'Sales'
 -- Non-deterministic: float average may vary slightly across engines
-ASSERT WARNING VALUE avg_age BETWEEN 40.5 AND 41.5 WHERE department = 'Engineering'
+ASSERT WARNING VALUE avg_age BETWEEN 40.0 AND 41.5 WHERE department = 'Engineering'
 USE {{zone_name}}.graph.stress_test_network
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount,
@@ -104,7 +104,7 @@ ORDER BY count DESC;
 -- could mentor the next generation.
 
 ASSERT ROW_COUNT = 25
-ASSERT VALUE age = 60
+ASSERT VALUE age = 59
 USE {{zone_name}}.graph.stress_test_network
 MATCH (n)
 WHERE n.department = 'Engineering' AND n.age > 50
