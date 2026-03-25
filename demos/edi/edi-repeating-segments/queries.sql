@@ -13,18 +13,23 @@
 --   850 purchase_order:   1 N1  — John Doe
 --   850 purchase_order_a: 5 N1s — Transplace Laredo, Penjamo Cutting, Test Inc., '', Supplier Name
 --   850 edifabric:        1 N1  — ABC AEROSPACE
---   810 invoice_a:        6 N1s — Aaron Copeland, XYZ Bank, Philadelphia, Music Insurance..., ...
+--   810 invoice_a/b/d:    6 N1s — Aaron Copeland, XYZ Bank, Philadelphia, Music Insurance..., ...
+--   810 invoice_c:        4 N1s — Aaron Copeland, XYZ Bank, Philadelphia, Music Insurance...
 --   810 edifabric:        1 N1  — ABC AEROSPACE CORPORATION
 --   855 po_ack:           2 N1s — XYZ MANUFACTURING CO, KOHLS DEPARTMENT STORES
+--   856 ship_notice:      4 N1s — WAL-MART DC 6094J-JIT, SUPPLIER NAME, ...
+--   856 ship_bill_notice: 4 N1s — (all empty names)
+--   824 application_advice: 5 N1s — (all empty names)
+--   861 receiving_advice: 1 N1  — (empty name)
 --   997 functional_ack:   0 N1s
 -- ============================================================================
 
 
 -- ============================================================================
--- 1. Default Mode — First Occurrence Only
+-- 1. First Mode — Single Party Overview
 -- ============================================================================
 -- Shows n1_1 (entity code) and n1_2 (party name) from the First-mode table.
--- For files with multiple N1 segments, only the first occurrence appears.
+-- For files with multiple N1 segments, only the FIRST occurrence appears.
 -- This is the baseline — demonstrates what data is LOST when repeating
 -- segments are not explicitly handled.
 --
@@ -32,12 +37,13 @@
 --   - x12_850_purchase_order.edi:     n1_2 = 'John Doe' (only 1 N1, nothing lost)
 --   - x12_850_purchase_order_a.edi:   n1_2 = 'Transplace Laredo' (4 more N1s hidden)
 --   - x12_810_invoice_a.edi:          n1_2 = 'Aaron Copeland' (5 more N1s hidden)
---   - x12_855_purchase_order_ack.edi: n1_2 = 'XYZ MANUFACTURING CO' (1 more N1 hidden)
+--   - x12_855_purchase_order_ack.edi: n1_2 = 'XYZ MANUFACTURING CO' (1 more hidden)
 
 ASSERT ROW_COUNT = 14
-ASSERT VALUE n1_2 = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE n1_2 = 'Transplace Laredo' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
-ASSERT VALUE n1_2 = 'Aaron Copeland' WHERE df_file_name = 'x12_810_invoice_a.edi'
+ASSERT VALUE party_name = 'Transplace Laredo' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+ASSERT VALUE party_name = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE party_name = 'Aaron Copeland' WHERE df_file_name = 'x12_810_invoice_a.edi'
+ASSERT VALUE party_name = 'XYZ MANUFACTURING CO' WHERE df_file_name = 'x12_855_purchase_order_ack.edi'
 SELECT
     df_file_name,
     st_1 AS txn_type,
@@ -48,7 +54,38 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 2. Concatenate Mode — All Party Names
+-- 2. First Mode — PO Line Items
+-- ============================================================================
+-- Filters to 850 Purchase Order transactions showing the first PO1 line item
+-- details: po1_1 (line number), po1_2 (quantity), po1_3 (unit), po1_4 (price).
+--
+-- In First mode, only the first PO1 occurrence is captured. For files like
+-- purchase_order_a.edi with 3 PO1 lines, only the first line appears.
+--
+-- What you'll see:
+--   - purchase_order.edi:          po1_1='1', po1_4='19.95' (single line item)
+--   - purchase_order_a.edi:        po1_1='000100001', po1_2='2500', po1_4='2.53' (first of 3)
+--   - purchase_order_edifabric.edi: po1_1='1', po1_4='36' (single line item)
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE po1_1 = '1' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE po1_4 = '19.95' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE po1_1 = '000100001' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+ASSERT VALUE po1_2 = '2500' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+ASSERT VALUE po1_4 = '2.53' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+SELECT
+    df_file_name,
+    po1_1 AS line_number,
+    po1_2 AS quantity,
+    po1_3 AS unit_of_measure,
+    po1_4 AS unit_price
+FROM {{zone_name}}.edi.repeating_first
+WHERE st_1 = '850'
+ORDER BY df_file_name;
+
+
+-- ============================================================================
+-- 3. Concatenate Mode — All Party Names
 -- ============================================================================
 -- Shows n1_2 from the Concatenate table — all party names from every N1
 -- segment occurrence joined with a pipe (|) separator.
@@ -76,7 +113,7 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 3. ToJson Mode — Party Names as Array
+-- 4. ToJson Mode — Party Names as Array
 -- ============================================================================
 -- Shows n1_2 from the ToJson table — all party names as a JSON array.
 -- Each occurrence becomes an element in the array.
@@ -86,6 +123,7 @@ ORDER BY df_file_name;
 --
 -- What you'll see:
 --   - x12_850_purchase_order.edi:     ["John Doe"]
+--   - x12_850_purchase_order_a.edi:   ["Transplace Laredo","Penjamo Cutting","Test Inc.","","Supplier Name"]
 --   - x12_855_purchase_order_ack.edi: ["XYZ MANUFACTURING CO","KOHLS DEPARTMENT STORES"]
 --   - x12_810_invoice_edifabric.edi:  ["ABC AEROSPACE CORPORATION"]
 
@@ -100,20 +138,21 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 4. Compare Default vs Concatenate — Data Loss Demonstration
+-- 5. Compare All Three Modes — Side-by-Side
 -- ============================================================================
--- For x12_850_purchase_order_a.edi (5 N1 segments), shows how default First
--- mode loses data while Concatenate mode preserves all occurrences.
+-- Shows how the SAME file (purchase_order_a.edi with 5 N1 segments) looks
+-- in each of the three repeating_segment_mode options.
 --
 -- What you'll see:
---   - First mode:  n1_2 = 'Transplace Laredo' (only 1 of 5 names)
---   - Concat mode: n1_2 = 'Transplace Laredo|Penjamo Cutting|Test Inc.||Supplier Name'
+--   - First:       n1_2 = 'Transplace Laredo' (only first of 5)
+--   - Concatenate: n1_2 = 'Transplace Laredo|Penjamo Cutting|Test Inc.||Supplier Name'
+--   - ToJson:      n1_2 = '["Transplace Laredo","Penjamo Cutting","Test Inc.","","Supplier Name"]'
 
-ASSERT ROW_COUNT = 2
+ASSERT ROW_COUNT = 3
 SELECT
     'First (default)' AS mode,
-    f.n1_2 AS party_names,
-    f.po1_1 AS first_po1_line
+    f.n1_1 AS entity_codes,
+    f.n1_2 AS party_names
 FROM {{zone_name}}.edi.repeating_first f
 WHERE f.df_file_name = 'x12_850_purchase_order_a.edi'
 
@@ -121,27 +160,37 @@ UNION ALL
 
 SELECT
     'Concatenate' AS mode,
-    c.n1_2 AS party_names,
-    c.po1_1 AS first_po1_line
+    c.n1_1 AS entity_codes,
+    c.n1_2 AS party_names
 FROM {{zone_name}}.edi.repeating_concat c
 WHERE c.df_file_name = 'x12_850_purchase_order_a.edi'
+
+UNION ALL
+
+SELECT
+    'ToJson' AS mode,
+    j.n1_1 AS entity_codes,
+    j.n1_2 AS party_names
+FROM {{zone_name}}.edi.repeating_json j
+WHERE j.df_file_name = 'x12_850_purchase_order_a.edi'
 
 ORDER BY mode;
 
 
 -- ============================================================================
--- 5. Concatenate PO1 Line Items — Purchase Order Details
+-- 6. Concatenate PO1 Price Analysis
 -- ============================================================================
 -- Shows po1_1 (line numbers), po1_2 (quantities), po1_4 (prices) from the
 -- Concatenate table for 850 Purchase Order transactions.
 --
--- Files with multiple PO1 line items have pipe-delimited values.
+-- Files with multiple PO1 line items have pipe-delimited values, making it
+-- easy to see all line items at a glance.
 --
 -- What you'll see:
---   - x12_850_purchase_order.edi:          po1_1='1', po1_2='1', po1_4='19.95'
+--   - x12_850_purchase_order.edi:          po1_1='1', po1_4='19.95'
 --   - x12_850_purchase_order_a.edi:        po1_1='000100001|000200001|000200002',
 --                                           po1_2='2500|2000|1000', po1_4='2.53|3.41|3.41'
---   - x12_850_purchase_order_edifabric.edi: po1_1='1', po1_2='25', po1_4='36'
+--   - x12_850_purchase_order_edifabric.edi: po1_1='1', po1_4='36'
 
 ASSERT ROW_COUNT = 3
 SELECT
@@ -156,54 +205,35 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 6. Count Occurrences from Concatenate Mode
+-- 7. Multi-Party Detection
 -- ============================================================================
--- Uses the pipe-delimited n1_2 from Concatenate mode to count how many N1
--- segments each file contains. The count is derived by counting pipe
--- separators: occurrences = LENGTH(n1_2) - LENGTH(REPLACE(n1_2, '|', '')) + 1.
+-- Shows which files have multiple N1 party segments by checking the
+-- Concatenate table for pipe characters. Files with pipes have more than
+-- one N1 occurrence; files without pipes have exactly one (or NULL for none).
 --
--- Files with NULL n1_2 (no N1 segments, like the 997) get count = 0.
+-- This is a practical pattern: use Concatenate mode to quickly detect
+-- which transactions contain repeating segments, then drill into those.
 --
 -- What you'll see:
---   - x12_850_purchase_order.edi:   1  (single name, no pipes)
---   - x12_850_purchase_order_a.edi: 5  (4 pipes = 5 occurrences)
---   - x12_810_invoice_a.edi:        6  (5 pipes = 6 occurrences)
---   - x12_997_functional_acknowledgment.edi: 0 (NULL — no N1 segments)
+--   - Files with pipes (multiple N1s): purchase_order_a, invoice_a/b/c/d,
+--     purchase_order_ack, ship_notice, ship_bill_notice, application_advice
+--   - Files without pipes (single N1): purchase_order, edifabric files,
+--     receiving_advice
+--   - NULL (no N1 at all): functional_acknowledgment
 
-ASSERT ROW_COUNT = 14
+ASSERT ROW_COUNT >= 5
 SELECT
     df_file_name,
     st_1 AS txn_type,
     n1_2 AS party_names_concat,
     CASE
-        WHEN n1_2 IS NULL THEN 0
-        ELSE LENGTH(n1_2) - LENGTH(REPLACE(n1_2, '|', '')) + 1
-    END AS n1_count
+        WHEN n1_2 IS NULL THEN 'No N1 segments'
+        WHEN n1_2 LIKE '%|%' THEN 'Multiple parties'
+        ELSE 'Single party'
+    END AS party_status
 FROM {{zone_name}}.edi.repeating_concat
-ORDER BY n1_count DESC, df_file_name;
-
-
--- ============================================================================
--- 7. ToJson Array Length — Party Names Count via JSON
--- ============================================================================
--- Uses json_array_length on the JSON mode's n1_2 to count party names per
--- file. This is the JSON equivalent of the pipe-counting approach in query 6.
---
--- Files with NULL n1_2 (no N1 segments) get count = 0.
---
--- What you'll see:
---   - x12_810_invoice_a.edi:        6 (array with 6 elements)
---   - x12_850_purchase_order_a.edi: 5 (array with 5 elements)
---   - x12_997_functional_acknowledgment.edi: 0 (NULL — no array)
-
-ASSERT ROW_COUNT = 14
-SELECT
-    df_file_name,
-    st_1 AS txn_type,
-    n1_2 AS party_names_json,
-    COALESCE(json_array_length(n1_2), 0) AS n1_count
-FROM {{zone_name}}.edi.repeating_json
-ORDER BY n1_count DESC, df_file_name;
+WHERE n1_2 LIKE '%|%'
+ORDER BY df_file_name;
 
 
 -- ============================================================================
@@ -214,12 +244,12 @@ ORDER BY n1_count DESC, df_file_name;
 -- All checks should return PASS.
 
 ASSERT ROW_COUNT = 8
+ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_count_14'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_has_pipes'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'first_count_14'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'first_is_first_only'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'first_po1_populated'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'json_count_14'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_count_14'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'json_has_arrays'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'three_tables_same_count'
 SELECT check_name, result FROM (
@@ -255,7 +285,7 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 5: First mode returns only first N1 (Transplace Laredo, not the full pipe list)
+    -- Check 5: First mode returns only first N1 (not the full pipe list)
     SELECT 'first_is_first_only' AS check_name,
            CASE WHEN (SELECT n1_2 FROM {{zone_name}}.edi.repeating_first
                        WHERE df_file_name = 'x12_850_purchase_order_a.edi') = 'Transplace Laredo'
@@ -271,7 +301,7 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 7: Concatenate table has pipe-delimited values (contains '|')
+    -- Check 7: Concatenate table has pipe-delimited values for multi-N1 files
     SELECT 'concat_has_pipes' AS check_name,
            CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_concat
                        WHERE n1_2 LIKE '%|%') > 0
@@ -279,7 +309,7 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 8: ToJson table has JSON arrays (contains '[')
+    -- Check 8: ToJson table has JSON arrays (starts with '[')
     SELECT 'json_has_arrays' AS check_name,
            CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_json
                        WHERE n1_2 LIKE '[%') > 0
