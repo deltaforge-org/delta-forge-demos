@@ -100,7 +100,7 @@ ORDER BY order_date, product_category;
 -- Z-ORDER co-locates (category, date) values in the same files, so data
 -- skipping works across both columns simultaneously.
 
-ASSERT ROW_COUNT = 22
+ASSERT VALUE order_count = 22
 ASSERT VALUE total_revenue = 5623.4
 SELECT COUNT(*) AS order_count,
        ROUND(SUM(order_amount), 2) AS total_revenue
@@ -117,7 +117,7 @@ WHERE product_category = 'electronics'
 -- partition directories. The partitioning adds overhead here (directory
 -- listing + per-partition file opens) with no pruning benefit.
 
-ASSERT ROW_COUNT = 22
+ASSERT VALUE order_count = 22
 ASSERT VALUE total_revenue = 5623.4
 SELECT COUNT(*) AS order_count,
        ROUND(SUM(order_amount), 2) AS total_revenue
