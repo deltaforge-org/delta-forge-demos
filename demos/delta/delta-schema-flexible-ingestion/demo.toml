@@ -1,0 +1,25 @@
+[demo]
+id = "delta-schema-flexible-ingestion"
+name = "Delta Flexible Ingestion — JSON to Typed Columns"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A smart factory ingests IoT sensor telemetry into a Delta table with a JSON \
+metadata column. As analysts query the same JSON fields repeatedly, the team \
+promotes frequently-accessed fields (location, alert_flag) to typed columns \
+using ALTER TABLE ADD COLUMN + UPDATE backfill. This demonstrates the \
+real-world migration from flexible JSON storage to performant typed columns \
+without downtime or table recreation — the "schema promotion" pattern.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "schema-evolution", "json", "iot", "alter-table", "backfill", "typed-columns", "flexible-ingestion"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sensor_telemetry"

@@ -1,0 +1,26 @@
+[demo]
+id = "delta-json-event-log"
+name = "Delta JSON Event Log — Payment Gateway Analysis"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A fintech payment gateway logs every API transaction with JSON payloads in \
+VARCHAR columns — each transaction type (charge, refund, auth, payout) has \
+a different payload shape. This demo shows how to query heterogeneous JSON \
+strings using LIKE patterns, SUBSTRING extraction, CASE WHEN classification, \
+and GROUP BY analytics. The real-world problem: fraud analysts need to slice \
+payment data by extracted fields (amount ranges, merchant categories, error \
+codes) without a rigid schema for every payload variation.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "json", "event-log", "payments", "fintech", "like", "substring", "case-when", "analytics"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.payment_events"

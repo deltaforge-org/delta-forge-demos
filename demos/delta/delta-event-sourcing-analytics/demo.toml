@@ -1,0 +1,26 @@
+[demo]
+id = "delta-event-sourcing-analytics"
+name = "Delta Event Sourcing Analytics — ED Patient Flow"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A hospital emergency department tracks patient flow as an event stream: \
+triage, admit, transfer, discharge. Each event records a patient, department, \
+and timestamp. Operations analysts use window functions (LAG for wait times, \
+ROW_NUMBER for latest state, SUM OVER for running counts) and CTEs to answer \
+critical questions: average time from triage to admission, department transfer \
+patterns, and peak-hour patient loads. This demonstrates analytical queries \
+over heterogeneous event payloads stored in a single append-style table.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "event-sourcing", "analytics", "window-functions", "lag", "row-number", "cte", "healthcare", "patient-flow"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.ed_events"
