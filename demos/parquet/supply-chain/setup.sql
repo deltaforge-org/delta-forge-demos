@@ -39,8 +39,8 @@ OPTIONS (
     row_group_filter = 'true',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.all_orders;
 GRANT ADMIN ON TABLE {{zone_name}}.parquet.all_orders TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.all_orders;
 
 
 -- ============================================================================
@@ -57,8 +57,8 @@ OPTIONS (
     file_filter = 'Orders_2015*',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.orders_2015;
 GRANT ADMIN ON TABLE {{zone_name}}.parquet.orders_2015 TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.orders_2015;
 
 
 -- ============================================================================
@@ -76,8 +76,8 @@ OPTIONS (
     max_rows = '100',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.orders_sample;
 GRANT ADMIN ON TABLE {{zone_name}}.parquet.orders_sample TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.orders_sample;
 
 
 -- ============================================================================
@@ -94,5 +94,5 @@ OPTIONS (
     file_filter = 'Orders_2014-03*',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.orders_q1_2014;
 GRANT ADMIN ON TABLE {{zone_name}}.parquet.orders_q1_2014 TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.parquet.orders_q1_2014;

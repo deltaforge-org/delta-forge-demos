@@ -1,0 +1,32 @@
+[demo]
+id = "pseudonymisation-healthcare"
+name = "Healthcare Pseudonymisation"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Demonstrates GDPR-compliant pseudonymisation across three healthcare data formats: \
+HL7 v2 ADT patient admissions, FHIR R4 Patient resources, and EDI HIPAA X12 claims. \
+Showcases all 7 transform types (keyed_hash, encrypt, redact, generalize, tokenize, \
+mask, hash), wildcard column patterns, ALTER enable/disable lifecycle, and permanent \
+APPLY transformations for right-to-erasure compliance.
+"""
+categories = ["pseudonymisation", "healthcare"]
+tags = ["pseudonymisation", "healthcare", "hl7", "fhir", "edi", "hipaa", "gdpr", "privacy"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+zone_name = { description = "Target zone name for tables (defaults to 'demo_zone')", required = false }
+current_user = { description = "Username of the current logged-in user", required = true }
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation.hl7_patients"
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation.fhir_patients"
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation.edi_claims"

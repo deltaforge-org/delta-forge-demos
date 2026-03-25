@@ -5138,6 +5138,38 @@
       ]
     },
     {
+      "id": "iceberg-energy-grid-monitoring",
+      "path": "demos/iceberg/energy-grid-monitoring",
+      "iconPath": "icons/iceberg-energy-grid-monitoring.svg",
+      "name": "Iceberg Energy Grid — Native Table Reading",
+      "summary": "Demonstrates native Apache Iceberg table reading using a smart energy grid monitoring dataset (600 meter readings across 3 regions). Exercises Iceberg metadata chain parsing (metadata.json → manifest list → manifest → Parquet data files), schema inference from Iceberg metadata, manifest-based file discovery, region-level aggregations, and Parquet row-group filtering — all without any conversion to Delta format.",
+      "categories": [
+        "iceberg",
+        "energy"
+      ],
+      "tags": [
+        "iceberg",
+        "beginner",
+        "read-only",
+        "native-format",
+        "metadata-chain",
+        "aggregation"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 27824,
+      "fileCount": 6,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.grid_readings"
+        }
+      ]
+    },
+    {
       "id": "json-country-factbook",
       "path": "demos/json/country-factbook",
       "iconPath": "icons/json-country-factbook.svg",
@@ -5729,6 +5761,12 @@
       "name": "ORC",
       "icon": "file-binary",
       "description": "ORC format demos with self-describing schema, schema evolution, and multi-file reading"
+    },
+    {
+      "id": "iceberg",
+      "name": "Iceberg",
+      "icon": "hexagon",
+      "description": "Apache Iceberg native table demos with metadata chain parsing, manifest-based file discovery, and read-only analytics"
     },
     {
       "id": "geospatial",
