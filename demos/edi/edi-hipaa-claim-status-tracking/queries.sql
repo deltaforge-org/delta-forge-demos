@@ -125,8 +125,8 @@ ORDER BY df_file_name;
 ASSERT ROW_COUNT = 2
 ASSERT VALUE trn_1 = '1' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
 ASSERT VALUE trn_1 = '2' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
-ASSERT VALUE trace_number = 'ABCXYZ1' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
-ASSERT VALUE trace_number = 'ABCXYZ1' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
+ASSERT VALUE trace_number = 'ABCXYZ3' WHERE df_file_name = 'hipaa_276_claim_status_request.edi'
+ASSERT VALUE trace_number = 'ABCXYC3' WHERE df_file_name = 'hipaa_277_claim_status_response.edi'
 SELECT
     df_file_name,
     st_1,
