@@ -60,13 +60,13 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.hl7_patients (
     status          VARCHAR
 ) LOCATION '{{data_path}}/hl7_patients';
 
+GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.hl7_patients TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.pseudonymisation.hl7_patients VALUES
     ('MSG001', 'MRN-10045', 'SMITH^WILLIAM^A', '19610615', 'M', '1200 N ELM STREET^^JERUSALEM^TN^99999', '(999)999-1212', '123-45-6789', 'I', 'W4-R201-B1', 'DR JONES', 'A01', 'Active'),
     ('MSG002', 'MRN-10046', 'DOE^JANE^M', '19850322', 'F', '456 OAK AVE^^BIRMINGHAM^AL^35209', '(555)123-4567', '234-56-7890', 'O', 'CLINIC-A', 'DR PATEL', 'A04', 'Active'),
     ('MSG003', 'MRN-10047', 'KLEINSAMPLE^BARRY^Q', '19480203', 'M', '260 GOODWIN CREST^^BIRMINGHAM^AL^35209', '(555)987-6543', '345-67-8901', 'E', 'ER-BAY3', 'DR CHEN', 'A01', 'Active'),
     ('MSG004', 'MRN-10048', 'JOHNSON^ALICE^R', '19901114', 'F', '789 PINE RD^^CHICAGO^IL^60601', '(312)555-0199', '456-78-9012', 'I', 'W2-R105-B2', 'DR WILSON', 'A01', 'Discharged');
-
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.hl7_patients TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -94,13 +94,13 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.fhir_patients (
     active          BOOLEAN
 ) LOCATION '{{data_path}}/fhir_patients';
 
+GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.fhir_patients TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.pseudonymisation.fhir_patients VALUES
     ('pt-fhir-001', 'Chalmers', 'Peter', '1974-12-25', 'male', 'peter.chalmers@example.com', '(03) 5555 6473', '534 Erewhon St', 'PleasantVille', 'VT', '05401', 'MRN-20001', '111-22-3333', 'M', true),
     ('pt-fhir-002', 'Solo', 'Leia', '1995-10-12', 'female', 'leia.solo@hospital.org', '(555) 867-5309', '100 Galaxy Way', 'Alderaan', 'CA', '90210', 'MRN-20002', '222-33-4444', 'S', true),
     ('pt-fhir-003', 'Duck', 'Donald', '1934-06-09', 'male', 'dduck@duckburg.net', '(555) 382-5633', '1313 Webfoot Walk', 'Duckburg', 'CA', '95501', 'MRN-20003', '333-44-5555', 'M', true),
     ('pt-fhir-004', 'Doe', 'Jane', '1988-03-15', 'female', 'jdoe@clinic.net', '(555) 246-8101', '42 Unknown St', 'Springfield', 'IL', '62704', 'MRN-20004', '444-55-6666', 'S', false);
-
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.fhir_patients TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -128,14 +128,14 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.edi_claims (
     bpr_14          VARCHAR
 ) LOCATION '{{data_path}}/edi_claims';
 
+GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.edi_claims TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.pseudonymisation.edi_claims VALUES
     ('TXN-837-001', '837', '00', 'IL', 'SMITH', 'FRED', '123456789A', '12101930', 'M', 'ACCT-5001', 1250.00, 'C', 1250.00, '9876543210', '1234567890'),
     ('TXN-837-002', '837', '00', 'IL', 'JONES', 'MARY', '234567890A', '05151985', 'F', 'ACCT-5002', 3750.50, 'C', 3750.50, '8765432109', '2345678901'),
     ('TXN-835-001', '835', '08', '85', 'GENERAL HOSPITAL', NULL, '987654321', NULL, NULL, NULL, NULL, 'H', 5000.50, '7654321098', '3456789012'),
     ('TXN-270-001', '270', '13', 'IL', 'MANN', 'JOHN', '345678901', '07041990', 'M', NULL, NULL, NULL, NULL, NULL, NULL),
     ('TXN-837-003', '837', '00', 'IL', 'WILLIAMS', 'CAROL', '456789012A', '11301978', 'F', 'ACCT-5003', 890.00, 'C', 890.00, '6543210987', '4567890123');
-
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.edi_claims TO USER {{current_user}};
 
 
 -- ============================================================================
