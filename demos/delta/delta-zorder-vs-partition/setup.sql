@@ -140,13 +140,7 @@ INSERT INTO {{zone_name}}.delta_demos.orders_zorder VALUES
     (22, 'ORD-0022', 'latin-america', 'home-garden',   63.45, 2, '2025-01-28', 'paypal',        'standard',  4),
     (23, 'ORD-0023', 'europe',        'home-garden',  187.90, 1, '2025-01-28', 'credit_card',   'express',   4),
     (24, 'ORD-0024', 'asia-pacific',  'clothing',     112.30, 2, '2025-01-28', 'bank_transfer', 'standard',  3),
-    (25, 'ORD-0025', 'middle-east',   'sports',        29.99, 6, '2025-01-28', 'paypal',        'standard',  2);
-
--- ============================================================================
--- STEP 3: Batch 2 — 50 orders (rows 26-100, split from batch 1 to show scatter)
--- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.orders_partitioned
-SELECT * FROM (VALUES
+    (25, 'ORD-0025', 'middle-east',   'sports',        29.99, 6, '2025-01-28', 'paypal',        'standard',  2),
     (26, 'ORD-0026', 'north-america', 'home-garden',  234.15, 1, '2025-02-01', 'credit_card',   'express',   5),
     (27, 'ORD-0027', 'europe',        'electronics',  312.60, 1, '2025-02-01', 'credit_card',   'express',   4),
     (28, 'ORD-0028', 'north-america', 'clothing',      68.90, 3, '2025-02-01', 'paypal',        'standard',  4),
@@ -171,7 +165,66 @@ SELECT * FROM (VALUES
     (47, 'ORD-0047', 'north-america', 'clothing',      42.15, 5, '2025-02-13', 'bank_transfer', 'standard',  2),
     (48, 'ORD-0048', 'asia-pacific',  'electronics',  385.00, 1, '2025-02-13', 'credit_card',   'express',   5),
     (49, 'ORD-0049', 'latin-america', 'home-garden',  128.90, 2, '2025-02-13', 'paypal',        'standard',  4),
-    (50, 'ORD-0050', 'europe',        'clothing',     101.55, 2, '2025-02-13', 'credit_card',   'standard',  4),
+    (50, 'ORD-0050', 'europe',        'clothing',     101.55, 2, '2025-02-13', 'credit_card',   'standard',  4);
+
+INSERT INTO {{zone_name}}.delta_demos.orders_zorder VALUES
+    (1,  'ORD-0001', 'north-america', 'electronics',  349.99, 1, '2025-01-15', 'credit_card',   'express',   4),
+    (2,  'ORD-0002', 'europe',        'clothing',      89.50, 3, '2025-01-15', 'paypal',        'standard',  5),
+    (3,  'ORD-0003', 'asia-pacific',  'home-garden',  145.00, 2, '2025-01-15', 'credit_card',   'standard',  3),
+    (4,  'ORD-0004', 'north-america', 'sports',        67.25, 4, '2025-01-15', 'bank_transfer', 'standard',  4),
+    (5,  'ORD-0005', 'latin-america', 'electronics',  219.90, 1, '2025-01-18', 'credit_card',   'express',   5),
+    (6,  'ORD-0006', 'europe',        'home-garden',   78.30, 2, '2025-01-18', 'paypal',        'standard',  4),
+    (7,  'ORD-0007', 'north-america', 'clothing',     124.75, 1, '2025-01-18', 'credit_card',   'overnight', 3),
+    (8,  'ORD-0008', 'middle-east',   'electronics',  289.00, 1, '2025-01-18', 'bank_transfer', 'express',   4),
+    (9,  'ORD-0009', 'asia-pacific',  'clothing',      56.80, 5, '2025-01-18', 'paypal',        'standard',  2),
+    (10, 'ORD-0010', 'north-america', 'electronics',  199.95, 2, '2025-01-18', 'credit_card',   'standard',  5),
+    (11, 'ORD-0011', 'europe',        'electronics',  374.50, 1, '2025-01-22', 'credit_card',   'express',   4),
+    (12, 'ORD-0012', 'north-america', 'home-garden',   43.20, 3, '2025-01-22', 'paypal',        'standard',  3),
+    (13, 'ORD-0013', 'asia-pacific',  'sports',        34.99, 2, '2025-01-22', 'credit_card',   'standard',  4),
+    (14, 'ORD-0014', 'latin-america', 'clothing',      72.10, 2, '2025-01-22', 'bank_transfer', 'standard',  3),
+    (15, 'ORD-0015', 'europe',        'clothing',     158.40, 1, '2025-01-22', 'credit_card',   'express',   5),
+    (16, 'ORD-0016', 'north-america', 'sports',        89.99, 3, '2025-01-25', 'paypal',        'standard',  4),
+    (17, 'ORD-0017', 'middle-east',   'clothing',      47.60, 4, '2025-01-25', 'credit_card',   'standard',  3),
+    (18, 'ORD-0018', 'asia-pacific',  'electronics',  267.80, 1, '2025-01-25', 'bank_transfer', 'express',   5),
+    (19, 'ORD-0019', 'north-america', 'clothing',      95.25, 2, '2025-01-28', 'credit_card',   'standard',  4),
+    (20, 'ORD-0020', 'europe',        'sports',        55.70, 3, '2025-01-28', 'paypal',        'standard',  3),
+    (21, 'ORD-0021', 'north-america', 'electronics',  425.00, 1, '2025-01-28', 'credit_card',   'overnight', 5),
+    (22, 'ORD-0022', 'latin-america', 'home-garden',   63.45, 2, '2025-01-28', 'paypal',        'standard',  4),
+    (23, 'ORD-0023', 'europe',        'home-garden',  187.90, 1, '2025-01-28', 'credit_card',   'express',   4),
+    (24, 'ORD-0024', 'asia-pacific',  'clothing',     112.30, 2, '2025-01-28', 'bank_transfer', 'standard',  3),
+    (25, 'ORD-0025', 'middle-east',   'sports',        29.99, 6, '2025-01-28', 'paypal',        'standard',  2),
+    (26, 'ORD-0026', 'north-america', 'home-garden',  234.15, 1, '2025-02-01', 'credit_card',   'express',   5),
+    (27, 'ORD-0027', 'europe',        'electronics',  312.60, 1, '2025-02-01', 'credit_card',   'express',   4),
+    (28, 'ORD-0028', 'north-america', 'clothing',      68.90, 3, '2025-02-01', 'paypal',        'standard',  4),
+    (29, 'ORD-0029', 'asia-pacific',  'home-garden',   97.50, 2, '2025-02-01', 'credit_card',   'standard',  3),
+    (30, 'ORD-0030', 'latin-america', 'sports',        41.80, 4, '2025-02-01', 'bank_transfer', 'standard',  3),
+    (31, 'ORD-0031', 'north-america', 'electronics',  178.50, 2, '2025-02-01', 'credit_card',   'standard',  4),
+    (32, 'ORD-0032', 'europe',        'clothing',      83.20, 1, '2025-02-01', 'paypal',        'standard',  5),
+    (33, 'ORD-0033', 'asia-pacific',  'electronics',  291.75, 1, '2025-02-01', 'credit_card',   'express',   4),
+    (34, 'ORD-0034', 'north-america', 'sports',       119.40, 2, '2025-02-04', 'bank_transfer', 'standard',  3),
+    (35, 'ORD-0035', 'middle-east',   'home-garden',   52.10, 3, '2025-02-04', 'credit_card',   'standard',  4),
+    (36, 'ORD-0036', 'europe',        'electronics',  246.80, 1, '2025-02-04', 'paypal',        'express',   5),
+    (37, 'ORD-0037', 'latin-america', 'clothing',     135.60, 1, '2025-02-04', 'credit_card',   'overnight', 4),
+    (38, 'ORD-0038', 'north-america', 'home-garden',   88.75, 4, '2025-02-08', 'credit_card',   'standard',  3),
+    (39, 'ORD-0039', 'asia-pacific',  'sports',        73.20, 2, '2025-02-08', 'paypal',        'standard',  4),
+    (40, 'ORD-0040', 'europe',        'home-garden',  162.35, 1, '2025-02-08', 'credit_card',   'express',   4),
+    (41, 'ORD-0041', 'north-america', 'clothing',     176.80, 1, '2025-02-08', 'paypal',        'express',   5),
+    (42, 'ORD-0042', 'middle-east',   'electronics',  198.50, 2, '2025-02-08', 'credit_card',   'standard',  4),
+    (43, 'ORD-0043', 'asia-pacific',  'home-garden',  211.00, 1, '2025-02-10', 'bank_transfer', 'express',   3),
+    (44, 'ORD-0044', 'latin-america', 'electronics',  333.25, 1, '2025-02-10', 'credit_card',   'overnight', 5),
+    (45, 'ORD-0045', 'north-america', 'electronics',  156.30, 3, '2025-02-10', 'credit_card',   'standard',  4),
+    (46, 'ORD-0046', 'europe',        'sports',        64.90, 2, '2025-02-13', 'paypal',        'standard',  3),
+    (47, 'ORD-0047', 'north-america', 'clothing',      42.15, 5, '2025-02-13', 'bank_transfer', 'standard',  2),
+    (48, 'ORD-0048', 'asia-pacific',  'electronics',  385.00, 1, '2025-02-13', 'credit_card',   'express',   5),
+    (49, 'ORD-0049', 'latin-america', 'home-garden',  128.90, 2, '2025-02-13', 'paypal',        'standard',  4),
+    (50, 'ORD-0050', 'europe',        'clothing',     101.55, 2, '2025-02-13', 'credit_card',   'standard',  4);
+
+
+-- ============================================================================
+-- STEP 3: Batch 2 — 50 orders (rows 51-100) into both tables
+-- ============================================================================
+INSERT INTO {{zone_name}}.delta_demos.orders_partitioned
+SELECT * FROM (VALUES
     (51, 'ORD-0051', 'north-america', 'home-garden',   79.60, 3, '2025-02-13', 'credit_card',   'standard',  3),
     (52, 'ORD-0052', 'asia-pacific',  'clothing',      65.40, 2, '2025-02-15', 'paypal',        'standard',  4),
     (53, 'ORD-0053', 'middle-east',   'home-garden',  143.70, 1, '2025-02-15', 'credit_card',   'express',   5),
@@ -226,31 +279,6 @@ SELECT * FROM (VALUES
 
 INSERT INTO {{zone_name}}.delta_demos.orders_zorder
 SELECT * FROM (VALUES
-    (26, 'ORD-0026', 'north-america', 'home-garden',  234.15, 1, '2025-02-01', 'credit_card',   'express',   5),
-    (27, 'ORD-0027', 'europe',        'electronics',  312.60, 1, '2025-02-01', 'credit_card',   'express',   4),
-    (28, 'ORD-0028', 'north-america', 'clothing',      68.90, 3, '2025-02-01', 'paypal',        'standard',  4),
-    (29, 'ORD-0029', 'asia-pacific',  'home-garden',   97.50, 2, '2025-02-01', 'credit_card',   'standard',  3),
-    (30, 'ORD-0030', 'latin-america', 'sports',        41.80, 4, '2025-02-01', 'bank_transfer', 'standard',  3),
-    (31, 'ORD-0031', 'north-america', 'electronics',  178.50, 2, '2025-02-01', 'credit_card',   'standard',  4),
-    (32, 'ORD-0032', 'europe',        'clothing',      83.20, 1, '2025-02-01', 'paypal',        'standard',  5),
-    (33, 'ORD-0033', 'asia-pacific',  'electronics',  291.75, 1, '2025-02-01', 'credit_card',   'express',   4),
-    (34, 'ORD-0034', 'north-america', 'sports',       119.40, 2, '2025-02-04', 'bank_transfer', 'standard',  3),
-    (35, 'ORD-0035', 'middle-east',   'home-garden',   52.10, 3, '2025-02-04', 'credit_card',   'standard',  4),
-    (36, 'ORD-0036', 'europe',        'electronics',  246.80, 1, '2025-02-04', 'paypal',        'express',   5),
-    (37, 'ORD-0037', 'latin-america', 'clothing',     135.60, 1, '2025-02-04', 'credit_card',   'overnight', 4),
-    (38, 'ORD-0038', 'north-america', 'home-garden',   88.75, 4, '2025-02-08', 'credit_card',   'standard',  3),
-    (39, 'ORD-0039', 'asia-pacific',  'sports',        73.20, 2, '2025-02-08', 'paypal',        'standard',  4),
-    (40, 'ORD-0040', 'europe',        'home-garden',  162.35, 1, '2025-02-08', 'credit_card',   'express',   4),
-    (41, 'ORD-0041', 'north-america', 'clothing',     176.80, 1, '2025-02-08', 'paypal',        'express',   5),
-    (42, 'ORD-0042', 'middle-east',   'electronics',  198.50, 2, '2025-02-08', 'credit_card',   'standard',  4),
-    (43, 'ORD-0043', 'asia-pacific',  'home-garden',  211.00, 1, '2025-02-10', 'bank_transfer', 'express',   3),
-    (44, 'ORD-0044', 'latin-america', 'electronics',  333.25, 1, '2025-02-10', 'credit_card',   'overnight', 5),
-    (45, 'ORD-0045', 'north-america', 'electronics',  156.30, 3, '2025-02-10', 'credit_card',   'standard',  4),
-    (46, 'ORD-0046', 'europe',        'sports',        64.90, 2, '2025-02-13', 'paypal',        'standard',  3),
-    (47, 'ORD-0047', 'north-america', 'clothing',      42.15, 5, '2025-02-13', 'bank_transfer', 'standard',  2),
-    (48, 'ORD-0048', 'asia-pacific',  'electronics',  385.00, 1, '2025-02-13', 'credit_card',   'express',   5),
-    (49, 'ORD-0049', 'latin-america', 'home-garden',  128.90, 2, '2025-02-13', 'paypal',        'standard',  4),
-    (50, 'ORD-0050', 'europe',        'clothing',     101.55, 2, '2025-02-13', 'credit_card',   'standard',  4),
     (51, 'ORD-0051', 'north-america', 'home-garden',   79.60, 3, '2025-02-13', 'credit_card',   'standard',  3),
     (52, 'ORD-0052', 'asia-pacific',  'clothing',      65.40, 2, '2025-02-15', 'paypal',        'standard',  4),
     (53, 'ORD-0053', 'middle-east',   'home-garden',  143.70, 1, '2025-02-15', 'credit_card',   'express',   5),
