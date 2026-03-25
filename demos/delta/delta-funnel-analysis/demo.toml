@@ -1,0 +1,26 @@
+[demo]
+id = "delta-funnel-analysis"
+name = "Delta Funnel Analysis — SaaS Conversion Tracking"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+SaaS companies track users through a conversion funnel: trial_start → activation \
+→ subscription → renewal. Each stage has a natural drop-off rate, and identifying \
+where users churn is critical for growth. \
+This demo builds a 100-event funnel dataset across 40 users, computes stage-by-stage \
+conversion rates using self-JOINs, then uses UPDATE to mark churned users — \
+demonstrating Delta Lake as an analytics backend where the funnel data itself is \
+mutable and enriched over time.
+"""
+categories = ["delta-table", "delta-analytics"]
+tags = ["delta-table", "intermediate", "funnel", "analytics", "saas", "conversion", "self-join", "update"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.user_events"

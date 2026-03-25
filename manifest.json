@@ -2510,11 +2510,11 @@
       ]
     },
     {
-      "id": "delta-unicode-encoding",
-      "path": "demos/delta/delta-unicode-encoding",
-      "iconPath": "icons/delta-unicode-encoding.svg",
-      "name": "Delta Unicode & Encoding — International Data",
-      "summary": "Delta tables inherit Parquet's native UTF-8 encoding, which means full Unicode \\ support for strings including CJK, Arabic, Cyrillic, and Latin diacritics. \\ This is critical for any global...",
+      "id": "delta-unicode-roundtrip",
+      "path": "demos/delta/delta-unicode-roundtrip",
+      "iconPath": "icons/delta-unicode-roundtrip.svg",
+      "name": "Delta Unicode Roundtrip — Mutation Fidelity Proof",
+      "summary": "An international e-commerce marketplace stores product listings in sellers' native scripts — Japanese, Chinese, Korean, Arabic, Hebrew, Cyrillic, and Latin diacritics. Proves UTF-8 roundtrip fidelity by asserting exact Unicode values after every DML mutation: UPDATE on Unicode columns directly, DELETE with CJK LIKE predicates, and copy-on-write Parquet rewrites.",
       "categories": [
         "delta-table",
         "delta-schema-types"
@@ -2525,20 +2525,88 @@
         "unicode",
         "encoding",
         "international",
-        "partitioning",
-        "i18n"
+        "i18n",
+        "utf-8",
+        "mutation"
       ],
       "difficulty": "intermediate",
       "estimatedTimeMinutes": 8,
       "dataSizeBytes": 0,
-      "fileCount": 5,
+      "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z",
+      "updatedAt": "2026-03-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.global_products"
+          "name": "{{zone_name}}.delta_demos.global_bazaar"
+        }
+      ]
+    },
+    {
+      "id": "delta-unicode-partitioning",
+      "path": "demos/delta/delta-unicode-partitioning",
+      "iconPath": "icons/delta-unicode-partitioning.svg",
+      "name": "Delta Unicode Partitioning — Non-ASCII Partition Keys",
+      "summary": "A global CDN partitions content metadata by region names in their native script: 日本語, العربية, Русский, Français, Português. Proves that partition pruning, cross-partition queries, INSERT, UPDATE, and DELETE all work correctly when partition keys are non-ASCII multi-byte strings.",
+      "categories": [
+        "delta-table",
+        "delta-performance"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "unicode",
+        "partitioning",
+        "i18n",
+        "utf-8",
+        "partition-pruning"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.cdn_content"
+        }
+      ]
+    },
+    {
+      "id": "delta-unicode-string-functions",
+      "path": "demos/delta/delta-unicode-string-functions",
+      "iconPath": "icons/delta-unicode-string-functions.svg",
+      "name": "Delta Unicode String Functions — Multi-Byte Operations",
+      "summary": "A multilingual customer support platform receives tickets in 15+ languages. Tests whether SQL string functions — LENGTH, UPPER, LOWER, SUBSTR, LIKE, and CONCAT — correctly handle multi-byte UTF-8 characters. LENGTH must return character count (not byte count), SUBSTR must not split multi-byte sequences, and UPPER must preserve diacritics (ü → Ü).",
+      "categories": [
+        "delta-table",
+        "delta-schema-types"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "unicode",
+        "string-functions",
+        "i18n",
+        "utf-8",
+        "length",
+        "substr"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.support_tickets"
         }
       ]
     },
@@ -2882,35 +2950,70 @@
       ]
     },
     {
-      "id": "delta-zorder-transactions",
-      "path": "demos/delta/delta-zorder-transactions",
-      "iconPath": "icons/delta-zorder-transactions.svg",
-      "name": "Delta Z-ORDER & Transaction Management",
-      "summary": "OPTIMIZE ZORDER is recorded as an atomic transaction in the Delta log, meaning \\ the entire file reorganization either completes fully or not at all -- readers \\ never see a partially optimized...",
+      "id": "delta-snapshot-isolation",
+      "path": "demos/delta/delta-snapshot-isolation",
+      "iconPath": "icons/delta-snapshot-isolation.svg",
+      "name": "Delta Snapshot Isolation — Portfolio Rebalancing",
+      "summary": "Every Delta Lake write is an atomic transaction producing a new version. This demo builds a multi-fund investment portfolio, runs OPTIMIZE to compact files, applies a price-adjustment UPDATE, then uses VERSION AS OF to prove each snapshot remains unchanged — the foundation of snapshot isolation.",
       "categories": [
         "delta-table",
-        "delta-performance"
+        "delta-versioning"
       ],
       "tags": [
         "delta-table",
         "advanced",
-        "z-order",
+        "snapshot-isolation",
+        "time-travel",
+        "version-as-of",
         "optimize",
         "transactions",
-        "analytics",
-        "performance"
+        "finance"
       ],
       "difficulty": "advanced",
       "estimatedTimeMinutes": 10,
       "dataSizeBytes": 0,
-      "fileCount": 5,
+      "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z",
+      "updatedAt": "2026-03-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.web_analytics"
+          "name": "{{zone_name}}.delta_demos.fund_holdings"
+        }
+      ]
+    },
+    {
+      "id": "delta-funnel-analysis",
+      "path": "demos/delta/delta-funnel-analysis",
+      "iconPath": "icons/delta-funnel-analysis.svg",
+      "name": "Delta Funnel Analysis — SaaS Conversion Tracking",
+      "summary": "SaaS companies track users through a conversion funnel: trial → activation → subscription → renewal. This demo builds a 100-event dataset, computes stage-by-stage conversion rates using self-JOINs, then uses UPDATE to mark churned users — demonstrating Delta Lake as a mutable analytics backend.",
+      "categories": [
+        "delta-table",
+        "delta-analytics"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "funnel",
+        "analytics",
+        "saas",
+        "conversion",
+        "self-join",
+        "update"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.user_events"
         }
       ]
     },

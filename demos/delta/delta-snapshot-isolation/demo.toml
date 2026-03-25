@@ -1,0 +1,26 @@
+[demo]
+id = "delta-snapshot-isolation"
+name = "Delta Snapshot Isolation — Portfolio Rebalancing"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Every Delta Lake write — INSERT, UPDATE, OPTIMIZE — is an atomic transaction \
+that produces a new table version. Concurrent readers always see a complete, \
+consistent snapshot: they never observe a half-written state. \
+This demo builds a multi-fund investment portfolio in 3 batches, runs OPTIMIZE \
+to compact the fragmented files, then applies a price-adjustment UPDATE. \
+At each stage it uses VERSION AS OF to prove that earlier snapshots remain \
+unchanged — the foundation of Delta Lake's snapshot isolation guarantee.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "snapshot-isolation", "time-travel", "version-as-of", "optimize", "transactions", "finance"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.fund_holdings"

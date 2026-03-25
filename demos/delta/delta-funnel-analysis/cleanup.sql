@@ -1,10 +1,10 @@
 -- ============================================================================
--- Delta Z-ORDER & Transaction Management — Cleanup Script
+-- Delta Funnel Analysis — Cleanup Script
 -- ============================================================================
 -- Removes all objects created by setup.sql.
 -- ============================================================================
 
-DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.web_analytics WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.user_events WITH FILES;
 
 -- Shared resources (safe — will warn if other demos still use them)
 DROP SCHEMA IF EXISTS {{zone_name}}.delta_demos;
