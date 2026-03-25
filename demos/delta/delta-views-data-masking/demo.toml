@@ -4,17 +4,17 @@ name = "Delta Views & Data Masking — Role-Based Access Layers"
 version = "1.0.0"
 author = "Delta Forge Team"
 description = """
-Production databases serve multiple audiences — analysts need order metrics, \
-support agents need customer details with masked payment info, and executives \
-need regional summaries without individual records. Views solve this by \
-projecting different column subsets from the same base table. This demo \
-builds three role-based views on an e-commerce order table: an analyst view \
-(no PII, only product and revenue data), a support view (customer details \
-with masked credit card numbers), and an executive view (pre-aggregated \
-regional summaries). Each view enforces its access boundary at the SQL layer.
+The MASK() function applies Delta Forge's pseudonymisation transforms inline \
+in SQL expressions — redact, keyed_hash, generalize, encrypt, and tokenize. \
+Unlike manual string concatenation, MASK() provides format-aware redaction \
+(email, phone, card, SSN), deterministic hashing for JOINable pseudonyms, \
+and date generalisation. This demo builds three role-based views on an \
+e-commerce order table: an analyst view (keyed_hash pseudonyms for linkable \
+but anonymous customer IDs), a support view (MASK-redacted card, email, and \
+phone), and an executive view (pre-aggregated regional summaries).
 """
 categories = ["delta-table"]
-tags = ["delta-table", "intermediate", "views", "data-masking", "access-control", "e-commerce", "security"]
+tags = ["delta-table", "intermediate", "views", "data-masking", "mask-function", "pseudonymisation", "access-control", "e-commerce", "security"]
 difficulty = "intermediate"
 estimated_time_minutes = 8
 

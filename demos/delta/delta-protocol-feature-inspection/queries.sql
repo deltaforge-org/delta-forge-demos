@@ -21,8 +21,9 @@
 -- pipelines, we need to understand what each table contains and what
 -- protocol features are active.
 
-ASSERT ROW_COUNT = 15
+ASSERT VALUE row_count = 15
 ASSERT VALUE categories = 4
+ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS row_count,
        COUNT(DISTINCT category) AS categories,
        COUNT(DISTINCT CAST(in_stock AS VARCHAR)) AS stock_states
@@ -49,7 +50,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.inherited_plain;
 -- properties — only system defaults.
 
 ASSERT ROW_COUNT >= 0
-SHOW TABLE PROPERTIES {{zone_name}}.delta_demos.inherited_plain;
+SHOW TBLPROPERTIES {{zone_name}}.delta_demos.inherited_plain;
 
 
 -- ============================================================================
@@ -91,7 +92,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.inherited_cdc;
 -- effect, SHOW TABLE PROPERTIES shows the configuration that caused it.
 
 ASSERT VALUE value = 'true' WHERE key = 'delta.enableChangeDataFeed'
-SHOW TABLE PROPERTIES {{zone_name}}.delta_demos.inherited_cdc;
+SHOW TBLPROPERTIES {{zone_name}}.delta_demos.inherited_cdc;
 
 
 -- ============================================================================

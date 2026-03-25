@@ -10,7 +10,7 @@
 --       is essential for platform teams managing long-lived tables.
 -- HOW:  We create a plain table, inspect its baseline protocol state, then
 --       progressively activate CDC and observe the effects at each step using
---       DESCRIBE DETAIL, SHOW TABLE PROPERTIES, and data operations.
+--       DESCRIBE DETAIL, SHOW TBLPROPERTIES, and data operations.
 -- ============================================================================
 
 
@@ -47,11 +47,11 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.customer_events;
 -- ============================================================================
 -- LEARN: Baseline Properties (Empty or Minimal)
 -- ============================================================================
--- SHOW TABLE PROPERTIES shows the TBLPROPERTIES configuration. A plain
+-- SHOW TBLPROPERTIES shows the TBLPROPERTIES configuration. A plain
 -- table has no custom properties — only system defaults (if any).
 
 ASSERT ROW_COUNT >= 0
-SHOW TABLE PROPERTIES {{zone_name}}.delta_demos.customer_events;
+SHOW TBLPROPERTIES {{zone_name}}.delta_demos.customer_events;
 
 
 -- ============================================================================
@@ -93,13 +93,13 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.customer_events;
 
 
 -- ============================================================================
--- LEARN: SHOW TABLE PROPERTIES Confirms CDC Active
+-- LEARN: SHOW TBLPROPERTIES Confirms CDC Active
 -- ============================================================================
 -- The TBLPROPERTIES should now include delta.enableChangeDataFeed = true.
 -- This is the persistent configuration stored in the transaction log.
 
 ASSERT VALUE value = 'true' WHERE key = 'delta.enableChangeDataFeed'
-SHOW TABLE PROPERTIES {{zone_name}}.delta_demos.customer_events;
+SHOW TBLPROPERTIES {{zone_name}}.delta_demos.customer_events;
 
 
 -- ============================================================================
