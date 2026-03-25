@@ -41,6 +41,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.persons_hybrid (
     extras      STRING
 ) LOCATION '{{data_path}}/persons_hybrid';
 
+GRANT ADMIN ON TABLE {{zone_name}}.graph.persons_hybrid TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.graph.persons_hybrid
 SELECT
     id,
@@ -91,7 +93,6 @@ SELECT
 FROM generate_series(1, 50) AS t(id);
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.persons_hybrid;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.persons_hybrid TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -114,6 +115,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.friendships_hybrid (
     relationship_type   STRING,
     extras              STRING
 ) LOCATION '{{data_path}}/friendships_hybrid';
+
+GRANT ADMIN ON TABLE {{zone_name}}.graph.friendships_hybrid TO USER {{current_user}};
 
 
 -- Batch 1: Intra-department colleagues (~50 edges)
@@ -259,7 +262,6 @@ FROM (
 WHERE src != dst;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.friendships_hybrid;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.friendships_hybrid TO USER {{current_user}};
 
 
 -- ============================================================================
