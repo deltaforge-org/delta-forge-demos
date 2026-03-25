@@ -1,0 +1,28 @@
+[demo]
+id = "delta-cross-timezone-scheduling"
+name = "Delta Cross-Timezone Scheduling — Global Conference Planner"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Cross-timezone scheduling demonstrates the dual local/UTC column pattern for \
+coordinating events across global offices. Each meeting stores both a local \
+start time (what appears on the office wall clock) and a UTC start time (for \
+system-level ordering and conflict detection). \
+This demo models a multinational company's conference scheduler across 6 offices \
+(New York, London, Tokyo, Sydney, Berlin, Dubai). Queries detect room conflicts \
+via UTC overlap, find cross-office collaboration windows, and order events \
+chronologically regardless of timezone — patterns impossible without UTC as the \
+single source of truth for temporal ordering.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "timezone", "scheduling", "conflict-detection", "join", "global"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.conference_schedule"

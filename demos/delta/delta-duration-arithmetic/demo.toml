@@ -1,0 +1,26 @@
+[demo]
+id = "delta-duration-arithmetic"
+name = "Delta Duration Arithmetic — Maritime Canal Transit"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+Duration arithmetic on timestamp strings demonstrates how to compute time \
+intervals, identify SLA breaches, and aggregate throughput statistics using \
+SQL string functions and math on Delta tables. \
+This demo models a maritime canal lock system where vessels have entry and \
+exit timestamps stored as VARCHAR (NTZ). Queries compute transit durations \
+via SUBSTRING + CAST arithmetic, detect cross-midnight passages, and \
+calculate per-lock cargo throughput — all without native timestamp types.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "duration", "arithmetic", "timestamp", "maritime", "varchar"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.vessel_transit"

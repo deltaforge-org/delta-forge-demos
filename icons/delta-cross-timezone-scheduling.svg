@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ct" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <!-- Globe -->
+  <circle cx="32" cy="30" r="18" stroke="url(#ct)" stroke-width="1.5" fill="url(#ct)" fill-opacity=".06"/>
+  <ellipse cx="32" cy="30" rx="8" ry="18" stroke="url(#ct)" stroke-width="0.8" fill="none" opacity=".4"/>
+  <line x1="14" y1="30" x2="50" y2="30" stroke="url(#ct)" stroke-width="0.8" opacity=".4"/>
+  <line x1="18" y1="20" x2="46" y2="20" stroke="url(#ct)" stroke-width="0.6" opacity=".3"/>
+  <line x1="18" y1="40" x2="46" y2="40" stroke="url(#ct)" stroke-width="0.6" opacity=".3"/>
+  <!-- Timezone markers -->
+  <circle cx="20" cy="24" r="2.5" fill="url(#ct)" fill-opacity=".6"/>
+  <circle cx="40" cy="18" r="2.5" fill="url(#ct)" fill-opacity=".6"/>
+  <circle cx="28" cy="38" r="2.5" fill="url(#ct)" fill-opacity=".6"/>
+  <!-- Calendar/schedule grid -->
+  <rect x="52" y="14" width="20" height="20" rx="2" stroke="url(#ct)" stroke-width="1.2" fill="url(#ct)" fill-opacity=".08"/>
+  <line x1="52" y1="20" x2="72" y2="20" stroke="url(#ct)" stroke-width="0.8" opacity=".5"/>
+  <line x1="52" y1="26" x2="72" y2="26" stroke="url(#ct)" stroke-width="0.6" opacity=".3"/>
+  <line x1="62" y1="20" x2="62" y2="34" stroke="url(#ct)" stroke-width="0.6" opacity=".3"/>
+  <!-- Conflict warning -->
+  <circle cx="62" cy="23" r="2" fill="url(#ct)" fill-opacity=".8"/>
+  <text x="62" y="25" text-anchor="middle" font-size="3.5" font-family="sans-serif" fill="white" font-weight="bold">!</text>
+  <!-- UTC label bar -->
+  <rect x="8" y="58" width="64" height="12" rx="3" stroke="url(#ct)" stroke-width="1" fill="url(#ct)" fill-opacity=".08"/>
+  <text x="40" y="67" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ct)" opacity=".7">NY · LON · TKY · SYD</text>
+</svg>

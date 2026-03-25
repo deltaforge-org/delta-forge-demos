@@ -1,147 +1,125 @@
 -- ============================================================================
--- Delta Timestamps NTZ (No TimeZone) -- Educational Queries
+-- QUERIES: Hospital Shift Handover — Timestamp NTZ Demo
 -- ============================================================================
--- WHAT: Timezone-free timestamp storage preserves literal date/time values
---       without embedding timezone metadata in the Delta table.
--- WHY:  Global systems need "wall clock" times (e.g., flight boards) that are
---       meaningful in their local context, separate from UTC coordination.
--- HOW:  Delta stores timestamps as VARCHAR or TIMESTAMP_NTZ columns in Parquet
---       files, so the value "08:30" stays "08:30" regardless of the reader's
---       timezone setting -- no implicit conversion occurs.
+--
+-- Timestamp NTZ (No TimeZone) preserves wall-clock times exactly as entered.
+-- In healthcare, "07:00" means 7 AM at THAT hospital — it must never shift
+-- when viewed from another timezone. This is critical for patient safety,
+-- HIPAA compliance, and accurate shift handover records.
+--
+-- Local times (VARCHAR) stay human-readable for clinical staff.
+-- UTC times (VARCHAR) enable true chronological ordering across hospitals.
+-- The NTZ concept: store the literal clock reading, not a UTC instant.
 -- ============================================================================
 
-
 -- ============================================================================
--- EXPLORE: What does the flight schedule look like?
+-- Query 1: EXPLORE — What does the shift schedule look like?
 -- ============================================================================
--- Each flight stores BOTH a local time (what the traveler sees on the departure
--- board) and a UTC time (for system-level coordination across timezones).
--- Notice that departure_local and departure_utc differ by the origin's offset.
-
-ASSERT VALUE status = 'delayed' WHERE id = 6
+-- First look at the data: staff, hospitals, local vs UTC times, and statuses.
+-- Notice that id=2 (Maria Santos) shows 'on_break' from our UPDATE.
+-- ============================================================================
+ASSERT VALUE status = 'on_break' WHERE id = 2
 ASSERT ROW_COUNT = 10
-SELECT id, flight_code, origin, destination,
-       departure_local, departure_utc,
-       duration_minutes, status
-FROM {{zone_name}}.delta_demos.flight_schedule
+SELECT id, staff_name, hospital, shift_start_local, shift_start_utc, role, status
+FROM {{zone_name}}.delta_demos.shift_handover
 ORDER BY id
 LIMIT 10;
 
+-- ============================================================================
+-- Query 2: LEARN — NTZ means local times are preserved exactly
+-- ============================================================================
+-- The core NTZ insight: earliest_local is IDENTICAL across all 5 hospitals
+-- (07:00:00) because each hospital recorded "7 AM" in their own wall-clock.
+-- But earliest_utc differs — NYC 11:00, Chicago 12:00, Denver 13:00, LA 14:00,
+-- Honolulu 17:00. Same local time, different absolute instants.
+-- ============================================================================
+ASSERT ROW_COUNT = 5
+ASSERT VALUE staff_count = 6 WHERE hospital = 'Metro General'
+SELECT hospital, timezone_offset, COUNT(*) AS staff_count,
+       MIN(shift_start_local) AS earliest_local,
+       MIN(shift_start_utc) AS earliest_utc
+FROM {{zone_name}}.delta_demos.shift_handover
+GROUP BY hospital, timezone_offset
+ORDER BY timezone_offset;
 
 -- ============================================================================
--- EXPLORE: How do local vs UTC times differ across origins?
+-- Query 3: LEARN — Night shifts cross date boundaries
 -- ============================================================================
--- The gap between departure_local and departure_utc reveals the timezone offset
--- of the origin airport. JFK is UTC-4 (EDT), LAX is UTC-7 (PDT), etc.
--- With NTZ storage, these offsets are not stored -- they are implicit in the
--- origin/destination context, keeping the data timezone-agnostic.
-
-ASSERT ROW_COUNT = 9
-SELECT origin,
-       COUNT(*) AS flights,
-       MIN(departure_local) AS earliest_local,
-       MIN(departure_utc) AS earliest_utc
-FROM {{zone_name}}.delta_demos.flight_schedule
-WHERE status = 'on_time'
-GROUP BY origin
-ORDER BY origin;
-
-
+-- Night shift staff (23:00-07:00) have shift_end on a different date than
+-- shift_start. NTZ preserves both dates exactly — no timezone math needed
+-- to determine whether a shift spans midnight.
 -- ============================================================================
--- LEARN: Overnight and red-eye flights -- date boundary crossings
--- ============================================================================
--- Timezone-free storage is especially important for overnight flights where
--- the arrival date is the NEXT day. Without NTZ, timezone conversion could
--- shift the date incorrectly. Here we find flights where the arrival local
--- date differs from the departure local date -- a classic red-eye pattern.
-
-ASSERT ROW_COUNT = 14
-SELECT id, flight_code, origin, destination,
-       departure_local, arrival_local,
-       duration_minutes
-FROM {{zone_name}}.delta_demos.flight_schedule
-WHERE arrival_local > departure_local
-  AND SUBSTRING(arrival_local, 1, 10) != SUBSTRING(departure_local, 1, 10)
-ORDER BY duration_minutes DESC;
-
-
--- ============================================================================
--- LEARN: International flights and UTC coordination
--- ============================================================================
--- For international routes, the local times at origin and destination are in
--- completely different timezones. The UTC column provides a single reference
--- frame for scheduling, conflict detection, and sequencing -- while the local
--- times remain human-readable for passengers and ground staff.
-
-ASSERT VALUE duration_minutes = 1140 WHERE id = 42
 ASSERT ROW_COUNT = 10
-SELECT id, flight_code, origin, destination,
-       departure_local AS depart_local,
-       arrival_local AS arrive_local,
-       departure_utc AS depart_utc,
-       duration_minutes
-FROM {{zone_name}}.delta_demos.flight_schedule
-WHERE origin NOT IN ('JFK','LAX','ORD','ATL','DFW')
-   OR destination NOT IN ('JFK','LAX','ORD','ATL','DFW')
-ORDER BY duration_minutes DESC
+SELECT id, staff_name, hospital, shift_start_local, shift_end_local, role
+FROM {{zone_name}}.delta_demos.shift_handover
+WHERE SUBSTRING(shift_end_local, 1, 10) != SUBSTRING(shift_start_local, 1, 10)
+ORDER BY hospital;
+
+-- ============================================================================
+-- Query 4: LEARN — UTC ordering reveals true chronological sequence
+-- ============================================================================
+-- All doctors start at "07:00" or "15:00" locally, but UTC reveals NYC
+-- doctors start earliest (UTC-4 is closest to UTC). Sorting by UTC gives
+-- the real-world sequence of events across all hospitals — essential for
+-- coordinating cross-facility transfers and incident timelines.
+-- ============================================================================
+ASSERT ROW_COUNT = 10
+ASSERT VALUE staff_name = 'James Chen' WHERE id = 1
+SELECT id, staff_name, hospital, shift_start_local, shift_start_utc, timezone_offset
+FROM {{zone_name}}.delta_demos.shift_handover
+WHERE role = 'doctor'
+ORDER BY shift_start_utc
 LIMIT 10;
 
-
 -- ============================================================================
--- LEARN: Status transitions -- how DML preserves timestamp integrity
+-- Query 5: LEARN — Status distribution after DML
 -- ============================================================================
--- When flights are delayed or cancelled via UPDATE, the timestamp values must
--- remain stable. Delta's copy-on-write ensures the original Parquet files are
--- preserved (until VACUUM), while new files contain the updated rows.
--- The NTZ timestamps are never reinterpreted during these rewrites.
-
--- Verify flight counts per status: cancelled=3, delayed=5, on_time=37
-ASSERT VALUE flight_count = 3 WHERE status = 'cancelled'
-ASSERT VALUE flight_count = 5 WHERE status = 'delayed'
-ASSERT VALUE flight_count = 37 WHERE status = 'on_time'
+-- Our UPDATEs changed 3 staff to on_break and 2 to completed. Delta Lake
+-- recorded these as new versions while preserving the original timestamps
+-- exactly — no timezone drift from the read-modify-write cycle.
+-- ============================================================================
+ASSERT VALUE staff_count = 25 WHERE status = 'active'
+ASSERT VALUE staff_count = 2 WHERE status = 'completed'
+ASSERT VALUE staff_count = 3 WHERE status = 'on_break'
 ASSERT ROW_COUNT = 3
-SELECT status, COUNT(*) AS flight_count,
-       MIN(departure_local) AS earliest_departure,
-       MAX(departure_local) AS latest_departure
-FROM {{zone_name}}.delta_demos.flight_schedule
+SELECT status, COUNT(*) AS staff_count
+FROM {{zone_name}}.delta_demos.shift_handover
 GROUP BY status
 ORDER BY status;
 
-
 -- ============================================================================
--- VERIFY: All Checks
+-- Query 6: VERIFY — All Checks
+-- ============================================================================
+-- Comprehensive validation of data integrity: total count, per-hospital
+-- distribution, role balance, and night shift identification.
 -- ============================================================================
 
--- Verify total row count is 45
-ASSERT ROW_COUNT = 45
-SELECT * FROM {{zone_name}}.delta_demos.flight_schedule;
+-- Verify total staff count is 30
+ASSERT ROW_COUNT = 30
+SELECT * FROM {{zone_name}}.delta_demos.shift_handover;
 
--- Verify 25 domestic flights (both origin and destination are US airports)
-ASSERT VALUE domestic_count = 25
-SELECT COUNT(*) AS domestic_count FROM {{zone_name}}.delta_demos.flight_schedule
-WHERE origin IN ('JFK','LAX','ORD','ATL','DFW') AND destination IN ('JFK','LAX','ORD','ATL','DFW');
+-- Verify each hospital has exactly 6 staff
+ASSERT VALUE hospital_count = 6 WHERE hospital = 'Metro General'
+SELECT hospital, COUNT(*) AS hospital_count FROM {{zone_name}}.delta_demos.shift_handover
+WHERE hospital = 'Metro General'
+GROUP BY hospital;
 
--- Verify 20 international flights
-ASSERT VALUE international_count = 20
-SELECT COUNT(*) AS international_count FROM {{zone_name}}.delta_demos.flight_schedule
-WHERE NOT (origin IN ('JFK','LAX','ORD','ATL','DFW') AND destination IN ('JFK','LAX','ORD','ATL','DFW'));
+ASSERT VALUE hospital_count = 6 WHERE hospital = 'Island Hospital'
+SELECT hospital, COUNT(*) AS hospital_count FROM {{zone_name}}.delta_demos.shift_handover
+WHERE hospital = 'Island Hospital'
+GROUP BY hospital;
 
--- Verify 5 delayed flights
-ASSERT VALUE delayed_count = 5
-SELECT COUNT(*) AS delayed_count FROM {{zone_name}}.delta_demos.flight_schedule WHERE status = 'delayed';
+-- Verify role distribution: 10 each
+ASSERT VALUE doctor_count = 10
+SELECT COUNT(*) AS doctor_count FROM {{zone_name}}.delta_demos.shift_handover WHERE role = 'doctor';
 
--- Verify 3 cancelled flights
-ASSERT VALUE cancelled_count = 3
-SELECT COUNT(*) AS cancelled_count FROM {{zone_name}}.delta_demos.flight_schedule WHERE status = 'cancelled';
+ASSERT VALUE nurse_count = 10
+SELECT COUNT(*) AS nurse_count FROM {{zone_name}}.delta_demos.shift_handover WHERE role = 'nurse';
 
--- Verify 37 on-time flights
-ASSERT VALUE on_time_count = 37
-SELECT COUNT(*) AS on_time_count FROM {{zone_name}}.delta_demos.flight_schedule WHERE status = 'on_time';
+ASSERT VALUE tech_count = 10
+SELECT COUNT(*) AS tech_count FROM {{zone_name}}.delta_demos.shift_handover WHERE role = 'technician';
 
--- Verify 9 JFK departures
-ASSERT VALUE jfk_departures = 9
-SELECT COUNT(*) AS jfk_departures FROM {{zone_name}}.delta_demos.flight_schedule WHERE origin = 'JFK';
-
--- Verify longest flight is 1140 minutes
-ASSERT VALUE longest_flight = 1140
-SELECT MAX(duration_minutes) AS longest_flight FROM {{zone_name}}.delta_demos.flight_schedule;
+-- Verify night shift count (cross-date boundary)
+ASSERT VALUE night_shift_count = 10
+SELECT COUNT(*) AS night_shift_count FROM {{zone_name}}.delta_demos.shift_handover
+WHERE SUBSTRING(shift_end_local, 1, 10) != SUBSTRING(shift_start_local, 1, 10);

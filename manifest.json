@@ -2384,31 +2384,95 @@
       "id": "delta-timestamp-ntz",
       "path": "demos/delta/delta-timestamp-ntz",
       "iconPath": "icons/delta-timestamp-ntz.svg",
-      "name": "Delta Timestamps — Timezone-Free & Precision Handling",
-      "summary": "Timestamp NTZ (No TimeZone) is a Delta protocol feature that stores timestamps \\ without embedded timezone information, preserving the literal date and time as written. \\ This matters because...",
+      "name": "Delta Timestamp NTZ — Hospital Shift Handover",
+      "summary": "Demonstrates NTZ (No TimeZone) timestamp storage using a hospital shift handover system across 5 US hospitals in different timezones. Wall-clock shift times are stored as VARCHAR and never undergo timezone conversion — identical local times (07:00) map to different UTC instants depending on the hospital's timezone offset, and sorting by UTC reveals true chronological order while local times stay human-readable for clinical staff.",
       "categories": [
-        "delta-table",
-        "delta-schema-types"
+        "delta-table"
       ],
       "tags": [
         "delta-table",
         "intermediate",
         "timestamp",
+        "ntz",
         "timezone",
-        "varchar",
-        "scheduling"
+        "healthcare",
+        "varchar"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "2.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.shift_handover"
+        }
+      ]
+    },
+    {
+      "id": "delta-duration-arithmetic",
+      "path": "demos/delta/delta-duration-arithmetic",
+      "iconPath": "icons/delta-duration-arithmetic.svg",
+      "name": "Delta Duration Arithmetic — Maritime Canal Transit",
+      "summary": "Demonstrates duration arithmetic on VARCHAR timestamps using SUBSTRING + CAST to compute transit times through a canal lock system. 35 vessel passages across 3 locks with entry/exit timestamps — queries compute transit durations in minutes, detect cross-midnight passages, and aggregate per-lock cargo throughput, all without native timestamp types.",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "duration",
+        "arithmetic",
+        "timestamp",
+        "maritime",
+        "varchar"
       ],
       "difficulty": "intermediate",
       "estimatedTimeMinutes": 10,
       "dataSizeBytes": 0,
-      "fileCount": 5,
+      "fileCount": 4,
       "author": "Delta Forge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z",
+      "updatedAt": "2026-03-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.flight_schedule"
+          "name": "{{zone_name}}.delta_demos.vessel_transit"
+        }
+      ]
+    },
+    {
+      "id": "delta-cross-timezone-scheduling",
+      "path": "demos/delta/delta-cross-timezone-scheduling",
+      "iconPath": "icons/delta-cross-timezone-scheduling.svg",
+      "name": "Delta Cross-Timezone Scheduling — Global Conference Planner",
+      "summary": "Demonstrates the dual local/UTC column pattern for coordinating events across 6 global offices (New York, London, Tokyo, Sydney, Berlin, Dubai). 40 meetings with local and UTC times — queries detect room scheduling conflicts via UTC-based self-joins, find cross-office collaboration windows where 3+ offices are active, and order events chronologically regardless of timezone.",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "timezone",
+        "scheduling",
+        "conflict-detection",
+        "join",
+        "global"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.conference_schedule"
         }
       ]
     },

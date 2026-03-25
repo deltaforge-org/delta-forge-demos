@@ -1,25 +1,26 @@
 [demo]
 id = "delta-timestamp-ntz"
-name = "Delta Timestamps — Timezone-Free & Precision Handling"
-version = "1.0.0"
+name = "Delta Timestamp NTZ — Hospital Shift Handover"
+version = "2.0.0"
 author = "Delta Forge Team"
 description = """
-Timestamp NTZ (No TimeZone) is a Delta protocol feature that stores timestamps \
-without embedded timezone information, preserving the literal date and time as written. \
-This matters because global systems often need to record "wall clock" times (like flight \
-departure boards) independently of UTC conversion logic. \
-This demo uses an airline scheduling system to show how local and UTC timestamps \
-coexist in a Delta table, handling cross-timezone flights and overnight arrivals.
+Timestamp NTZ (No TimeZone) stores literal wall-clock times without embedded \
+timezone metadata. In healthcare, shift times must display exactly as entered — \
+"07:00" means 7 AM at THAT hospital regardless of the reader's timezone. \
+This demo uses a multi-hospital shift handover system to demonstrate why NTZ \
+matters: identical local times map to different UTC instants depending on the \
+hospital's timezone, and sorting by UTC reveals the true chronological sequence \
+while local times remain human-readable for clinical staff.
 """
 categories = ["delta-table"]
-tags = ["delta-table", "intermediate", "timestamp", "timezone", "varchar", "scheduling"]
+tags = ["delta-table", "intermediate", "timestamp", "ntz", "timezone", "healthcare", "varchar"]
 difficulty = "intermediate"
-estimated_time_minutes = 10
+estimated_time_minutes = 8
 
 [demo.variables]
 data_path = { description = "Root path where Delta table data is stored", required = true }
-zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+zone_name = { description = "Target zone name for tables", required = false }
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.flight_schedule"
+name = "{{zone_name}}.delta_demos.shift_handover"
