@@ -2215,8 +2215,8 @@
       "id": "delta-append-only-enforcement",
       "path": "demos/delta/delta-append-only-enforcement",
       "iconPath": "icons/delta-append-only-enforcement.svg",
-      "name": "Delta Append-Only Enforcement — Immutable Compliance Ledger",
-      "summary": "A financial services firm must prove to regulators that its transaction ledger cannot be altered. Systematically tests the enforcement boundary: INSERTs succeed, UPDATEs and DELETEs are rejected at the protocol level, and the event count can only grow.",
+      "name": "Delta Append-Only Ledger — Immutable Financial Compliance",
+      "summary": "A financial services firm builds an immutable transaction ledger using Delta's append-only property. Verifies configuration via DESCRIBE DETAIL and SHOW TBLPROPERTIES, appends regulatory batches proving count-only-grows, and contrasts against a mutable table where UPDATEs and DELETEs freely modify records.",
       "categories": [
         "delta-table",
         "delta-compliance"

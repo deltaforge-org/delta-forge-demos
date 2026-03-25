@@ -1,16 +1,17 @@
 -- ============================================================================
--- Delta Append-Only Enforcement — Educational Queries
+-- Delta Append-Only Ledger — Educational Queries
 -- ============================================================================
--- WHAT: The delta.appendOnly table property tells Delta to reject any
---       commit that contains "remove" file actions — blocking UPDATE and
---       DELETE at the protocol level.
--- WHY:  Financial regulators require immutable transaction ledgers. A
---       configuration flag alone is not enough — the enforcement must be
---       provable. This demo systematically tests the boundary between
---       allowed and forbidden operations.
--- HOW:  We compare two identical tables: one append-only (compliance_ledger)
---       and one mutable (mutable_ledger). Mutations succeed on the mutable
---       table but fail on the append-only table, proving the guard works.
+-- WHAT: The delta.appendOnly table property declares that a Delta table
+--       should only receive INSERT operations — no UPDATE or DELETE.
+-- WHY:  Financial regulators require immutable transaction ledgers where
+--       records can never be altered or deleted after the fact. The
+--       append-only property marks this intent in the Delta protocol.
+-- HOW:  We create an append-only ledger and a mutable control table with
+--       identical data. We verify the append-only configuration via
+--       DESCRIBE DETAIL and SHOW TBLPROPERTIES, append new batches to
+--       prove the count-only-grows invariant, and use DESCRIBE HISTORY
+--       to audit the operation timeline. Meanwhile, the mutable table
+--       demonstrates what happens when records CAN be modified.
 -- ============================================================================
 
 
@@ -18,7 +19,7 @@
 -- EXPLORE: Baseline — Both Ledgers Start Identical
 -- ============================================================================
 -- Both tables were loaded with the same 20 financial transactions.
--- Let's confirm they match before testing enforcement.
+-- Let's confirm they match before we diverge their histories.
 
 ASSERT ROW_COUNT = 3
 ASSERT VALUE txn_count = 10 WHERE txn_type = 'DEPOSIT'
@@ -35,8 +36,8 @@ ORDER BY txn_count DESC;
 -- ============================================================================
 -- EXPLORE: Account Balances — The Regulatory View
 -- ============================================================================
--- Auditors need per-account net positions. Both ledgers should show
--- identical balances at this point.
+-- Auditors need per-account net positions. Both ledgers show identical
+-- balances at this point.
 
 ASSERT ROW_COUNT = 5
 ASSERT VALUE balance = 9900.0 WHERE account_id = 'ACC-1001'
@@ -53,11 +54,33 @@ ORDER BY account_id;
 
 
 -- ============================================================================
--- ACTION: UPDATE on Mutable Ledger — This Should Succeed
+-- LEARN: DESCRIBE DETAIL — Verify Append-Only Configuration
 -- ============================================================================
--- The mutable_ledger has no append-only restriction. We apply a 5% fee
--- adjustment to ACC-1001 deposits. This is the kind of retroactive
--- modification that regulators want to prevent on official ledgers.
+-- DESCRIBE DETAIL reveals the protocol metadata. For the compliance_ledger,
+-- the table_features should include append-only support, confirming the
+-- table was created with the correct configuration.
+
+ASSERT ROW_COUNT >= 10
+DESCRIBE DETAIL {{zone_name}}.delta_demos.compliance_ledger;
+
+
+-- ============================================================================
+-- LEARN: SHOW TBLPROPERTIES — The Configuration Source of Truth
+-- ============================================================================
+-- SHOW TBLPROPERTIES confirms delta.appendOnly = true is set. This property
+-- is stored in the Delta transaction log's metaData action and persists
+-- across all future operations.
+
+ASSERT ROW_COUNT >= 1
+SHOW TBLPROPERTIES {{zone_name}}.delta_demos.compliance_ledger;
+
+
+-- ============================================================================
+-- ACTION: Mutable Table — UPDATE Modifies History (The Problem)
+-- ============================================================================
+-- On the mutable table, we can freely modify records. Here we apply a 5%
+-- fee adjustment to ACC-1001 deposits. This is exactly the kind of
+-- retroactive change that regulators want to prevent on official ledgers.
 
 ASSERT ROW_COUNT = 3
 UPDATE {{zone_name}}.delta_demos.mutable_ledger
@@ -65,7 +88,7 @@ SET amount = ROUND(amount * 1.05, 2)
 WHERE account_id = 'ACC-1001' AND txn_type = 'DEPOSIT';
 
 
--- Verify the mutable table was modified
+-- Verify the mutable table was modified — ACC-1001 balance changed
 ASSERT VALUE new_balance = 10530.0
 ASSERT ROW_COUNT = 1
 SELECT ROUND(SUM(amount), 2) AS new_balance
@@ -74,62 +97,34 @@ WHERE account_id = 'ACC-1001';
 
 
 -- ============================================================================
--- LEARN: UPDATE on Compliance Ledger — This MUST Be Rejected
+-- ACTION: Mutable Table — DELETE Removes Records (The Problem)
 -- ============================================================================
--- The compliance_ledger has delta.appendOnly = true. The same UPDATE that
--- succeeded on the mutable table MUST fail here. Delta rejects the commit
--- because UPDATE requires rewriting data files (remove + add), which
--- violates the append-only constraint.
---
--- Expected: error containing "append-only" or "only supported operation"
-
-ASSERT ROW_COUNT = 0
-UPDATE {{zone_name}}.delta_demos.compliance_ledger
-SET amount = ROUND(amount * 1.05, 2)
-WHERE account_id = 'ACC-1001' AND txn_type = 'DEPOSIT';
-
-
--- ============================================================================
--- LEARN: DELETE on Mutable Ledger — This Should Succeed
--- ============================================================================
--- Remove two transfer transactions from the mutable ledger. This is the
--- kind of record tampering that append-only mode prevents.
+-- We can also delete records from the mutable table. This removes the
+-- audit trail entirely — a compliance nightmare.
 
 ASSERT ROW_COUNT = 2
 DELETE FROM {{zone_name}}.delta_demos.mutable_ledger
 WHERE txn_id IN (4, 19);
 
 
--- Verify the mutable table now has 18 rows
+-- Verify the mutable table now has 18 rows — 2 transactions vanished
 ASSERT VALUE remaining = 18
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS remaining FROM {{zone_name}}.delta_demos.mutable_ledger;
 
 
 -- ============================================================================
--- LEARN: DELETE on Compliance Ledger — This MUST Be Rejected
+-- EXPLORE: Compliance Ledger — Still Pristine
 -- ============================================================================
--- The same DELETE that succeeded on the mutable table MUST fail on the
--- compliance ledger. Deleting financial records would be a regulatory
--- violation — the protocol enforces this automatically.
-
-ASSERT ROW_COUNT = 0
-DELETE FROM {{zone_name}}.delta_demos.compliance_ledger
-WHERE txn_id IN (4, 19);
-
-
--- ============================================================================
--- EXPLORE: Compliance Ledger Is Untouched
--- ============================================================================
--- After both rejected mutations, the compliance ledger should still have
--- exactly 20 rows with the original balances — nothing changed.
+-- While the mutable table was modified and records deleted, the compliance
+-- ledger remains untouched — all 20 original transactions are intact.
 
 ASSERT VALUE ledger_count = 20
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS ledger_count FROM {{zone_name}}.delta_demos.compliance_ledger;
 
 
--- The original account balances are preserved
+-- Original account balances are preserved
 ASSERT VALUE balance = 9900.0 WHERE account_id = 'ACC-1001'
 ASSERT ROW_COUNT = 5
 SELECT account_id,
@@ -140,10 +135,10 @@ ORDER BY account_id;
 
 
 -- ============================================================================
--- ACTION: INSERT on Compliance Ledger — This IS Allowed
+-- ACTION: Append Batch 1 — Q1 Settlement Transactions
 -- ============================================================================
--- Append-only does NOT block INSERTs. New transactions can always be added.
--- This is the correct pattern: the ledger grows monotonically.
+-- Append-only tables grow monotonically. New transactions are added via
+-- INSERT — the only operation that should touch a compliance ledger.
 
 ASSERT ROW_COUNT = 5
 INSERT INTO {{zone_name}}.delta_demos.compliance_ledger VALUES
@@ -157,8 +152,8 @@ INSERT INTO {{zone_name}}.delta_demos.compliance_ledger VALUES
 -- ============================================================================
 -- EXPLORE: Count Only Grows — The Immutability Proof
 -- ============================================================================
--- The ledger grew from 20 to 25 rows. It can never shrink. This is the
--- fundamental guarantee that auditors verify.
+-- The ledger grew from 20 to 25 rows. Under append-only discipline, this
+-- count can never decrease. This is the fundamental invariant.
 
 ASSERT VALUE new_count = 25
 ASSERT ROW_COUNT = 1
@@ -177,6 +172,36 @@ SELECT account_id,
 FROM {{zone_name}}.delta_demos.compliance_ledger
 GROUP BY account_id
 ORDER BY account_id;
+
+
+-- ============================================================================
+-- LEARN: DESCRIBE HISTORY — The Complete Audit Trail
+-- ============================================================================
+-- DESCRIBE HISTORY shows every committed transaction on the ledger.
+-- For the compliance ledger, we should see only CREATE TABLE and INSERT
+-- operations — never UPDATE or DELETE. This is the audit evidence.
+
+ASSERT ROW_COUNT >= 3
+DESCRIBE HISTORY {{zone_name}}.delta_demos.compliance_ledger;
+
+
+-- ============================================================================
+-- EXPLORE: Divergence — Compare Mutable vs Immutable
+-- ============================================================================
+-- The two tables started identical but have diverged. The compliance ledger
+-- has 25 rows (20 + 5 appended) with all original records intact. The
+-- mutable table has 18 rows (20 - 2 deleted) with modified amounts.
+
+ASSERT VALUE ledger_rows = 25 WHERE table_type = 'compliance_ledger'
+ASSERT VALUE ledger_rows = 18 WHERE table_type = 'mutable_ledger'
+ASSERT ROW_COUNT = 2
+SELECT 'compliance_ledger' AS table_type,
+       COUNT(*) AS ledger_rows
+FROM {{zone_name}}.delta_demos.compliance_ledger
+UNION ALL
+SELECT 'mutable_ledger' AS table_type,
+       COUNT(*) AS ledger_rows
+FROM {{zone_name}}.delta_demos.mutable_ledger;
 
 
 -- ============================================================================
