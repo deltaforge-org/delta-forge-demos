@@ -248,7 +248,7 @@ ORDER BY df_file_name;
 ASSERT ROW_COUNT = 4
 ASSERT VALUE qualifier_name = 'Vessel master' WHERE nad_qualifier = 'VW'
 ASSERT VALUE qualifier_name = 'Carrier agent' WHERE nad_qualifier = 'CA'
-ASSERT VALUE qualifier_name = 'WZ' WHERE nad_qualifier = 'WZ'
+ASSERT VALUE qualifier_name = 'Consignment routing party' WHERE nad_qualifier = 'WZ'
 SELECT
     nad_1 AS nad_qualifier,
     CASE nad_1
