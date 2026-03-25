@@ -49,6 +49,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.persons_flattened (
     level       STRING,
     active      BOOLEAN
 ) LOCATION '{{data_path}}/persons_flattened';
+GRANT ADMIN ON TABLE {{zone_name}}.graph.persons_flattened TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.graph.persons_flattened
 SELECT
@@ -85,7 +86,6 @@ SELECT
     (id % 7 != 0) AS active
 FROM generate_series(1, 50) AS t(id);
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.persons_flattened;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.persons_flattened TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -114,6 +114,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph.friendships_flattened (
     context             STRING,
     rating              INT
 ) LOCATION '{{data_path}}/friendships_flattened';
+GRANT ADMIN ON TABLE {{zone_name}}.graph.friendships_flattened TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -306,7 +307,6 @@ FROM (
 ) sub
 WHERE src != dst;
 DETECT SCHEMA FOR TABLE {{zone_name}}.graph.friendships_flattened;
-GRANT ADMIN ON TABLE {{zone_name}}.graph.friendships_flattened TO USER {{current_user}};
 
 
 -- ============================================================================
