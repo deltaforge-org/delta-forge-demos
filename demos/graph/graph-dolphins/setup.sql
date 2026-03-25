@@ -37,8 +37,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.dolphins_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.raw.dolphins_edges;
 GRANT ADMIN ON TABLE {{zone_name}}.raw.dolphins_edges TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.raw.dolphins_edges;
 
 
 -- ############################################################################
@@ -55,8 +55,8 @@ AS SELECT
     CAST(weight AS DOUBLE) AS weight
 FROM {{zone_name}}.raw.dolphins_edges;
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.dolphins.edges;
 GRANT ADMIN ON TABLE {{zone_name}}.dolphins.edges TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.dolphins.edges;
 
 
 -- === Vertex Table (derived from edges) ===
@@ -69,8 +69,8 @@ AS SELECT DISTINCT vertex_id FROM (
     SELECT dst AS vertex_id FROM {{zone_name}}.dolphins.edges
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.dolphins.vertices;
 GRANT ADMIN ON TABLE {{zone_name}}.dolphins.vertices TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.dolphins.vertices;
 
 
 -- ############################################################################
