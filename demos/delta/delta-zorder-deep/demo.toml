@@ -1,7 +1,7 @@
 [demo]
 id = "delta-zorder-deep"
 name = "Delta Z-ORDER — Multi-Column Data Layout Optimization"
-version = "1.0.0"
+version = "2.0.0"
 author = "Delta Forge Team"
 description = """
 Z-ORDER is a Delta Lake optimization that reorganizes data files using a \
@@ -10,14 +10,16 @@ columns, enabling efficient data skipping for multi-dimensional queries. \
 Unlike single-column sorting, Z-ORDER balances locality across ALL specified \
 columns simultaneously, so filters on region AND/OR sensor_type AND/OR date \
 all benefit. \
-This demo builds an IoT telemetry table in 3 batches, applies Z-ORDER \
-across 3 columns, and shows how the optimized layout supports diverse query \
-patterns.
+This demo builds an IoT telemetry table in 3 batches, uses DESCRIBE DETAIL \
+to observe the scattered file layout, applies OPTIMIZE ZORDER BY across 3 \
+columns, then uses DESCRIBE DETAIL and DESCRIBE HISTORY to verify the \
+compacted layout and shows how diverse query patterns benefit from the \
+optimized data organization.
 """
-categories = ["delta-table"]
-tags = ["delta-table", "advanced", "z-order", "optimize", "iot", "telemetry", "performance", "multi-column"]
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "advanced", "z-order", "optimize", "iot", "telemetry", "performance", "multi-column", "data-skipping", "describe-detail"]
 difficulty = "advanced"
-estimated_time_minutes = 12
+estimated_time_minutes = 10
 
 [demo.variables]
 data_path = { description = "Root path where Delta table data is stored", required = true }

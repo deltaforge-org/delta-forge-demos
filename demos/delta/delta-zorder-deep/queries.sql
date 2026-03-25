@@ -1,5 +1,5 @@
 -- ============================================================================
--- Delta Z-ORDER -- Multi-Column Data Layout Optimization -- Educational Queries
+-- Delta Z-ORDER — Multi-Column Data Layout Optimization — Educational Queries
 -- ============================================================================
 -- WHAT: Z-ORDER reorganizes data using a space-filling curve so rows with
 --       similar values across multiple columns are stored in the same files.
@@ -14,7 +14,7 @@
 
 
 -- ============================================================================
--- PRE-ZORDER: Data distribution across regions and sensor types
+-- Query 1: PRE-ZORDER — Data distribution across regions and sensor types
 -- ============================================================================
 -- Right now, data is spread across 3 batch insert files plus update files.
 -- Rows are in insertion order, NOT co-located by region or sensor_type.
@@ -25,6 +25,7 @@
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 16
 ASSERT RESULT SET INCLUDES ('eu-west', 'humidity', 10, 66.64)
+ASSERT RESULT SET INCLUDES ('ap-south', 'pressure', 7, 1012.97)
 SELECT region, sensor_type, COUNT(*) AS reading_count,
        ROUND(AVG(reading), 2) AS avg_reading
 FROM {{zone_name}}.delta_demos.sensor_telemetry
@@ -33,12 +34,12 @@ ORDER BY region, sensor_type;
 
 
 -- ============================================================================
--- PRE-ZORDER: Observe scattered data layout
+-- Query 2: PRE-ZORDER — Multi-column filter on scattered data
 -- ============================================================================
--- This query filters on region AND sensor_type. Without Z-ORDER, these rows
--- are scattered across multiple data files from different batch inserts.
--- The engine must scan all files to find matching rows -- no data skipping
--- is possible because file-level min/max stats span all regions and types.
+-- This query filters on region AND sensor_type AND date range. Without
+-- Z-ORDER, these rows are scattered across multiple data files from different
+-- batch inserts. The engine must scan all files — no data skipping is possible
+-- because file-level min/max stats span all regions and types.
 
 ASSERT ROW_COUNT = 4
 SELECT id, device_id, reading, unit, quality_score, recorded_date
@@ -50,7 +51,18 @@ ORDER BY recorded_date;
 
 
 -- ============================================================================
--- OPTIMIZE ZORDER BY (region, sensor_type, recorded_date)
+-- Query 3: PRE-ZORDER — DESCRIBE DETAIL shows file count before optimization
+-- ============================================================================
+-- DESCRIBE DETAIL reveals the current physical layout. After 3 batch inserts
+-- plus an UPDATE (copy-on-write), the table has multiple data files. All
+-- queries must scan all of them because data is in insertion order.
+
+ASSERT NO_FAIL IN result
+DESCRIBE DETAIL {{zone_name}}.delta_demos.sensor_telemetry;
+
+
+-- ============================================================================
+-- Query 4: OPTIMIZE ZORDER BY (region, sensor_type, recorded_date)
 -- ============================================================================
 -- This is the key command. It reads ALL data files, interleaves column values
 -- using a Z-curve (Morton code), and rewrites the data into new files where
@@ -71,11 +83,23 @@ ZORDER BY (region, sensor_type, recorded_date);
 
 
 -- ============================================================================
--- POST-ZORDER: Same multi-column filter -- now with data skipping
+-- Query 5: POST-ZORDER — DESCRIBE HISTORY shows the OPTIMIZE operation
 -- ============================================================================
--- Re-run the same query from before. After Z-ORDER, rows matching
--- region='eu-west' AND sensor_type='temperature' are co-located in the same
--- file(s). The engine can skip files whose min/max stats exclude these values.
+-- The transaction log records OPTIMIZE ZORDER as a single atomic operation.
+-- DESCRIBE HISTORY shows how many files were compacted and the new version.
+
+ASSERT NO_FAIL IN result
+DESCRIBE HISTORY {{zone_name}}.delta_demos.sensor_telemetry;
+
+
+-- ============================================================================
+-- Query 6: POST-ZORDER — Same multi-column filter, now with data skipping
+-- ============================================================================
+-- Re-run the exact same query from Query 2. The result set is identical —
+-- Z-ORDER does not change the data, only the physical file layout. After
+-- Z-ORDER, rows matching region='eu-west' AND sensor_type='temperature' are
+-- co-located in the same file(s). The engine can skip files whose min/max
+-- stats exclude these values.
 
 ASSERT ROW_COUNT = 4
 SELECT id, device_id, reading, unit, quality_score, recorded_date
@@ -87,7 +111,7 @@ ORDER BY recorded_date;
 
 
 -- ============================================================================
--- POST-ZORDER: Single-column filter benefits
+-- Query 7: POST-ZORDER — Single-column filter still benefits
 -- ============================================================================
 -- Even though Z-ORDER optimizes across 3 columns, a filter on just ONE column
 -- still benefits. A query for region='us-east' can skip files whose min/max
@@ -103,7 +127,7 @@ ORDER BY sensor_type, recorded_date;
 
 
 -- ============================================================================
--- POST-ZORDER: Multi-dimensional grouping shows co-location
+-- Query 8: POST-ZORDER — Multi-dimensional grouping shows co-location
 -- ============================================================================
 -- This aggregation reveals how readings are distributed across the three
 -- Z-ORDER dimensions. After optimization, rows sharing the same
@@ -119,45 +143,6 @@ SELECT region, sensor_type, recorded_date,
 FROM {{zone_name}}.delta_demos.sensor_telemetry
 GROUP BY region, sensor_type, recorded_date
 ORDER BY region, sensor_type, recorded_date;
-
-
--- ============================================================================
--- LEARN: Quality flagging after OPTIMIZE -- post-Z-ORDER updates
--- ============================================================================
--- The setup script flagged 8 low-quality readings (quality_score < 50 set to
--- 0) via UPDATE. This UPDATE created NEW files (copy-on-write) that are NOT
--- Z-ordered. Over time, as more updates accumulate, you would re-run
--- OPTIMIZE ZORDER to restore locality.
-
-ASSERT ROW_COUNT = 8
-ASSERT RESULT SET INCLUDES (6, 'DEV-006', 'temperature', 21, 'eu-west', 0, '2025-03-03')
-SELECT id, device_id, sensor_type, reading, region,
-       quality_score, recorded_date
-FROM {{zone_name}}.delta_demos.sensor_telemetry
-WHERE quality_score = 0
-ORDER BY region, sensor_type;
-
-
--- ============================================================================
--- LEARN: Date range queries across all regions
--- ============================================================================
--- Z-ORDER BY includes recorded_date as the third column. This means date
--- range queries also benefit from data skipping, even without partitioning
--- by date. Z-ORDER is often preferred over partitioning when the column
--- has high cardinality (many distinct dates) that would create too many
--- small partition directories.
--- 10 distinct dates across the dataset
-
-ASSERT NO_FAIL IN result
-ASSERT ROW_COUNT = 10
-ASSERT RESULT SET INCLUDES ('2025-03-01', 8, 2, 4, 90)
-SELECT recorded_date, COUNT(*) AS readings,
-       COUNT(DISTINCT region) AS regions,
-       COUNT(DISTINCT sensor_type) AS sensor_types,
-       ROUND(AVG(quality_score), 1) AS avg_quality
-FROM {{zone_name}}.delta_demos.sensor_telemetry
-GROUP BY recorded_date
-ORDER BY recorded_date;
 
 
 -- ============================================================================

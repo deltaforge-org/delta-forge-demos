@@ -3293,7 +3293,7 @@
       "path": "demos/delta/delta-zorder-deep",
       "iconPath": "icons/delta-zorder-deep.svg",
       "name": "Delta Z-ORDER — Multi-Column Data Layout Optimization",
-      "summary": "Z-ORDER is a Delta Lake optimization that reorganizes data files using a \\ space-filling curve to co-locate rows with similar values across multiple \\ columns, enabling efficient data skipping for...",
+      "summary": "Z-ORDER reorganizes data files using a space-filling curve to co-locate rows with similar values across multiple columns. This demo builds an IoT telemetry table in 3 batches, uses DESCRIBE DETAIL to observe file layout, applies OPTIMIZE ZORDER BY, then verifies compaction with DESCRIBE HISTORY.",
       "categories": [
         "delta-table",
         "delta-performance"
@@ -3306,15 +3306,17 @@
         "iot",
         "telemetry",
         "performance",
-        "multi-column"
+        "multi-column",
+        "data-skipping",
+        "describe-detail"
       ],
       "difficulty": "advanced",
-      "estimatedTimeMinutes": 12,
+      "estimatedTimeMinutes": 10,
       "dataSizeBytes": 0,
       "fileCount": 5,
       "author": "Delta Forge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-09T12:00:00Z",
+      "version": "2.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
@@ -5058,6 +5060,45 @@
       "author": "Delta Forge Team",
       "version": "1.0.0",
       "updatedAt": "2026-03-01T12:00:00Z"
+    },
+    {
+      "id": "delta-zorder-vs-partition",
+      "path": "demos/delta/delta-zorder-vs-partition",
+      "iconPath": "icons/delta-zorder-vs-partition.svg",
+      "name": "Delta Z-ORDER vs Partitioning — Choosing the Right Data Layout",
+      "summary": "The most common Delta table design question: should I partition or Z-ORDER? This demo builds the same e-commerce dataset in two tables — one partitioned by region, one Z-ORDERed — and runs side-by-side queries showing where each strategy wins.",
+      "categories": [
+        "delta-table",
+        "delta-performance"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "z-order",
+        "partitioning",
+        "optimize",
+        "e-commerce",
+        "performance",
+        "data-layout",
+        "comparison"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.orders_partitioned"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.orders_zorder"
+        }
+      ]
     }
   ],
   "categories": [

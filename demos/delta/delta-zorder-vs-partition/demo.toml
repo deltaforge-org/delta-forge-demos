@@ -1,0 +1,32 @@
+[demo]
+id = "delta-zorder-vs-partition"
+name = "Delta Z-ORDER vs Partitioning — Choosing the Right Data Layout"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+The most common Delta table design question: should I partition or Z-ORDER? \
+This demo builds the same e-commerce order dataset in two tables — one \
+partitioned by customer_region, one unpartitioned but Z-ORDERed by \
+(customer_region, product_category, order_date). Side-by-side queries show \
+where each strategy wins. Partitioning excels at single-column filters on \
+the partition key but creates many directories with high-cardinality columns. \
+Z-ORDER handles multi-column ad-hoc filters and high-cardinality dimensions \
+without directory explosion. The takeaway: partition by low-cardinality \
+columns you always filter on; Z-ORDER by the rest.
+"""
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "advanced", "z-order", "partitioning", "optimize", "e-commerce", "performance", "data-layout", "comparison"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.orders_partitioned"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.orders_zorder"
