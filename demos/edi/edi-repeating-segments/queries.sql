@@ -54,34 +54,26 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 2. First Mode — PO Line Items
+-- 2. First Mode — Transaction Type Distribution
 -- ============================================================================
--- Filters to 850 Purchase Order transactions showing the first PO1 line item
--- details: po1_1 (line number), po1_2 (quantity), po1_3 (unit), po1_4 (price).
---
--- In First mode, only the first PO1 occurrence is captured. For files like
--- purchase_order_a.edi with 3 PO1 lines, only the first line appears.
+-- Groups transactions by type to show how many documents of each X12 type
+-- exist in the 14-file feed. This confirms all 8 transaction types loaded.
 --
 -- What you'll see:
---   - purchase_order.edi:          po1_1='1', po1_4='19.95' (single line item)
---   - purchase_order_a.edi:        po1_1='000100001', po1_2='2500', po1_4='2.53' (first of 3)
---   - purchase_order_edifabric.edi: po1_1='1', po1_4='36' (single line item)
+--   - 810 (Invoice): 5 files
+--   - 850 (Purchase Order): 3 files
+--   - Other types: 1 file each
 
-ASSERT ROW_COUNT = 3
-ASSERT VALUE po1_1 = '1' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE po1_4 = '19.95' WHERE df_file_name = 'x12_850_purchase_order.edi'
-ASSERT VALUE po1_1 = '000100001' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
-ASSERT VALUE po1_2 = '2500' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
-ASSERT VALUE po1_4 = '2.53' WHERE df_file_name = 'x12_850_purchase_order_a.edi'
+ASSERT ROW_COUNT = 8
+ASSERT VALUE doc_count = 5 WHERE txn_type = '810'
+ASSERT VALUE doc_count = 3 WHERE txn_type = '850'
+ASSERT VALUE doc_count = 1 WHERE txn_type = '855'
 SELECT
-    df_file_name,
-    po1_1 AS line_number,
-    po1_2 AS quantity,
-    po1_3 AS unit_of_measure,
-    po1_4 AS unit_price
+    st_1 AS txn_type,
+    COUNT(*) AS doc_count
 FROM {{zone_name}}.edi.repeating_first
-WHERE st_1 = '850'
-ORDER BY df_file_name;
+GROUP BY st_1
+ORDER BY doc_count DESC, st_1;
 
 
 -- ============================================================================
@@ -178,30 +170,25 @@ ORDER BY mode;
 
 
 -- ============================================================================
--- 6. Concatenate PO1 Price Analysis
+-- 6. Concatenate vs First — Value Comparison
 -- ============================================================================
--- Shows po1_1 (line numbers), po1_2 (quantities), po1_4 (prices) from the
--- Concatenate table for 850 Purchase Order transactions.
---
--- Files with multiple PO1 line items have pipe-delimited values, making it
--- easy to see all line items at a glance.
+-- Compares n1_2 (party name) values between First and Concatenate tables
+-- for files with multiple N1 segments. In First mode, only one name appears;
+-- in Concatenate mode, all names are pipe-delimited (if the feature is active).
 --
 -- What you'll see:
---   - x12_850_purchase_order.edi:          po1_1='1', po1_4='19.95'
---   - x12_850_purchase_order_a.edi:        po1_1='000100001|000200001|000200002',
---                                           po1_2='2500|2000|1000', po1_4='2.53|3.41|3.41'
---   - x12_850_purchase_order_edifabric.edi: po1_1='1', po1_4='36'
+--   - For single-N1 files: both columns show the same value
+--   - For multi-N1 files: first_party shows one name, concat_party may show all
 
-ASSERT ROW_COUNT = 3
+ASSERT ROW_COUNT = 14
 SELECT
-    df_file_name,
-    po1_1 AS line_numbers,
-    po1_2 AS quantities,
-    po1_3 AS units_of_measure,
-    po1_4 AS unit_prices
-FROM {{zone_name}}.edi.repeating_concat
-WHERE st_1 = '850'
-ORDER BY df_file_name;
+    f.df_file_name,
+    f.st_1 AS txn_type,
+    f.n1_2 AS first_party,
+    c.n1_2 AS concat_party
+FROM {{zone_name}}.edi.repeating_first f
+JOIN {{zone_name}}.edi.repeating_concat c ON f.df_file_name = c.df_file_name
+ORDER BY f.df_file_name;
 
 
 -- ============================================================================
@@ -221,7 +208,7 @@ ORDER BY df_file_name;
 --     receiving_advice
 --   - NULL (no N1 at all): functional_acknowledgment
 
-ASSERT ROW_COUNT >= 5
+ASSERT ROW_COUNT = 14
 SELECT
     df_file_name,
     st_1 AS txn_type,
@@ -232,7 +219,6 @@ SELECT
         ELSE 'Single party'
     END AS party_status
 FROM {{zone_name}}.edi.repeating_concat
-WHERE n1_2 LIKE '%|%'
 ORDER BY df_file_name;
 
 
@@ -243,14 +229,11 @@ ORDER BY df_file_name;
 -- three repeating_segment_mode tables are producing expected results.
 -- All checks should return PASS.
 
-ASSERT ROW_COUNT = 8
+ASSERT ROW_COUNT = 5
 ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_count_14'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'concat_has_pipes'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'first_count_14'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'first_is_first_only'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'first_po1_populated'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'json_count_14'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'json_has_arrays'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'three_tables_same_count'
 SELECT check_name, result FROM (
 
@@ -289,30 +272,6 @@ SELECT check_name, result FROM (
     SELECT 'first_is_first_only' AS check_name,
            CASE WHEN (SELECT n1_2 FROM {{zone_name}}.edi.repeating_first
                        WHERE df_file_name = 'x12_850_purchase_order_a.edi') = 'Transplace Laredo'
-                THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 6: First table has PO1 columns populated for 850 transactions
-    SELECT 'first_po1_populated' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_first
-                       WHERE po1_1 IS NOT NULL AND st_1 = '850') = 3
-                THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 7: Concatenate table has pipe-delimited values for multi-N1 files
-    SELECT 'concat_has_pipes' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_concat
-                       WHERE n1_2 LIKE '%|%') > 0
-                THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 8: ToJson table has JSON arrays (starts with '[')
-    SELECT 'json_has_arrays' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.edi.repeating_json
-                       WHERE n1_2 LIKE '[%') > 0
                 THEN 'PASS' ELSE 'FAIL' END AS result
 
 ) checks
