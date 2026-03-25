@@ -9,8 +9,7 @@
 --   json_array_length()       — Count body segments per transaction
 --   json_typeof()             — Inspect JSON value types at any path
 --   json_extract_path_text()  — Extract text value at a JSON path
---   json_extract_path()       — Extract JSON value at a path (for nesting)
---   jsonb_pretty()            — Pretty-print JSON for human inspection
+--   json_extract_path_text()  — Extract nested text values at deeper paths
 --
 -- df_transaction_json structure:
 --   A JSON array of segment objects (body segments only — no ISA/GS/ST/SE/GE/IEA):
@@ -105,17 +104,17 @@ ORDER BY
 --   - df_file_name:         Source file
 --   - txn_type:             Transaction set ID
 --   - root_json_type:       Should be 'array' for all rows
---   - first_element_type:   Should be 'object' (each segment is an object)
+--   - first_segment_name:   Name of the first body segment (proves elements are objects)
 
 ASSERT ROW_COUNT = 14
 ASSERT VALUE root_json_type = 'array' WHERE df_file_name = 'x12_850_purchase_order.edi'
 ASSERT VALUE root_json_type = 'array' WHERE df_file_name = 'x12_810_invoice_a.edi'
-ASSERT VALUE first_element_type = 'object' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT VALUE first_segment_name IS NOT NULL WHERE df_file_name = 'x12_850_purchase_order.edi'
 SELECT
     df_file_name,
     st_1 AS txn_type,
     json_typeof(df_transaction_json) AS root_json_type,
-    json_typeof(json_extract_path(df_transaction_json, '0')) AS first_element_type
+    json_extract_path_text(df_transaction_json, '0', 'segment') AS first_segment_name
 FROM {{zone_name}}.edi.json_extraction_messages
 ORDER BY df_file_name;
 
@@ -226,19 +225,18 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 7. Pretty Print Transaction Sample — jsonb_pretty
+-- 7. First Two Segments Sample — json_extract_path_text
 -- ============================================================================
--- Uses jsonb_pretty() to format the first two body segments of a single
--- transaction as human-readable, indented JSON. This is invaluable for
--- analysts exploring an unfamiliar transaction structure — they can see
--- the exact segment names and element layouts before writing extraction
--- queries.
+-- Extracts the raw JSON text of the first two body segments from a single
+-- transaction. This is useful for analysts exploring an unfamiliar
+-- transaction structure — they can see the full segment content before
+-- writing targeted extraction queries.
 --
 -- What you'll see:
 --   - df_file_name:          Source file (the simple 850)
 --   - txn_type:              '850'
---   - first_segment_pretty:  Formatted JSON of the first body segment
---   - second_segment_pretty: Formatted JSON of the second body segment
+--   - first_segment_pretty:  JSON text of the first body segment
+--   - second_segment_pretty: JSON text of the second body segment
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE txn_type = '850' WHERE df_file_name = 'x12_850_purchase_order.edi'
@@ -247,8 +245,8 @@ ASSERT VALUE second_segment_pretty IS NOT NULL WHERE df_file_name = 'x12_850_pur
 SELECT
     df_file_name,
     st_1 AS txn_type,
-    jsonb_pretty(json_extract_path(df_transaction_json, '0')) AS first_segment_pretty,
-    jsonb_pretty(json_extract_path(df_transaction_json, '1')) AS second_segment_pretty
+    json_extract_path_text(df_transaction_json, '0') AS first_segment_pretty,
+    json_extract_path_text(df_transaction_json, '1') AS second_segment_pretty
 FROM {{zone_name}}.edi.json_extraction_messages
 WHERE df_file_name = 'x12_850_purchase_order.edi';
 
