@@ -1,0 +1,40 @@
+[demo]
+id = "edi-tradacoms-json-deep-access"
+name = "EDI TRADACOMS — JSON Deep Segment Extraction"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates on-demand extraction of deeply nested TRADACOMS segments \
+using SQL JSON functions against the df_transaction_json column. While \
+materialized_paths works well for simple, fixed segments, complex messages \
+like product planning forecasts (PPRDET) contain PDN, PLO, SFS, and SFX \
+segments in variable quantities that are impractical to materialize. This \
+demo shows how to use json_array_length, json_extract_path_text, and \
+string-based segment counting to query any segment without \
+pre-configuration — comparing JSON extraction against materialized \
+columns for verification.
+"""
+categories = ["edi", "analytics"]
+tags = ["edi", "tradacoms", "json", "segment-extraction", "product-planning", "deep-access", "on-demand"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to TRADACOMS .edi files", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/tradacoms_product_planning.edi"
+format = "edi"
+description = "TRADACOMS product planning forecast — 3 MHD messages: PPRHDR:2, PPRDET:2 (with nested PDN/PLO/SFS), PPRTLR:2"
+size_bytes = 969
+
+[[demo.data_files]]
+path = "data/tradacoms_order.edi"
+format = "edi"
+description = "TRADACOMS purchase order — 4 MHD messages for cross-format JSON comparison"
+size_bytes = 747
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.tradacoms_json_messages"

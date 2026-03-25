@@ -1,0 +1,36 @@
+[demo]
+id = "edi-tradacoms-purchase-orders"
+name = "EDI TRADACOMS — Purchase Order Line Items"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+A UK grocery retailer sends purchase orders to a supplier via TRADACOMS \
+ORDHDR/ORDERS/ORDTLR messages. This demo extracts order line items (OLD \
+segments), delivery instructions, and order totals from a real-world \
+TRADACOMS purchase order file containing 2 orders with 5 product lines. \
+Demonstrates the Header-Detail-Trailer message pattern unique to TRADACOMS, \
+cross-message analysis within a single file, and materialized_paths for \
+deep segment extraction beyond the default STX/MHD envelope.
+"""
+categories = ["edi", "supply-chain"]
+tags = ["edi", "tradacoms", "purchase-order", "order-lines", "ean-13", "materialized-paths", "header-detail-trailer"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the directory containing TRADACOMS .edi files", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/tradacoms_order.edi"
+format = "edi"
+description = "TRADACOMS purchase order — 4 MHD messages: ORDHDR:9 (header), ORDERS:9 x2 (detail orders with OLD line items), ORDTLR:9 (trailer)"
+size_bytes = 747
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.tradacoms_order_compact"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.tradacoms_order_lines"

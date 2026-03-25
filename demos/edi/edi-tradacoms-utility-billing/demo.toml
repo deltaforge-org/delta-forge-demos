@@ -1,0 +1,41 @@
+[demo]
+id = "edi-tradacoms-utility-billing"
+name = "EDI TRADACOMS — UK Energy Billing & VAT Reconciliation"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+A UK energy company sends utility bills via TRADACOMS UTLHDR/UTLBIL/UVATLR/UTLTLR \
+messages. This demo extracts billing details from CCD (Charge Calculation Detail) \
+segments, verifies VAT calculations, reconciles bill totals from BTL/TTL segments, \
+and demonstrates TRADACOMS escape character decoding for special characters in \
+customer names. Two files — a standard bill and an escape-character variant — \
+produce 8 messages covering the complete billing lifecycle.
+"""
+categories = ["edi", "utilities"]
+tags = ["edi", "tradacoms", "utility-billing", "energy", "vat", "escape-characters", "charge-detail", "reconciliation"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to TRADACOMS .edi files", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/tradacoms_utility_bill.edi"
+format = "edi"
+description = "TRADACOMS utility bill — 4 MHD messages: UTLHDR:3, UTLBIL:3, UVATLR:3, UTLTLR:3"
+size_bytes = 1246
+
+[[demo.data_files]]
+path = "data/tradacoms_utility_bill_escape.edi"
+format = "edi"
+description = "TRADACOMS utility bill with escape characters — ?' and ?+ in customer name"
+size_bytes = 1298
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.tradacoms_bills"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.tradacoms_bill_details"
