@@ -52,9 +52,9 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.hl7.lab_orders;
-
 GRANT ADMIN ON TABLE {{zone_name}}.hl7.lab_orders TO USER {{current_user}};
+
+DETECT SCHEMA FOR TABLE {{zone_name}}.hl7.lab_orders;
 
 
 -- ============================================================================
@@ -87,6 +87,6 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.hl7.lab_results;
-
 GRANT ADMIN ON TABLE {{zone_name}}.hl7.lab_results TO USER {{current_user}};
+
+DETECT SCHEMA FOR TABLE {{zone_name}}.hl7.lab_results;
