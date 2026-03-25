@@ -99,8 +99,8 @@ ORDER BY df_file_name;
 --   - party_name:    N1 party name(s) — may be pipe-delimited in future
 
 ASSERT ROW_COUNT = 14
-WARNING VALUE party_name = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
-WARNING VALUE party_name = 'ABC AEROSPACE' WHERE df_file_name = 'x12_850_purchase_order_edifabric.edi'
+ASSERT WARNING VALUE party_name = 'John Doe' WHERE df_file_name = 'x12_850_purchase_order.edi'
+ASSERT WARNING VALUE party_name = 'ABC AEROSPACE' WHERE df_file_name = 'x12_850_purchase_order_edifabric.edi'
 SELECT
     df_file_name,
     n1_1 AS entity_code,
