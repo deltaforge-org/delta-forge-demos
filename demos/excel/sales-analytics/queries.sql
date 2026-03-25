@@ -1,8 +1,8 @@
 -- ============================================================================
 -- Excel Sales Analytics — Verification Queries
 -- ============================================================================
--- Each query verifies a specific Excel feature: sheet selection, multi-file
--- reading, range extraction, header handling, type inference, and file metadata.
+-- Each query verifies a specific Excel feature: multi-file reading, sheet
+-- selection, file filtering, file metadata, and type inference.
 -- ============================================================================
 
 
@@ -32,6 +32,9 @@ LIMIT 20;
 -- 2014: 1,993 | 2015: 2,102 | 2016: 2,587 | 2017: 3,312
 
 ASSERT ROW_COUNT = 4
+ASSERT VALUE row_count = 1993 WHERE df_file_name LIKE '%2014%'
+ASSERT VALUE row_count = 2102 WHERE df_file_name LIKE '%2015%'
+ASSERT VALUE row_count = 2587 WHERE df_file_name LIKE '%2016%'
 ASSERT VALUE row_count = 3312 WHERE df_file_name LIKE '%2017%'
 SELECT df_file_name, COUNT(*) AS row_count
 FROM {{zone_name}}.excel.all_orders
@@ -44,11 +47,19 @@ ORDER BY df_file_name;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 4
+ASSERT VALUE orders = 1993 WHERE source_file LIKE '%2014%'
+ASSERT VALUE orders = 2102 WHERE source_file LIKE '%2015%'
+ASSERT VALUE orders = 2587 WHERE source_file LIKE '%2016%'
 ASSERT VALUE orders = 3312 WHERE source_file LIKE '%2017%'
 -- Non-deterministic: floating-point SUM may vary slightly across platforms
-ASSERT WARNING VALUE total_sales BETWEEN 733000.00 AND 734000.00 WHERE source_file LIKE '%2017%'
--- Non-deterministic: floating-point SUM may vary slightly across platforms
-ASSERT WARNING VALUE total_profit BETWEEN 93000.00 AND 94000.00 WHERE source_file LIKE '%2017%'
+ASSERT WARNING VALUE total_sales BETWEEN 484246.50 AND 484248.50 WHERE source_file LIKE '%2014%'
+ASSERT WARNING VALUE total_profit BETWEEN 49542.97 AND 49544.97 WHERE source_file LIKE '%2014%'
+ASSERT WARNING VALUE total_sales BETWEEN 470531.51 AND 470533.51 WHERE source_file LIKE '%2015%'
+ASSERT WARNING VALUE total_profit BETWEEN 61617.60 AND 61619.60 WHERE source_file LIKE '%2015%'
+ASSERT WARNING VALUE total_sales BETWEEN 609204.60 AND 609206.60 WHERE source_file LIKE '%2016%'
+ASSERT WARNING VALUE total_profit BETWEEN 81794.17 AND 81796.17 WHERE source_file LIKE '%2016%'
+ASSERT WARNING VALUE total_sales BETWEEN 733214.26 AND 733216.26 WHERE source_file LIKE '%2017%'
+ASSERT WARNING VALUE total_profit BETWEEN 93438.27 AND 93440.27 WHERE source_file LIKE '%2017%'
 SELECT df_file_name AS source_file,
        COUNT(*) AS orders,
        ROUND(SUM(CAST(sales AS DOUBLE)), 2) AS total_sales,
@@ -68,61 +79,7 @@ FROM {{zone_name}}.excel.orders_2017;
 
 
 -- ============================================================================
--- 6. RANGE TABLE — Limited columns and rows
--- ============================================================================
--- Range A1:K500 should produce 11 columns (A through K) and up to 499 data
--- rows per file. Columns beyond K (Region, Product ID, ..., Profit) are absent.
-
-ASSERT VALUE column_count = 21
-SELECT COUNT(*) AS column_count
-FROM information_schema.columns
-WHERE table_schema = 'excel'
-  AND table_name = 'orders_range'
-  AND column_name NOT LIKE 'df_%';
-
-
--- ============================================================================
--- 7. RANGE TABLE — Browse the subset of columns
--- ============================================================================
-
-ASSERT ROW_COUNT = 10
-SELECT *
-FROM {{zone_name}}.excel.orders_range
-LIMIT 10;
-
-
--- ============================================================================
--- 8. TRIMMED TABLE — Verify row count matches (same data, with trimming)
--- ============================================================================
-
-ASSERT ROW_COUNT = 9994
-SELECT *
-FROM {{zone_name}}.excel.orders_trimmed;
-
-
--- ============================================================================
--- 9. NO-HEADER TABLE — Auto-generated column names (column_0, column_1, ...)
--- ============================================================================
--- With has_header=false and skip_rows=1, the header row is skipped and columns
--- get auto-generated names. max_rows=100 limits to 100 rows per file (4 files = 400).
-
-ASSERT ROW_COUNT = 5
-SELECT col01, col02, col03, col04, col05
-FROM {{zone_name}}.excel.orders_no_header
-LIMIT 5;
-
-
--- ============================================================================
--- 9b. NO-HEADER TABLE — Row count = 400 (100 rows x 4 files)
--- ============================================================================
-
-ASSERT ROW_COUNT = 9994
-SELECT *
-FROM {{zone_name}}.excel.orders_no_header;
-
-
--- ============================================================================
--- 9c. DISTINCT REGIONS — 4 regions (Central, East, South, West)
+-- 6. DISTINCT REGIONS — 4 regions (Central, East, South, West)
 -- ============================================================================
 
 ASSERT VALUE region_count = 4
@@ -131,7 +88,7 @@ FROM {{zone_name}}.excel.all_orders;
 
 
 -- ============================================================================
--- 10. FILE METADATA — df_file_name populated for all rows
+-- 7. FILE METADATA — df_file_name populated, verify 2014 file pattern
 -- ============================================================================
 
 ASSERT ROW_COUNT = 4
@@ -143,14 +100,28 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
--- 11. SALES BY REGION — Analytics query
+-- 8. SALES BY REGION — Analytics query
 -- ============================================================================
 
 ASSERT ROW_COUNT = 4
+ASSERT VALUE orders = 3203 WHERE region = 'West'
+ASSERT VALUE orders = 2848 WHERE region = 'East'
+ASSERT VALUE orders = 2323 WHERE region = 'Central'
+ASSERT VALUE orders = 1620 WHERE region = 'South'
 -- Non-deterministic: floating-point SUM may vary slightly across platforms
-ASSERT WARNING VALUE total_sales BETWEEN 725000.00 AND 726000.00 WHERE region = 'West'
--- Non-deterministic: floating-point SUM may vary slightly across platforms
-ASSERT WARNING VALUE total_profit BETWEEN 108000.00 AND 109000.00 WHERE region = 'West'
+ASSERT WARNING VALUE total_sales BETWEEN 725456.82 AND 725458.82 WHERE region = 'West'
+ASSERT WARNING VALUE total_profit BETWEEN 108417.45 AND 108419.45 WHERE region = 'West'
+ASSERT WARNING VALUE total_sales BETWEEN 678780.24 AND 678782.24 WHERE region = 'East'
+ASSERT WARNING VALUE total_profit BETWEEN 91521.78 AND 91523.78 WHERE region = 'East'
+ASSERT WARNING VALUE total_sales BETWEEN 501238.89 AND 501240.89 WHERE region = 'Central'
+ASSERT WARNING VALUE total_profit BETWEEN 39705.36 AND 39707.36 WHERE region = 'Central'
+ASSERT WARNING VALUE total_sales BETWEEN 391720.91 AND 391722.91 WHERE region = 'South'
+ASSERT WARNING VALUE total_profit BETWEEN 46748.43 AND 46750.43 WHERE region = 'South'
+-- Non-deterministic: floating-point AVG may vary slightly across platforms
+ASSERT WARNING VALUE avg_discount BETWEEN 0.10 AND 0.12 WHERE region = 'West'
+ASSERT WARNING VALUE avg_discount BETWEEN 0.13 AND 0.16 WHERE region = 'East'
+ASSERT WARNING VALUE avg_discount BETWEEN 0.23 AND 0.25 WHERE region = 'Central'
+ASSERT WARNING VALUE avg_discount BETWEEN 0.14 AND 0.16 WHERE region = 'South'
 SELECT region,
        COUNT(*) AS orders,
        ROUND(SUM(CAST(sales AS DOUBLE)), 2) AS total_sales,
@@ -162,13 +133,20 @@ ORDER BY total_sales DESC;
 
 
 -- ============================================================================
--- 12. TOP PRODUCTS — By profit margin
+-- 9. TOP PRODUCTS — By profit margin (top 10 sub-categories)
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
 ASSERT VALUE orders = 68 WHERE sub_category = 'Copiers'
+ASSERT VALUE orders = 889 WHERE sub_category = 'Phones'
+ASSERT VALUE orders = 775 WHERE sub_category = 'Accessories'
 -- Non-deterministic: floating-point SUM may vary slightly across platforms
-ASSERT WARNING VALUE total_profit BETWEEN 55000.00 AND 56500.00 WHERE sub_category = 'Copiers'
+ASSERT WARNING VALUE total_sales BETWEEN 149527.03 AND 149529.03 WHERE sub_category = 'Copiers'
+ASSERT WARNING VALUE total_profit BETWEEN 55616.82 AND 55618.82 WHERE sub_category = 'Copiers'
+ASSERT WARNING VALUE total_sales BETWEEN 330006.05 AND 330008.05 WHERE sub_category = 'Phones'
+ASSERT WARNING VALUE total_profit BETWEEN 44514.73 AND 44516.73 WHERE sub_category = 'Phones'
+ASSERT WARNING VALUE total_sales BETWEEN 167379.32 AND 167381.32 WHERE sub_category = 'Accessories'
+ASSERT WARNING VALUE total_profit BETWEEN 41935.64 AND 41937.64 WHERE sub_category = 'Accessories'
 SELECT category, sub_category,
        COUNT(*) AS orders,
        ROUND(SUM(CAST(sales AS DOUBLE)), 2) AS total_sales,
@@ -180,21 +158,17 @@ LIMIT 10;
 
 
 -- ============================================================================
--- VERIFY: All Checks
+-- 10. VERIFY: All Checks — Cross-cutting sanity check
 -- ============================================================================
--- End-to-end sanity check: row counts, file options, metadata, and type inference.
 
-ASSERT ROW_COUNT = 10
+ASSERT ROW_COUNT = 7
 ASSERT VALUE result = 'PASS' WHERE check_name = 'total_count_9994'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'four_source_files'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'file_2017_count'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'trimmed_same_count'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'file_metadata_populated'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'no_header_max_rows'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'range_limited_columns'
-ASSERT VALUE result = 'PASS' WHERE check_name = 'no_header_auto_columns'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'type_inference_numeric'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'four_regions'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'orders_2017_filter'
 SELECT check_name, result FROM (
 
     -- Check 1: Total row count = 9,994
@@ -218,41 +192,14 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 4: Range table has 21 data columns + 2 metadata
-    SELECT 'range_limited_columns' AS check_name,
-           CASE WHEN (
-               SELECT COUNT(*) FROM information_schema.columns
-               WHERE table_schema = 'excel' AND table_name = 'orders_range'
-               AND column_name NOT LIKE 'df_%'
-           ) = 21 THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 5: Trimmed table has same count as all_orders
-    SELECT 'trimmed_same_count' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.excel.orders_trimmed) = 9994
-                THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 6: No-header table has auto-generated column names (col01, col02, ...)
-    SELECT 'no_header_auto_columns' AS check_name,
-           CASE WHEN (
-               SELECT COUNT(*) FROM information_schema.columns
-               WHERE table_schema = 'excel' AND table_name = 'orders_no_header'
-               AND column_name LIKE 'col%'
-           ) > 0 THEN 'PASS' ELSE 'FAIL' END AS result
-
-    UNION ALL
-
-    -- Check 7: File metadata populated (all rows have df_file_name)
+    -- Check 4: File metadata populated (all rows have df_file_name)
     SELECT 'file_metadata_populated' AS check_name,
            CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.excel.all_orders WHERE df_file_name IS NOT NULL) = 9994
                 THEN 'PASS' ELSE 'FAIL' END AS result
 
     UNION ALL
 
-    -- Check 8: Type inference — sales column exists and is castable (may be text or numeric)
+    -- Check 5: Type inference — sales column exists and is castable
     SELECT 'type_inference_numeric' AS check_name,
            CASE WHEN (SELECT COUNT(*) FROM information_schema.columns
                        WHERE table_schema = 'excel' AND table_name = 'all_orders'
@@ -261,16 +208,16 @@ SELECT check_name, result FROM (
 
     UNION ALL
 
-    -- Check 9: 4 regions present (Central, East, South, West)
+    -- Check 6: 4 regions present (Central, East, South, West)
     SELECT 'four_regions' AS check_name,
            CASE WHEN (SELECT COUNT(DISTINCT region) FROM {{zone_name}}.excel.all_orders) = 4
                 THEN 'PASS' ELSE 'FAIL' END AS result
 
     UNION ALL
 
-    -- Check 10: No-header table row count matches all_orders (DETECT SCHEMA overrides max_rows)
-    SELECT 'no_header_max_rows' AS check_name,
-           CASE WHEN (SELECT COUNT(*) FROM {{zone_name}}.excel.orders_no_header) = 9994
+    -- Check 7: orders_2017 file_filter works correctly
+    SELECT 'orders_2017_filter' AS check_name,
+           CASE WHEN (SELECT COUNT(DISTINCT df_file_name) FROM {{zone_name}}.excel.orders_2017) = 1
                 THEN 'PASS' ELSE 'FAIL' END AS result
 
 ) checks

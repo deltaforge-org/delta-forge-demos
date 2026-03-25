@@ -4,16 +4,15 @@ name = "Excel Sales Analytics — Superstore Orders"
 version = "1.0.0"
 author = "Delta Forge Team"
 description = """\
-Demonstrates Excel reading features using 4 years of Superstore sales data \
-(2014–2017, 16,676 orders). Five tables exercise sheet_name, has_header, \
-skip_rows, max_rows, range, trim_whitespace, null_values, empty_cell_handling, \
-infer_schema_rows, column_prefix, multi-file reading, file_metadata, and \
-automatic type inference for dates, numbers, and strings.
+Demonstrates multi-file Excel analytics using 4 years of Superstore sales data \
+(2014–2017, 9,994 orders). Two tables exercise sheet_name, file_filter, \
+infer_schema_rows, multi-file reading, file_metadata, and automatic type \
+inference for dates, numbers, and strings.
 """
 categories = ["excel", "retail"]
-tags = ["excel", "intermediate", "sheet-name", "range", "multi-file", "type-inference", "file-metadata"]
+tags = ["excel", "intermediate", "sheet-name", "multi-file", "file-filter", "type-inference", "file-metadata"]
 difficulty = "intermediate"
-estimated_time_minutes = 8
+estimated_time_minutes = 5
 
 [demo.variables]
 data_path = { description = "Path to the directory containing the 4 Superstore XLSX files", required = true }
@@ -40,7 +39,7 @@ size_bytes = 384561
 [[demo.data_files]]
 path = "data/sales-data-2017.xlsx"
 format = "excel"
-description = "Superstore orders 2017 — 9,994 orders"
+description = "Superstore orders 2017 — 3,312 orders"
 size_bytes = 587173
 
 [[demo.target_objects]]
@@ -50,15 +49,3 @@ name = "{{zone_name}}.excel.all_orders"
 [[demo.target_objects]]
 type = "external_table"
 name = "{{zone_name}}.excel.orders_2017"
-
-[[demo.target_objects]]
-type = "external_table"
-name = "{{zone_name}}.excel.orders_range"
-
-[[demo.target_objects]]
-type = "external_table"
-name = "{{zone_name}}.excel.orders_trimmed"
-
-[[demo.target_objects]]
-type = "external_table"
-name = "{{zone_name}}.excel.orders_no_header"

@@ -1,0 +1,74 @@
+[demo]
+id = "excel-options-testbench"
+name = "Excel Options Testbench — Connector Validation"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Verifies that each Excel parsing option is correctly wired through to the \
+backend. Each table exercises a specific option (sheet_name, has_header, \
+skip_rows, max_rows, file_filter) with data designed so that incorrect \
+parsing produces obviously wrong results."""
+categories = ["excel"]
+tags = ["excel", "intermediate", "options", "testing", "validation"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo Excel data files (.xlsx) are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_multi_sheet.xlsx"
+format = "excel"
+description = "3 sheets (Summary, Details, Metadata) — tests sheet_name selection"
+size_bytes = 6062
+
+[[demo.data_files]]
+path = "data/02_no_header.xlsx"
+format = "excel"
+description = "Single sheet with no header row — tests has_header=false"
+size_bytes = 4968
+
+[[demo.data_files]]
+path = "data/03_skip_rows.xlsx"
+format = "excel"
+description = "3 metadata rows before header — tests skip_rows=3"
+size_bytes = 5110
+
+[[demo.data_files]]
+path = "data/04_max_rows.xlsx"
+format = "excel"
+description = "20 data rows in Inventory sheet — tests max_rows=5"
+size_bytes = 5310
+
+[[demo.data_files]]
+path = "data/05_target.xlsx"
+format = "excel"
+description = "3 rows with value=CORRECT — should be included by file_filter"
+size_bytes = 4890
+
+[[demo.data_files]]
+path = "data/05_decoy.xlsx"
+format = "excel"
+description = "3 rows with value=WRONG — should be excluded by file_filter"
+size_bytes = 4888
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel_opts.opt_sheet_name"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel_opts.opt_no_header"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel_opts.opt_skip_rows"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel_opts.opt_max_rows"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel_opts.opt_file_filter"

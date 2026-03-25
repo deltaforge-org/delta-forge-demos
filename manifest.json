@@ -4005,7 +4005,7 @@
       "path": "demos/excel/sales-analytics",
       "iconPath": "icons/excel-sales-analytics.svg",
       "name": "Excel Sales Analytics — Superstore Orders",
-      "summary": "Demonstrates all Excel reading features using 4 years of Superstore sales data (2014–2017, 16,676 orders). Five tables exercise sheet_name, has_header, skip_rows, max_rows, range, trim_whitespace, null_values, empty_cell_handling, infer_schema_rows, file_filter, multi-file reading, file_metadata, and automatic type inference for dates, numbers, and strings.",
+      "summary": "Demonstrates multi-file Excel analytics using 4 years of Superstore sales data (2014–2017, 9,994 orders). Two tables exercise sheet_name, file_filter, infer_schema_rows, multi-file reading, file_metadata, and automatic type inference for dates, numbers, and strings.",
       "categories": [
         "excel",
         "retail"
@@ -4014,18 +4014,18 @@
         "excel",
         "intermediate",
         "sheet-name",
-        "range",
         "multi-file",
+        "file-filter",
         "type-inference",
         "file-metadata"
       ],
       "difficulty": "intermediate",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 1592005,
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 1593005,
       "fileCount": 4,
       "author": "Delta Forge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z",
+      "version": "2.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "external_table",
@@ -4034,18 +4034,91 @@
         {
           "objectType": "external_table",
           "name": "{{zone_name}}.excel.orders_2017"
+        }
+      ]
+    },
+    {
+      "id": "excel-multi-sheet-reporting",
+      "path": "demos/excel/multi-sheet-reporting",
+      "iconPath": "icons/excel-multi-sheet-reporting.svg",
+      "name": "Excel Multi-Sheet Reporting — Regional Sales Review",
+      "summary": "Demonstrates Excel multi-sheet reading using quarterly field-office reports from two regions (East and West). Each workbook contains three sheets — Sales transactions, Returns/refunds, and Staff roster. Creates one external table per sheet, then queries across sheets and regions with cross-sheet JOINs, net-revenue calculations, and return-rate analysis. This scenario is unique to Excel — no other format has named sheets.",
+      "categories": [
+        "excel",
+        "retail"
+      ],
+      "tags": [
+        "excel",
+        "intermediate",
+        "multi-sheet",
+        "cross-sheet-join",
+        "regional-analysis"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 14589,
+      "fileCount": 2,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.all_sales"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.excel.orders_range"
+          "name": "{{zone_name}}.excel.all_returns"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.excel.orders_trimmed"
+          "name": "{{zone_name}}.excel.all_staff"
+        }
+      ]
+    },
+    {
+      "id": "excel-options-testbench",
+      "path": "demos/excel/excel-options-testbench",
+      "iconPath": "icons/excel-options-testbench.svg",
+      "name": "Excel Options Testbench — Connector Validation",
+      "summary": "Verifies that each Excel parsing option is correctly wired through to the backend. Each table exercises a specific option (sheet_name, has_header, skip_rows, max_rows, file_filter) with data designed so that incorrect parsing produces obviously wrong results. Includes a summary query that reports PASS/FAIL for each option.",
+      "categories": [
+        "excel"
+      ],
+      "tags": [
+        "excel",
+        "intermediate",
+        "options",
+        "testing",
+        "validation"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 31228,
+      "fileCount": 6,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel_opts.opt_sheet_name"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.excel.orders_no_header"
+          "name": "{{zone_name}}.excel_opts.opt_no_header"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel_opts.opt_skip_rows"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel_opts.opt_max_rows"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel_opts.opt_file_filter"
         }
       ]
     },

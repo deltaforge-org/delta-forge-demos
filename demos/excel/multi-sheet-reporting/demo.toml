@@ -1,0 +1,47 @@
+[demo]
+id = "excel-multi-sheet-reporting"
+name = "Excel Multi-Sheet Reporting — Regional Sales Review"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates Excel multi-sheet reading using quarterly field-office reports \
+from two regions (East and West). Each workbook contains three sheets — Sales \
+transactions, Returns/refunds, and Staff roster — modelling the real-world \
+pattern where regional offices submit a single Excel file with multiple \
+related datasets. The demo creates one external table per sheet (reading both \
+files), then queries across sheets and regions: cross-sheet JOINs, net-revenue \
+calculations, and return-rate analysis. This scenario is unique to Excel — no \
+other file format has the concept of named sheets within a single file.\
+"""
+categories = ["excel", "retail"]
+tags = ["excel", "intermediate", "multi-sheet", "cross-sheet-join", "regional-analysis"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Path to the directory containing the regional report XLSX files", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/region-east-2024.xlsx"
+format = "excel"
+description = "East region Q1-Q4 2024 report — 17 sales, 4 returns, 4 staff"
+size_bytes = 7357
+
+[[demo.data_files]]
+path = "data/region-west-2024.xlsx"
+format = "excel"
+description = "West region Q1-Q4 2024 report — 16 sales, 3 returns, 3 staff"
+size_bytes = 7232
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel.all_sales"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel.all_returns"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel.all_staff"
