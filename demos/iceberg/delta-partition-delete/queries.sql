@@ -265,12 +265,12 @@ FROM {{zone_name}}.delta_demos.warehouse_orders;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-CREATE EXTERNAL TABLE IF NOT EXISTS warehouse_orders_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.delta_demos.warehouse_orders_iceberg
 USING ICEBERG
 LOCATION '{{data_path}}/warehouse_orders';
 
-GRANT ADMIN ON TABLE warehouse_orders_iceberg TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE warehouse_orders_iceberg;
+GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.warehouse_orders_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.warehouse_orders_iceberg;
 
 
 -- ============================================================================
@@ -278,7 +278,7 @@ DETECT SCHEMA FOR TABLE warehouse_orders_iceberg;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 33
-SELECT * FROM warehouse_orders_iceberg ORDER BY id;
+SELECT * FROM {{zone_name}}.delta_demos.warehouse_orders_iceberg ORDER BY id;
 
 
 -- ============================================================================
@@ -292,7 +292,7 @@ ASSERT VALUE order_count = 10 WHERE region = 'us-east'
 SELECT
     region,
     COUNT(*) AS order_count
-FROM warehouse_orders_iceberg
+FROM {{zone_name}}.delta_demos.warehouse_orders_iceberg
 GROUP BY region
 ORDER BY region;
 
@@ -303,7 +303,7 @@ ORDER BY region;
 
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM warehouse_orders_iceberg
+FROM {{zone_name}}.delta_demos.warehouse_orders_iceberg
 WHERE id IN (4, 8, 13, 6, 10, 21, 24, 36, 39, 38, 43, 45);
 
 
@@ -318,7 +318,7 @@ ASSERT VALUE cnt = 6 WHERE status = 'cancelled'
 SELECT
     status,
     COUNT(*) AS cnt
-FROM warehouse_orders_iceberg
+FROM {{zone_name}}.delta_demos.warehouse_orders_iceberg
 GROUP BY status
 ORDER BY status;
 
@@ -331,4 +331,4 @@ ASSERT ROW_COUNT = 1
 ASSERT VALUE total_value = 19696.33
 SELECT
     ROUND(SUM(quantity * unit_price), 2) AS total_value
-FROM warehouse_orders_iceberg;
+FROM {{zone_name}}.delta_demos.warehouse_orders_iceberg;

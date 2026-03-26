@@ -5,7 +5,7 @@
 -- ============================================================================
 
 -- STEP 1: Drop Iceberg read-back verification table
-DROP TABLE IF EXISTS warehouse_orders_iceberg;
+DROP TABLE IF EXISTS {{zone_name}}.delta_demos.warehouse_orders_iceberg;
 
 -- STEP 2: Drop Delta table (includes Delta log + Iceberg metadata/ directory)
 DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.warehouse_orders WITH FILES;
