@@ -13,9 +13,9 @@
 -- a popular benchmark for community detection algorithms.
 --
 -- PART 1: DATA INTEGRITY CHECKS (queries 1–4)
--- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–9)
--- PART 3: CYPHER — GRAPH ALGORITHMS (queries 10–16)
--- PART 4: VERIFICATION SUMMARY (query 17)
+-- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–10)
+-- PART 3: CYPHER — GRAPH ALGORITHMS (queries 11–17)
+-- PART 4: VERIFICATION SUMMARY (query 18)
 --
 -- ############################################################################
 
@@ -74,19 +74,30 @@ WHERE src = dst;
 
 
 -- ============================================================================
--- 5. BROWSE VERTICES — Verify the graph exposes all 62 dolphins (IDs 0–61)
+-- 5. EDGE TYPE DISTRIBUTION — What kinds of associations hold the pod together?
 -- ============================================================================
 
-ASSERT VALUE min_id = 0
-ASSERT VALUE max_id = 61
-ASSERT VALUE total = 62
+ASSERT ROW_COUNT = 6
+USE {{zone_name}}.dolphins.dolphins_social
+MATCH (a)-[r]->(b)
+RETURN r.edge_type AS type, count(r) AS count
+ORDER BY count DESC;
+
+
+-- ============================================================================
+-- 6. BROWSE VERTICES — Verify the graph exposes all 62 dolphins (IDs 0–61)
+-- ============================================================================
+
+ASSERT ROW_COUNT = 62
+ASSERT VALUE name = 'Ripple' WHERE dolphin_id = 0
 USE {{zone_name}}.dolphins.dolphins_social
 MATCH (v)
-RETURN MIN(v.id) AS min_id, MAX(v.id) AS max_id, COUNT(v) AS total;
+RETURN v.id AS dolphin_id, v.name AS name, v.category AS category
+ORDER BY dolphin_id;
 
 
 -- ============================================================================
--- 6. DEGREE DISTRIBUTION — How many associations does each dolphin have?
+-- 7. DEGREE DISTRIBUTION — How many associations does each dolphin have?
 -- ============================================================================
 -- All 62 dolphins appear in at least one edge. Max degree = 12 (node 14),
 -- min degree = 1 (9 leaf nodes). 318 total edge rows / 62 nodes = avg ~5.13.
@@ -98,12 +109,12 @@ ASSERT VALUE degree = 6 WHERE dolphin_id = 0
 ASSERT VALUE degree = 1 WHERE dolphin_id = 4
 USE {{zone_name}}.dolphins.dolphins_social
 MATCH (a)-[r]->(b)
-RETURN a.id AS dolphin_id, COUNT(r) AS degree
+RETURN a.id AS dolphin_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC, dolphin_id ASC;
 
 
 -- ============================================================================
--- 7. TOP HUBS — The 5 most connected dolphins
+-- 8. TOP HUBS — The 5 most connected dolphins
 -- ============================================================================
 -- Node 14 (12), 37 (11), 45 (11), 33 (10), 51 (10).
 
@@ -114,13 +125,13 @@ ASSERT VALUE degree = 10 WHERE dolphin_id = 33
 ASSERT VALUE degree = 10 WHERE dolphin_id = 51
 USE {{zone_name}}.dolphins.dolphins_social
 MATCH (a)-[r]->(b)
-RETURN a.id AS dolphin_id, COUNT(r) AS degree
+RETURN a.id AS dolphin_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC, dolphin_id ASC
 LIMIT 5;
 
 
 -- ============================================================================
--- 8. NEIGHBORHOOD OF TOP HUB — Dolphin 14's 12 direct associates
+-- 9. NEIGHBORHOOD OF TOP HUB — Dolphin 14's 12 direct associates
 -- ============================================================================
 -- Node 14 connects to: 0, 3, 16, 24, 33, 34, 37, 38, 40, 43, 50, 52.
 
@@ -128,12 +139,12 @@ ASSERT RESULT SET INCLUDES (14, 0), (14, 3), (14, 16), (14, 24), (14, 33), (14, 
 USE {{zone_name}}.dolphins.dolphins_social
 MATCH (a)-[]->(c)
 WHERE a.id = 14
-RETURN a.id AS hub_id, c.id AS associate_id
+RETURN a.id AS hub_id, c.id AS associate_id, c.name AS associate_name
 ORDER BY associate_id;
 
 
 -- ============================================================================
--- 9. TWO-HOP REACHABILITY FROM NODE 0 — How far does association reach?
+-- 10. TWO-HOP REACHABILITY FROM NODE 0 — How far does association reach?
 -- ============================================================================
 -- Node 0 has 6 direct neighbors. Through them, 27 distinct nodes are
 -- reachable in 1–2 hops (44% of the graph) — excludes node 0 itself.
@@ -151,7 +162,7 @@ RETURN COUNT(DISTINCT b.id) AS reachable_in_2_hops;
 
 
 -- ============================================================================
--- 10. PAGERANK — Identify most influential dolphins
+-- 11. PAGERANK — Identify most influential dolphins
 -- ============================================================================
 -- PageRank scores are non-deterministic (floating-point iteration order).
 -- The top node should be one of the high-degree hubs (14, 37, 45).
@@ -169,7 +180,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 11. DEGREE CENTRALITY — Normalized degree
+-- 12. DEGREE CENTRALITY — Normalized degree
 -- ============================================================================
 -- Deterministic: derived directly from edge counts.
 -- Node 14 should have total_degree = 12 (in=12, out=12 for undirected).
@@ -188,7 +199,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 12. BETWEENNESS CENTRALITY — Bridge nodes
+-- 13. BETWEENNESS CENTRALITY — Bridge nodes
 -- ============================================================================
 -- Dolphins that bridge sub-communities will have the highest betweenness.
 -- Betweenness is deterministic for a fixed graph topology.
@@ -208,7 +219,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 13. CLOSENESS CENTRALITY — How close is each dolphin to all others?
+-- 14. CLOSENESS CENTRALITY — How close is each dolphin to all others?
 -- ============================================================================
 -- Closeness is deterministic for a fixed, connected graph.
 
@@ -227,7 +238,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 14. COMMUNITY DETECTION — Can we recover the natural groups?
+-- 15. COMMUNITY DETECTION — Can we recover the natural groups?
 -- ============================================================================
 -- Published results show 2-4 communities. Louvain is non-deterministic
 -- (tie-breaking varies), but the number of communities is stable.
@@ -243,7 +254,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 15. CONNECTED COMPONENTS — Is the graph fully connected?
+-- 16. CONNECTED COMPONENTS — Is the graph fully connected?
 -- ============================================================================
 -- All 62 dolphins form a single connected component.
 
@@ -257,7 +268,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 16. SHORTEST PATH — Distance between dolphins 0 and 61
+-- 17. SHORTEST PATH — Distance between dolphins 0 and 61
 -- ============================================================================
 -- BFS: 0 → 10 → 2 → 61 (3 hops). Verify start, end, and hop count.
 ASSERT VALUE distance = 0 WHERE node_id = 0
@@ -277,7 +288,7 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 17. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- 18. AUTOMATED VERIFICATION — PASS/FAIL against golden values
 -- ============================================================================
 -- All checks should return PASS. Any FAIL indicates data loading issues
 -- or algorithm correctness problems.
@@ -339,6 +350,13 @@ FROM (
         SELECT 1 FROM {{zone_name}}.dolphins.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
+)
+
+UNION ALL
+SELECT '6 edge types',
+       CASE WHEN cnt = 6 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.dolphins.edges
 );
 
 
@@ -353,10 +371,12 @@ ASSERT VALUE max_degree = 12
 ASSERT VALUE top_hub_id = 14
 ASSERT VALUE missing_reverse = 0
 ASSERT VALUE hub_14_neighbors = 12
+ASSERT VALUE edge_type_count = 6
 SELECT
     (SELECT COUNT(*) FROM {{zone_name}}.dolphins.vertices) AS vertex_count,
     (SELECT COUNT(*) FROM {{zone_name}}.dolphins.edges) AS edge_count,
     (SELECT MAX(deg) FROM (SELECT COUNT(*) AS deg FROM {{zone_name}}.dolphins.edges GROUP BY src)) AS max_degree,
     (SELECT src FROM (SELECT src, COUNT(*) AS deg FROM {{zone_name}}.dolphins.edges GROUP BY src ORDER BY deg DESC LIMIT 1)) AS top_hub_id,
     (SELECT COUNT(*) FROM {{zone_name}}.dolphins.edges e1 WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.dolphins.edges e2 WHERE e2.src = e1.dst AND e2.dst = e1.src)) AS missing_reverse,
-    (SELECT COUNT(*) FROM {{zone_name}}.dolphins.edges WHERE src = 14) AS hub_14_neighbors;
+    (SELECT COUNT(*) FROM {{zone_name}}.dolphins.edges WHERE src = 14) AS hub_14_neighbors,
+    (SELECT COUNT(DISTINCT edge_type) FROM {{zone_name}}.dolphins.edges) AS edge_type_count;

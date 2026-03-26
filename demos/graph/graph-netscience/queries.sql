@@ -12,10 +12,10 @@
 -- multiple connected components (isolated authors and small groups) with clear
 -- research-group community structure (modularity ~0.95).
 --
--- PART 1: DATA INTEGRITY CHECKS (queries 1–4)
--- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–9)
--- PART 3: CYPHER — GRAPH ALGORITHMS (queries 10–16)
--- PART 4: VERIFICATION SUMMARY (query 17)
+-- PART 1: DATA INTEGRITY CHECKS (queries 1–5)
+-- PART 2: CYPHER — GRAPH EXPLORATION (queries 6–10)
+-- PART 3: CYPHER — GRAPH ALGORITHMS (queries 11–17)
+-- PART 4: VERIFICATION SUMMARY (query 18)
 --
 -- ############################################################################
 
@@ -75,51 +75,62 @@ SELECT
 FROM {{zone_name}}.netscience.edges;
 
 
+-- ============================================================================
+-- 5. COLLABORATION TYPES — Distribution of coauthorship relationship types
+-- ============================================================================
+
+ASSERT ROW_COUNT = 5
+USE {{zone_name}}.netscience.netscience_collab
+MATCH (a)-[r]->(b)
+RETURN r.edge_type AS type, count(r) AS count
+ORDER BY count DESC;
+
+
 -- ############################################################################
 -- PART 2: CYPHER — GRAPH EXPLORATION
 -- ############################################################################
 
 
 -- ============================================================================
--- 5. BROWSE VERTICES — Sample of authors
+-- 6. BROWSE VERTICES — Sample of authors
 -- ============================================================================
 
 ASSERT ROW_COUNT = 20
 USE {{zone_name}}.netscience.netscience_collab
 MATCH (v)
-RETURN v.id AS author_id
+RETURN v.id AS author_id, v.name AS name, v.role AS role
 ORDER BY author_id
 LIMIT 20;
 
 
 -- ============================================================================
--- 6. DEGREE DISTRIBUTION — How many coauthors does each scientist have?
+-- 7. DEGREE DISTRIBUTION — How many coauthors does each scientist have?
 -- ============================================================================
 -- Network scientists with the most collaborators appear at the top.
 
 ASSERT ROW_COUNT = 20
 USE {{zone_name}}.netscience.netscience_collab
 MATCH (a)-[r]->(b)
-RETURN a.id AS author_id, COUNT(r) AS degree
+RETURN a.id AS author_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC, author_id ASC
 LIMIT 20;
 
 
 -- ============================================================================
--- 7. TOP HUBS — Most connected scientists
+-- 8. TOP HUBS — Most connected scientists
 -- ============================================================================
 -- The most prolific collaborators in the network science community.
 
 ASSERT ROW_COUNT = 10
 USE {{zone_name}}.netscience.netscience_collab
 MATCH (a)-[r]->(b)
-RETURN a.id AS author_id, COUNT(r) AS degree
+RETURN a.id AS author_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC
 LIMIT 10;
 
 
 -- ============================================================================
--- 8. WEIGHTED DEGREE — Total collaboration strength per author
+-- 9. WEIGHTED DEGREE — Total collaboration strength per author
 -- ============================================================================
 -- Sum of edge weights reveals authors with the strongest collaborative ties.
 -- Uses SQL aggregation over the edge Delta table (Cypher columnar pipeline
@@ -136,7 +147,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 9. TWO-HOP REACHABILITY FROM TOP HUB — Research influence
+-- 10. TWO-HOP REACHABILITY FROM TOP HUB — Research influence
 -- ============================================================================
 -- How many authors are within 2 hops of the most connected scientist?
 -- Uses SQL CTEs instead of Cypher variable-length paths (which exceed the
@@ -174,7 +185,7 @@ GROUP BY h.hub_id;
 
 
 -- ============================================================================
--- 10. PAGERANK — Identify most influential scientists
+-- 11. PAGERANK — Identify most influential scientists
 -- ============================================================================
 -- Top-ranked authors should be prolific collaborators who bridge
 -- multiple research groups.
@@ -189,7 +200,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 11. DEGREE CENTRALITY — Normalized degree
+-- 12. DEGREE CENTRALITY — Normalized degree
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
@@ -202,7 +213,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 12. BETWEENNESS CENTRALITY — Bridge scientists
+-- 13. BETWEENNESS CENTRALITY — Bridge scientists
 -- ============================================================================
 -- Authors who connect different research groups will have high betweenness.
 
@@ -216,7 +227,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 13. CLOSENESS CENTRALITY — Proximity to all other authors
+-- 14. CLOSENESS CENTRALITY — Proximity to all other authors
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
@@ -229,7 +240,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 14. COMMUNITY DETECTION — Recover research groups
+-- 15. COMMUNITY DETECTION — Recover research groups
 -- ============================================================================
 -- With modularity ~0.95, Louvain should find many well-separated
 -- research communities.
@@ -244,7 +255,7 @@ LIMIT 20;
 
 
 -- ============================================================================
--- 15. CONNECTED COMPONENTS — Multiple components expected
+-- 16. CONNECTED COMPONENTS — Multiple components expected
 -- ============================================================================
 -- Unlike Karate Club, this network is NOT fully connected.
 -- There are isolated authors and small disconnected groups.
@@ -259,7 +270,7 @@ LIMIT 20;
 
 
 -- ============================================================================
--- 16. SHORTEST PATH — Distance between two prolific authors
+-- 17. SHORTEST PATH — Distance between two prolific authors
 -- ============================================================================
 -- Find the shortest path between vertices 0 and 1 (if in same component).
 
@@ -277,13 +288,13 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 17. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- 18. AUTOMATED VERIFICATION — PASS/FAIL against golden values
 -- ============================================================================
 -- All checks should return PASS. Any FAIL indicates data loading issues
 -- or algorithm correctness problems.
 
 ASSERT NO_FAIL IN result
-ASSERT ROW_COUNT = 6
+ASSERT ROW_COUNT = 7
 SELECT 'Vertex count = 1461' AS test,
        CASE WHEN cnt = 1461 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience.vertices)
@@ -326,4 +337,11 @@ SELECT 'Non-uniform weights (> 1 distinct value)',
        CASE WHEN cnt > 1 THEN 'PASS' ELSE 'FAIL (only ' || CAST(cnt AS VARCHAR) || ' distinct weight)' END
 FROM (
     SELECT COUNT(DISTINCT weight) AS cnt FROM {{zone_name}}.netscience.edges
+)
+
+UNION ALL
+SELECT '5 edge types',
+       CASE WHEN cnt = 5 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.netscience.edges
 );

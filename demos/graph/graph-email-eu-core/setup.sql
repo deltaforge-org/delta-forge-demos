@@ -5,7 +5,7 @@
 -- tables and creates a named graph for algorithm verification.
 --
 -- Data source: Stanford SNAP (Leskovec et al.)
--- Format: pipe-delimited CSV with header (src|dst|weight)
+-- Format: pipe-delimited CSV with header (src|dst|weight|edge_type)
 --
 -- Vertices: 1,005 institution members (IDs 0–1004)
 -- Edges: 25,571 directed email edges (NOT symmetric, has self-loops)
@@ -52,22 +52,30 @@ LOCATION '{{data_path}}/delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
     CAST(dst AS BIGINT) AS dst,
-    CAST(weight AS DOUBLE) AS weight
+    CAST(weight AS DOUBLE) AS weight,
+    CAST(edge_type AS VARCHAR) AS edge_type
 FROM {{zone_name}}.raw.email_eu_edges;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.email_eu.edges;
 GRANT ADMIN ON TABLE {{zone_name}}.email_eu.edges TO USER {{current_user}};
 
 
--- === Vertex Table (derived from edges) ===
+-- === Vertex Table (from CSV with member names and departments) ===
+
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.email_eu_vertices
+USING CSV LOCATION '{{data_path}}/vertices.csv'
+OPTIONS (header = 'true', delimiter = '|');
+
+DETECT SCHEMA FOR TABLE {{zone_name}}.raw.email_eu_vertices;
+GRANT ADMIN ON TABLE {{zone_name}}.raw.email_eu_vertices TO USER {{current_user}};
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.email_eu.vertices
 LOCATION '{{data_path}}/delta/vertices'
-AS SELECT DISTINCT vertex_id FROM (
-    SELECT src AS vertex_id FROM {{zone_name}}.email_eu.edges
-    UNION
-    SELECT dst AS vertex_id FROM {{zone_name}}.email_eu.edges
-);
+AS SELECT
+    CAST(vertex_id AS BIGINT) AS vertex_id,
+    CAST(name AS VARCHAR) AS name,
+    CAST(category AS VARCHAR) AS department
+FROM {{zone_name}}.raw.email_eu_vertices;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.email_eu.vertices;
 GRANT ADMIN ON TABLE {{zone_name}}.email_eu.vertices TO USER {{current_user}};
@@ -81,7 +89,8 @@ GRANT ADMIN ON TABLE {{zone_name}}.email_eu.vertices TO USER {{current_user}};
 -- Cypher queries reference this by name: USE {{zone_name}}.email_eu.email_eu_core MATCH ...
 
 CREATE GRAPH IF NOT EXISTS {{zone_name}}.email_eu.email_eu_core
-    VERTEX TABLE {{zone_name}}.email_eu.vertices ID COLUMN vertex_id
+    VERTEX TABLE {{zone_name}}.email_eu.vertices ID COLUMN vertex_id NODE NAME COLUMN name NODE TYPE COLUMN department
     EDGE TABLE {{zone_name}}.email_eu.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
+    EDGE TYPE COLUMN edge_type
     DIRECTED;

@@ -12,10 +12,10 @@
 -- is DIRECTED and contains self-loops. It has 42 ground-truth department
 -- communities, 105,461 triangles, and a diameter of 7.
 --
--- PART 1: DATA INTEGRITY CHECKS (queries 1–4)
--- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–9)
--- PART 3: CYPHER — GRAPH ALGORITHMS (queries 10–16)
--- PART 4: VERIFICATION SUMMARY (query 17)
+-- PART 1: DATA INTEGRITY CHECKS (queries 1–5)
+-- PART 2: CYPHER — GRAPH EXPLORATION (queries 6–10)
+-- PART 3: CYPHER — GRAPH ALGORITHMS (queries 11–17)
+-- PART 4: VERIFICATION SUMMARY (query 18)
 --
 -- ############################################################################
 
@@ -68,51 +68,62 @@ FROM {{zone_name}}.email_eu.edges
 WHERE src = dst;
 
 
+-- ============================================================================
+-- 5. EMAIL TYPES — Distribution of communication types
+-- ============================================================================
+
+ASSERT ROW_COUNT = 6
+USE {{zone_name}}.email_eu.email_eu_core
+MATCH (a)-[r]->(b)
+RETURN r.edge_type AS type, count(r) AS count
+ORDER BY count DESC;
+
+
 -- ############################################################################
 -- PART 2: CYPHER — GRAPH EXPLORATION
 -- ############################################################################
 
 
 -- ============================================================================
--- 5. BROWSE VERTICES — Sample of institution members
+-- 6. BROWSE VERTICES — Sample of institution members
 -- ============================================================================
 
 ASSERT ROW_COUNT = 20
 USE {{zone_name}}.email_eu.email_eu_core
 MATCH (v)
-RETURN v.id AS member_id
+RETURN v.id AS member_id, v.name AS name, v.department AS department
 ORDER BY member_id
 LIMIT 20;
 
 
 -- ============================================================================
--- 6. OUT-DEGREE DISTRIBUTION — How many people does each member email?
+-- 7. OUT-DEGREE DISTRIBUTION — How many people does each member email?
 -- ============================================================================
 -- This is a directed graph, so in-degree and out-degree differ.
 
 ASSERT ROW_COUNT = 20
 USE {{zone_name}}.email_eu.email_eu_core
 MATCH (a)-[r]->(b)
-RETURN a.id AS member_id, COUNT(r) AS out_degree
+RETURN a.id AS member_id, a.name AS name, COUNT(r) AS out_degree
 ORDER BY out_degree DESC, member_id ASC
 LIMIT 20;
 
 
 -- ============================================================================
--- 7. IN-DEGREE DISTRIBUTION — How many people email each member?
+-- 8. IN-DEGREE DISTRIBUTION — How many people email each member?
 -- ============================================================================
 -- Members who receive the most emails may be managers or key contacts.
 
 ASSERT ROW_COUNT = 20
 USE {{zone_name}}.email_eu.email_eu_core
 MATCH (a)-[r]->(b)
-RETURN b.id AS member_id, COUNT(r) AS in_degree
+RETURN b.id AS member_id, b.name AS name, COUNT(r) AS in_degree
 ORDER BY in_degree DESC, member_id ASC
 LIMIT 20;
 
 
 -- ============================================================================
--- 8. TOP HUBS — Members with highest total degree (in + out)
+-- 9. TOP HUBS — Members with highest total degree (in + out)
 -- ============================================================================
 -- The most active email communicators in the institution.
 
@@ -138,7 +149,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 9. TWO-HOP REACHABILITY FROM TOP HUB — Communication reach
+-- 10. TWO-HOP REACHABILITY FROM TOP HUB — Communication reach
 -- ============================================================================
 -- How many members are within 2 directed hops of the most active sender?
 -- Uses SQL on the edges table to avoid variable-length path explosion.
@@ -168,7 +179,7 @@ GROUP BY hub;
 
 
 -- ============================================================================
--- 10. PAGERANK — Identify most influential members
+-- 11. PAGERANK — Identify most influential members
 -- ============================================================================
 -- PageRank on directed graphs highlights members who receive emails
 -- from other influential members.
@@ -183,7 +194,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 11. DEGREE CENTRALITY — Normalized degree
+-- 12. DEGREE CENTRALITY — Normalized degree
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
@@ -196,7 +207,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 12. BETWEENNESS CENTRALITY — Communication bridges
+-- 13. BETWEENNESS CENTRALITY — Communication bridges
 -- ============================================================================
 -- Members who bridge different departments will have high betweenness.
 
@@ -210,7 +221,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 13. CLOSENESS CENTRALITY — Proximity to all other members
+-- 14. CLOSENESS CENTRALITY — Proximity to all other members
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
@@ -223,7 +234,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 14. COMMUNITY DETECTION — Recover department structure
+-- 15. COMMUNITY DETECTION — Recover department structure
 -- ============================================================================
 -- Ground truth: 42 department communities.
 -- Louvain should find a comparable number of communities.
@@ -239,7 +250,7 @@ LIMIT 20;
 
 
 -- ============================================================================
--- 15. CONNECTED COMPONENTS — Weakly connected components
+-- 16. CONNECTED COMPONENTS — Weakly connected components
 -- ============================================================================
 -- Known: 20 weakly connected components (1 giant of 986 nodes + 19 singletons
 -- that appear only in self-loops and have no other neighbours).
@@ -255,7 +266,7 @@ LIMIT 20;
 
 
 -- ============================================================================
--- 16. SHORTEST PATH — Distance between two active members
+-- 17. SHORTEST PATH — Distance between two active members
 -- ============================================================================
 -- Diameter is 7, so shortest paths are relatively short.
 
@@ -273,13 +284,13 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 17. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- 18. AUTOMATED VERIFICATION — PASS/FAIL against golden values
 -- ============================================================================
 -- All checks should return PASS. Any FAIL indicates data loading issues
 -- or algorithm correctness problems.
 
 ASSERT NO_FAIL IN result
-ASSERT ROW_COUNT = 7
+ASSERT ROW_COUNT = 8
 SELECT 'Vertex count = 1005' AS test,
        CASE WHEN cnt = 1005 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu.vertices)
@@ -332,4 +343,11 @@ FROM (
     SELECT MAX(deg) AS max_deg FROM (
         SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu.edges GROUP BY src
     )
+)
+
+UNION ALL
+SELECT '6 edge types (including self-note)',
+       CASE WHEN cnt = 6 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.email_eu.edges
 );

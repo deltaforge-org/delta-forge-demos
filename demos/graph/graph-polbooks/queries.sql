@@ -13,9 +13,9 @@
 -- classic benchmark for community detection with known labels.
 --
 -- PART 1: DATA INTEGRITY CHECKS (queries 1–4)
--- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–9)
--- PART 3: CYPHER — GRAPH ALGORITHMS (queries 10–16)
--- PART 4: VERIFICATION SUMMARY (query 17)
+-- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–10)
+-- PART 3: CYPHER — GRAPH ALGORITHMS (queries 11–17)
+-- PART 4: VERIFICATION SUMMARY (query 18)
 --
 -- ############################################################################
 
@@ -73,43 +73,54 @@ WHERE src = dst;
 
 
 -- ============================================================================
--- 5. BROWSE VERTICES — List all 105 books
+-- 5. EDGE TYPE MIX — What co-purchasing patterns exist?
+-- ============================================================================
+
+ASSERT ROW_COUNT = 5
+USE {{zone_name}}.polbooks.political_books
+MATCH (a)-[r]->(b)
+RETURN r.edge_type AS type, count(r) AS count
+ORDER BY count DESC;
+
+
+-- ============================================================================
+-- 6. BROWSE VERTICES — List all 105 books
 -- ============================================================================
 
 ASSERT ROW_COUNT = 105
 USE {{zone_name}}.polbooks.political_books
 MATCH (v)
-RETURN v.id AS book_id
+RETURN v.id AS book_id, v.name AS title, v.leaning AS leaning
 ORDER BY book_id;
 
 
 -- ============================================================================
--- 6. DEGREE DISTRIBUTION — How many co-purchases does each book have?
+-- 7. DEGREE DISTRIBUTION — How many co-purchases does each book have?
 -- ============================================================================
 -- Known: Maximum degree is 25.
 
 ASSERT ROW_COUNT = 105
 USE {{zone_name}}.polbooks.political_books
 MATCH (a)-[r]->(b)
-RETURN a.id AS book_id, COUNT(r) AS degree
+RETURN a.id AS book_id, a.name AS title, COUNT(r) AS degree
 ORDER BY degree DESC, book_id ASC;
 
 
 -- ============================================================================
--- 7. TOP HUBS — The most co-purchased books
+-- 8. TOP HUBS — The most co-purchased books
 -- ============================================================================
 -- Expected: Top books have degree 25 or higher.
 
 ASSERT ROW_COUNT = 5
 USE {{zone_name}}.polbooks.political_books
 MATCH (a)-[r]->(b)
-RETURN a.id AS book_id, COUNT(r) AS degree
+RETURN a.id AS book_id, a.name AS title, COUNT(r) AS degree
 ORDER BY degree DESC
 LIMIT 5;
 
 
 -- ============================================================================
--- 8. NEIGHBORHOOD OF TOP HUB — Most connected book's co-purchases
+-- 9. NEIGHBORHOOD OF TOP HUB — Most connected book's co-purchases
 -- ============================================================================
 -- The most connected book has up to 25 co-purchasing links.
 
@@ -125,7 +136,7 @@ ORDER BY copurchase_id;
 
 
 -- ============================================================================
--- 9. TWO-HOP REACHABILITY FROM NODE 0 — How far does co-purchasing reach?
+-- 10. TWO-HOP REACHABILITY FROM NODE 0 — How far does co-purchasing reach?
 -- ============================================================================
 -- Most of the 105-node graph should be reachable within 2 hops.
 
@@ -143,7 +154,7 @@ RETURN COUNT(DISTINCT b.id) AS reachable_in_2_hops;
 
 
 -- ============================================================================
--- 10. PAGERANK — Identify most influential books
+-- 11. PAGERANK — Identify most influential books
 -- ============================================================================
 -- Expected: The most co-purchased books should have the highest PageRank.
 
@@ -157,7 +168,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 11. DEGREE CENTRALITY — Normalized degree
+-- 12. DEGREE CENTRALITY — Normalized degree
 -- ============================================================================
 -- The most connected books should rank highest.
 
@@ -171,7 +182,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 12. BETWEENNESS CENTRALITY — Bridge nodes
+-- 13. BETWEENNESS CENTRALITY — Bridge nodes
 -- ============================================================================
 -- Books that bridge political communities (e.g., neutral books) will
 -- have the highest betweenness.
@@ -186,7 +197,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 13. CLOSENESS CENTRALITY — How close is each book to all others?
+-- 14. CLOSENESS CENTRALITY — How close is each book to all others?
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
@@ -199,7 +210,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 14. COMMUNITY DETECTION — Can we recover the political leanings?
+-- 15. COMMUNITY DETECTION — Can we recover the political leanings?
 -- ============================================================================
 -- Ground truth: 3 communities (liberal, neutral, conservative).
 -- Community detection should approximate this partitioning.
@@ -214,7 +225,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 15. CONNECTED COMPONENTS — Is the graph fully connected?
+-- 16. CONNECTED COMPONENTS — Is the graph fully connected?
 -- ============================================================================
 -- Expected: The graph should be connected or nearly connected.
 
@@ -227,7 +238,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 16. SHORTEST PATH — Distance between two books
+-- 17. SHORTEST PATH — Distance between two books
 -- ============================================================================
 -- Book 0 and book 104 should be reachable through the co-purchasing network.
 
@@ -245,13 +256,13 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 17. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- 18. AUTOMATED VERIFICATION — PASS/FAIL against golden values
 -- ============================================================================
 -- All checks should return PASS. Any FAIL indicates data loading issues
 -- or algorithm correctness problems.
 
 ASSERT NO_FAIL IN result
-ASSERT ROW_COUNT = 8
+ASSERT ROW_COUNT = 9
 SELECT 'Vertex count = 105' AS test,
        CASE WHEN cnt = 105 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.polbooks.vertices)
@@ -308,4 +319,11 @@ FROM (
         SELECT 1 FROM {{zone_name}}.polbooks.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
+)
+
+UNION ALL
+SELECT '5 edge types',
+       CASE WHEN cnt = 5 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.polbooks.edges
 );

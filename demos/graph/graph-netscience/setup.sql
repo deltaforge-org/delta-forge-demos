@@ -5,7 +5,7 @@
 -- and creates a named graph for algorithm verification.
 --
 -- Data source: M. E. J. Newman, network data repository
--- Format: pipe-delimited CSV with header (src|dst|weight)
+-- Format: pipe-delimited CSV with header (src|dst|weight|edge_type)
 --
 -- Vertices: 1,461 authors (IDs 0–1588, non-sequential with 128 gaps)
 -- Edges: 5,484 rows (2,742 undirected edges stored bidirectionally,
@@ -53,22 +53,30 @@ LOCATION '{{data_path}}/delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
     CAST(dst AS BIGINT) AS dst,
-    CAST(weight AS DOUBLE) AS weight
+    CAST(weight AS DOUBLE) AS weight,
+    CAST(edge_type AS VARCHAR) AS edge_type
 FROM {{zone_name}}.raw.netscience_edges;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.netscience.edges;
 GRANT ADMIN ON TABLE {{zone_name}}.netscience.edges TO USER {{current_user}};
 
 
--- === Vertex Table (derived from edges) ===
+-- === Vertex Table (from CSV with researcher names and roles) ===
+
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.netscience_vertices
+USING CSV LOCATION '{{data_path}}/vertices.csv'
+OPTIONS (header = 'true', delimiter = '|');
+
+DETECT SCHEMA FOR TABLE {{zone_name}}.raw.netscience_vertices;
+GRANT ADMIN ON TABLE {{zone_name}}.raw.netscience_vertices TO USER {{current_user}};
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.netscience.vertices
 LOCATION '{{data_path}}/delta/vertices'
-AS SELECT DISTINCT vertex_id FROM (
-    SELECT src AS vertex_id FROM {{zone_name}}.netscience.edges
-    UNION
-    SELECT dst AS vertex_id FROM {{zone_name}}.netscience.edges
-);
+AS SELECT
+    CAST(vertex_id AS BIGINT) AS vertex_id,
+    CAST(name AS VARCHAR) AS name,
+    CAST(category AS VARCHAR) AS role
+FROM {{zone_name}}.raw.netscience_vertices;
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.netscience.vertices;
 GRANT ADMIN ON TABLE {{zone_name}}.netscience.vertices TO USER {{current_user}};
@@ -81,7 +89,8 @@ GRANT ADMIN ON TABLE {{zone_name}}.netscience.vertices TO USER {{current_user}};
 -- Cypher queries reference this by name: USE {{zone_name}}.netscience.netscience_collab MATCH ...
 
 CREATE GRAPH IF NOT EXISTS {{zone_name}}.netscience.netscience_collab
-    VERTEX TABLE {{zone_name}}.netscience.vertices ID COLUMN vertex_id
+    VERTEX TABLE {{zone_name}}.netscience.vertices ID COLUMN vertex_id NODE NAME COLUMN name NODE TYPE COLUMN role
     EDGE TABLE {{zone_name}}.netscience.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
+    EDGE TYPE COLUMN edge_type
     DIRECTED;

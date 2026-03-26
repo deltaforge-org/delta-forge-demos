@@ -13,9 +13,9 @@
 -- for community detection, centrality, and structural metrics.
 --
 -- PART 1: DATA INTEGRITY CHECKS (queries 1–4)
--- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–9)
--- PART 3: CYPHER — GRAPH ALGORITHMS (queries 10–24)
--- PART 4: VERIFICATION SUMMARY (query 25)
+-- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–10)
+-- PART 3: CYPHER — GRAPH ALGORITHMS (queries 11–25)
+-- PART 4: VERIFICATION SUMMARY (query 26)
 --
 -- ############################################################################
 
@@ -73,7 +73,20 @@ WHERE src = dst;
 
 
 -- ============================================================================
--- 5. BROWSE VERTICES — List all 34 club members
+-- 5. EDGE TYPE MIX — What kinds of bonds exist in the club?
+-- ============================================================================
+-- 5 distinct edge types: training-partner, sparring-buddy, class-friend,
+-- practice-mate, social-contact.
+
+ASSERT ROW_COUNT = 5
+USE {{zone_name}}.karate.karate_club
+MATCH (a)-[r]->(b)
+RETURN r.edge_type AS type, count(r) AS count
+ORDER BY count DESC;
+
+
+-- ============================================================================
+-- 6. BROWSE VERTICES — List all 34 club members
 -- ============================================================================
 
 ASSERT ROW_COUNT = 34
@@ -84,7 +97,7 @@ ORDER BY member_id;
 
 
 -- ============================================================================
--- 6. DEGREE DISTRIBUTION — How many friends does each member have?
+-- 7. DEGREE DISTRIBUTION — How many friends does each member have?
 -- ============================================================================
 -- Counts outgoing edges per node. Since edges are stored bidirectionally,
 -- out-degree equals the undirected degree.
@@ -102,7 +115,7 @@ ORDER BY degree DESC, member_id ASC;
 
 
 -- ============================================================================
--- 7. TOP HUBS — The two faction leaders
+-- 8. TOP HUBS — The two faction leaders
 -- ============================================================================
 -- Expected top-5 (NetworkX-verified): 33(17), 0(16), 32(12), 2(10), 1(9).
 
@@ -120,7 +133,7 @@ LIMIT 5;
 
 
 -- ============================================================================
--- 8. NEIGHBORHOOD OF NODE 0 — Instructor's faction
+-- 9. NEIGHBORHOOD OF NODE 0 — Instructor's faction
 -- ============================================================================
 -- The instructor (node 0) has 16 direct friends (NetworkX-verified):
 -- [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 17, 19, 21, 31]
@@ -135,7 +148,7 @@ ORDER BY friend_id;
 
 
 -- ============================================================================
--- 9. TWO-HOP REACHABILITY FROM NODE 0 — How far does influence reach?
+-- 10. TWO-HOP REACHABILITY FROM NODE 0 — How far does influence reach?
 -- ============================================================================
 -- Expected: 25 distinct nodes reachable within 2 hops (excludes source node 0).
 -- Cypher variable-length paths do not include cycles back to the source.
@@ -154,7 +167,7 @@ RETURN COUNT(DISTINCT b.id) AS reachable_in_2_hops;
 
 
 -- ============================================================================
--- 10. PAGERANK — Identify most influential members
+-- 11. PAGERANK — Identify most influential members
 -- ============================================================================
 -- NetworkX-verified top-5 (damping=0.85):
 --   Node 33 = 0.100918, Node 0 = 0.097002, Node 32 = 0.071692,
@@ -173,7 +186,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 11. DEGREE CENTRALITY — Raw connection counts
+-- 12. DEGREE CENTRALITY — Raw connection counts
 -- ============================================================================
 -- Graph is DIRECTED with bidirectional edges, so in_degree = out_degree.
 -- NetworkX-verified top-5:
@@ -198,7 +211,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 12. BETWEENNESS CENTRALITY — Bridge nodes
+-- 13. BETWEENNESS CENTRALITY — Bridge nodes
 -- ============================================================================
 -- NetworkX-verified (normalized, Brandes algorithm):
 --   Node 0 = 0.4376, Node 33 = 0.3041, Node 32 = 0.1452,
@@ -217,7 +230,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 13. CLOSENESS CENTRALITY — How close is each member to all others?
+-- 14. CLOSENESS CENTRALITY — How close is each member to all others?
 -- ============================================================================
 -- NetworkX-verified top-5:
 --   Node 0 = 0.5690, Node 2 = 0.5593, Node 33 = 0.5500,
@@ -235,7 +248,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 14. COMMUNITY DETECTION — Can we recover the two factions?
+-- 15. COMMUNITY DETECTION — Can we recover the two factions?
 -- ============================================================================
 -- Ground truth: 2 factions (instructor vs president), but Louvain optimises
 -- modularity and typically splits the network into 4-6 sub-communities.
@@ -257,7 +270,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 15. CONNECTED COMPONENTS — Is the graph fully connected?
+-- 16. CONNECTED COMPONENTS — Is the graph fully connected?
 -- ============================================================================
 -- Expected: 1 connected component (all 34 members reachable from any node).
 
@@ -271,7 +284,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 16. SHORTEST PATH — Distance between the two faction leaders
+-- 17. SHORTEST PATH — Distance between the two faction leaders
 -- ============================================================================
 -- Nodes 0 and 33 are NOT directly connected (no direct friendship edge).
 -- Shortest distance = 2 hops. Four equally valid paths exist:
@@ -292,7 +305,7 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 17. STRONGLY CONNECTED COMPONENTS — All nodes mutually reachable?
+-- 18. STRONGLY CONNECTED COMPONENTS — All nodes mutually reachable?
 -- ============================================================================
 -- Expected: 1 SCC containing all 34 nodes (NetworkX-verified).
 -- Because edges are bidirectional, every node can reach every other node
@@ -308,7 +321,7 @@ ORDER BY members DESC;
 
 
 -- ============================================================================
--- 18. TRIANGLE COUNT — Clustering structure
+-- 19. TRIANGLE COUNT — Clustering structure
 -- ============================================================================
 -- NetworkX-verified: 45 unique triangles total.
 -- Top-5 by triangle participation:
@@ -329,7 +342,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 19. ALL SHORTEST PATHS FROM NODE 0 — Distance to every member
+-- 20. ALL SHORTEST PATHS FROM NODE 0 — Distance to every member
 -- ============================================================================
 -- NetworkX-verified: All 33 other nodes reachable, max distance = 3.0.
 -- 16 nodes at distance 1, 9 at distance 2, 8 at distance 3.
@@ -345,7 +358,7 @@ ORDER BY distance ASC, node_id ASC;
 
 
 -- ============================================================================
--- 20. BFS TRAVERSAL FROM NODE 0 — Breadth-first layer structure
+-- 21. BFS TRAVERSAL FROM NODE 0 — Breadth-first layer structure
 -- ============================================================================
 -- NetworkX-verified: depth 0 = 1 node, depth 1 = 16 nodes,
 -- depth 2 = 9 nodes, depth 3 = 8 nodes. Max depth = 3.
@@ -364,7 +377,7 @@ ORDER BY depth;
 
 
 -- ============================================================================
--- 21. DFS TRAVERSAL FROM NODE 0 — Depth-first discovery
+-- 22. DFS TRAVERSAL FROM NODE 0 — Depth-first discovery
 -- ============================================================================
 -- All 34 nodes discovered. Discovery/finish times are implementation-dependent
 -- (vary with CSR neighbor ordering). Useful for verifying DFS traversal works.
@@ -380,7 +393,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 22. MINIMUM SPANNING TREE — Lightest connecting tree
+-- 23. MINIMUM SPANNING TREE — Lightest connecting tree
 -- ============================================================================
 -- NetworkX-verified: 33 edges (n-1), total weight = 33.0 (all weights = 1.0).
 -- Any spanning tree is minimum since all edges have equal weight.
@@ -398,7 +411,7 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 23. KNN — 5 Nearest Neighbors of Node 0 (by Jaccard similarity)
+-- 24. KNN — 5 Nearest Neighbors of Node 0 (by Jaccard similarity)
 -- ============================================================================
 -- NetworkX-verified top-5 most similar to node 0:
 --   Node 1 = 0.3889, Node 3 = 0.2941, Node 2 = 0.2381,
@@ -416,7 +429,7 @@ ORDER BY rank;
 
 
 -- ============================================================================
--- 24. SIMILARITY — Compare the two faction leaders
+-- 25. SIMILARITY — Compare the two faction leaders
 -- ============================================================================
 -- NetworkX-verified similarity between nodes 0 and 33:
 --   Jaccard = 0.1379 (4 common neighbors out of 29 union)
@@ -439,13 +452,13 @@ RETURN score;
 
 
 -- ============================================================================
--- 25. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- 26. AUTOMATED VERIFICATION — PASS/FAIL against golden values
 -- ============================================================================
 -- All checks should return PASS. Any FAIL indicates data loading issues
 -- or algorithm correctness problems.
 
 ASSERT NO_FAIL IN result
-ASSERT ROW_COUNT = 8
+ASSERT ROW_COUNT = 9
 SELECT 'Vertex count = 34' AS test,
        CASE WHEN cnt = 34 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.vertices)
@@ -502,4 +515,11 @@ FROM (
         SELECT 1 FROM {{zone_name}}.karate.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
+)
+
+UNION ALL
+SELECT '5 edge types',
+       CASE WHEN cnt = 5 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.karate.edges
 );
