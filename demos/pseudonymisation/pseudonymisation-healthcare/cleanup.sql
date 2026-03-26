@@ -13,10 +13,10 @@ DROP PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.hl7_patients;
 DROP PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.fhir_patients;
 DROP PSEUDONYMISATION RULE ON {{zone_name}}.pseudonymisation.edi_claims;
 
--- STEP 2: Drop Tables
-DROP TABLE IF EXISTS {{zone_name}}.pseudonymisation.edi_claims;
-DROP TABLE IF EXISTS {{zone_name}}.pseudonymisation.fhir_patients;
-DROP TABLE IF EXISTS {{zone_name}}.pseudonymisation.hl7_patients;
+-- STEP 2: Drop Tables (WITH FILES removes Delta data from disk)
+DROP TABLE IF EXISTS {{zone_name}}.pseudonymisation.edi_claims WITH FILES;
+DROP TABLE IF EXISTS {{zone_name}}.pseudonymisation.fhir_patients WITH FILES;
+DROP TABLE IF EXISTS {{zone_name}}.pseudonymisation.hl7_patients WITH FILES;
 
 -- STEP 3: Drop Schema
 DROP SCHEMA IF EXISTS {{zone_name}}.pseudonymisation;
