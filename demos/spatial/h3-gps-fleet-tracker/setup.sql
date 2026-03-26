@@ -43,6 +43,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial.landmarks (
     lng DOUBLE
 ) LOCATION '{{data_path}}/landmarks';
 
+GRANT ADMIN ON TABLE {{zone_name}}.spatial.landmarks TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.spatial.landmarks VALUES
     (1,  'Golden Gate Bridge',     'San Francisco', 'USA',       37.8199, -122.4783),
     (2,  'Statue of Liberty',     'New York',      'USA',       40.6892,  -74.0445),
@@ -56,7 +58,6 @@ INSERT INTO {{zone_name}}.spatial.landmarks VALUES
     (10, 'Shibuya Crossing',      'Tokyo',         'Japan',     35.6595,  139.7004);
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.spatial.landmarks;
-GRANT ADMIN ON TABLE {{zone_name}}.spatial.landmarks TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -74,6 +75,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial.regions (
     timezone VARCHAR
 ) LOCATION '{{data_path}}/regions';
 
+GRANT ADMIN ON TABLE {{zone_name}}.spatial.regions TO USER {{current_user}};
+
 INSERT INTO {{zone_name}}.spatial.regions VALUES
     (1, 'San Francisco', 'USA',    'POLYGON((-122.52 37.70, -122.35 37.70, -122.35 37.82, -122.52 37.82, -122.52 37.70))', 'America/Los_Angeles'),
     (2, 'Manhattan',     'USA',    'POLYGON((-74.02 40.70, -73.97 40.70, -73.97 40.80, -74.02 40.80, -74.02 40.70))',      'America/New_York'),
@@ -82,7 +85,6 @@ INSERT INTO {{zone_name}}.spatial.regions VALUES
     (5, 'Central Tokyo', 'Japan',  'POLYGON((139.65 35.63, 139.80 35.63, 139.80 35.73, 139.65 35.73, 139.65 35.63))',      'Asia/Tokyo');
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.spatial.regions;
-GRANT ADMIN ON TABLE {{zone_name}}.spatial.regions TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -100,6 +102,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial.gps_points (
     device_id VARCHAR,
     city VARCHAR
 ) LOCATION '{{data_path}}/gps_points';
+
+GRANT ADMIN ON TABLE {{zone_name}}.spatial.gps_points TO USER {{current_user}};
 
 -- San Francisco: 2,000 points within bounding box
 INSERT INTO {{zone_name}}.spatial.gps_points
@@ -152,7 +156,6 @@ SELECT
 FROM generate_series(1, 2000) AS t(id);
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.spatial.gps_points;
-GRANT ADMIN ON TABLE {{zone_name}}.spatial.gps_points TO USER {{current_user}};
 
 
 -- ============================================================================
