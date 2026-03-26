@@ -25,5 +25,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg.grid_readings
 USING ICEBERG
 LOCATION '{{data_path}}';
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg.grid_readings;
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg.grid_readings TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg.grid_readings;
