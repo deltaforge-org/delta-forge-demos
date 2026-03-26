@@ -43,7 +43,7 @@ size_bytes = 7913
 path = "metadata/v1.metadata.json"
 format = "json"
 description = "Iceberg format v2 metadata (schema, snapshots, partition specs)"
-size_bytes = 2568
+size_bytes = 2692
 
 [[demo.data_files]]
 path = "metadata/snap-1-manifest-list.avro"
@@ -55,7 +55,7 @@ size_bytes = 783
 path = "metadata/snap-1-manifest.avro"
 format = "avro"
 description = "Iceberg data manifest (Avro) — pointers to 3 Parquet data files"
-size_bytes = 726
+size_bytes = 711
 
 [[demo.target_objects]]
 type = "external_table"
