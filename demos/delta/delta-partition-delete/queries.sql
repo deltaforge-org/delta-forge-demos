@@ -42,7 +42,7 @@ ORDER BY region;
 
 
 -- ============================================================================
--- LEARN: Partition-Scoped DELETE (Version 2 / Snapshot 2)
+-- LEARN: Partition-Scoped DELETE (Version 4 / Snapshot 4)
 -- ============================================================================
 -- The us-west warehouse has completed its cancellation review. Remove all
 -- cancelled orders from that warehouse only. Because the WHERE clause
@@ -73,18 +73,20 @@ ORDER BY region;
 -- ============================================================================
 -- Query 3: Time Travel — Compare Before and After
 -- ============================================================================
--- VERSION AS OF 1 is the baseline (after INSERT). The current version
--- reflects the delete. Subtracting confirms exactly 3 rows removed.
+-- VERSION AS OF 3 is the baseline (after all three INSERTs — version 0 is
+-- the empty CREATE TABLE, versions 1–3 are the per-region INSERTs). The
+-- current version reflects the delete. Subtracting confirms exactly 3 rows
+-- removed.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE removed = 3
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 1) -
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 3) -
     (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders) AS removed;
 
 
 -- ============================================================================
--- LEARN: Cross-Partition DELETE (Version 3 / Snapshot 3)
+-- LEARN: Cross-Partition DELETE (Version 5 / Snapshot 5)
 -- ============================================================================
 -- Company policy: purge all returned-status orders across every warehouse.
 -- This DELETE spans all three partitions because the WHERE clause does NOT
@@ -127,7 +129,7 @@ WHERE status = 'returned';
 
 
 -- ============================================================================
--- LEARN: Conditional Partition DELETE (Version 4 / Snapshot 4)
+-- LEARN: Conditional Partition DELETE (Version 6 / Snapshot 6)
 -- ============================================================================
 -- The us-east warehouse is clearing out low-value pending orders where the
 -- line total (quantity * unit_price) is below $500. This combines the
@@ -181,22 +183,24 @@ WHERE region = 'us-east' AND status = 'pending';
 -- ============================================================================
 -- EXPLORE: Version History — Row Counts Over Time
 -- ============================================================================
--- Walk through every version to see the progressive deletions:
---   V1: 45 (baseline after INSERT)
---   V2: 42 (3 cancelled removed from us-west)
---   V3: 36 (6 returned removed across all regions)
---   V4: 33 (3 low-value pending removed from us-east)
+-- Walk through every version to see the progressive deletions.
+-- Versions 0–3 are setup (CREATE TABLE + 3 INSERTs). The queries
+-- phase creates versions 4, 5, 6:
+--   V3: 45 (baseline — all three INSERTs complete)
+--   V4: 42 (3 cancelled removed from us-west)
+--   V5: 36 (6 returned removed across all regions)
+--   V6: 33 (3 low-value pending removed from us-east)
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE v1_rows = 45
-ASSERT VALUE v2_rows = 42
-ASSERT VALUE v3_rows = 36
-ASSERT VALUE v4_rows = 33
+ASSERT VALUE v3_rows = 45
+ASSERT VALUE v4_rows = 42
+ASSERT VALUE v5_rows = 36
+ASSERT VALUE v6_rows = 33
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 1) AS v1_rows,
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 2) AS v2_rows,
     (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 3) AS v3_rows,
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders) AS v4_rows;
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 4) AS v4_rows,
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 5) AS v5_rows,
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders) AS v6_rows;
 
 
 -- ============================================================================
