@@ -141,11 +141,7 @@ WHERE region = 'eu-west' AND amount < 120;
 -- ============================================================================
 -- B6: Sales — Verify rows after delete
 -- ============================================================================
--- NOTE: DELETE with compound WHERE (partition col + non-partition col) on
--- column-mapped partitioned tables may not work. Expecting 12 if delete
--- fails silently, 11 if it works correctly.
-
-ASSERT ROW_COUNT = 12
+ASSERT ROW_COUNT = 11
 SELECT * FROM {{zone_name}}.iceberg_verify.sales ORDER BY id;
 
 
@@ -163,8 +159,8 @@ INSERT INTO {{zone_name}}.iceberg_verify.sales VALUES
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE cnt = 14
-ASSERT VALUE total_amount = 2579.50
+ASSERT VALUE cnt = 13
+ASSERT VALUE total_amount = 2469.50
 SELECT COUNT(*) AS cnt, ROUND(SUM(amount), 2) AS total_amount
 FROM {{zone_name}}.iceberg_verify.sales;
 
@@ -304,7 +300,7 @@ FROM {{zone_name}}.iceberg_verify.v3_table;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE products_count = 10
-ASSERT VALUE sales_count = 14
+ASSERT VALUE sales_count = 13
 ASSERT VALUE evolve_count = 8
 ASSERT VALUE v3_count = 3
 SELECT
