@@ -38,6 +38,11 @@ GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.warehouse_orders TO USER {{curren
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.warehouse_orders;
 
+ALTER TABLE {{zone_name}}.delta_demos.warehouse_orders SET TBLPROPERTIES (
+  'delta.universalFormat.enabledFormats' = 'iceberg',
+  'delta.universalFormat.icebergVersion' = '3'
+);
+
 -- Region 1: us-west (15 orders)
 INSERT INTO {{zone_name}}.delta_demos.warehouse_orders VALUES
     (1,  'ORD-1001', 'us-west', 'Laptop Pro',          'electronics', 2,  899.99, 'fulfilled', '2024-08-01'),

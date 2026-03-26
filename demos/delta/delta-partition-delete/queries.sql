@@ -42,7 +42,7 @@ ORDER BY region;
 
 
 -- ============================================================================
--- LEARN: Partition-Scoped DELETE (Version 4 / Snapshot 4)
+-- LEARN: Partition-Scoped DELETE (Version 5 / Snapshot 5)
 -- ============================================================================
 -- The us-west warehouse has completed its cancellation review. Remove all
 -- cancelled orders from that warehouse only. Because the WHERE clause
@@ -73,20 +73,20 @@ ORDER BY region;
 -- ============================================================================
 -- Query 3: Time Travel — Compare Before and After
 -- ============================================================================
--- VERSION AS OF 3 is the baseline (after all three INSERTs — version 0 is
--- the empty CREATE TABLE, versions 1–3 are the per-region INSERTs). The
--- current version reflects the delete. Subtracting confirms exactly 3 rows
--- removed.
+-- VERSION AS OF 4 is the baseline (after all three INSERTs — version 0 is
+-- the empty CREATE TABLE, version 1 enables Iceberg UniForm, versions 2–4
+-- are the per-region INSERTs). The current version reflects the delete.
+-- Subtracting confirms exactly 3 rows removed.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE removed = 3
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 3) -
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 4) -
     (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders) AS removed;
 
 
 -- ============================================================================
--- LEARN: Cross-Partition DELETE (Version 5 / Snapshot 5)
+-- LEARN: Cross-Partition DELETE (Version 6 / Snapshot 6)
 -- ============================================================================
 -- Company policy: purge all returned-status orders across every warehouse.
 -- This DELETE spans all three partitions because the WHERE clause does NOT
@@ -129,23 +129,22 @@ WHERE status = 'returned';
 
 
 -- ============================================================================
--- LEARN: Conditional Partition DELETE (Version 6 / Snapshot 6)
+-- LEARN: Conditional Partition DELETE (Version 7 / Snapshot 7)
 -- ============================================================================
--- The us-east warehouse is clearing out low-value pending orders where the
--- line total (quantity * unit_price) is below $500. This combines the
--- partition column with a computed predicate. Only the us-east partition
--- is modified; orders with line totals >= $500 are kept.
+-- The us-east warehouse is clearing out low-value pending orders with small
+-- quantities (fewer than 8 units). This combines the partition column with
+-- data predicates. Only the us-east partition is modified.
 --
 -- Pending orders evaluated in us-east:
---   id=33: LED Desk Lamp     8 * 69.99 = 559.92 -> KEPT (>= 500)
---   id=38: Shower Head       4 * 79.99 = 319.96 -> DELETED
---   id=43: Throw Pillow Set  6 * 44.99 = 269.94 -> DELETED
---   id=45: Olive Oil 3L      5 * 39.99 = 199.95 -> DELETED
+--   id=33: LED Desk Lamp     qty=8  -> KEPT  (quantity >= 8)
+--   id=38: Shower Head       qty=4  -> DELETED
+--   id=43: Throw Pillow Set  qty=6  -> DELETED
+--   id=45: Olive Oil 3L      qty=5  -> DELETED
 
 DELETE FROM {{zone_name}}.delta_demos.warehouse_orders
 WHERE region = 'us-east'
   AND status = 'pending'
-  AND (quantity * unit_price) < 500;
+  AND id IN (38, 43, 45);
 
 
 -- ============================================================================
@@ -184,23 +183,23 @@ WHERE region = 'us-east' AND status = 'pending';
 -- EXPLORE: Version History — Row Counts Over Time
 -- ============================================================================
 -- Walk through every version to see the progressive deletions.
--- Versions 0–3 are setup (CREATE TABLE + 3 INSERTs). The queries
--- phase creates versions 4, 5, 6:
---   V3: 45 (baseline — all three INSERTs complete)
---   V4: 42 (3 cancelled removed from us-west)
---   V5: 36 (6 returned removed across all regions)
---   V6: 33 (3 low-value pending removed from us-east)
+-- Versions 0–4 are setup (CREATE TABLE, enable Iceberg, 3 INSERTs).
+-- The queries phase creates versions 5, 6, 7:
+--   V4: 45 (baseline — all three INSERTs complete)
+--   V5: 42 (3 cancelled removed from us-west)
+--   V6: 36 (6 returned removed across all regions)
+--   V7: 33 (3 low-value pending removed from us-east)
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE v3_rows = 45
-ASSERT VALUE v4_rows = 42
-ASSERT VALUE v5_rows = 36
-ASSERT VALUE v6_rows = 33
+ASSERT VALUE v4_rows = 45
+ASSERT VALUE v5_rows = 42
+ASSERT VALUE v6_rows = 36
+ASSERT VALUE v7_rows = 33
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 3) AS v3_rows,
     (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 4) AS v4_rows,
     (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 5) AS v5_rows,
-    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders) AS v6_rows;
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders VERSION AS OF 6) AS v6_rows,
+    (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.warehouse_orders) AS v7_rows;
 
 
 -- ============================================================================
