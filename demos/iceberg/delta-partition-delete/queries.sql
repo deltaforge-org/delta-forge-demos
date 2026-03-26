@@ -250,3 +250,85 @@ FROM {{zone_name}}.delta_demos.warehouse_orders WHERE status = 'fulfilled';
 ASSERT VALUE total_value = 19696.33
 SELECT ROUND(SUM(quantity * unit_price), 2) AS total_value
 FROM {{zone_name}}.delta_demos.warehouse_orders;
+
+
+-- ============================================================================
+-- ICEBERG READ-BACK VERIFICATION
+-- ============================================================================
+-- Register the same physical location as an external Iceberg table and
+-- query it through the Iceberg metadata chain. This proves the UniForm
+-- shadow metadata correctly represents the final state after all three
+-- partition-scoped DELETE operations.
+--
+-- NOTE: Most Iceberg tools (PyIceberg, Spark, Trino, DuckDB) have issues
+-- resolving Windows-style paths (e.g. B:\data\...). If running on Windows,
+-- use forward-slash paths or UNC paths for the data_path variable.
+-- ============================================================================
+
+CREATE EXTERNAL TABLE IF NOT EXISTS warehouse_orders_iceberg
+USING ICEBERG
+LOCATION '{{data_path}}/warehouse_orders';
+
+GRANT ADMIN ON TABLE warehouse_orders_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE warehouse_orders_iceberg;
+
+
+-- ============================================================================
+-- Iceberg Verify 1: Row Count — 33 Orders After All Deletes
+-- ============================================================================
+
+ASSERT ROW_COUNT = 33
+SELECT * FROM warehouse_orders_iceberg ORDER BY id;
+
+
+-- ============================================================================
+-- Iceberg Verify 2: Per-Region Counts Match Delta Final State
+-- ============================================================================
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE order_count = 10 WHERE region = 'us-west'
+ASSERT VALUE order_count = 13 WHERE region = 'us-central'
+ASSERT VALUE order_count = 10 WHERE region = 'us-east'
+SELECT
+    region,
+    COUNT(*) AS order_count
+FROM warehouse_orders_iceberg
+GROUP BY region
+ORDER BY region;
+
+
+-- ============================================================================
+-- Iceberg Verify 3: Deleted Rows Are Absent
+-- ============================================================================
+
+ASSERT VALUE cnt = 0
+SELECT COUNT(*) AS cnt
+FROM warehouse_orders_iceberg
+WHERE id IN (4, 8, 13, 6, 10, 21, 24, 36, 39, 38, 43, 45);
+
+
+-- ============================================================================
+-- Iceberg Verify 4: Status Breakdown — No Returned Orders
+-- ============================================================================
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE cnt = 18 WHERE status = 'fulfilled'
+ASSERT VALUE cnt = 9 WHERE status = 'pending'
+ASSERT VALUE cnt = 6 WHERE status = 'cancelled'
+SELECT
+    status,
+    COUNT(*) AS cnt
+FROM warehouse_orders_iceberg
+GROUP BY status
+ORDER BY status;
+
+
+-- ============================================================================
+-- Iceberg Verify 5: Grand Total Value — Must Match Delta
+-- ============================================================================
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE total_value = 19696.33
+SELECT
+    ROUND(SUM(quantity * unit_price), 2) AS total_value
+FROM warehouse_orders_iceberg;

@@ -13,8 +13,8 @@ purge of cancelled orders, a cross-partition sweep of all returned orders, \
 and a conditional delete using computed line-total thresholds within one \
 partition. Time-travel queries confirm each mutation's effect.
 """
-categories = ["delta-table"]
-tags = ["delta-table", "intermediate", "partitions", "delete", "pruning", "time-travel"]
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "delta-table", "intermediate", "partitions", "delete", "pruning", "time-travel", "uniform"]
 difficulty = "intermediate"
 estimated_time_minutes = 8
 
