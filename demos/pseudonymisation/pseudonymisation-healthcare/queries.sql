@@ -38,10 +38,11 @@
 --   - All 7 transform types represented
 --   - Wildcard patterns: address_* and *_name on FHIR table
 --
--- Expected: 22 rows, all enabled = true
+-- Expected: 22 rules total (6 HL7 + 8 FHIR + 8 EDI), all enabled = true
+-- Use per-table SHOW to avoid counting rules from other demos
 
-ASSERT ROW_COUNT = 22
-SHOW PSEUDONYMISATION RULES;
+ASSERT ROW_COUNT = 6
+SHOW PSEUDONYMISATION RULES FOR {{zone_name}}.pseudonymisation.hl7_patients;
 
 
 -- ============================================================================
