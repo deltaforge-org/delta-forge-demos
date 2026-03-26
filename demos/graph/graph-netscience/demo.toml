@@ -34,6 +34,12 @@ format = "csv"
 description = "Edge list: 5,484 rows (2,742 undirected edges, both directions) with non-uniform weights"
 size_bytes = 82433
 
+[[demo.data_files]]
+path = "data/vertices.csv"
+format = "csv"
+description = "Vertex list: 1,461 authors with name and research category"
+size_bytes = 44699
+
 [[demo.target_objects]]
 type = "graph"
 name = "netscience_collab"
