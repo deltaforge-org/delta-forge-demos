@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dpd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f87171"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <!-- Three partition columns -->
+  <rect x="6" y="12" width="19" height="50" rx="3" stroke="url(#dpd)" stroke-width="1.5" fill="url(#dpd)" fill-opacity=".12"/>
+  <rect x="30" y="12" width="19" height="50" rx="3" stroke="url(#dpd)" stroke-width="1.5" fill="url(#dpd)" fill-opacity=".12"/>
+  <rect x="54" y="12" width="19" height="50" rx="3" stroke="url(#dpd)" stroke-width="1.5" fill="url(#dpd)" fill-opacity=".12"/>
+  <!-- Data rows in partition 1 (us-west) — top row deleted -->
+  <rect x="9" y="16" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".25"/>
+  <line x1="8" y1="18" x2="23" y2="18" stroke="url(#dpd)" stroke-width="1.2" opacity=".8"/>
+  <rect x="9" y="23" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <rect x="9" y="30" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <rect x="9" y="37" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <!-- Data rows in partition 2 (us-central) — middle row deleted -->
+  <rect x="33" y="16" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <rect x="33" y="23" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <rect x="33" y="30" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".25"/>
+  <line x1="32" y1="32" x2="47" y2="32" stroke="url(#dpd)" stroke-width="1.2" opacity=".8"/>
+  <rect x="33" y="37" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <!-- Data rows in partition 3 (us-east) — bottom two deleted -->
+  <rect x="57" y="16" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <rect x="57" y="23" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".5"/>
+  <rect x="57" y="30" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".25"/>
+  <line x1="56" y1="32" x2="71" y2="32" stroke="url(#dpd)" stroke-width="1.2" opacity=".8"/>
+  <rect x="57" y="37" width="13" height="4" rx="1" fill="url(#dpd)" opacity=".25"/>
+  <line x1="56" y1="39" x2="71" y2="39" stroke="url(#dpd)" stroke-width="1.2" opacity=".8"/>
+  <!-- Region labels -->
+  <text x="15.5" y="53" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dpd)" opacity=".6">west</text>
+  <text x="39.5" y="53" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dpd)" opacity=".6">central</text>
+  <text x="63.5" y="53" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dpd)" opacity=".6">east</text>
+  <!-- Label -->
+  <text x="40" y="72" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#dpd)" opacity=".7">DELETE</text>
+</svg>

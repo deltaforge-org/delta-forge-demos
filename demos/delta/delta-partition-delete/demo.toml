@@ -1,0 +1,27 @@
+[demo]
+id = "delta-partition-delete"
+name = "Delta Partition-Scoped DELETE"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+E-commerce fulfillment teams routinely purge cancelled, returned, and \
+low-value orders from their warehouse tables. When the table is partitioned \
+by warehouse region, Delta can scope each DELETE to the affected partitions \
+only, leaving untouched partitions completely unmodified. This demo walks \
+through three progressively targeted DELETE patterns: a single-partition \
+purge of cancelled orders, a cross-partition sweep of all returned orders, \
+and a conditional delete using computed line-total thresholds within one \
+partition. Time-travel queries confirm each mutation's effect.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "partitions", "delete", "pruning", "time-travel"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.warehouse_orders"

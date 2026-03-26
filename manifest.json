@@ -1866,6 +1866,37 @@
       ]
     },
     {
+      "id": "delta-partition-delete",
+      "path": "demos/delta/delta-partition-delete",
+      "iconPath": "icons/delta-partition-delete.svg",
+      "name": "Delta Partition-Scoped DELETE",
+      "summary": "Demonstrates three DELETE patterns on a partitioned Delta table (45 rows, 3 warehouse regions): partition-scoped purge of cancelled orders, cross-partition sweep of returned orders, and conditional delete using computed line-total thresholds. Time-travel queries confirm each mutation. Pure Delta format.",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "partitions",
+        "delete",
+        "pruning",
+        "time-travel"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.warehouse_orders"
+        }
+      ]
+    },
+    {
       "id": "delta-partition-merge",
       "path": "demos/delta/delta-partition-merge",
       "iconPath": "icons/delta-partition-merge.svg",
