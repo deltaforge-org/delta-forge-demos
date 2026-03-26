@@ -192,20 +192,20 @@ LIMIT 25;
 -- ============================================================================
 -- 10. IDENTITY CHECK — Verify specific employees by ID
 -- ============================================================================
--- The generation is deterministic: employee #1 is Bob_1 in Marketing/SF,
--- employee #1000 is Alice_1000, a VP in Engineering/Seattle,
--- employee #500000 is Alice_500000, a VP in Engineering/Tokyo.
+-- The generation is deterministic: employee #1 is Marcus_1 in Marketing/SF,
+-- employee #1000 is Priya_1000, a VP in Engineering/Seattle,
+-- employee #500000 is Priya_500000, a VP in Engineering/Tokyo.
 -- This proves the Cypher engine correctly resolves vertex properties.
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE name = 'Bob_1' WHERE id = 1
+ASSERT VALUE name = 'Marcus_1' WHERE id = 1
 ASSERT VALUE department = 'Marketing' WHERE id = 1
 ASSERT VALUE city = 'SF' WHERE id = 1
-ASSERT VALUE name = 'Alice_1000' WHERE id = 1000
+ASSERT VALUE name = 'Priya_1000' WHERE id = 1000
 ASSERT VALUE title = 'VP' WHERE id = 1000
 ASSERT VALUE department = 'Engineering' WHERE id = 1000
 ASSERT VALUE city = 'Seattle' WHERE id = 1000
-ASSERT VALUE name = 'Alice_500000' WHERE id = 500000
+ASSERT VALUE name = 'Priya_500000' WHERE id = 500000
 ASSERT VALUE title = 'VP' WHERE id = 500000
 ASSERT VALUE city = 'Tokyo' WHERE id = 500000
 USE {{zone_name}}.graph.stress_test_network
@@ -430,8 +430,8 @@ LIMIT 25;
 -- ============================================================================
 -- 24. SHORTEST PATH — Route across the enterprise
 -- ============================================================================
--- If employee #1 (Bob_1, Marketing, SF) needs to reach employee #500000
--- (Alice_500000, VP, Engineering, Tokyo), what's the fastest chain?
+-- If employee #1 (Marcus_1, Marketing, SF) needs to reach employee #500000
+-- (Priya_500000, VP, Engineering, Tokyo), what's the fastest chain?
 -- Tests Dijkstra at 1M scale with weighted edges.
 
 ASSERT ROW_COUNT >= 2

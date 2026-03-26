@@ -22,9 +22,9 @@
 -- any JSON extraction overhead.
 
 ASSERT ROW_COUNT = 50
-ASSERT VALUE city = 'SF' WHERE name = 'Alice_1'
-ASSERT VALUE dept = 'Marketing' WHERE name = 'Alice_1'
-ASSERT VALUE age = 43 WHERE name = 'Alice_1'
+ASSERT VALUE city = 'SF' WHERE name = 'Priya_1'
+ASSERT VALUE dept = 'Marketing' WHERE name = 'Priya_1'
+ASSERT VALUE age = 43 WHERE name = 'Priya_1'
 USE {{zone_name}}.graph.flattened_demo
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.title AS title,

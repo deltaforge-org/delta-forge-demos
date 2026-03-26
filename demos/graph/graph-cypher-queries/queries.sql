@@ -131,14 +131,14 @@ RETURN a, r, b;
 
 
 -- ============================================================================
--- 9. ALICE'S NETWORK — One person's direct connections
+-- 9. PRIYA'S NETWORK — One person's direct connections
 -- ============================================================================
--- Inline property filtering: see everyone Alice_1 connects to directly,
+-- Inline property filtering: see everyone Priya_1 connects to directly,
 -- what type of relationship each is, and how strong the bond is.
 
 ASSERT ROW_COUNT = 4
 USE {{zone_name}}.graph.cypher_demo
-MATCH (a {name: 'Alice_1'})-[r]->(b)
+MATCH (a {name: 'Priya_1'})-[r]->(b)
 RETURN b.name AS contact, b.department AS dept,
        r.relationship_type AS rel_type, r.weight AS strength
 ORDER BY r.weight DESC;
@@ -150,31 +150,31 @@ ORDER BY r.weight DESC;
 
 
 -- ============================================================================
--- 10. FRIENDS OF FRIENDS — 2-hop information flow from Alice
+-- 10. FRIENDS OF FRIENDS — 2-hop information flow from Priya
 -- ============================================================================
--- If Alice shares important news, it reaches her direct contacts first,
+-- If Priya shares important news, it reaches her direct contacts first,
 -- then spreads to their contacts. This shows the intermediate relay
 -- person at each step.
 
 ASSERT ROW_COUNT = 21
 USE {{zone_name}}.graph.cypher_demo
 MATCH (a)-[]->(b)-[]->(c)
-WHERE a.name = 'Alice_1' AND a <> c
+WHERE a.name = 'Priya_1' AND a <> c
 RETURN a.name AS source, b.name AS relay, c.name AS reached,
        b.department AS relay_dept, c.department AS reached_dept;
 
 
 -- ============================================================================
--- 11. REACHABILITY — Who can Alice reach within 3 hops?
+-- 11. REACHABILITY — Who can Priya reach within 3 hops?
 -- ============================================================================
 -- Variable-length paths [*1..3] show everyone reachable within 3 steps.
--- In a well-connected 50-person startup, Alice should be able to reach
+-- In a well-connected 50-person startup, Priya should be able to reach
 -- most people within 3 hops.
 
 ASSERT ROW_COUNT >= 1
 USE {{zone_name}}.graph.cypher_demo
 MATCH (a)-[*1..3]->(b)
-WHERE a.name = 'Alice_1' AND a <> b
+WHERE a.name = 'Priya_1' AND a <> b
 RETURN DISTINCT b.name AS reachable, b.department AS dept
 ORDER BY b.name;
 
@@ -327,7 +327,7 @@ ORDER BY size DESC;
 -- ============================================================================
 -- 21. SHORTEST PATH — Fastest route between two distant employees
 -- ============================================================================
--- If Alice needs to get an urgent message to employee #42 (probably in
+-- If Priya needs to get an urgent message to employee #42 (probably in
 -- a different department), what's the fastest chain of introductions?
 
 ASSERT ROW_COUNT >= 2
@@ -339,9 +339,9 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 22. ALL DISTANCES — How far is Alice from everyone?
+-- 22. ALL DISTANCES — How far is Priya from everyone?
 -- ============================================================================
--- Maps Alice's distance to every other employee. Nearby people (1-2 hops)
+-- Maps Priya's distance to every other employee. Nearby people (1-2 hops)
 -- are in her inner circle; distant people (3+ hops) may never hear her
 -- ideas unless bridges carry them.
 
@@ -356,7 +356,7 @@ ORDER BY distance;
 -- ============================================================================
 -- 23. BFS — How does news spread level by level?
 -- ============================================================================
--- Breadth-first search from Alice shows how information radiates outward:
+-- Breadth-first search from Priya shows how information radiates outward:
 -- first her direct contacts, then their contacts, and so on. In a
 -- well-connected startup, everyone should be reachable within 3-4 levels.
 
@@ -369,10 +369,10 @@ ORDER BY depth;
 
 
 -- ============================================================================
--- 24. DFS — Deep exploration from Alice
+-- 24. DFS — Deep exploration from Priya
 -- ============================================================================
 -- Depth-first search explores as deep as possible before backtracking.
--- Discovery and finish times reveal the tree structure of how Alice's
+-- Discovery and finish times reveal the tree structure of how Priya's
 -- influence spreads through chains of contacts.
 
 ASSERT ROW_COUNT = 50
@@ -404,10 +404,10 @@ ORDER BY weight;
 
 
 -- ============================================================================
--- 26. NEAREST NEIGHBORS — Who is most like Alice?
+-- 26. NEAREST NEIGHBORS — Who is most like Priya?
 -- ============================================================================
 -- KNN finds the K structurally similar people based on shared neighbors.
--- Useful for succession planning: if Alice leaves, who could fill her
+-- Useful for succession planning: if Priya leaves, who could fill her
 -- network role?
 
 ASSERT ROW_COUNT = 5

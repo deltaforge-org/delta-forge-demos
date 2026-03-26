@@ -101,20 +101,20 @@ SELECT
     id,
     -- First name from pool of 40 + ID suffix for uniqueness
     CASE (id % 40)
-        WHEN 0  THEN 'Alice'    WHEN 1  THEN 'Bob'      WHEN 2  THEN 'Carol'
-        WHEN 3  THEN 'Dave'     WHEN 4  THEN 'Eve'      WHEN 5  THEN 'Frank'
-        WHEN 6  THEN 'Grace'    WHEN 7  THEN 'Hank'     WHEN 8  THEN 'Iris'
-        WHEN 9  THEN 'Jack'     WHEN 10 THEN 'Kate'     WHEN 11 THEN 'Leo'
-        WHEN 12 THEN 'Mia'     WHEN 13 THEN 'Noah'     WHEN 14 THEN 'Olivia'
-        WHEN 15 THEN 'Paul'    WHEN 16 THEN 'Quinn'    WHEN 17 THEN 'Rita'
-        WHEN 18 THEN 'Sam'     WHEN 19 THEN 'Tina'     WHEN 20 THEN 'Uma'
-        WHEN 21 THEN 'Victor'  WHEN 22 THEN 'Wendy'    WHEN 23 THEN 'Xander'
-        WHEN 24 THEN 'Yara'    WHEN 25 THEN 'Zane'     WHEN 26 THEN 'Aria'
-        WHEN 27 THEN 'Blake'   WHEN 28 THEN 'Cleo'     WHEN 29 THEN 'Dean'
-        WHEN 30 THEN 'Elise'   WHEN 31 THEN 'Finn'     WHEN 32 THEN 'Gina'
-        WHEN 33 THEN 'Hugo'    WHEN 34 THEN 'Ivy'      WHEN 35 THEN 'Jay'
-        WHEN 36 THEN 'Kira'    WHEN 37 THEN 'Liam'     WHEN 38 THEN 'Nina'
-        WHEN 39 THEN 'Oscar'
+        WHEN 0  THEN 'Priya'    WHEN 1  THEN 'Marcus'   WHEN 2  THEN 'Sofia'
+        WHEN 3  THEN 'James'    WHEN 4  THEN 'Wei'      WHEN 5  THEN 'Elena'
+        WHEN 6  THEN 'Raj'      WHEN 7  THEN 'Kenji'    WHEN 8  THEN 'Amara'
+        WHEN 9  THEN 'Luca'     WHEN 10 THEN 'Fatima'   WHEN 11 THEN 'Carlos'
+        WHEN 12 THEN 'Yuki'     WHEN 13 THEN 'Nadia'    WHEN 14 THEN 'Omar'
+        WHEN 15 THEN 'Ingrid'   WHEN 16 THEN 'Dmitri'   WHEN 17 THEN 'Aisha'
+        WHEN 18 THEN 'Tomas'    WHEN 19 THEN 'Mei'      WHEN 20 THEN 'Henrik'
+        WHEN 21 THEN 'Zara'     WHEN 22 THEN 'Mateo'    WHEN 23 THEN 'Suki'
+        WHEN 24 THEN 'Andre'    WHEN 25 THEN 'Leila'    WHEN 26 THEN 'Chen'
+        WHEN 27 THEN 'Rosa'     WHEN 28 THEN 'Vikram'   WHEN 29 THEN 'Astrid'
+        WHEN 30 THEN 'Felix'    WHEN 31 THEN 'Naomi'    WHEN 32 THEN 'Pavel'
+        WHEN 33 THEN 'Lucia'    WHEN 34 THEN 'Tariq'    WHEN 35 THEN 'Elin'
+        WHEN 36 THEN 'Kofi'     WHEN 37 THEN 'Maren'    WHEN 38 THEN 'Dante'
+        WHEN 39 THEN 'Isla'
     END || '_' || CAST(id AS VARCHAR) AS name,
     -- Age: 22–60 range, deterministic via golden ratio
     22 + CAST(((CAST(id AS DOUBLE) * 0.618033988749895) % 1.0) * 38.0 AS INT) AS age,

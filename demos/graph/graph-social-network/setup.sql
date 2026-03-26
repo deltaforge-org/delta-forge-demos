@@ -79,13 +79,13 @@ INSERT INTO {{zone_name}}.graph.employees
 SELECT
     id,
     CASE (id % 20)
-        WHEN 0  THEN 'Alice'   WHEN 1  THEN 'Bob'     WHEN 2  THEN 'Carol'
-        WHEN 3  THEN 'Dave'    WHEN 4  THEN 'Eve'     WHEN 5  THEN 'Frank'
-        WHEN 6  THEN 'Grace'   WHEN 7  THEN 'Hank'    WHEN 8  THEN 'Iris'
-        WHEN 9  THEN 'Jack'    WHEN 10 THEN 'Kate'    WHEN 11 THEN 'Leo'
-        WHEN 12 THEN 'Mia'    WHEN 13 THEN 'Noah'    WHEN 14 THEN 'Olivia'
-        WHEN 15 THEN 'Paul'   WHEN 16 THEN 'Quinn'   WHEN 17 THEN 'Rita'
-        WHEN 18 THEN 'Sam'    WHEN 19 THEN 'Tina'
+        WHEN 0  THEN 'Priya'    WHEN 1  THEN 'Marcus'   WHEN 2  THEN 'Sofia'
+        WHEN 3  THEN 'James'    WHEN 4  THEN 'Wei'      WHEN 5  THEN 'Elena'
+        WHEN 6  THEN 'Raj'      WHEN 7  THEN 'Kenji'    WHEN 8  THEN 'Amara'
+        WHEN 9  THEN 'Luca'     WHEN 10 THEN 'Fatima'   WHEN 11 THEN 'Carlos'
+        WHEN 12 THEN 'Yuki'     WHEN 13 THEN 'Nadia'    WHEN 14 THEN 'Omar'
+        WHEN 15 THEN 'Ingrid'   WHEN 16 THEN 'Dmitri'   WHEN 17 THEN 'Aisha'
+        WHEN 18 THEN 'Tomas'    WHEN 19 THEN 'Mei'
     END || '_' || CAST(id AS VARCHAR) AS name,
     -- Age: 23–55 range, deterministic via golden ratio
     23 + CAST(((CAST(id AS DOUBLE) * 0.618033988749895) % 1.0) * 32.0 AS INT) AS age,

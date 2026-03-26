@@ -22,9 +22,9 @@
 -- JSON extraction automatically.
 
 ASSERT ROW_COUNT = 50
-ASSERT VALUE city = 'SF' WHERE name = 'Alice_1'
-ASSERT VALUE dept = 'Marketing' WHERE name = 'Alice_1'
-ASSERT VALUE age = 43 WHERE name = 'Alice_1'
+ASSERT VALUE city = 'SF' WHERE name = 'Priya_1'
+ASSERT VALUE dept = 'Marketing' WHERE name = 'Priya_1'
+ASSERT VALUE age = 43 WHERE name = 'Priya_1'
 USE {{zone_name}}.graph.json_demo
 MATCH (n)
 RETURN n.name AS name, n.age AS age, n.department AS dept,
@@ -55,8 +55,8 @@ ORDER BY headcount DESC;
 -- query syntax is identical.
 
 ASSERT ROW_COUNT = 10
-ASSERT VALUE title = 'Director' WHERE name = 'Jack_10'
-ASSERT VALUE city = 'Chicago' WHERE name = 'Jack_10'
+ASSERT VALUE title = 'Director' WHERE name = 'Luca_10'
+ASSERT VALUE city = 'Chicago' WHERE name = 'Luca_10'
 USE {{zone_name}}.graph.json_demo
 MATCH (n)
 WHERE n.department = 'Engineering'
@@ -84,7 +84,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
-ASSERT VALUE bond_strength = 0.99 WHERE mentor = 'Eve_15'
+ASSERT VALUE bond_strength = 0.99 WHERE mentor = 'Wei_15'
 USE {{zone_name}}.graph.json_demo
 MATCH (mentor)-[r]->(mentee)
 WHERE r.relationship_type = 'mentor'
@@ -110,7 +110,7 @@ RETURN mentor, r, mentee;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 53
-ASSERT VALUE strength = 1.0 WHERE person_a = 'Jack_30'
+ASSERT VALUE strength = 1.0 WHERE person_a = 'Luca_30'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[r]->(b)
 WHERE r.weight > 0.8
@@ -149,7 +149,7 @@ ORDER BY connections DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 2
-ASSERT VALUE person_a = 'Eve_15' WHERE a_to_b = 'mentor'
+ASSERT VALUE person_a = 'Wei_15' WHERE a_to_b = 'mentor'
 ASSERT VALUE a_to_b_weight = 0.99 WHERE a_to_b = 'mentor'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[r1]->(b)-[r2]->(a)
@@ -170,7 +170,7 @@ ORDER BY r1.weight + r2.weight DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 21
-ASSERT VALUE relay_dept = 'Engineering' WHERE relay = 'Eve_5'
+ASSERT VALUE relay_dept = 'Engineering' WHERE relay = 'Wei_5'
 USE {{zone_name}}.graph.json_demo
 MATCH (a)-[]->(b)-[]->(c)
 WHERE a.id = 1 AND a <> c

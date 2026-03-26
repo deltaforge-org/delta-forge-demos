@@ -47,10 +47,10 @@ INSERT INTO {{zone_name}}.graph.persons_hybrid
 SELECT
     id,
     CASE (id % 10)
-        WHEN 1 THEN 'Alice'  WHEN 2 THEN 'Bob'    WHEN 3 THEN 'Carol'
-        WHEN 4 THEN 'Dave'   WHEN 5 THEN 'Eve'    WHEN 6 THEN 'Frank'
-        WHEN 7 THEN 'Grace'  WHEN 8 THEN 'Hank'   WHEN 9 THEN 'Iris'
-        WHEN 0 THEN 'Jack'
+        WHEN 1 THEN 'Priya'  WHEN 2 THEN 'Marcus'  WHEN 3 THEN 'Sofia'
+        WHEN 4 THEN 'James'  WHEN 5 THEN 'Wei'     WHEN 6 THEN 'Elena'
+        WHEN 7 THEN 'Raj'    WHEN 8 THEN 'Kenji'   WHEN 9 THEN 'Amara'
+        WHEN 0 THEN 'Luca'
     END || '_' || CAST(id AS VARCHAR) AS name,
     25 + CAST(((CAST(id AS DOUBLE) * 0.618033988749895) % 1.0) * 30.0 AS INT) AS age,
     -- label = department (for graph definition)

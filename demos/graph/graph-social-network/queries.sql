@@ -36,8 +36,8 @@
 -- city, and seniority level give a complete picture.
 
 ASSERT ROW_COUNT = 100
-ASSERT VALUE dept = 'Marketing' WHERE name = 'Bob_1'
-ASSERT VALUE city = 'SF' WHERE name = 'Bob_1'
+ASSERT VALUE dept = 'Marketing' WHERE name = 'Marcus_1'
+ASSERT VALUE city = 'SF' WHERE name = 'Marcus_1'
 USE {{zone_name}}.graph.social_network
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.title AS title,
@@ -92,7 +92,7 @@ ORDER BY count DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 12
-ASSERT VALUE title = 'Director' WHERE name = 'Alice_40'
+ASSERT VALUE title = 'Director' WHERE name = 'Priya_40'
 USE {{zone_name}}.graph.social_network
 MATCH (n)
 WHERE n.department = 'Engineering'

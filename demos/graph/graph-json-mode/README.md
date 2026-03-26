@@ -13,14 +13,14 @@ adding new properties without ALTER TABLE and supports heterogeneous vertex
 types in a single table.
 
 ```
-Alice(30,Engineering,NYC) -----> Bob(25,Marketing,LA)
+Priya(30,Engineering,NYC) -----> Marcus(25,Marketing,LA)
   |   ^                            |
   |   |                            | friend
   |   |                            |
-  |   +--- Eve(32,Finance,NYC)     |
+  |   +--- Wei(32,Finance,NYC)     |
   |         ^                      |
   v         | colleague            v
-Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
+Sofia(35,HR,Chicago) ----------> James(28,Engineering,SF)
          manager
 ```
 
@@ -42,7 +42,7 @@ Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
 **Person props:**
 ```json
 {
-  "name": "Alice", "age": 30, "department": "Engineering",
+  "name": "Priya", "age": 30, "department": "Engineering",
   "city": "NYC", "skills": ["rust", "python"],
   "level": "senior", "active": true
 }
@@ -71,8 +71,8 @@ Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
 |-------|----------|--------|
 | Person count | 5 | Static insert |
 | Edge count | 6 | Static insert |
-| Alice name from JSON | "Alice" | json_get_str extraction |
-| Alice age from JSON | 30 | json_get_int extraction |
+| Priya name from JSON | "Priya" | json_get_str extraction |
+| Priya age from JSON | 30 | json_get_int extraction |
 | Skills is array | Starts with `[` | JSON array format |
 | Max weight from JSON | 1.0 | json_get_float extraction |
 

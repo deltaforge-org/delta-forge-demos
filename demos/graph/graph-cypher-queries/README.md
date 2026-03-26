@@ -11,14 +11,14 @@ graph traversal intuitive, and `CALL algo.*` procedures provide one-line
 access to PageRank, shortest paths, community detection, and more.
 
 ```text
-Alice(30,Engineering,NYC) -----> Bob(25,Marketing,LA)
+Priya(30,Engineering,NYC) -----> Marcus(25,Marketing,LA)
   |   ^                            |
   |   |                            | friend
   |   |                            |
-  |   +--- Eve(32,Finance,NYC)     |
+  |   +--- Wei(32,Finance,NYC)     |
   |         ^                      |
   v         | colleague            v
-Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
+Sofia(35,HR,Chicago) ----------> James(28,Engineering,SF)
          manager
 ```
 
@@ -41,7 +41,7 @@ Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
 |---------|---------|-------------|
 | All nodes | `MATCH (n) RETURN n` | Find every vertex |
 | Directed edges | `MATCH (a)-[r]->(b) RETURN a, b` | Follow directed relationships |
-| Property filter | `MATCH (a {name: 'Alice'})-[r]->(b)` | Filter by node properties |
+| Property filter | `MATCH (a {name: 'Priya'})-[r]->(b)` | Filter by node properties |
 | WHERE clause | `WHERE a.age > 28` | Conditional filtering |
 | Variable paths | `MATCH (a)-[*1..2]->(b)` | Paths of length 1 to 2 |
 
@@ -71,9 +71,9 @@ Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
 |-------|----------|--------|
 | Person count | 5 | Static insert |
 | Edge count | 6 | Static insert |
-| Alice out-degree | 2 (Bob, Carol) | Graph structure |
-| Carol in-degree | 2 (Alice, Bob) | Graph structure |
-| Triangle | Alice-Bob-Carol | Nodes 1,2,3 |
+| Priya out-degree | 2 (Marcus, Sofia) | Graph structure |
+| Sofia in-degree | 2 (Priya, Marcus) | Graph structure |
+| Triangle | Priya-Marcus-Sofia | Nodes 1,2,3 |
 | Connected components | 1 (all connected) | Cycle 1->3->4->5->1 |
 | Shortest path 1->5 | 1->3->4->5 (dist 2.4) | Dijkstra |
 

@@ -13,14 +13,14 @@ properties (department, city, skills, frequency, context) live in a JSON
 `extras` column.
 
 ```
-Alice(30,Engineering,NYC) -----> Bob(25,Marketing,LA)
+Priya(30,Engineering,NYC) -----> Marcus(25,Marketing,LA)
   |   ^                            |
   |   |                            | friend
   |   |                            |
-  |   +--- Eve(32,Finance,NYC)     |
+  |   +--- Wei(32,Finance,NYC)     |
   |         ^                      |
   v         | colleague            v
-Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
+Sofia(35,HR,Chicago) ----------> James(28,Engineering,SF)
          manager
 ```
 
@@ -58,8 +58,8 @@ Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
 |-------|----------|--------|
 | Person count | 5 | Static insert |
 | Edge count | 6 | Static insert |
-| Alice name (column) | "Alice" | Direct column access |
-| Alice dept (extras) | "Engineering" | JSON extraction |
+| Priya name (column) | "Priya" | Direct column access |
+| Priya dept (extras) | "Engineering" | JSON extraction |
 | Mentor type (column) | 1 edge | Direct column filter |
 | Work context (extras) | 4 edges | JSON extraction filter |
 

@@ -6,20 +6,20 @@ columns with full predicate pushdown.
 
 ## Data Story
 
-A 5-person social graph with directed friendships. Alice, Bob, Carol, Dave,
-and Eve work across Engineering, Marketing, HR, and Finance departments.
+A 5-person social graph with directed friendships. Priya, Marcus, Sofia, James,
+and Wei work across Engineering, Marketing, HR, and Finance departments.
 Six directed edges carry weight, relationship type, interaction frequency,
 and context metadata — all as dedicated columns.
 
 ```
-Alice(30,Engineering,NYC) -----> Bob(25,Marketing,LA)
+Priya(30,Engineering,NYC) -----> Marcus(25,Marketing,LA)
   |   ^                            |
   |   |                            | friend
   |   |                            |
-  |   +--- Eve(32,Finance,NYC)     |
+  |   +--- Wei(32,Finance,NYC)     |
   |         ^                      |
   v         | colleague            v
-Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
+Sofia(35,HR,Chicago) ----------> James(28,Engineering,SF)
          manager
 ```
 
@@ -42,11 +42,11 @@ Carol(35,HR,Chicago) ----------> Dave(28,Engineering,SF)
 |-------|----------|--------|
 | Person count | 5 | Static insert |
 | Edge count | 6 | Static insert |
-| Alice out-degree | 2 (Bob, Carol) | Graph structure |
-| Engineering count | 2 (Alice, Dave) | Static data |
+| Priya out-degree | 2 (Marcus, Sofia) | Graph structure |
+| Engineering count | 2 (Priya, James) | Static data |
 | Work context edges | 4 | Static data |
-| NYC persons | 2 (Alice, Eve) | Static data |
-| Max edge weight | 1.0 (Alice->Bob mentor) | Static data |
+| NYC persons | 2 (Priya, Wei) | Static data |
+| Max edge weight | 1.0 (Priya->Marcus mentor) | Static data |
 
 ## How to Verify
 
