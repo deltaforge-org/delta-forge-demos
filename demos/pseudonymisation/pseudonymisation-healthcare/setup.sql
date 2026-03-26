@@ -62,6 +62,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.hl7_patients (
 
 GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.hl7_patients TO USER {{current_user}};
 
+DELETE FROM {{zone_name}}.pseudonymisation.hl7_patients WHERE 1=1;
+
 INSERT INTO {{zone_name}}.pseudonymisation.hl7_patients VALUES
     ('MSG001', 'MRN-10045', 'SMITH^WILLIAM^A', '19610615', 'M', '1200 N ELM STREET^^JERUSALEM^TN^99999', '(999)999-1212', '123-45-6789', 'I', 'W4-R201-B1', 'DR JONES', 'A01', 'Active'),
     ('MSG002', 'MRN-10046', 'DOE^JANE^M', '19850322', 'F', '456 OAK AVE^^BIRMINGHAM^AL^35209', '(555)123-4567', '234-56-7890', 'O', 'CLINIC-A', 'DR PATEL', 'A04', 'Active'),
@@ -96,6 +98,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.fhir_patients (
 
 GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.fhir_patients TO USER {{current_user}};
 
+DELETE FROM {{zone_name}}.pseudonymisation.fhir_patients WHERE 1=1;
+
 INSERT INTO {{zone_name}}.pseudonymisation.fhir_patients VALUES
     ('pt-fhir-001', 'Chalmers', 'Peter', '1974-12-25', 'male', 'peter.chalmers@example.com', '(03) 5555 6473', '534 Erewhon St', 'PleasantVille', 'VT', '05401', 'MRN-20001', '111-22-3333', 'M', true),
     ('pt-fhir-002', 'Solo', 'Leia', '1995-10-12', 'female', 'leia.solo@hospital.org', '(555) 867-5309', '100 Galaxy Way', 'Alderaan', 'CA', '90210', 'MRN-20002', '222-33-4444', 'S', true),
@@ -129,6 +133,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation.edi_claims (
 ) LOCATION '{{data_path}}/edi_claims';
 
 GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation.edi_claims TO USER {{current_user}};
+
+DELETE FROM {{zone_name}}.pseudonymisation.edi_claims WHERE 1=1;
 
 INSERT INTO {{zone_name}}.pseudonymisation.edi_claims VALUES
     ('TXN-837-001', '837', '00', 'IL', 'SMITH', 'FRED', '123456789A', '12101930', 'M', 'ACCT-5001', 1250.00, 'C', 1250.00, '9876543210', '1234567890'),
