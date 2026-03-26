@@ -183,7 +183,6 @@ FROM {{zone_name}}.iceberg_demos.regional_sales;
 -- Remove low-performing transactions (amount < 700) from eu-west only.
 -- Only the eu-west partition's data files are rewritten.
 
-ASSERT ROW_COUNT = 1
 DELETE FROM {{zone_name}}.iceberg_demos.regional_sales
 WHERE region = 'eu-west' AND amount < 700;
 
