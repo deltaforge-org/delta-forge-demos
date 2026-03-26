@@ -34,8 +34,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.warehouse_orders (
     order_date  VARCHAR
 ) LOCATION '{{data_path}}/warehouse_orders'
 PARTITIONED BY (region);
-
 GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.warehouse_orders TO USER {{current_user}};
+
+DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.warehouse_orders;
 
 -- Region 1: us-west (15 orders)
 INSERT INTO {{zone_name}}.delta_demos.warehouse_orders VALUES
