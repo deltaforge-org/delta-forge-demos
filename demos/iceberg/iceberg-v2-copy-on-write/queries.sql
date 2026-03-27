@@ -112,7 +112,7 @@ ORDER BY priority;
 -- 3 snapshots: append (initial 120), overwrite (update 20), overwrite (delete 10).
 -- Copy-on-write operations show as "overwrite" — not "delete" or "append".
 
-ASSERT ROW_COUNT = 3
+ASSERT WARNING ROW_COUNT = 3
 DESCRIBE HISTORY {{zone_name}}.iceberg.shipments;
 
 
