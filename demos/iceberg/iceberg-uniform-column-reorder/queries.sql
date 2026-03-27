@@ -248,7 +248,7 @@ FROM {{zone_name}}.iceberg_demos.patient_records_iceberg;
 
 
 -- ============================================================================
--- Iceberg Verify 2: Original Records — Spot-Check Individual Rows
+-- Iceberg Verify 2a: Original Record — Patient #1 (Smith, John)
 -- ============================================================================
 -- Verify specific patient data survived column reordering intact.
 
@@ -261,6 +261,11 @@ ASSERT VALUE diagnosis_code = 'I25.10'
 ASSERT VALUE attending_physician = 'Dr. Chen'
 SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 1;
 
+
+-- ============================================================================
+-- Iceberg Verify 2b: Original Record — Patient #10 (Taylor, Susan)
+-- ============================================================================
+
 ASSERT ROW_COUNT = 1
 ASSERT VALUE mrn = 'MRN-1010'
 ASSERT VALUE first_name = 'Susan'
@@ -270,6 +275,11 @@ ASSERT VALUE admission_date = '2025-01-18'
 ASSERT VALUE discharge_date = '2025-02-01'
 ASSERT VALUE attending_physician = 'Dr. Kim'
 SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 10;
+
+
+-- ============================================================================
+-- Iceberg Verify 2c: Original Record — Patient #20 (Clark, Elizabeth)
+-- ============================================================================
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE mrn = 'MRN-1020'
@@ -281,10 +291,10 @@ SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_i
 
 
 -- ============================================================================
--- Iceberg Verify 3: Post-Reorder Inserts — Values Written After Column Move
+-- Iceberg Verify 3a: Post-Reorder Insert — Patient #21 (Lee, Andrew)
 -- ============================================================================
--- These rows were inserted AFTER the column reorder. Verifies that Iceberg
--- metadata correctly maps values written in the new column order.
+-- Inserted AFTER column reorder. Verifies Iceberg metadata correctly maps
+-- values written in the new column order.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE mrn = 'MRN-1021'
@@ -294,6 +304,11 @@ ASSERT VALUE diagnosis_code = 'I25.10'
 ASSERT VALUE admission_date = '2025-02-01'
 ASSERT VALUE attending_physician = 'Dr. Chen'
 SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 21;
+
+
+-- ============================================================================
+-- Iceberg Verify 3b: Post-Reorder Insert — Patient #24 (Allen, Margaret)
+-- ============================================================================
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE mrn = 'MRN-1024'
