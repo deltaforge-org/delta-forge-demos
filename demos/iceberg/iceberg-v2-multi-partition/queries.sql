@@ -147,11 +147,11 @@ ORDER BY temperature_c DESC;
 
 
 -- ============================================================================
--- VERIFY: Grand Totals
+-- VERIFY: Grand Totals & Data Integrity
 -- ============================================================================
--- Cross-cutting sanity check: total rows, distinct counts, and key
--- invariants. A user who runs only this query can verify the Iceberg v2
--- multi-partition reader works correctly.
+-- Cross-cutting sanity check: total rows, distinct counts, value ranges,
+-- and computed aggregates. Verifies the Iceberg v2 multi-partition reader
+-- produces correct data values — not just correct row counts.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_rows = 450
@@ -160,11 +160,54 @@ ASSERT VALUE station_count = 15
 ASSERT VALUE condition_count = 5
 ASSERT VALUE extreme_count = 41
 ASSERT VALUE null_precip_count = 58
+ASSERT VALUE min_temp = -9.9
+ASSERT VALUE max_temp = 39.5
+ASSERT VALUE min_humidity = 20.9
+ASSERT VALUE max_humidity = 99.9
+ASSERT VALUE total_wind = 25320.8
+ASSERT VALUE avg_precip = 25.01
+ASSERT VALUE earliest_date = '2023-01-08'
+ASSERT VALUE latest_date = '2025-12-31'
 SELECT
     COUNT(*) AS total_rows,
     COUNT(DISTINCT region) AS region_count,
     COUNT(DISTINCT station_id) AS station_count,
     COUNT(DISTINCT condition) AS condition_count,
     SUM(CASE WHEN temperature_c > 35 OR temperature_c < -5 THEN 1 ELSE 0 END) AS extreme_count,
-    SUM(CASE WHEN precipitation_mm IS NULL THEN 1 ELSE 0 END) AS null_precip_count
+    SUM(CASE WHEN precipitation_mm IS NULL THEN 1 ELSE 0 END) AS null_precip_count,
+    ROUND(MIN(temperature_c), 2) AS min_temp,
+    ROUND(MAX(temperature_c), 2) AS max_temp,
+    ROUND(MIN(humidity_pct), 2) AS min_humidity,
+    ROUND(MAX(humidity_pct), 2) AS max_humidity,
+    ROUND(SUM(wind_speed_kmh), 2) AS total_wind,
+    ROUND(AVG(precipitation_mm), 2) AS avg_precip,
+    CAST(MIN(observation_date) AS VARCHAR) AS earliest_date,
+    CAST(MAX(observation_date) AS VARCHAR) AS latest_date
 FROM {{zone_name}}.iceberg.weather_readings;
+
+
+-- ============================================================================
+-- VERIFY: Hottest & Coldest Readings
+-- ============================================================================
+-- Validates that specific extreme-value rows are read correctly across
+-- partition boundaries, confirming data fidelity at the individual row level.
+
+ASSERT ROW_COUNT = 2
+ASSERT VALUE temperature_c = 39.5 WHERE reading_id = 439
+ASSERT VALUE station_id = 'WX-AF003' WHERE reading_id = 439
+ASSERT VALUE region = 'Africa' WHERE reading_id = 439
+ASSERT VALUE condition = 'Cloudy' WHERE reading_id = 439
+ASSERT VALUE temperature_c = -9.9 WHERE reading_id = 53
+ASSERT VALUE station_id = 'WX-NA003' WHERE reading_id = 53
+ASSERT VALUE region = 'North America' WHERE reading_id = 53
+ASSERT VALUE condition = 'Cloudy' WHERE reading_id = 53
+SELECT
+    reading_id,
+    station_id,
+    region,
+    observation_date,
+    temperature_c,
+    condition
+FROM {{zone_name}}.iceberg.weather_readings
+WHERE reading_id IN (439, 53)
+ORDER BY temperature_c DESC;
