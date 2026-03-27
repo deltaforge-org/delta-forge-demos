@@ -335,34 +335,93 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.delivery_tracking_iceberg;
 
 
 -- ============================================================================
--- Iceberg Verify 1: Row Count — 72 Deliveries After Z-ORDER
+-- Iceberg Verify 1: Spot-Check Individual Rows — Data Fidelity
+-- ============================================================================
+-- Verify specific rows survive the Delta → Iceberg round-trip with exact
+-- values. Covers one row from each INSERT batch (seed, batch 2, batch 3).
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE driver_id = 'DRV-101'
+ASSERT VALUE latitude = 40.7128
+ASSERT VALUE delivery_status = 'delivered'
+ASSERT VALUE delivery_fee = 8.99
+ASSERT VALUE city = 'New York'
+SELECT * FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
+WHERE delivery_id = 1;
+
+
+-- ============================================================================
+-- Iceberg Verify 2: Batch 2 Row — delivery_id 37
 -- ============================================================================
 
-ASSERT ROW_COUNT = 72
-SELECT * FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg ORDER BY delivery_id;
+ASSERT ROW_COUNT = 1
+ASSERT VALUE driver_id = 'DRV-107'
+ASSERT VALUE latitude = 40.7614
+ASSERT VALUE delivery_status = 'delivered'
+ASSERT VALUE delivery_fee = 7.50
+ASSERT VALUE city = 'New York'
+SELECT * FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
+WHERE delivery_id = 37;
 
 
 -- ============================================================================
--- Iceberg Verify 2: Per-City Counts — Must Match Delta
+-- Iceberg Verify 3: Batch 3 Row — delivery_id 72 (last row)
+-- ============================================================================
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE driver_id = 'DRV-612'
+ASSERT VALUE latitude = 39.99
+ASSERT VALUE delivery_status = 'pending'
+ASSERT VALUE delivery_fee = 5.50
+ASSERT VALUE city = 'Philadelphia'
+SELECT * FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
+WHERE delivery_id = 72;
+
+
+-- ============================================================================
+-- Iceberg Verify 4: Per-City Fees & Weights — Must Match Delta
 -- ============================================================================
 
 ASSERT ROW_COUNT = 6
-ASSERT VALUE delivery_count = 12 WHERE city = 'Chicago'
-ASSERT VALUE delivery_count = 12 WHERE city = 'Houston'
-ASSERT VALUE delivery_count = 12 WHERE city = 'Los Angeles'
-ASSERT VALUE delivery_count = 12 WHERE city = 'New York'
-ASSERT VALUE delivery_count = 12 WHERE city = 'Philadelphia'
-ASSERT VALUE delivery_count = 12 WHERE city = 'Phoenix'
+ASSERT VALUE total_fee = 115.97 WHERE city = 'Chicago'
+ASSERT VALUE total_fee = 126.95 WHERE city = 'Houston'
+ASSERT VALUE total_fee = 136.43 WHERE city = 'Los Angeles'
+ASSERT VALUE total_fee = 109.94 WHERE city = 'New York'
+ASSERT VALUE total_fee = 112.96 WHERE city = 'Philadelphia'
+ASSERT VALUE total_fee = 123.94 WHERE city = 'Phoenix'
+ASSERT VALUE total_weight = 36.8 WHERE city = 'Chicago'
+ASSERT VALUE total_weight = 42.2 WHERE city = 'Houston'
+ASSERT VALUE total_weight = 47.0 WHERE city = 'Los Angeles'
+ASSERT VALUE total_weight = 32.4 WHERE city = 'New York'
+ASSERT VALUE total_weight = 34.3 WHERE city = 'Philadelphia'
+ASSERT VALUE total_weight = 40.5 WHERE city = 'Phoenix'
 SELECT
     city,
-    COUNT(*) AS delivery_count
+    ROUND(SUM(delivery_fee), 2) AS total_fee,
+    ROUND(SUM(package_weight), 1) AS total_weight
 FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
 GROUP BY city
 ORDER BY city;
 
 
 -- ============================================================================
--- Iceberg Verify 3: Grand Totals — Must Match Delta Final State
+-- Iceberg Verify 5: Status Distribution — Must Match Delta
+-- ============================================================================
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE status_count = 48 WHERE delivery_status = 'delivered'
+ASSERT VALUE status_count = 12 WHERE delivery_status = 'in_transit'
+ASSERT VALUE status_count = 12 WHERE delivery_status = 'pending'
+SELECT
+    delivery_status,
+    COUNT(*) AS status_count
+FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
+GROUP BY delivery_status
+ORDER BY delivery_status;
+
+
+-- ============================================================================
+-- Iceberg Verify 6: Grand Totals — Must Match Delta Final State
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
@@ -370,18 +429,37 @@ ASSERT VALUE total_deliveries = 72
 ASSERT VALUE total_fees = 726.19
 ASSERT VALUE total_weight = 233.2
 ASSERT VALUE city_count = 6
+ASSERT VALUE delivered_count = 48
 SELECT
     COUNT(*) AS total_deliveries,
     ROUND(SUM(delivery_fee), 2) AS total_fees,
     ROUND(SUM(package_weight), 1) AS total_weight,
-    COUNT(DISTINCT city) AS city_count
+    COUNT(DISTINCT city) AS city_count,
+    COUNT(*) FILTER (WHERE delivery_status = 'delivered') AS delivered_count
 FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg;
 
 
 -- ============================================================================
--- Iceberg Verify 4: Spatial Range Query — NYC Box via Iceberg
+-- Iceberg Verify 7: Spatial Range Query — NYC Box via Iceberg
 -- ============================================================================
 -- Same bounding box as Query 10, but read through Iceberg metadata.
+-- Verifies spatial filtering works identically through Iceberg read path.
+
+ASSERT ROW_COUNT = 10
+SELECT
+    delivery_id,
+    driver_id,
+    delivery_fee,
+    city
+FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
+WHERE latitude BETWEEN 40.65 AND 40.80
+  AND longitude BETWEEN -74.05 AND -73.95
+ORDER BY delivery_id;
+
+
+-- ============================================================================
+-- Iceberg Verify 8: NYC Box Aggregate via Iceberg
+-- ============================================================================
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE bbox_deliveries = 10
@@ -392,3 +470,18 @@ SELECT
 FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
 WHERE latitude BETWEEN 40.65 AND 40.80
   AND longitude BETWEEN -74.05 AND -73.95;
+
+
+-- ============================================================================
+-- Iceberg Verify 9: LA Box via Iceberg — All 12 LA Deliveries
+-- ============================================================================
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE delivery_count = 12
+ASSERT VALUE total_fee = 136.43
+SELECT
+    COUNT(*) AS delivery_count,
+    ROUND(SUM(delivery_fee), 2) AS total_fee
+FROM {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
+WHERE latitude BETWEEN 33.0 AND 35.0
+  AND longitude BETWEEN -119.0 AND -118.0;
