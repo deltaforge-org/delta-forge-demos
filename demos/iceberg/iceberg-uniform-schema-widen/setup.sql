@@ -30,7 +30,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensor_readings (
 ) LOCATION '{{data_path}}/sensor_readings'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
-    'delta.columnMapping.mode' = 'id'
+    'delta.columnMapping.mode' = 'id',
+    'delta.enableTypeWidening' = 'true'
 );
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensor_readings TO USER {{current_user}};

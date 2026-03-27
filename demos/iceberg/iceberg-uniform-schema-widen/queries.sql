@@ -62,7 +62,7 @@ ORDER BY location;
 -- allows counters up to 2^63. The Iceberg metadata.json gets a new schema
 -- entry with the reading_count field type changed from int to long.
 
-ALTER TABLE {{zone_name}}.iceberg_demos.sensor_readings CHANGE COLUMN reading_count TYPE BIGINT;
+ALTER TABLE {{zone_name}}.iceberg_demos.sensor_readings ALTER COLUMN reading_count TYPE BIGINT;
 
 
 -- ============================================================================
@@ -115,14 +115,14 @@ FROM {{zone_name}}.iceberg_demos.sensor_readings;
 -- double-precision (DOUBLE, ~15 digits). The Iceberg metadata records the
 -- type change from float to double.
 
-ALTER TABLE {{zone_name}}.iceberg_demos.sensor_readings CHANGE COLUMN temperature TYPE DOUBLE;
+ALTER TABLE {{zone_name}}.iceberg_demos.sensor_readings ALTER COLUMN temperature TYPE DOUBLE;
 
 
 -- ============================================================================
 -- LEARN: Type Widening Step 3 — FLOAT→DOUBLE for humidity (Version 5)
 -- ============================================================================
 
-ALTER TABLE {{zone_name}}.iceberg_demos.sensor_readings CHANGE COLUMN humidity TYPE DOUBLE;
+ALTER TABLE {{zone_name}}.iceberg_demos.sensor_readings ALTER COLUMN humidity TYPE DOUBLE;
 
 
 -- ============================================================================
@@ -235,12 +235,12 @@ FROM {{zone_name}}.iceberg_demos.sensor_readings;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-CREATE EXTERNAL TABLE IF NOT EXISTS sensor_readings_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensor_readings_iceberg
 USING ICEBERG
 LOCATION '{{data_path}}/sensor_readings';
 
-GRANT ADMIN ON TABLE sensor_readings_iceberg TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE sensor_readings_iceberg;
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensor_readings_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.sensor_readings_iceberg;
 
 
 -- ============================================================================
@@ -248,7 +248,7 @@ DETECT SCHEMA FOR TABLE sensor_readings_iceberg;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 32
-SELECT * FROM sensor_readings_iceberg ORDER BY sensor_id;
+SELECT * FROM {{zone_name}}.iceberg_demos.sensor_readings_iceberg ORDER BY sensor_id;
 
 
 -- ============================================================================
@@ -263,7 +263,7 @@ SELECT
     COUNT(*) AS total_sensors,
     MAX(reading_count) AS max_reading,
     COUNT(*) FILTER (WHERE reading_count > 2147483647) AS bigint_rows
-FROM sensor_readings_iceberg;
+FROM {{zone_name}}.iceberg_demos.sensor_readings_iceberg;
 
 
 -- ============================================================================
@@ -276,4 +276,4 @@ ASSERT VALUE avg_humidity = 55.34
 SELECT
     ROUND(AVG(temperature), 2) AS avg_temp,
     ROUND(AVG(humidity), 2) AS avg_humidity
-FROM sensor_readings_iceberg;
+FROM {{zone_name}}.iceberg_demos.sensor_readings_iceberg;
