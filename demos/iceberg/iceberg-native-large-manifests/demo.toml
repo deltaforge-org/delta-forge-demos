@@ -99,8 +99,62 @@ size_bytes = 4885
 [[demo.data_files]]
 path = "web_analytics/metadata/0a9ffeff-460d-4a0c-924d-268e80983e15-m0.avro"
 format = "avro"
-description = "Data manifest for batch 10 — one of 10 manifest files in the chain"
+description = "Data manifest for batch 10"
 size_bytes = 7633
+
+[[demo.data_files]]
+path = "web_analytics/metadata/1d5a3112-5dc5-430a-9360-c3f6b161caa4-m0.avro"
+format = "avro"
+description = "Data manifest for batch 4"
+size_bytes = 7634
+
+[[demo.data_files]]
+path = "web_analytics/metadata/54ebe19c-e148-494e-8935-dc89dedf7a1b-m0.avro"
+format = "avro"
+description = "Data manifest for batch 8"
+size_bytes = 7634
+
+[[demo.data_files]]
+path = "web_analytics/metadata/5f1fb973-7c71-45b2-8026-061ffe4e18ec-m0.avro"
+format = "avro"
+description = "Data manifest for batch 7"
+size_bytes = 7636
+
+[[demo.data_files]]
+path = "web_analytics/metadata/a5a6ae36-c983-43ed-a67d-5ce4b21b53d7-m0.avro"
+format = "avro"
+description = "Data manifest for batch 6"
+size_bytes = 7635
+
+[[demo.data_files]]
+path = "web_analytics/metadata/bd9106aa-8ba5-4711-b005-7994ab4f261d-m0.avro"
+format = "avro"
+description = "Data manifest for batch 3"
+size_bytes = 7633
+
+[[demo.data_files]]
+path = "web_analytics/metadata/c28f4f26-787f-4de9-83e8-6ed1d8570d73-m0.avro"
+format = "avro"
+description = "Data manifest for batch 9"
+size_bytes = 7632
+
+[[demo.data_files]]
+path = "web_analytics/metadata/d431be3e-7fb2-4f2b-b2c7-c8d62e015fce-m0.avro"
+format = "avro"
+description = "Data manifest for batch 1"
+size_bytes = 7631
+
+[[demo.data_files]]
+path = "web_analytics/metadata/e94ed2cd-c36b-4dd7-892a-e38b08e78ea5-m0.avro"
+format = "avro"
+description = "Data manifest for batch 2"
+size_bytes = 7634
+
+[[demo.data_files]]
+path = "web_analytics/metadata/facc8e80-b2a4-46fe-b766-004d502039a8-m0.avro"
+format = "avro"
+description = "Data manifest for batch 5"
+size_bytes = 7634
 
 [[demo.target_objects]]
 type = "external_table"
