@@ -348,7 +348,47 @@ SELECT * FROM {{zone_name}}.iceberg_demos.app_logs_iceberg WHERE log_level = 'DE
 
 
 -- ============================================================================
--- Iceberg Verify 3: Per-Level Counts — Must Match Delta
+-- Iceberg Verify 3: Spot-Check Seed Row (Batch 1) — Data Fidelity
+-- ============================================================================
+-- Verify a specific row from the original 40-row seed batch survived OPTIMIZE,
+-- DELETE, and VACUUM with all field values intact.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE service_name = 'auth-service' WHERE log_id = 1
+ASSERT VALUE log_level = 'INFO' WHERE log_id = 1
+ASSERT VALUE message = 'User login successful' WHERE log_id = 1
+ASSERT VALUE response_time_ms = 45 WHERE log_id = 1
+ASSERT VALUE endpoint = '/api/auth/login' WHERE log_id = 1
+ASSERT VALUE log_date = '2025-01-15' WHERE log_id = 1
+SELECT *
+FROM {{zone_name}}.iceberg_demos.app_logs_iceberg
+WHERE log_id = 1;
+
+
+-- ============================================================================
+-- Iceberg Verify 4: Spot-Check Batch 2 & 3 Rows — Cross-Batch Fidelity
+-- ============================================================================
+-- Verify rows from the fragmentation batches. These rows were written as
+-- separate data files, then compacted by OPTIMIZE, proving compaction
+-- preserved values across all three INSERT batches.
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE service_name = 'payment-service' WHERE log_id = 43
+ASSERT VALUE message = 'Duplicate transaction detected' WHERE log_id = 43
+ASSERT VALUE response_time_ms = 95 WHERE log_id = 43
+ASSERT VALUE service_name = 'notification-service' WHERE log_id = 48
+ASSERT VALUE log_level = 'FATAL' WHERE log_id = 48
+ASSERT VALUE service_name = 'payment-service' WHERE log_id = 67
+ASSERT VALUE message = 'Payout batch completed' WHERE log_id = 67
+ASSERT VALUE response_time_ms = 600 WHERE log_id = 67
+SELECT *
+FROM {{zone_name}}.iceberg_demos.app_logs_iceberg
+WHERE log_id IN (43, 48, 67)
+ORDER BY log_id;
+
+
+-- ============================================================================
+-- Iceberg Verify 5: Per-Level Counts — Must Match Delta
 -- ============================================================================
 
 ASSERT ROW_COUNT = 4
@@ -365,7 +405,63 @@ ORDER BY log_level;
 
 
 -- ============================================================================
--- Iceberg Verify 4: Grand Totals — Must Match Delta Final State
+-- Iceberg Verify 6: Per-Service Aggregates — Must Match Delta
+-- ============================================================================
+-- Verifies that per-service response time totals and row counts are identical
+-- when read through the Iceberg metadata chain.
+
+ASSERT ROW_COUNT = 4
+ASSERT VALUE log_count = 14 WHERE service_name = 'api-gateway'
+ASSERT VALUE total_response_ms = 7281 WHERE service_name = 'api-gateway'
+ASSERT VALUE log_count = 15 WHERE service_name = 'auth-service'
+ASSERT VALUE total_response_ms = 412 WHERE service_name = 'auth-service'
+ASSERT VALUE log_count = 16 WHERE service_name = 'notification-service'
+ASSERT VALUE total_response_ms = 28505 WHERE service_name = 'notification-service'
+ASSERT VALUE log_count = 15 WHERE service_name = 'payment-service'
+ASSERT VALUE total_response_ms = 10010 WHERE service_name = 'payment-service'
+SELECT
+    service_name,
+    COUNT(*) AS log_count,
+    SUM(response_time_ms) AS total_response_ms
+FROM {{zone_name}}.iceberg_demos.app_logs_iceberg
+GROUP BY service_name
+ORDER BY service_name;
+
+
+-- ============================================================================
+-- Iceberg Verify 7: Filtered Data — ERROR Payments via Iceberg
+-- ============================================================================
+-- Proves that compound filters (level + service) return correct rows and
+-- values through the Iceberg reader.
+
+ASSERT ROW_COUNT = 2
+ASSERT VALUE message = 'Card declined' WHERE log_id = 11
+ASSERT VALUE message = 'Duplicate transaction detected' WHERE log_id = 43
+SELECT log_id, service_name, log_level, message, response_time_ms
+FROM {{zone_name}}.iceberg_demos.app_logs_iceberg
+WHERE log_level = 'ERROR' AND service_name = 'payment-service'
+ORDER BY log_id;
+
+
+-- ============================================================================
+-- Iceberg Verify 8: Max Response Time — Extreme Value Preserved
+-- ============================================================================
+-- The highest response time in the dataset must survive all maintenance ops.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE log_id = 56
+ASSERT VALUE service_name = 'notification-service'
+ASSERT VALUE message = 'Delivery receipt timeout'
+ASSERT VALUE max_response_ms = 15000
+SELECT
+    log_id, service_name, message, response_time_ms AS max_response_ms
+FROM {{zone_name}}.iceberg_demos.app_logs_iceberg
+ORDER BY response_time_ms DESC
+LIMIT 1;
+
+
+-- ============================================================================
+-- Iceberg Verify 9: Grand Totals — Must Match Delta Final State
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
