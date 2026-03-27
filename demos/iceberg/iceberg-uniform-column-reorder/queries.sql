@@ -6,7 +6,7 @@
 -- All queries below read through the Delta transaction log. The Iceberg
 -- metadata in metadata/ is generated automatically as a shadow.
 --
--- When ALTER TABLE CHANGE COLUMN ... FIRST or ... AFTER runs, Delta Forge:
+-- When ALTER TABLE ALTER COLUMN ... FIRST or ... AFTER runs, Delta Forge:
 --   1. Updates the Delta schema in _delta_log/ with new column positions
 --   2. Adds a new schema entry to metadata.json's "schemas" array with
 --      field IDs in the updated order (Iceberg uses column IDs, not names,
@@ -80,7 +80,7 @@ FROM {{zone_name}}.iceberg_demos.patient_records;
 -- primary patient identifier and should appear first. This is a
 -- metadata-only operation — no data files are rewritten.
 
-ALTER TABLE {{zone_name}}.iceberg_demos.patient_records CHANGE COLUMN mrn FIRST;
+ALTER TABLE {{zone_name}}.iceberg_demos.patient_records ALTER COLUMN mrn FIRST;
 
 
 -- ============================================================================
@@ -88,7 +88,7 @@ ALTER TABLE {{zone_name}}.iceberg_demos.patient_records CHANGE COLUMN mrn FIRST;
 -- ============================================================================
 -- FHIR ordering: identifier → name (given, family) → demographics.
 
-ALTER TABLE {{zone_name}}.iceberg_demos.patient_records CHANGE COLUMN first_name AFTER mrn;
+ALTER TABLE {{zone_name}}.iceberg_demos.patient_records ALTER COLUMN first_name AFTER mrn;
 
 
 -- ============================================================================
@@ -97,7 +97,7 @@ ALTER TABLE {{zone_name}}.iceberg_demos.patient_records CHANGE COLUMN first_name
 -- Final FHIR-compliant order: mrn, first_name, last_name, record_id, dob,
 -- diagnosis_code, admission_date, discharge_date, attending_physician.
 
-ALTER TABLE {{zone_name}}.iceberg_demos.patient_records CHANGE COLUMN last_name AFTER first_name;
+ALTER TABLE {{zone_name}}.iceberg_demos.patient_records ALTER COLUMN last_name AFTER first_name;
 
 
 -- ============================================================================
