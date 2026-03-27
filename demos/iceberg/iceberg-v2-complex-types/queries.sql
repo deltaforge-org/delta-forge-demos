@@ -56,7 +56,7 @@ SELECT
     item.unit_price,
     item.quantity * item.unit_price AS line_total
 FROM {{zone_name}}.iceberg.orders o,
-     UNNEST(o.items) AS t(item)
+     UNNEST(items) AS t(item)
 ORDER BY o.order_id, item.product_name;
 
 
@@ -97,7 +97,7 @@ SELECT
     item.product_name AS product_name,
     SUM(item.quantity) AS total_qty
 FROM {{zone_name}}.iceberg.orders o,
-     UNNEST(o.items) AS t(item)
+     UNNEST(items) AS t(item)
 GROUP BY item.product_name
 ORDER BY total_qty DESC;
 
@@ -135,5 +135,5 @@ SELECT
     COUNT(*) AS total_orders,
     ROUND(SUM(order_total), 2) AS sum_order_total,
     COUNT(DISTINCT shipping_address.city) AS distinct_cities,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg.orders o2, UNNEST(o2.items) AS t(item)) AS total_items
+    (SELECT COUNT(*) FROM {{zone_name}}.iceberg.orders o2, UNNEST(items) AS t(item)) AS total_items
 FROM {{zone_name}}.iceberg.orders;
