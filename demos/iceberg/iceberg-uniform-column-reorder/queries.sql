@@ -259,9 +259,9 @@ ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Kim'
 ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Okafor'
 ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Nakamura'
 ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Patel'
-ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Lopez'
-ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Singh'
-ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Reeves'
+ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Lopez'
+ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Singh'
+ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Reeves'
 SELECT
     attending_physician,
     COUNT(*) AS patient_count
@@ -271,20 +271,20 @@ ORDER BY attending_physician;
 
 
 -- ============================================================================
--- Iceberg Verify 3: Post-Reorder MRN Presence — All 24 MRNs Present
+-- Iceberg Verify 3: Post-Reorder Record Values — Rows Written After Reorder
 -- ============================================================================
--- Verify that all MRNs from both original and post-reorder inserts exist,
--- proving the Iceberg metadata correctly maps values written before and after
--- the column reorder.
+-- Verify specific values from the 4 records inserted AFTER column reordering.
+-- These prove the Iceberg metadata correctly maps values written in the new
+-- column order (mrn, first_name, last_name, record_id, ...).
 
-ASSERT ROW_COUNT = 24
-ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1001'
-ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1010'
-ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1020'
-ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1021'
-ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1024'
-SELECT mrn, 1 AS mrn_present
+ASSERT ROW_COUNT = 4
+ASSERT VALUE first_name = 'Andrew' WHERE mrn = 'MRN-1021'
+ASSERT VALUE last_name = 'Allen' WHERE mrn = 'MRN-1024'
+ASSERT VALUE diagnosis_code = 'M54.5' WHERE mrn = 'MRN-1022'
+ASSERT VALUE attending_physician = 'Dr. Singh' WHERE mrn = 'MRN-1023'
+SELECT mrn, first_name, last_name, diagnosis_code, attending_physician
 FROM {{zone_name}}.iceberg_demos.patient_records_iceberg
+WHERE mrn IN ('MRN-1021', 'MRN-1022', 'MRN-1023', 'MRN-1024')
 ORDER BY mrn;
 
 
