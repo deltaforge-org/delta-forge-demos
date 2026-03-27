@@ -18,6 +18,9 @@
 -- UPDATE doesn't change count (same 120 rows, just different prices).
 
 ASSERT ROW_COUNT = 138
+ASSERT VALUE company_name = 'Bank of America' WHERE ticker = 'BAC'
+ASSERT VALUE sector = 'Technology' WHERE ticker = 'AAPL'
+ASSERT VALUE company_name = 'BioTech Innovations' WHERE ticker = 'BIOT'
 SELECT * FROM {{zone_name}}.iceberg.stock_prices;
 
 
@@ -98,6 +101,11 @@ WHERE ticker IN ('COP', 'SLB');
 -- 5 IPO tickers x 6 trading days = 30 rows inserted in snapshot 3.
 
 ASSERT ROW_COUNT = 30
+ASSERT VALUE sector = 'Healthcare' WHERE ticker = 'BIOT'
+ASSERT VALUE sector = 'Finance' WHERE ticker = 'FINX'
+ASSERT VALUE sector = 'Energy' WHERE ticker = 'GRNH'
+ASSERT VALUE sector = 'Technology' WHERE ticker = 'NWAI'
+ASSERT VALUE sector = 'Technology' WHERE ticker = 'QCMP'
 SELECT
     ticker,
     company_name,
