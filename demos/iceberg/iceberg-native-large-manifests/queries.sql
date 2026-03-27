@@ -140,8 +140,8 @@ ORDER BY cnt DESC, referrer;
 -- ============================================================================
 -- VERIFY: Grand Totals
 -- ============================================================================
--- Cross-cutting sanity check: row count, country count, device count,
--- bounce count, and total event count across all 10 manifest files.
+-- Cross-cutting sanity check across all 10 manifest files.
+-- Verifies row counts, data aggregates, and value ranges.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_rows = 600
@@ -149,12 +149,28 @@ ASSERT VALUE country_count = 10
 ASSERT VALUE device_count = 3
 ASSERT VALUE referrer_count = 10
 ASSERT VALUE bounce_count = 165
+ASSERT VALUE non_bounce_count = 435
 ASSERT VALUE total_events = 6023
+ASSERT VALUE avg_event_count = 10.04
+ASSERT VALUE min_event_count = 1
+ASSERT VALUE max_event_count = 25
+ASSERT VALUE total_time_on_page = 173924
+ASSERT VALUE avg_time_on_page = 289.87
+ASSERT VALUE min_time_on_page = 3
+ASSERT VALUE max_time_on_page = 599
 SELECT
     COUNT(*) AS total_rows,
     COUNT(DISTINCT country) AS country_count,
     COUNT(DISTINCT device_type) AS device_count,
     COUNT(DISTINCT referrer) AS referrer_count,
     SUM(CASE WHEN is_bounce THEN 1 ELSE 0 END) AS bounce_count,
-    SUM(event_count) AS total_events
+    COUNT(*) - SUM(CASE WHEN is_bounce THEN 1 ELSE 0 END) AS non_bounce_count,
+    SUM(event_count) AS total_events,
+    ROUND(AVG(event_count), 2) AS avg_event_count,
+    MIN(event_count) AS min_event_count,
+    MAX(event_count) AS max_event_count,
+    SUM(time_on_page) AS total_time_on_page,
+    ROUND(AVG(time_on_page), 2) AS avg_time_on_page,
+    MIN(time_on_page) AS min_time_on_page,
+    MAX(time_on_page) AS max_time_on_page
 FROM {{zone_name}}.iceberg.web_analytics;
