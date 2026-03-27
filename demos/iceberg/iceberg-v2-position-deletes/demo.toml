@@ -1,0 +1,70 @@
+[demo]
+id = "iceberg-v2-position-deletes"
+name = "Iceberg V2 — Position Delete Vectors"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Validates Iceberg format-version 2 position delete (deletion vector) support \
+using a pharmaceutical cold-chain monitoring dataset. A faulty temperature \
+sensor (SENSOR-F01) recorded 30 out-of-range readings on ROUTE-A; those \
+readings were retracted via Iceberg V2 position deletes. Queries confirm the \
+reader correctly excludes deleted rows: 570 valid readings remain from the \
+original 600, the faulty sensor disappears from all results, and per-route \
+aggregations reflect the corrected dataset. Exercises the full Iceberg V2 \
+delete path: metadata chain → delete manifest → position delete Parquet file \
+→ row-level exclusion during query execution.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "intermediate", "read-only", "native-format", "v2", "position-deletes", "deletion-vectors", "cold-chain", "pharma", "iot"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "cold_chain_readings/data/00000-4-bfdba926-7387-41ed-9b79-77d74b42dbe0-0-00001.parquet"
+format = "parquet"
+description = "All 600 cold-chain sensor readings (single Parquet data file, pre-delete)"
+size_bytes = 8880
+
+[[demo.data_files]]
+path = "cold_chain_readings/data/00000-8-c21b14b3-9c03-449b-9cb0-a910c9c3b340-00001-deletes.parquet"
+format = "parquet"
+description = "Position delete file — 30 row positions to exclude (faulty sensor SENSOR-F01)"
+size_bytes = 1629
+
+[[demo.data_files]]
+path = "cold_chain_readings/metadata/v3.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata with 3 snapshots: create, append (600 rows), delete (30 position deletes)"
+size_bytes = 3491
+
+[[demo.data_files]]
+path = "cold_chain_readings/metadata/snap-1207161823108265314-1-a7ad41bc-0e05-4fa3-a8f3-d0ca613ed83e.avro"
+format = "avro"
+description = "Manifest list for delete snapshot — references both data and delete manifests"
+size_bytes = 4544
+
+[[demo.data_files]]
+path = "cold_chain_readings/metadata/snap-2255466662925287717-1-d29852c1-2ce1-41ca-b3c2-52d50863c755.avro"
+format = "avro"
+description = "Manifest list for append snapshot — references data manifest only"
+size_bytes = 4466
+
+[[demo.data_files]]
+path = "cold_chain_readings/metadata/a7ad41bc-0e05-4fa3-a8f3-d0ca613ed83e-m0.avro"
+format = "avro"
+description = "Delete manifest — references both data file (existing) and position delete file (added)"
+size_bytes = 7676
+
+[[demo.data_files]]
+path = "cold_chain_readings/metadata/d29852c1-2ce1-41ca-b3c2-52d50863c755-m0.avro"
+format = "avro"
+description = "Data manifest from initial append — references the single Parquet data file"
+size_bytes = 7877
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.cold_chain_readings"
