@@ -1,0 +1,29 @@
+[demo]
+id = "iceberg-uniform-equality-deletes"
+name = "Iceberg UniForm — Equality Delete Write & Read"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Full-cycle demonstration of Iceberg equality delete file generation via \
+UniForm. Creates a Delta table with equality delete mode enabled, seeds \
+10 products, deletes 3 products via standard DELETE, then reads the \
+table back through an Iceberg external table to verify that the equality \
+delete file correctly filters the deleted rows. Exercises the complete \
+write → convert → read pipeline for equality deletes.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "intermediate", "uniform", "equality-deletes", "write-read", "full-cycle"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path for Delta table storage", required = true }
+zone_name = { description = "Target zone name (defaults to 'demo_zone')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.eq_del_demo.products"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.eq_del_demo.products_iceberg"
