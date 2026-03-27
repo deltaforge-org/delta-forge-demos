@@ -235,10 +235,24 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.financial_transactions_icebe
 
 
 -- ============================================================================
--- Iceberg Verify 1: Row Count — 28 Transactions
+-- Iceberg Verify 1: Data Integrity — Spot-Check Rows via Renamed Columns
 -- ============================================================================
+-- Verify that specific rows are readable through Iceberg metadata and that
+-- the renamed columns (transaction_amount, currency_code, account_number)
+-- resolve correctly by field-id.
 
 ASSERT ROW_COUNT = 28
+ASSERT VALUE transaction_amount = 1500.00 WHERE txn_id = 1
+ASSERT VALUE currency_code = 'USD' WHERE txn_id = 1
+ASSERT VALUE account_number = 'CHK-10001' WHERE txn_id = 1
+ASSERT VALUE transaction_amount = 7500.00 WHERE txn_id = 8
+ASSERT VALUE currency_code = 'EUR' WHERE txn_id = 8
+ASSERT VALUE transaction_amount = 12000.00 WHERE txn_id = 23
+ASSERT VALUE currency_code = 'EUR' WHERE txn_id = 23
+ASSERT VALUE transaction_amount = 950.00 WHERE txn_id = 25
+ASSERT VALUE account_number = 'CHK-10004' WHERE txn_id = 25
+ASSERT VALUE transaction_amount = 7000.00 WHERE txn_id = 28
+ASSERT VALUE currency_code = 'USD' WHERE txn_id = 28
 SELECT * FROM {{zone_name}}.iceberg_demos.financial_transactions_iceberg ORDER BY txn_id;
 
 
