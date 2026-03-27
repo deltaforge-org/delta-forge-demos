@@ -222,12 +222,12 @@ FROM {{zone_name}}.iceberg_demos.patient_records;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-CREATE EXTERNAL TABLE IF NOT EXISTS patient_records_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.patient_records_iceberg
 USING ICEBERG
 LOCATION '{{data_path}}/patient_records';
 
-GRANT ADMIN ON TABLE patient_records_iceberg TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE patient_records_iceberg;
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.patient_records_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.patient_records_iceberg;
 
 
 -- ============================================================================
@@ -235,7 +235,7 @@ DETECT SCHEMA FOR TABLE patient_records_iceberg;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 24
-SELECT * FROM patient_records_iceberg ORDER BY record_id;
+SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg ORDER BY record_id;
 
 
 -- ============================================================================
@@ -250,7 +250,7 @@ SELECT
     COUNT(*) AS total_records,
     COUNT(DISTINCT mrn) AS distinct_mrns,
     COUNT(DISTINCT diagnosis_code) AS distinct_codes
-FROM patient_records_iceberg;
+FROM {{zone_name}}.iceberg_demos.patient_records_iceberg;
 
 
 -- ============================================================================
@@ -263,6 +263,6 @@ ASSERT VALUE patient_count = 2 WHERE diagnosis_code = 'C18.9'
 SELECT
     diagnosis_code,
     COUNT(*) AS patient_count
-FROM patient_records_iceberg
+FROM {{zone_name}}.iceberg_demos.patient_records_iceberg
 GROUP BY diagnosis_code
 ORDER BY diagnosis_code;
