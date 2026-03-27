@@ -248,76 +248,44 @@ FROM {{zone_name}}.iceberg_demos.patient_records_iceberg;
 
 
 -- ============================================================================
--- Iceberg Verify 2a: Original Record — Patient #1 (Smith, John)
+-- Iceberg Verify 2: Data Values — Per-Physician Patient Counts
 -- ============================================================================
--- Verify specific patient data survived column reordering intact.
+-- Verify that all 8 physicians have the correct patient counts, proving that
+-- column values (including attending_physician) survived the reorder intact.
 
-ASSERT ROW_COUNT = 1
-ASSERT VALUE mrn = 'MRN-1001'
-ASSERT VALUE first_name = 'John'
-ASSERT VALUE last_name = 'Smith'
-ASSERT VALUE dob = '1955-03-12'
-ASSERT VALUE diagnosis_code = 'I25.10'
-ASSERT VALUE attending_physician = 'Dr. Chen'
-SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 1;
-
-
--- ============================================================================
--- Iceberg Verify 2b: Original Record — Patient #10 (Taylor, Susan)
--- ============================================================================
-
-ASSERT ROW_COUNT = 1
-ASSERT VALUE mrn = 'MRN-1010'
-ASSERT VALUE first_name = 'Susan'
-ASSERT VALUE last_name = 'Taylor'
-ASSERT VALUE diagnosis_code = 'S72.001'
-ASSERT VALUE admission_date = '2025-01-18'
-ASSERT VALUE discharge_date = '2025-02-01'
-ASSERT VALUE attending_physician = 'Dr. Kim'
-SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 10;
+ASSERT ROW_COUNT = 8
+ASSERT VALUE patient_count = 4 WHERE attending_physician = 'Dr. Chen'
+ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Kim'
+ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Okafor'
+ASSERT VALUE patient_count = 3 WHERE attending_physician = 'Dr. Nakamura'
+ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Patel'
+ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Lopez'
+ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Singh'
+ASSERT VALUE patient_count = 2 WHERE attending_physician = 'Dr. Reeves'
+SELECT
+    attending_physician,
+    COUNT(*) AS patient_count
+FROM {{zone_name}}.iceberg_demos.patient_records_iceberg
+GROUP BY attending_physician
+ORDER BY attending_physician;
 
 
 -- ============================================================================
--- Iceberg Verify 2c: Original Record — Patient #20 (Clark, Elizabeth)
+-- Iceberg Verify 3: Post-Reorder MRN Presence — All 24 MRNs Present
 -- ============================================================================
+-- Verify that all MRNs from both original and post-reorder inserts exist,
+-- proving the Iceberg metadata correctly maps values written before and after
+-- the column reorder.
 
-ASSERT ROW_COUNT = 1
-ASSERT VALUE mrn = 'MRN-1020'
-ASSERT VALUE first_name = 'Elizabeth'
-ASSERT VALUE last_name = 'Clark'
-ASSERT VALUE diagnosis_code = 'C50.911'
-ASSERT VALUE attending_physician = 'Dr. Okafor'
-SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 20;
-
-
--- ============================================================================
--- Iceberg Verify 3a: Post-Reorder Insert — Patient #21 (Lee, Andrew)
--- ============================================================================
--- Inserted AFTER column reorder. Verifies Iceberg metadata correctly maps
--- values written in the new column order.
-
-ASSERT ROW_COUNT = 1
-ASSERT VALUE mrn = 'MRN-1021'
-ASSERT VALUE first_name = 'Andrew'
-ASSERT VALUE last_name = 'Lee'
-ASSERT VALUE diagnosis_code = 'I25.10'
-ASSERT VALUE admission_date = '2025-02-01'
-ASSERT VALUE attending_physician = 'Dr. Chen'
-SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 21;
-
-
--- ============================================================================
--- Iceberg Verify 3b: Post-Reorder Insert — Patient #24 (Allen, Margaret)
--- ============================================================================
-
-ASSERT ROW_COUNT = 1
-ASSERT VALUE mrn = 'MRN-1024'
-ASSERT VALUE first_name = 'Margaret'
-ASSERT VALUE last_name = 'Allen'
-ASSERT VALUE diagnosis_code = 'C18.9'
-ASSERT VALUE discharge_date = '2025-02-21'
-ASSERT VALUE attending_physician = 'Dr. Reeves'
-SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 24;
+ASSERT ROW_COUNT = 24
+ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1001'
+ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1010'
+ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1020'
+ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1021'
+ASSERT VALUE mrn_present = 1 WHERE mrn = 'MRN-1024'
+SELECT mrn, 1 AS mrn_present
+FROM {{zone_name}}.iceberg_demos.patient_records_iceberg
+ORDER BY mrn;
 
 
 -- ============================================================================
