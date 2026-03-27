@@ -188,8 +188,9 @@ def generate():
     total_sensors += 8
     total_readings += sum(floor_a_reading_counts)
 
+    floor_a_msg = encode_sensor_network(floor_a_sensors, "Factory Floor A")
     with open(os.path.join(data_dir, 'factory_floor_a.pb'), 'wb') as f:
-        f.write(encode_sensor_network(floor_a_sensors, "Factory Floor A"))
+        f.write(encode_varint(len(floor_a_msg)) + floor_a_msg)
 
     # == File 2: Factory Floor B — 7 sensors ================================
     floor_b_sensors = [
@@ -244,8 +245,9 @@ def generate():
     total_sensors += 7
     total_readings += sum(floor_b_reading_counts)
 
+    floor_b_msg = encode_sensor_network(floor_b_sensors, "Factory Floor B")
     with open(os.path.join(data_dir, 'factory_floor_b.pb'), 'wb') as f:
-        f.write(encode_sensor_network(floor_b_sensors, "Factory Floor B"))
+        f.write(encode_varint(len(floor_b_msg)) + floor_b_msg)
 
     # == File 3: Warehouse — 5 sensors ======================================
     warehouse_sensors = [
@@ -287,8 +289,9 @@ def generate():
     total_sensors += 5
     total_readings += sum(warehouse_reading_counts)
 
+    warehouse_msg = encode_sensor_network(warehouse_sensors, "Warehouse")
     with open(os.path.join(data_dir, 'warehouse.pb'), 'wb') as f:
-        f.write(encode_sensor_network(warehouse_sensors, "Warehouse"))
+        f.write(encode_varint(len(warehouse_msg)) + warehouse_msg)
 
     # -- Print summary ---------------------------------------------------
     print(f"Total sensors:  {total_sensors}")

@@ -25,19 +25,19 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 path = "data/factory_floor_a.pb"
 format = "protobuf"
 description = "Factory Floor A — 8 sensors (3 temperature, 3 humidity, 2 vibration), 33 readings"
-size_bytes = 1344
+size_bytes = 1346
 
 [[demo.data_files]]
 path = "data/factory_floor_b.pb"
 format = "protobuf"
 description = "Factory Floor B — 7 sensors (2 temperature, 2 humidity, 3 vibration), 29 readings"
-size_bytes = 1187
+size_bytes = 1189
 
 [[demo.data_files]]
 path = "data/warehouse.pb"
 format = "protobuf"
 description = "Warehouse — 5 sensors (2 temperature, 2 humidity, 1 vibration), 20 readings"
-size_bytes = 839
+size_bytes = 841
 
 [[demo.data_files]]
 path = "schema/sensor.proto"
