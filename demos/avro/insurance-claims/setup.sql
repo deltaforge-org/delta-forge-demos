@@ -34,8 +34,8 @@ LOCATION '{{data_path}}'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.avro_insurance.all_claims;
 GRANT ADMIN ON TABLE {{zone_name}}.avro_insurance.all_claims TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.avro_insurance.all_claims;
 
 
 -- ============================================================================
@@ -51,8 +51,8 @@ OPTIONS (
     file_filter = '*auto*',
     file_metadata = '{"columns":["df_file_name"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.avro_insurance.auto_claims_only;
 GRANT ADMIN ON TABLE {{zone_name}}.avro_insurance.auto_claims_only TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.avro_insurance.auto_claims_only;
 
 
 -- ============================================================================
@@ -68,5 +68,5 @@ OPTIONS (
     max_rows = '15',
     file_metadata = '{"columns":["df_file_name"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.avro_insurance.sampled_claims;
 GRANT ADMIN ON TABLE {{zone_name}}.avro_insurance.sampled_claims TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.avro_insurance.sampled_claims;
