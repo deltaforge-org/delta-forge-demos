@@ -109,10 +109,13 @@ ORDER BY region;
 -- ============================================================================
 -- Query 7: Date-Range Query (Days Partition Benefit)
 -- ============================================================================
--- Filters to the first 3 days (March 1-3, 2025). With days(capture_time)
+-- Filters to the first 3 days (March 1-3, 2025) in UTC. With days(capture_time)
 -- partitioning, Iceberg can prune partitions for non-matching days.
+-- Note: The data uses Europe/Oslo timezone (UTC+1). TIMESTAMP literals are
+-- compared in UTC, so 2 Oslo-midnight rows fall before UTC midnight on Feb 28,
+-- while 1 Oslo-Mar-3 row extends into UTC Mar 4, netting 139 rows.
 
-ASSERT ROW_COUNT = 140
+ASSERT ROW_COUNT = 139
 SELECT
     packet_id,
     source_ip,
@@ -159,7 +162,7 @@ ASSERT VALUE threat_level_count = 4
 ASSERT VALUE total_bytes = 251040311
 ASSERT VALUE critical_count = 22
 ASSERT VALUE high_port_count = 122
-ASSERT VALUE first_3_days_count = 140
+ASSERT VALUE first_3_days_count = 139
 SELECT
     COUNT(*) AS total_rows,
     COUNT(DISTINCT region) AS region_count,
