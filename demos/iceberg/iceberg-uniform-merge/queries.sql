@@ -96,7 +96,7 @@ USING (VALUES
     (35, 'roger@example.com',   'SKU-4005', 2,  210.00, 'pending',   'eu-west', '2024-02-11')
 ) AS source(order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
 ON t.order_id = source.order_id
-WHEN MATCHED THEN UPDATE SET t.status = source.status, t.order_date = source.order_date
+WHEN MATCHED THEN UPDATE SET status = source.status, order_date = source.order_date
 WHEN NOT MATCHED THEN INSERT (order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
     VALUES (source.order_id, source.customer_email, source.product_sku, source.quantity, source.unit_price, source.status, source.region, source.order_date);
 
@@ -191,7 +191,7 @@ USING (VALUES
 ) AS source(order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
 ON t.order_id = source.order_id
 WHEN MATCHED AND source.status = 'cancelled' THEN DELETE
-WHEN MATCHED THEN UPDATE SET t.status = source.status, t.order_date = source.order_date
+WHEN MATCHED THEN UPDATE SET status = source.status, order_date = source.order_date
 WHEN NOT MATCHED THEN INSERT (order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
     VALUES (source.order_id, source.customer_email, source.product_sku, source.quantity, source.unit_price, source.status, source.region, source.order_date);
 
