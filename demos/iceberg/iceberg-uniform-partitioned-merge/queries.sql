@@ -102,13 +102,13 @@ USING (VALUES
     ('WH-C011', 'charlotte', 'Circuit Breaker 20A',         85,  40,  12.50, '2024-02-17'),
     ('WH-C013', 'charlotte', 'Epoxy Resin 1gal',            65,  20,  28.75, '2024-02-17'),
     ('WH-C014', 'charlotte', 'Cable Tie 12" (100pk)',      380, 80,  3.85,  '2024-02-17')
-) AS s(sku, warehouse, product_name, quantity_on_hand, reorder_point, unit_cost, last_received)
-ON t.sku = s.sku
+) AS source(sku, warehouse, product_name, quantity_on_hand, reorder_point, unit_cost, last_received)
+ON t.sku = source.sku
 WHEN MATCHED THEN UPDATE SET
-    t.quantity_on_hand = t.quantity_on_hand + s.quantity_on_hand,
-    t.last_received = s.last_received
+    t.quantity_on_hand = t.quantity_on_hand + source.quantity_on_hand,
+    t.last_received = source.last_received
 WHEN NOT MATCHED THEN INSERT (sku, warehouse, product_name, quantity_on_hand, reorder_point, unit_cost, last_received)
-    VALUES (s.sku, s.warehouse, s.product_name, s.quantity_on_hand, s.reorder_point, s.unit_cost, s.last_received);
+    VALUES (source.sku, source.warehouse, source.product_name, source.quantity_on_hand, source.reorder_point, source.unit_cost, source.last_received);
 
 
 -- ============================================================================
@@ -202,14 +202,14 @@ USING (VALUES
     ('WH-P006', 'portland',  'Concrete Anchor 1/2"',       870,  150, 0.89,  '2024-03-01'),
     ('WH-D006', 'dallas',   'Concrete Anchor 1/2"',        780,  150, 0.92,  '2024-03-01'),
     ('WH-C006', 'charlotte', 'Concrete Anchor 1/2"',       820,  150, 0.88,  '2024-03-01')
-) AS s(sku, warehouse, product_name, quantity_on_hand, reorder_point, unit_cost, last_received)
-ON t.sku = s.sku
-WHEN MATCHED AND s.last_received = 'discontinued' THEN DELETE
+) AS source(sku, warehouse, product_name, quantity_on_hand, reorder_point, unit_cost, last_received)
+ON t.sku = source.sku
+WHEN MATCHED AND source.last_received = 'discontinued' THEN DELETE
 WHEN MATCHED THEN UPDATE SET
-    t.quantity_on_hand = s.quantity_on_hand,
-    t.last_received = s.last_received
+    t.quantity_on_hand = source.quantity_on_hand,
+    t.last_received = source.last_received
 WHEN NOT MATCHED THEN INSERT (sku, warehouse, product_name, quantity_on_hand, reorder_point, unit_cost, last_received)
-    VALUES (s.sku, s.warehouse, s.product_name, s.quantity_on_hand, s.reorder_point, s.unit_cost, s.last_received);
+    VALUES (source.sku, source.warehouse, source.product_name, source.quantity_on_hand, source.reorder_point, source.unit_cost, source.last_received);
 
 
 -- ============================================================================
