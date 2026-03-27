@@ -1,0 +1,40 @@
+[demo]
+id = "orc-banking-transactions"
+name = "ORC Banking Transactions — Transaction Monitoring"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates ORC format reading with branch-level banking transaction \
+records for fraud monitoring. Two ORC files (100 rows total) across two \
+bank branches exercise multi-file aggregation, flagged transaction \
+filtering, risk score analysis, and per-account summaries with \
+file_metadata for traceability.\
+"""
+categories = ["orc", "banking"]
+tags = ["orc", "beginner", "multi-file", "file-metadata", "aggregation", "fraud-monitoring"]
+difficulty = "beginner"
+estimated_time_minutes = 4
+
+[demo.variables]
+data_path = { description = "Path to the demo directory containing the ORC banking transaction files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/branch_downtown.orc"
+format = "orc"
+description = "Downtown branch — 50 transactions"
+size_bytes = 4788
+
+[[demo.data_files]]
+path = "data/branch_suburban.orc"
+format = "orc"
+description = "Suburban branch — 50 transactions"
+size_bytes = 4812
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc_bank.all_transactions"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc_bank.downtown_only"

@@ -1,0 +1,77 @@
+[demo]
+id = "iceberg-v2-hidden-partitions"
+name = "Iceberg V2 — Hidden Partitions (Ride-Share Trip Analytics)"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "iceberg-v2-hidden-partitions"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading with \
+hidden partitioning via months(pickup_date). Hidden partitioning means the \
+partition column does NOT appear in the data schema — queries filter on \
+pickup_date and Iceberg transparently prunes partitions. The dataset contains \
+300 ride-share trip records across 6 months (Jan–Jun 2025), 5 cities, 3 payment \
+types, and 50 drivers. Data is spread across 6 monthly Parquet files. \
+Exercises Iceberg partition pruning, NULL handling (tip_amount), and \
+aggregation across hidden partition boundaries.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "intermediate", "read-only", "native-format", "v2", "hidden-partitions", "months", "ride-share", "analytics"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "trips/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg format v2 metadata with months(pickup_date) hidden partition spec"
+size_bytes = 2414
+
+[[demo.data_files]]
+path = "trips/metadata/snap-82500759660784530-1-21e08ec7-ef4d-4af2-b72d-569de8a2e09e.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — pointers to data manifests"
+size_bytes = 4474
+
+[[demo.data_files]]
+path = "trips/metadata/21e08ec7-ef4d-4af2-b72d-569de8a2e09e-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to 6 monthly partitioned Parquet data files"
+size_bytes = 8594
+
+[[demo.data_files]]
+path = "trips/data/pickup_date_month=2025-01/00000-3-49d5b23b-04bc-40d6-8ba7-d9bbf96ff725-0-00001.parquet"
+format = "parquet"
+description = "Partition: month=2025-01 (January)"
+size_bytes = 4952
+[[demo.data_files]]
+path = "trips/data/pickup_date_month=2025-02/00000-3-49d5b23b-04bc-40d6-8ba7-d9bbf96ff725-0-00002.parquet"
+format = "parquet"
+description = "Partition: month=2025-02 (February)"
+size_bytes = 4962
+[[demo.data_files]]
+path = "trips/data/pickup_date_month=2025-03/00000-3-49d5b23b-04bc-40d6-8ba7-d9bbf96ff725-0-00003.parquet"
+format = "parquet"
+description = "Partition: month=2025-03 (March)"
+size_bytes = 5040
+[[demo.data_files]]
+path = "trips/data/pickup_date_month=2025-04/00000-3-49d5b23b-04bc-40d6-8ba7-d9bbf96ff725-0-00004.parquet"
+format = "parquet"
+description = "Partition: month=2025-04 (April)"
+size_bytes = 5037
+[[demo.data_files]]
+path = "trips/data/pickup_date_month=2025-05/00000-3-49d5b23b-04bc-40d6-8ba7-d9bbf96ff725-0-00005.parquet"
+format = "parquet"
+description = "Partition: month=2025-05 (May)"
+size_bytes = 4907
+[[demo.data_files]]
+path = "trips/data/pickup_date_month=2025-06/00000-3-49d5b23b-04bc-40d6-8ba7-d9bbf96ff725-0-00006.parquet"
+format = "parquet"
+description = "Partition: month=2025-06 (June)"
+size_bytes = 4971
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.trips"

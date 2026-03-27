@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="obt" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#64748b"/>
+      <stop offset="1" stop-color="#1e3a5f"/>
+    </linearGradient>
+  </defs>
+  <!-- Bank building base -->
+  <rect x="14" y="32" width="52" height="38" rx="2" stroke="url(#obt)" stroke-width="1.5" fill="url(#obt)" fill-opacity=".06"/>
+  <!-- Pediment (triangle roof) -->
+  <polygon points="10,32 40,12 70,32" stroke="url(#obt)" stroke-width="1.5" fill="url(#obt)" fill-opacity=".1"/>
+  <!-- Columns -->
+  <rect x="22" y="36" width="4" height="30" rx="1" stroke="url(#obt)" stroke-width="1.2" fill="url(#obt)" fill-opacity=".15"/>
+  <rect x="34" y="36" width="4" height="30" rx="1" stroke="url(#obt)" stroke-width="1.2" fill="url(#obt)" fill-opacity=".15"/>
+  <rect x="46" y="36" width="4" height="30" rx="1" stroke="url(#obt)" stroke-width="1.2" fill="url(#obt)" fill-opacity=".15"/>
+  <rect x="58" y="36" width="4" height="30" rx="1" stroke="url(#obt)" stroke-width="1.2" fill="url(#obt)" fill-opacity=".15"/>
+  <!-- Steps -->
+  <rect x="10" y="70" width="60" height="4" rx="1" stroke="url(#obt)" stroke-width="1" fill="url(#obt)" fill-opacity=".08"/>
+  <!-- Dollar sign -->
+  <text x="40" y="28" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="url(#obt)" opacity=".7">$</text>
+</svg>

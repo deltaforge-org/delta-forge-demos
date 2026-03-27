@@ -1,0 +1,100 @@
+[demo]
+id = "iceberg-v2-copy-on-write"
+name = "Iceberg V2 — Copy-on-Write Mode"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Validates Iceberg format-version 2 copy-on-write support using a logistics \
+shipment tracking dataset. Unlike merge-on-read (which creates delete files), \
+copy-on-write rewrites entire data files on UPDATE and DELETE operations. \
+120 shipments were initially loaded; 20 were updated from "In Transit" to \
+"Delivered" (data file rewritten), then 10 cancelled shipments were deleted \
+(data file rewritten again). The current snapshot references a single clean \
+data file with 110 rows — no delete files exist. Exercises the Iceberg V2 \
+overwrite path: metadata chain → manifest list → data manifest → single \
+rewritten Parquet data file with all mutations pre-applied.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "intermediate", "read-only", "native-format", "v2", "copy-on-write", "logistics", "shipments", "overwrite"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "shipments/data/00000-20-71679a41-8d72-44fb-b17a-a55c57e4d9a1-0-00001.parquet"
+format = "parquet"
+description = "Current snapshot data file — 110 shipments after copy-on-write update and delete (single clean file, no delete files)"
+size_bytes = 5807
+
+[[demo.data_files]]
+path = "shipments/data/00000-12-7d56a6f3-0462-4982-9b73-58fc631ab0ee-0-00001.parquet"
+format = "parquet"
+description = "Intermediate data file — 120 shipments after copy-on-write update (snapshot 2, superseded)"
+size_bytes = 5923
+
+[[demo.data_files]]
+path = "shipments/data/00000-4-c95fb1bb-ad49-4f76-bd8c-62caa48197b2-0-00001.parquet"
+format = "parquet"
+description = "Original data file — 120 shipments from initial append (snapshot 1, superseded)"
+size_bytes = 5750
+
+[[demo.data_files]]
+path = "shipments/metadata/v4.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata with 3 snapshots: append (120 rows), overwrite (update 20), overwrite (delete 10)"
+size_bytes = 4585
+
+[[demo.data_files]]
+path = "shipments/metadata/snap-3503150654736440502-1-029347a3-1c70-4ea6-8d82-f3e4e737cf6b.avro"
+format = "avro"
+description = "Manifest list for delete-overwrite snapshot — references current data manifest"
+size_bytes = 4499
+
+[[demo.data_files]]
+path = "shipments/metadata/snap-3350455676600973538-1-060bfefc-f123-4108-afa4-25d9462df9c8.avro"
+format = "avro"
+description = "Manifest list for update-overwrite snapshot"
+size_bytes = 4498
+
+[[demo.data_files]]
+path = "shipments/metadata/snap-8094148403973941968-1-3bb46877-8e6e-415f-bc3a-e6c8899b5423.avro"
+format = "avro"
+description = "Manifest list for initial append snapshot"
+size_bytes = 4467
+
+[[demo.data_files]]
+path = "shipments/metadata/029347a3-1c70-4ea6-8d82-f3e4e737cf6b-m0.avro"
+format = "avro"
+description = "Data manifest — marks previous data file as deleted (snapshot 3)"
+size_bytes = 7834
+
+[[demo.data_files]]
+path = "shipments/metadata/029347a3-1c70-4ea6-8d82-f3e4e737cf6b-m1.avro"
+format = "avro"
+description = "Data manifest — adds current 110-row data file (snapshot 3)"
+size_bytes = 7827
+
+[[demo.data_files]]
+path = "shipments/metadata/060bfefc-f123-4108-afa4-25d9462df9c8-m0.avro"
+format = "avro"
+description = "Data manifest — marks original data file as deleted (snapshot 2)"
+size_bytes = 7837
+
+[[demo.data_files]]
+path = "shipments/metadata/060bfefc-f123-4108-afa4-25d9462df9c8-m1.avro"
+format = "avro"
+description = "Data manifest — adds updated 120-row data file (snapshot 2)"
+size_bytes = 7836
+
+[[demo.data_files]]
+path = "shipments/metadata/3bb46877-8e6e-415f-bc3a-e6c8899b5423-m0.avro"
+format = "avro"
+description = "Data manifest from initial append — references original 120-row data file"
+size_bytes = 7837
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.shipments"

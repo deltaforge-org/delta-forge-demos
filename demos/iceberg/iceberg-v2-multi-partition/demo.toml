@@ -1,0 +1,134 @@
+[demo]
+id = "iceberg-v2-multi-partition"
+name = "Iceberg V2 — Multi-Column Partitioning"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading with \
+multi-column partitioning using a global weather station readings dataset \
+(450 observations across 5 regions and 3 years). The table is partitioned \
+by region (identity) and years(observation_date), producing 15 partitions. \
+Exercises Iceberg v2 metadata chain parsing, multi-dimension partition \
+pruning, cross-partition aggregations, NULL handling, and predicate pushdown \
+on double columns — all without conversion to Delta format.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "beginner", "read-only", "native-format", "v2", "partitioning", "multi-partition", "weather", "pruning"]
+difficulty = "beginner"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "weather_readings/data/region=North+America/observation_date_year=2023/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00001.parquet"
+format = "parquet"
+description = "North America 2023 weather readings (30 rows)"
+size_bytes = 3485
+
+[[demo.data_files]]
+path = "weather_readings/data/region=North+America/observation_date_year=2024/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00002.parquet"
+format = "parquet"
+description = "North America 2024 weather readings (30 rows)"
+size_bytes = 3490
+
+[[demo.data_files]]
+path = "weather_readings/data/region=North+America/observation_date_year=2025/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00003.parquet"
+format = "parquet"
+description = "North America 2025 weather readings (30 rows)"
+size_bytes = 3497
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Europe/observation_date_year=2023/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00004.parquet"
+format = "parquet"
+description = "Europe 2023 weather readings (30 rows)"
+size_bytes = 3433
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Europe/observation_date_year=2024/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00005.parquet"
+format = "parquet"
+description = "Europe 2024 weather readings (30 rows)"
+size_bytes = 3457
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Europe/observation_date_year=2025/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00006.parquet"
+format = "parquet"
+description = "Europe 2025 weather readings (30 rows)"
+size_bytes = 3459
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Asia/observation_date_year=2023/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00007.parquet"
+format = "parquet"
+description = "Asia 2023 weather readings (30 rows)"
+size_bytes = 3458
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Asia/observation_date_year=2024/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00008.parquet"
+format = "parquet"
+description = "Asia 2024 weather readings (30 rows)"
+size_bytes = 3437
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Asia/observation_date_year=2025/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00009.parquet"
+format = "parquet"
+description = "Asia 2025 weather readings (30 rows)"
+size_bytes = 3459
+
+[[demo.data_files]]
+path = "weather_readings/data/region=South+America/observation_date_year=2023/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00010.parquet"
+format = "parquet"
+description = "South America 2023 weather readings (30 rows)"
+size_bytes = 3505
+
+[[demo.data_files]]
+path = "weather_readings/data/region=South+America/observation_date_year=2024/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00011.parquet"
+format = "parquet"
+description = "South America 2024 weather readings (30 rows)"
+size_bytes = 3553
+
+[[demo.data_files]]
+path = "weather_readings/data/region=South+America/observation_date_year=2025/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00012.parquet"
+format = "parquet"
+description = "South America 2025 weather readings (30 rows)"
+size_bytes = 3496
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Africa/observation_date_year=2023/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00013.parquet"
+format = "parquet"
+description = "Africa 2023 weather readings (30 rows)"
+size_bytes = 3448
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Africa/observation_date_year=2024/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00014.parquet"
+format = "parquet"
+description = "Africa 2024 weather readings (30 rows)"
+size_bytes = 3455
+
+[[demo.data_files]]
+path = "weather_readings/data/region=Africa/observation_date_year=2025/00000-1-c5930d75-0333-41b6-9ab5-8610323f5edf-0-00015.parquet"
+format = "parquet"
+description = "Africa 2025 weather readings (30 rows)"
+size_bytes = 3457
+
+[[demo.data_files]]
+path = "weather_readings/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg format v2 metadata (schema, snapshots, partition specs with region + years transform)"
+size_bytes = 2418
+
+[[demo.data_files]]
+path = "weather_readings/metadata/snap-3940489264684036615-1-5cb0be25-9868-4b8b-8761-c0f5605abaed.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — pointers to data manifests"
+size_bytes = 4507
+
+[[demo.data_files]]
+path = "weather_readings/metadata/5cb0be25-9868-4b8b-8761-c0f5605abaed-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to 15 partitioned Parquet data files"
+size_bytes = 9307
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.weather_readings"

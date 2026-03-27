@@ -1,0 +1,24 @@
+syntax = "proto3";
+package iot;
+
+import "google/protobuf/timestamp.proto";
+
+message SensorReading {
+  double value = 1;
+  google.protobuf.Timestamp recorded_at = 2;
+  string unit = 3;
+}
+
+message Sensor {
+  string sensor_id = 1;
+  string sensor_type = 2;  // "temperature", "humidity", "vibration"
+  string location = 3;     // "Line-A", "Line-B", "Warehouse"
+  string status = 4;       // "active", "maintenance", "offline"
+  repeated SensorReading readings = 5;
+  google.protobuf.Timestamp installed_at = 6;
+}
+
+message SensorNetwork {
+  repeated Sensor sensors = 1;
+  string facility_name = 2;
+}

@@ -1,0 +1,49 @@
+[demo]
+id = "iceberg-v2-complex-types"
+name = "Iceberg V2 — Complex Types (Struct & Array)"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading with \
+complex/nested column types. An e-commerce order processing dataset of \
+100 orders uses STRUCT for shipping addresses and ARRAY<STRUCT> for line \
+items. Exercises nested struct field access via dot notation, array \
+explosion via UNNEST, and aggregations over nested data — all without \
+conversion to Delta format.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "beginner", "read-only", "native-format", "v2", "complex-types", "struct", "array", "nested", "e-commerce"]
+difficulty = "beginner"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "orders/data/00000-2-9b0fefe2-352c-4c39-96a1-99bf674bb70f-0-00001.parquet"
+format = "parquet"
+description = "All 100 e-commerce orders with nested struct and array columns (single Parquet data file)"
+size_bytes = 8383
+
+[[demo.data_files]]
+path = "orders/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg format v2 metadata (schema with complex types, snapshots, partition specs)"
+size_bytes = 2668
+
+[[demo.data_files]]
+path = "orders/metadata/snap-3212386484517504893-1-189a8689-156d-402a-9c3d-f62e8c0403ce.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — pointers to data manifests"
+size_bytes = 4463
+
+[[demo.data_files]]
+path = "orders/metadata/189a8689-156d-402a-9c3d-f62e8c0403ce-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to Parquet data files"
+size_bytes = 8189
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.orders"

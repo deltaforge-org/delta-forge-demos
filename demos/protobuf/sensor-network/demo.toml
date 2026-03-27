@@ -1,0 +1,49 @@
+[demo]
+id = "protobuf-sensor-network"
+name = "Protobuf IoT Sensor Network — Manufacturing Floor Sensors"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates Protocol Buffers (proto3) reading with IoT manufacturing sensor \
+data. Three binary files contain 20 sensors across two factory floors and a \
+warehouse, with 82 individual readings. Two tables exercise repeated field \
+handling (SensorReading array → explode vs. comma-join), nested message \
+flattening, well-known type support (google.protobuf.Timestamp), multi-file \
+reading, file_metadata, and schema-driven column discovery from .proto \
+definitions.
+"""
+categories = ["protobuf"]
+tags = ["protobuf", "proto3", "intermediate", "nested-messages", "repeated-fields", "timestamps", "multi-file", "iot", "sensor-data"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo protobuf data files (.pb) are stored", required = true }
+schema_path = { description = "Path to the schema directory containing .proto files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/factory_floor_a.pb"
+format = "protobuf"
+description = "Factory Floor A — 8 sensors (3 temperature, 3 humidity, 2 vibration), 33 readings"
+size_bytes = 1344
+
+[[demo.data_files]]
+path = "data/factory_floor_b.pb"
+format = "protobuf"
+description = "Factory Floor B — 7 sensors (2 temperature, 2 humidity, 3 vibration), 29 readings"
+size_bytes = 1187
+
+[[demo.data_files]]
+path = "data/warehouse.pb"
+format = "protobuf"
+description = "Warehouse — 5 sensors (2 temperature, 2 humidity, 1 vibration), 20 readings"
+size_bytes = 839
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_iot.sensor_readings"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_iot.sensor_summary"

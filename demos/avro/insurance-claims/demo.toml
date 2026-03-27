@@ -1,0 +1,51 @@
+[demo]
+id = "avro-insurance-claims"
+name = "Avro Insurance Claims — Claims Processing with Schema Evolution"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates Avro reading features using 3 insurance claim files \
+(90 rows) with schema evolution (v1→v2 adds adjuster_name, settlement_date) \
+and mixed compression codecs (null, deflate). Three tables exercise \
+multi-file reading with NULL filling for evolved columns, file_filter \
+for auto-claim extraction, max_rows for sampling, and file_metadata \
+for traceability.
+"""
+categories = ["avro", "insurance"]
+tags = ["avro", "intermediate", "schema-evolution", "compression", "file-filter", "multi-file", "file-metadata", "null-filling"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo directory containing the Avro claim files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/claims_auto_v1.avro"
+format = "avro"
+description = "Auto claims — 30 rows, schema v1 (10 fields), null codec"
+size_bytes = 4271
+
+[[demo.data_files]]
+path = "data/claims_home_v1.avro"
+format = "avro"
+description = "Home claims — 30 rows, schema v1 (10 fields), deflate codec"
+size_bytes = 1981
+
+[[demo.data_files]]
+path = "data/claims_auto_v2.avro"
+format = "avro"
+description = "Auto claims v2 — 30 rows, schema v2 (12 fields), deflate codec"
+size_bytes = 2299
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.avro_insurance.all_claims"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.avro_insurance.auto_claims_only"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.avro_insurance.sampled_claims"

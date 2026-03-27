@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="aic" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f87171"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield body -->
+  <path d="M40 8L14 20V42C14 56 25 68 40 74C55 68 66 56 66 42V20L40 8Z"
+        fill="url(#aic)" opacity=".15" stroke="url(#aic)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Inner shield highlight -->
+  <path d="M40 14L20 24V42C20 52 28 62 40 67C52 62 60 52 60 42V24L40 14Z"
+        fill="url(#aic)" opacity=".08" stroke="url(#aic)" stroke-width="1" opacity=".4"/>
+  <!-- Checkmark -->
+  <path d="M28 40L36 48L52 30" stroke="url(#aic)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <!-- Small doc lines (claim form feel) -->
+  <line x1="32" y1="56" x2="48" y2="56" stroke="url(#aic)" stroke-width="1" opacity=".3" stroke-linecap="round"/>
+  <line x1="34" y1="60" x2="46" y2="60" stroke="url(#aic)" stroke-width="1" opacity=".2" stroke-linecap="round"/>
+</svg>

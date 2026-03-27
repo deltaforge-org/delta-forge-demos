@@ -1,0 +1,141 @@
+[demo]
+id = "iceberg-v2-snapshot-consistency"
+name = "Iceberg V2 — Snapshot Consistency"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Validates Iceberg format-version 2 snapshot consistency using a retail \
+store inventory ledger. The table undergoes 4 snapshots: initial stock \
+load (80 products across 4 categories), restocking INSERT (20 new \
+products), price correction UPDATE (Electronics +8% via merge-on-read), \
+and discontinuation DELETE (10 SKUs removed). Queries read the final \
+consistent 90-row state and verify category breakdowns, price \
+adjustments, new product presence, discontinued product absence, \
+supplier analysis, inventory valuations, and snapshot history. \
+Exercises the full Iceberg V2 merge-on-read path with multiple \
+position delete files across UPDATE and DELETE operations.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "intermediate", "read-only", "native-format", "v2", "snapshot-consistency", "merge-on-read", "position-deletes", "retail", "inventory"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+# --- Data files (3 data + 4 delete) ---
+
+[[demo.data_files]]
+path = "inventory/data/00000-0-b7cd6a79-bec1-4eaf-8445-8f5aeced6207-0-00001.parquet"
+format = "parquet"
+description = "Snapshot 1 data — initial 80 products (all 4 categories, 20 each)"
+size_bytes = 3939
+
+[[demo.data_files]]
+path = "inventory/data/00000-3-8f0b42ad-3b6c-4a89-9869-267960f647a7-0-00001.parquet"
+format = "parquet"
+description = "Snapshot 2 data — 20 new restocked products (5 per category)"
+size_bytes = 2870
+
+[[demo.data_files]]
+path = "inventory/data/00000-7-bf0a6566-14ed-47b4-87c9-3be6d410d91a-00001.parquet"
+format = "parquet"
+description = "Snapshot 3 data — 25 Electronics products with updated (+8%) prices"
+size_bytes = 3069
+
+[[demo.data_files]]
+path = "inventory/data/00000-7-bf0a6566-14ed-47b4-87c9-3be6d410d91a-00001-deletes.parquet"
+format = "parquet"
+description = "Snapshot 3 position deletes — 20 original Electronics rows superseded by price update"
+size_bytes = 1669
+
+[[demo.data_files]]
+path = "inventory/data/00000-7-bf0a6566-14ed-47b4-87c9-3be6d410d91a-00002-deletes.parquet"
+format = "parquet"
+description = "Snapshot 3 position deletes — 5 new Electronics rows superseded by price update"
+size_bytes = 1633
+
+[[demo.data_files]]
+path = "inventory/data/00000-13-31925aca-1698-48a6-a305-81542e135e93-00001-deletes.parquet"
+format = "parquet"
+description = "Snapshot 4 position deletes — 28 positions in initial data file (includes 20 already-deleted Electronics + 8 discontinued SKUs)"
+size_bytes = 1685
+
+[[demo.data_files]]
+path = "inventory/data/00000-13-31925aca-1698-48a6-a305-81542e135e93-00002-deletes.parquet"
+format = "parquet"
+description = "Snapshot 4 position deletes — 2 discontinued SKUs from Snapshot 3 replacement data file"
+size_bytes = 1615
+
+# --- Metadata files ---
+
+[[demo.data_files]]
+path = "inventory/metadata/v5.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata with 4 snapshots: create+append, append, overwrite (UPDATE), delete"
+size_bytes = 5431
+
+[[demo.data_files]]
+path = "inventory/metadata/snap-1957851769265421796-1-566ec4e0-dcdd-4c6d-b823-2f49a2f759f0.avro"
+format = "avro"
+description = "Manifest list for Snapshot 1 — initial 80-row append"
+size_bytes = 4468
+
+[[demo.data_files]]
+path = "inventory/metadata/snap-4781069988086795434-1-cd222c3e-07b3-4786-9e46-77f7a84ca911.avro"
+format = "avro"
+description = "Manifest list for Snapshot 2 — 20-row restock append"
+size_bytes = 4544
+
+[[demo.data_files]]
+path = "inventory/metadata/snap-2662764502247894211-1-0d1106bd-1690-4b43-8377-cb229374e955.avro"
+format = "avro"
+description = "Manifest list for Snapshot 3 — Electronics price update (data + delete manifests)"
+size_bytes = 4612
+
+[[demo.data_files]]
+path = "inventory/metadata/snap-6158576737164140264-1-fb910ff9-cdb9-439f-b931-c8216b7967c0.avro"
+format = "avro"
+description = "Manifest list for Snapshot 4 — discontinuation deletes"
+size_bytes = 4664
+
+[[demo.data_files]]
+path = "inventory/metadata/566ec4e0-dcdd-4c6d-b823-2f49a2f759f0-m0.avro"
+format = "avro"
+description = "Data manifest — Snapshot 1 initial data file"
+size_bytes = 7518
+
+[[demo.data_files]]
+path = "inventory/metadata/cd222c3e-07b3-4786-9e46-77f7a84ca911-m0.avro"
+format = "avro"
+description = "Data manifest — Snapshot 2 restock data file"
+size_bytes = 7518
+
+[[demo.data_files]]
+path = "inventory/metadata/0d1106bd-1690-4b43-8377-cb229374e955-m0.avro"
+format = "avro"
+description = "Data + delete manifest — Snapshot 3 price update (new data + position deletes)"
+size_bytes = 7514
+
+[[demo.data_files]]
+path = "inventory/metadata/0d1106bd-1690-4b43-8377-cb229374e955-m1.avro"
+format = "avro"
+description = "Existing data manifest — Snapshot 3 carries forward prior data references"
+size_bytes = 7485
+
+[[demo.data_files]]
+path = "inventory/metadata/fb910ff9-cdb9-439f-b931-c8216b7967c0-m0.avro"
+format = "avro"
+description = "Delete manifest — Snapshot 4 discontinuation position deletes"
+size_bytes = 7502
+
+[[demo.data_files]]
+path = "inventory/metadata/fb910ff9-cdb9-439f-b931-c8216b7967c0-m1.avro"
+format = "avro"
+description = "Existing manifests — Snapshot 4 carries forward prior data + delete references"
+size_bytes = 7495
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.inventory"
