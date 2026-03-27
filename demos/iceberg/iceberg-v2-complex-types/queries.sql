@@ -49,15 +49,18 @@ ORDER BY order_count DESC, city;
 -- per order line item. Verifies correct array-of-struct reading.
 
 ASSERT ROW_COUNT = 311
+WITH exploded AS (
+    SELECT order_id, unnest(items) AS item
+    FROM {{zone_name}}.iceberg.orders
+)
 SELECT
-    o.order_id,
-    item.product_name,
-    item.quantity,
-    item.unit_price,
-    item.quantity * item.unit_price AS line_total
-FROM {{zone_name}}.iceberg.orders o,
-     UNNEST(items) AS t(item)
-ORDER BY o.order_id, item.product_name;
+    order_id,
+    item['product_name'] AS product_name,
+    item['quantity'] AS quantity,
+    item['unit_price'] AS unit_price,
+    item['quantity'] * item['unit_price'] AS line_total
+FROM exploded
+ORDER BY order_id, product_name;
 
 
 -- ============================================================================
@@ -93,12 +96,15 @@ ASSERT ROW_COUNT = 10
 ASSERT VALUE total_qty = 71 WHERE product_name = 'Desk Lamp'
 ASSERT VALUE total_qty = 70 WHERE product_name = 'Keyboard'
 ASSERT VALUE total_qty = 50 WHERE product_name = 'Laptop'
+WITH exploded AS (
+    SELECT unnest(items) AS item
+    FROM {{zone_name}}.iceberg.orders
+)
 SELECT
-    item.product_name AS product_name,
-    SUM(item.quantity) AS total_qty
-FROM {{zone_name}}.iceberg.orders o,
-     UNNEST(items) AS t(item)
-GROUP BY item.product_name
+    item['product_name'] AS product_name,
+    SUM(item['quantity']) AS total_qty
+FROM exploded
+GROUP BY item['product_name']
 ORDER BY total_qty DESC;
 
 
@@ -135,5 +141,5 @@ SELECT
     COUNT(*) AS total_orders,
     ROUND(SUM(order_total), 2) AS sum_order_total,
     COUNT(DISTINCT shipping_address.city) AS distinct_cities,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg.orders o2, UNNEST(items) AS t(item)) AS total_items
+    (SELECT COUNT(*) FROM (SELECT unnest(items) AS item FROM {{zone_name}}.iceberg.orders) sub) AS total_items
 FROM {{zone_name}}.iceberg.orders;
