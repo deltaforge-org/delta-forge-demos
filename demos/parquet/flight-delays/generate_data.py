@@ -28,12 +28,12 @@ SELECT
     (['JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA'])[(((i - 1) % 8) + 1)] AS origin,
     (['JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA'])[(((i + 3) % 8) + 1)] AS destination,
     CAST(DATE '2025-01-01' + INTERVAL ((i - 1) * 2) DAY AS DATE) AS departure_date,
-    CAST(TIME '06:00:00' + INTERVAL ((i * 37) % 720) MINUTE AS VARCHAR) AS scheduled_time,
-    CAST(TIME '06:00:00' + INTERVAL (((i * 37) % 720) + (CASE
+    TIME '06:00:00' + INTERVAL ((i * 37) % 720) MINUTE AS scheduled_time,
+    TIME '06:00:00' + INTERVAL (((i * 37) % 720) + (CASE
         WHEN i % 2 = 1 THEN 0  -- odd = on-time
         WHEN i IN (2,20) THEN 0  -- cancelled (delay_minutes=0)
         ELSE ((i * 13 + 7) % 170) + 10
-    END)) MINUTE AS VARCHAR) AS actual_time,
+    END)) MINUTE AS actual_time,
     (CASE
         WHEN i % 2 = 1 THEN 0
         WHEN i IN (2,20) THEN 0
@@ -63,12 +63,12 @@ SELECT
     (['JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA'])[(((i - 1) % 8) + 1)] AS origin,
     (['JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA'])[(((i + 3) % 8) + 1)] AS destination,
     CAST(DATE '2025-04-01' + INTERVAL (((i - 41) * 2)) DAY AS DATE) AS departure_date,
-    CAST(TIME '06:00:00' + INTERVAL ((i * 37) % 720) MINUTE AS VARCHAR) AS scheduled_time,
-    CAST(TIME '06:00:00' + INTERVAL (((i * 37) % 720) + (CASE
+    TIME '06:00:00' + INTERVAL ((i * 37) % 720) MINUTE AS scheduled_time,
+    TIME '06:00:00' + INTERVAL (((i * 37) % 720) + (CASE
         WHEN i % 2 = 1 THEN 0
         WHEN i IN (42,60) THEN 0
         ELSE ((i * 13 + 7) % 170) + 10
-    END)) MINUTE AS VARCHAR) AS actual_time,
+    END)) MINUTE AS actual_time,
     (CASE
         WHEN i % 2 = 1 THEN 0
         WHEN i IN (42,60) THEN 0
@@ -103,12 +103,12 @@ SELECT
     (['JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA'])[(((i - 1) % 8) + 1)] AS origin,
     (['JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA'])[(((i + 3) % 8) + 1)] AS destination,
     CAST(DATE '2025-07-01' + INTERVAL (((i - 81) * 2)) DAY AS DATE) AS departure_date,
-    CAST(TIME '06:00:00' + INTERVAL ((i * 37) % 720) MINUTE AS VARCHAR) AS scheduled_time,
-    CAST(TIME '06:00:00' + INTERVAL (((i * 37) % 720) + (CASE
+    TIME '06:00:00' + INTERVAL ((i * 37) % 720) MINUTE AS scheduled_time,
+    TIME '06:00:00' + INTERVAL (((i * 37) % 720) + (CASE
         WHEN i % 2 = 1 THEN 0
         WHEN i IN (82,100) THEN 0
         ELSE ((i * 13 + 7) % 170) + 10
-    END)) MINUTE AS VARCHAR) AS actual_time,
+    END)) MINUTE AS actual_time,
     (CASE
         WHEN i % 2 = 1 THEN 0
         WHEN i IN (82,100) THEN 0
