@@ -50,7 +50,8 @@ SELECT * FROM {{zone_name}}.eq_del_demo.products_iceberg WHERE id IN (2, 5, 8);
 -- ============================================================================
 -- Verify the exact set of remaining product IDs on the Delta side.
 
-ASSERT ROW_COUNT = 7
+ASSERT ROW_COUNT = 1
+ASSERT VALUE product_count = 7
 ASSERT VALUE total_price = 2403.48
 SELECT
     COUNT(*) AS product_count,
