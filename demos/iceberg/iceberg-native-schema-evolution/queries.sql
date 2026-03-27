@@ -99,6 +99,7 @@ SELECT
     emp_id,
     full_name,
     department,
+    title,
     location
 FROM {{zone_name}}.iceberg.employee_directory
 WHERE location IS NOT NULL
