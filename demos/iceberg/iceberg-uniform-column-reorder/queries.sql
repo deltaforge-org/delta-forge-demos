@@ -231,35 +231,91 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.patient_records_iceberg;
 
 
 -- ============================================================================
--- Iceberg Verify 1: Row Count — 24 Records (20 Original + 4 Post-Reorder)
--- ============================================================================
-
-ASSERT ROW_COUNT = 24
-SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg ORDER BY record_id;
-
-
--- ============================================================================
--- Iceberg Verify 2: Data Integrity — All MRNs Present and Unique
+-- Iceberg Verify 1: Full Row Count and Aggregates
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_records = 24
 ASSERT VALUE distinct_mrns = 24
 ASSERT VALUE distinct_codes = 12
+ASSERT VALUE distinct_physicians = 8
 SELECT
     COUNT(*) AS total_records,
     COUNT(DISTINCT mrn) AS distinct_mrns,
-    COUNT(DISTINCT diagnosis_code) AS distinct_codes
+    COUNT(DISTINCT diagnosis_code) AS distinct_codes,
+    COUNT(DISTINCT attending_physician) AS distinct_physicians
 FROM {{zone_name}}.iceberg_demos.patient_records_iceberg;
 
 
 -- ============================================================================
--- Iceberg Verify 3: Diagnosis Counts Must Match Delta Final State
+-- Iceberg Verify 2: Original Records — Spot-Check Individual Rows
+-- ============================================================================
+-- Verify specific patient data survived column reordering intact.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE mrn = 'MRN-1001'
+ASSERT VALUE first_name = 'John'
+ASSERT VALUE last_name = 'Smith'
+ASSERT VALUE dob = '1955-03-12'
+ASSERT VALUE diagnosis_code = 'I25.10'
+ASSERT VALUE attending_physician = 'Dr. Chen'
+SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 1;
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE mrn = 'MRN-1010'
+ASSERT VALUE first_name = 'Susan'
+ASSERT VALUE last_name = 'Taylor'
+ASSERT VALUE diagnosis_code = 'S72.001'
+ASSERT VALUE admission_date = '2025-01-18'
+ASSERT VALUE discharge_date = '2025-02-01'
+ASSERT VALUE attending_physician = 'Dr. Kim'
+SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 10;
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE mrn = 'MRN-1020'
+ASSERT VALUE first_name = 'Elizabeth'
+ASSERT VALUE last_name = 'Clark'
+ASSERT VALUE diagnosis_code = 'C50.911'
+ASSERT VALUE attending_physician = 'Dr. Okafor'
+SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 20;
+
+
+-- ============================================================================
+-- Iceberg Verify 3: Post-Reorder Inserts — Values Written After Column Move
+-- ============================================================================
+-- These rows were inserted AFTER the column reorder. Verifies that Iceberg
+-- metadata correctly maps values written in the new column order.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE mrn = 'MRN-1021'
+ASSERT VALUE first_name = 'Andrew'
+ASSERT VALUE last_name = 'Lee'
+ASSERT VALUE diagnosis_code = 'I25.10'
+ASSERT VALUE admission_date = '2025-02-01'
+ASSERT VALUE attending_physician = 'Dr. Chen'
+SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 21;
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE mrn = 'MRN-1024'
+ASSERT VALUE first_name = 'Margaret'
+ASSERT VALUE last_name = 'Allen'
+ASSERT VALUE diagnosis_code = 'C18.9'
+ASSERT VALUE discharge_date = '2025-02-21'
+ASSERT VALUE attending_physician = 'Dr. Reeves'
+SELECT * FROM {{zone_name}}.iceberg_demos.patient_records_iceberg WHERE record_id = 24;
+
+
+-- ============================================================================
+-- Iceberg Verify 4: Diagnosis Counts Must Match Delta Final State
 -- ============================================================================
 
 ASSERT ROW_COUNT = 12
 ASSERT VALUE patient_count = 3 WHERE diagnosis_code = 'I25.10'
+ASSERT VALUE patient_count = 2 WHERE diagnosis_code = 'I48.0'
+ASSERT VALUE patient_count = 2 WHERE diagnosis_code = 'M54.5'
+ASSERT VALUE patient_count = 2 WHERE diagnosis_code = 'G30.9'
 ASSERT VALUE patient_count = 2 WHERE diagnosis_code = 'C18.9'
+ASSERT VALUE patient_count = 2 WHERE diagnosis_code = 'C50.911'
 SELECT
     diagnosis_code,
     COUNT(*) AS patient_count
