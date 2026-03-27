@@ -25,8 +25,8 @@ OPTIONS (
     recursive = 'true',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.csv_vet.all_visits;
 GRANT ADMIN ON TABLE {{zone_name}}.csv_vet.all_visits TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.csv_vet.all_visits;
 
 -- ============================================================================
 -- TABLE 2: north_only — File filter for branch-north
@@ -37,10 +37,11 @@ USING CSV
 LOCATION '{{data_path}}'
 OPTIONS (
     header = 'true',
+    recursive = 'true',
     file_filter = '*north*'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.csv_vet.north_only;
 GRANT ADMIN ON TABLE {{zone_name}}.csv_vet.north_only TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.csv_vet.north_only;
 
 -- ============================================================================
 -- TABLE 3: sampled_visits — Max rows = 10 per file
@@ -54,5 +55,5 @@ OPTIONS (
     recursive = 'true',
     max_rows = '10'
 );
-DETECT SCHEMA FOR TABLE {{zone_name}}.csv_vet.sampled_visits;
 GRANT ADMIN ON TABLE {{zone_name}}.csv_vet.sampled_visits TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.csv_vet.sampled_visits;
