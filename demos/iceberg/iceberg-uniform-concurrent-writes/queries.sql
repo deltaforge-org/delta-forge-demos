@@ -213,10 +213,10 @@ USING {{zone_name}}.iceberg_demos.beta_corrections AS source
 ON target.record_id = source.record_id
 WHEN MATCHED THEN
     UPDATE SET
-        target.record_type  = source.record_type,
-        target.payload_hash = source.payload_hash,
-        target.ingested_at  = source.ingested_at,
-        target.batch_id     = source.batch_id
+        record_type  = source.record_type,
+        payload_hash = source.payload_hash,
+        ingested_at  = source.ingested_at,
+        batch_id     = source.batch_id
 WHEN NOT MATCHED THEN
     INSERT (record_id, pipeline_name, source_system, record_type, payload_hash, ingested_at, batch_id)
     VALUES (source.record_id, source.pipeline_name, source.source_system,
