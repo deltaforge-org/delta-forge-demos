@@ -47,7 +47,7 @@ ORDER BY sensor_id, reading_value;
 -- ============================================================================
 -- TEMP-A001 has readings: 22.5, 23.1, 22.8, 23.4 (all celsius).
 
-ASSERT ROW_COUNT = 4
+ASSERT ROW_COUNT = 1
 ASSERT VALUE min_val = 22.5 WHERE sensor_id = 'TEMP-A001'
 ASSERT VALUE max_val = 23.4 WHERE sensor_id = 'TEMP-A001'
 SELECT sensor_id,
@@ -64,7 +64,7 @@ GROUP BY sensor_id;
 -- ============================================================================
 -- VIB-B002 (maintenance): 7.8, 8.2, 8.5, 7.9 mm/s — high vibration sensor.
 
-ASSERT ROW_COUNT = 4
+ASSERT ROW_COUNT = 1
 ASSERT VALUE min_val = 7.8 WHERE sensor_id = 'VIB-B002'
 ASSERT VALUE max_val = 8.5 WHERE sensor_id = 'VIB-B002'
 ASSERT VALUE avg_val = 8.1 WHERE sensor_id = 'VIB-B002'
@@ -83,7 +83,7 @@ GROUP BY sensor_id;
 -- ============================================================================
 -- HUM-W002 (maintenance): 72.1, 73.5, 71.8, 72.9 percent.
 
-ASSERT ROW_COUNT = 4
+ASSERT ROW_COUNT = 1
 ASSERT VALUE min_val = 71.8 WHERE sensor_id = 'HUM-W002'
 ASSERT VALUE max_val = 73.5 WHERE sensor_id = 'HUM-W002'
 SELECT sensor_id, status,
