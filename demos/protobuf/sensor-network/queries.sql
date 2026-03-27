@@ -1,33 +1,102 @@
 -- ============================================================================
 -- Protobuf IoT Sensor Network — Verification Queries
 -- ============================================================================
--- Each query verifies a specific protobuf feature: nested message flattening,
--- repeated field handling (explode vs. join_comma), timestamp conversion,
--- multi-file reading, and file metadata.
+-- Validates actual field values read from protobuf binary files, not just
+-- row counts. Each query checks known values from the seed data across all
+-- three facility files, both tables, and key protobuf features.
 -- ============================================================================
 
 
 -- ============================================================================
--- 1. SENSOR SUMMARY — 8 + 7 + 5 = 20 sensors across 3 facility files
+-- Query 1: SENSOR SUMMARY — row count and known sensor fields
 -- ============================================================================
+-- Verifies the summary table (one row per sensor, repeated fields joined).
 
 ASSERT ROW_COUNT = 20
-SELECT *
-FROM {{zone_name}}.protobuf_iot.sensor_summary;
+ASSERT VALUE sensor_type = 'temperature' WHERE sensor_id = 'TEMP-A001'
+ASSERT VALUE location = 'Line-A' WHERE sensor_id = 'TEMP-A001'
+ASSERT VALUE status = 'active' WHERE sensor_id = 'TEMP-A001'
+ASSERT VALUE sensor_type = 'vibration' WHERE sensor_id = 'VIB-B002'
+ASSERT VALUE status = 'maintenance' WHERE sensor_id = 'VIB-B002'
+ASSERT VALUE location = 'Line-B' WHERE sensor_id = 'VIB-B002'
+ASSERT VALUE sensor_type = 'humidity' WHERE sensor_id = 'HUM-W001'
+ASSERT VALUE location = 'Warehouse' WHERE sensor_id = 'HUM-W001'
+ASSERT VALUE status = 'offline' WHERE sensor_id = 'TEMP-B002'
+SELECT sensor_id, sensor_type, location, status
+FROM {{zone_name}}.protobuf_iot.sensor_summary
+ORDER BY sensor_id;
 
 
 -- ============================================================================
--- 2. EXPLODED READINGS — 33 + 29 + 20 = 82 reading rows
+-- Query 2: EXPLODED READINGS — specific reading values from each file
 -- ============================================================================
--- Each SensorReading within each Sensor becomes its own row.
+-- Verifies that exploded readings carry correct double values and units.
+-- Checks one known reading from each of the 3 facility files.
 
 ASSERT ROW_COUNT = 82
-SELECT *
-FROM {{zone_name}}.protobuf_iot.sensor_readings;
+ASSERT VALUE reading_value = 22.5 WHERE sensor_id = 'TEMP-A001' AND unit = 'celsius' AND reading_value = 22.5
+ASSERT VALUE unit = 'percent' WHERE sensor_id = 'HUM-B002' AND reading_value = 61.5
+ASSERT VALUE unit = 'mm_per_s' WHERE sensor_id = 'VIB-W001' AND reading_value = 0.5
+SELECT sensor_id, reading_value, unit
+FROM {{zone_name}}.protobuf_iot.sensor_readings
+ORDER BY sensor_id, reading_value;
 
 
 -- ============================================================================
--- 3. SENSOR TYPE BREAKDOWN — count and average reading value per type
+-- Query 3: SPECIFIC SENSOR READINGS — verify all 4 readings for TEMP-A001
+-- ============================================================================
+-- TEMP-A001 has readings: 22.5, 23.1, 22.8, 23.4 (all celsius).
+
+ASSERT ROW_COUNT = 4
+ASSERT VALUE min_val = 22.5 WHERE sensor_id = 'TEMP-A001'
+ASSERT VALUE max_val = 23.4 WHERE sensor_id = 'TEMP-A001'
+SELECT sensor_id,
+       MIN(reading_value) AS min_val,
+       MAX(reading_value) AS max_val,
+       COUNT(*) AS cnt
+FROM {{zone_name}}.protobuf_iot.sensor_readings
+WHERE sensor_id = 'TEMP-A001'
+GROUP BY sensor_id;
+
+
+-- ============================================================================
+-- Query 4: VIBRATION SENSOR VALUES — verify readings from Line-B
+-- ============================================================================
+-- VIB-B002 (maintenance): 7.8, 8.2, 8.5, 7.9 mm/s — high vibration sensor.
+
+ASSERT ROW_COUNT = 4
+ASSERT VALUE min_val = 7.8 WHERE sensor_id = 'VIB-B002'
+ASSERT VALUE max_val = 8.5 WHERE sensor_id = 'VIB-B002'
+ASSERT VALUE avg_val = 8.1 WHERE sensor_id = 'VIB-B002'
+SELECT sensor_id,
+       MIN(reading_value) AS min_val,
+       MAX(reading_value) AS max_val,
+       ROUND(AVG(reading_value), 1) AS avg_val,
+       COUNT(*) AS cnt
+FROM {{zone_name}}.protobuf_iot.sensor_readings
+WHERE sensor_id = 'VIB-B002'
+GROUP BY sensor_id;
+
+
+-- ============================================================================
+-- Query 5: WAREHOUSE HUMIDITY — verify exact reading values for HUM-W002
+-- ============================================================================
+-- HUM-W002 (maintenance): 72.1, 73.5, 71.8, 72.9 percent.
+
+ASSERT ROW_COUNT = 4
+ASSERT VALUE min_val = 71.8 WHERE sensor_id = 'HUM-W002'
+ASSERT VALUE max_val = 73.5 WHERE sensor_id = 'HUM-W002'
+SELECT sensor_id, status,
+       MIN(reading_value) AS min_val,
+       MAX(reading_value) AS max_val,
+       COUNT(*) AS cnt
+FROM {{zone_name}}.protobuf_iot.sensor_readings
+WHERE sensor_id = 'HUM-W002'
+GROUP BY sensor_id, status;
+
+
+-- ============================================================================
+-- Query 6: SENSOR TYPE BREAKDOWN — count and reading ranges per type
 -- ============================================================================
 
 ASSERT ROW_COUNT = 3
@@ -43,7 +112,7 @@ ORDER BY sensor_type;
 
 
 -- ============================================================================
--- 4. LOCATION ANALYSIS — sensors and readings per location
+-- Query 7: LOCATION ANALYSIS — sensors and readings per location
 -- ============================================================================
 
 ASSERT ROW_COUNT = 3
@@ -62,7 +131,7 @@ ORDER BY location;
 
 
 -- ============================================================================
--- 5. STATUS CHECK — sensor status distribution
+-- Query 8: STATUS CHECK — sensor status distribution
 -- ============================================================================
 
 ASSERT ROW_COUNT = 3
@@ -77,7 +146,7 @@ ORDER BY sensor_count DESC;
 
 
 -- ============================================================================
--- 6. FILE SOURCE VERIFICATION — 3 distinct source files
+-- Query 9: FILE SOURCE VERIFICATION — sensors per source file
 -- ============================================================================
 
 ASSERT ROW_COUNT = 3
@@ -92,10 +161,24 @@ ORDER BY df_file_name;
 
 
 -- ============================================================================
+-- Query 10: FIVE-READING SENSOR — HUM-A003 and HUM-B002 have 5 readings
+-- ============================================================================
+-- Most sensors have 4 readings; HUM-A003 and HUM-B002 each have 5.
+
+ASSERT ROW_COUNT = 2
+ASSERT VALUE reading_count = 5 WHERE sensor_id = 'HUM-A003'
+ASSERT VALUE reading_count = 5 WHERE sensor_id = 'HUM-B002'
+SELECT sensor_id, COUNT(*) AS reading_count
+FROM {{zone_name}}.protobuf_iot.sensor_readings
+GROUP BY sensor_id
+HAVING COUNT(*) = 5
+ORDER BY sensor_id;
+
+
+-- ============================================================================
 -- VERIFY: Grand Totals
 -- ============================================================================
--- Cross-cutting sanity check: sensor count, reading count, type distribution,
--- location distribution, status distribution, and file metadata.
+-- Cross-cutting sanity check covering key data invariants.
 
 ASSERT ROW_COUNT = 8
 ASSERT VALUE result = 'PASS' WHERE check_name = 'sensor_count_20'
