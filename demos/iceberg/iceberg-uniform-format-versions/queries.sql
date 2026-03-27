@@ -295,26 +295,26 @@ SELECT
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-CREATE EXTERNAL TABLE IF NOT EXISTS sensors_v1_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v1_iceberg
 USING ICEBERG
 LOCATION '{{data_path}}/sensors_v1';
 
-GRANT ADMIN ON TABLE sensors_v1_iceberg TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE sensors_v1_iceberg;
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v1_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.sensors_v1_iceberg;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS sensors_v2_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v2_iceberg
 USING ICEBERG
 LOCATION '{{data_path}}/sensors_v2';
 
-GRANT ADMIN ON TABLE sensors_v2_iceberg TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE sensors_v2_iceberg;
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v2_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.sensors_v2_iceberg;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS sensors_v3_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v3_iceberg
 USING ICEBERG
 LOCATION '{{data_path}}/sensors_v3';
 
-GRANT ADMIN ON TABLE sensors_v3_iceberg TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE sensors_v3_iceberg;
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v3_iceberg TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.sensors_v3_iceberg;
 
 
 -- ============================================================================
@@ -322,13 +322,13 @@ DETECT SCHEMA FOR TABLE sensors_v3_iceberg;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 12
-SELECT * FROM sensors_v1_iceberg ORDER BY id;
+SELECT * FROM {{zone_name}}.iceberg_demos.sensors_v1_iceberg ORDER BY id;
 
 ASSERT ROW_COUNT = 12
-SELECT * FROM sensors_v2_iceberg ORDER BY id;
+SELECT * FROM {{zone_name}}.iceberg_demos.sensors_v2_iceberg ORDER BY id;
 
 ASSERT ROW_COUNT = 12
-SELECT * FROM sensors_v3_iceberg ORDER BY id;
+SELECT * FROM {{zone_name}}.iceberg_demos.sensors_v3_iceberg ORDER BY id;
 
 
 -- ============================================================================
@@ -342,7 +342,7 @@ ASSERT VALUE avg_temp = 22.43 WHERE location = 'Lab-C'
 SELECT
     location,
     ROUND(AVG(temperature), 2) AS avg_temp
-FROM sensors_v1_iceberg
+FROM {{zone_name}}.iceberg_demos.sensors_v1_iceberg
 GROUP BY location
 ORDER BY location;
 
@@ -359,7 +359,7 @@ ASSERT VALUE status = 'corrected'
 SELECT
     temperature,
     status
-FROM sensors_v3_iceberg
+FROM {{zone_name}}.iceberg_demos.sensors_v3_iceberg
 WHERE id = 8;
 
 
@@ -372,6 +372,6 @@ ASSERT VALUE v1_avg = 22.21
 ASSERT VALUE v3_avg = 21.85
 ASSERT VALUE v1_total_humidity = 571.50
 SELECT
-    ROUND((SELECT AVG(temperature) FROM sensors_v1_iceberg), 2) AS v1_avg,
-    ROUND((SELECT AVG(temperature) FROM sensors_v3_iceberg), 2) AS v3_avg,
-    ROUND((SELECT SUM(humidity) FROM sensors_v1_iceberg), 2) AS v1_total_humidity;
+    ROUND((SELECT AVG(temperature) FROM {{zone_name}}.iceberg_demos.sensors_v1_iceberg), 2) AS v1_avg,
+    ROUND((SELECT AVG(temperature) FROM {{zone_name}}.iceberg_demos.sensors_v3_iceberg), 2) AS v3_avg,
+    ROUND((SELECT SUM(humidity) FROM {{zone_name}}.iceberg_demos.sensors_v1_iceberg), 2) AS v1_total_humidity;
