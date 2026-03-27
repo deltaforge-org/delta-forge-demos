@@ -72,7 +72,59 @@ FROM {{zone_name}}.puffin_dv_demo.products_iceberg;
 
 
 -- ============================================================================
--- Query 7: Delta — Category Distribution
+-- Query 7: Delta — Per-Row Value Check
+-- ============================================================================
+-- Verify each surviving product's actual name and price through Delta.
+-- This catches corruption where row counts are right but values are wrong
+-- (e.g., wrong rows deleted, data shifted, or columns swapped).
+
+ASSERT ROW_COUNT = 7
+ASSERT VALUE name = 'Quantum Widget' WHERE id = 1
+ASSERT VALUE price = 299.99 WHERE id = 1
+ASSERT VALUE name = 'Bio Reactor Kit' WHERE id = 3
+ASSERT VALUE price = 599.0 WHERE id = 3
+ASSERT VALUE name = 'Solar Panel Mini' WHERE id = 4
+ASSERT VALUE price = 425.0 WHERE id = 4
+ASSERT VALUE name = 'LED Matrix Board' WHERE id = 6
+ASSERT VALUE price = 175.0 WHERE id = 6
+ASSERT VALUE name = 'Thermal Coupler' WHERE id = 7
+ASSERT VALUE price = 64.5 WHERE id = 7
+ASSERT VALUE name = 'Wind Turbine Blade' WHERE id = 9
+ASSERT VALUE price = 850.0 WHERE id = 9
+ASSERT VALUE name = 'Plasma Cutter Pro' WHERE id = 10
+ASSERT VALUE price = 399.99 WHERE id = 10
+SELECT id, name, price
+FROM {{zone_name}}.puffin_dv_demo.products
+ORDER BY id;
+
+
+-- ============================================================================
+-- Query 8: Iceberg — Per-Row Value Check
+-- ============================================================================
+-- Same per-row verification via Iceberg. Values must match Delta exactly.
+
+ASSERT ROW_COUNT = 7
+ASSERT VALUE name = 'Quantum Widget' WHERE id = 1
+ASSERT VALUE price = 299.99 WHERE id = 1
+ASSERT VALUE name = 'Bio Reactor Kit' WHERE id = 3
+ASSERT VALUE price = 599.0 WHERE id = 3
+ASSERT VALUE name = 'Solar Panel Mini' WHERE id = 4
+ASSERT VALUE price = 425.0 WHERE id = 4
+ASSERT VALUE name = 'LED Matrix Board' WHERE id = 6
+ASSERT VALUE price = 175.0 WHERE id = 6
+ASSERT VALUE name = 'Thermal Coupler' WHERE id = 7
+ASSERT VALUE price = 64.5 WHERE id = 7
+ASSERT VALUE name = 'Wind Turbine Blade' WHERE id = 9
+ASSERT VALUE price = 850.0 WHERE id = 9
+ASSERT VALUE name = 'Plasma Cutter Pro' WHERE id = 10
+ASSERT VALUE price = 399.99 WHERE id = 10
+SELECT id, name, price
+FROM {{zone_name}}.puffin_dv_demo.products_iceberg
+ORDER BY id;
+
+
+-- ============================================================================
+-- Query 9: Delta — Category Distribution
 -- ============================================================================
 -- Post-delete category breakdown on the Delta side.
 
@@ -90,7 +142,7 @@ ORDER BY category;
 
 
 -- ============================================================================
--- Query 8: Iceberg — Category Distribution
+-- Query 10: Iceberg — Category Distribution
 -- ============================================================================
 -- Same category breakdown via Iceberg — must match Delta exactly.
 
