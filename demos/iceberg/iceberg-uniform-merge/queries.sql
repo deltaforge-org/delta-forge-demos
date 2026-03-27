@@ -94,11 +94,11 @@ USING (VALUES
     (33, 'oscar@example.com',   'SKU-4003', 3,  55.00,  'pending',   'eu-west', '2024-02-11'),
     (34, 'petra@example.com',   'SKU-4004', 4,  32.50,  'pending',   'us-east', '2024-02-11'),
     (35, 'roger@example.com',   'SKU-4005', 2,  210.00, 'pending',   'eu-west', '2024-02-11')
-) AS s(order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
-ON t.order_id = s.order_id
-WHEN MATCHED THEN UPDATE SET t.status = s.status, t.order_date = s.order_date
+) AS source(order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
+ON t.order_id = source.order_id
+WHEN MATCHED THEN UPDATE SET t.status = source.status, t.order_date = source.order_date
 WHEN NOT MATCHED THEN INSERT (order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
-    VALUES (s.order_id, s.customer_email, s.product_sku, s.quantity, s.unit_price, s.status, s.region, s.order_date);
+    VALUES (source.order_id, source.customer_email, source.product_sku, source.quantity, source.unit_price, source.status, source.region, source.order_date);
 
 
 -- ============================================================================
@@ -188,12 +188,12 @@ USING (VALUES
     (37, 'tom@example.com',     'SKU-5002', 2,  65.00,  'pending',   'eu-west', '2024-03-02'),
     (38, 'ursula@example.com',  'SKU-5003', 3,  88.00,  'pending',   'us-east', '2024-03-02'),
     (39, 'vince@example.com',   'SKU-5004', 5,  27.50,  'pending',   'us-west', '2024-03-02')
-) AS s(order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
-ON t.order_id = s.order_id
-WHEN MATCHED AND s.status = 'cancelled' THEN DELETE
-WHEN MATCHED THEN UPDATE SET t.status = s.status, t.order_date = s.order_date
+) AS source(order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
+ON t.order_id = source.order_id
+WHEN MATCHED AND source.status = 'cancelled' THEN DELETE
+WHEN MATCHED THEN UPDATE SET t.status = source.status, t.order_date = source.order_date
 WHEN NOT MATCHED THEN INSERT (order_id, customer_email, product_sku, quantity, unit_price, status, region, order_date)
-    VALUES (s.order_id, s.customer_email, s.product_sku, s.quantity, s.unit_price, s.status, s.region, s.order_date);
+    VALUES (source.order_id, source.customer_email, source.product_sku, source.quantity, source.unit_price, source.status, source.region, source.order_date);
 
 
 -- ============================================================================
