@@ -1,0 +1,28 @@
+[demo]
+id = "iceberg-uniform-schema-rename"
+name = "Iceberg UniForm — Column Rename (Field-ID Stability)"
+icon = "rename"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates column renaming on a UniForm-enabled Delta table. When columns \
+are renamed via ALTER TABLE RENAME COLUMN, the underlying Iceberg field IDs \
+remain stable — only the human-readable name changes. This is critical for \
+Iceberg-compatible engines that resolve columns by field ID, not by name. \
+Dataset: 24 financial transactions across 4 account types (checking, savings, \
+credit, investment) and 3 currencies (USD, EUR, GBP). Columns amt, ccy, and \
+acct_num are renamed to transaction_amount, currency_code, and account_number \
+to simulate migration from legacy to IFRS-standardized column names.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "schema-evolution", "rename-column", "field-id"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.financial_transactions"

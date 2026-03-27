@@ -1,0 +1,33 @@
+[demo]
+id = "iceberg-uniform-zorder"
+name = "Iceberg UniForm — Z-ORDER Spatial Optimization"
+icon = "zorder"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates Z-ORDER optimization on a UniForm-enabled Delta table for \
+geospatial delivery tracking data. Seeds 36 deliveries across 6 US cities \
+(New York, Los Angeles, Chicago, Houston, Phoenix, Philadelphia) with \
+realistic latitude/longitude coordinates, adds two more batches to create \
+file fragmentation, then applies OPTIMIZE ZORDER BY (latitude, longitude) \
+to reorganize data files for spatial locality. Verifies that all data \
+remains intact after Z-ORDER compaction and that Iceberg metadata reflects \
+the optimized layout. Spatial range queries demonstrate the benefit of \
+co-locating geographically nearby records.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "zorder", "spatial", "optimize", "geospatial", "delivery"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.delivery_tracking"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg_demos.delivery_tracking_iceberg"

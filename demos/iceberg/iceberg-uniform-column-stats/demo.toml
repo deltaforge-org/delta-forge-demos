@@ -1,0 +1,28 @@
+[demo]
+id = "iceberg-uniform-column-stats"
+name = "Iceberg UniForm — Column-Level Statistics Verification"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "column-stats"
+description = """\
+Verifies that column-level min/max/null-count statistics in Iceberg \
+manifest files remain accurate through INSERT, UPDATE, and data-skipping \
+scenarios. Uses an ad-click analytics dataset (30 clicks across 3 campaigns, \
+4 device types) to demonstrate how column stats evolve as extreme values \
+are inserted and NULL conversion_values are backfilled with late conversions. \
+Proves that Iceberg metadata faithfully tracks column boundaries through \
+the full mutation lifecycle — essential for query planners that rely on \
+data-skipping to prune file reads.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "column-stats", "min-max", "null-count", "data-skipping", "analytics"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.ad_clicks"

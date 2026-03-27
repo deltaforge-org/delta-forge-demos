@@ -1,0 +1,107 @@
+[demo]
+id = "iceberg-native-large-manifests"
+name = "Iceberg Native — Large Manifests (Web Analytics)"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "scale-test"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading with \
+many manifest files created by repeated micro-batch appends. A web \
+analytics dataset of 600 session records is ingested across 10 separate \
+append operations (60 rows each), producing 10 snapshots, 10 manifest \
+lists, and 10 manifest files — each pointing to its own Parquet data \
+file. This exercises the Iceberg metadata chain traversal: the reader \
+must walk the current manifest list, resolve all 10 manifests, and \
+union the data files to reconstruct the full table. Tests metadata \
+parsing performance and correctness at manifest scale.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v2", "manifests", "scale-test", "web-analytics", "micro-batch"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-0-127f895f-1a9a-4347-bc28-29e3a198334b-0-00001.parquet"
+format = "parquet"
+description = "Batch 1: 60 web analytics session records"
+size_bytes = 3997
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-3-9228f05e-dd2a-474a-9c1b-a20f90e2fda1-0-00001.parquet"
+format = "parquet"
+description = "Batch 2: 60 web analytics session records"
+size_bytes = 3987
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-6-f414db90-5a30-45a4-8ea0-cd94b6d62e21-0-00001.parquet"
+format = "parquet"
+description = "Batch 3: 60 web analytics session records"
+size_bytes = 3982
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-9-e02e5371-a857-455c-be45-04f84d2ddcd0-0-00001.parquet"
+format = "parquet"
+description = "Batch 4: 60 web analytics session records"
+size_bytes = 3973
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-12-833400a3-d708-4af8-92c7-d9610a35c442-0-00001.parquet"
+format = "parquet"
+description = "Batch 5: 60 web analytics session records"
+size_bytes = 3990
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-15-82238910-f1a4-4b32-a4b5-785d4344e7f2-0-00001.parquet"
+format = "parquet"
+description = "Batch 6: 60 web analytics session records"
+size_bytes = 3991
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-18-358e2a65-dc92-4b89-8feb-b8fbd469c8b7-0-00001.parquet"
+format = "parquet"
+description = "Batch 7: 60 web analytics session records"
+size_bytes = 3977
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-21-c354480a-75c5-4915-a854-36f87f9c117b-0-00001.parquet"
+format = "parquet"
+description = "Batch 8: 60 web analytics session records"
+size_bytes = 3984
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-24-ea617cb1-9766-4e92-b847-280e80a2c12a-0-00001.parquet"
+format = "parquet"
+description = "Batch 9: 60 web analytics session records"
+size_bytes = 3982
+
+[[demo.data_files]]
+path = "web_analytics/data/00000-27-ac254585-09eb-42e5-8e4e-b16d9682329d-0-00001.parquet"
+format = "parquet"
+description = "Batch 10: 60 web analytics session records"
+size_bytes = 3983
+
+[[demo.data_files]]
+path = "web_analytics/metadata/v11.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — final state with 10 snapshots from 10 appends"
+size_bytes = 11198
+
+[[demo.data_files]]
+path = "web_analytics/metadata/snap-3386169241786142670-1-0a9ffeff-460d-4a0c-924d-268e80983e15.avro"
+format = "avro"
+description = "Manifest list for snapshot 10 (current) — references all 10 data manifests"
+size_bytes = 4885
+
+[[demo.data_files]]
+path = "web_analytics/metadata/0a9ffeff-460d-4a0c-924d-268e80983e15-m0.avro"
+format = "avro"
+description = "Data manifest for batch 10 — one of 10 manifest files in the chain"
+size_bytes = 7633
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.web_analytics"

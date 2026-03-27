@@ -1,0 +1,30 @@
+[demo]
+id = "iceberg-uniform-schema-widen"
+name = "Iceberg UniForm — Type Widening (INT→BIGINT, FLOAT→DOUBLE)"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "type-widen"
+description = """\
+Demonstrates column type widening on a UniForm-enabled Delta table. IoT \
+sensor counters that outgrow INT range are widened to BIGINT, and sensor \
+readings that need higher precision are widened from FLOAT to DOUBLE. Both \
+the Delta schema and the Iceberg schema (tracked in metadata.json) evolve \
+in lockstep — the Iceberg metadata records the type change so that \
+Iceberg-compatible engines can read both old and new data through the \
+unified metadata chain. Dataset: 24 IoT sensors across 4 locations \
+(rooftop, basement, warehouse, cleanroom) with progressive type widening \
+for reading_count (INT→BIGINT), temperature (FLOAT→DOUBLE), and \
+humidity (FLOAT→DOUBLE).
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "schema-evolution", "type-widening", "bigint", "double", "iot"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.sensor_readings"

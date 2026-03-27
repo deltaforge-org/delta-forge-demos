@@ -1,0 +1,27 @@
+[demo]
+id = "iceberg-uniform-merge"
+name = "Iceberg UniForm — MERGE INTO (CDC Upsert)"
+icon = "merge"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates MERGE INTO on a UniForm-enabled Delta table for change-data-capture \
+(CDC) order fulfillment. Two successive MERGE operations simulate a daily sync \
+from a source system: the first upserts status changes and new orders, the second \
+adds a DELETE clause for cancellations. Time travel verifies state at each merge \
+boundary. Iceberg read-back confirms the shadow metadata matches the final Delta \
+state after all mutations. Dataset: 30 e-commerce orders across 3 regions \
+(us-east, us-west, eu-west).
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "merge", "cdc", "upsert", "time-travel"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.order_fulfillment"

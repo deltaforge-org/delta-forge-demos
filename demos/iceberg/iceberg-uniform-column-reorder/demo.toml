@@ -1,0 +1,28 @@
+[demo]
+id = "iceberg-uniform-column-reorder"
+name = "Iceberg UniForm — Column Reorder (FHIR-Compliant Layout)"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "reorder"
+description = """\
+Demonstrates column reordering on a UniForm-enabled Delta table. Healthcare \
+patient records are reorganized to match HL7 FHIR standard column ordering \
+(MRN first, then name fields) using ALTER TABLE CHANGE COLUMN ... FIRST and \
+AFTER syntax. Both the Delta schema and the Iceberg schema (tracked in \
+metadata.json) evolve in lockstep — the Iceberg metadata records the column \
+position changes so that Iceberg-compatible engines see the updated layout. \
+Dataset: 20 patient records across 4 diagnosis groups (cardiology, \
+orthopedics, neurology, oncology) with progressive column reordering.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "schema-evolution", "column-reorder", "healthcare", "fhir"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.patient_records"

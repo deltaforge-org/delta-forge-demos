@@ -1,0 +1,33 @@
+[demo]
+id = "iceberg-uniform-concurrent-writes"
+name = "Iceberg UniForm — Concurrent Multi-Pipeline Writes"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "concurrent"
+description = """\
+Simulates concurrent writes from multiple ETL pipelines into a shared \
+UniForm-enabled ingestion log, verifying that Iceberg metadata remains \
+consistent through INSERT, UPDATE, MERGE, and DELETE operations from \
+different teams. Seeds 20 records from etl-team-alpha, then adds batches \
+from etl-team-beta (15 records) and etl-team-gamma (15 records). \
+Exercises correction flows (UPDATE reprocessed records, MERGE corrections, \
+DELETE failed records) and uses time travel to show table state at each \
+batch boundary — proving that every pipeline's data is faithfully tracked \
+in both Delta and Iceberg metadata chains.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "concurrent", "multi-pipeline", "merge", "time-travel", "etl"]
+difficulty = "advanced"
+estimated_time_minutes = 15
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.ingestion_log"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.beta_corrections"

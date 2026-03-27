@@ -1,0 +1,93 @@
+[demo]
+id = "iceberg-native-schema-evolution"
+name = "Iceberg Native — Schema Evolution (Add, Rename, Drop)"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "schema-evolve"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading with \
+schema evolution across 4 snapshots. The employee directory table starts \
+with 5 columns and 300 rows, then evolves: ADD COLUMN title, INSERT 60 more \
+employees with titles, ADD COLUMN location with UPDATE, and RENAME COLUMN \
+dept TO department. Exercises Iceberg's field-id stability for column renames, \
+NULL handling for columns added after initial data load, and multi-snapshot \
+metadata chain resolution. The final schema has 7 columns and 360 rows.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v2", "schema-evolution", "add-column", "rename-column", "field-id", "employee"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "employee_directory/metadata/v7.metadata.json"
+format = "json"
+description = "Iceberg format v2 metadata — latest snapshot after schema evolution (7 schema versions)"
+size_bytes = 5733
+
+[[demo.data_files]]
+path = "employee_directory/metadata/snap-8419466703512787893-1-f019314c-098f-4e98-bda2-06fdc5c5c46b.avro"
+format = "avro"
+description = "Manifest list for snapshot 3 — UPDATE with locations (merge-on-read)"
+size_bytes = 4559
+
+[[demo.data_files]]
+path = "employee_directory/metadata/snap-8318625747608057483-1-b2011e66-de05-4ce1-9ed7-7300fc300875.avro"
+format = "avro"
+description = "Manifest list for snapshot 2 — INSERT 60 employees with titles"
+size_bytes = 4544
+
+[[demo.data_files]]
+path = "employee_directory/metadata/snap-2241472629252036638-1-6719a348-ec63-4d15-8e65-267c1e14cd0d.avro"
+format = "avro"
+description = "Manifest list for snapshot 1 — initial 300 employees"
+size_bytes = 4468
+
+[[demo.data_files]]
+path = "employee_directory/metadata/f019314c-098f-4e98-bda2-06fdc5c5c46b-m0.avro"
+format = "avro"
+description = "Data manifest — updated 60 employees with locations"
+size_bytes = 7479
+
+[[demo.data_files]]
+path = "employee_directory/metadata/f019314c-098f-4e98-bda2-06fdc5c5c46b-m1.avro"
+format = "avro"
+description = "Data manifest — delete side of merge-on-read UPDATE"
+size_bytes = 7501
+
+[[demo.data_files]]
+path = "employee_directory/metadata/b2011e66-de05-4ce1-9ed7-7300fc300875-m0.avro"
+format = "avro"
+description = "Data manifest — 60 new employees with titles"
+size_bytes = 7420
+
+[[demo.data_files]]
+path = "employee_directory/metadata/6719a348-ec63-4d15-8e65-267c1e14cd0d-m0.avro"
+format = "avro"
+description = "Data manifest — initial 300 employees"
+size_bytes = 7340
+
+[[demo.data_files]]
+path = "employee_directory/data/00000-2-76e77ac9-f3c1-4435-a1cd-94d97c780bba-0-00001.parquet"
+format = "parquet"
+description = "Initial 300 employees (5 columns: emp_id, full_name, dept, salary, hire_date)"
+size_bytes = 5444
+
+[[demo.data_files]]
+path = "employee_directory/data/00000-5-4435636d-162c-4dfb-8453-f6518ff4f42e-0-00001.parquet"
+format = "parquet"
+description = "60 new employees with titles (6 columns: + title)"
+size_bytes = 3278
+
+[[demo.data_files]]
+path = "employee_directory/data/00000-11-6507d163-f97e-4bb0-8197-b56f78b36d1b-0-00001.parquet"
+format = "parquet"
+description = "60 employees updated with locations (7 columns: + location)"
+size_bytes = 3681
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.employee_directory"

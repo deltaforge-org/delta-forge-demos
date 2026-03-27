@@ -1,0 +1,28 @@
+[demo]
+id = "iceberg-uniform-complex-types"
+name = "Iceberg UniForm — Complex Types"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "complex-types"
+description = """\
+Demonstrates Iceberg UniForm on a Delta table with complex nested types: \
+STRUCT for product dimensions, ARRAY for tags, and MAP for localized names. \
+The Iceberg metadata must correctly represent these nested type definitions \
+so that Iceberg-compatible engines can read struct fields, array elements, \
+and map entries. Shows querying struct fields, array length filtering, map \
+key access, INSERT with complex values, UPDATE of struct fields, and \
+aggregation over nested data. Dataset: 18 products across 3 categories \
+(Electronics, Home, Outdoor) with rich nested attributes.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "complex-types", "struct", "array", "map", "nested"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.product_catalog_nested"

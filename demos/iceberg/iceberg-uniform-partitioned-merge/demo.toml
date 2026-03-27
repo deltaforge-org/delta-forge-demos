@@ -1,0 +1,29 @@
+[demo]
+id = "iceberg-uniform-partitioned-merge"
+name = "Iceberg UniForm — Partitioned MERGE (Inventory Sync)"
+icon = "partition-merge"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates MERGE INTO on a partitioned UniForm-enabled Delta table for \
+multi-warehouse inventory synchronization. The table is partitioned by \
+warehouse, so each MERGE touches data files in specific partitions. The \
+first MERGE simulates receiving shipments (quantity additions + new SKUs), \
+the second simulates an inventory audit (quantity corrections + \
+discontinuing SKUs via DELETE). Time travel compares inventory state at \
+each version boundary. Iceberg read-back confirms partition-aware shadow \
+metadata matches the final Delta state. Dataset: 36 SKUs across 3 \
+warehouses (portland, dallas, charlotte).
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "merge", "partitioning", "inventory", "time-travel"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.warehouse_inventory"

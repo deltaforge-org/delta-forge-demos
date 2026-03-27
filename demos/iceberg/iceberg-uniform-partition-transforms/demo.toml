@@ -1,0 +1,28 @@
+[demo]
+id = "iceberg-uniform-partition-transforms"
+name = "Iceberg UniForm — Partition Transforms"
+version = "1.0.0"
+author = "Delta Forge Team"
+icon = "partition-transform"
+description = """\
+Demonstrates Iceberg UniForm on a Delta table partitioned by date using \
+CAST(event_timestamp AS DATE). The Iceberg metadata maps this to a day() \
+partition transform in the partition spec, enabling date-based partition \
+pruning in Iceberg-compatible engines. Shows INSERT into existing and new \
+partitions, UPDATE across partitions, DELETE within a partition, and \
+verifies that Iceberg snapshots correctly track partition-level mutations. \
+Dataset: 36 application events across 6 days (2024-03-01 to 2024-03-06) \
+with various event types and severities.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "partitioning", "partition-transforms", "day-transform", "time-series"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.app_events"

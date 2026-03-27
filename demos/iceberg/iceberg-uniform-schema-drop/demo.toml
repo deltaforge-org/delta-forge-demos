@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-uniform-schema-drop"
+name = "Iceberg UniForm — Drop Columns (GDPR PII Removal)"
+icon = "column-drop"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates dropping columns on a UniForm-enabled Delta table for GDPR \
+compliance. When columns are dropped via ALTER TABLE DROP COLUMN, the Delta \
+schema removes the column and the Iceberg metadata.json schema entry is \
+updated accordingly. Dropped columns become inaccessible in new queries but \
+remain in historical snapshots via time travel. Dataset: 20 user profiles \
+with PII columns (email, phone, ip_address) progressively removed.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "schema-evolution", "drop-column", "gdpr", "pii"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.user_profiles"
