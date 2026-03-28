@@ -1,0 +1,56 @@
+[demo]
+id = "iceberg-v2-aggregate-analytics"
+name = "Iceberg V2 — Retail Multi-Dimensional Aggregation"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates multi-dimensional aggregate analytics on a native Apache \
+Iceberg format-version 2 table. A retail chain sales dataset with 120 \
+transactions across 4 stores, 3 regions, and 5 product categories \
+exercises GROUPING SETS, ROLLUP, FILTER clause, DISTINCT aggregates, \
+and HAVING predicates. These patterns are essential for OLAP-style \
+reporting and prove the Delta Forge query engine supports complex \
+aggregation on Iceberg data without conversion.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v2", "grouping-sets", "rollup", "filter-clause", "aggregation", "retail"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "retail_sales/data/00000-0-97d490d0-939d-454c-849d-60a925205146-0-00001.parquet"
+format = "parquet"
+description = "All 120 retail sale transactions (single Parquet data file)"
+size_bytes = 5362
+
+[[demo.data_files]]
+path = "retail_sales/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — single snapshot with 120 transactions"
+size_bytes = 2396
+
+[[demo.data_files]]
+path = "retail_sales/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — initial table creation"
+size_bytes = 1382
+
+[[demo.data_files]]
+path = "retail_sales/metadata/snap-8556301251813537930-1-c195cfa1-31b0-4826-9c51-d588ab32c168.avro"
+format = "avro"
+description = "Manifest list for the single data snapshot"
+size_bytes = 4464
+
+[[demo.data_files]]
+path = "retail_sales/metadata/c195cfa1-31b0-4826-9c51-d588ab32c168-m0.avro"
+format = "avro"
+description = "Data manifest referencing the Parquet data file"
+size_bytes = 7825
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.retail_sales"
