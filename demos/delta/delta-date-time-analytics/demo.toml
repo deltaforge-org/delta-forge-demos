@@ -1,0 +1,24 @@
+[demo]
+id = "delta-date-time-analytics"
+name = "Employee Attendance Tracking"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+An HR department analyzes employee attendance patterns using date/time functions. \
+DATE_TRUNC groups records by week and month for payroll periods. EXTRACT and \
+DATE_PART pull day-of-week and hour components for pattern analysis. Date \
+arithmetic computes hours worked per day. Epoch conversion enables precise \
+duration calculations between clock-in and clock-out timestamps.
+"""
+categories = ["delta-table", "date-time"]
+tags = ["delta-table", "intermediate", "date-trunc", "date-part", "extract", "epoch", "date-arithmetic", "timestamp"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.attendance_records"

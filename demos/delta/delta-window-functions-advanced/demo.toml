@@ -1,0 +1,24 @@
+[demo]
+id = "delta-window-functions-advanced"
+name = "Retail Sales Rep Leaderboard"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A retail chain ranks its sales reps by quarterly revenue using advanced window \
+functions. DENSE_RANK assigns leaderboard positions, NTILE splits reps into \
+performance quartiles, LEAD compares each rep to the next-best performer, and \
+PERCENT_RANK / CUME_DIST compute relative standing. Window frames (RANGE BETWEEN) \
+smooth revenue trends across quarters.
+"""
+categories = ["delta-table", "window-functions"]
+tags = ["delta-table", "intermediate", "dense-rank", "ntile", "lead", "percent-rank", "cume-dist", "window-frames"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sales_reps"

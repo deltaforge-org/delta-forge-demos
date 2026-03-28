@@ -1,0 +1,24 @@
+[demo]
+id = "delta-grouping-sets"
+name = "Manufacturing Production Reporting"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A widget factory generates multi-level production reports from a single query. \
+GROUPING SETS produces per-line, per-shift, and per-line+shift subtotals without \
+multiple queries. ROLLUP adds hierarchical subtotals (line -> shift -> grand total). \
+CUBE generates all possible grouping combinations. The GROUPING() function \
+distinguishes real NULLs from grouping-generated NULLs in the output.
+"""
+categories = ["delta-table", "aggregation"]
+tags = ["delta-table", "advanced", "grouping-sets", "cube", "rollup", "grouping-function"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.production_runs"

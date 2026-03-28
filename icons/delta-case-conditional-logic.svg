@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ccl" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c026d3"/>
+      <stop offset="1" stop-color="#e879f9"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield / insurance badge -->
+  <path d="M40 10L16 22v20c0 16 10 24 24 30 14-6 24-14 24-30V22L40 10z" fill="url(#ccl)" opacity=".12" stroke="url(#ccl)" stroke-width="1.5"/>
+  <!-- Checkmark inside shield -->
+  <path d="M30 40l6 6 14-14" stroke="url(#ccl)" stroke-width="2.5" fill="none" opacity=".6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Classification tiers (bars) -->
+  <rect x="12" y="66" width="12" height="6" rx="1" fill="url(#ccl)" opacity=".3"/>
+  <rect x="27" y="63" width="12" height="9" rx="1" fill="url(#ccl)" opacity=".4"/>
+  <rect x="42" y="60" width="12" height="12" rx="1" fill="url(#ccl)" opacity=".5"/>
+  <rect x="57" y="57" width="12" height="15" rx="1" fill="url(#ccl)" opacity=".6"/>
+  <!-- CASE label -->
+  <text x="40" y="78" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#ccl)" opacity=".5">CASE</text>
+</svg>

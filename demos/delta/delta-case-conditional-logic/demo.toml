@@ -1,0 +1,24 @@
+[demo]
+id = "delta-case-conditional-logic"
+name = "Insurance Claim Classification"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+An insurance company classifies and processes claims using CASE expressions. \
+Searched CASE categorizes claims by severity tier (minor/moderate/major/catastrophic). \
+Simple CASE maps claim types to department names. Nested CASE combines fraud score \
+with claim amount for risk flagging. CASE inside SUM/COUNT drives conditional \
+aggregation, and CASE in ORDER BY creates custom sort priorities (high-risk first).
+"""
+categories = ["delta-table", "conditional-logic"]
+tags = ["delta-table", "intermediate", "case-expression", "searched-case", "simple-case", "conditional-aggregation"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.insurance_claims"

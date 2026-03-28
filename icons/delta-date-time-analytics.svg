@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dta" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+  <!-- Clock face -->
+  <circle cx="40" cy="36" r="22" fill="url(#dta)" opacity=".12" stroke="url(#dta)" stroke-width="1.5"/>
+  <!-- Clock ticks -->
+  <line x1="40" y1="16" x2="40" y2="19" stroke="url(#dta)" stroke-width="1.5" opacity=".5"/>
+  <line x1="40" y1="53" x2="40" y2="56" stroke="url(#dta)" stroke-width="1.5" opacity=".5"/>
+  <line x1="20" y1="36" x2="23" y2="36" stroke="url(#dta)" stroke-width="1.5" opacity=".5"/>
+  <line x1="57" y1="36" x2="60" y2="36" stroke="url(#dta)" stroke-width="1.5" opacity=".5"/>
+  <!-- Clock hands -->
+  <line x1="40" y1="36" x2="40" y2="22" stroke="url(#dta)" stroke-width="2" opacity=".7"/>
+  <line x1="40" y1="36" x2="50" y2="30" stroke="url(#dta)" stroke-width="1.5" opacity=".6"/>
+  <!-- Center dot -->
+  <circle cx="40" cy="36" r="2" fill="url(#dta)" opacity=".7"/>
+  <!-- Calendar below -->
+  <rect x="22" y="62" width="36" height="12" rx="2" fill="url(#dta)" opacity=".2" stroke="url(#dta)" stroke-width="1.2"/>
+  <!-- Calendar grid -->
+  <line x1="28" y1="62" x2="28" y2="74" stroke="url(#dta)" stroke-width="0.8" opacity=".3"/>
+  <line x1="34" y1="62" x2="34" y2="74" stroke="url(#dta)" stroke-width="0.8" opacity=".3"/>
+  <line x1="40" y1="62" x2="40" y2="74" stroke="url(#dta)" stroke-width="0.8" opacity=".3"/>
+  <line x1="46" y1="62" x2="46" y2="74" stroke="url(#dta)" stroke-width="0.8" opacity=".3"/>
+  <line x1="52" y1="62" x2="52" y2="74" stroke="url(#dta)" stroke-width="0.8" opacity=".3"/>
+  <!-- Highlighted day -->
+  <rect x="34" y="62" width="6" height="12" fill="url(#dta)" opacity=".3"/>
+</svg>

@@ -1,0 +1,28 @@
+[demo]
+id = "delta-subqueries-set-ops"
+name = "University Course Enrollment Analytics"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+A university tracks student course enrollments across departments and semesters. \
+Correlated subqueries identify students enrolled in multiple departments, EXISTS \
+checks prerequisite completion, IN subqueries filter by enrollment criteria, and \
+UNION/INTERSECT/EXCEPT compare enrollment lists across Fall and Spring semesters. \
+Scalar subqueries compute per-student metrics inline.
+"""
+categories = ["delta-table", "subqueries"]
+tags = ["delta-table", "intermediate", "subquery", "exists", "union", "intersect", "except", "correlated-subquery"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.students"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.enrollments"

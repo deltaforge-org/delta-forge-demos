@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sso" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e11d48"/>
+      <stop offset="1" stop-color="#d946ef"/>
+    </linearGradient>
+  </defs>
+  <!-- Graduation cap -->
+  <polygon points="40,14 12,28 40,42 68,28" fill="url(#sso)" opacity=".2" stroke="url(#sso)" stroke-width="1.5"/>
+  <line x1="40" y1="42" x2="40" y2="28" stroke="url(#sso)" stroke-width="1.5" opacity=".4"/>
+  <!-- Cap top -->
+  <rect x="36" y="10" width="8" height="6" rx="1" fill="url(#sso)" opacity=".5"/>
+  <!-- Tassel -->
+  <line x1="62" y1="28" x2="62" y2="42" stroke="url(#sso)" stroke-width="1.5" opacity=".5"/>
+  <circle cx="62" cy="44" r="2" fill="url(#sso)" opacity=".6"/>
+  <!-- Venn diagram for set operations -->
+  <circle cx="32" cy="58" r="10" stroke="url(#sso)" stroke-width="1.5" fill="url(#sso)" opacity=".15"/>
+  <circle cx="48" cy="58" r="10" stroke="url(#sso)" stroke-width="1.5" fill="url(#sso)" opacity=".15"/>
+  <!-- Intersection highlight -->
+  <path d="M40 50.5a10 10 0 0 0-4.5 7.5 10 10 0 0 0 4.5 7.5 10 10 0 0 0 4.5-7.5 10 10 0 0 0-4.5-7.5z" fill="url(#sso)" opacity=".35"/>
+  <!-- Set labels -->
+  <text x="28" y="60" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#sso)" opacity=".7">A</text>
+  <text x="52" y="60" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#sso)" opacity=".7">B</text>
+</svg>
