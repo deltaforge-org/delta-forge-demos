@@ -33,7 +33,7 @@ INNER JOIN {{zone_name}}.orc_insurance.policies p
 -- ============================================================================
 -- All 200 claims returned; 20 orphans have NULL policy columns.
 
-ASSERT ROW_COUNT = 200
+ASSERT ROW_COUNT = 1
 ASSERT VALUE orphan_count = 20
 SELECT COUNT(*) FILTER (WHERE p.policy_id IS NULL) AS orphan_count
 FROM {{zone_name}}.orc_insurance.claims c

@@ -35,13 +35,17 @@ FROM {{zone_name}}.orc_trials.patients;
 -- baseline_score so all 150 patients have an effective score.
 
 ASSERT ROW_COUNT = 150
-ASSERT VALUE has_effective_score = 150
 SELECT patient_id, baseline_score, followup_score,
        COALESCE(followup_score, baseline_score) AS effective_score,
        CASE WHEN followup_score IS NULL THEN 'Dropout' ELSE 'Completed' END AS status
 FROM {{zone_name}}.orc_trials.patients
 ORDER BY patient_id;
 
+-- ============================================================================
+-- Query 3b: COALESCE — verify all 150 patients have an effective score
+-- ============================================================================
+
+ASSERT VALUE has_effective_score = 150
 SELECT COUNT(*) AS has_effective_score
 FROM (
     SELECT COALESCE(followup_score, baseline_score) AS effective_score
