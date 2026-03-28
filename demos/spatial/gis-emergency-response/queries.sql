@@ -194,17 +194,15 @@ ORDER BY hospital_id;
 -- Downtown Manhattan (narrower, 0.05° lng) should be smaller than Brooklyn
 -- (wider, 0.20° lng, taller, 0.13° lat).
 
-ASSERT ROW_COUNT = 4
+ASSERT ROW_COUNT = 1
 ASSERT EXPRESSION area_km2_downtown < area_km2_brooklyn
 ASSERT EXPRESSION area_km2_queens > 0
 SELECT
-    zone_name,
-    ROUND(st_area(zone_polygon) / 1000000.0, 2) AS area_km2,
-    MAX(CASE WHEN zone_id = 1 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) OVER () AS area_km2_downtown,
-    MAX(CASE WHEN zone_id = 3 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) OVER () AS area_km2_brooklyn,
-    MAX(CASE WHEN zone_id = 4 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) OVER () AS area_km2_queens
-FROM {{zone_name}}.emergency.response_zones
-ORDER BY zone_id;
+    MAX(CASE WHEN zone_id = 1 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) AS area_km2_downtown,
+    MAX(CASE WHEN zone_id = 2 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) AS area_km2_midtown,
+    MAX(CASE WHEN zone_id = 3 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) AS area_km2_brooklyn,
+    MAX(CASE WHEN zone_id = 4 THEN ROUND(st_area(zone_polygon) / 1000000.0, 2) END) AS area_km2_queens
+FROM {{zone_name}}.emergency.response_zones;
 
 
 -- ============================================================================
