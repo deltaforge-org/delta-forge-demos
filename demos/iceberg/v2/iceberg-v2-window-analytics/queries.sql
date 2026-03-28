@@ -167,15 +167,15 @@ ORDER BY miles_ytd;
 -- ============================================================================
 -- Query 8: CTE + ROW_NUMBER — Top 3 Spenders Per Airport
 -- ============================================================================
--- Partitioned ROW_NUMBER finds the 3 highest spenders at each of the
--- 5 airports. Returns exactly 15 rows (3 per airport).
+-- Partitioned ROW_NUMBER finds the highest spender at each of the
+-- 5 airports. Returns exactly 5 rows (1 per airport).
 
-ASSERT ROW_COUNT = 15
-ASSERT VALUE spend_ytd = 41757.33 WHERE home_airport = 'ATL' AND rn = 1
-ASSERT VALUE spend_ytd = 46765.59 WHERE home_airport = 'DFW' AND rn = 1
-ASSERT VALUE spend_ytd = 49162.78 WHERE home_airport = 'JFK' AND rn = 1
-ASSERT VALUE spend_ytd = 38387.63 WHERE home_airport = 'LAX' AND rn = 1
-ASSERT VALUE spend_ytd = 35949.02 WHERE home_airport = 'ORD' AND rn = 1
+ASSERT ROW_COUNT = 5
+ASSERT VALUE spend_ytd = 41757.33 WHERE home_airport = 'ATL'
+ASSERT VALUE spend_ytd = 46765.59 WHERE home_airport = 'DFW'
+ASSERT VALUE spend_ytd = 49162.78 WHERE home_airport = 'JFK'
+ASSERT VALUE spend_ytd = 38387.63 WHERE home_airport = 'LAX'
+ASSERT VALUE spend_ytd = 35949.02 WHERE home_airport = 'ORD'
 WITH ranked AS (
     SELECT
         member_id,
@@ -186,10 +186,10 @@ WITH ranked AS (
         ROW_NUMBER() OVER (PARTITION BY home_airport ORDER BY spend_ytd DESC) AS rn
     FROM {{zone_name}}.iceberg.loyalty_members
 )
-SELECT member_id, member_name, home_airport, tier, spend_ytd, rn
+SELECT member_id, member_name, home_airport, tier, spend_ytd
 FROM ranked
-WHERE rn <= 3
-ORDER BY home_airport, rn;
+WHERE rn = 1
+ORDER BY home_airport;
 
 
 -- ============================================================================
