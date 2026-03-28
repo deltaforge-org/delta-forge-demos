@@ -41,8 +41,8 @@ ASSERT VALUE entity_type = 'subscriber' WHERE name = 'User_1'
 USE {{zone_name}}.graph.movie_recs
 MATCH (n)
 WHERE n.entity_type = 'subscriber'
-RETURN n.name AS name, n.join_year AS join_year, n.entity_type AS entity_type
-ORDER BY n.id;
+RETURN n.id AS id, n.name AS name, n.join_year AS join_year, n.entity_type AS entity_type
+ORDER BY id;
 
 
 -- ============================================================================
@@ -58,8 +58,8 @@ ASSERT VALUE genre = 'sci-fi' WHERE name = 'Inception'
 USE {{zone_name}}.graph.movie_recs
 MATCH (n)
 WHERE n.entity_type = 'movie'
-RETURN n.name AS name, n.genre AS genre, n.release_year AS release_year
-ORDER BY n.id;
+RETURN n.id AS id, n.name AS name, n.genre AS genre, n.release_year AS release_year
+ORDER BY id;
 
 
 -- ============================================================================
@@ -73,9 +73,9 @@ ASSERT VALUE rating = 4.0 WHERE subscriber = 'User_1' AND movie = 'Forrest_Gump'
 USE {{zone_name}}.graph.movie_recs
 MATCH (u)-[r]->(m)
 WHERE u.entity_type = 'subscriber'
-RETURN u.name AS subscriber, m.name AS movie,
+RETURN u.id AS uid, m.id AS mid, u.name AS subscriber, m.name AS movie,
        r.weight AS rating, r.rating_type AS type, r.watch_date AS watched
-ORDER BY u.id, m.id;
+ORDER BY uid, mid;
 
 
 -- ============================================================================
