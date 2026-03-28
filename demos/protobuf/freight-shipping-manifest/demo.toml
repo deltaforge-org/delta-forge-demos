@@ -1,0 +1,65 @@
+[demo]
+id = "protobuf-freight-shipping-manifest"
+name = "Protobuf Freight Shipping — Multi-Carrier Manifest"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates protobuf features not covered by existing demos: boolean fields \
+(is_express, is_insured, requires_signature), int64 monetary values \
+(total_cost_cents, declared_value_cents), float weights and dimensions, \
+3-level message nesting (Shipment → Package → Dimensions), multiple enum \
+types (ShipmentStatus, PackageClass), and multiple repeated fields per \
+message (packages + tracking). Three carrier files contain 12 shipments \
+with 24 packages and 39 tracking events across a realistic freight \
+forwarding scenario.
+"""
+categories = ["protobuf"]
+tags = ["protobuf", "proto3", "intermediate", "bool", "int64", "float", "nested-messages", "repeated-fields", "enums", "multi-file", "3-level-nesting"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo protobuf data files (.pb) and schema are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/carrier_alpha.pb"
+format = "protobuf"
+description = "Alpha Express Logistics — 5 shipments, 10 packages, 18 tracking events"
+size_bytes = 1712
+
+[[demo.data_files]]
+path = "data/carrier_beta.pb"
+format = "protobuf"
+description = "Beta Freight Services — 4 shipments, 8 packages, 12 tracking events"
+size_bytes = 1295
+
+[[demo.data_files]]
+path = "data/carrier_gamma.pb"
+format = "protobuf"
+description = "Gamma Global Shipping — 3 shipments, 6 packages, 9 tracking events"
+size_bytes = 985
+
+[[demo.data_files]]
+path = "schema/freight.proto"
+format = "protobuf"
+description = "Proto3 schema — ShippingManifest with nested Shipment, Package, Dimensions, TrackingEvent"
+size_bytes = 1145
+
+[[demo.data_files]]
+path = "schema/timestamp.proto"
+format = "protobuf"
+description = "Google well-known Timestamp type (required import for freight.proto)"
+size_bytes = 6595
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_freight.shipments"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_freight.shipment_packages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_freight.shipment_tracking"

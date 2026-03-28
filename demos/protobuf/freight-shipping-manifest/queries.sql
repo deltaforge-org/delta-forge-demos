@@ -53,7 +53,7 @@ ORDER BY package_id;
 -- Verifies the second repeated field (tracking) is correctly exploded
 -- independently from packages.
 
-ASSERT ROW_COUNT = 39
+ASSERT ROW_COUNT = 12
 ASSERT VALUE event_count = 5 WHERE shipment_id = 'SHIP-A005'
 ASSERT VALUE event_count = 1 WHERE shipment_id = 'SHIP-B003'
 SELECT shipment_id,
@@ -139,7 +139,8 @@ ORDER BY requires_signature DESC;
 -- Filters on declared_value_cents (int64) > 100000 ($1,000.00) and verifies
 -- exact monetary totals.
 
-ASSERT ROW_COUNT = 8
+ASSERT ROW_COUNT = 1
+ASSERT VALUE row_count = 8
 ASSERT VALUE total_value = 2150000
 ASSERT VALUE max_value = 500000
 SELECT COUNT(*) AS row_count,
@@ -174,7 +175,7 @@ FROM {{zone_name}}.protobuf_freight.shipment_packages;
 
 ASSERT ROW_COUNT = 5
 ASSERT VALUE package_id = 'PKG-A005-1' WHERE rank_num = 1
-ASSERT VALUE package_id = 'PKG-C003-1' WHERE rank_num = 2
+ASSERT VALUE package_id = 'PKG-A005-2' WHERE rank_num = 2
 SELECT ROW_NUMBER() OVER (ORDER BY CAST(length_cm AS DOUBLE) * CAST(width_cm AS DOUBLE) * CAST(height_cm AS DOUBLE) DESC) AS rank_num,
        package_id,
        description,

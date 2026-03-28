@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fsm" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97316"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <!-- Truck body -->
+  <rect x="10" y="36" width="38" height="24" rx="3" fill="url(#fsm)" opacity=".2" stroke="url(#fsm)" stroke-width="1.5"/>
+  <!-- Truck cab -->
+  <path d="M48 42h12a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H48V42z" fill="url(#fsm)" opacity=".35" stroke="url(#fsm)" stroke-width="1.5"/>
+  <!-- Windshield -->
+  <rect x="52" y="46" width="8" height="8" rx="1.5" fill="url(#fsm)" opacity=".15"/>
+  <!-- Wheels -->
+  <circle cx="24" cy="62" r="5" fill="url(#fsm)" opacity=".5" stroke="url(#fsm)" stroke-width="1.5"/>
+  <circle cx="56" cy="62" r="5" fill="url(#fsm)" opacity=".5" stroke="url(#fsm)" stroke-width="1.5"/>
+  <!-- Wheel hubs -->
+  <circle cx="24" cy="62" r="2" fill="url(#fsm)" opacity=".8"/>
+  <circle cx="56" cy="62" r="2" fill="url(#fsm)" opacity=".8"/>
+  <!-- Package box on truck -->
+  <rect x="16" y="40" width="14" height="14" rx="2" fill="url(#fsm)" opacity=".45"/>
+  <!-- Package cross tape -->
+  <line x1="23" y1="40" x2="23" y2="54" stroke="url(#fsm)" stroke-width="1" opacity=".7"/>
+  <line x1="16" y1="47" x2="30" y2="47" stroke="url(#fsm)" stroke-width="1" opacity=".7"/>
+  <!-- Small package -->
+  <rect x="33" y="44" width="10" height="10" rx="1.5" fill="url(#fsm)" opacity=".35"/>
+  <!-- Motion lines -->
+  <line x1="4" y1="44" x2="8" y2="44" stroke="url(#fsm)" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+  <line x1="2" y1="50" x2="8" y2="50" stroke="url(#fsm)" stroke-width="1.5" stroke-linecap="round" opacity=".3"/>
+  <line x1="4" y1="56" x2="8" y2="56" stroke="url(#fsm)" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+  <!-- Proto/binary indicator dots -->
+  <circle cx="18" cy="24" r="2" fill="url(#fsm)" opacity=".5"/>
+  <circle cx="26" cy="24" r="2" fill="url(#fsm)" opacity=".4"/>
+  <circle cx="34" cy="24" r="2" fill="url(#fsm)" opacity=".3"/>
+  <circle cx="42" cy="24" r="2" fill="url(#fsm)" opacity=".2"/>
+</svg>

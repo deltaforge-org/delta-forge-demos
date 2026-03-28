@@ -6168,6 +6168,49 @@
       ]
     },
     {
+      "id": "protobuf-freight-shipping-manifest",
+      "path": "demos/protobuf/freight-shipping-manifest",
+      "iconPath": "icons/protobuf-freight-shipping-manifest.svg",
+      "name": "Protobuf Freight Shipping — Multi-Carrier Manifest",
+      "summary": "Tests protobuf features beyond existing demos: boolean fields (is_express, is_insured, requires_signature), int64 monetary values, float weights/dimensions, 3-level message nesting (Shipment → Package → Dimensions), multiple enums (ShipmentStatus, PackageClass), and multiple repeated fields per message. 3 carrier files contain 12 shipments, 24 packages, and 39 tracking events in a freight forwarding scenario.",
+      "categories": [
+        "protobuf",
+        "logistics"
+      ],
+      "tags": [
+        "protobuf",
+        "intermediate",
+        "proto3",
+        "bool",
+        "int64",
+        "float",
+        "3-level-nesting",
+        "multiple-enums",
+        "multi-repeated"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 3992,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.protobuf_freight.shipments"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.protobuf_freight.shipment_packages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.protobuf_freight.shipment_tracking"
+        }
+      ]
+    },
+    {
       "id": "protobuf-sensor-network",
       "path": "demos/protobuf/sensor-network",
       "iconPath": "icons/protobuf-sensor-network.svg",
