@@ -26,19 +26,19 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 path = "data/carrier_alpha.pb"
 format = "protobuf"
 description = "Alpha Express Logistics — 5 shipments, 10 packages, 18 tracking events"
-size_bytes = 1712
+size_bytes = 1740
 
 [[demo.data_files]]
 path = "data/carrier_beta.pb"
 format = "protobuf"
 description = "Beta Freight Services — 4 shipments, 8 packages, 12 tracking events"
-size_bytes = 1295
+size_bytes = 1327
 
 [[demo.data_files]]
 path = "data/carrier_gamma.pb"
 format = "protobuf"
 description = "Gamma Global Shipping — 3 shipments, 6 packages, 9 tracking events"
-size_bytes = 985
+size_bytes = 1001
 
 [[demo.data_files]]
 path = "schema/freight.proto"

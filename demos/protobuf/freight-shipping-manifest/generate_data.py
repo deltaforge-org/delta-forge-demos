@@ -151,18 +151,18 @@ def encode_shipping_manifest(shipments, carrier_name, manifest_date):
 
 # -- Enum constants --------------------------------------------------------
 
-# ShipmentStatus
-CREATED = 0
-PICKED_UP = 1
-IN_TRANSIT = 2
-DELIVERED = 3
-RETURNED = 4
+# ShipmentStatus (0 = UNSPECIFIED, never used)
+CREATED = 1
+PICKED_UP = 2
+IN_TRANSIT = 3
+DELIVERED = 4
+RETURNED = 5
 
-# PackageClass
-STANDARD = 0
-FRAGILE = 1
-HAZMAT = 2
-PERISHABLE = 3
+# PackageClass (0 = UNSPECIFIED, never used)
+STANDARD = 1
+FRAGILE = 2
+HAZMAT = 3
+PERISHABLE = 4
 
 # -- Timestamps (Unix epoch seconds) --------------------------------------
 
