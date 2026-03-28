@@ -21,14 +21,14 @@ zone_name = { description = "Target zone name", required = false }
 [[demo.data_files]]
 path = "data/orders_q1.avro"
 format = "avro"
-description = "Q1 2025 orders (40 rows, null compression) — date, timestamp-millis, nullable unions"
-size_bytes = 4432
+description = "Q1 2025 orders (40 rows, null compression) — date, long timestamp, nullable unions"
+size_bytes = 4387
 
 [[demo.data_files]]
 path = "data/orders_q2.avro"
 format = "avro"
 description = "Q2 2025 orders (40 rows, deflate compression) — same schema, different codec"
-size_bytes = 2192
+size_bytes = 2147
 
 [[demo.target_objects]]
 type = "external_table"
