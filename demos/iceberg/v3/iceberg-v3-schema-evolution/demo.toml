@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-v3-schema-evolution"
+name = "Iceberg V3 UniForm — Pharmaceutical Drug Registry Schema Evolution"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates schema evolution (ADD COLUMN) on a Delta table with Iceberg \
+UniForm V3 metadata generation. A pharmaceutical drug registry with 30 \
+compounds undergoes two rounds of schema evolution — adding trial_phase \
+and priority_score columns — followed by UPDATE backfills and new INSERT \
+rows with the full evolved schema. The Iceberg V3 read-back verifies that \
+the shadow metadata correctly tracks all schema versions, including NULL \
+backfill for evolved columns and populated values for post-evolution rows.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "v3", "schema-evolution", "add-column", "pharmaceutical"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.drug_registry"

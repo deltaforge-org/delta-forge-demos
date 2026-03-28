@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="icf" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#dc2626"/>
+      <stop offset="1" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <!-- Shopping bag -->
+  <rect x="20" y="30" width="40" height="36" rx="4" fill="url(#icf)" opacity=".12" stroke="url(#icf)" stroke-width="1.5"/>
+  <!-- Bag handles -->
+  <path d="M30 30 L30 22 Q30 16 40 16 Q50 16 50 22 L50 30" stroke="url(#icf)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <!-- Venn diagram (join) -->
+  <circle cx="34" cy="48" r="10" fill="url(#icf)" opacity=".15" stroke="url(#icf)" stroke-width="1.5"/>
+  <circle cx="46" cy="48" r="10" fill="url(#icf)" opacity=".15" stroke="url(#icf)" stroke-width="1.5"/>
+  <!-- Format labels -->
+  <text x="28" y="51" font-family="sans-serif" font-size="6" font-weight="bold" fill="url(#icf)" opacity=".7">IC</text>
+  <text x="48" y="51" font-family="sans-serif" font-size="6" font-weight="bold" fill="url(#icf)" opacity=".7">CS</text>
+  <!-- Link symbol in overlap -->
+  <circle cx="40" cy="48" r="3" fill="url(#icf)" opacity=".4"/>
+</svg>

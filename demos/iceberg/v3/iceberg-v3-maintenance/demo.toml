@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-v3-maintenance"
+name = "Iceberg V3 UniForm — SaaS Billing OPTIMIZE & VACUUM"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates OPTIMIZE and VACUUM maintenance operations on a Delta table \
+with Iceberg UniForm V3 metadata. A SaaS subscription billing table starts \
+with 30 tenants, grows to 60 through two INSERT batches (creating file \
+fragmentation), then undergoes OPTIMIZE (compaction), DELETE (remove \
+trial/suspended accounts), and VACUUM (orphan cleanup). The Iceberg V3 \
+read-back verifies that the shadow metadata survives the full maintenance \
+lifecycle with concrete subscription data intact.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "v3", "optimize", "vacuum", "maintenance", "saas", "billing"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.subscriptions"

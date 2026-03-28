@@ -6137,6 +6137,45 @@
       ]
     },
     {
+      "id": "iceberg-v2-cross-format-join",
+      "path": "demos/iceberg/v2/iceberg-v2-cross-format-join",
+      "iconPath": "icons/iceberg-v2-cross-format-join.svg",
+      "name": "Iceberg Cross-Format Join \u2014 Retail Store Analytics",
+      "summary": "Demonstrates cross-format interoperability by joining a UniForm Iceberg Delta table (40 sales transactions) with a CSV external table (10 store locations). Revenue-by-store and revenue-by-region JOINs run through both Delta and Iceberg V2 metadata paths, proving seamless cross-format query execution.",
+      "categories": [
+        "iceberg",
+        "csv",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "v2",
+        "cross-format",
+        "join",
+        "retail",
+        "csv"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 615,
+      "fileCount": 1,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.retail_demo.sales"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.retail_demo.stores"
+        }
+      ]
+    },
+    {
       "id": "iceberg-v2-fleet-telemetry",
       "path": "demos/iceberg/v2/iceberg-v2-fleet-telemetry",
       "iconPath": "icons/iceberg-v2-fleet-telemetry.svg",
@@ -6403,6 +6442,141 @@
         {
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.lab_results"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v3-maintenance",
+      "path": "demos/iceberg/v3/iceberg-v3-maintenance",
+      "iconPath": "icons/iceberg-v3-maintenance.svg",
+      "name": "Iceberg V3 UniForm \u2014 SaaS Billing OPTIMIZE & VACUUM",
+      "summary": "Demonstrates OPTIMIZE and VACUUM on a V3 UniForm Delta table. A SaaS subscription billing dataset starts with 30 tenants, grows to 60 through two INSERT batches (file fragmentation), then undergoes OPTIMIZE (compaction), DELETE (purge trial/suspended), and VACUUM (orphan cleanup). Iceberg V3 read-back proves metadata survives the full maintenance lifecycle.",
+      "categories": [
+        "iceberg",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "v3",
+        "optimize",
+        "vacuum",
+        "maintenance",
+        "saas"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.subscriptions"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v3-merge-upsert",
+      "path": "demos/iceberg/v3/iceberg-v3-merge-upsert",
+      "iconPath": "icons/iceberg-v3-merge-upsert.svg",
+      "name": "Iceberg V3 UniForm \u2014 Supply Chain Inventory MERGE Sync",
+      "summary": "Demonstrates MERGE INTO (upsert) on a V3 UniForm Delta table. 30 warehouse inventory SKUs across 3 warehouses undergo two MERGE rounds \u2014 updating quantities/prices for existing items and inserting new products (33 final rows). Iceberg V3 read-back verifies specific inventory levels and prices through the metadata chain.",
+      "categories": [
+        "iceberg",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "v3",
+        "merge",
+        "upsert",
+        "supply-chain",
+        "inventory"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.warehouse_inventory"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v3-schema-evolution",
+      "path": "demos/iceberg/v3/iceberg-v3-schema-evolution",
+      "iconPath": "icons/iceberg-v3-schema-evolution.svg",
+      "name": "Iceberg V3 UniForm \u2014 Pharmaceutical Drug Registry Schema Evolution",
+      "summary": "Demonstrates schema evolution (ADD COLUMN) on a V3 UniForm Delta table. 30 pharmaceutical compounds undergo two rounds of schema evolution \u2014 adding trial_phase and priority_score columns \u2014 with UPDATE backfills and 5 new post-evolution inserts (35 final rows). Iceberg V3 read-back verifies all schema versions are tracked correctly.",
+      "categories": [
+        "iceberg",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "v3",
+        "schema-evolution",
+        "add-column",
+        "pharmaceutical"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.drug_registry"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v3-time-travel",
+      "path": "demos/iceberg/v3/iceberg-v3-time-travel",
+      "iconPath": "icons/iceberg-v3-time-travel.svg",
+      "name": "Iceberg V3 UniForm \u2014 Investment Portfolio Audit Trail",
+      "summary": "Demonstrates time travel (VERSION AS OF) and version history (DESCRIBE HISTORY) on a V3 UniForm Delta table. 25 investment holdings undergo four mutation rounds \u2014 rebalancing, dividend reinvestment, exits, and acquisitions \u2014 creating distinct snapshots. Iceberg V3 read-back verifies concrete portfolio values through the metadata chain.",
+      "categories": [
+        "iceberg",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "v3",
+        "time-travel",
+        "version-as-of",
+        "describe-history",
+        "finance"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.portfolio_holdings"
         }
       ]
     },

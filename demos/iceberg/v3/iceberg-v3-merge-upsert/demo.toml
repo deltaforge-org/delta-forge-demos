@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-v3-merge-upsert"
+name = "Iceberg V3 UniForm — Supply Chain Inventory MERGE Sync"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates MERGE INTO (upsert) on a Delta table with Iceberg UniForm V3 \
+metadata. A supply chain inventory of 30 SKUs across 3 warehouses undergoes \
+two MERGE rounds — updating quantities/prices for existing items and \
+inserting new products — proving that MERGE-generated V3 snapshots with \
+deletion vectors remain readable through the Iceberg metadata chain. The \
+Iceberg read-back verifies specific inventory levels and prices, not just \
+row counts.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "v3", "merge", "upsert", "supply-chain", "inventory"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.warehouse_inventory"

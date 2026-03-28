@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-v3-time-travel"
+name = "Iceberg V3 UniForm — Investment Portfolio Audit Trail"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates time travel (VERSION AS OF) and version history (DESCRIBE \
+HISTORY) on a Delta table with Iceberg UniForm V3 metadata. An investment \
+portfolio of 25 holdings undergoes four mutation rounds — rebalancing, \
+dividend reinvestment, position exits, and new acquisitions — creating \
+distinct snapshots. Queries read historical versions to prove V3 metadata \
+snapshots align with Delta versions. The Iceberg read-back verifies the \
+final state with concrete portfolio values, not just row counts.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "v3", "time-travel", "version-as-of", "describe-history", "finance"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.portfolio_holdings"

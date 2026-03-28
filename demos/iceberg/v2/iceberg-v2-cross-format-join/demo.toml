@@ -1,0 +1,36 @@
+[demo]
+id = "iceberg-v2-cross-format-join"
+name = "Iceberg Cross-Format Join — Retail Store Analytics"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates cross-format interoperability by joining a UniForm Iceberg \
+Delta table (sales transactions) with a CSV external table (store \
+locations). A retail analytics scenario with 40 sales across 10 stores \
+proves that JOINs work seamlessly between tables backed by different \
+storage formats. The Iceberg read-back queries the sales table through \
+the V2 metadata chain, then joins it with the CSV table to verify \
+cross-format aggregates match the Delta-based results.
+"""
+categories = ["iceberg", "delta-table", "csv"]
+tags = ["iceberg", "intermediate", "uniform", "v2", "cross-format", "join", "retail", "csv"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Root path where table data and CSV files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/stores.csv"
+format = "csv"
+description = "10 retail store locations with region, city, and square footage"
+size_bytes = 615
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail_demo.sales"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.retail_demo.stores"
