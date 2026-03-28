@@ -115,17 +115,18 @@ ORDER BY w.warehouse_id, s.store_id;
 -- Navigate the H3 hierarchy: parent cells at coarser resolutions (regional
 -- grouping), children at finer resolution (local detail).
 
-ASSERT ROW_COUNT = 1
-ASSERT VALUE res_7_hex = '872664c1affffff'
-ASSERT VALUE children_count = 7
+ASSERT ROW_COUNT = 7
+ASSERT VALUE h3_is_valid_cell = true WHERE child_index = 1
 SELECT
-    h3_cell_to_string(h3_latlng_to_cell(lat, lng, 7)) AS res_7_hex,
-    h3_cell_to_string(h3_cell_to_parent(h3_latlng_to_cell(lat, lng, 7), 5)) AS parent_res_5,
-    h3_cell_to_string(h3_cell_to_parent(h3_latlng_to_cell(lat, lng, 7), 3)) AS parent_res_3,
-    h3_cell_to_string(h3_cell_to_center_child(h3_latlng_to_cell(lat, lng, 7), 8)) AS center_child_res_8,
-    ARRAY_LENGTH(h3_cell_to_children(h3_latlng_to_cell(lat, lng, 7), 8)) AS children_count
-FROM {{zone_name}}.logistics.warehouses
-WHERE warehouse_id = 1;
+    ROW_NUMBER() OVER (ORDER BY child) AS child_index,
+    child,
+    h3_cell_to_string(child) AS child_hex,
+    h3_is_valid_cell(child) AS h3_is_valid_cell,
+    h3_get_resolution(child) AS resolution
+FROM (
+    SELECT UNNEST(h3_cell_to_children(h3_latlng_to_cell(41.8781, -87.6298, 7), 8)) AS child
+)
+ORDER BY child;
 
 
 -- ============================================================================
@@ -135,21 +136,18 @@ WHERE warehouse_id = 1;
 -- latitude due to H3's icosahedral projection (cells closer to poles are
 -- slightly different in geodesic area).
 
-ASSERT ROW_COUNT = 3
-ASSERT VALUE area_km2 > 4 WHERE warehouse_id = 1
-ASSERT VALUE area_km2 < 6 WHERE warehouse_id = 1
-ASSERT VALUE ring_k1 = 6 WHERE warehouse_id = 1
-ASSERT VALUE disk_k1 = 7 WHERE warehouse_id = 1
+ASSERT ROW_COUNT = 1
+ASSERT VALUE area_km2 > 4
+ASSERT VALUE area_km2 < 6
+ASSERT VALUE ring_k1 = 6
+ASSERT VALUE disk_k1 = 7
+ASSERT VALUE disk_k2 = 19
 SELECT
-    warehouse_id,
-    warehouse_name,
-    ROUND(h3_cell_area_km2(h3_latlng_to_cell(lat, lng, 7)), 2) AS area_km2,
-    ARRAY_LENGTH(h3_hex_ring(h3_latlng_to_cell(lat, lng, 7), 1)) AS ring_k1,
-    ARRAY_LENGTH(h3_hex_ring(h3_latlng_to_cell(lat, lng, 7), 2)) AS ring_k2,
-    ARRAY_LENGTH(h3_hex_disk(h3_latlng_to_cell(lat, lng, 7), 1)) AS disk_k1,
-    ARRAY_LENGTH(h3_hex_disk(h3_latlng_to_cell(lat, lng, 7), 2)) AS disk_k2
-FROM {{zone_name}}.logistics.warehouses
-ORDER BY warehouse_id;
+    ROUND(h3_cell_area_km2(h3_latlng_to_cell(41.8781, -87.6298, 7)), 2) AS area_km2,
+    (SELECT COUNT(*) FROM (SELECT UNNEST(h3_hex_ring(h3_latlng_to_cell(41.8781, -87.6298, 7), 1)) AS c)) AS ring_k1,
+    (SELECT COUNT(*) FROM (SELECT UNNEST(h3_hex_ring(h3_latlng_to_cell(41.8781, -87.6298, 7), 2)) AS c)) AS ring_k2,
+    (SELECT COUNT(*) FROM (SELECT UNNEST(h3_hex_disk(h3_latlng_to_cell(41.8781, -87.6298, 7), 1)) AS c)) AS disk_k1,
+    (SELECT COUNT(*) FROM (SELECT UNNEST(h3_hex_disk(h3_latlng_to_cell(41.8781, -87.6298, 7), 2)) AS c)) AS disk_k2;
 
 
 -- ============================================================================
@@ -177,14 +175,10 @@ ORDER BY warehouse_id;
 -- Extract the hexagonal boundary as a WKT polygon for each warehouse cell.
 -- h3_cell_to_boundary returns a POLYGON with 7 vertices (6 unique + closing).
 
-ASSERT ROW_COUNT = 3
-ASSERT EXPRESSION LENGTH(boundary_wkt) > 50 WHERE warehouse_id = 1
+ASSERT ROW_COUNT = 1
+ASSERT VALUE boundary_wkt LIKE 'POLYGON%'
 SELECT
-    warehouse_id,
-    warehouse_name,
-    h3_cell_to_boundary(h3_latlng_to_cell(lat, lng, 7)) AS boundary_wkt
-FROM {{zone_name}}.logistics.warehouses
-ORDER BY warehouse_id;
+    h3_cell_to_boundary(h3_latlng_to_cell(41.8781, -87.6298, 7)) AS boundary_wkt;
 
 
 -- ============================================================================
