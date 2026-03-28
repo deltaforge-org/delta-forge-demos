@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-v3-cdf-uniform"
+name = "Iceberg V3 UniForm — CDF Payment Reconciliation"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates that Change Data Feed (CDF) and Iceberg UniForm V3 coexist \
+correctly on the same Delta table. A payment processing dataset with 30 \
+transactions undergoes four mutation rounds — batch approval, decline, \
+fraud removal, and new payment insertion — with both CDF change tracking \
+and Iceberg V3 metadata generation active throughout. The final Iceberg \
+read-back via an external table proves the V3 shadow metadata chain stays \
+consistent when CDF is also writing change data alongside the Delta log.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "v3", "change-data-feed", "cdf", "dual-format", "payments"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.payment_transactions"
