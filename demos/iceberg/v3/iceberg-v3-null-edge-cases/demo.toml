@@ -1,0 +1,58 @@
+[demo]
+id = "iceberg-v3-null-edge-cases"
+name = "Iceberg V3 — Clinical Lab NULL Edge Cases"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates NULL handling edge cases on a native Apache Iceberg \
+format-version 3 table. A hospital clinical lab dataset with 50 test \
+results has intentional NULLs across 7 columns: pending tests (NULL \
+result_value), automated analyzers (NULL lab_technician), non-standard \
+tests (NULL reference ranges), unassessed criticality (NULL is_critical), \
+and sparse notes. Queries exercise COALESCE, NULLIF, IS DISTINCT FROM, \
+COUNT(*) vs COUNT(column), GROUP BY with NULL buckets, CASE with NULLs, \
+and aggregate behavior when NULLs are present — proving the engine \
+handles V3 NULL statistics and predicate evaluation correctly.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v3", "null-handling", "coalesce", "nullif", "clinical", "data-quality"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "lab_results/data/00000-0-2300b38b-27d2-437b-b1c6-f7d5db2eb4a0-0-00001.parquet"
+format = "parquet"
+description = "All 50 lab result records with intentional NULLs (single Parquet data file)"
+size_bytes = 4885
+
+[[demo.data_files]]
+path = "lab_results/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg V3 metadata — single snapshot with 50 lab results"
+size_bytes = 2457
+
+[[demo.data_files]]
+path = "lab_results/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg V3 metadata — initial table creation"
+size_bytes = 1421
+
+[[demo.data_files]]
+path = "lab_results/metadata/snap-4686187586128402222-1-8f25e837-3ecb-400b-bffe-3a4c78e39e24.avro"
+format = "avro"
+description = "Manifest list for the single data snapshot"
+size_bytes = 4749
+
+[[demo.data_files]]
+path = "lab_results/metadata/8f25e837-3ecb-400b-bffe-3a4c78e39e24-m0.avro"
+format = "avro"
+description = "Data manifest referencing the Parquet data file"
+size_bytes = 8658
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.lab_results"
