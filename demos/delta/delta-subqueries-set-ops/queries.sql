@@ -110,6 +110,13 @@ ORDER BY s.student_name;
 -- grade and the course that earned it. Only students with completed courses
 -- (non-NULL grades) appear. MIN(grade) works because letter grades sort
 -- lexicographically: A < A- < B < B+ < ... < D < D+.
+--
+-- KNOWN LIMITATION: The natural way to write this is a triple-nested correlated
+-- subquery (outer → subquery → sub-subquery all referencing s.student_id).
+-- DataFusion's PlannerContext stores only one level of outer_query_schema, so
+-- columns from the grandparent scope are invisible in the innermost subquery.
+-- The CTE-based approach below is the workaround.
+-- Upstream issue: DataFusion PlannerContext.outer_query_schema is Option, not Vec.
 
 ASSERT ROW_COUNT = 13
 ASSERT VALUE best_grade = 'A' WHERE student_name = 'Alice Chen'
