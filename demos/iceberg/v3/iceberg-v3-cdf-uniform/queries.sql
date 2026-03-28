@@ -18,7 +18,8 @@
 -- Query 1: Baseline — 30 Transactions
 -- ============================================================================
 
-ASSERT ROW_COUNT = 30
+ASSERT ROW_COUNT = 1
+ASSERT VALUE cnt = 30
 ASSERT VALUE total_amount = 12373.23
 SELECT
     COUNT(*) AS cnt,
