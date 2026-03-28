@@ -19,7 +19,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.retail_demo
 -- STEP 2: CSV external table — store locations
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.retail_demo.stores
 USING CSV
-LOCATION '{{data_path}}/data/stores.csv'
+LOCATION '{{data_path}}/stores.csv'
 OPTIONS (
     header = 'true'
 );
