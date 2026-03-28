@@ -24,8 +24,8 @@ OPTIONS (
     header = 'true'
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.retail_demo.stores;
 GRANT ADMIN ON TABLE {{zone_name}}.retail_demo.stores TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.retail_demo.stores;
 
 -- STEP 3: Delta table with UniForm V2 — sales transactions
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail_demo.sales (
