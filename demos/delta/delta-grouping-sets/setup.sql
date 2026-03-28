@@ -38,7 +38,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.production_runs (
 
 GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.production_runs TO USER {{current_user}};
 
-DETECT SCHEMA {{zone_name}}.delta_demos.production_runs;
+DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.production_runs;
 
 
 -- Line-A: 12 rows (3 shifts x 4 dates)

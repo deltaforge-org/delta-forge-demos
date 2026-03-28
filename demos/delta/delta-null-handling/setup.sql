@@ -40,7 +40,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.survey_responses (
 
 GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.survey_responses TO USER {{current_user}};
 
-DETECT SCHEMA {{zone_name}}.delta_demos.survey_responses;
+DETECT SCHEMA FOR TABLE {{zone_name}}.delta_demos.survey_responses;
 
 
 -- ============================================================================
