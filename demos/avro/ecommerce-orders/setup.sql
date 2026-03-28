@@ -47,11 +47,11 @@ OPTIONS (
 -- Schema Detection & Permissions
 -- --------------------------------------------------------------------------
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.ecommerce.all_orders;
 GRANT ADMIN ON TABLE {{zone_name}}.ecommerce.all_orders TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.ecommerce.all_orders;
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.ecommerce.q1_orders;
 GRANT ADMIN ON TABLE {{zone_name}}.ecommerce.q1_orders TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.ecommerce.q1_orders;
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.ecommerce.sample_orders;
 GRANT ADMIN ON TABLE {{zone_name}}.ecommerce.sample_orders TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.ecommerce.sample_orders;
