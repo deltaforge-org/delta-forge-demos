@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="oct" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+  <!-- Clipboard body -->
+  <rect x="18" y="16" width="44" height="54" rx="3" fill="url(#oct)" opacity=".1" stroke="url(#oct)" stroke-width="1.5"/>
+  <!-- Clipboard clip -->
+  <rect x="30" y="10" width="20" height="10" rx="2" fill="url(#oct)" opacity=".3" stroke="url(#oct)" stroke-width="1.2"/>
+  <!-- Heartbeat / vitals line -->
+  <polyline points="24,42 32,42 35,32 38,52 41,38 44,42 48,42 51,36 54,48 57,42 62,42" stroke="url(#oct)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity=".6"/>
+  <!-- Data rows -->
+  <line x1="24" y1="54" x2="56" y2="54" stroke="url(#oct)" stroke-width="1" opacity=".3"/>
+  <line x1="24" y1="59" x2="50" y2="59" stroke="url(#oct)" stroke-width="1" opacity=".3"/>
+  <line x1="24" y1="64" x2="44" y2="64" stroke="url(#oct)" stroke-width="1" opacity=".3"/>
+  <!-- Medical cross -->
+  <rect x="52" y="56" width="8" height="3" rx=".5" fill="url(#oct)" opacity=".5"/>
+  <rect x="54.5" y="53.5" width="3" height="8" rx=".5" fill="url(#oct)" opacity=".5"/>
+</svg>

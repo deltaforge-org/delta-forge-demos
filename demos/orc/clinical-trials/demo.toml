@@ -1,0 +1,30 @@
+[demo]
+id = "orc-clinical-trials"
+name = "ORC Clinical Trials — Patient Outcome Analysis"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates ORC format with heavily nullable data for NULL handling and \
+conditional logic. 150 clinical trial patient records with NULLs in 6 of \
+13 columns exercise COALESCE, NULLIF, IS NULL patterns, CASE expressions, \
+and string functions (LIKE, LENGTH). Tests ORC's NULL bitmap encoding \
+with high NULL density.\
+"""
+categories = ["orc", "null-handling"]
+tags = ["orc", "intermediate", "null-handling", "coalesce", "case-expression", "string-functions"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/patients.orc"
+format = "orc"
+description = "Clinical trial patients — 150 rows with high NULL density"
+size_bytes = 19227
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc_trials.patients"

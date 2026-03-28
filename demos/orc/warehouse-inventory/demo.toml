@@ -1,0 +1,35 @@
+[demo]
+id = "orc-warehouse-inventory"
+name = "ORC Warehouse Inventory — Stock Level Analytics"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates ORC format with window functions on warehouse inventory data. \
+Two ORC files (100 rows across 2 warehouses) with mixed numeric types \
+exercise ROW_NUMBER, RANK, LAG/LEAD, NTILE, and running totals. Tests \
+ORC handling of int32, float64, boolean, and nullable string columns.\
+"""
+categories = ["orc", "window-functions"]
+tags = ["orc", "intermediate", "window-functions", "rank", "lag-lead", "ntile", "multi-file"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/wh_north.orc"
+format = "orc"
+description = "WH-NORTH warehouse — 50 inventory items"
+size_bytes = 3824
+
+[[demo.data_files]]
+path = "data/wh_south.orc"
+format = "orc"
+description = "WH-SOUTH warehouse — 50 inventory items"
+size_bytes = 3820
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc_inventory.stock"

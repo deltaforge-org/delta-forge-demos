@@ -1,0 +1,39 @@
+[demo]
+id = "orc-insurance-claims"
+name = "ORC Insurance Claims — Policy Cross-Reference"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates multi-table ORC queries with complex JOINs and subqueries. \
+Two ORC files — policies (80 rows) and claims (200 rows, 20 orphaned) — \
+exercise INNER JOIN, LEFT JOIN, anti-join, correlated subqueries, EXISTS, \
+and IN with subquery. Tests ORC cross-table referential integrity checks.\
+"""
+categories = ["orc", "joins"]
+tags = ["orc", "intermediate", "joins", "subqueries", "anti-join", "exists", "multi-table"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/policies.orc"
+format = "orc"
+description = "Insurance policies — 80 rows (70 active, 10 inactive)"
+size_bytes = 5302
+
+[[demo.data_files]]
+path = "data/claims.orc"
+format = "orc"
+description = "Insurance claims — 200 rows (180 matched, 20 orphaned)"
+size_bytes = 13301
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc_insurance.policies"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc_insurance.claims"

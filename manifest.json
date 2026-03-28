@@ -6,7 +6,7 @@
       "id": "avro-ecommerce-orders",
       "path": "demos/avro/ecommerce-orders",
       "iconPath": "icons/avro-ecommerce-orders.svg",
-      "name": "Avro E-Commerce Orders — Logical Types & Nullable Unions",
+      "name": "Avro E-Commerce Orders \u2014 Logical Types & Nullable Unions",
       "summary": "Tests Avro logical type support using 80 e-commerce orders across 2 quarterly files (null + deflate compression). Schema exercises date (int logicalType), timestamp-millis (long logicalType), nullable unions for discount_pct and notes, and integer-based monetary arithmetic. 9 queries with 38 assertions cover revenue aggregation, NULL coalescing, status/customer/country analytics, file_filter, and max_rows sampling.",
       "categories": [
         "avro",
@@ -48,8 +48,8 @@
       "id": "avro-insurance-claims",
       "path": "demos/avro/insurance-claims",
       "iconPath": "icons/avro-insurance-claims.svg",
-      "name": "Avro Insurance Claims — Claims Processing with Schema Evolution",
-      "summary": "Demonstrates Avro reading features using 3 insurance claim files (90 rows) with schema evolution (v1→v2 adds adjuster_name, settlement_date) and mixed compression codecs (null, deflate). Three tables exercise multi-file reading with NULL filling for evolved columns, file_filter for auto-claim extraction, max_rows for sampling, and file_metadata for traceability.",
+      "name": "Avro Insurance Claims \u2014 Claims Processing with Schema Evolution",
+      "summary": "Demonstrates Avro reading features using 3 insurance claim files (90 rows) with schema evolution (v1\u2192v2 adds adjuster_name, settlement_date) and mixed compression codecs (null, deflate). Three tables exercise multi-file reading with NULL filling for evolved columns, file_filter for auto-claim extraction, max_rows for sampling, and file_metadata for traceability.",
       "categories": [
         "avro",
         "insurance"
@@ -90,8 +90,8 @@
       "id": "avro-iot-sensors",
       "path": "demos/avro/iot-sensors",
       "iconPath": "icons/avro-iot-sensors.svg",
-      "name": "Avro IoT Sensors — Smart Building Telemetry",
-      "summary": "Demonstrates Avro reading features using 5 building-floor sensor files (2,500 rows) with schema evolution (v1→v2 adds battery_pct, firmware_version) and mixed compression codecs (null, deflate). Three tables exercise multi-file reading, file_filter for single-floor extraction, max_rows for sampling, file_metadata, and Avro's self-describing schema with automatic type detection.",
+      "name": "Avro IoT Sensors \u2014 Smart Building Telemetry",
+      "summary": "Demonstrates Avro reading features using 5 building-floor sensor files (2,500 rows) with schema evolution (v1\u2192v2 adds battery_pct, firmware_version) and mixed compression codecs (null, deflate). Three tables exercise multi-file reading, file_filter for single-floor extraction, max_rows for sampling, file_metadata, and Avro's self-describing schema with automatic type detection.",
       "categories": [
         "avro",
         "iot"
@@ -190,7 +190,7 @@
       "id": "csv-veterinary-clinic",
       "path": "demos/csv/veterinary-clinic",
       "iconPath": "icons/csv-veterinary-clinic.svg",
-      "name": "CSV Veterinary Clinic — Patient Records Across Branches",
+      "name": "CSV Veterinary Clinic \u2014 Patient Records Across Branches",
       "summary": "Demonstrates CSV recursive directory scanning, file_filter, and max_rows using 3 veterinary clinic branch files (75 rows). Three tables exercise recursive multi-branch reading, branch-specific filtering, and row sampling with file_metadata for source traceability.",
       "categories": [
         "csv",
@@ -230,7 +230,7 @@
       "id": "delta-advanced-sql",
       "path": "demos/delta/delta-advanced-sql",
       "iconPath": "icons/delta-advanced-sql.svg",
-      "name": "Delta Advanced SQL — Windows, CTEs & Analytics",
+      "name": "Delta Advanced SQL \u2014 Windows, CTEs & Analytics",
       "summary": "Delta tables support the full power of SQL analytics including window \\ functions, CTEs, and advanced aggregations, making them a drop-in \\ replacement for traditional data warehouses. This...",
       "categories": [
         "delta-table"
@@ -263,7 +263,7 @@
       "id": "delta-append-only-enforcement",
       "path": "demos/delta/delta-append-only-enforcement",
       "iconPath": "icons/delta-append-only-enforcement.svg",
-      "name": "Delta Append-Only Ledger — Immutable Financial Compliance",
+      "name": "Delta Append-Only Ledger \u2014 Immutable Financial Compliance",
       "summary": "A financial services firm builds an immutable transaction ledger using Delta's append-only property. Verifies configuration via DESCRIBE DETAIL and SHOW TBLPROPERTIES, appends regulatory batches proving count-only-grows, and contrasts against a mutable table where UPDATEs and DELETEs freely modify records.",
       "categories": [
         "delta-table",
@@ -301,7 +301,7 @@
       "path": "demos/delta/delta-append-only-event-sourcing",
       "iconPath": "icons/delta-append-only-event-sourcing.svg",
       "name": "Delta Append-Only Event Sourcing",
-      "summary": "Append-only Delta tables reject UPDATE and DELETE, making them ideal for \\ immutable event logs. This demo builds a 60-event order stream, reconstructs \\ order lifecycles, uses window functions to measure processing times, derives \\ current state from event history, appends a new batch, and proves the log \\ only grows — never shrinks.",
+      "summary": "Append-only Delta tables reject UPDATE and DELETE, making them ideal for \\ immutable event logs. This demo builds a 60-event order stream, reconstructs \\ order lifecycles, uses window functions to measure processing times, derives \\ current state from event history, appends a new batch, and proves the log \\ only grows \u2014 never shrinks.",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -333,8 +333,8 @@
       "id": "delta-audit-trail-versioning",
       "path": "demos/delta/delta-audit-trail-versioning",
       "iconPath": "icons/delta-audit-trail-versioning.svg",
-      "name": "Delta Audit Trail — Native Version-Based Compliance",
-      "summary": "Uses Delta's native transaction log and time travel as a tamper-proof audit trail for financial compliance. DESCRIBE HISTORY reveals every commit, VERSION AS OF reconstructs past states, and MERGE reconciles late-arriving event batches — all without manual audit columns. 42 events across 10 accounts and 4 Delta versions demonstrate immutable, version-stamped compliance.",
+      "name": "Delta Audit Trail \u2014 Native Version-Based Compliance",
+      "summary": "Uses Delta's native transaction log and time travel as a tamper-proof audit trail for financial compliance. DESCRIBE HISTORY reveals every commit, VERSION AS OF reconstructs past states, and MERGE reconciles late-arriving event batches \u2014 all without manual audit columns. 42 events across 10 accounts and 4 Delta versions demonstrate immutable, version-stamped compliance.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -367,7 +367,7 @@
       "id": "delta-auto-optimize",
       "path": "demos/delta/delta-auto-optimize",
       "iconPath": "icons/delta-auto-optimize.svg",
-      "name": "Delta Auto-Optimize — Automatic Compaction & Write Optimization",
+      "name": "Delta Auto-Optimize \u2014 Automatic Compaction & Write Optimization",
       "summary": "Delta Auto-Optimize uses the table properties 'delta.autoOptimize.optimizeWrite' \\ and 'delta.autoOptimize.autoCompact' to automatically coalesce small Parquet files \\ into larger ones during...",
       "categories": [
         "delta-table",
@@ -400,8 +400,8 @@
       "id": "delta-basics-crud",
       "path": "demos/delta/delta-basics-crud",
       "iconPath": "icons/delta-basics-crud.svg",
-      "name": "Delta Basics — Create, Insert, Update, Delete",
-      "summary": "Delta Lake extends Parquet with a transaction log that enables full CRUD \\ (Create, Read, Update, Delete) operations — something plain Parquet cannot do. \\ Each mutation (INSERT, UPDATE, DELETE)...",
+      "name": "Delta Basics \u2014 Create, Insert, Update, Delete",
+      "summary": "Delta Lake extends Parquet with a transaction log that enables full CRUD \\ (Create, Read, Update, Delete) operations \u2014 something plain Parquet cannot do. \\ Each mutation (INSERT, UPDATE, DELETE)...",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -516,7 +516,7 @@
       "id": "delta-bloom-filters",
       "path": "demos/delta/delta-bloom-filters",
       "iconPath": "icons/delta-bloom-filters.svg",
-      "name": "Delta Bloom Filters — Probabilistic Index for Fast Lookups",
+      "name": "Delta Bloom Filters \u2014 Probabilistic Index for Fast Lookups",
       "summary": "Bloom filters are probabilistic data structures stored alongside Delta \\ data files that enable data-skipping for point lookups on high-cardinality \\ columns like transaction IDs. When a query...",
       "categories": [
         "delta-table",
@@ -581,7 +581,7 @@
       "id": "delta-change-data-feed",
       "path": "demos/delta/delta-change-data-feed",
       "iconPath": "icons/delta-change-data-feed.svg",
-      "name": "Delta Change Data Feed — Track Row-Level Changes",
+      "name": "Delta Change Data Feed \u2014 Track Row-Level Changes",
       "summary": "Delta Change Data Feed (CDF) tracks row-level changes (inserts, updates, \\ deletes) across table versions, enabling efficient incremental ETL pipelines. \\ Without CDF, downstream consumers must...",
       "categories": [
         "delta-table",
@@ -614,8 +614,8 @@
       "id": "delta-collations",
       "path": "demos/delta/delta-collations",
       "iconPath": "icons/delta-collations.svg",
-      "name": "Delta Collations — Language-Aware Sorting & Comparison",
-      "summary": "Collation defines how strings are compared, sorted, and matched — critical for \\ multilingual data where naive byte-order sorting produces incorrect results \\ (e.g., placing umlauts after 'z')....",
+      "name": "Delta Collations \u2014 Language-Aware Sorting & Comparison",
+      "summary": "Collation defines how strings are compared, sorted, and matched \u2014 critical for \\ multilingual data where naive byte-order sorting produces incorrect results \\ (e.g., placing umlauts after 'z')....",
       "categories": [
         "delta-table",
         "delta-schema-types"
@@ -646,7 +646,7 @@
       "id": "delta-column-mapping",
       "path": "demos/delta/delta-column-mapping",
       "iconPath": "icons/delta-column-mapping.svg",
-      "name": "Delta Column Mapping — Physical & Logical Names",
+      "name": "Delta Column Mapping \u2014 Physical & Logical Names",
       "summary": "Delta Column Mapping (mode 'name') decouples logical column names in the \\ schema from physical column names in Parquet files, enabling ALTER TABLE \\ operations like column rename, drop, and add...",
       "categories": [
         "delta-table",
@@ -680,8 +680,8 @@
       "id": "delta-complex-types",
       "path": "demos/delta/delta-complex-types",
       "iconPath": "icons/delta-complex-types.svg",
-      "name": "Delta Complex Types — Structs, Arrays & Maps",
-      "summary": "Delta Lake supports complex data modelling through struct-like multi-column \\ patterns, array-like delimited strings, and map-like key=value pairs — \\ reflecting how real-world data often has...",
+      "name": "Delta Complex Types \u2014 Structs, Arrays & Maps",
+      "summary": "Delta Lake supports complex data modelling through struct-like multi-column \\ patterns, array-like delimited strings, and map-like key=value pairs \u2014 \\ reflecting how real-world data often has...",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -713,7 +713,7 @@
       "id": "delta-computed-columns",
       "path": "demos/delta/delta-computed-columns",
       "iconPath": "icons/delta-computed-columns.svg",
-      "name": "Delta Computed Fields — Formulas, Defaults & Derived Values",
+      "name": "Delta Computed Fields \u2014 Formulas, Defaults & Derived Values",
       "summary": "Computed columns are derived values calculated from other columns using \\ SQL expressions, ensuring consistency without storing redundant data. \\ Without a disciplined approach, formulas like...",
       "categories": [
         "delta-table",
@@ -746,7 +746,7 @@
       "id": "delta-constraint-enforcement",
       "path": "demos/delta/delta-constraint-enforcement",
       "iconPath": "icons/delta-constraint-enforcement.svg",
-      "name": "Delta Constraint Enforcement — NOT NULL & CHECK",
+      "name": "Delta Constraint Enforcement \u2014 NOT NULL & CHECK",
       "summary": "Delta Lake CHECK constraints enforce data quality invariants at the protocol \\ level, rejecting any commit whose rows violate the declared expressions. \\ Without constraints, bad data silently...",
       "categories": [
         "delta-table"
@@ -778,8 +778,8 @@
       "id": "delta-constraints-lifecycle",
       "path": "demos/delta/delta-constraints-lifecycle",
       "iconPath": "icons/delta-constraints-lifecycle.svg",
-      "name": "Delta Constraints Lifecycle — Validate, Mutate, Verify",
-      "summary": "CHECK constraints protect data quality, but the real proof is that they \\ survive every DML operation. This demo creates a product catalog with three \\ constraints, performs bulk UPDATEs, discontinues and deletes items, and \\ re-validates after each step — proving constraints hold through the full \\ mutation lifecycle.",
+      "name": "Delta Constraints Lifecycle \u2014 Validate, Mutate, Verify",
+      "summary": "CHECK constraints protect data quality, but the real proof is that they \\ survive every DML operation. This demo creates a product catalog with three \\ constraints, performs bulk UPDATEs, discontinues and deletes items, and \\ re-validates after each step \u2014 proving constraints hold through the full \\ mutation lifecycle.",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -849,7 +849,7 @@
       "id": "delta-convert-to-delta",
       "path": "demos/delta/delta-convert-to-delta",
       "iconPath": "icons/delta-convert-to-delta.svg",
-      "name": "Delta Convert to Delta — Migrating from Raw Parquet",
+      "name": "Delta Convert to Delta \u2014 Migrating from Raw Parquet",
       "summary": "Converting Parquet files to Delta Lake adds a transaction log (_delta_log) \\ on top of existing data files, unlocking ACID transactions, schema \\ enforcement, and time travel that raw Parquet...",
       "categories": [
         "delta-table",
@@ -883,8 +883,8 @@
       "id": "delta-cross-timezone-scheduling",
       "path": "demos/delta/delta-cross-timezone-scheduling",
       "iconPath": "icons/delta-cross-timezone-scheduling.svg",
-      "name": "Delta Cross-Timezone Scheduling — Global Conference Planner",
-      "summary": "Demonstrates the dual local/UTC column pattern for coordinating events across 6 global offices (New York, London, Tokyo, Sydney, Berlin, Dubai). 40 meetings with local and UTC times — queries detect room scheduling conflicts via UTC-based self-joins, find cross-office collaboration windows where 3+ offices are active, and order events chronologically regardless of timezone.",
+      "name": "Delta Cross-Timezone Scheduling \u2014 Global Conference Planner",
+      "summary": "Demonstrates the dual local/UTC column pattern for coordinating events across 6 global offices (New York, London, Tokyo, Sydney, Berlin, Dubai). 40 meetings with local and UTC times \u2014 queries detect room scheduling conflicts via UTC-based self-joins, find cross-office collaboration windows where 3+ offices are active, and order events chronologically regardless of timezone.",
       "categories": [
         "delta-table"
       ],
@@ -1013,7 +1013,7 @@
       "id": "delta-deletion-vectors",
       "path": "demos/delta/delta-deletion-vectors",
       "iconPath": "icons/delta-deletion-vectors.svg",
-      "name": "Delta Deletion Vectors — Efficient Soft Deletes",
+      "name": "Delta Deletion Vectors \u2014 Efficient Soft Deletes",
       "summary": "Deletion vectors (DVs) are a Delta Lake protocol feature that marks individual \\ rows as deleted using lightweight bitmap files, avoiding the costly rewrite of \\ entire Parquet data files. Without...",
       "categories": [
         "delta-table",
@@ -1045,7 +1045,7 @@
       "id": "delta-dml-patterns",
       "path": "demos/delta/delta-dml-patterns",
       "iconPath": "icons/delta-dml-patterns.svg",
-      "name": "Delta DML Patterns — INSERT, UPDATE & DELETE",
+      "name": "Delta DML Patterns \u2014 INSERT, UPDATE & DELETE",
       "summary": "Delta Lake supports full DML (INSERT, UPDATE, DELETE) on top of immutable \\ Parquet files by recording add/remove file actions in the transaction log, \\ whereas traditional data lakes are...",
       "categories": [
         "data-manipulation",
@@ -1081,8 +1081,8 @@
       "id": "delta-duration-arithmetic",
       "path": "demos/delta/delta-duration-arithmetic",
       "iconPath": "icons/delta-duration-arithmetic.svg",
-      "name": "Delta Duration Arithmetic — Maritime Canal Transit",
-      "summary": "Demonstrates duration arithmetic on VARCHAR timestamps using SUBSTRING + CAST to compute transit times through a canal lock system. 35 vessel passages across 3 locks with entry/exit timestamps — queries compute transit durations in minutes, detect cross-midnight passages, and aggregate per-lock cargo throughput, all without native timestamp types.",
+      "name": "Delta Duration Arithmetic \u2014 Maritime Canal Transit",
+      "summary": "Demonstrates duration arithmetic on VARCHAR timestamps using SUBSTRING + CAST to compute transit times through a canal lock system. 35 vessel passages across 3 locks with entry/exit timestamps \u2014 queries compute transit durations in minutes, detect cross-midnight passages, and aggregate per-lock cargo throughput, all without native timestamp types.",
       "categories": [
         "delta-table"
       ],
@@ -1113,7 +1113,7 @@
       "id": "delta-dv-accumulation",
       "path": "demos/delta/delta-dv-accumulation",
       "iconPath": "icons/delta-dv-accumulation.svg",
-      "name": "Delta DV Accumulation — Performance Degradation & Recovery",
+      "name": "Delta DV Accumulation \u2014 Performance Degradation & Recovery",
       "summary": "Deletion vectors enable lightweight row-level deletes, but each DELETE creates a new DV bitmap file. In healthcare systems under GDPR/HIPAA, deletion requests arrive in small batches, causing DV files to accumulate and degrade query performance. This demo simulates three compliance deletion rounds, then recovers with OPTIMIZE.",
       "categories": [
         "delta-table",
@@ -1146,7 +1146,7 @@
       "id": "delta-dynamic-partition-pruning",
       "path": "demos/delta/delta-dynamic-partition-pruning",
       "iconPath": "icons/delta-dynamic-partition-pruning.svg",
-      "name": "Delta Dynamic Partition Pruning — Smart Query Filtering",
+      "name": "Delta Dynamic Partition Pruning \u2014 Smart Query Filtering",
       "summary": "Dynamic partition pruning is a query optimization where the engine skips \\ entire partitions of a fact table based on filter values derived from a \\ joined dimension table, dramatically reducing...",
       "categories": [
         "delta-table",
@@ -1183,7 +1183,7 @@
       "id": "delta-edge-cases",
       "path": "demos/delta/delta-edge-cases",
       "iconPath": "icons/delta-edge-cases.svg",
-      "name": "Delta Edge Cases — Empty, Wide & Minimal Tables",
+      "name": "Delta Edge Cases \u2014 Empty, Wide & Minimal Tables",
       "summary": "Delta tables gracefully handle boundary conditions that often trip up \\ traditional data systems, including single-row tables, wide schemas, \\ and empty tables. Understanding these edge cases is...",
       "categories": [
         "delta-table"
@@ -1223,7 +1223,7 @@
       "id": "delta-event-sourcing-analytics",
       "path": "demos/delta/delta-event-sourcing-analytics",
       "iconPath": "icons/delta-event-sourcing-analytics.svg",
-      "name": "Delta Event Sourcing Analytics — ED Patient Flow",
+      "name": "Delta Event Sourcing Analytics \u2014 ED Patient Flow",
       "summary": "A hospital emergency department tracks patient flow as an event stream: triage, admit, transfer, discharge. Uses LAG for wait times, ROW_NUMBER for current state derivation, SUM OVER for running counts, and CTEs for multi-step analytics over heterogeneous event payloads.",
       "categories": [
         "delta-table"
@@ -1258,8 +1258,8 @@
       "id": "delta-feature-activation-lifecycle",
       "path": "demos/delta/delta-feature-activation-lifecycle",
       "iconPath": "icons/delta-feature-activation-lifecycle.svg",
-      "name": "Delta Feature Activation Lifecycle — Evolving Table Capabilities",
-      "summary": "A platform team manages a customer_events table that started plain. As requirements grow, features are activated incrementally via ALTER TABLE SET TBLPROPERTIES — first CDC for incremental ETL, then observing protocol version changes and write-time behavior at each step.",
+      "name": "Delta Feature Activation Lifecycle \u2014 Evolving Table Capabilities",
+      "summary": "A platform team manages a customer_events table that started plain. As requirements grow, features are activated incrementally via ALTER TABLE SET TBLPROPERTIES \u2014 first CDC for incremental ETL, then observing protocol version changes and write-time behavior at each step.",
       "categories": [
         "delta-table"
       ],
@@ -1291,8 +1291,8 @@
       "id": "delta-funnel-analysis",
       "path": "demos/delta/delta-funnel-analysis",
       "iconPath": "icons/delta-funnel-analysis.svg",
-      "name": "Delta Funnel Analysis — SaaS Conversion Tracking",
-      "summary": "SaaS companies track users through a conversion funnel: trial → activation → subscription → renewal. This demo builds a 100-event dataset, computes stage-by-stage conversion rates using self-JOINs, then uses UPDATE to mark churned users — demonstrating Delta Lake as a mutable analytics backend.",
+      "name": "Delta Funnel Analysis \u2014 SaaS Conversion Tracking",
+      "summary": "SaaS companies track users through a conversion funnel: trial \u2192 activation \u2192 subscription \u2192 renewal. This demo builds a 100-event dataset, computes stage-by-stage conversion rates using self-JOINs, then uses UPDATE to mark churned users \u2014 demonstrating Delta Lake as a mutable analytics backend.",
       "categories": [
         "delta-table",
         "delta-analytics"
@@ -1325,7 +1325,7 @@
       "id": "delta-gdpr-data-erasure",
       "path": "demos/delta/delta-gdpr-data-erasure",
       "iconPath": "icons/delta-gdpr-data-erasure.svg",
-      "name": "Delta GDPR Data Erasure — Right to Erasure Lifecycle",
+      "name": "Delta GDPR Data Erasure \u2014 Right to Erasure Lifecycle",
       "summary": "GDPR Article 17 requires permanent deletion of personal data on request. This demo walks through a bank's compliance workflow: NULL out SSN, phone, and address for targeted customers, audit changes via DESCRIBE HISTORY, prove time travel still exposes PII in prior versions, then VACUUM to complete physical deletion.",
       "categories": [
         "delta-table"
@@ -1391,8 +1391,8 @@
       "id": "delta-history-investigation",
       "path": "demos/delta/delta-history-investigation",
       "iconPath": "icons/delta-history-investigation.svg",
-      "name": "Delta DESCRIBE HISTORY — Root-Cause Investigation",
-      "summary": "A SaaS platform's reporting dashboard shows inflated Americas revenue. A data engineer uses DESCRIBE HISTORY to list every version, then time-travels through commits to pinpoint the exact update that doubled revenue — a full diagnostic workflow without modifying the table.",
+      "name": "Delta DESCRIBE HISTORY \u2014 Root-Cause Investigation",
+      "summary": "A SaaS platform's reporting dashboard shows inflated Americas revenue. A data engineer uses DESCRIBE HISTORY to list every version, then time-travels through commits to pinpoint the exact update that doubled revenue \u2014 a full diagnostic workflow without modifying the table.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -1424,7 +1424,7 @@
       "id": "delta-in-commit-timestamps",
       "path": "demos/delta/delta-in-commit-timestamps",
       "iconPath": "icons/delta-in-commit-timestamps.svg",
-      "name": "Delta In-Commit Timestamps — Reliable Version Timing",
+      "name": "Delta In-Commit Timestamps \u2014 Reliable Version Timing",
       "summary": "In-commit timestamps embed a reliable, monotonically increasing timestamp \\ directly into each Delta transaction log commit, solving the problem of \\ clock skew between distributed writers....",
       "categories": [
         "delta-table",
@@ -1456,8 +1456,8 @@
       "id": "delta-json-event-log",
       "path": "demos/delta/delta-json-event-log",
       "iconPath": "icons/delta-json-event-log.svg",
-      "name": "Delta JSON Event Log — Payment Gateway Analysis",
-      "summary": "A fintech payment gateway logs every API transaction with JSON payloads in VARCHAR columns — each transaction type (charge, refund, auth, payout) has a different payload shape. Demonstrates LIKE patterns, CASE WHEN classification, CTE analytics, and UPDATE based on JSON content.",
+      "name": "Delta JSON Event Log \u2014 Payment Gateway Analysis",
+      "summary": "A fintech payment gateway logs every API transaction with JSON payloads in VARCHAR columns \u2014 each transaction type (charge, refund, auth, payout) has a different payload shape. Demonstrates LIKE patterns, CASE WHEN classification, CTE analytics, and UPDATE based on JSON content.",
       "categories": [
         "delta-table"
       ],
@@ -1491,7 +1491,7 @@
       "id": "delta-merge-advanced",
       "path": "demos/delta/delta-merge-advanced",
       "iconPath": "icons/delta-merge-advanced.svg",
-      "name": "Delta MERGE — Advanced Patterns & Conditional Logic",
+      "name": "Delta MERGE \u2014 Advanced Patterns & Conditional Logic",
       "summary": "Delta MERGE INTO supports multiple WHEN MATCHED clauses with conditional \\ predicates, enabling complex write patterns in a single atomic operation. \\ This solves the common ETL problem of needing...",
       "categories": [
         "delta-table",
@@ -1528,8 +1528,8 @@
       "id": "delta-merge-composite-keys",
       "path": "demos/delta/delta-merge-composite-keys",
       "iconPath": "icons/delta-merge-composite-keys.svg",
-      "name": "Delta MERGE — Composite Keys & Subquery Source",
-      "summary": "Real-world tables rarely have single-column keys. Fleet telemetry, IoT data, and multi-tenant systems use composite keys. This demo shows MERGE with a multi-column ON condition for deduplicating and upserting GPS telemetry from a delivery fleet — the standard pattern for late-arriving data corrections.",
+      "name": "Delta MERGE \u2014 Composite Keys & Subquery Source",
+      "summary": "Real-world tables rarely have single-column keys. Fleet telemetry, IoT data, and multi-tenant systems use composite keys. This demo shows MERGE with a multi-column ON condition for deduplicating and upserting GPS telemetry from a delivery fleet \u2014 the standard pattern for late-arriving data corrections.",
       "categories": [
         "delta-table",
         "delta-dml-merge"
@@ -1567,7 +1567,7 @@
       "id": "delta-merge-computed-columns",
       "path": "demos/delta/delta-merge-computed-columns",
       "iconPath": "icons/delta-merge-computed-columns.svg",
-      "name": "Delta MERGE — Computed Columns & CASE Logic",
+      "name": "Delta MERGE \u2014 Computed Columns & CASE Logic",
       "summary": "Embed business logic directly in MERGE using CASE expressions, arithmetic, and conditional logic in UPDATE SET and INSERT VALUES clauses to compute derived columns (tier, discount, priority score) at merge time.",
       "categories": [
         "delta-table",
@@ -1604,7 +1604,7 @@
       "id": "delta-merge-dedup",
       "path": "demos/delta/delta-merge-dedup",
       "iconPath": "icons/delta-merge-dedup.svg",
-      "name": "Delta MERGE — Deduplication (Keep Latest)",
+      "name": "Delta MERGE \u2014 Deduplication (Keep Latest)",
       "summary": "Deduplicate a table by merging against a subquery that selects the winning row per business key using ROW_NUMBER. The self-merge pattern is idempotent and handles at-least-once delivery, pipeline retries, and overlapping batch windows.",
       "categories": [
         "delta-table",
@@ -1642,7 +1642,7 @@
       "id": "delta-merge-dv-lifecycle",
       "path": "demos/delta/delta-merge-dv-lifecycle",
       "iconPath": "icons/delta-merge-dv-lifecycle.svg",
-      "name": "Delta MERGE — Generating & Materializing Deletion Vectors",
+      "name": "Delta MERGE \u2014 Generating & Materializing Deletion Vectors",
       "summary": "A retail product catalog sync demonstrating how MERGE generates deletion vectors (DVs) and how OPTIMIZE materializes them. An ERP system sends daily product feed updates via a three-way MERGE: matched updates create DVs for old rows, zero-stock matches trigger deletes, and new SKUs are inserted.",
       "categories": [
         "delta-table",
@@ -1679,8 +1679,8 @@
       "id": "delta-merge-idempotent",
       "path": "demos/delta/delta-merge-idempotent",
       "iconPath": "icons/delta-merge-idempotent.svg",
-      "name": "Delta MERGE — Idempotent Pipeline (Timestamp Guards)",
-      "summary": "Production pipelines must handle retries gracefully. This demo uses timestamp guards to ensure re-running the same IoT sensor batch is safe — the first run applies changes, the second run is a verified no-op.",
+      "name": "Delta MERGE \u2014 Idempotent Pipeline (Timestamp Guards)",
+      "summary": "Production pipelines must handle retries gracefully. This demo uses timestamp guards to ensure re-running the same IoT sensor batch is safe \u2014 the first run applies changes, the second run is a verified no-op.",
       "categories": [
         "delta-table",
         "delta-dml-merge"
@@ -1718,8 +1718,8 @@
       "id": "delta-merge-multi-source",
       "path": "demos/delta/delta-merge-multi-source",
       "iconPath": "icons/delta-merge-multi-source.svg",
-      "name": "Delta MERGE — Multi-Source Sequential Updates",
-      "summary": "Order fulfillment pipelines receive updates from shipping, payments, and returns systems on independent schedules. Each source MERGEs into the same order_status table, updating only its own columns while preserving data from other sources — the standard pattern for event-driven microservice data integration.",
+      "name": "Delta MERGE \u2014 Multi-Source Sequential Updates",
+      "summary": "Order fulfillment pipelines receive updates from shipping, payments, and returns systems on independent schedules. Each source MERGEs into the same order_status table, updating only its own columns while preserving data from other sources \u2014 the standard pattern for event-driven microservice data integration.",
       "categories": [
         "delta-table",
         "delta-dml-merge"
@@ -1765,7 +1765,7 @@
       "id": "delta-merge-scd2",
       "path": "demos/delta/delta-merge-scd2",
       "iconPath": "icons/delta-merge-scd2.svg",
-      "name": "Delta MERGE — SCD Type 2 (Slowly Changing Dimensions)",
+      "name": "Delta MERGE \u2014 SCD Type 2 (Slowly Changing Dimensions)",
       "summary": "Slowly Changing Dimension Type 2 preserves full history by expiring the current row and inserting a new version. This demo merges HR changes (promotions, transfers, salary adjustments) into an employee dimension, maintaining a complete audit trail.",
       "categories": [
         "delta-table",
@@ -1804,7 +1804,7 @@
       "id": "delta-merge-soft-delete",
       "path": "demos/delta/delta-merge-soft-delete",
       "iconPath": "icons/delta-merge-soft-delete.svg",
-      "name": "Delta MERGE — Soft Delete with BY SOURCE",
+      "name": "Delta MERGE \u2014 Soft Delete with BY SOURCE",
       "summary": "Production CDC pipelines rarely hard-delete records. This demo uses WHEN NOT MATCHED BY SOURCE with UPDATE (not DELETE) to flag stale records as inactive, with tiered rules: high-value records get flagged for review while low-value records are deactivated automatically.",
       "categories": [
         "delta-table",
@@ -1842,8 +1842,8 @@
       "id": "delta-merge-subquery",
       "path": "demos/delta/delta-merge-subquery",
       "iconPath": "icons/delta-merge-subquery.svg",
-      "name": "Delta MERGE — Subquery & CTE Source Patterns",
-      "summary": "Real-world MERGE sources require deduplication and aggregation before merging. This demo uses a CTE to aggregate raw e-commerce order events and upsert into a daily revenue summary — the pattern behind every analytics pipeline.",
+      "name": "Delta MERGE \u2014 Subquery & CTE Source Patterns",
+      "summary": "Real-world MERGE sources require deduplication and aggregation before merging. This demo uses a CTE to aggregate raw e-commerce order events and upsert into a daily revenue summary \u2014 the pattern behind every analytics pipeline.",
       "categories": [
         "delta-table",
         "delta-dml-merge"
@@ -1881,7 +1881,7 @@
       "id": "delta-merge-upsert",
       "path": "demos/delta/delta-merge-upsert",
       "iconPath": "icons/delta-merge-upsert.svg",
-      "name": "Delta MERGE — CDC Upsert with BY SOURCE",
+      "name": "Delta MERGE \u2014 CDC Upsert with BY SOURCE",
       "summary": "The MERGE INTO upsert pattern is the foundation of change data capture (CDC) pipelines, atomically applying inserts, updates, and deletes from a staging source to a target table. The WHEN NOT MATCHED BY SOURCE clause detects and removes stale target rows absent from the source feed.",
       "categories": [
         "delta-table",
@@ -1919,8 +1919,8 @@
       "id": "delta-multi-level-partitioning",
       "path": "demos/delta/delta-multi-level-partitioning",
       "iconPath": "icons/delta-multi-level-partitioning.svg",
-      "name": "Delta Multi-Level Partitioning — Compound Partition Pruning",
-      "summary": "Multi-level partitioning creates a hierarchy of partition directories \\\r(e.g., region=us-east/quarter=Q1-2024/) that enables compound pruning: \\\rthe engine can skip partitions on BOTH dimensions simultaneously. A query \\\rfiltering on region AND quarter can prune down to 1 of 16 partitions — a \\\r93.7",
+      "name": "Delta Multi-Level Partitioning \u2014 Compound Partition Pruning",
+      "summary": "Multi-level partitioning creates a hierarchy of partition directories \\\r(e.g., region=us-east/quarter=Q1-2024/) that enables compound pruning: \\\rthe engine can skip partitions on BOTH dimensions simultaneously. A query \\\rfiltering on region AND quarter can prune down to 1 of 16 partitions \u2014 a \\\r93.7",
       "categories": [
         "delta-table"
       ],
@@ -1993,7 +1993,7 @@
       "id": "delta-null-statistics",
       "path": "demos/delta/delta-null-statistics",
       "iconPath": "icons/delta-null-statistics.svg",
-      "name": "Delta NULL Statistics — NULL-Aware Query Optimization",
+      "name": "Delta NULL Statistics \u2014 NULL-Aware Query Optimization",
       "summary": "Healthcare patient records have optional fields that start NULL and get populated over time. Delta tracks per-file NULL counts, enabling the engine to skip files with zero NULLs or all-NULL columns...",
       "categories": [
         "delta-table",
@@ -2026,8 +2026,8 @@
       "id": "delta-optimize-compaction",
       "path": "demos/delta/delta-optimize-compaction",
       "iconPath": "icons/delta-optimize-compaction.svg",
-      "name": "Delta OPTIMIZE — Manual File Compaction & TARGET SIZE",
-      "summary": "OPTIMIZE is a Delta Lake maintenance command that compacts small Parquet files \\\rinto larger, optimally-sized ones. Frequent small INSERTs — such as daily batch \\\rloads or streaming micro-batches — create a \"small files problem\" that degrades \\\rread performance due to excessive file-open overhead. \\",
+      "name": "Delta OPTIMIZE \u2014 Manual File Compaction & TARGET SIZE",
+      "summary": "OPTIMIZE is a Delta Lake maintenance command that compacts small Parquet files \\\rinto larger, optimally-sized ones. Frequent small INSERTs \u2014 such as daily batch \\\rloads or streaming micro-batches \u2014 create a \"small files problem\" that degrades \\\rread performance due to excessive file-open overhead. \\",
       "categories": [
         "delta-table"
       ],
@@ -2059,7 +2059,7 @@
       "id": "delta-optimize-version-proof",
       "path": "demos/delta/delta-optimize-version-proof",
       "iconPath": "icons/delta-optimize-version-proof.svg",
-      "name": "Delta OPTIMIZE — Cross-Version Data Integrity Proof",
+      "name": "Delta OPTIMIZE \u2014 Cross-Version Data Integrity Proof",
       "summary": "A logistics company tracks shipment manifests across three carriers. Daily uploads fragment the table. Weekly OPTIMIZE compacts the files, and cross-version comparison proves zero data loss: carrier breakdowns, weight sums, and row counts are identical before and after compaction.",
       "categories": [
         "delta-table",
@@ -2092,7 +2092,7 @@
       "id": "delta-overflow-detection",
       "path": "demos/delta/delta-overflow-detection",
       "iconPath": "icons/delta-overflow-detection.svg",
-      "name": "Delta Overflow Detection — Treasury Balance Monitoring",
+      "name": "Delta Overflow Detection \u2014 Treasury Balance Monitoring",
       "summary": "Models a multi-tier treasury ledger where account balances range from small business ($4.5M) to sovereign wealth funds ($2B). Queries detect accounts approaching the INT limit (2,147,483,647) by computing percentage proximity and risk levels. Demonstrates proactive type widening via ALTER TABLE ALTER COLUMN TYPE before overflow occurs, then safely processes BIGINT-range transactions for central bank reserves and pension funds.",
       "categories": [
         "delta-table"
@@ -2155,8 +2155,8 @@
       "id": "delta-partition-merge",
       "path": "demos/delta/delta-partition-merge",
       "iconPath": "icons/delta-partition-merge.svg",
-      "name": "Delta Partition MERGE — Catalog Sync by Category",
-      "summary": "MERGE into a partitioned Delta table demonstrates how upsert operations target only the partition directories containing matching rows. A product catalog partitioned by category receives a supplier feed that updates Electronics, Clothing, and Home — while Sports files are never opened.",
+      "name": "Delta Partition MERGE \u2014 Catalog Sync by Category",
+      "summary": "MERGE into a partitioned Delta table demonstrates how upsert operations target only the partition directories containing matching rows. A product catalog partitioned by category receives a supplier feed that updates Electronics, Clothing, and Home \u2014 while Sports files are never opened.",
       "categories": [
         "delta-table",
         "delta-dml-merge"
@@ -2193,7 +2193,7 @@
       "id": "delta-partition-pitfalls",
       "path": "demos/delta/delta-partition-pitfalls",
       "iconPath": "icons/delta-partition-pitfalls.svg",
-      "name": "Delta Partition Pitfalls — Over-Partitioning & Repartitioning",
+      "name": "Delta Partition Pitfalls \u2014 Over-Partitioning & Repartitioning",
       "summary": "Over-partitioning is one of the most common Delta table design mistakes. When \\\ra table is partitioned by a high-cardinality column (like customer_id), each \\\rpartition directory contains very few rows, creating hundreds or thousands of \\\rtiny Parquet files. This \"small files problem\" degrades query",
       "categories": [
         "delta-table"
@@ -2229,8 +2229,8 @@
       "id": "delta-partition-replace",
       "path": "demos/delta/delta-partition-replace",
       "iconPath": "icons/delta-partition-replace.svg",
-      "name": "Delta Partition Replace — Monthly Sales Pipeline",
-      "summary": "The partition-replace pattern uses DELETE + INSERT to atomically swap an entire partition's data with a corrected dataset. A monthly sales table receives price corrections for February via partition replacement, then grows with an incremental April append — all without touching January or March.",
+      "name": "Delta Partition Replace \u2014 Monthly Sales Pipeline",
+      "summary": "The partition-replace pattern uses DELETE + INSERT to atomically swap an entire partition's data with a corrected dataset. A monthly sales table receives price corrections for February via partition replacement, then grows with an incremental April append \u2014 all without touching January or March.",
       "categories": [
         "delta-table",
         "delta-fundamentals"
@@ -2331,7 +2331,7 @@
       "id": "delta-partition-time-series",
       "path": "demos/delta/delta-partition-time-series",
       "iconPath": "icons/delta-partition-time-series.svg",
-      "name": "Delta Time-Based Partitioning — Monthly Sensor Data",
+      "name": "Delta Time-Based Partitioning \u2014 Monthly Sensor Data",
       "summary": "Time-based partitioning is the most common strategy in production data lakes, \\\rorganizing files into directories by time period (year_month, event_date, etc.). \\\rThis demo partitions factory sensor readings by month and demonstrates time-range \\\rqueries with partition pruning, partition-scoped reca",
       "categories": [
         "delta-table"
@@ -2363,7 +2363,7 @@
       "id": "delta-partitioning",
       "path": "demos/delta/delta-partitioning",
       "iconPath": "icons/delta-partitioning.svg",
-      "name": "Delta Partitioning — Organize & Query by Region",
+      "name": "Delta Partitioning \u2014 Organize & Query by Region",
       "summary": "Delta table partitioning physically organizes data files into directories \\ by partition column values, enabling partition pruning that skips entire \\ file groups during queries. This dramatically...",
       "categories": [
         "delta-table",
@@ -2428,7 +2428,7 @@
       "id": "delta-protocol-feature-inspection",
       "path": "demos/delta/delta-protocol-feature-inspection",
       "iconPath": "icons/delta-protocol-feature-inspection.svg",
-      "name": "Delta Protocol Feature Inspection — Metadata Forensics",
+      "name": "Delta Protocol Feature Inspection \u2014 Metadata Forensics",
       "summary": "A data engineering team inherits three Delta tables and must determine which protocol features are enabled before building downstream pipelines. Uses DESCRIBE DETAIL, SHOW TABLE PROPERTIES, and DESCRIBE HISTORY to inspect protocol versions, reader/writer features, and table configuration.",
       "categories": [
         "delta-table"
@@ -2468,7 +2468,7 @@
       "id": "delta-restore-advanced",
       "path": "demos/delta/delta-restore-advanced",
       "iconPath": "icons/delta-restore-advanced.svg",
-      "name": "Delta RESTORE — Advanced Recovery Scenarios",
+      "name": "Delta RESTORE \u2014 Advanced Recovery Scenarios",
       "summary": "Delta RESTORE TO VERSION rolls an entire table back to a previous \\ transaction log version, undoing all intermediate commits in a single \\ atomic operation. This is a safety net for recovering...",
       "categories": [
         "delta-table",
@@ -2501,8 +2501,8 @@
       "id": "delta-restore-partitioned",
       "path": "demos/delta/delta-restore-partitioned",
       "iconPath": "icons/delta-restore-partitioned.svg",
-      "name": "Delta Recovery Strategy — RESTORE vs Partition Replace",
-      "summary": "When only one partition is corrupted, a full RESTORE rolls back the entire table — undoing good changes in other partitions. This demo compares whole-table RESTORE with partition-scoped replacement (DELETE + INSERT FROM VERSION AS OF), demonstrating why partition replace is the surgical recovery tool for partitioned tables.",
+      "name": "Delta Recovery Strategy \u2014 RESTORE vs Partition Replace",
+      "summary": "When only one partition is corrupted, a full RESTORE rolls back the entire table \u2014 undoing good changes in other partitions. This demo compares whole-table RESTORE with partition-scoped replacement (DELETE + INSERT FROM VERSION AS OF), demonstrating why partition replace is the surgical recovery tool for partitioned tables.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -2535,7 +2535,7 @@
       "id": "delta-restore-rollback",
       "path": "demos/delta/delta-restore-rollback",
       "iconPath": "icons/delta-restore-rollback.svg",
-      "name": "Delta RESTORE — Rollback to Previous Versions",
+      "name": "Delta RESTORE \u2014 Rollback to Previous Versions",
       "summary": "RESTORE is a Delta Lake operation that rewinds a table to any previous \\ version by writing a new commit that recreates the old snapshot. It solves \\ the problem of accidental data loss: a...",
       "categories": [
         "delta-table",
@@ -2568,7 +2568,7 @@
       "id": "delta-restore-selective-recovery",
       "path": "demos/delta/delta-restore-selective-recovery",
       "iconPath": "icons/delta-restore-selective-recovery.svg",
-      "name": "Delta Selective Recovery — VERSION AS OF Extraction",
+      "name": "Delta Selective Recovery \u2014 VERSION AS OF Extraction",
       "summary": "When only a subset of rows is corrupted but a full RESTORE would undo good changes to other rows, use VERSION AS OF to extract correct data from a historical version and surgically replace the bad rows. This demo recovers one investment portfolio while preserving rebalancing changes to two others.",
       "categories": [
         "delta-table",
@@ -2602,7 +2602,7 @@
       "id": "delta-restore-time-travel",
       "path": "demos/delta/delta-restore-time-travel",
       "iconPath": "icons/delta-restore-time-travel.svg",
-      "name": "Delta RESTORE + Time Travel — Inspect Before You Recover",
+      "name": "Delta RESTORE + Time Travel \u2014 Inspect Before You Recover",
       "summary": "Teaches the safe recovery workflow: use VERSION AS OF to browse every historical version, compare side by side, choose the right target, then RESTORE. Scenario: a script zeros all student grades and the registrar inspects V1 vs V2 to pick the version that preserves a legitimate curve.",
       "categories": [
         "delta-table",
@@ -2636,7 +2636,7 @@
       "id": "delta-restore-vacuum-lifecycle",
       "path": "demos/delta/delta-restore-vacuum-lifecycle",
       "iconPath": "icons/delta-restore-vacuum-lifecycle.svg",
-      "name": "Delta RESTORE + VACUUM — Incident Response Lifecycle",
+      "name": "Delta RESTORE + VACUUM \u2014 Incident Response Lifecycle",
       "summary": "The complete incident response pattern for Delta tables: detect bad data via anomaly queries, RESTORE to a known-good version, VACUUM orphaned files from the bad versions, then resume operations. Demonstrates the correct order of operations and why VACUUM after RESTORE is safe.",
       "categories": [
         "delta-table",
@@ -2670,7 +2670,7 @@
       "id": "delta-row-tracking",
       "path": "demos/delta/delta-row-tracking",
       "iconPath": "icons/delta-row-tracking.svg",
-      "name": "Delta Row Tracking — Stable Row IDs & Audit Trail",
+      "name": "Delta Row Tracking \u2014 Stable Row IDs & Audit Trail",
       "summary": "Row tracking is a Delta Lake protocol feature that assigns stable, unique \\identifiers to each row so that changes can be traced across versions. It \\enables fine-grained change detection for CDC pipelines, merge operations, \\and regulatory compliance. This demo builds a financial audit trail that \\",
       "categories": [
         "delta-table"
@@ -2702,7 +2702,7 @@
       "id": "delta-schema-evolution",
       "path": "demos/delta/delta-schema-evolution",
       "iconPath": "icons/delta-schema-evolution.svg",
-      "name": "Delta Schema Evolution — Add Columns & NULL Filling",
+      "name": "Delta Schema Evolution \u2014 Add Columns & NULL Filling",
       "summary": "Schema evolution lets you add new columns to a Delta table without \\ rewriting existing data files. This solves the real-world problem of \\ evolving requirements: as your data model grows, old...",
       "categories": [
         "delta-table",
@@ -2734,7 +2734,7 @@
       "id": "delta-schema-evolution-advanced",
       "path": "demos/delta/delta-schema-evolution-advanced",
       "iconPath": "icons/delta-schema-evolution-advanced.svg",
-      "name": "Delta Advanced Schema Evolution — Add, Widen & Restructure",
+      "name": "Delta Advanced Schema Evolution \u2014 Add, Widen & Restructure",
       "summary": "Advanced schema evolution demonstrates multiple rounds of ALTER TABLE ADD \\ COLUMN on a single table, evolving from 5 to 8 columns across separate \\ phases. This mirrors real production systems...",
       "categories": [
         "delta-table",
@@ -2768,7 +2768,7 @@
       "id": "delta-schema-flexible-ingestion",
       "path": "demos/delta/delta-schema-flexible-ingestion",
       "iconPath": "icons/delta-schema-flexible-ingestion.svg",
-      "name": "Delta Flexible Ingestion — JSON to Typed Columns",
+      "name": "Delta Flexible Ingestion \u2014 JSON to Typed Columns",
       "summary": "A smart factory ingests IoT sensor telemetry with JSON metadata. Frequently-queried fields are promoted to typed columns via ALTER TABLE ADD COLUMN + UPDATE backfill. Demonstrates the schema promotion pattern: flexible JSON for initial ingestion, typed columns for analytical performance.",
       "categories": [
         "delta-table"
@@ -2802,8 +2802,8 @@
       "id": "delta-snapshot-isolation",
       "path": "demos/delta/delta-snapshot-isolation",
       "iconPath": "icons/delta-snapshot-isolation.svg",
-      "name": "Delta Snapshot Isolation — Portfolio Rebalancing",
-      "summary": "Every Delta Lake write is an atomic transaction producing a new version. This demo builds a multi-fund investment portfolio, runs OPTIMIZE to compact files, applies a price-adjustment UPDATE, then uses VERSION AS OF to prove each snapshot remains unchanged — the foundation of snapshot isolation.",
+      "name": "Delta Snapshot Isolation \u2014 Portfolio Rebalancing",
+      "summary": "Every Delta Lake write is an atomic transaction producing a new version. This demo builds a multi-fund investment portfolio, runs OPTIMIZE to compact files, applies a price-adjustment UPDATE, then uses VERSION AS OF to prove each snapshot remains unchanged \u2014 the foundation of snapshot isolation.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -2836,7 +2836,7 @@
       "id": "delta-statistics-skipping",
       "path": "demos/delta/delta-statistics-skipping",
       "iconPath": "icons/delta-statistics-skipping.svg",
-      "name": "Delta Data Skipping — Range Statistics in Action",
+      "name": "Delta Data Skipping \u2014 Range Statistics in Action",
       "summary": "E-commerce order data arrives in monthly batches with naturally non-overlapping price ranges. Per-file min/max statistics allow the query engine to skip entire files when filters don't overlap a file's value range...",
       "categories": [
         "delta-table",
@@ -2869,7 +2869,7 @@
       "id": "delta-string-statistics",
       "path": "demos/delta/delta-string-statistics",
       "iconPath": "icons/delta-string-statistics.svg",
-      "name": "Delta String Statistics — Truncation & Bloom Filter Bridge",
+      "name": "Delta String Statistics \u2014 Truncation & Bloom Filter Bridge",
       "summary": "Delta stores min/max statistics for string columns, but only the first 32 characters. Short strings like SKU codes get full statistics; long strings like URLs share the same truncated prefix...",
       "categories": [
         "delta-table",
@@ -2940,7 +2940,7 @@
       "id": "delta-table-properties-lifecycle",
       "path": "demos/delta/delta-table-properties-lifecycle",
       "iconPath": "icons/delta-table-properties-lifecycle.svg",
-      "name": "Delta Table Properties — Configuration Lifecycle",
+      "name": "Delta Table Properties \u2014 Configuration Lifecycle",
       "summary": "Walks through the full TBLPROPERTIES lifecycle: creating a table with enableChangeDataFeed, optimizeWrite, and checkpointInterval; inspecting with SHOW TABLE PROPERTIES; modifying with ALTER TABLE SET/UNSET; and observing effects via DESCRIBE HISTORY and DESCRIBE DETAIL. A building-supply warehouse inventory with price adjustments, restocking, and discontinuation provides the real-world context.",
       "categories": [
         "delta-table",
@@ -2973,7 +2973,7 @@
       "id": "delta-time-travel-point-in-time-join",
       "path": "demos/delta/delta-time-travel-point-in-time-join",
       "iconPath": "icons/delta-time-travel-point-in-time-join.svg",
-      "name": "Delta Time Travel — Point-in-Time Joins",
+      "name": "Delta Time Travel \u2014 Point-in-Time Joins",
       "summary": "JOIN a fact table against a dimension table pinned to a historical version, ensuring each trade is valued at the exchange rate active when it executed.",
       "categories": [
         "delta-table",
@@ -3009,8 +3009,8 @@
       "id": "delta-time-travel-row-diff",
       "path": "demos/delta/delta-time-travel-row-diff",
       "iconPath": "icons/delta-time-travel-row-diff.svg",
-      "name": "Delta Time Travel — Row-Level Change Detection",
-      "summary": "Detect modified, deleted, and inserted rows across Delta versions using self-JOINs and LEFT JOINs on VERSION AS OF — the fallback when Change Data Feed wasn’t enabled.",
+      "name": "Delta Time Travel \u2014 Row-Level Change Detection",
+      "summary": "Detect modified, deleted, and inserted rows across Delta versions using self-JOINs and LEFT JOINs on VERSION AS OF \u2014 the fallback when Change Data Feed wasn\u2019t enabled.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -3041,7 +3041,7 @@
       "id": "delta-time-travel-vacuum-boundary",
       "path": "demos/delta/delta-time-travel-vacuum-boundary",
       "iconPath": "icons/delta-time-travel-vacuum-boundary.svg",
-      "name": "Delta Time Travel — VACUUM Retention Boundary",
+      "name": "Delta Time Travel \u2014 VACUUM Retention Boundary",
       "summary": "Demonstrate that VACUUM removes old Parquet files and breaks time travel for vacuumed versions, while DESCRIBE HISTORY still shows ghost entries in the delta log.",
       "categories": [
         "delta-table",
@@ -3074,8 +3074,8 @@
       "id": "delta-timestamp-ntz",
       "path": "demos/delta/delta-timestamp-ntz",
       "iconPath": "icons/delta-timestamp-ntz.svg",
-      "name": "Delta Timestamp NTZ — Hospital Shift Handover",
-      "summary": "Demonstrates NTZ (No TimeZone) timestamp storage using a hospital shift handover system across 5 US hospitals in different timezones. Wall-clock shift times are stored as VARCHAR and never undergo timezone conversion — identical local times (07:00) map to different UTC instants depending on the hospital's timezone offset, and sorting by UTC reveals true chronological order while local times stay human-readable for clinical staff.",
+      "name": "Delta Timestamp NTZ \u2014 Hospital Shift Handover",
+      "summary": "Demonstrates NTZ (No TimeZone) timestamp storage using a hospital shift handover system across 5 US hospitals in different timezones. Wall-clock shift times are stored as VARCHAR and never undergo timezone conversion \u2014 identical local times (07:00) map to different UTC instants depending on the hospital's timezone offset, and sorting by UTC reveals true chronological order while local times stay human-readable for clinical staff.",
       "categories": [
         "delta-table"
       ],
@@ -3106,7 +3106,7 @@
       "id": "delta-type-widening",
       "path": "demos/delta/delta-type-widening",
       "iconPath": "icons/delta-type-widening.svg",
-      "name": "Delta Type Widening — IoT Fleet Counter Overflow",
+      "name": "Delta Type Widening \u2014 IoT Fleet Counter Overflow",
       "summary": "Demonstrates the Delta type widening protocol feature using an IoT fleet monitoring scenario. Creates a device telemetry table with INT counters, enables type widening, promotes columns to BIGINT via ALTER TABLE ALTER COLUMN TYPE, then scales gateway counters and inserts high-volume edge/CDN devices with BIGINT-range values. Shows how old INT-encoded Parquet files coexist seamlessly with new BIGINT-encoded files through transparent upcasting.",
       "categories": [
         "delta-table"
@@ -3138,8 +3138,8 @@
       "id": "delta-unicode-partitioning",
       "path": "demos/delta/delta-unicode-partitioning",
       "iconPath": "icons/delta-unicode-partitioning.svg",
-      "name": "Delta Unicode Partitioning — Non-ASCII Partition Keys",
-      "summary": "A global CDN partitions content metadata by region names in their native script: 日本語, العربية, Русский, Français, Português. Proves that partition pruning, cross-partition queries, INSERT, UPDATE, and DELETE all work correctly when partition keys are non-ASCII multi-byte strings.",
+      "name": "Delta Unicode Partitioning \u2014 Non-ASCII Partition Keys",
+      "summary": "A global CDN partitions content metadata by region names in their native script: \u65e5\u672c\u8a9e, \u0627\u0644\u0639\u0631\u0628\u064a\u0629, \u0420\u0443\u0441\u0441\u043a\u0438\u0439, Fran\u00e7ais, Portugu\u00eas. Proves that partition pruning, cross-partition queries, INSERT, UPDATE, and DELETE all work correctly when partition keys are non-ASCII multi-byte strings.",
       "categories": [
         "delta-table",
         "delta-performance"
@@ -3171,8 +3171,8 @@
       "id": "delta-unicode-roundtrip",
       "path": "demos/delta/delta-unicode-roundtrip",
       "iconPath": "icons/delta-unicode-roundtrip.svg",
-      "name": "Delta Unicode Roundtrip — Mutation Fidelity Proof",
-      "summary": "An international e-commerce marketplace stores product listings in sellers' native scripts — Japanese, Chinese, Korean, Arabic, Hebrew, Cyrillic, and Latin diacritics. Proves UTF-8 roundtrip fidelity by asserting exact Unicode values after every DML mutation: UPDATE on Unicode columns directly, DELETE with CJK LIKE predicates, and copy-on-write Parquet rewrites.",
+      "name": "Delta Unicode Roundtrip \u2014 Mutation Fidelity Proof",
+      "summary": "An international e-commerce marketplace stores product listings in sellers' native scripts \u2014 Japanese, Chinese, Korean, Arabic, Hebrew, Cyrillic, and Latin diacritics. Proves UTF-8 roundtrip fidelity by asserting exact Unicode values after every DML mutation: UPDATE on Unicode columns directly, DELETE with CJK LIKE predicates, and copy-on-write Parquet rewrites.",
       "categories": [
         "delta-table",
         "delta-schema-types"
@@ -3205,8 +3205,8 @@
       "id": "delta-unicode-string-functions",
       "path": "demos/delta/delta-unicode-string-functions",
       "iconPath": "icons/delta-unicode-string-functions.svg",
-      "name": "Delta Unicode String Functions — Multi-Byte Operations",
-      "summary": "A multilingual customer support platform receives tickets in 15+ languages. Tests whether SQL string functions — LENGTH, UPPER, LOWER, SUBSTR, LIKE, and CONCAT — correctly handle multi-byte UTF-8 characters. LENGTH must return character count (not byte count), SUBSTR must not split multi-byte sequences, and UPPER must preserve diacritics (ü → Ü).",
+      "name": "Delta Unicode String Functions \u2014 Multi-Byte Operations",
+      "summary": "A multilingual customer support platform receives tickets in 15+ languages. Tests whether SQL string functions \u2014 LENGTH, UPPER, LOWER, SUBSTR, LIKE, and CONCAT \u2014 correctly handle multi-byte UTF-8 characters. LENGTH must return character count (not byte count), SUBSTR must not split multi-byte sequences, and UPPER must preserve diacritics (\u00fc \u2192 \u00dc).",
       "categories": [
         "delta-table",
         "delta-schema-types"
@@ -3272,7 +3272,7 @@
       "id": "delta-update-expressions",
       "path": "demos/delta/delta-update-expressions",
       "iconPath": "icons/delta-update-expressions.svg",
-      "name": "Delta UPDATE Expressions — Portfolio Rebalancing",
+      "name": "Delta UPDATE Expressions \u2014 Portfolio Rebalancing",
       "summary": "Showcases computed expressions in UPDATE SET clauses: arithmetic adjustments (equity +5% appreciation), CASE WHEN reclassification (dynamic risk ratings based on value thresholds), and percentage-based recalculations (bond -2% decline). Three investment portfolios with 20 holdings go through a quarterly rebalancing cycle. VERSION AS OF and DESCRIBE HISTORY compare pre- and post-rebalancing snapshots.",
       "categories": [
         "delta-table",
@@ -3306,7 +3306,7 @@
       "id": "delta-update-multi-pass",
       "path": "demos/delta/delta-update-multi-pass",
       "iconPath": "icons/delta-update-multi-pass.svg",
-      "name": "Delta UPDATE Multi-Pass — ETL Pipeline Stages",
+      "name": "Delta UPDATE Multi-Pass \u2014 ETL Pipeline Stages",
       "summary": "Sequential UPDATE passes transform 30 e-commerce orders through a 3-stage ETL pipeline: Normalize (UPPER+TRIM status codes), Classify (CASE WHEN priority/shipping assignment), Enrich (total_with_tax and estimated_profit computation). VERSION AS OF inspects data at each pipeline stage, demonstrating how Delta versioning provides built-in pipeline checkpoints.",
       "categories": [
         "delta-table",
@@ -3342,7 +3342,7 @@
       "id": "delta-update-null-backfill",
       "path": "demos/delta/delta-update-null-backfill",
       "iconPath": "icons/delta-update-null-backfill.svg",
-      "name": "Delta UPDATE NULL Backfill — Patient Data Recovery",
+      "name": "Delta UPDATE NULL Backfill \u2014 Patient Data Recovery",
       "summary": "After a hospital database migration, many fields arrived as NULL or with sentinel values (-999, 'N/A', ''). This demo walks through 8 UPDATE passes using NULLIF, COALESCE, CASE WHEN IS NULL, and conditional SET to replace sentinels with proper NULLs and backfill missing values with defaults across 25 patient records.",
       "categories": [
         "delta-table",
@@ -3377,8 +3377,8 @@
       "id": "delta-update-string-cleansing",
       "path": "demos/delta/delta-update-string-cleansing",
       "iconPath": "icons/delta-update-string-cleansing.svg",
-      "name": "Delta UPDATE String Cleansing — CRM Data Normalization",
-      "summary": "UPDATE statements with string functions clean messy data in place. Imports 25 customer records from a legacy CRM system — emails in mixed case, names with extra whitespace, unpadded account codes, and missing full names — then walks through 5 UPDATE passes using TRIM, LOWER, LPAD, concatenation (||), and UPPER to normalize every field.",
+      "name": "Delta UPDATE String Cleansing \u2014 CRM Data Normalization",
+      "summary": "UPDATE statements with string functions clean messy data in place. Imports 25 customer records from a legacy CRM system \u2014 emails in mixed case, names with extra whitespace, unpadded account codes, and missing full names \u2014 then walks through 5 UPDATE passes using TRIM, LOWER, LPAD, concatenation (||), and UPPER to normalize every field.",
       "categories": [
         "delta-table",
         "delta-dml-merge"
@@ -3413,7 +3413,7 @@
       "id": "delta-vacuum-cleanup",
       "path": "demos/delta/delta-vacuum-cleanup",
       "iconPath": "icons/delta-vacuum-cleanup.svg",
-      "name": "Delta VACUUM — Cleanup Orphaned Files",
+      "name": "Delta VACUUM \u2014 Cleanup Orphaned Files",
       "summary": "VACUUM is a Delta Lake maintenance command that removes data files no longer \\ referenced by the current table version, reclaiming storage after UPDATEs, \\ DELETEs, and OPTIMIZE operations...",
       "categories": [
         "delta-table",
@@ -3446,7 +3446,7 @@
       "id": "delta-vacuum-optimize-maintenance",
       "path": "demos/delta/delta-vacuum-optimize-maintenance",
       "iconPath": "icons/delta-vacuum-optimize-maintenance.svg",
-      "name": "Delta Maintenance Playbook — OPTIMIZE Then VACUUM",
+      "name": "Delta Maintenance Playbook \u2014 OPTIMIZE Then VACUUM",
       "summary": "The standard Delta Lake maintenance sequence: OPTIMIZE compacts fragmented small files from daily micro-batch ingestion, then VACUUM RETAIN 0 HOURS purges the orphaned pre-compaction files. Uses an e-commerce order pipeline with DESCRIBE DETAIL at each stage to show physical file state while data integrity stays constant.",
       "categories": [
         "delta-table"
@@ -3480,8 +3480,8 @@
       "id": "delta-vacuum-retention-governance",
       "path": "demos/delta/delta-vacuum-retention-governance",
       "iconPath": "icons/delta-vacuum-retention-governance.svg",
-      "name": "Delta VACUUM Retention Governance — Compliance-Driven Data Lifecycle",
-      "summary": "Compares two VACUUM retention strategies on a trade settlement table: safe retention (168 hours, preserves all recent versions for audit) versus aggressive cleanup (RETAIN 0 HOURS, destroys time travel). DESCRIBE HISTORY proves the audit trail survives both strategies — only data file availability differs. Governance-first framing for regulated environments.",
+      "name": "Delta VACUUM Retention Governance \u2014 Compliance-Driven Data Lifecycle",
+      "summary": "Compares two VACUUM retention strategies on a trade settlement table: safe retention (168 hours, preserves all recent versions for audit) versus aggressive cleanup (RETAIN 0 HOURS, destroys time travel). DESCRIBE HISTORY proves the audit trail survives both strategies \u2014 only data file availability differs. Governance-first framing for regulated environments.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -3514,8 +3514,8 @@
       "id": "delta-vacuum-storage-diagnostics",
       "path": "demos/delta/delta-vacuum-storage-diagnostics",
       "iconPath": "icons/delta-vacuum-storage-diagnostics.svg",
-      "name": "Delta VACUUM Storage Diagnostics — Measuring Cleanup Impact",
-      "summary": "Walks through a product inventory lifecycle — price adjustments, discontinued removals, new arrivals — running DESCRIBE DETAIL at each stage to track version, file count, and byte size. After VACUUM, the same diagnostic queries prove cleanup worked while data remains bit-for-bit identical. The first demo to systematically use DESCRIBE DETAIL for storage auditing.",
+      "name": "Delta VACUUM Storage Diagnostics \u2014 Measuring Cleanup Impact",
+      "summary": "Walks through a product inventory lifecycle \u2014 price adjustments, discontinued removals, new arrivals \u2014 running DESCRIBE DETAIL at each stage to track version, file count, and byte size. After VACUUM, the same diagnostic queries prove cleanup worked while data remains bit-for-bit identical. The first demo to systematically use DESCRIBE DETAIL for storage auditing.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -3547,8 +3547,8 @@
       "id": "delta-vacuum-storage-savings",
       "path": "demos/delta/delta-vacuum-storage-savings",
       "iconPath": "icons/delta-vacuum-storage-savings.svg",
-      "name": "Delta VACUUM — Storage Cost Savings",
-      "summary": "Every UPDATE and DELETE in Delta Lake orphans old Parquet files via copy-on-write, silently inflating cloud storage costs. This demo uses a SaaS billing system to show how DESCRIBE DETAIL measures file accumulation and VACUUM RETAIN 0 HOURS reclaims storage — proving zero data change through before/after integrity checks.",
+      "name": "Delta VACUUM \u2014 Storage Cost Savings",
+      "summary": "Every UPDATE and DELETE in Delta Lake orphans old Parquet files via copy-on-write, silently inflating cloud storage costs. This demo uses a SaaS billing system to show how DESCRIBE DETAIL measures file accumulation and VACUUM RETAIN 0 HOURS reclaims storage \u2014 proving zero data change through before/after integrity checks.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -3581,7 +3581,7 @@
       "id": "delta-views-data-masking",
       "path": "demos/delta/delta-views-data-masking",
       "iconPath": "icons/delta-views-data-masking.svg",
-      "name": "Delta Views & Data Masking — Role-Based Access Layers",
+      "name": "Delta Views & Data Masking \u2014 Role-Based Access Layers",
       "summary": "Production databases serve multiple audiences with different access needs. This demo builds three role-based views on an e-commerce order table: an analyst view (no PII), a support view (masked credit cards), and an executive view (pre-aggregated regional summaries). Each view enforces its access boundary at the SQL layer.",
       "categories": [
         "delta-table"
@@ -3647,7 +3647,7 @@
       "id": "delta-zorder-deep",
       "path": "demos/delta/delta-zorder-deep",
       "iconPath": "icons/delta-zorder-deep.svg",
-      "name": "Delta Z-ORDER — Multi-Column Data Layout Optimization",
+      "name": "Delta Z-ORDER \u2014 Multi-Column Data Layout Optimization",
       "summary": "Z-ORDER reorganizes data files using a space-filling curve to co-locate rows with similar values across multiple columns. This demo builds an IoT telemetry table in 3 batches, uses DESCRIBE DETAIL to observe file layout, applies OPTIMIZE ZORDER BY, then verifies compaction with DESCRIBE HISTORY.",
       "categories": [
         "delta-table",
@@ -3683,7 +3683,7 @@
       "id": "edi-edifact-international-trade",
       "path": "demos/edi/edi-edifact-international-trade",
       "iconPath": "icons/edi-edifact-international-trade.svg",
-      "name": "EDI EDIFACT — International Trade & Logistics",
+      "name": "EDI EDIFACT \u2014 International Trade & Logistics",
       "summary": "Overview of UN/EDIFACT and EANCOM message parsing across 22 files covering international trade, logistics, customs, and passenger data. Demonstrates 6 syntax identifiers (UNOA through IATA), 17+ distinct message types, domain classification (Commerce/Transport/Border/Acknowledgment), EANCOM vs EDIFACT standard differentiation, and full JSON transaction access.",
       "categories": [
         "edi"
@@ -3718,7 +3718,7 @@
       "path": "demos/edi/edi-edifact-customs-border",
       "iconPath": "icons/edi-edifact-customs-border.svg",
       "name": "EDIFACT Customs & Border Control",
-      "summary": "Port authority customs system processing UN/EDIFACT messages for border security and trade compliance. Parses cargo manifests (CUSCAR) with consignment and goods item details, passenger lists (PAXLST) with travel document verification, passenger name records (PNRGOV) for advance screening, and bayplan stowage plans (BAPLIE) for vessel operations. Demonstrates materialized_paths for BGM, TDT, NAD, LOC, CNI, GID, EQD, and DOC segments — message types unique to EDIFACT with no X12 equivalent.",
+      "summary": "Port authority customs system processing UN/EDIFACT messages for border security and trade compliance. Parses cargo manifests (CUSCAR) with consignment and goods item details, passenger lists (PAXLST) with travel document verification, passenger name records (PNRGOV) for advance screening, and bayplan stowage plans (BAPLIE) for vessel operations. Demonstrates materialized_paths for BGM, TDT, NAD, LOC, CNI, GID, EQD, and DOC segments \u2014 message types unique to EDIFACT with no X12 equivalent.",
       "categories": [
         "edi"
       ],
@@ -3754,7 +3754,7 @@
       "path": "demos/edi/edi-eancom-retail-supply-chain",
       "iconPath": "icons/edi-eancom-retail-supply-chain.svg",
       "name": "EANCOM Retail Supply Chain",
-      "summary": "European retailer EDI hub processing GS1/EANCOM messages across the retail supply chain. Covers despatch advices (DESADV) for warehouse receiving, invoices (INVOIC) for accounts payable, order responses (ORDRSP) for procurement, price catalogues (PRICAT) for product master data, transport status (IFTSTA) for shipment tracking, and transport instructions (IFTMIN) for carrier booking. EANCOM is the GS1 subset of EDIFACT used by major European retailers — demonstrates BGM document codes, NAD trading partner identification, LIN product lines with GTINs, and STS shipment status tracking.",
+      "summary": "European retailer EDI hub processing GS1/EANCOM messages across the retail supply chain. Covers despatch advices (DESADV) for warehouse receiving, invoices (INVOIC) for accounts payable, order responses (ORDRSP) for procurement, price catalogues (PRICAT) for product master data, transport status (IFTSTA) for shipment tracking, and transport instructions (IFTMIN) for carrier booking. EANCOM is the GS1 subset of EDIFACT used by major European retailers \u2014 demonstrates BGM document codes, NAD trading partner identification, LIN product lines with GTINs, and STS shipment status tracking.",
       "categories": [
         "edi"
       ],
@@ -3825,7 +3825,7 @@
       "id": "edi-hipaa-claim-status-tracking",
       "path": "demos/edi/edi-hipaa-claim-status-tracking",
       "iconPath": "icons/edi-hipaa-claim-status-tracking.svg",
-      "name": "EDI HIPAA Claim Status — Inquiry & Authorization Tracking",
+      "name": "EDI HIPAA Claim Status \u2014 Inquiry & Authorization Tracking",
       "summary": "Demonstrates HIPAA claim status tracking and prior authorization review using CASE on composite status codes, LIKE pattern matching, and multi-table JOINs. Three transactions cover the 276/277 claim status request/response cycle and 278 health services review. Queries classify composite STC codes (P3:317 = pending, F0:3 = finalized) using LIKE, correlate request amounts with response statuses, and JOIN two specialized tables for unified lifecycle views.",
       "categories": [
         "edi",
@@ -3865,8 +3865,8 @@
       "id": "edi-hipaa-claims-financial",
       "path": "demos/edi/edi-hipaa-claims-financial",
       "iconPath": "icons/edi-hipaa-claims-financial.svg",
-      "name": "EDI HIPAA Claims Financial — Charge & Remittance Analysis",
-      "summary": "Demonstrates financial analysis of HIPAA X12 healthcare claims using SUM, CAST, HAVING, and JOIN — SQL features not covered by any other EDI demo. Four transactions cover 837 professional/dental/institutional claims and 835 remittance advice. Queries compute total charges with SUM, filter with HAVING, calculate write-off percentages with CAST and arithmetic, and JOIN claim charges with remittance payments for end-to-end reconciliation.",
+      "name": "EDI HIPAA Claims Financial \u2014 Charge & Remittance Analysis",
+      "summary": "Demonstrates financial analysis of HIPAA X12 healthcare claims using SUM, CAST, HAVING, and JOIN \u2014 SQL features not covered by any other EDI demo. Four transactions cover 837 professional/dental/institutional claims and 835 remittance advice. Queries compute total charges with SUM, filter with HAVING, calculate write-off percentages with CAST and arithmetic, and JOIN claim charges with remittance payments for end-to-end reconciliation.",
       "categories": [
         "edi",
         "healthcare"
@@ -3907,8 +3907,8 @@
       "id": "edi-hipaa-eligibility-enrollment",
       "path": "demos/edi/edi-hipaa-eligibility-enrollment",
       "iconPath": "icons/edi-hipaa-eligibility-enrollment.svg",
-      "name": "EDI HIPAA Eligibility & Enrollment — Coverage Verification",
-      "summary": "Demonstrates HIPAA eligibility verification and benefit enrollment analysis using CTEs, JOINs, and COALESCE — SQL patterns unique across all EDI demos. Three transactions cover the 270/271 eligibility request/response cycle and 834 benefit enrollment. A CTE pairs request with response by matching TRN trace numbers, and a JOIN correlates eligibility context with enrollment plan data.",
+      "name": "EDI HIPAA Eligibility & Enrollment \u2014 Coverage Verification",
+      "summary": "Demonstrates HIPAA eligibility verification and benefit enrollment analysis using CTEs, JOINs, and COALESCE \u2014 SQL patterns unique across all EDI demos. Three transactions cover the 270/271 eligibility request/response cycle and 834 benefit enrollment. A CTE pairs request with response by matching TRN trace numbers, and a JOIN correlates eligibility context with enrollment plan data.",
       "categories": [
         "edi",
         "healthcare"
@@ -3948,7 +3948,7 @@
       "id": "edi-hipaa-healthcare",
       "path": "demos/edi/edi-hipaa-healthcare",
       "iconPath": "icons/edi-hipaa-healthcare.svg",
-      "name": "EDI HIPAA Healthcare — Claims Lifecycle",
+      "name": "EDI HIPAA Healthcare \u2014 Claims Lifecycle",
       "summary": "Demonstrates X12 EDI transaction parsing for the healthcare claims lifecycle. 11 transactions spanning 9 HIPAA 5010 transaction types: eligibility verification (270/271), claim status (276/277), healthcare claims (837 Professional/Dental/Institutional), payment remittance (835), benefit enrollment (834), prior authorization (278), and payment order (820). Covers materialized path extraction and full JSON access.",
       "categories": [
         "edi",
@@ -3987,7 +3987,7 @@
       "id": "edi-supply-chain-x12",
       "path": "demos/edi/edi-supply-chain-x12",
       "iconPath": "icons/edi-supply-chain-x12.svg",
-      "name": "EDI X12 Supply Chain — Order-to-Cash Lifecycle",
+      "name": "EDI X12 Supply Chain \u2014 Order-to-Cash Lifecycle",
       "summary": "Demonstrates X12 EDI transactions spanning the full supply chain order-to-cash lifecycle. 14 real-world transactions across 8 types: purchase orders (850), invoices (810), PO acknowledgments (855), ship notices (856), shipment & billing (857), receiving advice (861), functional acknowledgment (997), and application advice (824). Multi-version X12 (00204, 00401) with trading partner diversity.",
       "categories": [
         "edi",
@@ -4025,7 +4025,7 @@
       "id": "edi-compliance-validation",
       "path": "demos/edi/edi-compliance-validation",
       "iconPath": "icons/edi-compliance-validation.svg",
-      "name": "EDI Compliance Validation — 997/824 Error & Rejection Analysis",
+      "name": "EDI Compliance Validation \u2014 997/824 Error & Rejection Analysis",
       "summary": "Demonstrates EDI compliance monitoring using 997 Functional Acknowledgment and 824 Application Advice transactions. Extracts AK1-AK9 acknowledgment segments, OTI issue codes, and TED error descriptions to track transaction acceptance rates, identify segment-level rejections (TXI segment error, element error code 7), and diagnose application-level failures (invalid part/plant/supplier). The only EDI demo focused on error detection and compliance rather than business data.",
       "categories": [
         "edi",
@@ -4064,8 +4064,8 @@
       "id": "edi-json-segment-extraction",
       "path": "demos/edi/edi-json-segment-extraction",
       "iconPath": "icons/edi-json-segment-extraction.svg",
-      "name": "EDI JSON Segment Extraction — On-Demand X12 Deep Access",
-      "summary": "Demonstrates SQL JSON functions (json_array_length, json_extract_path_text, json_typeof, jsonb_pretty, #>> path operator) on EDI transaction data. Analysts explore and extract any X12 segment on-demand from df_transaction_json without pre-configuring materialized paths — the only EDI demo showcasing JSON function capabilities. Covers segment counting, type inspection, BEG/BIG field extraction via JSON paths, and formatted output.",
+      "name": "EDI JSON Segment Extraction \u2014 On-Demand X12 Deep Access",
+      "summary": "Demonstrates SQL JSON functions (json_array_length, json_extract_path_text, json_typeof, jsonb_pretty, #>> path operator) on EDI transaction data. Analysts explore and extract any X12 segment on-demand from df_transaction_json without pre-configuring materialized paths \u2014 the only EDI demo showcasing JSON function capabilities. Covers segment counting, type inspection, BEG/BIG field extraction via JSON paths, and formatted output.",
       "categories": [
         "edi",
         "json"
@@ -4097,8 +4097,8 @@
       "id": "edi-order-lifecycle-tracking",
       "path": "demos/edi/edi-order-lifecycle-tracking",
       "iconPath": "icons/edi-order-lifecycle-tracking.svg",
-      "name": "EDI Order Lifecycle Tracking — Cross-Document X12 Traceability",
-      "summary": "Demonstrates cross-document traceability by correlating 8 X12 transaction types in a single unified table. Traces the order-to-cash lifecycle: PO creation (850) → acknowledgment (855) → shipment (856/857) → invoicing (810) → receipt (861). Uses CASE/COALESCE to map document IDs and dates across BEG, BIG, BAK, BSN, and BRA segments. The only EDI demo with cross-document lifecycle queries rather than single-type analysis.",
+      "name": "EDI Order Lifecycle Tracking \u2014 Cross-Document X12 Traceability",
+      "summary": "Demonstrates cross-document traceability by correlating 8 X12 transaction types in a single unified table. Traces the order-to-cash lifecycle: PO creation (850) \u2192 acknowledgment (855) \u2192 shipment (856/857) \u2192 invoicing (810) \u2192 receipt (861). Uses CASE/COALESCE to map document IDs and dates across BEG, BIG, BAK, BSN, and BRA segments. The only EDI demo with cross-document lifecycle queries rather than single-type analysis.",
       "categories": [
         "edi",
         "supply-chain"
@@ -4131,7 +4131,7 @@
       "id": "edi-repeating-segments",
       "path": "demos/edi/edi-repeating-segments",
       "iconPath": "icons/edi-repeating-segments.svg",
-      "name": "EDI Repeating Segments — Multi-Occurrence X12 Handling",
+      "name": "EDI Repeating Segments \u2014 Multi-Occurrence X12 Handling",
       "summary": "Demonstrates the repeating_segment_mode EDI option with three tables from the same X12 data: Indexed mode creates per-occurrence columns (n1_1_1, n1_2_1 for first/second N1), Concatenate mode joins all values with pipes (n1_1 = 'ST|BY|SO'), and ToJson mode produces JSON arrays (n1_1 = '[\"ST\",\"BY\",\"SO\"]'). Shows multi-line PO1 extraction, N1 address analysis, and price computation across indexed occurrences.",
       "categories": [
         "edi",
@@ -4173,8 +4173,8 @@
       "id": "edi-tradacoms-uk-retail",
       "path": "demos/edi/edi-tradacoms-uk-retail",
       "iconPath": "icons/edi-tradacoms-uk-retail.svg",
-      "name": "EDI TRADACOMS — UK Retail Orders & Utilities",
-      "summary": "Demonstrates TRADACOMS — the UK-specific EDI standard used in retail and utilities. 4 files containing 15 total messages cover purchase orders, product planning forecasts, and utility bills. Features multi-message file parsing, STX envelope extraction, TRADACOMS escape character decoding (?' and ?+), and EAN-13 product codes.",
+      "name": "EDI TRADACOMS \u2014 UK Retail Orders & Utilities",
+      "summary": "Demonstrates TRADACOMS \u2014 the UK-specific EDI standard used in retail and utilities. 4 files containing 15 total messages cover purchase orders, product planning forecasts, and utility bills. Features multi-message file parsing, STX envelope extraction, TRADACOMS escape character decoding (?' and ?+), and EAN-13 product codes.",
       "categories": [
         "edi",
         "retail"
@@ -4211,8 +4211,8 @@
       "id": "edi-tradacoms-purchase-orders",
       "path": "demos/edi/edi-tradacoms-purchase-orders",
       "iconPath": "icons/edi-tradacoms-purchase-orders.svg",
-      "name": "EDI TRADACOMS — Purchase Order Line Items",
-      "summary": "Extracts order line items (OLD segments), delivery instructions, and totals from a UK grocery retailer’s TRADACOMS purchase order. Demonstrates the Header–Detail–Trailer message pattern, cross-message analysis, and materialized_paths for deep segment extraction.",
+      "name": "EDI TRADACOMS \u2014 Purchase Order Line Items",
+      "summary": "Extracts order line items (OLD segments), delivery instructions, and totals from a UK grocery retailer\u2019s TRADACOMS purchase order. Demonstrates the Header\u2013Detail\u2013Trailer message pattern, cross-message analysis, and materialized_paths for deep segment extraction.",
       "categories": [
         "edi",
         "supply-chain"
@@ -4249,8 +4249,8 @@
       "id": "edi-tradacoms-utility-billing",
       "path": "demos/edi/edi-tradacoms-utility-billing",
       "iconPath": "icons/edi-tradacoms-utility-billing.svg",
-      "name": "EDI TRADACOMS — UK Energy Billing & VAT Reconciliation",
-      "summary": "Extracts billing details from CCD charge segments, verifies VAT calculations, and reconciles bill totals from a UK energy company’s TRADACOMS utility bills. Demonstrates escape character decoding for special characters in customer names.",
+      "name": "EDI TRADACOMS \u2014 UK Energy Billing & VAT Reconciliation",
+      "summary": "Extracts billing details from CCD charge segments, verifies VAT calculations, and reconciles bill totals from a UK energy company\u2019s TRADACOMS utility bills. Demonstrates escape character decoding for special characters in customer names.",
       "categories": [
         "edi",
         "utilities"
@@ -4288,7 +4288,7 @@
       "id": "edi-tradacoms-json-deep-access",
       "path": "demos/edi/edi-tradacoms-json-deep-access",
       "iconPath": "icons/edi-tradacoms-json-deep-access.svg",
-      "name": "EDI TRADACOMS — JSON Deep Segment Extraction",
+      "name": "EDI TRADACOMS \u2014 JSON Deep Segment Extraction",
       "summary": "Demonstrates on-demand extraction of deeply nested TRADACOMS segments using SQL JSON functions. Queries product planning forecasts (PDN/PLO/SFS) and order line items (OLD/DIN) directly from df_transaction_json without materialized_paths.",
       "categories": [
         "edi",
@@ -4322,7 +4322,7 @@
       "id": "edi-transportation-logistics",
       "path": "demos/edi/edi-transportation-logistics",
       "iconPath": "icons/edi-transportation-logistics.svg",
-      "name": "EDI X12 Transportation — Freight Lifecycle",
+      "name": "EDI X12 Transportation \u2014 Freight Lifecycle",
       "summary": "Demonstrates X12 EDI transactions spanning the full freight lifecycle. 12 files across 8 types: load tendering (204), freight invoicing (210), shipment tracking (214), rail transport (404), warehouse operations (945), payment remittance (820), price catalogs (832), and load tender response (990). Multi-version X12 (00204 through 005010) with multi-modal transportation.",
       "categories": [
         "edi"
@@ -4359,8 +4359,8 @@
       "id": "excel-sales-analytics",
       "path": "demos/excel/sales-analytics",
       "iconPath": "icons/excel-sales-analytics.svg",
-      "name": "Excel Sales Analytics — Superstore Orders",
-      "summary": "Demonstrates multi-file Excel analytics using 4 years of Superstore sales data (2014–2017, 9,994 orders). Two tables exercise sheet_name, file_filter, infer_schema_rows, multi-file reading, file_metadata, and automatic type inference for dates, numbers, and strings.",
+      "name": "Excel Sales Analytics \u2014 Superstore Orders",
+      "summary": "Demonstrates multi-file Excel analytics using 4 years of Superstore sales data (2014\u20132017, 9,994 orders). Two tables exercise sheet_name, file_filter, infer_schema_rows, multi-file reading, file_metadata, and automatic type inference for dates, numbers, and strings.",
       "categories": [
         "excel",
         "retail"
@@ -4396,8 +4396,8 @@
       "id": "excel-multi-sheet-reporting",
       "path": "demos/excel/multi-sheet-reporting",
       "iconPath": "icons/excel-multi-sheet-reporting.svg",
-      "name": "Excel Multi-Sheet Reporting — Regional Sales Review",
-      "summary": "Demonstrates Excel multi-sheet reading using quarterly field-office reports from two regions (East and West). Each workbook contains three sheets — Sales transactions, Returns/refunds, and Staff roster. Creates one external table per sheet, then queries across sheets and regions with cross-sheet JOINs, net-revenue calculations, and return-rate analysis. This scenario is unique to Excel — no other format has named sheets.",
+      "name": "Excel Multi-Sheet Reporting \u2014 Regional Sales Review",
+      "summary": "Demonstrates Excel multi-sheet reading using quarterly field-office reports from two regions (East and West). Each workbook contains three sheets \u2014 Sales transactions, Returns/refunds, and Staff roster. Creates one external table per sheet, then queries across sheets and regions with cross-sheet JOINs, net-revenue calculations, and return-rate analysis. This scenario is unique to Excel \u2014 no other format has named sheets.",
       "categories": [
         "excel",
         "retail"
@@ -4435,7 +4435,7 @@
       "id": "excel-options-testbench",
       "path": "demos/excel/excel-options-testbench",
       "iconPath": "icons/excel-options-testbench.svg",
-      "name": "Excel Options Testbench — Connector Validation",
+      "name": "Excel Options Testbench \u2014 Connector Validation",
       "summary": "Verifies that each Excel parsing option is correctly wired through to the backend. Each table exercises a specific option (sheet_name, has_header, skip_rows, max_rows, file_filter) with data designed so that incorrect parsing produces obviously wrong results. Includes a summary query that reports PASS/FAIL for each option.",
       "categories": [
         "excel"
@@ -4481,7 +4481,7 @@
       "id": "fhir-clinical-observations",
       "path": "demos/fhir/fhir-clinical-observations",
       "iconPath": "icons/fhir-clinical-observations.svg",
-      "name": "FHIR Clinical Observations — Vital Signs & Lab Results",
+      "name": "FHIR Clinical Observations \u2014 Vital Signs & Lab Results",
       "summary": "Demonstrates FHIR R5 Observation resource ingestion across vital signs (body weight, height, BMI, blood pressure, temperature, SpO2), lab results (glucose, CO2, hemoglobin), and clinical assessments (Glasgow Coma Scale). 100 bulk heart rate readings plus 14 individual clinical observations. Covers deep nested JSON flattening, schema evolution across observation types, and multi-file reading.",
       "categories": [
         "healthcare",
@@ -4521,7 +4521,7 @@
       "id": "fhir-clinical-records",
       "path": "demos/fhir/fhir-clinical-records",
       "iconPath": "icons/fhir-clinical-records.svg",
-      "name": "FHIR Clinical Records — Conditions, Procedures & Allergies",
+      "name": "FHIR Clinical Records \u2014 Conditions, Procedures & Allergies",
       "summary": "Demonstrates advanced FHIR R5 resource ingestion across three clinical resource types: 8 Condition resources (diagnoses with SNOMED CT coding, severity, body site), 8 Procedure resources (surgeries with performers and outcomes), and 6 AllergyIntolerance resources (allergies with reaction history and criticality). Three tables showcase multi-resource-type directory scanning, deep nested arrays, and cross-resource references.",
       "categories": [
         "healthcare",
@@ -4567,7 +4567,7 @@
       "id": "fhir-medications-prescriptions",
       "path": "demos/fhir/fhir-medications-prescriptions",
       "iconPath": "icons/fhir-medications-prescriptions.svg",
-      "name": "FHIR Medications — Prescriptions & Coverage",
+      "name": "FHIR Medications \u2014 Prescriptions & Coverage",
       "summary": "Demonstrates FHIR R5 MedicationRequest and Coverage resource ingestion. 12 prescriptions with contained Medication resources, dosage instructions, dispense requests, and substitution rules. 4 Coverage resources with insurance classes and beneficiary references. Covers json_paths for preserving complex subtrees, contained resources, and deep FHIR nesting.",
       "categories": [
         "healthcare",
@@ -4608,7 +4608,7 @@
       "id": "fhir-patient-demographics",
       "path": "demos/fhir/fhir-patient-demographics",
       "iconPath": "icons/fhir-patient-demographics.svg",
-      "name": "FHIR Patient Demographics — Basics",
+      "name": "FHIR Patient Demographics \u2014 Basics",
       "summary": "Demonstrates FHIR R5 Patient resource ingestion from both bulk NDJSON exports (50 patients) and individual JSON files (7 detailed patients). Two tables show flat bulk demographics vs rich nested FHIR data with names, telecom, addresses, and managing organizations. Covers NDJSON format, column_mappings, schema evolution, and file_metadata.",
       "categories": [
         "healthcare",
@@ -4647,7 +4647,7 @@
       "id": "fhir-xml-clinical-resources",
       "path": "demos/fhir/fhir-xml-clinical-resources",
       "iconPath": "icons/fhir-xml-clinical-resources.svg",
-      "name": "FHIR XML — Clinical Patients & Observations",
+      "name": "FHIR XML \u2014 Clinical Patients & Observations",
       "summary": "Demonstrates HL7 FHIR R4 clinical data in native XML format. FHIR XML stores all primitive values as @value attributes. 8 Patient and 8 Observation XML files showcase FHIR namespace handling, @value extraction, exclude_paths for narrative XHTML, xml_paths for component/referenceRange subtrees, repeating element join_comma, deep XPath column_mappings, and schema evolution.",
       "categories": [
         "healthcare",
@@ -4688,7 +4688,7 @@
       "id": "gis-emergency-response",
       "path": "demos/spatial/gis-emergency-response",
       "iconPath": "icons/gis-emergency-response.svg",
-      "name": "GIS Emergency Response Network — Multi-Step Spatial Analytics",
+      "name": "GIS Emergency Response Network \u2014 Multi-Step Spatial Analytics",
       "summary": "Demonstrates complex multi-step GIS analytics using an NYC emergency dispatch scenario. 8 hospitals, 12 incidents, and 4 response zones exercise nearest-neighbor ranking (ROW_NUMBER + st_distance), multi-algorithm distance comparison (haversine/sphere/Vincenty), navigation bearings, geofencing (st_contains/st_within with zone polygons), coordinate round-trips, and geodesic area calculations in layered analytical queries.",
       "categories": [
         "geospatial",
@@ -4731,7 +4731,7 @@
       "id": "gis-maritime-shipping",
       "path": "demos/spatial/gis-maritime-shipping",
       "iconPath": "icons/gis-maritime-shipping.svg",
-      "name": "GIS Maritime Shipping — PostGIS-Compatible Geospatial Functions",
+      "name": "GIS Maritime Shipping \u2014 PostGIS-Compatible Geospatial Functions",
       "summary": "Tests all 18 PostGIS-compatible st_* functions using a global maritime shipping scenario. 5 cargo vessels navigate between 10 world ports with 40 GPS position records. Exercises st_distance (haversine, Vincenty, spherical), st_bearing, st_azimuth, st_final_bearing, st_contains, st_within, st_make_point, st_x, st_y, and st_area with independently computed proof values.",
       "categories": [
         "geospatial",
@@ -4773,7 +4773,7 @@
       "id": "graph-advanced-cypher",
       "path": "demos/graph/graph-advanced-cypher",
       "iconPath": "icons/graph-advanced-cypher.svg",
-      "name": "University Research Collaboration — Advanced Cypher Patterns",
+      "name": "University Research Collaboration \u2014 Advanced Cypher Patterns",
       "summary": "40 researchers across 5 departments with 170 collaboration edges. Tests advanced Cypher patterns: negative patterns (WHERE NOT), aggregation functions (collect, min, max, avg), co-author triangles, advisor chains, dual-relationship matching, and prolific collaborator analysis.",
       "categories": [
         "graph"
@@ -4811,7 +4811,7 @@
       "id": "graph-bipartite",
       "path": "demos/graph/graph-bipartite",
       "iconPath": "icons/graph-bipartite.svg",
-      "name": "Movie Recommendation Engine — Bipartite Graph",
+      "name": "Movie Recommendation Engine \u2014 Bipartite Graph",
       "summary": "Bipartite graph with 25 subscribers and 20 movies (45 entities) connected by 84 rating edges. Tests two-type vertex graphs, collaborative filtering (users who liked X also liked Y), genre preference analysis, and cross-type traversal patterns.",
       "categories": [
         "graph"
@@ -4849,7 +4849,7 @@
       "id": "graph-email-eu-core",
       "path": "demos/graph/graph-email-eu-core",
       "iconPath": "icons/graph-email-eu-core.svg",
-      "name": "Email-Eu-core — European Research Institution",
+      "name": "Email-Eu-core \u2014 European Research Institution",
       "summary": "Directed email communication network from a European research institution (SNAP). 1,005 persons, 25,571 directed edges. 42 ground-truth department communities. 10 weakly connected components, 105,461 triangles, diameter 7.",
       "categories": [
         "graph"
@@ -4893,7 +4893,7 @@
       "id": "graph-karate-club",
       "path": "demos/graph/graph-karate-club",
       "iconPath": "icons/graph-karate-club.svg",
-      "name": "Zachary's Karate Club — Classic Graph Benchmark",
+      "name": "Zachary's Karate Club \u2014 Classic Graph Benchmark",
       "summary": "The most studied graph in network science (Zachary, 1977). 34 club members, 78 undirected edges. Ground-truth 2-faction split for community detection verification. Known centrality values, degree distribution, and connected component structure.",
       "categories": [
         "graph"
@@ -4937,7 +4937,7 @@
       "id": "graph-ldbc-snb",
       "path": "demos/graph/graph-ldbc-snb",
       "iconPath": "icons/graph-ldbc-snb.svg",
-      "name": "LDBC Social Network Benchmark — Full Model Graph Verification",
+      "name": "LDBC Social Network Benchmark \u2014 Full Model Graph Verification",
       "summary": "Full LDBC Social Network Benchmark (SF0.1) with 8 entity types, 23 relationship types, and ~1.2M rows. Verifies graph algorithms (PageRank, shortest path, Louvain, centrality, BFS) and Cypher/SQL queries against official LDBC golden values. Demonstrates mixed SQL + Cypher queries joining graph algorithm results with Delta tables.",
       "categories": [
         "graph"
@@ -5104,8 +5104,8 @@
       "id": "graph-mutations",
       "path": "demos/graph/graph-mutations",
       "iconPath": "icons/graph-mutations.svg",
-      "name": "Hospital Patient Referral Network — Graph Mutations",
-      "summary": "30 physicians across 6 specialties with 75 referral edges. Tests graph write operations: INSERT new physicians and referrals, UPDATE referral priorities, DELETE completed referrals — each mutation verified via Cypher queries. Proves DML on underlying Delta tables is transparently visible through the graph layer.",
+      "name": "Hospital Patient Referral Network \u2014 Graph Mutations",
+      "summary": "30 physicians across 6 specialties with 75 referral edges. Tests graph write operations: INSERT new physicians and referrals, UPDATE referral priorities, DELETE completed referrals \u2014 each mutation verified via Cypher queries. Proves DML on underlying Delta tables is transparently visible through the graph layer.",
       "categories": [
         "graph"
       ],
@@ -5144,7 +5144,7 @@
       "id": "graph-netscience",
       "path": "demos/graph/graph-netscience",
       "iconPath": "icons/graph-netscience.svg",
-      "name": "NetScience — Coauthorship Network",
+      "name": "NetScience \u2014 Coauthorship Network",
       "summary": "Coauthorship network of 1,461 network-science researchers with 2,742 weighted edges (Newman, 2006). Multiple disconnected components, non-uniform weights, and modularity ~0.95 reflecting clear research-group structure.",
       "categories": [
         "graph"
@@ -5188,7 +5188,7 @@
       "id": "graph-polbooks",
       "path": "demos/graph/graph-polbooks",
       "iconPath": "icons/graph-polbooks.svg",
-      "name": "Political Books — Partisan Co-Purchasing Network",
+      "name": "Political Books \u2014 Partisan Co-Purchasing Network",
       "summary": "105 US political books with 441 co-purchasing edges from Amazon (Krebs/Newman). Ground-truth 3-community partition (liberal/neutral/conservative). Max degree 25, avg clustering ~0.488.",
       "categories": [
         "graph"
@@ -5231,7 +5231,7 @@
       "id": "graph-sql-cypher-mix",
       "path": "demos/graph/graph-sql-cypher-mix",
       "iconPath": "icons/graph-sql-cypher-mix.svg",
-      "name": "Sales Territory Optimization — SQL + Cypher Interop",
+      "name": "Sales Territory Optimization \u2014 SQL + Cypher Interop",
       "summary": "40 enterprise customers (graph) with 96 referral edges, 120 orders, and 8 sales reps (relational). Demonstrates Delta Forge's unique SQL-Cypher interoperability: cypher() table function in SQL JOINs, INSERT INTO from Cypher results (PageRank, Louvain), mixed CTEs combining graph degree centrality with SQL revenue aggregation, and 4-way JOINs across Cypher-populated and relational tables.",
       "categories": [
         "graph"
@@ -5287,7 +5287,7 @@
       "id": "graph-storage-modes",
       "path": "demos/graph/graph-storage-modes",
       "iconPath": "icons/graph-storage-modes.svg",
-      "name": "Graph Storage Modes — Flattened vs Hybrid vs JSON",
+      "name": "Graph Storage Modes \u2014 Flattened vs Hybrid vs JSON",
       "summary": "Creates the same 50-employee startup graph three times using FLATTENED, HYBRID, and JSON property storage modes. Runs identical Cypher queries against all three and asserts value-level equivalence. Includes full algorithm suite: PageRank, degree, betweenness, closeness, Louvain, SCC, triangle count, shortest path, BFS, DFS, MST, KNN, Jaccard similarity.",
       "categories": [
         "graph"
@@ -5351,7 +5351,7 @@
       "id": "graph-stress-test",
       "path": "demos/graph/graph-stress-test",
       "iconPath": "icons/graph-stress-test.svg",
-      "name": "Graph Stress Test — 1M-Node Performance Benchmark",
+      "name": "Graph Stress Test \u2014 1M-Node Performance Benchmark",
       "summary": "Extreme-scale graph performance benchmark: 1,000,000 vertex nodes and 5,000,000+ directed edges across 20 departments, 15 cities, and 200 project teams. Stress-tests graph rendering, layout algorithms, Cypher engine algorithms (PageRank, Louvain, BFS, shortest path, MST), and memory handling at massive scale.",
       "categories": [
         "graph"
@@ -5397,7 +5397,7 @@
       "id": "graph-weighted-paths",
       "path": "demos/graph/graph-weighted-paths",
       "iconPath": "icons/graph-weighted-paths.svg",
-      "name": "Global Shipping Route Optimization — Weighted Pathfinding",
+      "name": "Global Shipping Route Optimization \u2014 Weighted Pathfinding",
       "summary": "25 major ports connected by 55 shipping routes with distance (nautical miles) and transit time weights. Tests weighted shortest path, MST for minimum-cost infrastructure, hub analysis via PageRank and degree centrality, and regional route analysis across Asia, Europe, and Americas.",
       "categories": [
         "graph"
@@ -5436,7 +5436,7 @@
       "id": "h3-gis-delivery-optimization",
       "path": "demos/spatial/h3-gis-delivery-optimization",
       "iconPath": "icons/h3-gis-delivery-optimization.svg",
-      "name": "H3+GIS Delivery Optimization — Cross-Function Spatial Analytics",
+      "name": "H3+GIS Delivery Optimization \u2014 Cross-Function Spatial Analytics",
       "summary": "Combines H3 hexagonal indexing with GIS geospatial functions for US regional delivery logistics. 3 warehouses serve 15 stores with cross-function queries: H3 cell assignment + GIS distance ranking, grid topology + haversine comparison, multi-resolution hierarchy + bearing calculations, and suboptimal warehouse assignment detection using combined H3 grid_distance and st_distance metrics.",
       "categories": [
         "geospatial",
@@ -5517,8 +5517,8 @@
       "id": "h3-point-in-polygon",
       "path": "demos/spatial/h3-point-in-polygon",
       "iconPath": "icons/h3-point-in-polygon.svg",
-      "name": "H3 Point-in-Polygon — 1M Row Performance",
-      "summary": "Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial indexing. 1,000,000 ride-share driver GPS positions are checked against 12 pricing zones across 8 world cities using O(1) H3 cell matching instead of O(n×m) polygon intersection. Progressive queries build from 'what is H3' to million-row analytics with 10 automated PASS/FAIL checks.",
+      "name": "H3 Point-in-Polygon \u2014 1M Row Performance",
+      "summary": "Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial indexing. 1,000,000 ride-share driver GPS positions are checked against 12 pricing zones across 8 world cities using O(1) H3 cell matching instead of O(n\u00d7m) polygon intersection. Progressive queries build from 'what is H3' to million-row analytics with 10 automated PASS/FAIL checks.",
       "categories": [
         "geospatial",
         "iot"
@@ -5555,7 +5555,7 @@
       "id": "hl7-clinical-workflows",
       "path": "demos/hl7/hl7-clinical-workflows",
       "iconPath": "icons/hl7-clinical-workflows.svg",
-      "name": "HL7 Clinical Workflows — Documents, Scheduling & Edge Cases",
+      "name": "HL7 Clinical Workflows \u2014 Documents, Scheduling & Edge Cases",
       "summary": "Demonstrates HL7 v2 clinical workflow messages beyond core ADT and lab types. MDM^T02 document management with full History & Physical narrative, SIU^S12 appointment scheduling from two systems, and comprehensive edge-case testing with escape sequences (\\F\\, \\T\\, \\S\\, \\R\\, \\E\\, \\X0D\\), empty fields, and multi-line text.",
       "categories": [
         "healthcare",
@@ -5594,8 +5594,8 @@
       "id": "hl7-lab-orders-results",
       "path": "demos/hl7/hl7-lab-orders-results",
       "iconPath": "icons/hl7-lab-orders-results.svg",
-      "name": "HL7 Lab Orders & Results — ORM/ORU Workflow",
-      "summary": "Models the complete laboratory workflow using HL7 v2 ORM (Order) and ORU (Observation Result) messages. 3 ORM orders and 5 ORU results from 4+ LIS/EHR systems across HL7 versions 2.3–2.5.1. Covers materialized PID/OBR/OBX extraction, value type handling (NM, ST, TX, SN), abnormal flag detection, escape sequence decoding, and cross-system unification.",
+      "name": "HL7 Lab Orders & Results \u2014 ORM/ORU Workflow",
+      "summary": "Models the complete laboratory workflow using HL7 v2 ORM (Order) and ORU (Observation Result) messages. 3 ORM orders and 5 ORU results from 4+ LIS/EHR systems across HL7 versions 2.3\u20132.5.1. Covers materialized PID/OBR/OBX extraction, value type handling (NM, ST, TX, SN), abnormal flag detection, escape sequence decoding, and cross-system unification.",
       "categories": [
         "healthcare",
         "hl7"
@@ -5633,8 +5633,8 @@
       "id": "hl7-patient-admin",
       "path": "demos/hl7/hl7-patient-admin",
       "iconPath": "icons/hl7-patient-admin.svg",
-      "name": "HL7 Patient Administration — ADT Lifecycle",
-      "summary": "Demonstrates HL7 v2 ADT (Admit-Discharge-Transfer) messages from 6 EHR systems across 5 HL7 versions (2.3–2.6). 8 real-world messages cover admission (A01), demographics update (A08), and discharge (A03). Features MSH header extraction, materialized PID/PV1/EVN paths, escape sequence decoding, Z-segment preservation, and cross-EHR field mapping.",
+      "name": "HL7 Patient Administration \u2014 ADT Lifecycle",
+      "summary": "Demonstrates HL7 v2 ADT (Admit-Discharge-Transfer) messages from 6 EHR systems across 5 HL7 versions (2.3\u20132.6). 8 real-world messages cover admission (A01), demographics update (A08), and discharge (A03). Features MSH header extraction, materialized PID/PV1/EVN paths, escape sequence decoding, Z-segment preservation, and cross-EHR field mapping.",
       "categories": [
         "healthcare",
         "hl7"
@@ -5671,8 +5671,8 @@
       "id": "iceberg-energy-grid-monitoring",
       "path": "demos/iceberg/v2/energy-grid-monitoring",
       "iconPath": "icons/iceberg-energy-grid-monitoring.svg",
-      "name": "Iceberg Energy Grid — Native Table Reading",
-      "summary": "Demonstrates native Apache Iceberg table reading using a smart energy grid monitoring dataset (600 meter readings across 3 regions). Exercises Iceberg metadata chain parsing (metadata.json → manifest list → manifest → Parquet data files), schema inference from Iceberg metadata, manifest-based file discovery, region-level aggregations, and Parquet row-group filtering — all without any conversion to Delta format.",
+      "name": "Iceberg Energy Grid \u2014 Native Table Reading",
+      "summary": "Demonstrates native Apache Iceberg table reading using a smart energy grid monitoring dataset (600 meter readings across 3 regions). Exercises Iceberg metadata chain parsing (metadata.json \u2192 manifest list \u2192 manifest \u2192 Parquet data files), schema inference from Iceberg metadata, manifest-based file discovery, region-level aggregations, and Parquet row-group filtering \u2014 all without any conversion to Delta format.",
       "categories": [
         "iceberg-v2",
         "energy"
@@ -5703,7 +5703,7 @@
       "id": "iceberg-native-time-travel",
       "path": "demos/iceberg/v2/iceberg-native-time-travel",
       "iconPath": "icons/iceberg-native-time-travel.svg",
-      "name": "Iceberg Native — Time Travel (Stock Prices)",
+      "name": "Iceberg Native \u2014 Time Travel (Stock Prices)",
       "summary": "Demonstrates native Apache Iceberg V2 table reading after 4 snapshot-producing mutations on a stock price dataset (138 final rows, 23 tickers). Exercises merge-on-read with position delete files across UPDATE (+5% tech correction), INSERT (30 IPO rows), and DELETE (12 delisted rows). Verifies per-ticker averages, sector breakdowns, and absence of deleted data.",
       "categories": [
         "iceberg-v2",
@@ -5737,8 +5737,8 @@
       "id": "iceberg-uniform-basics",
       "path": "demos/iceberg/v1/iceberg-uniform-basics",
       "iconPath": "icons/iceberg-uniform-basics.svg",
-      "name": "Iceberg UniForm — Enable Dual-Format Metadata",
-      "summary": "Demonstrates the core Iceberg UniForm feature: enabling automatic Iceberg metadata generation on a Delta table by setting delta.universalFormat.enabledFormats = 'iceberg'. After enabling, every Delta commit produces Iceberg-compatible metadata (metadata.json, manifest lists, manifest files) alongside the Delta transaction log — making the table readable by any Iceberg engine without conversion. Uses a product catalog dataset to show property configuration, DML operations with dual metadata, and DESCRIBE commands.",
+      "name": "Iceberg UniForm \u2014 Enable Dual-Format Metadata",
+      "summary": "Demonstrates the core Iceberg UniForm feature: enabling automatic Iceberg metadata generation on a Delta table by setting delta.universalFormat.enabledFormats = 'iceberg'. After enabling, every Delta commit produces Iceberg-compatible metadata (metadata.json, manifest lists, manifest files) alongside the Delta transaction log \u2014 making the table readable by any Iceberg engine without conversion. Uses a product catalog dataset to show property configuration, DML operations with dual metadata, and DESCRIBE commands.",
       "categories": [
         "iceberg-v1",
         "delta-table"
@@ -5769,7 +5769,7 @@
       "id": "iceberg-uniform-crud-lifecycle",
       "path": "demos/iceberg/v1/iceberg-uniform-crud-lifecycle",
       "iconPath": "icons/iceberg-uniform-crud-lifecycle.svg",
-      "name": "Iceberg UniForm — CRUD & Snapshot Lifecycle",
+      "name": "Iceberg UniForm \u2014 CRUD & Snapshot Lifecycle",
       "summary": "Walks through the complete lifecycle of a UniForm-enabled Delta table: INSERT, UPDATE, DELETE operations, each producing a new Iceberg snapshot alongside the Delta version. Uses time travel to inspect data at each snapshot boundary. Demonstrates that Iceberg metadata stays in sync with the Delta log across all mutation types. Dataset: 20 employees across 4 departments.",
       "categories": [
         "iceberg-v1",
@@ -5802,7 +5802,7 @@
       "id": "iceberg-uniform-schema-evolution",
       "path": "demos/iceberg/v1/iceberg-uniform-schema-evolution",
       "iconPath": "icons/iceberg-uniform-schema-evolution.svg",
-      "name": "Iceberg UniForm — Schema Evolution Across Formats",
+      "name": "Iceberg UniForm \u2014 Schema Evolution Across Formats",
       "summary": "Demonstrates schema evolution on a UniForm-enabled Delta table. When columns are added via ALTER TABLE ADD COLUMN, both the Delta schema and the Iceberg schema evolve in lockstep. Older snapshots reference the original schema; newer snapshots reference the evolved schema. Dataset: customer orders with progressive column additions for loyalty_tier, discount_pct, and notes.",
       "categories": [
         "iceberg-v1",
@@ -5834,8 +5834,8 @@
       "id": "iceberg-uniform-format-versions",
       "path": "demos/iceberg/v2/iceberg-uniform-format-versions",
       "iconPath": "icons/iceberg-uniform-format-versions.svg",
-      "name": "Iceberg UniForm — V1, V2, V3 Format Comparison",
-      "summary": "Compares Iceberg format versions V1, V2, and V3 side by side. Creates three identical Delta tables with the same seed data, each configured with a different delta.universalFormat.icebergVersion property. Demonstrates that all three versions produce correct metadata, handle DML, and support time travel — while V3 adds nanosecond timestamp types, deletion vectors, and named references.",
+      "name": "Iceberg UniForm \u2014 V1, V2, V3 Format Comparison",
+      "summary": "Compares Iceberg format versions V1, V2, and V3 side by side. Creates three identical Delta tables with the same seed data, each configured with a different delta.universalFormat.icebergVersion property. Demonstrates that all three versions produce correct metadata, handle DML, and support time travel \u2014 while V3 adds nanosecond timestamp types, deletion vectors, and named references.",
       "categories": [
         "iceberg-v2",
         "delta-table"
@@ -5876,7 +5876,7 @@
       "id": "iceberg-uniform-partitioned",
       "path": "demos/iceberg/v1/iceberg-uniform-partitioned",
       "iconPath": "icons/iceberg-uniform-partitioned.svg",
-      "name": "Iceberg UniForm — Partitioned Tables",
+      "name": "Iceberg UniForm \u2014 Partitioned Tables",
       "summary": "Demonstrates Iceberg UniForm on a partitioned Delta table. The Iceberg metadata includes partition specs that map directly from the Delta partition columns, enabling Iceberg-compatible engines to leverage partition pruning. Shows INSERT, UPDATE, DELETE across partitions with time travel verification. Dataset: 24 sales transactions across 3 regions and 4 quarters.",
       "categories": [
         "iceberg-v1",
@@ -5908,7 +5908,7 @@
       "id": "iceberg-uniform-bloom-filters",
       "path": "demos/iceberg/v1/iceberg-uniform-bloom-filters",
       "iconPath": "icons/iceberg-uniform-bloom-filters.svg",
-      "name": "Customer Loyalty Program — Bloom Filters with UniForm",
+      "name": "Customer Loyalty Program \u2014 Bloom Filters with UniForm",
       "summary": "Tests BLOOM FILTER COLUMNS on a UniForm Iceberg table. 40 loyalty members across 4 tiers (Bronze/Silver/Gold/Platinum) exercise point lookups by member_id and full_name. Verifies bloom filter metadata coexists with UniForm Iceberg metadata and data fidelity through Iceberg read-back.",
       "categories": [
         "iceberg-v1",
@@ -5941,7 +5941,7 @@
       "id": "iceberg-uniform-change-data-feed",
       "path": "demos/iceberg/v1/iceberg-uniform-change-data-feed",
       "iconPath": "icons/iceberg-uniform-change-data-feed.svg",
-      "name": "E-Commerce Order Lifecycle — Change Data Feed with UniForm",
+      "name": "E-Commerce Order Lifecycle \u2014 Change Data Feed with UniForm",
       "summary": "Tests CDF (Change Data Feed) integration with UniForm Iceberg metadata. 30 e-commerce orders across 5 customers and 5 products undergo INSERT, UPDATE (pending to processing), and DELETE (cancelled orders). Proves CDF mutations are correctly reflected in the shadow Iceberg metadata chain.",
       "categories": [
         "iceberg-v1",
@@ -5974,7 +5974,7 @@
       "id": "iceberg-uniform-constraints",
       "path": "demos/iceberg/v1/iceberg-uniform-constraints",
       "iconPath": "icons/iceberg-uniform-constraints.svg",
-      "name": "Bank Transaction Validation — CHECK Constraints with UniForm",
+      "name": "Bank Transaction Validation \u2014 CHECK Constraints with UniForm",
       "summary": "Tests CHECK constraints (delta.constraints.*) on a UniForm Iceberg table. 25 bank transactions across 5 accounts and 3 currencies enforce positive amounts and valid currency codes. Verifies constraint metadata via SHOW TBLPROPERTIES and data integrity through Iceberg read-back.",
       "categories": [
         "iceberg-v1",
@@ -6007,7 +6007,7 @@
       "id": "iceberg-uniform-restore",
       "path": "demos/iceberg/v1/iceberg-uniform-restore",
       "iconPath": "icons/iceberg-uniform-restore.svg",
-      "name": "Regulatory Compliance Recovery — RESTORE with UniForm",
+      "name": "Regulatory Compliance Recovery \u2014 RESTORE with UniForm",
       "summary": "Tests RESTORE TO VERSION on a UniForm Iceberg table. 20 compliance records are seeded, updated (non_compliant to under_review), then accidentally deleted. RESTORE recovers the pre-delete state and Iceberg read-back verifies the shadow metadata is rebuilt correctly after the restore operation.",
       "categories": [
         "iceberg-v1",
@@ -6040,7 +6040,7 @@
       "id": "iceberg-uniform-window-analytics",
       "path": "demos/iceberg/v1/iceberg-uniform-window-analytics",
       "iconPath": "icons/iceberg-uniform-window-analytics.svg",
-      "name": "Regional Sales Performance — Window Analytics with UniForm",
+      "name": "Regional Sales Performance \u2014 Window Analytics with UniForm",
       "summary": "Tests window functions (ROW_NUMBER, RANK, LAG, LEAD, running totals) on a UniForm Iceberg table. 40 sales records across 7 reps, 4 regions, and 3 product categories exercise PARTITION BY, ORDER BY, and frame clauses. Iceberg read-back proves analytical results are identical through both metadata chains.",
       "categories": [
         "iceberg-v1",
@@ -6074,7 +6074,7 @@
       "id": "iceberg-v1-warehouse-inventory",
       "path": "demos/iceberg/v1/iceberg-v1-warehouse-inventory",
       "iconPath": "icons/iceberg-v1-warehouse-inventory.svg",
-      "name": "Iceberg V1 — Warehouse Inventory Snapshots",
+      "name": "Iceberg V1 \u2014 Warehouse Inventory Snapshots",
       "summary": "Demonstrates native Apache Iceberg format-version 1 table reading using a retail warehouse inventory dataset (489 SKUs across 3 warehouses). Exercises v1 metadata chain parsing, schema inference, and inventory analytics.",
       "categories": [
         "iceberg-v1"
@@ -6107,7 +6107,7 @@
       "id": "iceberg-v2-aggregate-analytics",
       "path": "demos/iceberg/v2/iceberg-v2-aggregate-analytics",
       "iconPath": "icons/iceberg-v2-aggregate-analytics.svg",
-      "name": "Iceberg V2 — Retail Multi-Dimensional Aggregation",
+      "name": "Iceberg V2 \u2014 Retail Multi-Dimensional Aggregation",
       "summary": "Demonstrates multi-dimensional aggregate analytics on a native Iceberg V2 table. 120 retail transactions across 4 stores, 3 regions, and 5 categories exercise GROUPING SETS, ROLLUP, FILTER clause, DISTINCT aggregates, and HAVING predicates. Essential for OLAP-style reporting on Iceberg data without conversion.",
       "categories": [
         "iceberg-v2"
@@ -6142,8 +6142,8 @@
       "id": "iceberg-v2-complex-types",
       "path": "demos/iceberg/v2/iceberg-v2-complex-types",
       "iconPath": "icons/iceberg-v2-complex-types.svg",
-      "name": "Iceberg V2 — Complex Types (E-Commerce Orders)",
-      "summary": "Demonstrates native Iceberg V2 reading of complex column types — STRUCT for shipping addresses and ARRAY<STRUCT> for order line items. 100 e-commerce orders exercise nested field access via dot notation, UNNEST for array explosion (311 line items), and aggregations on nested struct fields across 15 cities and 12 states.",
+      "name": "Iceberg V2 \u2014 Complex Types (E-Commerce Orders)",
+      "summary": "Demonstrates native Iceberg V2 reading of complex column types \u2014 STRUCT for shipping addresses and ARRAY<STRUCT> for order line items. 100 e-commerce orders exercise nested field access via dot notation, UNNEST for array explosion (311 line items), and aggregations on nested struct fields across 15 cities and 12 states.",
       "categories": [
         "iceberg-v2",
         "complex-types"
@@ -6177,7 +6177,7 @@
       "id": "iceberg-v2-copy-on-write",
       "path": "demos/iceberg/v2/iceberg-v2-copy-on-write",
       "iconPath": "icons/iceberg-v2-copy-on-write.svg",
-      "name": "Iceberg V2 — Copy-on-Write (Logistics Shipments)",
+      "name": "Iceberg V2 \u2014 Copy-on-Write (Logistics Shipments)",
       "summary": "Demonstrates Iceberg V2 copy-on-write mode where UPDATE and DELETE operations rewrite entire data files instead of using delete files. 120 shipments undergo delivery status updates (+20 delivered) and cancellation removals (-10 deleted), producing 110 final rows across 3 snapshots with no position delete files.",
       "categories": [
         "iceberg-v2",
@@ -6210,7 +6210,7 @@
       "id": "iceberg-v2-cross-format-join",
       "path": "demos/iceberg/v2/iceberg-v2-cross-format-join",
       "iconPath": "icons/iceberg-v2-cross-format-join.svg",
-      "name": "Iceberg Cross-Format Join — Retail Store Analytics",
+      "name": "Iceberg Cross-Format Join \u2014 Retail Store Analytics",
       "summary": "Demonstrates cross-format interoperability by joining a UniForm Iceberg Delta table (40 sales transactions) with a CSV external table (10 store locations). Revenue-by-store and revenue-by-region JOINs run through both Delta and Iceberg V2 metadata paths, proving seamless cross-format query execution.",
       "categories": [
         "iceberg",
@@ -6249,7 +6249,7 @@
       "id": "iceberg-v2-fleet-telemetry",
       "path": "demos/iceberg/v2/iceberg-v2-fleet-telemetry",
       "iconPath": "icons/iceberg-v2-fleet-telemetry.svg",
-      "name": "Iceberg V2 — Fleet Telemetry Analytics",
+      "name": "Iceberg V2 \u2014 Fleet Telemetry Analytics",
       "summary": "Demonstrates native Apache Iceberg format-version 2 table reading using a commercial fleet telemetry dataset (450 GPS pings across 3 regional fleets). Exercises v2 metadata chain parsing with enhanced column statistics, safety analytics, and fuel monitoring.",
       "categories": [
         "iceberg-v2"
@@ -6283,8 +6283,8 @@
       "id": "iceberg-v2-hidden-partitions",
       "path": "demos/iceberg/v2/iceberg-v2-hidden-partitions",
       "iconPath": "icons/iceberg-v2-hidden-partitions.svg",
-      "name": "Iceberg V2 — Hidden Partitions (Ride-Share Analytics)",
-      "summary": "Demonstrates Iceberg V2 hidden partitioning using months(pickup_date) transform. 300 ride-share trip records across 6 monthly partitions (Jan-Jun 2025) exercise transparent partition pruning — queries filter on pickup_date without knowing partition structure. Tests multi-city analytics, payment type breakdowns, and driver performance metrics.",
+      "name": "Iceberg V2 \u2014 Hidden Partitions (Ride-Share Analytics)",
+      "summary": "Demonstrates Iceberg V2 hidden partitioning using months(pickup_date) transform. 300 ride-share trip records across 6 monthly partitions (Jan-Jun 2025) exercise transparent partition pruning \u2014 queries filter on pickup_date without knowing partition structure. Tests multi-city analytics, payment type breakdowns, and driver performance metrics.",
       "categories": [
         "iceberg-v2",
         "partitioning"
@@ -6316,8 +6316,8 @@
       "id": "iceberg-v2-multi-partition",
       "path": "demos/iceberg/v2/iceberg-v2-multi-partition",
       "iconPath": "icons/iceberg-v2-multi-partition.svg",
-      "name": "Iceberg V2 — Multi-Column Partitioning (Weather Stations)",
-      "summary": "Demonstrates Iceberg V2 multi-column partitioning using region (identity) and years(observation_date) transforms. 450 weather station readings across 15 partitions (5 regions × 3 years) exercise compound partition pruning, per-station aggregation, year-over-year comparisons, and extreme reading detection.",
+      "name": "Iceberg V2 \u2014 Multi-Column Partitioning (Weather Stations)",
+      "summary": "Demonstrates Iceberg V2 multi-column partitioning using region (identity) and years(observation_date) transforms. 450 weather station readings across 15 partitions (5 regions \u00d7 3 years) exercise compound partition pruning, per-station aggregation, year-over-year comparisons, and extreme reading detection.",
       "categories": [
         "iceberg-v2",
         "partitioning"
@@ -6349,7 +6349,7 @@
       "id": "iceberg-v2-snapshot-consistency",
       "path": "demos/iceberg/v2/iceberg-v2-snapshot-consistency",
       "iconPath": "icons/iceberg-v2-snapshot-consistency.svg",
-      "name": "Iceberg V2 — Snapshot Consistency (Retail Inventory)",
+      "name": "Iceberg V2 \u2014 Snapshot Consistency (Retail Inventory)",
       "summary": "Demonstrates Iceberg V2 snapshot consistency with 4 mutations on a retail inventory table: initial load (80 products), restocking (+20 INSERTs), price corrections (UPDATE Electronics +8%), and discontinuation (-10 DELETEs). Final state of 90 products verifies merge-on-read with position delete files across all mutation types.",
       "categories": [
         "iceberg-v2",
@@ -6383,7 +6383,7 @@
       "id": "iceberg-v2-window-analytics",
       "path": "demos/iceberg/v2/iceberg-v2-window-analytics",
       "iconPath": "icons/iceberg-v2-window-analytics.svg",
-      "name": "Iceberg V2 — Airline Loyalty Window Analytics",
+      "name": "Iceberg V2 \u2014 Airline Loyalty Window Analytics",
       "summary": "Demonstrates advanced window function analytics on a native Iceberg V2 table. 60 frequent flyer members across 4 tiers and 5 airports exercise ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, NTILE, and running SUM window functions. CTEs implement top-N-per-group patterns, proving the query engine handles complex analytical SQL on Iceberg data.",
       "categories": [
         "iceberg-v2"
@@ -6417,7 +6417,7 @@
       "id": "iceberg-v3-clinical-trials",
       "path": "demos/iceberg/v3/iceberg-v3-clinical-trials",
       "iconPath": "icons/iceberg-v3-clinical-trials.svg",
-      "name": "Iceberg V3 — Clinical Trial Lab Results",
+      "name": "Iceberg V3 \u2014 Clinical Trial Lab Results",
       "summary": "Demonstrates native Apache Iceberg format-version 3 table reading using a pharmaceutical clinical trial dataset (480 lab results across 3 trial sites). Generated by Spark 4.0 + Iceberg 1.10.1. Exercises V3 metadata chain parsing, abnormal result detection, and analyst workload analysis.",
       "categories": [
         "iceberg-v3"
@@ -6450,7 +6450,7 @@
       "id": "iceberg-v3-cdf-uniform",
       "path": "demos/iceberg/v3/iceberg-v3-cdf-uniform",
       "iconPath": "icons/iceberg-v3-cdf-uniform.svg",
-      "name": "Iceberg V3 UniForm — CDF Payment Reconciliation",
+      "name": "Iceberg V3 UniForm \u2014 CDF Payment Reconciliation",
       "summary": "Tests that Change Data Feed (CDF) and Iceberg UniForm V3 coexist correctly on the same Delta table. 30 payment transactions across 5 merchants undergo batch approval, decline, fraud removal, and new payment insertion with both CDF change tracking and V3 Iceberg metadata generation active. Iceberg read-back verifies the V3 shadow metadata chain stays consistent through all mutations.",
       "categories": [
         "iceberg-v3",
@@ -6484,7 +6484,7 @@
       "id": "iceberg-v3-null-edge-cases",
       "path": "demos/iceberg/v3/iceberg-v3-null-edge-cases",
       "iconPath": "icons/iceberg-v3-null-edge-cases.svg",
-      "name": "Iceberg V3 — Clinical Lab NULL Edge Cases",
+      "name": "Iceberg V3 \u2014 Clinical Lab NULL Edge Cases",
       "summary": "Demonstrates NULL handling edge cases on a native Iceberg V3 table. 50 clinical lab results with intentional NULLs across 7 columns exercise COALESCE, NULLIF, COUNT(*) vs COUNT(column), GROUP BY with NULL buckets, CASE with NULLs, and aggregate behavior when NULLs are present. Proves V3 NULL statistics and predicate evaluation work correctly.",
       "categories": [
         "iceberg-v3"
@@ -6519,7 +6519,7 @@
       "id": "iceberg-v3-maintenance",
       "path": "demos/iceberg/v3/iceberg-v3-maintenance",
       "iconPath": "icons/iceberg-v3-maintenance.svg",
-      "name": "Iceberg V3 UniForm — SaaS Billing OPTIMIZE & VACUUM",
+      "name": "Iceberg V3 UniForm \u2014 SaaS Billing OPTIMIZE & VACUUM",
       "summary": "Demonstrates OPTIMIZE and VACUUM on a V3 UniForm Delta table. A SaaS subscription billing dataset starts with 30 tenants, grows to 60 through two INSERT batches (file fragmentation), then undergoes OPTIMIZE (compaction), DELETE (purge trial/suspended), and VACUUM (orphan cleanup). Iceberg V3 read-back proves metadata survives the full maintenance lifecycle.",
       "categories": [
         "iceberg",
@@ -6553,8 +6553,8 @@
       "id": "iceberg-v3-merge-upsert",
       "path": "demos/iceberg/v3/iceberg-v3-merge-upsert",
       "iconPath": "icons/iceberg-v3-merge-upsert.svg",
-      "name": "Iceberg V3 UniForm — Supply Chain Inventory MERGE Sync",
-      "summary": "Demonstrates MERGE INTO (upsert) on a V3 UniForm Delta table. 30 warehouse inventory SKUs across 3 warehouses undergo two MERGE rounds — updating quantities/prices for existing items and inserting new products (33 final rows). Iceberg V3 read-back verifies specific inventory levels and prices through the metadata chain.",
+      "name": "Iceberg V3 UniForm \u2014 Supply Chain Inventory MERGE Sync",
+      "summary": "Demonstrates MERGE INTO (upsert) on a V3 UniForm Delta table. 30 warehouse inventory SKUs across 3 warehouses undergo two MERGE rounds \u2014 updating quantities/prices for existing items and inserting new products (33 final rows). Iceberg V3 read-back verifies specific inventory levels and prices through the metadata chain.",
       "categories": [
         "iceberg",
         "delta-table"
@@ -6587,8 +6587,8 @@
       "id": "iceberg-v3-schema-evolution",
       "path": "demos/iceberg/v3/iceberg-v3-schema-evolution",
       "iconPath": "icons/iceberg-v3-schema-evolution.svg",
-      "name": "Iceberg V3 UniForm — Pharmaceutical Drug Registry Schema Evolution",
-      "summary": "Demonstrates schema evolution (ADD COLUMN) on a V3 UniForm Delta table. 30 pharmaceutical compounds undergo two rounds of schema evolution — adding trial_phase and priority_score columns — with UPDATE backfills and 5 new post-evolution inserts (35 final rows). Iceberg V3 read-back verifies all schema versions are tracked correctly.",
+      "name": "Iceberg V3 UniForm \u2014 Pharmaceutical Drug Registry Schema Evolution",
+      "summary": "Demonstrates schema evolution (ADD COLUMN) on a V3 UniForm Delta table. 30 pharmaceutical compounds undergo two rounds of schema evolution \u2014 adding trial_phase and priority_score columns \u2014 with UPDATE backfills and 5 new post-evolution inserts (35 final rows). Iceberg V3 read-back verifies all schema versions are tracked correctly.",
       "categories": [
         "iceberg",
         "delta-table"
@@ -6620,8 +6620,8 @@
       "id": "iceberg-v3-time-travel",
       "path": "demos/iceberg/v3/iceberg-v3-time-travel",
       "iconPath": "icons/iceberg-v3-time-travel.svg",
-      "name": "Iceberg V3 UniForm — Investment Portfolio Audit Trail",
-      "summary": "Demonstrates time travel (VERSION AS OF) and version history (DESCRIBE HISTORY) on a V3 UniForm Delta table. 25 investment holdings undergo four mutation rounds — rebalancing, dividend reinvestment, exits, and acquisitions — creating distinct snapshots. Iceberg V3 read-back verifies concrete portfolio values through the metadata chain.",
+      "name": "Iceberg V3 UniForm \u2014 Investment Portfolio Audit Trail",
+      "summary": "Demonstrates time travel (VERSION AS OF) and version history (DESCRIBE HISTORY) on a V3 UniForm Delta table. 25 investment holdings undergo four mutation rounds \u2014 rebalancing, dividend reinvestment, exits, and acquisitions \u2014 creating distinct snapshots. Iceberg V3 read-back verifies concrete portfolio values through the metadata chain.",
       "categories": [
         "iceberg",
         "delta-table"
@@ -6654,7 +6654,7 @@
       "id": "json-country-factbook",
       "path": "demos/json/country-factbook",
       "iconPath": "icons/json-country-factbook.svg",
-      "name": "JSON Country Factbook — Deep Nesting & Schema Evolution",
+      "name": "JSON Country Factbook \u2014 Deep Nesting & Schema Evolution",
       "summary": "Demonstrates deep JSON nesting (3+ levels), schema evolution with NULL filling, and selective path extraction using CIA World Factbook data for 10 African countries. One-object-per-file format with optional Terrorism/Space sections. Two tables: countries (flattened overview with preserve_original) and country_economy (GDP, sectors, trade). Covers exclude_paths, column_mappings, max_depth, and multi-file reading.",
       "categories": [
         "json"
@@ -6691,8 +6691,8 @@
       "id": "json-customers-basics",
       "path": "demos/json/customers-basics",
       "iconPath": "icons/json-customers-basics.svg",
-      "name": "JSON Customers — Basics",
-      "summary": "Demonstrates JSON fundamentals: creating an external table from a JSON array file, applying column_mappings for clean names ($.first → first_name, $.last → last_name), and using type inference for proper timestamp handling. 200 CRM customer records with include_paths, max_depth, and file_metadata.",
+      "name": "JSON Customers \u2014 Basics",
+      "summary": "Demonstrates JSON fundamentals: creating an external table from a JSON array file, applying column_mappings for clean names ($.first \u2192 first_name, $.last \u2192 last_name), and using type inference for proper timestamp handling. 200 CRM customer records with include_paths, max_depth, and file_metadata.",
       "categories": [
         "json"
       ],
@@ -6721,7 +6721,7 @@
       "id": "json-music-catalog",
       "path": "demos/json/music-catalog",
       "iconPath": "icons/json-music-catalog.svg",
-      "name": "JSON Music Catalog — Nested Arrays & Explode",
+      "name": "JSON Music Catalog \u2014 Nested Arrays & Explode",
       "summary": "Demonstrates nested JSON flattening with array explosion. 347 music albums with nested vendor objects and track detail arrays across 3 genre-based catalog files. Two tables: album_tracks (exploded, 3,503 rows) and album_summary (347 rows with vendor as JSON blob). Covers explode_paths, json_paths, column_mappings, default_array_handling, and multi-file reading.",
       "categories": [
         "json"
@@ -6757,7 +6757,7 @@
       "id": "json-subtree-capture",
       "path": "demos/json/json-subtree-capture",
       "iconPath": "icons/json-subtree-capture.svg",
-      "name": "JSON Subtree Capture — json_paths",
+      "name": "JSON Subtree Capture \u2014 json_paths",
       "summary": "Demonstrates json_paths for capturing complex JSON subtrees as serialized string columns instead of flattening. Two tables show the same property listing data: one with location and pricing subtrees captured as JSON blobs (json_paths), one fully flattened for comparison. Covers json_paths, column_mappings, include_paths, and multi-file reading.",
       "categories": [
         "json"
@@ -6855,7 +6855,7 @@
       "id": "orc-banking-transactions",
       "path": "demos/orc/banking-transactions",
       "iconPath": "icons/orc-banking-transactions.svg",
-      "name": "ORC Banking Transactions — Transaction Monitoring",
+      "name": "ORC Banking Transactions \u2014 Transaction Monitoring",
       "summary": "Demonstrates ORC format reading with branch-level banking transaction records for fraud monitoring. Two ORC files (100 rows) across two bank branches exercise multi-file aggregation, flagged transaction filtering, risk score analysis, and per-account summaries with file_metadata for traceability.",
       "categories": [
         "orc",
@@ -6891,8 +6891,8 @@
       "id": "orc-server-logs",
       "path": "demos/orc/server-logs",
       "iconPath": "icons/orc-server-logs.svg",
-      "name": "ORC Server Logs — HTTP Access Analytics",
-      "summary": "Demonstrates ORC reading features using 5 server access log files (2,500 rows) with schema evolution (v1→v2 adds request_body_bytes, cache_hit). Three tables exercise multi-file reading, file_filter for single-server extraction, max_rows for sampling, file_metadata, and ORC's self-describing schema with automatic type detection from file footers.",
+      "name": "ORC Server Logs \u2014 HTTP Access Analytics",
+      "summary": "Demonstrates ORC reading features using 5 server access log files (2,500 rows) with schema evolution (v1\u2192v2 adds request_body_bytes, cache_hit). Three tables exercise multi-file reading, file_filter for single-server extraction, max_rows for sampling, file_metadata, and ORC's self-describing schema with automatic type detection from file footers.",
       "categories": [
         "orc",
         "iot"
@@ -6924,10 +6924,145 @@
       ]
     },
     {
+      "id": "orc-clinical-trials",
+      "path": "demos/orc/clinical-trials",
+      "iconPath": "icons/orc-clinical-trials.svg",
+      "name": "ORC Clinical Trials \u2014 Patient Outcome Analysis",
+      "summary": "Demonstrates ORC format with heavily nullable data for NULL handling and conditional logic. 150 clinical trial patient records with NULLs in 6 of 13 columns exercise COALESCE, NULLIF, CASE expressions, and string functions (LIKE, LENGTH). Tests ORC NULL bitmap encoding with high NULL density.",
+      "categories": [
+        "orc",
+        "null-handling"
+      ],
+      "tags": [
+        "orc",
+        "intermediate",
+        "null-handling",
+        "coalesce",
+        "case-expression",
+        "string-functions"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 19227,
+      "fileCount": 1,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc_trials.patients"
+        }
+      ]
+    },
+    {
+      "id": "orc-energy-meters",
+      "path": "demos/orc/energy-meters",
+      "iconPath": "icons/orc-energy-meters.svg",
+      "name": "ORC Energy Meters \u2014 Utility Billing Analytics",
+      "summary": "Demonstrates ORC format at scale with 1,500 smart meter readings across 3 monthly files (50 meters \u00d7 10 days \u00d7 3 months). Exercises advanced aggregation: HAVING, COUNT DISTINCT, FILTER clause, and CTE-based analytics. Tests ORC handling of float64, boolean, and nullable columns at volume.",
+      "categories": [
+        "orc",
+        "aggregation"
+      ],
+      "tags": [
+        "orc",
+        "advanced",
+        "large-dataset",
+        "aggregation",
+        "having",
+        "filter-clause",
+        "multi-file"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 93741,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc_energy.readings"
+        }
+      ]
+    },
+    {
+      "id": "orc-insurance-claims",
+      "path": "demos/orc/insurance-claims",
+      "iconPath": "icons/orc-insurance-claims.svg",
+      "name": "ORC Insurance Claims \u2014 Policy Cross-Reference",
+      "summary": "Demonstrates multi-table ORC queries with complex JOINs and subqueries. Two ORC files \u2014 policies (80 rows) and claims (200 rows, 20 orphaned) \u2014 exercise INNER JOIN, LEFT JOIN, anti-join, correlated subqueries, EXISTS, and IN with subquery.",
+      "categories": [
+        "orc",
+        "joins"
+      ],
+      "tags": [
+        "orc",
+        "intermediate",
+        "joins",
+        "subqueries",
+        "anti-join",
+        "exists",
+        "multi-table"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 18603,
+      "fileCount": 2,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc_insurance.policies"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc_insurance.claims"
+        }
+      ]
+    },
+    {
+      "id": "orc-warehouse-inventory",
+      "path": "demos/orc/warehouse-inventory",
+      "iconPath": "icons/orc-warehouse-inventory.svg",
+      "name": "ORC Warehouse Inventory \u2014 Stock Level Analytics",
+      "summary": "Demonstrates ORC format with window functions on warehouse inventory data. Two ORC files (100 rows across 2 warehouses) with mixed numeric types exercise ROW_NUMBER, RANK, LAG/LEAD, NTILE, and running totals. Tests ORC handling of int32, float64, boolean, and nullable string columns.",
+      "categories": [
+        "orc",
+        "window-functions"
+      ],
+      "tags": [
+        "orc",
+        "intermediate",
+        "window-functions",
+        "rank",
+        "lag-lead",
+        "ntile",
+        "multi-file"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 7644,
+      "fileCount": 2,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.orc_inventory.stock"
+        }
+      ]
+    },
+    {
       "id": "parquet-flight-delays",
       "path": "demos/parquet/flight-delays",
       "iconPath": "icons/parquet-flight-delays.svg",
-      "name": "Parquet Flight Delays — Airline Delay Analysis",
+      "name": "Parquet Flight Delays \u2014 Airline Delay Analysis",
       "summary": "Demonstrates Parquet schema evolution using 3 quarterly flight-delay files (120 rows). Q1 has base columns, Q2 adds delay_reason, Q3 adds carrier_code. Two tables exercise multi-file reading with automatic NULL filling for evolved columns, file_filter for single-quarter extraction, and file_metadata for source traceability.",
       "categories": [
         "parquet",
@@ -6964,8 +7099,8 @@
       "id": "parquet-supply-chain",
       "path": "demos/parquet/supply-chain",
       "iconPath": "icons/parquet-supply-chain.svg",
-      "name": "Parquet Supply Chain — Order Analytics",
-      "summary": "Demonstrates Parquet reading features using 14 quarterly order files (2012–2016, 73,089 rows) organized in year-based subdirectories. Four tables exercise recursive directory scanning, file_filter for year/quarter extraction, max_rows for sampling, row_group_filter for predicate pushdown, file_metadata for traceability, and Parquet's self-describing schema.",
+      "name": "Parquet Supply Chain \u2014 Order Analytics",
+      "summary": "Demonstrates Parquet reading features using 14 quarterly order files (2012\u20132016, 73,089 rows) organized in year-based subdirectories. Four tables exercise recursive directory scanning, file_filter for year/quarter extraction, max_rows for sampling, row_group_filter for predicate pushdown, file_metadata for traceability, and Parquet's self-describing schema.",
       "categories": [
         "parquet",
         "retail"
@@ -7009,7 +7144,7 @@
       "id": "protobuf-addressbook-contacts",
       "path": "demos/protobuf/addressbook-contacts",
       "iconPath": "icons/protobuf-addressbook-contacts.svg",
-      "name": "Protobuf Address Book — Contact Directory",
+      "name": "Protobuf Address Book \u2014 Contact Directory",
       "summary": "Demonstrates Protocol Buffers (proto3) binary file reading using the classic Google addressbook schema. 3 team roster files (13 contacts, 22 phone numbers) read into flattened contacts and exploded phone-number tables. Covers nested message flattening, repeated field handling (join vs. explode), enum decoding (PhoneType), well-known types (Timestamp to ISO 8601), sparse data, and column mappings.",
       "categories": [
         "protobuf"
@@ -7046,8 +7181,8 @@
       "id": "protobuf-freight-shipping-manifest",
       "path": "demos/protobuf/freight-shipping-manifest",
       "iconPath": "icons/protobuf-freight-shipping-manifest.svg",
-      "name": "Protobuf Freight Shipping — Multi-Carrier Manifest",
-      "summary": "Tests protobuf features beyond existing demos: boolean fields (is_express, is_insured, requires_signature), int64 monetary values, float weights/dimensions, 3-level message nesting (Shipment → Package → Dimensions), multiple enums (ShipmentStatus, PackageClass), and multiple repeated fields per message. 3 carrier files contain 12 shipments, 24 packages, and 39 tracking events in a freight forwarding scenario.",
+      "name": "Protobuf Freight Shipping \u2014 Multi-Carrier Manifest",
+      "summary": "Tests protobuf features beyond existing demos: boolean fields (is_express, is_insured, requires_signature), int64 monetary values, float weights/dimensions, 3-level message nesting (Shipment \u2192 Package \u2192 Dimensions), multiple enums (ShipmentStatus, PackageClass), and multiple repeated fields per message. 3 carrier files contain 12 shipments, 24 packages, and 39 tracking events in a freight forwarding scenario.",
       "categories": [
         "protobuf",
         "logistics"
@@ -7089,7 +7224,7 @@
       "id": "protobuf-sensor-network",
       "path": "demos/protobuf/sensor-network",
       "iconPath": "icons/protobuf-sensor-network.svg",
-      "name": "Protobuf IoT Sensor Network — Manufacturing Floor Sensors",
+      "name": "Protobuf IoT Sensor Network \u2014 Manufacturing Floor Sensors",
       "summary": "Demonstrates Protobuf reading with 3 binary files (20 sensors, 82 readings) from a manufacturing IoT network. Two tables exercise different flatten configurations: exploded view (one row per reading) and summary view (one row per sensor with comma-joined readings). Tests nested messages, repeated fields, timestamp conversion, and multi-file reading.",
       "categories": [
         "protobuf",
@@ -7156,8 +7291,8 @@
       "id": "xml-books-schema-evolution",
       "path": "demos/xml/books-schema-evolution",
       "iconPath": "icons/xml-books-schema-evolution.svg",
-      "name": "XML Books — Schema Evolution",
-      "summary": "Demonstrates XML schema evolution across 5 catalog export files spanning 2000–2004. Each year adds new elements (isbn, publisher, rating, edition, series) and one drops description. Verifies the union schema, NULL filling, and attribute extraction.",
+      "name": "XML Books \u2014 Schema Evolution",
+      "summary": "Demonstrates XML schema evolution across 5 catalog export files spanning 2000\u20132004. Each year adds new elements (isbn, publisher, rating, edition, series) and one drops description. Verifies the union schema, NULL filling, and attribute extraction.",
       "categories": [
         "xml"
       ],
@@ -7186,7 +7321,7 @@
       "id": "xml-ecommerce-order-lines",
       "path": "demos/xml/ecommerce-order-lines",
       "iconPath": "icons/xml-ecommerce-order-lines.svg",
-      "name": "XML E-Commerce — Order Line Explosion",
+      "name": "XML E-Commerce \u2014 Order Line Explosion",
       "summary": "Demonstrates deep XML nesting (3+ levels), explode_paths for one-row-per-line-item, CDATA sections, exclude_paths, column_mappings, and self-closing flag elements on e-commerce order batch data with 5 orders and 11 line items.",
       "categories": [
         "xml",
@@ -7224,7 +7359,7 @@
       "id": "xml-nyt-news-rss",
       "path": "demos/xml/nyt-news-rss",
       "iconPath": "icons/xml-nyt-news-rss.svg",
-      "name": "XML NYT News — RSS Feed Analysis",
+      "name": "XML NYT News \u2014 RSS Feed Analysis",
       "summary": "Demonstrates XML namespace handling (4 namespaces: dc, media, atom, nyt), repeating element modes (JoinComma and Explode), self-closing element attributes, column_mappings, exclude_paths, and multi-file reading across 7 NYT RSS feed exports with 231 news articles and 2023 category keywords.",
       "categories": [
         "xml"
@@ -7261,7 +7396,7 @@
       "id": "xml-subtree-capture",
       "path": "demos/xml/xml-subtree-capture",
       "iconPath": "icons/xml-subtree-capture.svg",
-      "name": "XML Subtree Capture — xml_paths & nested_output_format",
+      "name": "XML Subtree Capture \u2014 xml_paths & nested_output_format",
       "summary": "Demonstrates xml_paths for capturing complex XML subtrees as serialized string columns instead of flattening. Two tables show the same product catalog with subtrees (specifications, supplier) captured as JSON objects or raw XML fragments via nested_output_format. Top-level fields are flattened normally alongside captured subtrees.",
       "categories": [
         "xml"
@@ -7287,8 +7422,8 @@
       "id": "delta-zorder-vs-partition",
       "path": "demos/delta/delta-zorder-vs-partition",
       "iconPath": "icons/delta-zorder-vs-partition.svg",
-      "name": "Delta Z-ORDER vs Partitioning — Choosing the Right Data Layout",
-      "summary": "The most common Delta table design question: should I partition or Z-ORDER? This demo builds the same e-commerce dataset in two tables — one partitioned by region, one Z-ORDERed — and runs side-by-side queries showing where each strategy wins.",
+      "name": "Delta Z-ORDER vs Partitioning \u2014 Choosing the Right Data Layout",
+      "summary": "The most common Delta table design question: should I partition or Z-ORDER? This demo builds the same e-commerce dataset in two tables \u2014 one partitioned by region, one Z-ORDERed \u2014 and runs side-by-side queries showing where each strategy wins.",
       "categories": [
         "delta-table",
         "delta-performance"
@@ -7326,7 +7461,7 @@
       "id": "pseudonymisation-healthcare",
       "path": "demos/pseudonymisation/pseudonymisation-healthcare",
       "iconPath": "icons/pseudonymisation-healthcare.svg",
-      "name": "Pseudonymisation Healthcare — HIPAA/GDPR Multi-Format",
+      "name": "Pseudonymisation Healthcare \u2014 HIPAA/GDPR Multi-Format",
       "summary": "Comprehensive GDPR-compliant pseudonymisation across three healthcare data formats: HL7 v2 ADT patient admissions (4 rows), FHIR R4 Patient resources (4 rows), and EDI HIPAA X12 claims (5 rows). Demonstrates all 7 transform types (keyed_hash, encrypt, redact, generalize, tokenize, mask, hash), wildcard column patterns (address_*, *_name), all 3 scopes (person, relationship, transaction), and 22 rules with aggregations on protected data.",
       "categories": [
         "pseudonymisation",
@@ -7370,7 +7505,7 @@
       "id": "pseudonymisation-quickstart",
       "path": "demos/pseudonymisation/pseudonymisation-quickstart",
       "iconPath": "icons/pseudonymisation-quickstart.svg",
-      "name": "Pseudonymisation Quickstart — Banking KYC",
+      "name": "Pseudonymisation Quickstart \u2014 Banking KYC",
       "summary": "A retail bank pseudonymises customer PII for its analytics team while keeping account-level aggregations accurate. Teaches the core concept: CREATE PSEUDONYMISATION RULE protects data at query time without modifying it on disk. Four transform types cover common KYC de-identification patterns: redact SSN, mask phone, keyed_hash names, and generalize dates of birth.",
       "categories": [
         "pseudonymisation",
@@ -7403,7 +7538,7 @@
       "id": "pseudonymisation-lifecycle",
       "path": "demos/pseudonymisation/pseudonymisation-lifecycle",
       "iconPath": "icons/pseudonymisation-lifecycle.svg",
-      "name": "Pseudonymisation Lifecycle — Insurance Claims",
+      "name": "Pseudonymisation Lifecycle \u2014 Insurance Claims",
       "summary": "An insurance company manages pseudonymisation rules across the claims processing lifecycle. Rules are created for routine analytics, selectively dropped when no longer needed, and verified through filtered SHOW commands. Demonstrates rule lifecycle management: SHOW filtered views, DROP individual rules, and catalog propagation.",
       "categories": [
         "pseudonymisation",
@@ -7436,7 +7571,7 @@
       "id": "pseudonymisation-apply",
       "path": "demos/pseudonymisation/pseudonymisation-apply",
       "iconPath": "icons/pseudonymisation-apply.svg",
-      "name": "Pseudonymisation Apply — Clinical Trial De-identification",
+      "name": "Pseudonymisation Apply \u2014 Clinical Trial De-identification",
       "summary": "A pharmaceutical company de-identifies clinical trial participant data for external research sharing. Demonstrates query-time pseudonymisation across two trials (6 participants) with SSN redaction, name hashing, and email masking. Aggregations by treatment arm and enrollment status work on protected data, proving analytics remain accurate. Covers GDPR Article 17 right-to-erasure compliance patterns.",
       "categories": [
         "pseudonymisation",
@@ -7543,19 +7678,19 @@
       "id": "iceberg-v1",
       "name": "Iceberg V1",
       "icon": "hexagon",
-      "description": "Iceberg format-version 1 demos — UniForm basics, schema evolution, partitioning, CRUD lifecycle, and maintenance"
+      "description": "Iceberg format-version 1 demos \u2014 UniForm basics, schema evolution, partitioning, CRUD lifecycle, and maintenance"
     },
     {
       "id": "iceberg-v2",
       "name": "Iceberg V2",
       "icon": "hexagon",
-      "description": "Iceberg format-version 2 demos — position deletes, equality deletes, copy-on-write, hidden partitions, and native table reading"
+      "description": "Iceberg format-version 2 demos \u2014 position deletes, equality deletes, copy-on-write, hidden partitions, and native table reading"
     },
     {
       "id": "iceberg-v3",
       "name": "Iceberg V3",
       "icon": "hexagon",
-      "description": "Iceberg format-version 3 demos — deletion vectors, puffin statistics, and advanced delete modes"
+      "description": "Iceberg format-version 3 demos \u2014 deletion vectors, puffin statistics, and advanced delete modes"
     },
     {
       "id": "geospatial",
