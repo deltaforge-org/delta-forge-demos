@@ -5835,6 +5835,172 @@
       ]
     },
     {
+      "id": "iceberg-uniform-bloom-filters",
+      "path": "demos/iceberg/v1/iceberg-uniform-bloom-filters",
+      "iconPath": "icons/iceberg-uniform-bloom-filters.svg",
+      "name": "Customer Loyalty Program \u2014 Bloom Filters with UniForm",
+      "summary": "Tests BLOOM FILTER COLUMNS on a UniForm Iceberg table. 40 loyalty members across 4 tiers (Bronze/Silver/Gold/Platinum) exercise point lookups by member_id and full_name. Verifies bloom filter metadata coexists with UniForm Iceberg metadata and data fidelity through Iceberg read-back.",
+      "categories": [
+        "iceberg-v1",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "bloom-filters",
+        "optimization",
+        "loyalty",
+        "point-lookup"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_bloom.members"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-uniform-change-data-feed",
+      "path": "demos/iceberg/v1/iceberg-uniform-change-data-feed",
+      "iconPath": "icons/iceberg-uniform-change-data-feed.svg",
+      "name": "E-Commerce Order Lifecycle \u2014 Change Data Feed with UniForm",
+      "summary": "Tests CDF (Change Data Feed) integration with UniForm Iceberg metadata. 30 e-commerce orders across 5 customers and 5 products undergo INSERT, UPDATE (pending to processing), and DELETE (cancelled orders). Proves CDF mutations are correctly reflected in the shadow Iceberg metadata chain.",
+      "categories": [
+        "iceberg-v1",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "cdf",
+        "change-data-feed",
+        "crud",
+        "e-commerce"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_cdf.orders"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-uniform-constraints",
+      "path": "demos/iceberg/v1/iceberg-uniform-constraints",
+      "iconPath": "icons/iceberg-uniform-constraints.svg",
+      "name": "Bank Transaction Validation \u2014 CHECK Constraints with UniForm",
+      "summary": "Tests CHECK constraints (delta.constraints.*) on a UniForm Iceberg table. 25 bank transactions across 5 accounts and 3 currencies enforce positive amounts and valid currency codes. Verifies constraint metadata via SHOW TBLPROPERTIES and data integrity through Iceberg read-back.",
+      "categories": [
+        "iceberg-v1",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "constraints",
+        "check-constraints",
+        "banking",
+        "data-quality"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_constraints.transactions"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-uniform-restore",
+      "path": "demos/iceberg/v1/iceberg-uniform-restore",
+      "iconPath": "icons/iceberg-uniform-restore.svg",
+      "name": "Regulatory Compliance Recovery \u2014 RESTORE with UniForm",
+      "summary": "Tests RESTORE TO VERSION on a UniForm Iceberg table. 20 compliance records are seeded, updated (non_compliant to under_review), then accidentally deleted. RESTORE recovers the pre-delete state and Iceberg read-back verifies the shadow metadata is rebuilt correctly after the restore operation.",
+      "categories": [
+        "iceberg-v1",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "restore",
+        "time-travel",
+        "compliance",
+        "recovery"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_restore.compliance_records"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-uniform-window-analytics",
+      "path": "demos/iceberg/v1/iceberg-uniform-window-analytics",
+      "iconPath": "icons/iceberg-uniform-window-analytics.svg",
+      "name": "Regional Sales Performance \u2014 Window Analytics with UniForm",
+      "summary": "Tests window functions (ROW_NUMBER, RANK, LAG, LEAD, running totals) on a UniForm Iceberg table. 40 sales records across 7 reps, 4 regions, and 3 product categories exercise PARTITION BY, ORDER BY, and frame clauses. Iceberg read-back proves analytical results are identical through both metadata chains.",
+      "categories": [
+        "iceberg-v1",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "window-functions",
+        "analytics",
+        "rank",
+        "lag-lead",
+        "running-total"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 3,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_window.sales"
+        }
+      ]
+    },
+    {
       "id": "iceberg-v1-warehouse-inventory",
       "path": "demos/iceberg/v1/iceberg-v1-warehouse-inventory",
       "iconPath": "icons/iceberg-v1-warehouse-inventory.svg",
@@ -5864,6 +6030,41 @@
         {
           "name": "{{zone_name}}.iceberg.warehouse_inventory",
           "objectType": "external_table"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v2-aggregate-analytics",
+      "path": "demos/iceberg/v2/iceberg-v2-aggregate-analytics",
+      "iconPath": "icons/iceberg-v2-aggregate-analytics.svg",
+      "name": "Iceberg V2 \u2014 Retail Multi-Dimensional Aggregation",
+      "summary": "Demonstrates multi-dimensional aggregate analytics on a native Iceberg V2 table. 120 retail transactions across 4 stores, 3 regions, and 5 categories exercise GROUPING SETS, ROLLUP, FILTER clause, DISTINCT aggregates, and HAVING predicates. Essential for OLAP-style reporting on Iceberg data without conversion.",
+      "categories": [
+        "iceberg-v2"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "read-only",
+        "native-format",
+        "v2",
+        "grouping-sets",
+        "rollup",
+        "filter-clause",
+        "aggregation",
+        "retail"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 5362,
+      "fileCount": 1,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.retail_sales"
         }
       ]
     },
@@ -6070,6 +6271,40 @@
       ]
     },
     {
+      "id": "iceberg-v2-window-analytics",
+      "path": "demos/iceberg/v2/iceberg-v2-window-analytics",
+      "iconPath": "icons/iceberg-v2-window-analytics.svg",
+      "name": "Iceberg V2 \u2014 Airline Loyalty Window Analytics",
+      "summary": "Demonstrates advanced window function analytics on a native Iceberg V2 table. 60 frequent flyer members across 4 tiers and 5 airports exercise ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, NTILE, and running SUM window functions. CTEs implement top-N-per-group patterns, proving the query engine handles complex analytical SQL on Iceberg data.",
+      "categories": [
+        "iceberg-v2"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "read-only",
+        "native-format",
+        "v2",
+        "window-functions",
+        "cte",
+        "analytics",
+        "airline"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 4601,
+      "fileCount": 1,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.loyalty_members"
+        }
+      ]
+    },
+    {
       "id": "iceberg-v3-clinical-trials",
       "path": "demos/iceberg/v3/iceberg-v3-clinical-trials",
       "iconPath": "icons/iceberg-v3-clinical-trials.svg",
@@ -6099,6 +6334,75 @@
         {
           "name": "{{zone_name}}.iceberg.lab_results",
           "objectType": "external_table"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v3-cdf-uniform",
+      "path": "demos/iceberg/v3/iceberg-v3-cdf-uniform",
+      "iconPath": "icons/iceberg-v3-cdf-uniform.svg",
+      "name": "Iceberg V3 UniForm \u2014 CDF Payment Reconciliation",
+      "summary": "Tests that Change Data Feed (CDF) and Iceberg UniForm V3 coexist correctly on the same Delta table. 30 payment transactions across 5 merchants undergo batch approval, decline, fraud removal, and new payment insertion with both CDF change tracking and V3 Iceberg metadata generation active. Iceberg read-back verifies the V3 shadow metadata chain stays consistent through all mutations.",
+      "categories": [
+        "iceberg-v3",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "v3",
+        "change-data-feed",
+        "cdf",
+        "dual-format",
+        "payments"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.payment_transactions"
+        }
+      ]
+    },
+    {
+      "id": "iceberg-v3-null-edge-cases",
+      "path": "demos/iceberg/v3/iceberg-v3-null-edge-cases",
+      "iconPath": "icons/iceberg-v3-null-edge-cases.svg",
+      "name": "Iceberg V3 \u2014 Clinical Lab NULL Edge Cases",
+      "summary": "Demonstrates NULL handling edge cases on a native Iceberg V3 table. 50 clinical lab results with intentional NULLs across 7 columns exercise COALESCE, NULLIF, COUNT(*) vs COUNT(column), GROUP BY with NULL buckets, CASE with NULLs, and aggregate behavior when NULLs are present. Proves V3 NULL statistics and predicate evaluation work correctly.",
+      "categories": [
+        "iceberg-v3"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "read-only",
+        "native-format",
+        "v3",
+        "null-handling",
+        "coalesce",
+        "nullif",
+        "clinical",
+        "data-quality"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 4885,
+      "fileCount": 1,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.lab_results"
         }
       ]
     },

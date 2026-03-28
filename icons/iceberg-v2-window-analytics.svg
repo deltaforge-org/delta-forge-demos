@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="iwa" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f43f5e"/>
+      <stop offset="1" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <!-- Airplane fuselage -->
+  <path d="M18 44 L40 30 L62 44 L40 40 Z" fill="url(#iwa)" opacity=".2" stroke="url(#iwa)" stroke-width="1.5"/>
+  <!-- Wing -->
+  <path d="M28 42 L40 20 L52 42" fill="url(#iwa)" opacity=".15" stroke="url(#iwa)" stroke-width="1.5"/>
+  <!-- Tail fin -->
+  <path d="M36 30 L40 16 L44 30" fill="url(#iwa)" opacity=".4"/>
+  <!-- Ranking bars (window analytics) -->
+  <rect x="20" y="52" width="8" height="16" rx="1" fill="url(#iwa)" opacity=".6"/>
+  <rect x="32" y="48" width="8" height="20" rx="1" fill="url(#iwa)" opacity=".5"/>
+  <rect x="44" y="44" width="8" height="24" rx="1" fill="url(#iwa)" opacity=".4"/>
+  <rect x="56" y="50" width="8" height="18" rx="1" fill="url(#iwa)" opacity=".3"/>
+</svg>

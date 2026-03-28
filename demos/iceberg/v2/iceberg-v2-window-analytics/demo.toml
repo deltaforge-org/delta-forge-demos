@@ -1,0 +1,56 @@
+[demo]
+id = "iceberg-v2-window-analytics"
+name = "Iceberg V2 — Airline Loyalty Window Analytics"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Demonstrates advanced window function analytics on a native Apache \
+Iceberg format-version 2 table. An airline loyalty program dataset with \
+60 frequent flyer members across 4 tiers (Bronze, Silver, Gold, Platinum) \
+and 5 home airports exercises ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, \
+NTILE, and running SUM window functions. Queries use CTEs for top-N-per-\
+group patterns, proving the Delta Forge query engine handles complex \
+analytical SQL on native Iceberg data without conversion.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "intermediate", "read-only", "native-format", "v2", "window-functions", "cte", "analytics", "airline"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "loyalty_members/data/00000-0-3c4c4524-763a-4c7e-9596-48bbed9d7243-0-00001.parquet"
+format = "parquet"
+description = "All 60 loyalty member records (single Parquet data file)"
+size_bytes = 4601
+
+[[demo.data_files]]
+path = "loyalty_members/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — single snapshot with 60 members"
+size_bytes = 2280
+
+[[demo.data_files]]
+path = "loyalty_members/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — initial table creation"
+size_bytes = 1266
+
+[[demo.data_files]]
+path = "loyalty_members/metadata/snap-1862999756818757567-1-bd6b1a0d-4bac-4429-b9a2-c2dcc36483f0.avro"
+format = "avro"
+description = "Manifest list for the single data snapshot"
+size_bytes = 4459
+
+[[demo.data_files]]
+path = "loyalty_members/metadata/bd6b1a0d-4bac-4429-b9a2-c2dcc36483f0-m0.avro"
+format = "avro"
+description = "Data manifest referencing the Parquet data file"
+size_bytes = 7647
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg.loyalty_members"
