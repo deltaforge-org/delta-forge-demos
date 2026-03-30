@@ -138,9 +138,9 @@ ORDER BY copurchase_id;
 -- ============================================================================
 -- 10. TWO-HOP REACHABILITY FROM NODE 0 — How far does co-purchasing reach?
 -- ============================================================================
--- Most of the 105-node graph should be reachable within 2 hops.
+-- Node 0's direct neighbors plus their neighbors; includes node 0 itself via 2-hop cycles.
 
-ASSERT VALUE reachable_in_2_hops = 31
+ASSERT VALUE reachable_in_2_hops = 32
 ASSERT ROW_COUNT = 1
 USE {{zone_name}}.polbooks.political_books
 MATCH (a)-[*1..2]->(b)
