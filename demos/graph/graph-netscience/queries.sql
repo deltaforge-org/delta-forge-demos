@@ -32,11 +32,11 @@
 
 -- Verify vertex count
 ASSERT VALUE row_count = 1461
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.netscience.vertices;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.netscience_collab.vertices;
 
 -- Verify edge count (2,742 undirected edges x 2)
 ASSERT VALUE row_count = 5484
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.netscience.edges;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.netscience_collab.edges;
 
 
 -- ============================================================================
@@ -52,9 +52,9 @@ SHOW GRAPH;
 
 ASSERT VALUE orphan_edges = 0
 SELECT COUNT(*) AS orphan_edges
-FROM {{zone_name}}.netscience.edges e
-WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience.vertices v WHERE v.vertex_id = e.src)
-   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience.vertices v WHERE v.vertex_id = e.dst);
+FROM {{zone_name}}.netscience_collab.edges e
+WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience_collab.vertices v WHERE v.vertex_id = e.src)
+   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience_collab.vertices v WHERE v.vertex_id = e.dst);
 
 
 -- ============================================================================
@@ -72,7 +72,7 @@ SELECT
     MIN(weight) AS min_weight,
     MAX(weight) AS max_weight,
     ROUND(AVG(weight), 4) AS avg_weight
-FROM {{zone_name}}.netscience.edges;
+FROM {{zone_name}}.netscience_collab.edges;
 
 
 -- ============================================================================
@@ -80,7 +80,7 @@ FROM {{zone_name}}.netscience.edges;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 5
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (a)-[r]->(b)
 RETURN r.edge_type AS type, count(r) AS count
 ORDER BY count DESC;
@@ -96,7 +96,7 @@ ORDER BY count DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (v)
 RETURN v.id AS author_id, v.name AS name, v.role AS role
 ORDER BY author_id
@@ -109,7 +109,7 @@ LIMIT 20;
 -- Network scientists with the most collaborators appear at the top.
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (a)-[r]->(b)
 RETURN a.id AS author_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC, author_id ASC
@@ -122,7 +122,7 @@ LIMIT 20;
 -- The most prolific collaborators in the network science community.
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (a)-[r]->(b)
 RETURN a.id AS author_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC
@@ -140,7 +140,7 @@ ASSERT ROW_COUNT = 10
 SELECT src AS author_id,
        COUNT(*) AS degree,
        ROUND(SUM(weight), 2) AS total_weight
-FROM {{zone_name}}.netscience.edges
+FROM {{zone_name}}.netscience_collab.edges
 GROUP BY src
 ORDER BY total_weight DESC
 LIMIT 10;
@@ -157,19 +157,19 @@ ASSERT ROW_COUNT = 1
 ASSERT VALUE reachable_in_2_hops >= 1
 WITH hub AS (
     SELECT src AS hub_id
-    FROM {{zone_name}}.netscience.edges
+    FROM {{zone_name}}.netscience_collab.edges
     GROUP BY src
     ORDER BY COUNT(*) DESC
     LIMIT 1
 ),
 hop1 AS (
     SELECT DISTINCT e.dst AS vid
-    FROM {{zone_name}}.netscience.edges e
+    FROM {{zone_name}}.netscience_collab.edges e
     JOIN hub h ON e.src = h.hub_id
 ),
 hop2 AS (
     SELECT DISTINCT e.dst AS vid
-    FROM {{zone_name}}.netscience.edges e
+    FROM {{zone_name}}.netscience_collab.edges e
     JOIN hop1 h1 ON e.src = h1.vid
 )
 SELECT h.hub_id AS hub,
@@ -191,7 +191,7 @@ GROUP BY h.hub_id;
 -- multiple research groups.
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -204,7 +204,7 @@ LIMIT 10;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -218,7 +218,7 @@ LIMIT 10;
 -- Authors who connect different research groups will have high betweenness.
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -231,7 +231,7 @@ LIMIT 10;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.closeness()
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
@@ -246,7 +246,7 @@ LIMIT 10;
 -- research communities.
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, count(*) AS members
@@ -261,7 +261,7 @@ LIMIT 20;
 -- There are isolated authors and small disconnected groups.
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS members
@@ -275,7 +275,7 @@ LIMIT 20;
 -- Find the shortest path between vertices 0 and 1 (if in same component).
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.netscience.netscience_collab
+USE {{zone_name}}.netscience_collab.netscience_collab
 CALL algo.shortestPath({source: 0, target: 1})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -297,20 +297,20 @@ ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 7
 SELECT 'Vertex count = 1461' AS test,
        CASE WHEN cnt = 1461 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience.vertices)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience_collab.vertices)
 
 UNION ALL
 SELECT 'Edge row count = 5484',
        CASE WHEN cnt = 5484 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience.edges)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience_collab.edges)
 
 UNION ALL
 SELECT 'Symmetric edges (undirected)',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' missing reverse edges)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience.edges e1
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience_collab.edges e1
     WHERE NOT EXISTS (
-        SELECT 1 FROM {{zone_name}}.netscience.edges e2
+        SELECT 1 FROM {{zone_name}}.netscience_collab.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
 )
@@ -319,9 +319,9 @@ UNION ALL
 SELECT 'All edge endpoints exist',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' orphans)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience.edges e
-    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience.vertices v WHERE v.vertex_id = e.src)
-       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience.vertices v WHERE v.vertex_id = e.dst)
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.netscience_collab.edges e
+    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience_collab.vertices v WHERE v.vertex_id = e.src)
+       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience_collab.vertices v WHERE v.vertex_id = e.dst)
 )
 
 UNION ALL
@@ -329,19 +329,19 @@ SELECT 'Vertex ID range = 0–1588',
        CASE WHEN min_id = 0 AND max_id = 1588 THEN 'PASS'
             ELSE 'FAIL (range ' || CAST(min_id AS VARCHAR) || '–' || CAST(max_id AS VARCHAR) || ')' END
 FROM (
-    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.netscience.vertices
+    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.netscience_collab.vertices
 )
 
 UNION ALL
 SELECT 'Non-uniform weights (> 1 distinct value)',
        CASE WHEN cnt > 1 THEN 'PASS' ELSE 'FAIL (only ' || CAST(cnt AS VARCHAR) || ' distinct weight)' END
 FROM (
-    SELECT COUNT(DISTINCT weight) AS cnt FROM {{zone_name}}.netscience.edges
+    SELECT COUNT(DISTINCT weight) AS cnt FROM {{zone_name}}.netscience_collab.edges
 )
 
 UNION ALL
 SELECT '5 edge types',
        CASE WHEN cnt = 5 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
 FROM (
-    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.netscience.edges
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.netscience_collab.edges
 );

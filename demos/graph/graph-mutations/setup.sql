@@ -16,13 +16,13 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Graph property storage mode demo tables';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.hospital_referrals
+    COMMENT 'Hospital referral network — physicians and referral edges across specialties';
 
 -- ============================================================================
 -- TABLE 1: physicians — 30 vertex nodes
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.physicians (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hospital_referrals.physicians (
     id                  BIGINT,
     name                STRING,
     specialty           STRING,
@@ -31,9 +31,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.physicians (
     accepting_referrals BOOLEAN
 ) LOCATION '{{data_path}}/physicians';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.physicians TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.hospital_referrals.physicians TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.physicians
+INSERT INTO {{zone_name}}.hospital_referrals.physicians
 SELECT
     id,
     'Dr. ' || CASE (id % 10)
@@ -57,7 +57,7 @@ FROM generate_series(1, 30) AS t(id);
 -- ============================================================================
 -- TABLE 2: referrals — 75 directed edges
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.referrals (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hospital_referrals.referrals (
     id              BIGINT,
     src             BIGINT,
     dst             BIGINT,
@@ -67,10 +67,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.referrals (
     status          STRING
 ) LOCATION '{{data_path}}/referrals';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.referrals TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.hospital_referrals.referrals TO USER {{current_user}};
 
 -- Batch 1: Intra-hospital referrals (stride 3, same hospital) — 30 edges
-INSERT INTO {{zone_name}}.graph_demos.referrals
+INSERT INTO {{zone_name}}.hospital_referrals.referrals
 SELECT
     ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -93,7 +93,7 @@ WHERE src != dst
   AND (src % 3) = (dst % 3);
 
 -- Batch 2: Cross-specialty consults (stride 7) — 30 edges
-INSERT INTO {{zone_name}}.graph_demos.referrals
+INSERT INTO {{zone_name}}.hospital_referrals.referrals
 SELECT
     1000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -112,12 +112,12 @@ FROM (
 WHERE src != dst
   AND (src % 6) != (dst % 6)
   AND NOT EXISTS (
-      SELECT 1 FROM {{zone_name}}.graph_demos.referrals r
+      SELECT 1 FROM {{zone_name}}.hospital_referrals.referrals r
       WHERE r.src = sub.src AND r.dst = sub.dst
   );
 
 -- Batch 3: Emergency transfers (prime scatter) — 15 edges
-INSERT INTO {{zone_name}}.graph_demos.referrals
+INSERT INTO {{zone_name}}.hospital_referrals.referrals
 SELECT
     2000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -137,16 +137,16 @@ FROM (
 ) sub
 WHERE src != dst
   AND NOT EXISTS (
-      SELECT 1 FROM {{zone_name}}.graph_demos.referrals r
+      SELECT 1 FROM {{zone_name}}.hospital_referrals.referrals r
       WHERE r.src = sub.src AND r.dst = sub.dst
   );
 
 -- ============================================================================
 -- GRAPH DEFINITION
 -- ============================================================================
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.hospital_referrals
-    VERTEX TABLE {{zone_name}}.graph_demos.physicians ID COLUMN id NODE TYPE COLUMN specialty NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.referrals SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.hospital_referrals.hospital_referrals
+    VERTEX TABLE {{zone_name}}.hospital_referrals.physicians ID COLUMN id NODE TYPE COLUMN specialty NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.hospital_referrals.referrals SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN referral_type
     DIRECTED;

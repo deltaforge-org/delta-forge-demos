@@ -27,28 +27,28 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.sales.customer_network"
+name = "{{zone_name}}.customer_network.customer_network"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.sales.customers"
+name = "{{zone_name}}.customer_network.customers"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.sales.referrals"
+name = "{{zone_name}}.customer_network.referrals"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.sales.orders"
+name = "{{zone_name}}.customer_network.orders"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.sales.sales_reps"
+name = "{{zone_name}}.customer_network.sales_reps"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.sales.influence_scores"
+name = "{{zone_name}}.customer_network.influence_scores"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.sales.community_assignments"
+name = "{{zone_name}}.customer_network.community_assignments"

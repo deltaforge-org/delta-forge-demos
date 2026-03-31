@@ -38,7 +38,7 @@
 ASSERT ROW_COUNT = 25
 ASSERT VALUE join_year = 2020 WHERE name = 'User_1'
 ASSERT VALUE entity_type = 'subscriber' WHERE name = 'User_1'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (n)
 WHERE n.entity_type = 'subscriber'
 RETURN n.id AS id, n.name AS name, n.join_year AS join_year, n.entity_type AS entity_type
@@ -55,7 +55,7 @@ ASSERT ROW_COUNT = 20
 ASSERT VALUE genre = 'action' WHERE name = 'The_Matrix'
 ASSERT VALUE release_year = 1999 WHERE name = 'The_Matrix'
 ASSERT VALUE genre = 'sci-fi' WHERE name = 'Inception'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (n)
 WHERE n.entity_type = 'movie'
 RETURN n.id AS id, n.name AS name, n.genre AS genre, n.release_year AS release_year
@@ -70,7 +70,7 @@ ORDER BY id;
 ASSERT ROW_COUNT = 84
 ASSERT VALUE rating = 2.7 WHERE subscriber = 'User_1' AND movie = 'The_Matrix'
 ASSERT VALUE rating = 4.0 WHERE subscriber = 'User_1' AND movie = 'Forrest_Gump'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (u)-[r]->(m)
 WHERE u.entity_type = 'subscriber'
 RETURN u.id AS uid, m.id AS mid, u.name AS subscriber, m.name AS movie,
@@ -89,7 +89,7 @@ ASSERT ROW_COUNT = 20
 ASSERT VALUE rating_count = 12 WHERE movie = 'The_Matrix'
 ASSERT VALUE rating_count = 9 WHERE movie = 'Inception'
 ASSERT VALUE rating_count = 1 WHERE movie = 'Parasite'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (u)-[r]->(m)
 WHERE m.entity_type = 'movie'
 RETURN m.name AS movie, count(r) AS rating_count,
@@ -108,7 +108,7 @@ ASSERT ROW_COUNT = 20
 ASSERT VALUE avg_rating = 4.17 WHERE movie = 'Goodfellas'
 ASSERT VALUE avg_rating = 4.03 WHERE movie = 'Shawshank'
 ASSERT VALUE avg_rating = 2.68 WHERE movie = 'The_Matrix'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (u)-[r]->(m)
 WHERE m.entity_type = 'movie'
 RETURN m.name AS movie, round(avg(r.weight), 2) AS avg_rating,
@@ -132,7 +132,7 @@ ORDER BY avg_rating DESC;
 ASSERT ROW_COUNT >= 5
 ASSERT VALUE co_ratings = 3 WHERE recommended_movie = 'Inception'
 ASSERT VALUE co_ratings = 3 WHERE recommended_movie = 'Blade_Runner'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (m1)<-[r1]-(u)-[r2]->(m2)
 WHERE m1.name = 'The_Matrix' AND m2.name <> 'The_Matrix'
 RETURN m2.name AS recommended_movie, count(DISTINCT u) AS co_ratings,
@@ -150,7 +150,7 @@ ORDER BY co_ratings DESC, avg_co_rating DESC;
 
 ASSERT ROW_COUNT = 20
 ASSERT VALUE shared_count = 4 WHERE user_a = 'User_1' AND user_b = 'User_21'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (u1)-[]->(m)<-[]-(u2)
 WHERE u1.entity_type = 'subscriber' AND u2.entity_type = 'subscriber'
   AND u1.id < u2.id
@@ -169,7 +169,7 @@ LIMIT 20;
 
 ASSERT ROW_COUNT >= 20
 ASSERT VALUE movies_rated = 2 WHERE subscriber = 'User_1' AND genre = 'drama'
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 MATCH (u)-[r]->(m)
 WHERE u.entity_type = 'subscriber'
 RETURN u.name AS subscriber, m.genre AS genre,
@@ -190,7 +190,7 @@ ORDER BY subscriber, movies_rated DESC;
 -- rank highest due to its 12 incoming rating edges.
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -207,7 +207,7 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 10
 ASSERT VALUE total_degree = 12 WHERE node_id = 101
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -224,7 +224,7 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE size = 45 WHERE component_id = 0
-USE {{zone_name}}.graph_demos.movie_recs
+USE {{zone_name}}.movie_recs.movie_recs
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -244,8 +244,8 @@ ASSERT VALUE subscribers = 25
 ASSERT VALUE total_movies = 20
 ASSERT VALUE matrix_ratings = 12
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.entities)                                              AS total_entities,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.ratings)                                               AS total_ratings,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.entities WHERE entity_type = 'subscriber')             AS subscribers,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.entities WHERE entity_type = 'movie')                  AS total_movies,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.ratings WHERE dst = 101)                               AS matrix_ratings;
+    (SELECT COUNT(*) FROM {{zone_name}}.movie_recs.entities)                                              AS total_entities,
+    (SELECT COUNT(*) FROM {{zone_name}}.movie_recs.ratings)                                               AS total_ratings,
+    (SELECT COUNT(*) FROM {{zone_name}}.movie_recs.entities WHERE entity_type = 'subscriber')             AS subscribers,
+    (SELECT COUNT(*) FROM {{zone_name}}.movie_recs.entities WHERE entity_type = 'movie')                  AS total_movies,
+    (SELECT COUNT(*) FROM {{zone_name}}.movie_recs.ratings WHERE dst = 101)                               AS matrix_ratings;

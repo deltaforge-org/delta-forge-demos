@@ -10,7 +10,7 @@
 -- Uses the industry-standard LDBC SNB dataset with official golden values
 -- from the LDBC reference implementation validation parameters.
 --
--- The graph definition ({{zone_name}}.ldbc.ldbc_social_network) maps Person vertices + KNOWS
+-- The graph definition ({{zone_name}}.ldbc_social_network.ldbc_social_network) maps Person vertices + KNOWS
 -- edges. Cypher queries use this for pattern matching and algorithms.
 -- SQL queries join across the full relational model for multi-relationship
 -- traversals that span beyond the KNOWS graph.
@@ -45,14 +45,14 @@ ASSERT VALUE row_count = 7955 WHERE entity = 'organisation'
 ASSERT VALUE row_count = 71 WHERE entity = 'tagclass'
 ASSERT VALUE row_count = 16080 WHERE entity = 'tag'
 ASSERT ROW_COUNT = 8
-SELECT 'person' AS entity, COUNT(*) AS row_count FROM {{zone_name}}.ldbc.person
-UNION ALL SELECT 'comment', COUNT(*) FROM {{zone_name}}.ldbc.comment
-UNION ALL SELECT 'post', COUNT(*) FROM {{zone_name}}.ldbc.post
-UNION ALL SELECT 'forum', COUNT(*) FROM {{zone_name}}.ldbc.forum
-UNION ALL SELECT 'place', COUNT(*) FROM {{zone_name}}.ldbc.place
-UNION ALL SELECT 'organisation', COUNT(*) FROM {{zone_name}}.ldbc.organisation
-UNION ALL SELECT 'tag', COUNT(*) FROM {{zone_name}}.ldbc.tag
-UNION ALL SELECT 'tagclass', COUNT(*) FROM {{zone_name}}.ldbc.tagclass
+SELECT 'person' AS entity, COUNT(*) AS row_count FROM {{zone_name}}.ldbc_social_network.person
+UNION ALL SELECT 'comment', COUNT(*) FROM {{zone_name}}.ldbc_social_network.comment
+UNION ALL SELECT 'post', COUNT(*) FROM {{zone_name}}.ldbc_social_network.post
+UNION ALL SELECT 'forum', COUNT(*) FROM {{zone_name}}.ldbc_social_network.forum
+UNION ALL SELECT 'place', COUNT(*) FROM {{zone_name}}.ldbc_social_network.place
+UNION ALL SELECT 'organisation', COUNT(*) FROM {{zone_name}}.ldbc_social_network.organisation
+UNION ALL SELECT 'tag', COUNT(*) FROM {{zone_name}}.ldbc_social_network.tag
+UNION ALL SELECT 'tagclass', COUNT(*) FROM {{zone_name}}.ldbc_social_network.tagclass
 ORDER BY entity;
 
 
@@ -61,31 +61,31 @@ ORDER BY entity;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
-SELECT 'person_knows_person' AS edge, COUNT(*) AS row_count FROM {{zone_name}}.ldbc.person_knows_person
-UNION ALL SELECT 'comment_has_creator_person', COUNT(*) FROM {{zone_name}}.ldbc.comment_has_creator_person
-UNION ALL SELECT 'comment_has_tag_tag', COUNT(*) FROM {{zone_name}}.ldbc.comment_has_tag_tag
-UNION ALL SELECT 'comment_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc.comment_is_located_in_place
-UNION ALL SELECT 'comment_reply_of_comment', COUNT(*) FROM {{zone_name}}.ldbc.comment_reply_of_comment
-UNION ALL SELECT 'comment_reply_of_post', COUNT(*) FROM {{zone_name}}.ldbc.comment_reply_of_post
-UNION ALL SELECT 'forum_container_of_post', COUNT(*) FROM {{zone_name}}.ldbc.forum_container_of_post
-UNION ALL SELECT 'forum_has_member_person', COUNT(*) FROM {{zone_name}}.ldbc.forum_has_member_person
-UNION ALL SELECT 'forum_has_moderator_person', COUNT(*) FROM {{zone_name}}.ldbc.forum_has_moderator_person
-UNION ALL SELECT 'forum_has_tag_tag', COUNT(*) FROM {{zone_name}}.ldbc.forum_has_tag_tag
-UNION ALL SELECT 'person_email', COUNT(*) FROM {{zone_name}}.ldbc.person_email
-UNION ALL SELECT 'person_has_interest_tag', COUNT(*) FROM {{zone_name}}.ldbc.person_has_interest_tag
-UNION ALL SELECT 'person_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc.person_is_located_in_place
-UNION ALL SELECT 'person_likes_comment', COUNT(*) FROM {{zone_name}}.ldbc.person_likes_comment
-UNION ALL SELECT 'person_likes_post', COUNT(*) FROM {{zone_name}}.ldbc.person_likes_post
-UNION ALL SELECT 'person_speaks_language', COUNT(*) FROM {{zone_name}}.ldbc.person_speaks_language
-UNION ALL SELECT 'person_study_at_organisation', COUNT(*) FROM {{zone_name}}.ldbc.person_study_at_organisation
-UNION ALL SELECT 'person_work_at_organisation', COUNT(*) FROM {{zone_name}}.ldbc.person_work_at_organisation
-UNION ALL SELECT 'post_has_creator_person', COUNT(*) FROM {{zone_name}}.ldbc.post_has_creator_person
-UNION ALL SELECT 'post_has_tag_tag', COUNT(*) FROM {{zone_name}}.ldbc.post_has_tag_tag
-UNION ALL SELECT 'post_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc.post_is_located_in_place
-UNION ALL SELECT 'organisation_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc.organisation_is_located_in_place
-UNION ALL SELECT 'place_is_part_of_place', COUNT(*) FROM {{zone_name}}.ldbc.place_is_part_of_place
-UNION ALL SELECT 'tag_has_type_tagclass', COUNT(*) FROM {{zone_name}}.ldbc.tag_has_type_tagclass
-UNION ALL SELECT 'tagclass_is_subclass_of_tagclass', COUNT(*) FROM {{zone_name}}.ldbc.tagclass_is_subclass_of_tagclass
+SELECT 'person_knows_person' AS edge, COUNT(*) AS row_count FROM {{zone_name}}.ldbc_social_network.person_knows_person
+UNION ALL SELECT 'comment_has_creator_person', COUNT(*) FROM {{zone_name}}.ldbc_social_network.comment_has_creator_person
+UNION ALL SELECT 'comment_has_tag_tag', COUNT(*) FROM {{zone_name}}.ldbc_social_network.comment_has_tag_tag
+UNION ALL SELECT 'comment_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc_social_network.comment_is_located_in_place
+UNION ALL SELECT 'comment_reply_of_comment', COUNT(*) FROM {{zone_name}}.ldbc_social_network.comment_reply_of_comment
+UNION ALL SELECT 'comment_reply_of_post', COUNT(*) FROM {{zone_name}}.ldbc_social_network.comment_reply_of_post
+UNION ALL SELECT 'forum_container_of_post', COUNT(*) FROM {{zone_name}}.ldbc_social_network.forum_container_of_post
+UNION ALL SELECT 'forum_has_member_person', COUNT(*) FROM {{zone_name}}.ldbc_social_network.forum_has_member_person
+UNION ALL SELECT 'forum_has_moderator_person', COUNT(*) FROM {{zone_name}}.ldbc_social_network.forum_has_moderator_person
+UNION ALL SELECT 'forum_has_tag_tag', COUNT(*) FROM {{zone_name}}.ldbc_social_network.forum_has_tag_tag
+UNION ALL SELECT 'person_email', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_email
+UNION ALL SELECT 'person_has_interest_tag', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_has_interest_tag
+UNION ALL SELECT 'person_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_is_located_in_place
+UNION ALL SELECT 'person_likes_comment', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_likes_comment
+UNION ALL SELECT 'person_likes_post', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_likes_post
+UNION ALL SELECT 'person_speaks_language', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_speaks_language
+UNION ALL SELECT 'person_study_at_organisation', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_study_at_organisation
+UNION ALL SELECT 'person_work_at_organisation', COUNT(*) FROM {{zone_name}}.ldbc_social_network.person_work_at_organisation
+UNION ALL SELECT 'post_has_creator_person', COUNT(*) FROM {{zone_name}}.ldbc_social_network.post_has_creator_person
+UNION ALL SELECT 'post_has_tag_tag', COUNT(*) FROM {{zone_name}}.ldbc_social_network.post_has_tag_tag
+UNION ALL SELECT 'post_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc_social_network.post_is_located_in_place
+UNION ALL SELECT 'organisation_is_located_in_place', COUNT(*) FROM {{zone_name}}.ldbc_social_network.organisation_is_located_in_place
+UNION ALL SELECT 'place_is_part_of_place', COUNT(*) FROM {{zone_name}}.ldbc_social_network.place_is_part_of_place
+UNION ALL SELECT 'tag_has_type_tagclass', COUNT(*) FROM {{zone_name}}.ldbc_social_network.tag_has_type_tagclass
+UNION ALL SELECT 'tagclass_is_subclass_of_tagclass', COUNT(*) FROM {{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass
 ORDER BY edge;
 
 
@@ -102,7 +102,7 @@ SHOW GRAPH;
 
 ASSERT ROW_COUNT = 3
 SELECT type, COUNT(*) AS count
-FROM {{zone_name}}.ldbc.place
+FROM {{zone_name}}.ldbc_social_network.place
 GROUP BY type
 ORDER BY type;
 
@@ -113,15 +113,15 @@ ORDER BY type;
 
 ASSERT VALUE orphan_edges = 0
 SELECT COUNT(*) AS orphan_edges
-FROM {{zone_name}}.ldbc.person_knows_person k
-WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc.person p WHERE p.id = k.src)
-   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc.person p WHERE p.id = k.dst);
+FROM {{zone_name}}.ldbc_social_network.person_knows_person k
+WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc_social_network.person p WHERE p.id = k.src)
+   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc_social_network.person p WHERE p.id = k.dst);
 
 
 -- ############################################################################
 -- PART 2: CYPHER — SOCIAL GRAPH EXPLORATION
 -- ############################################################################
--- These queries use the {{zone_name}}.ldbc.ldbc_social_network graph definition to traverse
+-- These queries use the {{zone_name}}.ldbc_social_network.ldbc_social_network graph definition to traverse
 -- the Person-KNOWS-Person social graph using Cypher pattern matching.
 -- ############################################################################
 
@@ -132,7 +132,7 @@ WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc.person p WHERE p.id = k.src)
 -- LDBC Short Query 1 pattern: person profile lookup.
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (p)
 RETURN p.id AS id, p.first_name AS first_name, p.last_name AS last_name,
        p.gender AS gender
@@ -147,7 +147,7 @@ LIMIT 25;
 -- Cypher: MATCH (:Person {id:933})-[r:KNOWS]-(friend) RETURN friend
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[r]->(b)
 WHERE a.id = 933
 RETURN a.first_name AS person, a.last_name AS person_last,
@@ -163,7 +163,7 @@ RETURN a.first_name AS person, a.last_name AS person_last,
 -- Classic social network recommendation: suggest connections.
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[]->(b)-[]->(c)
 WHERE a.id = 933 AND a.id <> c.id
 RETURN DISTINCT c.first_name AS suggested_friend, c.last_name AS last_name
@@ -179,7 +179,7 @@ LIMIT 20;
 -- within 3-4 hops (small-world property).
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[*1..3]->(b)
 WHERE a.id = 933 AND a <> b
 RETURN DISTINCT b.id AS reachable_id, b.first_name AS name
@@ -195,7 +195,7 @@ LIMIT 30;
 
 ASSERT VALUE mutual_friendship_count = 0
 ASSERT ROW_COUNT = 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[r1]->(b)-[r2]->(a)
 WHERE a.id < b.id
 RETURN count(*) AS mutual_friendship_count;
@@ -207,7 +207,7 @@ RETURN count(*) AS mutual_friendship_count;
 -- Do people preferentially connect within or across genders?
 
 ASSERT ROW_COUNT = 4
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[r]->(b)
 RETURN a.gender AS from_gender, b.gender AS to_gender, count(r) AS connections
 ORDER BY connections DESC;
@@ -220,7 +220,7 @@ ORDER BY connections DESC;
 -- Cypher: MATCH (a)-[:KNOWS]->(b) RETURN a, count(b) ORDER BY count DESC
 
 ASSERT ROW_COUNT = 15
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[r]->(b)
 RETURN a.id AS person_id, a.first_name AS first_name, a.last_name AS last_name,
        count(r) AS out_degree
@@ -234,7 +234,7 @@ LIMIT 15;
 -- Person 26388279067534 has degree 340 — who are their direct contacts?
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (hub)-[r]->(friend)
 WHERE hub.id = 26388279067534
 RETURN friend.id AS friend_id, friend.first_name AS first_name,
@@ -250,7 +250,7 @@ LIMIT 20;
 -- community structure should be visible as dense clusters.
 
 ASSERT ROW_COUNT = 500
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 MATCH (a)-[r]->(b)
 RETURN a, r, b
 LIMIT 500;
@@ -259,7 +259,7 @@ LIMIT 500;
 -- ############################################################################
 -- PART 3: CYPHER — GRAPH ALGORITHMS
 -- ############################################################################
--- Each algorithm runs on the {{zone_name}}.ldbc.ldbc_social_network graph (Person + KNOWS).
+-- Each algorithm runs on the {{zone_name}}.ldbc_social_network.ldbc_social_network graph (Person + KNOWS).
 -- Golden values come from the raw dataset and LDBC validation parameters.
 -- ############################################################################
 
@@ -271,7 +271,7 @@ LIMIT 500;
 -- should rank near the top.
 
 ASSERT ROW_COUNT = 15
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -289,7 +289,7 @@ LIMIT 15;
 ASSERT VALUE total_degree = 340 WHERE node_id = 26388279067534
 ASSERT VALUE total_degree = 338 WHERE node_id = 32985348834375
 ASSERT ROW_COUNT = 15
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -304,7 +304,7 @@ LIMIT 15;
 -- Removing high-betweenness nodes would fragment the network.
 
 ASSERT ROW_COUNT = 15
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -317,7 +317,7 @@ LIMIT 15;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 15
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.closeness()
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
@@ -331,7 +331,7 @@ LIMIT 15;
 -- A single large component means everyone can reach everyone else.
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -344,7 +344,7 @@ ORDER BY size DESC;
 -- Detects communities based on actual connection density.
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, count(*) AS size
@@ -356,7 +356,7 @@ ORDER BY size DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 15
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.triangle_count()
 YIELD node_id, triangle_count
 RETURN node_id, triangle_count
@@ -369,7 +369,7 @@ LIMIT 15;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.scc()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -383,7 +383,7 @@ ORDER BY size DESC;
 -- Path: K. Bose → Karl Muller → Bruna Costa → Fernanda Souza
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.shortestPath({source: 2199023256816, target: 24189255812380})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -397,7 +397,7 @@ ORDER BY step;
 -- Path: Salim Ahmed Binalshibh → Chito Reyes (direct edge)
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.shortestPath({source: 6597069767242, target: 6597069768287})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -411,7 +411,7 @@ ORDER BY step;
 -- Most nodes should be within 3-4 hops in a well-connected social network.
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.ldbc.ldbc_social_network
+USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.bfs({source: 26388279067534})
 YIELD node_id, depth, parent_id
 RETURN depth, count(*) AS people_at_distance
@@ -441,7 +441,7 @@ ORDER BY depth;
 
 ASSERT ROW_COUNT >= 1
 WITH friends AS (
-    SELECT * FROM cypher('{{zone_name}}.ldbc.ldbc_social_network', $$
+    SELECT * FROM cypher('{{zone_name}}.ldbc_social_network.ldbc_social_network', $$
         MATCH (a)-[]->(b)
         WHERE a.id = 26388279068220
         RETURN b.id AS friend_id, b.first_name AS first_name, b.last_name AS last_name
@@ -451,10 +451,10 @@ SELECT
     f.first_name, f.last_name,
     city.name AS city, country.name AS country
 FROM friends f
-JOIN {{zone_name}}.ldbc.person_is_located_in_place pip ON f.friend_id = pip.person_id
-JOIN {{zone_name}}.ldbc.place city ON pip.place_id = city.id
-JOIN {{zone_name}}.ldbc.place_is_part_of_place pipp ON city.id = pipp.place_id
-JOIN {{zone_name}}.ldbc.place country ON pipp.parent_place_id = country.id
+JOIN {{zone_name}}.ldbc_social_network.person_is_located_in_place pip ON f.friend_id = pip.person_id
+JOIN {{zone_name}}.ldbc_social_network.place city ON pip.place_id = city.id
+JOIN {{zone_name}}.ldbc_social_network.place_is_part_of_place pipp ON city.id = pipp.place_id
+JOIN {{zone_name}}.ldbc_social_network.place country ON pipp.parent_place_id = country.id
 ORDER BY country.name, city.name, f.last_name;
 
 
@@ -467,7 +467,7 @@ ORDER BY country.name, city.name, f.last_name;
 
 ASSERT ROW_COUNT >= 1
 WITH ranked AS (
-    SELECT * FROM cypher('{{zone_name}}.ldbc.ldbc_social_network', $$
+    SELECT * FROM cypher('{{zone_name}}.ldbc_social_network.ldbc_social_network', $$
         CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
         YIELD node_id, score
         RETURN node_id AS person_id, score
@@ -479,9 +479,9 @@ SELECT
     p.first_name, p.last_name, r.score AS pagerank_score,
     o.name AS employer, w.work_from AS work_since
 FROM ranked r
-JOIN {{zone_name}}.ldbc.person p ON r.person_id = p.id
-LEFT JOIN {{zone_name}}.ldbc.person_work_at_organisation w ON p.id = w.person_id
-LEFT JOIN {{zone_name}}.ldbc.organisation o ON w.organisation_id = o.id
+JOIN {{zone_name}}.ldbc_social_network.person p ON r.person_id = p.id
+LEFT JOIN {{zone_name}}.ldbc_social_network.person_work_at_organisation w ON p.id = w.person_id
+LEFT JOIN {{zone_name}}.ldbc_social_network.organisation o ON w.organisation_id = o.id
 ORDER BY r.score DESC;
 
 
@@ -494,7 +494,7 @@ ORDER BY r.score DESC;
 
 ASSERT ROW_COUNT >= 2
 WITH path_nodes AS (
-    SELECT * FROM cypher('{{zone_name}}.ldbc.ldbc_social_network', $$
+    SELECT * FROM cypher('{{zone_name}}.ldbc_social_network.ldbc_social_network', $$
         CALL algo.shortestPath({source: 2199023256816, target: 24189255812380})
         YIELD node_id, step, distance
         RETURN node_id AS person_id, step, distance
@@ -505,11 +505,11 @@ SELECT
     p.first_name, p.last_name, p.gender,
     city.name AS city, country.name AS country
 FROM path_nodes pn
-JOIN {{zone_name}}.ldbc.person p ON pn.person_id = p.id
-JOIN {{zone_name}}.ldbc.person_is_located_in_place pip ON p.id = pip.person_id
-JOIN {{zone_name}}.ldbc.place city ON pip.place_id = city.id
-JOIN {{zone_name}}.ldbc.place_is_part_of_place pipp ON city.id = pipp.place_id
-JOIN {{zone_name}}.ldbc.place country ON pipp.parent_place_id = country.id
+JOIN {{zone_name}}.ldbc_social_network.person p ON pn.person_id = p.id
+JOIN {{zone_name}}.ldbc_social_network.person_is_located_in_place pip ON p.id = pip.person_id
+JOIN {{zone_name}}.ldbc_social_network.place city ON pip.place_id = city.id
+JOIN {{zone_name}}.ldbc_social_network.place_is_part_of_place pipp ON city.id = pipp.place_id
+JOIN {{zone_name}}.ldbc_social_network.place country ON pipp.parent_place_id = country.id
 ORDER BY pn.step;
 
 
@@ -522,7 +522,7 @@ ORDER BY pn.step;
 
 ASSERT ROW_COUNT >= 1
 WITH communities AS (
-    SELECT * FROM cypher('{{zone_name}}.ldbc.ldbc_social_network', $$
+    SELECT * FROM cypher('{{zone_name}}.ldbc_social_network.ldbc_social_network', $$
         CALL algo.louvain({resolution: 1.0})
         YIELD node_id, community_id
         RETURN node_id AS person_id, community_id AS community_id
@@ -538,8 +538,8 @@ largest_community AS (
 SELECT t.name AS interest, COUNT(DISTINCT c.person_id) AS members_interested
 FROM communities c
 JOIN largest_community lc ON c.community_id = lc.community_id
-JOIN {{zone_name}}.ldbc.person_has_interest_tag phi ON c.person_id = phi.person_id
-JOIN {{zone_name}}.ldbc.tag t ON phi.tag_id = t.id
+JOIN {{zone_name}}.ldbc_social_network.person_has_interest_tag phi ON c.person_id = phi.person_id
+JOIN {{zone_name}}.ldbc_social_network.tag t ON phi.tag_id = t.id
 GROUP BY t.name
 ORDER BY members_interested DESC
 LIMIT 15;
@@ -554,7 +554,7 @@ LIMIT 15;
 
 ASSERT ROW_COUNT >= 1
 WITH hub_scores AS (
-    SELECT * FROM cypher('{{zone_name}}.ldbc.ldbc_social_network', $$
+    SELECT * FROM cypher('{{zone_name}}.ldbc_social_network.ldbc_social_network', $$
         CALL algo.degree()
         YIELD node_id, total_degree
         RETURN node_id AS person_id, total_degree AS degree
@@ -567,15 +567,15 @@ SELECT
     COALESCE(post_counts.post_count, 0) AS posts_authored,
     COALESCE(comment_counts.comment_count, 0) AS comments_authored
 FROM hub_scores h
-JOIN {{zone_name}}.ldbc.person p ON h.person_id = p.id
+JOIN {{zone_name}}.ldbc_social_network.person p ON h.person_id = p.id
 LEFT JOIN (
     SELECT person_id, COUNT(*) AS post_count
-    FROM {{zone_name}}.ldbc.post_has_creator_person
+    FROM {{zone_name}}.ldbc_social_network.post_has_creator_person
     GROUP BY person_id
 ) post_counts ON h.person_id = post_counts.person_id
 LEFT JOIN (
     SELECT person_id, COUNT(*) AS comment_count
-    FROM {{zone_name}}.ldbc.comment_has_creator_person
+    FROM {{zone_name}}.ldbc_social_network.comment_has_creator_person
     GROUP BY person_id
 ) comment_counts ON h.person_id = comment_counts.person_id
 ORDER BY h.degree DESC;
@@ -604,9 +604,9 @@ SELECT
     p.first_name, p.last_name, p.birthday, p.location_ip,
     p.browser_used, p.gender, p.creation_date,
     pl.id AS city_id
-FROM {{zone_name}}.ldbc.person p
-JOIN {{zone_name}}.ldbc.person_is_located_in_place pip ON p.id = pip.person_id
-JOIN {{zone_name}}.ldbc.place pl ON pip.place_id = pl.id
+FROM {{zone_name}}.ldbc_social_network.person p
+JOIN {{zone_name}}.ldbc_social_network.person_is_located_in_place pip ON p.id = pip.person_id
+JOIN {{zone_name}}.ldbc_social_network.place pl ON pip.place_id = pl.id
 WHERE p.id = 26388279068220;
 
 
@@ -619,8 +619,8 @@ ASSERT ROW_COUNT >= 1
 SELECT
     p2.id AS person_id, p2.first_name, p2.last_name,
     k.creation_date AS friendship_creation_date
-FROM {{zone_name}}.ldbc.person_knows_person k
-JOIN {{zone_name}}.ldbc.person p2 ON k.dst = p2.id
+FROM {{zone_name}}.ldbc_social_network.person_knows_person k
+JOIN {{zone_name}}.ldbc_social_network.person p2 ON k.dst = p2.id
 WHERE k.src = 26388279068220
 ORDER BY k.creation_date DESC, p2.id ASC;
 
@@ -634,9 +634,9 @@ ASSERT VALUE first_name = 'Jun'
 ASSERT VALUE last_name = 'Wang'
 ASSERT ROW_COUNT = 1
 SELECT p.id AS person_id, p.first_name, p.last_name
-FROM {{zone_name}}.ldbc.comment c
-JOIN {{zone_name}}.ldbc.comment_has_creator_person chc ON c.id = chc.comment_id
-JOIN {{zone_name}}.ldbc.person p ON chc.person_id = p.id
+FROM {{zone_name}}.ldbc_social_network.comment c
+JOIN {{zone_name}}.ldbc_social_network.comment_has_creator_person chc ON c.id = chc.comment_id
+JOIN {{zone_name}}.ldbc_social_network.person p ON chc.person_id = p.id
 WHERE c.id = 1099511997848;
 
 
@@ -650,12 +650,12 @@ ASSERT ROW_COUNT = 1
 SELECT
     f.id AS forum_id, f.title AS forum_title,
     mod_p.id AS moderator_id, mod_p.first_name, mod_p.last_name
-FROM {{zone_name}}.ldbc.comment c
-JOIN {{zone_name}}.ldbc.comment_reply_of_post crp ON c.id = crp.comment_id
-JOIN {{zone_name}}.ldbc.forum_container_of_post fcp ON crp.post_id = fcp.post_id
-JOIN {{zone_name}}.ldbc.forum f ON fcp.forum_id = f.id
-JOIN {{zone_name}}.ldbc.forum_has_moderator_person fhm ON f.id = fhm.forum_id
-JOIN {{zone_name}}.ldbc.person mod_p ON fhm.person_id = mod_p.id
+FROM {{zone_name}}.ldbc_social_network.comment c
+JOIN {{zone_name}}.ldbc_social_network.comment_reply_of_post crp ON c.id = crp.comment_id
+JOIN {{zone_name}}.ldbc_social_network.forum_container_of_post fcp ON crp.post_id = fcp.post_id
+JOIN {{zone_name}}.ldbc_social_network.forum f ON fcp.forum_id = f.id
+JOIN {{zone_name}}.ldbc_social_network.forum_has_moderator_person fhm ON f.id = fhm.forum_id
+JOIN {{zone_name}}.ldbc_social_network.person mod_p ON fhm.person_id = mod_p.id
 WHERE c.id = 1099511997848;
 
 
@@ -670,10 +670,10 @@ SELECT
     msg.id AS message_id,
     COALESCE(msg.content, '') AS message_content,
     msg.creation_date AS message_creation_date
-FROM {{zone_name}}.ldbc.person_knows_person k
-JOIN {{zone_name}}.ldbc.person p2 ON k.dst = p2.id
-JOIN {{zone_name}}.ldbc.post_has_creator_person phc ON p2.id = phc.person_id
-JOIN {{zone_name}}.ldbc.post msg ON phc.post_id = msg.id
+FROM {{zone_name}}.ldbc_social_network.person_knows_person k
+JOIN {{zone_name}}.ldbc_social_network.person p2 ON k.dst = p2.id
+JOIN {{zone_name}}.ldbc_social_network.post_has_creator_person phc ON p2.id = phc.person_id
+JOIN {{zone_name}}.ldbc_social_network.post msg ON phc.post_id = msg.id
 WHERE k.src = 19791209300143
   AND msg.creation_date <= 1354060800000
 ORDER BY msg.creation_date DESC, msg.id ASC
@@ -687,20 +687,20 @@ LIMIT 20;
 
 ASSERT ROW_COUNT >= 1
 SELECT t.name AS tag_name, COUNT(DISTINCT po.id) AS post_count
-FROM {{zone_name}}.ldbc.person_knows_person k
-JOIN {{zone_name}}.ldbc.post_has_creator_person phc ON k.dst = phc.person_id
-JOIN {{zone_name}}.ldbc.post po ON phc.post_id = po.id
-JOIN {{zone_name}}.ldbc.post_has_tag_tag pht ON po.id = pht.post_id
-JOIN {{zone_name}}.ldbc.tag t ON pht.tag_id = t.id
+FROM {{zone_name}}.ldbc_social_network.person_knows_person k
+JOIN {{zone_name}}.ldbc_social_network.post_has_creator_person phc ON k.dst = phc.person_id
+JOIN {{zone_name}}.ldbc_social_network.post po ON phc.post_id = po.id
+JOIN {{zone_name}}.ldbc_social_network.post_has_tag_tag pht ON po.id = pht.post_id
+JOIN {{zone_name}}.ldbc_social_network.tag t ON pht.tag_id = t.id
 WHERE k.src = 10995116278874
   AND po.creation_date >= 1338508800000
   AND po.creation_date < 1338508800000 + CAST(28 AS BIGINT) * 86400000
   AND NOT EXISTS (
       SELECT 1
-      FROM {{zone_name}}.ldbc.person_knows_person k2
-      JOIN {{zone_name}}.ldbc.post_has_creator_person phc2 ON k2.dst = phc2.person_id
-      JOIN {{zone_name}}.ldbc.post old ON phc2.post_id = old.id
-      JOIN {{zone_name}}.ldbc.post_has_tag_tag pht2 ON old.id = pht2.post_id
+      FROM {{zone_name}}.ldbc_social_network.person_knows_person k2
+      JOIN {{zone_name}}.ldbc_social_network.post_has_creator_person phc2 ON k2.dst = phc2.person_id
+      JOIN {{zone_name}}.ldbc_social_network.post old ON phc2.post_id = old.id
+      JOIN {{zone_name}}.ldbc_social_network.post_has_tag_tag pht2 ON old.id = pht2.post_id
       WHERE k2.src = 10995116278874
         AND pht2.tag_id = pht.tag_id
         AND old.creation_date < 1338508800000
@@ -717,15 +717,15 @@ LIMIT 10;
 
 ASSERT ROW_COUNT >= 1
 SELECT t2.name AS tag_name, COUNT(DISTINCT po.id) AS post_count
-FROM {{zone_name}}.ldbc.person_knows_person k1
-LEFT JOIN {{zone_name}}.ldbc.person_knows_person k2 ON k1.dst = k2.src
-JOIN {{zone_name}}.ldbc.post_has_creator_person phc
+FROM {{zone_name}}.ldbc_social_network.person_knows_person k1
+LEFT JOIN {{zone_name}}.ldbc_social_network.person_knows_person k2 ON k1.dst = k2.src
+JOIN {{zone_name}}.ldbc_social_network.post_has_creator_person phc
     ON (k1.dst = phc.person_id OR k2.dst = phc.person_id)
-JOIN {{zone_name}}.ldbc.post po ON phc.post_id = po.id
-JOIN {{zone_name}}.ldbc.post_has_tag_tag pht1 ON po.id = pht1.post_id
-JOIN {{zone_name}}.ldbc.tag t1 ON pht1.tag_id = t1.id AND t1.name = 'Shakira'
-JOIN {{zone_name}}.ldbc.post_has_tag_tag pht2 ON po.id = pht2.post_id
-JOIN {{zone_name}}.ldbc.tag t2 ON pht2.tag_id = t2.id AND t2.name <> 'Shakira'
+JOIN {{zone_name}}.ldbc_social_network.post po ON phc.post_id = po.id
+JOIN {{zone_name}}.ldbc_social_network.post_has_tag_tag pht1 ON po.id = pht1.post_id
+JOIN {{zone_name}}.ldbc_social_network.tag t1 ON pht1.tag_id = t1.id AND t1.name = 'Shakira'
+JOIN {{zone_name}}.ldbc_social_network.post_has_tag_tag pht2 ON po.id = pht2.post_id
+JOIN {{zone_name}}.ldbc_social_network.tag t2 ON pht2.tag_id = t2.id AND t2.name <> 'Shakira'
 WHERE k1.src = 2199023256816
 GROUP BY t2.name
 ORDER BY post_count DESC, tag_name ASC
@@ -744,10 +744,10 @@ SELECT
     lk.creation_date AS like_creation_date,
     po.id AS message_id,
     COALESCE(po.content, po.image_file) AS message_content
-FROM {{zone_name}}.ldbc.post_has_creator_person phc
-JOIN {{zone_name}}.ldbc.post po ON phc.post_id = po.id
-JOIN {{zone_name}}.ldbc.person_likes_post lk ON po.id = lk.post_id
-JOIN {{zone_name}}.ldbc.person p2 ON lk.person_id = p2.id
+FROM {{zone_name}}.ldbc_social_network.post_has_creator_person phc
+JOIN {{zone_name}}.ldbc_social_network.post po ON phc.post_id = po.id
+JOIN {{zone_name}}.ldbc_social_network.person_likes_post lk ON po.id = lk.post_id
+JOIN {{zone_name}}.ldbc_social_network.person p2 ON lk.person_id = p2.id
 WHERE phc.person_id = 26388279067534
 ORDER BY lk.creation_date DESC, po.id ASC
 LIMIT 20;
@@ -764,11 +764,11 @@ SELECT
     c.creation_date AS comment_creation_date,
     c.id AS comment_id,
     c.content AS comment_content
-FROM {{zone_name}}.ldbc.post_has_creator_person phc
-JOIN {{zone_name}}.ldbc.comment_reply_of_post crp ON phc.post_id = crp.post_id
-JOIN {{zone_name}}.ldbc.comment c ON crp.comment_id = c.id
-JOIN {{zone_name}}.ldbc.comment_has_creator_person chc ON c.id = chc.comment_id
-JOIN {{zone_name}}.ldbc.person p2 ON chc.person_id = p2.id
+FROM {{zone_name}}.ldbc_social_network.post_has_creator_person phc
+JOIN {{zone_name}}.ldbc_social_network.comment_reply_of_post crp ON phc.post_id = crp.post_id
+JOIN {{zone_name}}.ldbc_social_network.comment c ON crp.comment_id = c.id
+JOIN {{zone_name}}.ldbc_social_network.comment_has_creator_person chc ON c.id = chc.comment_id
+JOIN {{zone_name}}.ldbc_social_network.person p2 ON chc.person_id = p2.id
 WHERE phc.person_id = 2199023256816
 ORDER BY c.creation_date DESC, c.id ASC
 LIMIT 20;
@@ -783,15 +783,15 @@ ASSERT ROW_COUNT >= 1
 SELECT
     p2.id AS person_id, p2.first_name, p2.last_name,
     COUNT(DISTINCT c.id) AS reply_count
-FROM {{zone_name}}.ldbc.person_knows_person k
-JOIN {{zone_name}}.ldbc.person p2 ON k.dst = p2.id
-JOIN {{zone_name}}.ldbc.comment_has_creator_person chc ON p2.id = chc.person_id
-JOIN {{zone_name}}.ldbc.comment c ON chc.comment_id = c.id
-JOIN {{zone_name}}.ldbc.comment_reply_of_post crp ON c.id = crp.comment_id
-JOIN {{zone_name}}.ldbc.post_has_tag_tag pht ON crp.post_id = pht.post_id
-JOIN {{zone_name}}.ldbc.tag t ON pht.tag_id = t.id
-JOIN {{zone_name}}.ldbc.tag_has_type_tagclass tht ON t.id = tht.tag_id
-JOIN {{zone_name}}.ldbc.tagclass tc ON tht.tagclass_id = tc.id
+FROM {{zone_name}}.ldbc_social_network.person_knows_person k
+JOIN {{zone_name}}.ldbc_social_network.person p2 ON k.dst = p2.id
+JOIN {{zone_name}}.ldbc_social_network.comment_has_creator_person chc ON p2.id = chc.person_id
+JOIN {{zone_name}}.ldbc_social_network.comment c ON chc.comment_id = c.id
+JOIN {{zone_name}}.ldbc_social_network.comment_reply_of_post crp ON c.id = crp.comment_id
+JOIN {{zone_name}}.ldbc_social_network.post_has_tag_tag pht ON crp.post_id = pht.post_id
+JOIN {{zone_name}}.ldbc_social_network.tag t ON pht.tag_id = t.id
+JOIN {{zone_name}}.ldbc_social_network.tag_has_type_tagclass tht ON t.id = tht.tag_id
+JOIN {{zone_name}}.ldbc_social_network.tagclass tc ON tht.tagclass_id = tc.id
 WHERE k.src = 2199023256816
   AND tc.name = 'BasketballPlayer'
 GROUP BY p2.id, p2.first_name, p2.last_name
@@ -805,8 +805,8 @@ LIMIT 20;
 
 ASSERT ROW_COUNT = 15
 SELECT t.name AS tag_name, COUNT(*) AS comment_count
-FROM {{zone_name}}.ldbc.comment_has_tag_tag cht
-JOIN {{zone_name}}.ldbc.tag t ON cht.tag_id = t.id
+FROM {{zone_name}}.ldbc_social_network.comment_has_tag_tag cht
+JOIN {{zone_name}}.ldbc_social_network.tag t ON cht.tag_id = t.id
 GROUP BY t.name
 ORDER BY comment_count DESC
 LIMIT 15;
@@ -827,60 +827,60 @@ ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 17
 SELECT 'Person count = 1528' AS test,
        CASE WHEN cnt = 1528 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.person)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.person)
 
 UNION ALL
 SELECT 'Comment count = 151043',
        CASE WHEN cnt = 151043 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.comment)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.comment)
 
 UNION ALL
 SELECT 'Post count = 135701',
        CASE WHEN cnt = 135701 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.post)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.post)
 
 UNION ALL
 SELECT 'Forum count = 13750',
        CASE WHEN cnt = 13750 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.forum)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.forum)
 
 UNION ALL
 SELECT 'Place count = 1460',
        CASE WHEN cnt = 1460 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.place)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.place)
 
 UNION ALL
 SELECT 'Organisation count = 7955',
        CASE WHEN cnt = 7955 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.organisation)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.organisation)
 
 UNION ALL
 SELECT 'Tag count = 16080',
        CASE WHEN cnt = 16080 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.tag)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.tag)
 
 UNION ALL
 SELECT 'TagClass count = 71',
        CASE WHEN cnt = 71 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.tagclass)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.tagclass)
 
 UNION ALL
 SELECT 'KNOWS edge count = 14073',
        CASE WHEN cnt = 14073 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.person_knows_person)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.person_knows_person)
 
 UNION ALL
 SELECT 'No self-loops in KNOWS',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.person_knows_person WHERE src = dst)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.person_knows_person WHERE src = dst)
 
 UNION ALL
 SELECT 'All KNOWS endpoints exist',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' orphans)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.person_knows_person k
-    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc.person p WHERE p.id = k.src)
-       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc.person p WHERE p.id = k.dst)
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.person_knows_person k
+    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc_social_network.person p WHERE p.id = k.src)
+       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.ldbc_social_network.person p WHERE p.id = k.dst)
 )
 
 UNION ALL
@@ -888,7 +888,7 @@ SELECT 'Top hub degree >= 300',
        CASE WHEN max_deg >= 300 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
 FROM (
     SELECT MAX(deg) AS max_deg FROM (
-        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.ldbc.person_knows_person GROUP BY src
+        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.ldbc_social_network.person_knows_person GROUP BY src
     )
 )
 
@@ -896,7 +896,7 @@ UNION ALL
 SELECT 'SQ1: Jun Wang exists at person 26388279068220',
        CASE WHEN cnt = 1 THEN 'PASS' ELSE 'FAIL' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.person
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.person
     WHERE id = 26388279068220 AND first_name = 'Jun' AND last_name = 'Wang'
 )
 
@@ -904,7 +904,7 @@ UNION ALL
 SELECT 'SQ5: Comment 1099511997848 created by person 26388279068220',
        CASE WHEN cnt = 1 THEN 'PASS' ELSE 'FAIL' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.comment_has_creator_person
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.comment_has_creator_person
     WHERE comment_id = 1099511997848 AND person_id = 26388279068220
 )
 
@@ -913,8 +913,8 @@ SELECT 'SQ6: Comment 1099511997848 in forum 824633737506',
        CASE WHEN cnt >= 1 THEN 'PASS' ELSE 'FAIL' END
 FROM (
     SELECT COUNT(*) AS cnt
-    FROM {{zone_name}}.ldbc.comment_reply_of_post crp
-    JOIN {{zone_name}}.ldbc.forum_container_of_post fcp ON crp.post_id = fcp.post_id
+    FROM {{zone_name}}.ldbc_social_network.comment_reply_of_post crp
+    JOIN {{zone_name}}.ldbc_social_network.forum_container_of_post fcp ON crp.post_id = fcp.post_id
     WHERE crp.comment_id = 1099511997848 AND fcp.forum_id = 824633737506
 )
 
@@ -922,7 +922,7 @@ UNION ALL
 SELECT 'Gender values valid (male/female only)',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc.person
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.ldbc_social_network.person
     WHERE gender NOT IN ('male', 'female')
 )
 
@@ -930,6 +930,6 @@ UNION ALL
 SELECT 'Avg degree > 10',
        CASE WHEN avg_deg > 10.0 THEN 'PASS' ELSE 'FAIL (got ' || CAST(avg_deg AS VARCHAR) || ')' END
 FROM (
-    SELECT ROUND(CAST(COUNT(*) AS DOUBLE) * 2.0 / (SELECT COUNT(*) FROM {{zone_name}}.ldbc.person), 1) AS avg_deg
-    FROM {{zone_name}}.ldbc.person_knows_person
+    SELECT ROUND(CAST(COUNT(*) AS DOUBLE) * 2.0 / (SELECT COUNT(*) FROM {{zone_name}}.ldbc_social_network.person), 1) AS avg_deg
+    FROM {{zone_name}}.ldbc_social_network.person_knows_person
 );

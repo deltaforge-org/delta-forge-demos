@@ -12,7 +12,7 @@
 --        non-uniform weights representing coauthorship strength)
 --
 -- Graph:
---   {{zone_name}}.netscience.netscience_collab — Authors as vertices, coauthorships as edges
+--   {{zone_name}}.netscience_collab.netscience_collab — Authors as vertices, coauthorships as edges
 -- ============================================================================
 -- ############################################################################
 -- STEP 1: Zone & Schemas
@@ -24,8 +24,8 @@ CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
     COMMENT 'NetScience — external CSV staging table';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.netscience
-    COMMENT 'NetScience — Delta tables and graph definition';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.netscience_collab
+    COMMENT 'NetScience coauthorship — Delta tables, weighted collaboration graph, and algorithm queries';
 -- ############################################################################
 -- STEP 2: External Table — Raw CSV Reader (pipe-delimited)
 -- ############################################################################
@@ -41,7 +41,7 @@ GRANT ADMIN ON TABLE {{zone_name}}.raw.netscience_edges TO USER {{current_user}}
 
 -- === Edge Table (CTAS from external) ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.netscience.edges
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.netscience_collab.edges
 LOCATION '{{data_path}}/delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
@@ -50,7 +50,7 @@ AS SELECT
     CAST(edge_type AS VARCHAR) AS edge_type
 FROM {{zone_name}}.raw.netscience_edges;
 
-GRANT ADMIN ON TABLE {{zone_name}}.netscience.edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.netscience_collab.edges TO USER {{current_user}};
 -- === Vertex Table (from CSV with researcher names and roles) ===
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.netscience_vertices
@@ -59,7 +59,7 @@ OPTIONS (header = 'true', delimiter = '|');
 
 GRANT ADMIN ON TABLE {{zone_name}}.raw.netscience_vertices TO USER {{current_user}};
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.netscience.vertices
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.netscience_collab.vertices
 LOCATION '{{data_path}}/delta/vertices'
 AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
@@ -67,16 +67,16 @@ AS SELECT
     CAST(category AS VARCHAR) AS role
 FROM {{zone_name}}.raw.netscience_vertices;
 
-GRANT ADMIN ON TABLE {{zone_name}}.netscience.vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.netscience_collab.vertices TO USER {{current_user}};
 -- ############################################################################
 -- STEP 4: Graph Definition
 -- ############################################################################
 -- Creates a named graph coupling author vertices with coauthorship edges.
--- Cypher queries reference this by name: USE {{zone_name}}.netscience.netscience_collab MATCH ...
+-- Cypher queries reference this by name: USE {{zone_name}}.netscience_collab.netscience_collab MATCH ...
 
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.netscience.netscience_collab
-    VERTEX TABLE {{zone_name}}.netscience.vertices ID COLUMN vertex_id NODE NAME COLUMN name NODE TYPE COLUMN role
-    EDGE TABLE {{zone_name}}.netscience.edges SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.netscience_collab.netscience_collab
+    VERTEX TABLE {{zone_name}}.netscience_collab.vertices ID COLUMN vertex_id NODE NAME COLUMN name NODE TYPE COLUMN role
+    EDGE TABLE {{zone_name}}.netscience_collab.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN edge_type
     DIRECTED;

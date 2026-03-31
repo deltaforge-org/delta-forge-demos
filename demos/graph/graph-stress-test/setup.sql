@@ -31,12 +31,12 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Graph property storage mode demo tables';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.stress_test_network
+    COMMENT '1M-node enterprise organization network stress test';
 -- ============================================================================
 -- TABLE 1: departments — 20 department lookup records
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.st_departments (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_departments (
     dept_id     INT,
     dept_name   STRING,
     floor_num   INT,
@@ -44,9 +44,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.st_departments (
     region      STRING
 ) LOCATION '{{data_path}}/st_departments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.st_departments TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.stress_test_network.st_departments TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.st_departments VALUES
+INSERT INTO {{zone_name}}.stress_test_network.st_departments VALUES
     (0,  'Engineering',       3, 8000, 'Americas'),
     (1,  'Marketing',         2, 3000, 'Americas'),
     (2,  'HR',                1, 2000, 'Americas'),
@@ -75,7 +75,7 @@ INSERT INTO {{zone_name}}.graph_demos.st_departments VALUES
 -- Each person gets name, department, city, project team, hire year, level,
 -- and salary band derived from their ID for full reproducibility.
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.st_people (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_people (
     id              BIGINT,
     name            STRING,
     age             INT,
@@ -89,9 +89,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.st_people (
     active          BOOLEAN
 ) LOCATION '{{data_path}}/st_people';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.st_people TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.stress_test_network.st_people TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.st_people
+INSERT INTO {{zone_name}}.stress_test_network.st_people
 SELECT
     id,
     -- First name from pool of 40 + ID suffix for uniqueness
@@ -197,7 +197,7 @@ FROM generate_series(1, 1000000) AS t(id);
 --   Batch 6: Hub node extra connections       — ~490K edges   (L4+ wide reach)
 --   Batch 7: Weak ties (pseudo-random)        — ~300K edges   (prime scatter)
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.st_edges (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_edges (
     id                  BIGINT,
     src                 BIGINT,
     dst                 BIGINT,
@@ -206,7 +206,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.st_edges (
     since_year          INT
 ) LOCATION '{{data_path}}/st_edges';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.st_edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.stress_test_network.st_edges TO USER {{current_user}};
 -- ============================================================================
 -- Batch 1: Intra-department local neighborhood (~1.5M edges)
 -- ============================================================================
@@ -214,7 +214,7 @@ GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.st_edges TO USER {{current_user}}
 -- Adding multiples of 20 preserves department assignment (id % 20).
 -- Creates dense local clusters within each of the 20 departments.
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -251,7 +251,7 @@ WHERE src != dst
 -- this also preserves department — teams are tight sub-clusters nested
 -- inside department clusters.
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     10000000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -287,7 +287,7 @@ WHERE src != dst
 -- Offsets 15/30/45 shift department by 15/10/5 (all ≠ 0), creating a
 -- secondary clustering dimension that overlaps with departments.
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     20000000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -334,7 +334,7 @@ WHERE src != dst
 --   L6 (Sr Mgr, id%100=0):     8,000 people ×  30 mentees = 240K edges
 --   L5 (Manager, id%50=0):     10,000 people ×  15 mentees = 150K edges
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     30000000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -375,7 +375,7 @@ WHERE src != dst
 -- offsets (1..21 excluding 20). Each offset shifts department differently,
 -- creating star-shaped cross-department structures around bridge nodes.
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     40000000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -416,7 +416,7 @@ WHERE src != dst
 --   L6 (id%100=0):    8,000 × 25 = 200K edges
 --   L4 (id%20=0):    40,000 ×  5 = 200K edges
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     50000000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -461,7 +461,7 @@ WHERE src != dst
 -- connections, referrals — that cut the graph diameter from O(N) to
 -- O(log N) while contributing minimal edge weight.
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.st_edges
+INSERT INTO {{zone_name}}.stress_test_network.st_edges
 SELECT
     60000000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src,
@@ -485,16 +485,16 @@ WHERE src != dst;
 -- ============================================================================
 -- GRAPH DEFINITION
 -- ============================================================================
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.stress_test_network
-    VERTEX TABLE {{zone_name}}.graph_demos.st_people ID COLUMN id NODE TYPE COLUMN department NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.st_edges SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.stress_test_network.stress_test_network
+    VERTEX TABLE {{zone_name}}.stress_test_network.st_people ID COLUMN id NODE TYPE COLUMN department NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.stress_test_network.st_edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN relationship_type
     DIRECTED;
 -- ============================================================================
 -- VIEW 4: st_people_stats — per-person degree centrality
 -- ============================================================================
-CREATE OR REPLACE VIEW {{zone_name}}.graph_demos.st_people_stats AS
+CREATE OR REPLACE VIEW {{zone_name}}.stress_test_network.st_people_stats AS
 SELECT
     p.id,
     p.name,
@@ -505,24 +505,24 @@ SELECT
     COALESCE(out_deg.out_degree, 0) AS out_degree,
     COALESCE(in_deg.in_degree, 0) AS in_degree,
     COALESCE(out_deg.out_degree, 0) + COALESCE(in_deg.in_degree, 0) AS total_degree
-FROM {{zone_name}}.graph_demos.st_people p
+FROM {{zone_name}}.stress_test_network.st_people p
 LEFT JOIN (
-    SELECT src, COUNT(*) AS out_degree FROM {{zone_name}}.graph_demos.st_edges GROUP BY src
+    SELECT src, COUNT(*) AS out_degree FROM {{zone_name}}.stress_test_network.st_edges GROUP BY src
 ) out_deg ON p.id = out_deg.src
 LEFT JOIN (
-    SELECT dst, COUNT(*) AS in_degree FROM {{zone_name}}.graph_demos.st_edges GROUP BY dst
+    SELECT dst, COUNT(*) AS in_degree FROM {{zone_name}}.stress_test_network.st_edges GROUP BY dst
 ) in_deg ON p.id = in_deg.dst;
 -- ============================================================================
 -- VIEW 5: st_dept_matrix — cross-department connection matrix
 -- ============================================================================
-CREATE OR REPLACE VIEW {{zone_name}}.graph_demos.st_dept_matrix AS
+CREATE OR REPLACE VIEW {{zone_name}}.stress_test_network.st_dept_matrix AS
 SELECT
     src_p.department AS src_dept,
     dst_p.department AS dst_dept,
     COUNT(*) AS connection_count,
     ROUND(AVG(e.weight), 3) AS avg_weight,
     COUNT(DISTINCT e.relationship_type) AS rel_type_count
-FROM {{zone_name}}.graph_demos.st_edges e
-JOIN {{zone_name}}.graph_demos.st_people src_p ON e.src = src_p.id
-JOIN {{zone_name}}.graph_demos.st_people dst_p ON e.dst = dst_p.id
+FROM {{zone_name}}.stress_test_network.st_edges e
+JOIN {{zone_name}}.stress_test_network.st_people src_p ON e.src = src_p.id
+JOIN {{zone_name}}.stress_test_network.st_people dst_p ON e.dst = dst_p.id
 GROUP BY src_p.department, dst_p.department;

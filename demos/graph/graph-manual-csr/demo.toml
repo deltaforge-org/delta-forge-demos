@@ -40,12 +40,12 @@ size_bytes = 613
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.mcsr.karate_manual"
+name = "{{zone_name}}.karate_manual.karate_manual"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.mcsr.vertices"
+name = "{{zone_name}}.karate_manual.vertices"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.mcsr.edges"
+name = "{{zone_name}}.karate_manual.edges"

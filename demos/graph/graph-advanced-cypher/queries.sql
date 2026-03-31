@@ -23,7 +23,7 @@ ASSERT ROW_COUNT = 40
 ASSERT VALUE department = 'CompSci' WHERE name = 'Prof. Chen_10'
 ASSERT VALUE rank = 'Professor' WHERE name = 'Prof. Chen_10'
 ASSERT VALUE h_index = 30 WHERE name = 'Prof. Chen_10'
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 RETURN n.name AS name, n.department AS department, n.rank AS rank,
        n.h_index AS h_index, n.active AS active
@@ -38,7 +38,7 @@ ORDER BY n.department, n.name;
 ASSERT ROW_COUNT = 5
 ASSERT VALUE headcount = 8 WHERE department = 'CompSci'
 ASSERT VALUE headcount = 8 WHERE department = 'Physics'
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
 ORDER BY department;
@@ -55,7 +55,7 @@ ASSERT VALUE count = 70 WHERE type = 'co-author'
 ASSERT VALUE count = 35 WHERE type = 'advisor'
 ASSERT VALUE count = 35 WHERE type = 'committee'
 ASSERT VALUE count = 30 WHERE type = 'reviewer'
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (a)-[r]->(b)
 RETURN r.collab_type AS type, count(r) AS count
 ORDER BY count DESC;
@@ -72,7 +72,7 @@ ORDER BY count DESC;
 ASSERT ROW_COUNT = 5
 ASSERT VALUE name = 'Prof. Chen_40' WHERE name = 'Prof. Chen_40'
 ASSERT VALUE name = 'Prof. Larsson_36' WHERE name = 'Prof. Larsson_36'
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 WHERE NOT (n)-->()
 RETURN n.name AS name, n.department AS department, n.rank AS rank
@@ -87,7 +87,7 @@ ORDER BY n.name;
 -- An empty result confirms the network has no completely disconnected nodes.
 
 ASSERT ROW_COUNT = 0
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 WHERE NOT (n)<--()
 RETURN n.name AS name, n.department AS department;
@@ -105,7 +105,7 @@ ASSERT VALUE min_h = 10 WHERE dept = 'CompSci'
 ASSERT VALUE max_h = 45 WHERE dept = 'CompSci'
 ASSERT VALUE min_h = 6 WHERE dept = 'Math'
 ASSERT VALUE max_h = 49 WHERE dept = 'Biology'
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 RETURN n.department AS dept,
        count(n) AS num_researchers,
@@ -123,7 +123,7 @@ ORDER BY avg_h DESC;
 -- The ring+backskip co-author pattern creates directed 3-cycles within depts.
 
 ASSERT ROW_COUNT = 75
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (a)-[:co-author]->(b)-[:co-author]->(c)-[:co-author]->(a)
 RETURN a.name AS researcher_a, b.name AS researcher_b, c.name AS researcher_c
 ORDER BY a.name, b.name;
@@ -137,7 +137,7 @@ ORDER BY a.name, b.name;
 -- Each department has one Dean→Professor→(Associate or Assistant) chain set.
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (a)-[:advisor]->(b)-[:advisor]->(c)
 WHERE a <> c
 RETURN a.name AS senior, a.rank AS senior_rank,
@@ -155,7 +155,7 @@ ORDER BY a.name, c.name;
 -- member (who is also their co-author via the ring pattern).
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (a)-[:advisor]->(b), (a)-[:co-author]->(b)
 RETURN a.name AS advisor, a.rank AS advisor_rank,
        b.name AS advisee, b.rank AS advisee_rank
@@ -170,7 +170,7 @@ ORDER BY a.name;
 
 ASSERT ROW_COUNT = 35
 ASSERT VALUE collaborator_count = 7 WHERE name = 'Prof. Okafor_5'
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (a)-[]->(b)
 RETURN a.name AS name, a.department AS dept, count(DISTINCT b) AS collaborator_count
 ORDER BY collaborator_count DESC, name;
@@ -184,7 +184,7 @@ ORDER BY collaborator_count DESC, name;
 -- should rank high due to their central advisory positions.
 
 ASSERT ROW_COUNT = 40
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -199,7 +199,7 @@ ORDER BY score DESC;
 -- should have high betweenness centrality.
 
 ASSERT ROW_COUNT = 40
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -213,7 +213,7 @@ ORDER BY centrality DESC;
 -- other. Multiple components would indicate isolated research silos.
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -228,7 +228,7 @@ ORDER BY size DESC;
 -- should detect meaningful community structure.
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, count(*) AS size
@@ -242,22 +242,22 @@ ORDER BY size DESC;
 -- balanced departments, and exactly 5 isolated (no outgoing) researchers.
 
 ASSERT ROW_COUNT = 40
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 RETURN n.id AS id;
 
 ASSERT VALUE total_collaborations = 170
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (a)-[r]->(b)
 RETURN count(r) AS total_collaborations;
 
 ASSERT VALUE dept_count = 5
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 RETURN count(DISTINCT n.department) AS dept_count;
 
 ASSERT VALUE isolated_count = 5
-USE {{zone_name}}.graph_demos.research_network
+USE {{zone_name}}.research_network.research_network
 MATCH (n)
 WHERE NOT (n)-->()
 RETURN count(n) AS isolated_count;

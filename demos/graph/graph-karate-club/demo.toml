@@ -38,12 +38,12 @@ size_bytes = 640
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.karate.karate_club"
+name = "{{zone_name}}.karate_club.karate_club"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.karate.vertices"
+name = "{{zone_name}}.karate_club.vertices"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.karate.edges"
+name = "{{zone_name}}.karate_club.edges"

@@ -11,7 +11,7 @@
 -- Edges: 882 rows (441 undirected edges stored bidirectionally, weight=1.0)
 --
 -- Graph:
---   {{zone_name}}.polbooks.political_books — All books as vertices, co-purchases as edges
+--   {{zone_name}}.political_books.political_books — All books as vertices, co-purchases as edges
 -- ============================================================================
 -- ############################################################################
 -- STEP 1: Zone & Schemas
@@ -23,8 +23,8 @@ CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
     COMMENT 'Political Books — external CSV staging table';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.polbooks
-    COMMENT 'Political Books — Delta tables and graph definition';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.political_books
+    COMMENT 'Political Books — Delta tables, co-purchasing graph with ground-truth communities, and algorithm queries';
 -- ############################################################################
 -- STEP 2: External Table — Raw CSV Reader (pipe-delimited)
 -- ############################################################################
@@ -40,7 +40,7 @@ GRANT ADMIN ON TABLE {{zone_name}}.raw.polbooks_edges TO USER {{current_user}};
 
 -- === Edge Table (CTAS from external) ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.polbooks.edges
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.political_books.edges
 LOCATION '{{data_path}}/delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
@@ -49,7 +49,7 @@ AS SELECT
     CAST(edge_type AS VARCHAR) AS edge_type
 FROM {{zone_name}}.raw.polbooks_edges;
 
-GRANT ADMIN ON TABLE {{zone_name}}.polbooks.edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.political_books.edges TO USER {{current_user}};
 -- === Vertex Table (from CSV with book titles and political leanings) ===
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.polbooks_vertices
@@ -58,7 +58,7 @@ OPTIONS (header = 'true', delimiter = '|');
 
 GRANT ADMIN ON TABLE {{zone_name}}.raw.polbooks_vertices TO USER {{current_user}};
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.polbooks.vertices
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.political_books.vertices
 LOCATION '{{data_path}}/delta/vertices'
 AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
@@ -66,16 +66,16 @@ AS SELECT
     CAST(category AS VARCHAR) AS leaning
 FROM {{zone_name}}.raw.polbooks_vertices;
 
-GRANT ADMIN ON TABLE {{zone_name}}.polbooks.vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.political_books.vertices TO USER {{current_user}};
 -- ############################################################################
 -- STEP 4: Graph Definition
 -- ############################################################################
 -- Creates a named graph coupling book vertices with co-purchasing edges.
--- Cypher queries reference this by name: USE {{zone_name}}.polbooks.political_books MATCH ...
+-- Cypher queries reference this by name: USE {{zone_name}}.political_books.political_books MATCH ...
 
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.polbooks.political_books
-    VERTEX TABLE {{zone_name}}.polbooks.vertices ID COLUMN vertex_id NODE NAME COLUMN name NODE TYPE COLUMN leaning
-    EDGE TABLE {{zone_name}}.polbooks.edges SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.political_books.political_books
+    VERTEX TABLE {{zone_name}}.political_books.vertices ID COLUMN vertex_id NODE NAME COLUMN name NODE TYPE COLUMN leaning
+    EDGE TABLE {{zone_name}}.political_books.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN edge_type
     DIRECTED;

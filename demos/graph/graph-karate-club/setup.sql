@@ -11,7 +11,7 @@
 -- Edges: 156 rows (78 undirected edges stored bidirectionally, weight=1.0)
 --
 -- Graph:
---   {{zone_name}}.karate.karate_club — All members as vertices, friendships as edges
+--   {{zone_name}}.karate_club.karate_club — All members as vertices, friendships as edges
 -- ============================================================================
 -- ############################################################################
 -- STEP 1: Zone & Schemas
@@ -23,8 +23,8 @@ CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
     COMMENT 'Karate Club — external CSV staging table';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate
-    COMMENT 'Karate Club — Delta tables and graph definition';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_club
+    COMMENT 'Karate club — Delta tables and graph definition for Zachary dataset';
 -- ############################################################################
 -- STEP 2: External Table — Raw CSV Reader (pipe-delimited)
 -- ############################################################################
@@ -40,7 +40,7 @@ GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_edges TO USER {{current_user}};
 
 -- === Edge Table (CTAS from external) ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate.edges
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate_club.edges
 LOCATION '{{data_path}}/delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
@@ -49,7 +49,7 @@ AS SELECT
     CAST(edge_type AS VARCHAR) AS edge_type
 FROM {{zone_name}}.raw.karate_edges;
 
-GRANT ADMIN ON TABLE {{zone_name}}.karate.edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.karate_club.edges TO USER {{current_user}};
 -- === Vertex Table (from CSV with member names and roles) ===
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.karate_vertices
@@ -58,7 +58,7 @@ OPTIONS (header = 'true', delimiter = '|');
 
 GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_vertices TO USER {{current_user}};
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate.vertices
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate_club.vertices
 LOCATION '{{data_path}}/delta/vertices'
 AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
@@ -66,16 +66,16 @@ AS SELECT
     CAST(category AS VARCHAR) AS role
 FROM {{zone_name}}.raw.karate_vertices;
 
-GRANT ADMIN ON TABLE {{zone_name}}.karate.vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.karate_club.vertices TO USER {{current_user}};
 -- ############################################################################
 -- STEP 4: Graph Definition
 -- ############################################################################
 -- Creates a named graph coupling member vertices with friendship edges.
--- Cypher queries reference this by name: USE {{zone_name}}.karate.karate_club MATCH ...
+-- Cypher queries reference this by name: USE {{zone_name}}.karate_club.karate_club MATCH ...
 
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.karate.karate_club
-    VERTEX TABLE {{zone_name}}.karate.vertices ID COLUMN vertex_id NODE TYPE COLUMN role NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.karate.edges SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.karate_club.karate_club
+    VERTEX TABLE {{zone_name}}.karate_club.vertices ID COLUMN vertex_id NODE TYPE COLUMN role NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.karate_club.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN edge_type
     DIRECTED;

@@ -41,7 +41,7 @@ ASSERT ROW_COUNT = 40
 ASSERT VALUE region = 'North' WHERE name = 'Acme_Corp' AND id = 20
 ASSERT VALUE industry = 'Tech' WHERE name = 'Acme_Corp' AND id = 20
 ASSERT VALUE tier = 'Enterprise' WHERE name = 'Acme_Corp' AND id = 20
-USE {{zone_name}}.graph_demos.customer_network
+USE {{zone_name}}.customer_network.customer_network
 MATCH (n)
 RETURN n.id AS id, n.name AS name, n.region AS region,
        n.industry AS industry, n.tier AS tier,
@@ -58,7 +58,7 @@ ORDER BY n.id;
 ASSERT ROW_COUNT = 96
 ASSERT VALUE referral_type = 'partner' WHERE src_name = 'Bolt_Inc' AND dst_name = 'Forge_Inc' AND edge_id = 1
 ASSERT VALUE weight = 0.6 WHERE edge_id = 1
-USE {{zone_name}}.graph_demos.customer_network
+USE {{zone_name}}.customer_network.customer_network
 MATCH (a)-[r]->(b)
 RETURN r.id AS edge_id, a.name AS src_name, b.name AS dst_name,
        r.weight AS weight, r.referral_type AS referral_type,
@@ -82,12 +82,12 @@ ORDER BY r.id;
 ASSERT ROW_COUNT = 40
 ASSERT VALUE influence_score > 0 WHERE name = 'Acme_Corp' AND id = 20
 SELECT c.id, c.name, c.region, c.industry, pr.score AS influence_score
-FROM cypher('{{zone_name}}.graph_demos.customer_network', $$
+FROM cypher('{{zone_name}}.customer_network.customer_network', $$
     CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
     YIELD node_id, score
     RETURN node_id AS customer_id, score
 $$) AS (customer_id BIGINT, score DOUBLE) pr
-JOIN {{zone_name}}.graph_demos.customers c ON pr.customer_id = c.id
+JOIN {{zone_name}}.customer_network.customers c ON pr.customer_id = c.id
 ORDER BY pr.score DESC;
 
 
@@ -103,8 +103,8 @@ ORDER BY pr.score DESC;
 -- influence_scores Delta table. This is the key interop feature: graph
 -- algorithm output flows into a Delta table for subsequent SQL analysis.
 
-INSERT INTO {{zone_name}}.graph_demos.influence_scores
-SELECT * FROM cypher('{{zone_name}}.graph_demos.customer_network', $$
+INSERT INTO {{zone_name}}.customer_network.influence_scores
+SELECT * FROM cypher('{{zone_name}}.customer_network.customer_network', $$
     CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
     YIELD node_id, score, rank
     RETURN node_id AS customer_id, score AS influence_score, rank AS influence_rank
@@ -121,8 +121,8 @@ ASSERT ROW_COUNT = 40
 ASSERT VALUE influence_rank = 1 WHERE influence_rank = 1
 ASSERT VALUE influence_score > 0 WHERE influence_rank = 1
 SELECT i.customer_id, c.name, c.region, i.influence_score, i.influence_rank
-FROM {{zone_name}}.graph_demos.influence_scores i
-JOIN {{zone_name}}.graph_demos.customers c ON i.customer_id = c.id
+FROM {{zone_name}}.customer_network.influence_scores i
+JOIN {{zone_name}}.customer_network.customers c ON i.customer_id = c.id
 ORDER BY i.influence_rank;
 
 
@@ -132,8 +132,8 @@ ORDER BY i.influence_rank;
 -- Louvain community detection identifies clusters of densely connected
 -- customers. Results are persisted into the community_assignments Delta table.
 
-INSERT INTO {{zone_name}}.graph_demos.community_assignments
-SELECT * FROM cypher('{{zone_name}}.graph_demos.customer_network', $$
+INSERT INTO {{zone_name}}.customer_network.community_assignments
+SELECT * FROM cypher('{{zone_name}}.customer_network.customer_network', $$
     CALL algo.louvain()
     YIELD node_id, community_id
     RETURN node_id AS customer_id, community_id
@@ -149,7 +149,7 @@ $$) AS (customer_id BIGINT, community_id BIGINT);
 ASSERT ROW_COUNT = 1
 ASSERT VALUE community_count >= 2
 SELECT COUNT(DISTINCT community_id) AS community_count
-FROM {{zone_name}}.graph_demos.community_assignments;
+FROM {{zone_name}}.customer_network.community_assignments;
 
 
 -- ############################################################################
@@ -170,9 +170,9 @@ ASSERT VALUE total_revenue = 60896.0 WHERE name = 'Acme_Corp' AND customer_id = 
 SELECT c.id AS customer_id, c.name, c.region, i.influence_score,
        SUM(o.amount) AS total_revenue,
        ROUND(i.influence_score * SUM(o.amount), 2) AS weighted_influence
-FROM {{zone_name}}.graph_demos.influence_scores i
-JOIN {{zone_name}}.graph_demos.customers c ON i.customer_id = c.id
-JOIN {{zone_name}}.graph_demos.orders o ON c.id = o.customer_id
+FROM {{zone_name}}.customer_network.influence_scores i
+JOIN {{zone_name}}.customer_network.customers c ON i.customer_id = c.id
+JOIN {{zone_name}}.customer_network.orders o ON c.id = o.customer_id
 GROUP BY c.id, c.name, c.region, i.influence_score
 ORDER BY weighted_influence DESC;
 
@@ -189,8 +189,8 @@ SELECT SUM(members) AS total_members
 FROM (
     SELECT ca.community_id, COUNT(DISTINCT ca.customer_id) AS members,
            SUM(o.amount) AS community_revenue
-    FROM {{zone_name}}.graph_demos.community_assignments ca
-    JOIN {{zone_name}}.graph_demos.orders o ON ca.customer_id = o.customer_id
+    FROM {{zone_name}}.customer_network.community_assignments ca
+    JOIN {{zone_name}}.customer_network.orders o ON ca.customer_id = o.customer_id
     GROUP BY ca.community_id
 ) sub;
 
@@ -209,10 +209,10 @@ SELECT sr.rep_id, sr.rep_name, sr.territory, sr.quota,
        COUNT(DISTINCT c.id) AS customer_count,
        ROUND(SUM(i.influence_score), 4) AS total_influence,
        COUNT(DISTINCT ca.community_id) AS communities_covered
-FROM {{zone_name}}.graph_demos.sales_reps sr
-JOIN {{zone_name}}.graph_demos.customers c ON sr.territory = c.region
-JOIN {{zone_name}}.graph_demos.influence_scores i ON c.id = i.customer_id
-JOIN {{zone_name}}.graph_demos.community_assignments ca ON c.id = ca.customer_id
+FROM {{zone_name}}.customer_network.sales_reps sr
+JOIN {{zone_name}}.customer_network.customers c ON sr.territory = c.region
+JOIN {{zone_name}}.customer_network.influence_scores i ON c.id = i.customer_id
+JOIN {{zone_name}}.customer_network.community_assignments ca ON c.id = ca.customer_id
 GROUP BY sr.rep_id, sr.rep_name, sr.territory, sr.quota
 ORDER BY total_influence DESC;
 
@@ -233,7 +233,7 @@ ORDER BY total_influence DESC;
 ASSERT ROW_COUNT = 40
 ASSERT VALUE total_degree >= 1 WHERE name = 'Acme_Corp' AND id = 20
 WITH hub_scores AS (
-    SELECT * FROM cypher('{{zone_name}}.graph_demos.customer_network', $$
+    SELECT * FROM cypher('{{zone_name}}.customer_network.customer_network', $$
         CALL algo.degree()
         YIELD node_id, total_degree
         RETURN node_id AS customer_id, total_degree
@@ -241,12 +241,12 @@ WITH hub_scores AS (
 ),
 revenue AS (
     SELECT customer_id, SUM(amount) AS total_revenue
-    FROM {{zone_name}}.graph_demos.orders
+    FROM {{zone_name}}.customer_network.orders
     GROUP BY customer_id
 )
 SELECT c.id, c.name, c.region, h.total_degree, r.total_revenue
 FROM hub_scores h
-JOIN {{zone_name}}.graph_demos.customers c ON h.customer_id = c.id
+JOIN {{zone_name}}.customer_network.customers c ON h.customer_id = c.id
 JOIN revenue r ON c.id = r.customer_id
 ORDER BY h.total_degree DESC, r.total_revenue DESC;
 
@@ -269,10 +269,10 @@ ASSERT VALUE row_count = 8 WHERE entity = 'sales_reps'
 ASSERT VALUE row_count = 40 WHERE entity = 'influence_scores'
 ASSERT VALUE row_count = 40 WHERE entity = 'community_assignments'
 ASSERT ROW_COUNT = 6
-SELECT 'customers' AS entity, COUNT(*) AS row_count FROM {{zone_name}}.graph_demos.customers
-UNION ALL SELECT 'referrals', COUNT(*) FROM {{zone_name}}.graph_demos.referrals
-UNION ALL SELECT 'orders', COUNT(*) FROM {{zone_name}}.graph_demos.orders
-UNION ALL SELECT 'sales_reps', COUNT(*) FROM {{zone_name}}.graph_demos.sales_reps
-UNION ALL SELECT 'influence_scores', COUNT(*) FROM {{zone_name}}.graph_demos.influence_scores
-UNION ALL SELECT 'community_assignments', COUNT(*) FROM {{zone_name}}.graph_demos.community_assignments
+SELECT 'customers' AS entity, COUNT(*) AS row_count FROM {{zone_name}}.customer_network.customers
+UNION ALL SELECT 'referrals', COUNT(*) FROM {{zone_name}}.customer_network.referrals
+UNION ALL SELECT 'orders', COUNT(*) FROM {{zone_name}}.customer_network.orders
+UNION ALL SELECT 'sales_reps', COUNT(*) FROM {{zone_name}}.customer_network.sales_reps
+UNION ALL SELECT 'influence_scores', COUNT(*) FROM {{zone_name}}.customer_network.influence_scores
+UNION ALL SELECT 'community_assignments', COUNT(*) FROM {{zone_name}}.customer_network.community_assignments
 ORDER BY entity;

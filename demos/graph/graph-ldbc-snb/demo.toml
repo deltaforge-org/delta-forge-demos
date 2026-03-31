@@ -237,136 +237,136 @@ size_bytes = 2162688
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.ldbc.ldbc_social_network"
+name = "{{zone_name}}.ldbc_social_network.ldbc_social_network"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person"
+name = "{{zone_name}}.ldbc_social_network.person"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.comment"
+name = "{{zone_name}}.ldbc_social_network.comment"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.post"
+name = "{{zone_name}}.ldbc_social_network.post"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.forum"
+name = "{{zone_name}}.ldbc_social_network.forum"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.place"
+name = "{{zone_name}}.ldbc_social_network.place"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.organisation"
+name = "{{zone_name}}.ldbc_social_network.organisation"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.tag"
+name = "{{zone_name}}.ldbc_social_network.tag"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.tagclass"
+name = "{{zone_name}}.ldbc_social_network.tagclass"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_knows_person"
+name = "{{zone_name}}.ldbc_social_network.person_knows_person"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.comment_has_creator_person"
+name = "{{zone_name}}.ldbc_social_network.comment_has_creator_person"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.comment_has_tag_tag"
+name = "{{zone_name}}.ldbc_social_network.comment_has_tag_tag"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.comment_is_located_in_place"
+name = "{{zone_name}}.ldbc_social_network.comment_is_located_in_place"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.comment_reply_of_comment"
+name = "{{zone_name}}.ldbc_social_network.comment_reply_of_comment"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.comment_reply_of_post"
+name = "{{zone_name}}.ldbc_social_network.comment_reply_of_post"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.forum_container_of_post"
+name = "{{zone_name}}.ldbc_social_network.forum_container_of_post"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.forum_has_member_person"
+name = "{{zone_name}}.ldbc_social_network.forum_has_member_person"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.forum_has_moderator_person"
+name = "{{zone_name}}.ldbc_social_network.forum_has_moderator_person"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.forum_has_tag_tag"
+name = "{{zone_name}}.ldbc_social_network.forum_has_tag_tag"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_email"
+name = "{{zone_name}}.ldbc_social_network.person_email"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_has_interest_tag"
+name = "{{zone_name}}.ldbc_social_network.person_has_interest_tag"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_is_located_in_place"
+name = "{{zone_name}}.ldbc_social_network.person_is_located_in_place"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_likes_comment"
+name = "{{zone_name}}.ldbc_social_network.person_likes_comment"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_likes_post"
+name = "{{zone_name}}.ldbc_social_network.person_likes_post"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_speaks_language"
+name = "{{zone_name}}.ldbc_social_network.person_speaks_language"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_study_at_organisation"
+name = "{{zone_name}}.ldbc_social_network.person_study_at_organisation"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.person_work_at_organisation"
+name = "{{zone_name}}.ldbc_social_network.person_work_at_organisation"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.post_has_creator_person"
+name = "{{zone_name}}.ldbc_social_network.post_has_creator_person"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.post_has_tag_tag"
+name = "{{zone_name}}.ldbc_social_network.post_has_tag_tag"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.post_is_located_in_place"
+name = "{{zone_name}}.ldbc_social_network.post_is_located_in_place"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.organisation_is_located_in_place"
+name = "{{zone_name}}.ldbc_social_network.organisation_is_located_in_place"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.place_is_part_of_place"
+name = "{{zone_name}}.ldbc_social_network.place_is_part_of_place"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.tag_has_type_tagclass"
+name = "{{zone_name}}.ldbc_social_network.tag_has_type_tagclass"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.ldbc.tagclass_is_subclass_of_tagclass"
+name = "{{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass"

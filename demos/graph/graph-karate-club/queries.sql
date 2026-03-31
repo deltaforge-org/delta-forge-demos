@@ -32,11 +32,11 @@
 
 -- Verify vertex count
 ASSERT VALUE row_count = 34
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate.vertices;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_club.vertices;
 
 -- Verify edge count (78 undirected edges x 2)
 ASSERT VALUE row_count = 156
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate.edges;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_club.edges;
 
 
 -- ============================================================================
@@ -52,9 +52,9 @@ SHOW GRAPH;
 
 ASSERT VALUE orphan_edges = 0
 SELECT COUNT(*) AS orphan_edges
-FROM {{zone_name}}.karate.edges e
-WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate.vertices v WHERE v.vertex_id = e.src)
-   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate.vertices v WHERE v.vertex_id = e.dst);
+FROM {{zone_name}}.karate_club.edges e
+WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.src)
+   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.dst);
 
 
 -- ============================================================================
@@ -63,7 +63,7 @@ WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate.vertices v WHERE v.vertex_i
 
 ASSERT VALUE self_loops = 0
 SELECT COUNT(*) AS self_loops
-FROM {{zone_name}}.karate.edges
+FROM {{zone_name}}.karate_club.edges
 WHERE src = dst;
 
 
@@ -79,7 +79,7 @@ WHERE src = dst;
 -- practice-mate, social-contact.
 
 ASSERT ROW_COUNT = 5
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 MATCH (a)-[r]->(b)
 RETURN r.edge_type AS type, count(r) AS count
 ORDER BY count DESC;
@@ -90,7 +90,7 @@ ORDER BY count DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 34
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 MATCH (v)
 RETURN v.id AS member_id, v.name AS name, v.role AS role
 ORDER BY member_id;
@@ -108,7 +108,7 @@ ORDER BY member_id;
 ASSERT ROW_COUNT = 34
 ASSERT VALUE degree = 17 WHERE member_id = 33
 ASSERT VALUE degree = 16 WHERE member_id = 0
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 MATCH (a)-[r]->(b)
 RETURN a.id AS member_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC, member_id ASC;
@@ -125,7 +125,7 @@ ASSERT VALUE degree = 16 WHERE member_id = 0
 ASSERT VALUE degree = 12 WHERE member_id = 32
 ASSERT VALUE degree = 10 WHERE member_id = 2
 ASSERT VALUE degree = 9 WHERE member_id = 1
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 MATCH (a)-[r]->(b)
 RETURN a.id AS member_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC
@@ -140,7 +140,7 @@ LIMIT 5;
 -- Note: Node 33 (president) is NOT a direct neighbor of node 0.
 
 ASSERT ROW_COUNT = 16
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 MATCH (a)-[r]->(b)
 WHERE a.id = 0
 RETURN b.id AS friend_id, b.name AS friend_name
@@ -155,7 +155,7 @@ ORDER BY friend_id;
 -- 8 unreachable nodes: [14, 15, 18, 20, 22, 23, 26, 29].
 
 ASSERT VALUE reachable_in_2_hops = 26
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 MATCH (a)-[*1..2]->(b)
 WHERE a.id = 0
 RETURN COUNT(DISTINCT b.id) AS reachable_in_2_hops;
@@ -177,7 +177,7 @@ RETURN COUNT(DISTINCT b.id) AS reachable_in_2_hops;
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 33
 ASSERT VALUE rank = 2 WHERE node_id = 0
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -202,7 +202,7 @@ ASSERT VALUE total_degree = 32 WHERE node_id = 0
 ASSERT VALUE total_degree = 24 WHERE node_id = 32
 ASSERT VALUE in_degree = 17 WHERE node_id = 33
 ASSERT VALUE in_degree = 16 WHERE node_id = 0
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -221,7 +221,7 @@ LIMIT 10;
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 0
 ASSERT VALUE rank = 2 WHERE node_id = 33
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -239,7 +239,7 @@ LIMIT 10;
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 0
 ASSERT VALUE rank = 2 WHERE node_id = 2
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.closeness()
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
@@ -262,7 +262,7 @@ LIMIT 10;
 ASSERT WARNING ROW_COUNT >= 3
 -- Non-deterministic: Louvain is stochastic — community count varies by node ordering
 ASSERT WARNING ROW_COUNT <= 6
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, count(*) AS members
@@ -276,7 +276,7 @@ ORDER BY members DESC;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS members
@@ -297,7 +297,7 @@ ASSERT VALUE distance = 0 WHERE step = 0
 ASSERT VALUE distance = 2 WHERE step = 2
 ASSERT VALUE node_id = 0 WHERE step = 0
 ASSERT VALUE node_id = 33 WHERE step = 2
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.shortestPath({source: 0, target: 33})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -313,7 +313,7 @@ ORDER BY step;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.scc()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS members
@@ -333,7 +333,7 @@ ASSERT ROW_COUNT = 10
 ASSERT VALUE triangle_count = 18 WHERE node_id = 0
 ASSERT VALUE triangle_count = 15 WHERE node_id = 33
 ASSERT VALUE triangle_count = 13 WHERE node_id = 32
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.triangleCount()
 YIELD node_id, triangle_count
 RETURN node_id, triangle_count
@@ -350,7 +350,7 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 33
 ASSERT VALUE distance = 2.0 WHERE node_id = 33
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.allShortestPaths({source: 0})
 YIELD node_id, distance
 RETURN node_id, distance
@@ -369,7 +369,7 @@ ASSERT VALUE nodes_at_depth = 1 WHERE depth = 0
 ASSERT VALUE nodes_at_depth = 16 WHERE depth = 1
 ASSERT VALUE nodes_at_depth = 9 WHERE depth = 2
 ASSERT VALUE nodes_at_depth = 8 WHERE depth = 3
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.bfs({source: 0})
 YIELD node_id, depth
 RETURN depth, count(*) AS nodes_at_depth
@@ -384,7 +384,7 @@ ORDER BY depth;
 
 ASSERT ROW_COUNT = 10
 ASSERT VALUE discovery_time = 1 WHERE node_id = 0
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.dfs({source: 0})
 YIELD node_id, discovery_time, finish_time
 RETURN node_id, discovery_time, finish_time
@@ -402,7 +402,7 @@ LIMIT 10;
 ASSERT WARNING ROW_COUNT = 10
 -- Non-deterministic: edge direction depends on Kruskal processing order; node 0 appears as target
 ASSERT WARNING VALUE weight = 1.0 WHERE targetId = 0
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.mst()
 YIELD sourceId, targetId, weight
 RETURN sourceId, targetId, weight
@@ -421,7 +421,7 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE neighbor_id = 1 WHERE rank = 1
 ASSERT VALUE neighbor_id = 3 WHERE rank = 2
 ASSERT VALUE neighbor_id = 2 WHERE rank = 3
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.knn({node: 0, k: 5})
 YIELD neighbor_id, similarity, rank
 RETURN neighbor_id, similarity, rank
@@ -440,7 +440,7 @@ ASSERT ROW_COUNT = 1
 -- Jaccard similarity: 4 common neighbors {8,13,19,31} out of 29 union = 4/29 ≈ 0.1379 (deterministic)
 ASSERT VALUE score >= 0.13
 ASSERT VALUE score <= 0.15
-USE {{zone_name}}.karate.karate_club
+USE {{zone_name}}.karate_club.karate_club
 CALL algo.similarity({node1: 0, node2: 33})
 YIELD score
 RETURN score;
@@ -461,25 +461,25 @@ ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 9
 SELECT 'Vertex count = 34' AS test,
        CASE WHEN cnt = 34 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.vertices)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.vertices)
 
 UNION ALL
 SELECT 'Edge row count = 156',
        CASE WHEN cnt = 156 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.edges)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges)
 
 UNION ALL
 SELECT 'No self-loops',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.edges WHERE src = dst)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges WHERE src = dst)
 
 UNION ALL
 SELECT 'All edge endpoints exist',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' orphans)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.edges e
-    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate.vertices v WHERE v.vertex_id = e.src)
-       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate.vertices v WHERE v.vertex_id = e.dst)
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges e
+    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.src)
+       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.dst)
 )
 
 UNION ALL
@@ -487,7 +487,7 @@ SELECT 'Max degree >= 16 (faction leader)',
        CASE WHEN max_deg >= 16 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
 FROM (
     SELECT MAX(deg) AS max_deg FROM (
-        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.karate.edges GROUP BY src
+        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.karate_club.edges GROUP BY src
     )
 )
 
@@ -496,23 +496,23 @@ SELECT 'Vertex ID range = 0–33',
        CASE WHEN min_id = 0 AND max_id = 33 THEN 'PASS'
             ELSE 'FAIL (range ' || CAST(min_id AS VARCHAR) || '–' || CAST(max_id AS VARCHAR) || ')' END
 FROM (
-    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.karate.vertices
+    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.karate_club.vertices
 )
 
 UNION ALL
 SELECT 'All weights = 1.0 (unweighted)',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' non-unit weights)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.edges WHERE weight <> 1.0
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges WHERE weight <> 1.0
 )
 
 UNION ALL
 SELECT 'Symmetric edges (undirected)',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' missing reverse edges)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate.edges e1
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges e1
     WHERE NOT EXISTS (
-        SELECT 1 FROM {{zone_name}}.karate.edges e2
+        SELECT 1 FROM {{zone_name}}.karate_club.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
 )
@@ -521,5 +521,5 @@ UNION ALL
 SELECT '5 edge types',
        CASE WHEN cnt = 5 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
 FROM (
-    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.karate.edges
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.karate_club.edges
 );

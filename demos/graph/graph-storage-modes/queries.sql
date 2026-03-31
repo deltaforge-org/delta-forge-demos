@@ -27,7 +27,7 @@ ASSERT VALUE city = 'Chicago' WHERE name = 'Marcus_2'
 ASSERT VALUE age = 32 WHERE name = 'Marcus_2'
 ASSERT VALUE dept = 'Engineering' WHERE name = 'Wei_5'
 ASSERT VALUE age = 27 WHERE name = 'Wei_5'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.city AS city,
        n.age AS age, n.level AS level
@@ -47,7 +47,7 @@ ASSERT VALUE city = 'Chicago' WHERE name = 'Marcus_2'
 ASSERT VALUE age = 32 WHERE name = 'Marcus_2'
 ASSERT VALUE dept = 'Engineering' WHERE name = 'Wei_5'
 ASSERT VALUE age = 27 WHERE name = 'Wei_5'
-USE {{zone_name}}.graph_demos.storage_hybrid
+USE {{zone_name}}.storage_modes.storage_hybrid
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.city AS city,
        n.age AS age, n.level AS level
@@ -67,7 +67,7 @@ ASSERT VALUE city = 'Chicago' WHERE name = 'Marcus_2'
 ASSERT VALUE age = 32 WHERE name = 'Marcus_2'
 ASSERT VALUE dept = 'Engineering' WHERE name = 'Wei_5'
 ASSERT VALUE age = 27 WHERE name = 'Wei_5'
-USE {{zone_name}}.graph_demos.storage_json
+USE {{zone_name}}.storage_modes.storage_json
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.city AS city,
        n.age AS age, n.level AS level
@@ -80,7 +80,7 @@ ORDER BY n.name;
 
 ASSERT ROW_COUNT = 189
 ASSERT VALUE type = 'mentor' WHERE src_name = 'Luca_50'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 RETURN a.name AS src_name, b.name AS dst_name,
        r.relationship_type AS type, r.weight AS weight
@@ -93,7 +93,7 @@ ORDER BY a.name, b.name;
 
 ASSERT ROW_COUNT = 189
 ASSERT VALUE type = 'mentor' WHERE src_name = 'Luca_50'
-USE {{zone_name}}.graph_demos.storage_hybrid
+USE {{zone_name}}.storage_modes.storage_hybrid
 MATCH (a)-[r]->(b)
 RETURN a.name AS src_name, b.name AS dst_name,
        r.relationship_type AS type, r.weight AS weight
@@ -106,7 +106,7 @@ ORDER BY a.name, b.name;
 
 ASSERT ROW_COUNT = 189
 ASSERT VALUE type = 'mentor' WHERE src_name = 'Luca_50'
-USE {{zone_name}}.graph_demos.storage_json
+USE {{zone_name}}.storage_modes.storage_json
 MATCH (a)-[r]->(b)
 RETURN a.name AS src_name, b.name AS dst_name,
        r.relationship_type AS type, r.weight AS weight
@@ -123,7 +123,7 @@ ASSERT VALUE headcount = 10 WHERE department = 'Marketing'
 ASSERT VALUE headcount = 10 WHERE department = 'HR'
 ASSERT VALUE headcount = 10 WHERE department = 'Finance'
 ASSERT VALUE headcount = 10 WHERE department = 'Sales'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
 ORDER BY department;
@@ -137,7 +137,7 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE headcount = 10 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 10 WHERE department = 'Marketing'
 ASSERT VALUE headcount = 10 WHERE department = 'HR'
-USE {{zone_name}}.graph_demos.storage_hybrid
+USE {{zone_name}}.storage_modes.storage_hybrid
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
 ORDER BY department;
@@ -151,7 +151,7 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE headcount = 10 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 10 WHERE department = 'Marketing'
 ASSERT VALUE headcount = 10 WHERE department = 'HR'
-USE {{zone_name}}.graph_demos.storage_json
+USE {{zone_name}}.storage_modes.storage_json
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
 ORDER BY department;
@@ -163,7 +163,7 @@ ORDER BY department;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE size = 50 WHERE size = 50
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -176,7 +176,7 @@ ORDER BY size DESC;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE size = 50 WHERE size = 50
-USE {{zone_name}}.graph_demos.storage_hybrid
+USE {{zone_name}}.storage_modes.storage_hybrid
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -189,7 +189,7 @@ ORDER BY size DESC;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE size = 50 WHERE size = 50
-USE {{zone_name}}.graph_demos.storage_json
+USE {{zone_name}}.storage_modes.storage_json
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -210,7 +210,7 @@ ASSERT VALUE level = 'L5' WHERE name = 'Luca_10'
 ASSERT VALUE dept = 'Engineering' WHERE name = 'Luca_10'
 ASSERT VALUE level = 'L4' WHERE name = 'Wei_5'
 ASSERT VALUE dept = 'Engineering' WHERE name = 'Wei_5'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (n)
 WHERE n.active = true AND n.level IN ['L3', 'L4', 'L5']
 RETURN n.name AS name, n.department AS dept, n.city AS city,
@@ -223,7 +223,7 @@ ORDER BY n.level DESC, n.name;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (mentor)-[r:mentor]->(mentee)
 RETURN mentor.name AS mentor, mentor.department AS dept,
        mentee.name AS mentee, mentee.department AS mentee_dept,
@@ -236,7 +236,7 @@ ORDER BY r.weight DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 53
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 WHERE r.weight > 0.8
 RETURN a.name AS person_a, b.name AS person_b,
@@ -249,7 +249,7 @@ ORDER BY r.weight DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 80
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
 RETURN a.name AS src, a.department AS src_dept,
@@ -264,7 +264,7 @@ ORDER BY a.department, b.department;
 
 ASSERT ROW_COUNT = 14
 ASSERT VALUE connections = 10 WHERE from_dept = 'HR'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
 RETURN a.department AS from_dept, b.department AS to_dept,
@@ -280,7 +280,7 @@ ASSERT ROW_COUNT = 11
 ASSERT VALUE count = 25 WHERE type = 'mentor'
 ASSERT VALUE count = 27 WHERE type = 'teammate'
 ASSERT VALUE count = 26 WHERE type = 'colleague'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 RETURN r.relationship_type AS type, r.context AS context,
        count(r) AS count, avg(r.weight) AS avg_weight
@@ -292,7 +292,7 @@ ORDER BY count DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 21
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[]->(b)-[]->(c)
 WHERE a.id = 1 AND a <> c
 RETURN a.name AS source, b.name AS relay, c.name AS reached,
@@ -304,7 +304,7 @@ RETURN a.name AS source, b.name AS relay, c.name AS reached,
 -- ============================================================================
 
 ASSERT ROW_COUNT = 27
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[*1..3]->(b)
 WHERE a.id = 1 AND a <> b
 RETURN DISTINCT b.name AS reachable, b.department AS dept
@@ -316,7 +316,7 @@ ORDER BY b.name;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 45
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 WHERE a.department = 'Engineering' AND b.department = 'Engineering'
 RETURN a.name AS src, b.name AS dst,
@@ -329,7 +329,7 @@ ORDER BY r.weight DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 2
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r1]->(b)-[r2]->(a)
 WHERE a.id < b.id
 RETURN a.name AS person_a, b.name AS person_b,
@@ -348,7 +348,7 @@ ORDER BY r1.weight + r2.weight DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 50
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -363,7 +363,7 @@ ASSERT ROW_COUNT = 50
 ASSERT VALUE out_degree = 4 WHERE node_id = 1
 ASSERT VALUE in_degree = 2 WHERE node_id = 1
 ASSERT VALUE total_degree = 6 WHERE node_id = 1
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -375,7 +375,7 @@ ORDER BY total_degree DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 50
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -387,7 +387,7 @@ ORDER BY centrality DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 50
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.closeness()
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
@@ -399,7 +399,7 @@ ORDER BY closeness DESC;
 -- ============================================================================
 
 ASSERT WARNING ROW_COUNT >= 2
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, collect(node_id) AS members, count(*) AS size
@@ -411,7 +411,7 @@ ORDER BY size DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 50
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.triangle_count()
 YIELD node_id, triangle_count
 RETURN node_id, triangle_count
@@ -423,7 +423,7 @@ ORDER BY triangle_count DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.scc()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -442,7 +442,7 @@ ORDER BY size DESC;
 ASSERT ROW_COUNT = 5
 ASSERT VALUE node_id = 1 WHERE step = 0
 ASSERT VALUE distance = 0 WHERE step = 0
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.shortestPath({source: 1, target: 42})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -454,7 +454,7 @@ ORDER BY step;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 49
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.allShortestPaths({source: 1})
 YIELD node_id, distance, path
 RETURN node_id, distance, path
@@ -468,7 +468,7 @@ ORDER BY distance;
 ASSERT ROW_COUNT = 8
 ASSERT VALUE people_at_distance = 1 WHERE depth = 0
 ASSERT VALUE people_at_distance = 4 WHERE depth = 1
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.bfs({source: 1})
 YIELD node_id, depth, parent_id
 RETURN depth, count(*) AS people_at_distance
@@ -480,7 +480,7 @@ ORDER BY depth;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 50
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.dfs({source: 1})
 YIELD node_id, discovery_time, finish_time, parent_id
 RETURN node_id, discovery_time, finish_time, parent_id
@@ -492,7 +492,7 @@ ORDER BY discovery_time;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 49
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.mst()
 YIELD sourceId, targetId, weight
 RETURN sourceId, targetId, weight
@@ -504,7 +504,7 @@ ORDER BY weight;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 5
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.knn({node: 1, k: 5})
 YIELD neighbor_id, similarity, rank
 RETURN neighbor_id, similarity, rank
@@ -516,7 +516,7 @@ ORDER BY rank;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.similarity({node1: 1, node2: 13, metric: 'jaccard'})
 YIELD node1Id, node2Id, score
 RETURN node1Id, node2Id, score;
@@ -532,7 +532,7 @@ RETURN node1Id, node2Id, score;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 189
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 RETURN a, r, b;
 
@@ -542,7 +542,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r:mentor]->(b)
 RETURN a, r, b;
 
@@ -552,7 +552,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 80
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
 RETURN a, r, b;
@@ -567,13 +567,13 @@ RETURN a, r, b;
 ASSERT ROW_COUNT = 5
 ASSERT VALUE headcount = 10 WHERE department = 'Marketing'
 ASSERT VALUE headcount = 10 WHERE department = 'Engineering'
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
 ORDER BY department;
 
 ASSERT ROW_COUNT = 189
-USE {{zone_name}}.graph_demos.storage_flat
+USE {{zone_name}}.storage_modes.storage_flat
 MATCH (a)-[r]->(b)
 RETURN a, r, b;
 
@@ -581,13 +581,13 @@ RETURN a, r, b;
 ASSERT ROW_COUNT = 50
 ASSERT VALUE dept = 'Finance' WHERE name = 'Sofia_3'
 ASSERT VALUE city = 'London' WHERE name = 'Sofia_3'
-USE {{zone_name}}.graph_demos.storage_hybrid
+USE {{zone_name}}.storage_modes.storage_hybrid
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.city AS city
 ORDER BY n.name;
 
 ASSERT ROW_COUNT = 189
-USE {{zone_name}}.graph_demos.storage_hybrid
+USE {{zone_name}}.storage_modes.storage_hybrid
 MATCH (a)-[r]->(b)
 RETURN a, r, b;
 
@@ -595,12 +595,12 @@ RETURN a, r, b;
 ASSERT ROW_COUNT = 50
 ASSERT VALUE dept = 'Finance' WHERE name = 'Sofia_3'
 ASSERT VALUE city = 'London' WHERE name = 'Sofia_3'
-USE {{zone_name}}.graph_demos.storage_json
+USE {{zone_name}}.storage_modes.storage_json
 MATCH (n)
 RETURN n.name AS name, n.department AS dept, n.city AS city
 ORDER BY n.name;
 
 ASSERT ROW_COUNT = 189
-USE {{zone_name}}.graph_demos.storage_json
+USE {{zone_name}}.storage_modes.storage_json
 MATCH (a)-[r]->(b)
 RETURN a, r, b;

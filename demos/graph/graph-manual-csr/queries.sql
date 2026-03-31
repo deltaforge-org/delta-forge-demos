@@ -30,10 +30,10 @@
 -- ============================================================================
 
 ASSERT VALUE row_count = 34
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.mcsr.vertices;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_manual.vertices;
 
 ASSERT VALUE row_count = 156
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.mcsr.edges;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_manual.edges;
 
 
 -- ============================================================================
@@ -50,9 +50,9 @@ SHOW GRAPH;
 
 ASSERT VALUE orphan_edges = 0
 SELECT COUNT(*) AS orphan_edges
-FROM {{zone_name}}.mcsr.edges e
-WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.mcsr.vertices v WHERE v.vertex_id = e.src)
-   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.mcsr.vertices v WHERE v.vertex_id = e.dst);
+FROM {{zone_name}}.karate_manual.edges e
+WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_manual.vertices v WHERE v.vertex_id = e.src)
+   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_manual.vertices v WHERE v.vertex_id = e.dst);
 
 
 -- ############################################################################
@@ -69,7 +69,7 @@ WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.mcsr.vertices v WHERE v.vertex_id 
 -- ============================================================================
 
 ASSERT ROW_COUNT = 34
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 MATCH (v)
 RETURN v.id AS member_id, v.name AS name, v.role AS role
 ORDER BY member_id;
@@ -86,7 +86,7 @@ ASSERT VALUE degree = 16 WHERE member_id = 0
 ASSERT VALUE degree = 12 WHERE member_id = 32
 ASSERT VALUE degree = 10 WHERE member_id = 2
 ASSERT VALUE degree = 9 WHERE member_id = 1
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 MATCH (a)-[r]->(b)
 RETURN a.id AS member_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC
@@ -101,7 +101,7 @@ LIMIT 5;
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 33
 ASSERT VALUE rank = 2 WHERE node_id = 0
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -116,7 +116,7 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS members
@@ -133,7 +133,7 @@ ASSERT VALUE distance = 0 WHERE step = 0
 ASSERT VALUE distance = 2 WHERE step = 2
 ASSERT VALUE node_id = 0 WHERE step = 0
 ASSERT VALUE node_id = 33 WHERE step = 2
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 CALL algo.shortestPath({source: 0, target: 33})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -153,7 +153,7 @@ ORDER BY step;
 -- 9. CREATE GRAPHCSR — Build the disk cache manually
 -- ============================================================================
 
-CREATE GRAPHCSR {{zone_name}}.mcsr.karate_manual;
+CREATE GRAPHCSR {{zone_name}}.karate_manual.karate_manual;
 
 
 -- ############################################################################
@@ -169,7 +169,7 @@ CREATE GRAPHCSR {{zone_name}}.mcsr.karate_manual;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 34
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 MATCH (v)
 RETURN v.id AS member_id, v.name AS name, v.role AS role
 ORDER BY member_id;
@@ -186,7 +186,7 @@ ASSERT VALUE degree = 16 WHERE member_id = 0
 ASSERT VALUE degree = 12 WHERE member_id = 32
 ASSERT VALUE degree = 10 WHERE member_id = 2
 ASSERT VALUE degree = 9 WHERE member_id = 1
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 MATCH (a)-[r]->(b)
 RETURN a.id AS member_id, a.name AS name, COUNT(r) AS degree
 ORDER BY degree DESC
@@ -201,7 +201,7 @@ LIMIT 5;
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 33
 ASSERT VALUE rank = 2 WHERE node_id = 0
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -216,7 +216,7 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS members
@@ -233,7 +233,7 @@ ASSERT VALUE distance = 0 WHERE step = 0
 ASSERT VALUE distance = 2 WHERE step = 2
 ASSERT VALUE node_id = 0 WHERE step = 0
 ASSERT VALUE node_id = 33 WHERE step = 2
-USE {{zone_name}}.mcsr.karate_manual
+USE {{zone_name}}.karate_manual.karate_manual
 CALL algo.shortestPath({source: 0, target: 33})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -253,34 +253,34 @@ ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 5
 SELECT 'Vertex count = 34' AS test,
        CASE WHEN cnt = 34 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.mcsr.vertices)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_manual.vertices)
 
 UNION ALL
 SELECT 'Edge row count = 156',
        CASE WHEN cnt = 156 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.mcsr.edges)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_manual.edges)
 
 UNION ALL
 SELECT 'No self-loops',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.mcsr.edges WHERE src = dst)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_manual.edges WHERE src = dst)
 
 UNION ALL
 SELECT 'All edge endpoints exist',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' orphans)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.mcsr.edges e
-    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.mcsr.vertices v WHERE v.vertex_id = e.src)
-       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.mcsr.vertices v WHERE v.vertex_id = e.dst)
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_manual.edges e
+    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_manual.vertices v WHERE v.vertex_id = e.src)
+       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_manual.vertices v WHERE v.vertex_id = e.dst)
 )
 
 UNION ALL
 SELECT 'Symmetric edges (undirected)',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' missing reverse edges)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.mcsr.edges e1
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_manual.edges e1
     WHERE NOT EXISTS (
-        SELECT 1 FROM {{zone_name}}.mcsr.edges e2
+        SELECT 1 FROM {{zone_name}}.karate_manual.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
 );

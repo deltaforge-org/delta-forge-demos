@@ -16,13 +16,13 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Graph property storage mode demo tables';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.research_network
+    COMMENT 'University research collaboration network — researchers and co-authorship edges';
 
 -- ============================================================================
 -- TABLE 1: researchers — 40 vertex nodes
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.researchers (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.research_network.researchers (
     id          BIGINT,
     name        STRING,
     department  STRING,
@@ -31,9 +31,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.researchers (
     active      BOOLEAN
 ) LOCATION '{{data_path}}/researchers';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.researchers TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.research_network.researchers TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.researchers
+INSERT INTO {{zone_name}}.research_network.researchers
 SELECT
     id,
     'Prof. ' || CASE (id % 10)
@@ -60,7 +60,7 @@ FROM generate_series(1, 40) AS t(id);
 -- ============================================================================
 -- TABLE 2: collaborations — 170 directed edges
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.collaborations (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.research_network.collaborations (
     id              BIGINT,
     src             BIGINT,
     dst             BIGINT,
@@ -70,7 +70,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.collaborations (
     since_year      INT
 ) LOCATION '{{data_path}}/collaborations';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.collaborations TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.research_network.collaborations TO USER {{current_user}};
 
 -- Batch 1: Intra-department co-authors (~70 edges)
 -- Each researcher connects to the next (+1 position) and back-skip (-2 positions)
@@ -78,7 +78,7 @@ GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.collaborations TO USER {{current_
 -- Forward: dst = ((src + 5 - 1) % 40) + 1
 -- Backward: dst = ((src + 29) % 40) + 1
 -- Sources limited to ids 1-35 (ids 36-40 are isolated — no outgoing edges).
-INSERT INTO {{zone_name}}.graph_demos.collaborations
+INSERT INTO {{zone_name}}.research_network.collaborations
 SELECT
     ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -98,7 +98,7 @@ WHERE src != dst;
 -- Batch 2: Advisor-advisee hierarchy (35 edges)
 -- Deans (ids 1-5, position 0) advise Professors (+5) and Associates (+10, +15).
 -- Professors (ids 6-10, position 1) advise Associates (+5, +10) and Assistants (+15, +20).
-INSERT INTO {{zone_name}}.graph_demos.collaborations
+INSERT INTO {{zone_name}}.research_network.collaborations
 SELECT
     1000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -125,7 +125,7 @@ WHERE dst <= 40;
 
 -- Batch 3: Cross-department committee work (35 edges)
 -- Offset 3 from each source; only edges crossing department boundaries.
-INSERT INTO {{zone_name}}.graph_demos.collaborations
+INSERT INTO {{zone_name}}.research_network.collaborations
 SELECT
     2000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -141,7 +141,7 @@ WHERE src % 5 != dst % 5;
 
 -- Batch 4: Reviewer connections (30 edges)
 -- Prime-scatter pattern: odd sources offset by 11, every-3rd sources offset by 17.
-INSERT INTO {{zone_name}}.graph_demos.collaborations
+INSERT INTO {{zone_name}}.research_network.collaborations
 SELECT
     3000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -162,9 +162,9 @@ WHERE src != dst
 -- ============================================================================
 -- GRAPH DEFINITION
 -- ============================================================================
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.research_network
-    VERTEX TABLE {{zone_name}}.graph_demos.researchers ID COLUMN id NODE TYPE COLUMN department NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.collaborations SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.research_network.research_network
+    VERTEX TABLE {{zone_name}}.research_network.researchers ID COLUMN id NODE TYPE COLUMN department NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.research_network.collaborations SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN collab_type
     DIRECTED;

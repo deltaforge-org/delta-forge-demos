@@ -41,7 +41,7 @@ ASSERT VALUE region = 'Asia' WHERE name = 'Shanghai'
 ASSERT VALUE capacity_teu = 43500 WHERE name = 'Shanghai'
 ASSERT VALUE region = 'Europe' WHERE name = 'Rotterdam'
 ASSERT VALUE capacity_teu = 37200 WHERE name = 'Singapore'
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 MATCH (p)
 RETURN p.name AS name, p.region AS region,
        p.capacity_teu AS capacity_teu, p.crane_count AS crane_count
@@ -58,7 +58,7 @@ ASSERT ROW_COUNT = 55
 ASSERT VALUE distance_nm = 2200.0 WHERE from_port = 'Shanghai' AND to_port = 'Singapore'
 ASSERT VALUE transit_days = 26 WHERE from_port = 'Shanghai' AND to_port = 'Rotterdam'
 ASSERT VALUE distance_nm = 3300.0 WHERE from_port = 'Singapore' AND to_port = 'Dubai'
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 MATCH (a)-[r]->(b)
 RETURN a.name AS from_port, b.name AS to_port,
        r.distance_nm AS distance_nm, r.transit_days AS transit_days,
@@ -81,9 +81,9 @@ SELECT
     COUNT(*) AS route_count,
     ROUND(AVG(r.distance_nm), 0) AS avg_distance_nm,
     ROUND(SUM(r.fuel_cost_usd), 2) AS total_fuel_cost
-FROM {{zone_name}}.graph_demos.routes r
-JOIN {{zone_name}}.graph_demos.ports src_p ON r.src = src_p.id
-JOIN {{zone_name}}.graph_demos.ports dst_p ON r.dst = dst_p.id
+FROM {{zone_name}}.shipping_network.routes r
+JOIN {{zone_name}}.shipping_network.ports src_p ON r.src = src_p.id
+JOIN {{zone_name}}.shipping_network.ports dst_p ON r.dst = dst_p.id
 GROUP BY CASE WHEN src_p.region = dst_p.region THEN 'Intra-region' ELSE 'Cross-region' END
 ORDER BY route_count DESC;
 
@@ -105,7 +105,7 @@ SELECT
     ROUND(AVG(distance_nm), 0) AS avg_distance_nm,
     ROUND(AVG(transit_days), 1) AS avg_transit_days,
     ROUND(SUM(fuel_cost_usd), 2) AS total_fuel_cost
-FROM {{zone_name}}.graph_demos.routes
+FROM {{zone_name}}.shipping_network.routes
 GROUP BY route_type
 ORDER BY route_count DESC;
 
@@ -125,7 +125,7 @@ ORDER BY route_count DESC;
 ASSERT ROW_COUNT = 10
 ASSERT VALUE total_degree = 13 WHERE node_id = 1
 ASSERT VALUE total_degree = 12 WHERE node_id = 3
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -142,7 +142,7 @@ LIMIT 10;
 -- major European hubs (Rotterdam, Hamburg, Antwerp).
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -160,7 +160,7 @@ LIMIT 10;
 ASSERT ROW_COUNT >= 2
 ASSERT VALUE node_id = 1 WHERE step = 0
 ASSERT VALUE distance = 0 WHERE step = 0
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.shortestPath({source: 1, target: 22})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -177,7 +177,7 @@ ORDER BY step;
 
 ASSERT ROW_COUNT >= 2
 ASSERT VALUE node_id = 1 WHERE step = 0
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.shortestPath({source: 1, target: 22, weighted: true})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -195,7 +195,7 @@ ASSERT ROW_COUNT >= 3
 ASSERT VALUE people_at_distance = 1 WHERE depth = 0
 ASSERT VALUE people_at_distance = 10 WHERE depth = 1
 ASSERT VALUE people_at_distance = 12 WHERE depth = 2
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.bfs({source: 1})
 YIELD node_id, depth, parent_id
 RETURN depth, count(*) AS people_at_distance
@@ -210,7 +210,7 @@ ORDER BY depth;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE size = 25
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS size
@@ -225,7 +225,7 @@ ORDER BY size DESC;
 -- lowest-distance route for each connection, totaling 28,805 nautical miles.
 
 ASSERT ROW_COUNT = 24
-USE {{zone_name}}.graph_demos.shipping_network
+USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.mst()
 YIELD sourceId, targetId, weight
 RETURN sourceId, targetId, weight
@@ -250,8 +250,8 @@ ASSERT VALUE trunk_routes = 36
 ASSERT VALUE feeder_routes = 10
 ASSERT VALUE transshipment_routes = 9
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.ports)                                                 AS total_ports,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.routes)                                                AS total_routes,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.routes WHERE route_type = 'trunk')                     AS trunk_routes,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.routes WHERE route_type = 'feeder')                    AS feeder_routes,
-    (SELECT COUNT(*) FROM {{zone_name}}.graph_demos.routes WHERE route_type = 'transshipment')             AS transshipment_routes;
+    (SELECT COUNT(*) FROM {{zone_name}}.shipping_network.ports)                                                 AS total_ports,
+    (SELECT COUNT(*) FROM {{zone_name}}.shipping_network.routes)                                                AS total_routes,
+    (SELECT COUNT(*) FROM {{zone_name}}.shipping_network.routes WHERE route_type = 'trunk')                     AS trunk_routes,
+    (SELECT COUNT(*) FROM {{zone_name}}.shipping_network.routes WHERE route_type = 'feeder')                    AS feeder_routes,
+    (SELECT COUNT(*) FROM {{zone_name}}.shipping_network.routes WHERE route_type = 'transshipment')             AS transshipment_routes;

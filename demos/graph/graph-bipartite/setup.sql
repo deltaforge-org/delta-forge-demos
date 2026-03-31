@@ -18,13 +18,13 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Graph property storage mode demo tables';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.movie_recs
+    COMMENT 'Bipartite movie recommendation graph — subscribers, movies, and rating edges';
 
 -- ============================================================================
 -- TABLE 1: entities — 45 vertices (25 subscribers + 20 movies)
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.entities (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.movie_recs.entities (
     id              BIGINT,
     name            STRING,
     entity_type     STRING,
@@ -33,10 +33,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.entities (
     release_year    INT
 ) LOCATION '{{data_path}}/entities';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.entities TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.movie_recs.entities TO USER {{current_user}};
 
 -- 25 subscribers (id 1-25)
-INSERT INTO {{zone_name}}.graph_demos.entities VALUES
+INSERT INTO {{zone_name}}.movie_recs.entities VALUES
     (1,  'User_1',  'subscriber', NULL, 2020, NULL),
     (2,  'User_2',  'subscriber', NULL, 2021, NULL),
     (3,  'User_3',  'subscriber', NULL, 2022, NULL),
@@ -64,7 +64,7 @@ INSERT INTO {{zone_name}}.graph_demos.entities VALUES
     (25, 'User_25', 'subscriber', NULL, 2020, NULL);
 
 -- 20 movies (id 101-120)
-INSERT INTO {{zone_name}}.graph_demos.entities VALUES
+INSERT INTO {{zone_name}}.movie_recs.entities VALUES
     (101, 'The_Matrix',    'movie', 'action',   NULL, 1999),
     (102, 'Inception',     'movie', 'sci-fi',   NULL, 2010),
     (103, 'Interstellar',  'movie', 'sci-fi',   NULL, 2014),
@@ -94,7 +94,7 @@ INSERT INTO {{zone_name}}.graph_demos.entities VALUES
 -- the most popular movie (12 ratings). Inception (102) is second (9 ratings).
 -- All 45 nodes form a single connected component.
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.ratings (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.movie_recs.ratings (
     id              BIGINT,
     src             BIGINT,
     dst             BIGINT,
@@ -103,9 +103,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.ratings (
     watch_date      STRING
 ) LOCATION '{{data_path}}/ratings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.ratings TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.movie_recs.ratings TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.ratings VALUES
+INSERT INTO {{zone_name}}.movie_recs.ratings VALUES
     (1, 1, 101, 2.7, 'watched', '2024-08-19'),
     (2, 1, 108, 4.0, 'favorited', '2025-03-21'),
     (3, 1, 112, 1.9, 'recommended', '2025-07-25'),
@@ -197,9 +197,9 @@ INSERT INTO {{zone_name}}.graph_demos.ratings VALUES
 -- Bipartite graph: subscribers and movies as two vertex types, ratings as
 -- directed edges from subscriber to movie. Weight = star rating (1.0-5.0).
 -- ============================================================================
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.movie_recs
-    VERTEX TABLE {{zone_name}}.graph_demos.entities ID COLUMN id NODE TYPE COLUMN entity_type NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.ratings SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.movie_recs.movie_recs
+    VERTEX TABLE {{zone_name}}.movie_recs.entities ID COLUMN id NODE TYPE COLUMN entity_type NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.movie_recs.ratings SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN rating_type
     DIRECTED;

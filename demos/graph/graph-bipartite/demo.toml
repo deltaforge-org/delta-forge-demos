@@ -24,12 +24,12 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.graph.movie_recs"
+name = "{{zone_name}}.movie_recs.movie_recs"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.entities"
+name = "{{zone_name}}.movie_recs.entities"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.ratings"
+name = "{{zone_name}}.movie_recs.ratings"

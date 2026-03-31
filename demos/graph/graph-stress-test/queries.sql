@@ -41,7 +41,7 @@
 -- an exact count. Proof: generate_series(1, 1000000) → exactly 1M rows.
 
 ASSERT VALUE total_employees = 1000000
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 RETURN count(n) AS total_employees;
 
@@ -60,7 +60,7 @@ RETURN count(n) AS total_employees;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_connections = 5059998
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 RETURN count(r) AS total_connections;
 
@@ -77,7 +77,7 @@ ASSERT VALUE headcount = 50000 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 50000 WHERE department = 'Sales'
 ASSERT VALUE headcount = 50000 WHERE department = 'AI/ML'
 ASSERT VALUE headcount = 50000 WHERE department = 'Data Science'
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount,
        avg(n.age) AS avg_age
@@ -95,7 +95,7 @@ ASSERT VALUE headcount = 66667 WHERE city = 'SF'
 ASSERT VALUE headcount = 66667 WHERE city = 'London'
 ASSERT VALUE headcount = 66666 WHERE city = 'NYC'
 ASSERT VALUE headcount = 66666 WHERE city = 'Austin'
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 RETURN n.city AS city, count(n) AS headcount
 ORDER BY headcount DESC;
@@ -117,7 +117,7 @@ ASSERT VALUE count = 333333 WHERE type = 'sprint-partner'
 ASSERT VALUE count = 333333 WHERE type = 'code-reviewer'
 ASSERT VALUE count = 200000 WHERE type = 'city-social'
 ASSERT VALUE count = 200000 WHERE type = 'lunch-buddy'
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 RETURN r.relationship_type AS type, count(r) AS count,
        avg(r.weight) AS avg_strength
@@ -133,7 +133,7 @@ ORDER BY count DESC;
 
 ASSERT ROW_COUNT = 25
 ASSERT VALUE age = 59
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.department = 'Engineering' AND n.age > 50
 RETURN n.name AS name, n.age AS age, n.city AS city
@@ -149,7 +149,7 @@ LIMIT 25;
 -- of the mentor weight distribution.
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (mentor)-[r]->(mentee)
 WHERE r.relationship_type = 'mentor' AND r.weight > 0.8
 RETURN mentor.name AS mentor, mentee.name AS mentee, r.weight AS strength
@@ -166,7 +166,7 @@ LIMIT 25;
 
 ASSERT ROW_COUNT = 30
 ASSERT VALUE connections = 91000 WHERE from_dept = 'Engineering'
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
 RETURN a.department AS from_dept, b.department AS to_dept,
@@ -181,7 +181,7 @@ LIMIT 30;
 -- For remote work policy decisions: which office pairs collaborate most?
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 RETURN a.city AS from_city, b.city AS to_city,
        count(r) AS connections, avg(r.weight) AS avg_strength
@@ -208,7 +208,7 @@ ASSERT VALUE city = 'Seattle' WHERE id = 1000
 ASSERT VALUE name = 'Priya_500000' WHERE id = 500000
 ASSERT VALUE title = 'VP' WHERE id = 500000
 ASSERT VALUE city = 'Tokyo' WHERE id = 500000
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.id IN [1, 1000, 500000]
 RETURN n.id AS id, n.name AS name, n.department AS department,
@@ -221,7 +221,7 @@ ORDER BY n.id;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[]->(b)-[]->(c)
 WHERE a.id = 1
 RETURN a.name AS source, b.name AS relay, c.name AS reached
@@ -233,7 +233,7 @@ LIMIT 50;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[*1..2]->(b)
 WHERE a.id = 1 AND a <> b
 RETURN DISTINCT b.name AS reachable, b.department AS dept
@@ -245,7 +245,7 @@ LIMIT 50;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r1]->(b)-[r2]->(a)
 WHERE a.id < b.id
 RETURN a.name AS person_a, b.name AS person_b,
@@ -265,7 +265,7 @@ ASSERT VALUE mentorship_count = 192000 WHERE mentor_level = 'L6'
 ASSERT VALUE mentorship_count = 120000 WHERE mentor_level = 'L5'
 ASSERT VALUE mentorship_count = 80000 WHERE mentor_level = 'L8'
 ASSERT VALUE mentorship_count = 48000 WHERE mentor_level = 'L7'
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (mentor)-[r]->(mentee)
 WHERE r.relationship_type = 'mentor'
 RETURN mentor.level AS mentor_level, mentee.level AS mentee_level,
@@ -280,7 +280,7 @@ ORDER BY mentorship_count DESC;
 -- do connections span levels?
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 RETURN a.level AS from_level, b.level AS to_level,
        count(r) AS connections, avg(r.weight) AS avg_strength
@@ -300,7 +300,7 @@ ASSERT ROW_COUNT = 1
 ASSERT VALUE connections = 3125998
 -- Non-deterministic: float average may vary slightly across engines
 ASSERT WARNING VALUE avg_strength BETWEEN 0.7 AND 0.8
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.department = b.department
 RETURN 'within_department' AS scope, count(r) AS connections,
@@ -315,7 +315,7 @@ ASSERT ROW_COUNT = 1
 ASSERT VALUE connections = 1934000
 -- Non-deterministic: float average may vary slightly across engines
 ASSERT WARNING VALUE avg_strength BETWEEN 0.35 AND 0.45
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
 RETURN 'cross_department' AS scope, count(r) AS connections,
@@ -342,7 +342,7 @@ ASSERT ROW_COUNT = 25
 ASSERT VALUE total_degree = 194
 ASSERT VALUE out_degree = 178
 ASSERT VALUE in_degree = 16
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -357,7 +357,7 @@ LIMIT 25;
 -- connected to by other well-connected people. The real power structure.
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 5})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -374,7 +374,7 @@ LIMIT 25;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE community_size = 1000000
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS community_size
@@ -389,7 +389,7 @@ LIMIT 25;
 -- detected communities align with the 20 departments?
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, count(*) AS size
@@ -406,7 +406,7 @@ LIMIT 25;
 -- Uses samplingSize for approximate mode (exact is O(n·m), infeasible at 1M).
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.betweenness({samplingSize: 1000})
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -419,7 +419,7 @@ LIMIT 25;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.triangle_count()
 YIELD node_id, triangle_count
 RETURN node_id, triangle_count
@@ -435,7 +435,7 @@ LIMIT 25;
 -- Tests Dijkstra at 1M scale with weighted edges.
 
 ASSERT ROW_COUNT >= 2
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.shortestPath({source: 1, target: 500000})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -449,7 +449,7 @@ ORDER BY step;
 -- of 1 million. More suggests organizational fragmentation.
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.bfs({source: 1})
 YIELD node_id, depth, parent_id
 RETURN depth, count(*) AS people_at_distance
@@ -464,7 +464,7 @@ LIMIT 20;
 -- indicate one-way information flow (top-down only).
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.scc()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS scc_size
@@ -480,7 +480,7 @@ LIMIT 25;
 -- Uses samplingSize for approximate mode (exact is O(n·m), infeasible at 1M).
 
 ASSERT ROW_COUNT = 25
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.closeness({samplingSize: 1000})
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
@@ -496,7 +496,7 @@ LIMIT 25;
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE backbone_edges = 999999
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.mst()
 YIELD sourceId, targetId, weight
 RETURN count(*) AS backbone_edges, sum(weight) AS total_weight;
@@ -507,7 +507,7 @@ RETURN count(*) AS backbone_edges, sum(weight) AS total_weight;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.allShortestPaths({source: 1})
 YIELD node_id, distance, path
 RETURN node_id, distance
@@ -520,7 +520,7 @@ LIMIT 50;
 -- ============================================================================
 
 ASSERT ROW_COUNT >= 1
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.dfs({source: 1})
 YIELD node_id, discovery_time, finish_time, parent_id
 RETURN node_id, discovery_time, finish_time, parent_id
@@ -533,7 +533,7 @@ LIMIT 50;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 CALL algo.knn({node: 1, k: 10})
 YIELD neighbor_id, similarity, rank
 RETURN neighbor_id, similarity, rank
@@ -576,7 +576,7 @@ ORDER BY rank;
 -- endpoints fall within this range.
 
 ASSERT ROW_COUNT = 389
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 100 AND b.id <= 100
 RETURN a, r, b;
@@ -587,7 +587,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 3217
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 500 AND b.id <= 500
 RETURN a, r, b;
@@ -598,7 +598,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 7377
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 1000 AND b.id <= 1000
 RETURN a, r, b;
@@ -609,7 +609,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 41095
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 5000 AND b.id <= 5000
 RETURN a, r, b;
@@ -620,7 +620,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 83323
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 10000 AND b.id <= 10000
 RETURN a, r, b;
@@ -632,7 +632,7 @@ RETURN a, r, b;
 -- WARNING: Large result set. The visualizer may become sluggish.
 
 ASSERT ROW_COUNT = 421693
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 50000 AND b.id <= 50000
 RETURN a, r, b;
@@ -644,7 +644,7 @@ RETURN a, r, b;
 -- WARNING: Expect significant lag or memory pressure.
 
 ASSERT ROW_COUNT = 846096
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.id <= 100000 AND b.id <= 100000
 RETURN a, r, b;
@@ -656,7 +656,7 @@ RETURN a, r, b;
 -- WARNING: Ultimate stress test. The visualizer will likely freeze.
 
 ASSERT ROW_COUNT = 5059998
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 RETURN a, r, b;
 
@@ -666,7 +666,7 @@ RETURN a, r, b;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 100
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.id <= 100
 RETURN n;
@@ -677,7 +677,7 @@ RETURN n;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1000
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.id <= 1000
 RETURN n;
@@ -688,7 +688,7 @@ RETURN n;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10000
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.id <= 10000
 RETURN n;
@@ -700,7 +700,7 @@ RETURN n;
 -- WARNING: Returns 1,000,000 node objects. Ultimate node rendering test.
 
 ASSERT ROW_COUNT = 1000000
-USE {{zone_name}}.graph_demos.stress_test_network
+USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 RETURN n;
 
@@ -721,20 +721,20 @@ SELECT
     COUNT(*)                   AS total_people,
     COUNT(DISTINCT department) AS dept_count,
     COUNT(DISTINCT city)       AS city_count
-FROM {{zone_name}}.graph_demos.st_people;
+FROM {{zone_name}}.stress_test_network.st_people;
 
 -- Total edge count across all 7 batches
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_edges = 5059998
 SELECT COUNT(*) AS total_edges
-FROM {{zone_name}}.graph_demos.st_edges;
+FROM {{zone_name}}.stress_test_network.st_edges;
 
 -- Uniform department headcount: 1M / 20 = exactly 50000 per department
 ASSERT ROW_COUNT = 20
 ASSERT VALUE headcount = 50000 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 50000 WHERE department = 'AI/ML'
 SELECT department, COUNT(*) AS headcount
-FROM {{zone_name}}.graph_demos.st_people
+FROM {{zone_name}}.stress_test_network.st_people
 GROUP BY department
 ORDER BY department;
 
@@ -748,7 +748,7 @@ ASSERT VALUE cnt = 8000 WHERE title = 'Senior Manager'
 ASSERT VALUE cnt = 1000 WHERE title = 'Director'
 ASSERT VALUE cnt = 1000 WHERE title = 'VP'
 SELECT title, COUNT(*) AS cnt
-FROM {{zone_name}}.graph_demos.st_people
+FROM {{zone_name}}.stress_test_network.st_people
 GROUP BY title
 ORDER BY cnt DESC;
 
@@ -763,7 +763,7 @@ ASSERT VALUE cnt = 8000 WHERE level = 'L6'
 ASSERT VALUE cnt = 1000 WHERE level = 'L7'
 ASSERT VALUE cnt = 1000 WHERE level = 'L8'
 SELECT level, COUNT(*) AS cnt
-FROM {{zone_name}}.graph_demos.st_people
+FROM {{zone_name}}.stress_test_network.st_people
 GROUP BY level
 ORDER BY level;
 
@@ -774,7 +774,7 @@ ASSERT VALUE inactive_count = 47619
 SELECT
     SUM(CASE WHEN active = true THEN 1 ELSE 0 END)  AS active_count,
     SUM(CASE WHEN active = false THEN 1 ELSE 0 END) AS inactive_count
-FROM {{zone_name}}.graph_demos.st_people;
+FROM {{zone_name}}.stress_test_network.st_people;
 
 -- Relationship type breakdown: all 18 types with exact counts
 ASSERT ROW_COUNT = 18
@@ -792,7 +792,7 @@ ASSERT VALUE cnt = 133334 WHERE relationship_type = 'inter-team-link'
 ASSERT VALUE cnt = 133333 WHERE relationship_type = 'cross-dept-bridge'
 ASSERT VALUE cnt = 133333 WHERE relationship_type = 'liaison'
 SELECT relationship_type, COUNT(*) AS cnt
-FROM {{zone_name}}.graph_demos.st_edges
+FROM {{zone_name}}.stress_test_network.st_edges
 GROUP BY relationship_type
 ORDER BY cnt DESC;
 
@@ -805,6 +805,6 @@ SELECT
     SUM(CASE WHEN s.department = d.department THEN 1 ELSE 0 END) AS within_dept,
     SUM(CASE WHEN s.department != d.department THEN 1 ELSE 0 END) AS cross_dept,
     COUNT(*) AS total_check
-FROM {{zone_name}}.graph_demos.st_edges e
-JOIN {{zone_name}}.graph_demos.st_people s ON e.src = s.id
-JOIN {{zone_name}}.graph_demos.st_people d ON e.dst = d.id;
+FROM {{zone_name}}.stress_test_network.st_edges e
+JOIN {{zone_name}}.stress_test_network.st_people s ON e.src = s.id
+JOIN {{zone_name}}.stress_test_network.st_people d ON e.dst = d.id;

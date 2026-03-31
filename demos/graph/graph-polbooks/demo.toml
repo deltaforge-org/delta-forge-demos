@@ -38,12 +38,12 @@ size_bytes = 3363
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.polbooks.political_books"
+name = "{{zone_name}}.political_books.political_books"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.polbooks.vertices"
+name = "{{zone_name}}.political_books.vertices"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.polbooks.edges"
+name = "{{zone_name}}.political_books.edges"

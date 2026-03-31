@@ -4884,15 +4884,15 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.research_network"
+          "name": "{{zone_name}}.research_network.research_network"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.researchers"
+          "name": "{{zone_name}}.research_network.researchers"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.collaborations"
+          "name": "{{zone_name}}.research_network.collaborations"
         }
       ]
     },
@@ -4922,15 +4922,15 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.movie_recs"
+          "name": "{{zone_name}}.movie_recs.movie_recs"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.entities"
+          "name": "{{zone_name}}.movie_recs.entities"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.ratings"
+          "name": "{{zone_name}}.movie_recs.ratings"
         }
       ]
     },
@@ -4962,7 +4962,7 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.email_eu.email_eu_core"
+          "name": "{{zone_name}}.email_eu_core.email_eu_core"
         },
         {
           "objectType": "external_table",
@@ -4970,11 +4970,11 @@
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.email_eu.vertices"
+          "name": "{{zone_name}}.email_eu_core.vertices"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.email_eu.edges"
+          "name": "{{zone_name}}.email_eu_core.edges"
         }
       ]
     },
@@ -5006,7 +5006,7 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.karate.karate_club"
+          "name": "{{zone_name}}.karate_club.karate_club"
         },
         {
           "objectType": "external_table",
@@ -5014,11 +5014,11 @@
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.karate.vertices"
+          "name": "{{zone_name}}.karate_club.vertices"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.karate.edges"
+          "name": "{{zone_name}}.karate_club.edges"
         }
       ]
     },
@@ -5053,139 +5053,139 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.ldbc.ldbc_social_network"
+          "name": "{{zone_name}}.ldbc_social_network.ldbc_social_network"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person"
+          "name": "{{zone_name}}.ldbc_social_network.person"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.comment"
+          "name": "{{zone_name}}.ldbc_social_network.comment"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.post"
+          "name": "{{zone_name}}.ldbc_social_network.post"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.forum"
+          "name": "{{zone_name}}.ldbc_social_network.forum"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.place"
+          "name": "{{zone_name}}.ldbc_social_network.place"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.organisation"
+          "name": "{{zone_name}}.ldbc_social_network.organisation"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.tag"
+          "name": "{{zone_name}}.ldbc_social_network.tag"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.tagclass"
+          "name": "{{zone_name}}.ldbc_social_network.tagclass"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_knows_person"
+          "name": "{{zone_name}}.ldbc_social_network.person_knows_person"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.comment_has_creator_person"
+          "name": "{{zone_name}}.ldbc_social_network.comment_has_creator_person"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.comment_has_tag_tag"
+          "name": "{{zone_name}}.ldbc_social_network.comment_has_tag_tag"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.comment_is_located_in_place"
+          "name": "{{zone_name}}.ldbc_social_network.comment_is_located_in_place"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.comment_reply_of_comment"
+          "name": "{{zone_name}}.ldbc_social_network.comment_reply_of_comment"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.comment_reply_of_post"
+          "name": "{{zone_name}}.ldbc_social_network.comment_reply_of_post"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.forum_container_of_post"
+          "name": "{{zone_name}}.ldbc_social_network.forum_container_of_post"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.forum_has_member_person"
+          "name": "{{zone_name}}.ldbc_social_network.forum_has_member_person"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.forum_has_moderator_person"
+          "name": "{{zone_name}}.ldbc_social_network.forum_has_moderator_person"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.forum_has_tag_tag"
+          "name": "{{zone_name}}.ldbc_social_network.forum_has_tag_tag"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_email"
+          "name": "{{zone_name}}.ldbc_social_network.person_email"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_has_interest_tag"
+          "name": "{{zone_name}}.ldbc_social_network.person_has_interest_tag"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_is_located_in_place"
+          "name": "{{zone_name}}.ldbc_social_network.person_is_located_in_place"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_likes_comment"
+          "name": "{{zone_name}}.ldbc_social_network.person_likes_comment"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_likes_post"
+          "name": "{{zone_name}}.ldbc_social_network.person_likes_post"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_speaks_language"
+          "name": "{{zone_name}}.ldbc_social_network.person_speaks_language"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_study_at_organisation"
+          "name": "{{zone_name}}.ldbc_social_network.person_study_at_organisation"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.person_work_at_organisation"
+          "name": "{{zone_name}}.ldbc_social_network.person_work_at_organisation"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.post_has_creator_person"
+          "name": "{{zone_name}}.ldbc_social_network.post_has_creator_person"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.post_has_tag_tag"
+          "name": "{{zone_name}}.ldbc_social_network.post_has_tag_tag"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.post_is_located_in_place"
+          "name": "{{zone_name}}.ldbc_social_network.post_is_located_in_place"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.organisation_is_located_in_place"
+          "name": "{{zone_name}}.ldbc_social_network.organisation_is_located_in_place"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.place_is_part_of_place"
+          "name": "{{zone_name}}.ldbc_social_network.place_is_part_of_place"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.tag_has_type_tagclass"
+          "name": "{{zone_name}}.ldbc_social_network.tag_has_type_tagclass"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.ldbc.tagclass_is_subclass_of_tagclass"
+          "name": "{{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass"
         }
       ]
     },
@@ -5216,23 +5216,23 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.mcsr.karate_manual"
+          "name": "{{zone_name}}.karate_manual.karate_manual"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.raw_mcsr.karate_edges"
+          "name": "{{zone_name}}.raw.karate_edges"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.raw_mcsr.karate_vertices"
+          "name": "{{zone_name}}.raw.karate_vertices"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.mcsr.vertices"
+          "name": "{{zone_name}}.karate_manual.vertices"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.mcsr.edges"
+          "name": "{{zone_name}}.karate_manual.edges"
         }
       ]
     },
@@ -5264,15 +5264,15 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.hospital_referrals"
+          "name": "{{zone_name}}.hospital_referrals.hospital_referrals"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.physicians"
+          "name": "{{zone_name}}.hospital_referrals.physicians"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.referrals"
+          "name": "{{zone_name}}.hospital_referrals.referrals"
         }
       ]
     },
@@ -5304,7 +5304,7 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.netscience.netscience_collab"
+          "name": "{{zone_name}}.netscience_collab.netscience_collab"
         },
         {
           "objectType": "external_table",
@@ -5312,11 +5312,11 @@
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.netscience.vertices"
+          "name": "{{zone_name}}.netscience_collab.vertices"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.netscience.edges"
+          "name": "{{zone_name}}.netscience_collab.edges"
         }
       ]
     },
@@ -5347,7 +5347,7 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.polbooks.political_books"
+          "name": "{{zone_name}}.political_books.political_books"
         },
         {
           "objectType": "external_table",
@@ -5355,11 +5355,11 @@
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.polbooks.vertices"
+          "name": "{{zone_name}}.political_books.vertices"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.polbooks.edges"
+          "name": "{{zone_name}}.political_books.edges"
         }
       ]
     },
@@ -5391,31 +5391,31 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.sales.customer_network"
+          "name": "{{zone_name}}.customer_network.customer_network"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.sales.customers"
+          "name": "{{zone_name}}.customer_network.customers"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.sales.referrals"
+          "name": "{{zone_name}}.customer_network.referrals"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.sales.orders"
+          "name": "{{zone_name}}.customer_network.orders"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.sales.sales_reps"
+          "name": "{{zone_name}}.customer_network.sales_reps"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.sales.influence_scores"
+          "name": "{{zone_name}}.customer_network.influence_scores"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.sales.community_assignments"
+          "name": "{{zone_name}}.customer_network.community_assignments"
         }
       ]
     },
@@ -5447,39 +5447,39 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.storage_flat"
+          "name": "{{zone_name}}.storage_modes.storage_flat"
         },
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.storage_hybrid"
+          "name": "{{zone_name}}.storage_modes.storage_hybrid"
         },
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.storage_json"
+          "name": "{{zone_name}}.storage_modes.storage_json"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.persons_flat"
+          "name": "{{zone_name}}.storage_modes.persons_flat"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.edges_flat"
+          "name": "{{zone_name}}.storage_modes.edges_flat"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.persons_hybrid"
+          "name": "{{zone_name}}.storage_modes.persons_hybrid"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.edges_hybrid"
+          "name": "{{zone_name}}.storage_modes.edges_hybrid"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.persons_json"
+          "name": "{{zone_name}}.storage_modes.persons_json"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.edges_json"
+          "name": "{{zone_name}}.storage_modes.edges_json"
         }
       ]
     },
@@ -5513,19 +5513,19 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.stress_test_network"
+          "name": "{{zone_name}}.stress_test_network.stress_test_network"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.st_edges"
+          "name": "{{zone_name}}.stress_test_network.st_edges"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.st_people"
+          "name": "{{zone_name}}.stress_test_network.st_people"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.st_departments"
+          "name": "{{zone_name}}.stress_test_network.st_departments"
         }
       ]
     },
@@ -5556,15 +5556,15 @@
       "targetObjects": [
         {
           "objectType": "graph",
-          "name": "{{zone_name}}.graph.shipping_network"
+          "name": "{{zone_name}}.shipping_network.shipping_network"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.ports"
+          "name": "{{zone_name}}.shipping_network.ports"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.graph.routes"
+          "name": "{{zone_name}}.shipping_network.routes"
         }
       ]
     },

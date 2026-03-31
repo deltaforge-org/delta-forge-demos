@@ -23,36 +23,36 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.graph.storage_flat"
+name = "{{zone_name}}.storage_modes.storage_flat"
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.graph.storage_hybrid"
+name = "{{zone_name}}.storage_modes.storage_hybrid"
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.graph.storage_json"
+name = "{{zone_name}}.storage_modes.storage_json"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.persons_flat"
+name = "{{zone_name}}.storage_modes.persons_flat"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.edges_flat"
+name = "{{zone_name}}.storage_modes.edges_flat"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.persons_hybrid"
+name = "{{zone_name}}.storage_modes.persons_hybrid"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.edges_hybrid"
+name = "{{zone_name}}.storage_modes.edges_hybrid"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.persons_json"
+name = "{{zone_name}}.storage_modes.persons_json"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.edges_json"
+name = "{{zone_name}}.storage_modes.edges_json"

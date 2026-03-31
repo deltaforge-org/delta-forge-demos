@@ -21,8 +21,8 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Sales Territory Optimization — SQL/Cypher interop demo';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.customer_network
+    COMMENT 'Customer network — SQL/Cypher interop with referral graph';
 
 -- ############################################################################
 -- STEP 2: Customers (Vertex Table) — 40 enterprise customers
@@ -35,7 +35,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
 -- tier: id%10=0 → Enterprise, id%5=0 → Premium, else → Standard
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.customers (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.customers (
     id         BIGINT,
     name       STRING,
     region     STRING,
@@ -44,9 +44,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.customers (
     annual_contract INT
 ) LOCATION '{{data_path}}/sales/customers';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.customers TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.customer_network.customers TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.customers VALUES
+INSERT INTO {{zone_name}}.customer_network.customers VALUES
     ( 1, 'Bolt_Inc',        'South', 'Finance',       'Standard',   10500),
     ( 2, 'Cipher_Ltd',      'East',  'Healthcare',    'Standard',   11000),
     ( 3, 'DataFlow_Labs',   'West',  'Retail',        'Standard',   11500),
@@ -96,7 +96,7 @@ INSERT INTO {{zone_name}}.graph_demos.customers VALUES
 -- Batch 3: Strategic alliances (prime scatter, cross-region) — 25 edges
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.referrals (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.referrals (
     id             BIGINT,
     src            BIGINT,
     dst            BIGINT,
@@ -105,10 +105,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.referrals (
     year_established INT
 ) LOCATION '{{data_path}}/sales/referrals';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.referrals TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.customer_network.referrals TO USER {{current_user}};
 
 -- Batch 1: Regional partnerships (stride 4, same region)
-INSERT INTO {{zone_name}}.graph_demos.referrals VALUES
+INSERT INTO {{zone_name}}.customer_network.referrals VALUES
     ( 1,  1,  5, 0.6, 'partner', 2019),
     ( 2,  2,  6, 0.7, 'partner', 2020),
     ( 3,  3,  7, 0.8, 'partner', 2021),
@@ -147,7 +147,7 @@ INSERT INTO {{zone_name}}.graph_demos.referrals VALUES
     (36, 36, 40, 0.5, 'partner', 2018);
 
 -- Batch 2: Industry cross-referrals (stride 5, same industry)
-INSERT INTO {{zone_name}}.graph_demos.referrals VALUES
+INSERT INTO {{zone_name}}.customer_network.referrals VALUES
     (37,  1,  6, 0.4, 'peer',   2020),
     (38,  2,  7, 0.5, 'vendor', 2021),
     (39,  3,  8, 0.6, 'peer',   2022),
@@ -185,7 +185,7 @@ INSERT INTO {{zone_name}}.graph_demos.referrals VALUES
     (71, 35, 40, 0.6, 'peer',   2024);
 
 -- Batch 3: Strategic alliances (prime scatter, cross-region)
-INSERT INTO {{zone_name}}.graph_demos.referrals VALUES
+INSERT INTO {{zone_name}}.customer_network.referrals VALUES
     (72,  1,  3, 0.3, 'partner',    2021),
     (73,  2,  5, 0.4, 'peer',       2022),
     (74,  3,  2, 0.5, 'subsidiary', 2023),
@@ -220,7 +220,7 @@ INSERT INTO {{zone_name}}.graph_demos.referrals VALUES
 -- Quarters cycle: Q1_2024, Q2_2024, Q3_2024, Q4_2024
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.orders (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.orders (
     order_id    BIGINT,
     customer_id BIGINT,
     amount      DOUBLE,
@@ -228,10 +228,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.orders (
     quarter     STRING
 ) LOCATION '{{data_path}}/sales/orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.orders TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.customer_network.orders TO USER {{current_user}};
 
 -- Pass 1: orders 1-40 (one per customer)
-INSERT INTO {{zone_name}}.graph_demos.orders VALUES
+INSERT INTO {{zone_name}}.customer_network.orders VALUES
     (  1,  1,  5373, 'Analytics',    'Q2_2024'),
     (  2,  2,  5746, 'Security',     'Q3_2024'),
     (  3,  3,  6119, 'Integration',  'Q4_2024'),
@@ -274,7 +274,7 @@ INSERT INTO {{zone_name}}.graph_demos.orders VALUES
     ( 40, 40, 19920, 'Platform',     'Q1_2024');
 
 -- Pass 2: orders 41-80 (one per customer)
-INSERT INTO {{zone_name}}.graph_demos.orders VALUES
+INSERT INTO {{zone_name}}.customer_network.orders VALUES
     ( 41,  1, 28212, 'Analytics',    'Q2_2024'),
     ( 42,  2, 28585, 'Security',     'Q3_2024'),
     ( 43,  3, 28958, 'Integration',  'Q4_2024'),
@@ -317,7 +317,7 @@ INSERT INTO {{zone_name}}.graph_demos.orders VALUES
     ( 80, 40, 42759, 'Platform',     'Q1_2024');
 
 -- Pass 3: orders 81-120 (one per customer)
-INSERT INTO {{zone_name}}.graph_demos.orders VALUES
+INSERT INTO {{zone_name}}.customer_network.orders VALUES
     ( 81,  1,  6050, 'Analytics',    'Q2_2024'),
     ( 82,  2,  6423, 'Security',     'Q3_2024'),
     ( 83,  3,  6796, 'Integration',  'Q4_2024'),
@@ -363,16 +363,16 @@ INSERT INTO {{zone_name}}.graph_demos.orders VALUES
 -- STEP 5: Sales Reps — 8 reps, 2 per region
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.sales_reps (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.sales_reps (
     rep_id    BIGINT,
     rep_name  STRING,
     territory STRING,
     quota     INT
 ) LOCATION '{{data_path}}/sales/sales_reps';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.sales_reps TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.customer_network.sales_reps TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.sales_reps VALUES
+INSERT INTO {{zone_name}}.customer_network.sales_reps VALUES
     (1, 'Alice_Chen',   'North', 200000),
     (2, 'Bob_Kumar',    'North', 228571),
     (3, 'Carol_Davis',  'South', 257142),
@@ -386,20 +386,20 @@ INSERT INTO {{zone_name}}.graph_demos.sales_reps VALUES
 -- STEP 6: Working Tables (created empty, populated by Cypher in queries.sql)
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.influence_scores (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.influence_scores (
     customer_id     BIGINT,
     influence_score DOUBLE,
     influence_rank  BIGINT
 ) LOCATION '{{data_path}}/sales/influence_scores';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.influence_scores TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.customer_network.influence_scores TO USER {{current_user}};
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.community_assignments (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.community_assignments (
     customer_id  BIGINT,
     community_id BIGINT
 ) LOCATION '{{data_path}}/sales/community_assignments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.community_assignments TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.customer_network.community_assignments TO USER {{current_user}};
 
 -- ############################################################################
 -- STEP 7: Graph Definition
@@ -409,9 +409,9 @@ GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.community_assignments TO USER {{c
 -- EDGE TYPE COLUMN enables filtering by referral_type in Cypher.
 -- ############################################################################
 
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.customer_network
-    VERTEX TABLE {{zone_name}}.graph_demos.customers ID COLUMN id NODE TYPE COLUMN region NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.referrals SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.customer_network.customer_network
+    VERTEX TABLE {{zone_name}}.customer_network.customers ID COLUMN id NODE TYPE COLUMN region NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.customer_network.referrals SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN referral_type
     DIRECTED;

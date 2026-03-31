@@ -22,13 +22,13 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Graph property storage mode demo tables';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.shipping_network
+    COMMENT 'Global shipping route optimization with weighted paths';
 
 -- ============================================================================
 -- TABLE 1: ports — 25 major world container ports
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.ports (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.shipping_network.ports (
     id              BIGINT,
     name            STRING,
     region          STRING,
@@ -36,9 +36,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.ports (
     crane_count     INT
 ) LOCATION '{{data_path}}/ports';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.ports TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.shipping_network.ports TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.ports VALUES
+INSERT INTO {{zone_name}}.shipping_network.ports VALUES
     (1,  'Shanghai',     'Asia',        43500, 6),
     (2,  'Singapore',    'Asia',        37200, 7),
     (3,  'Rotterdam',    'Europe',      14800, 8),
@@ -72,7 +72,7 @@ INSERT INTO {{zone_name}}.graph_demos.ports VALUES
 -- transit_days = ROUND(distance_nm / 400)
 -- fuel_cost_usd = distance_nm * 0.15
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.routes (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.shipping_network.routes (
     id              BIGINT,
     src             BIGINT,
     dst             BIGINT,
@@ -82,12 +82,12 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.routes (
     fuel_cost_usd   DOUBLE
 ) LOCATION '{{data_path}}/routes';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.routes TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.shipping_network.routes TO USER {{current_user}};
 
 -- ============================================================================
 -- Batch 1: Asia intra-regional trunk routes (16 edges)
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.routes VALUES
+INSERT INTO {{zone_name}}.shipping_network.routes VALUES
     (1,  1,  2,  2200.0, 6,  'trunk', 330.00),
     (2,  1,  4,   530.0, 1,  'trunk',  79.50),
     (3,  1,  5,   820.0, 2,  'trunk', 123.00),
@@ -108,7 +108,7 @@ INSERT INTO {{zone_name}}.graph_demos.routes VALUES
 -- ============================================================================
 -- Batch 2: Asia-Europe trunk routes (10 edges)
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.routes VALUES
+INSERT INTO {{zone_name}}.shipping_network.routes VALUES
     (17, 1,  3,  10500.0, 26, 'trunk', 1575.00),
     (18, 1,  11, 10200.0, 26, 'trunk', 1530.00),
     (19, 2,  3,   8400.0, 21, 'trunk', 1260.00),
@@ -123,7 +123,7 @@ INSERT INTO {{zone_name}}.graph_demos.routes VALUES
 -- ============================================================================
 -- Batch 3: Asia-Americas trunk routes (10 edges)
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.routes VALUES
+INSERT INTO {{zone_name}}.shipping_network.routes VALUES
     (27, 1,  12,  6500.0, 16, 'trunk',  975.00),
     (28, 1,  13,  6500.0, 16, 'trunk',  975.00),
     (29, 4,  12,  5500.0, 14, 'trunk',  825.00),
@@ -138,7 +138,7 @@ INSERT INTO {{zone_name}}.graph_demos.routes VALUES
 -- ============================================================================
 -- Batch 4: Europe intra-regional feeder routes (10 edges)
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.routes VALUES
+INSERT INTO {{zone_name}}.shipping_network.routes VALUES
     (37, 3,  18,   180.0, 0, 'feeder',  27.00),
     (38, 3,  19,  1500.0, 4, 'feeder', 225.00),
     (39, 3,  25,  1700.0, 4, 'feeder', 255.00),
@@ -153,7 +153,7 @@ INSERT INTO {{zone_name}}.graph_demos.routes VALUES
 -- ============================================================================
 -- Batch 5: Transshipment hub connections (9 edges)
 -- ============================================================================
-INSERT INTO {{zone_name}}.graph_demos.routes VALUES
+INSERT INTO {{zone_name}}.shipping_network.routes VALUES
     (47, 2,  20,  1650.0, 4, 'transshipment', 247.50),
     (48, 2,  21,  2400.0, 6, 'transshipment', 360.00),
     (49, 20, 8,   1500.0, 4, 'transshipment', 225.00),
@@ -167,9 +167,9 @@ INSERT INTO {{zone_name}}.graph_demos.routes VALUES
 -- ============================================================================
 -- GRAPH DEFINITION
 -- ============================================================================
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.shipping_network
-    VERTEX TABLE {{zone_name}}.graph_demos.ports ID COLUMN id NODE TYPE COLUMN region NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.routes SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.shipping_network.shipping_network
+    VERTEX TABLE {{zone_name}}.shipping_network.ports ID COLUMN id NODE TYPE COLUMN region NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.shipping_network.routes SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN distance_nm
     EDGE TYPE COLUMN route_type
     DIRECTED;

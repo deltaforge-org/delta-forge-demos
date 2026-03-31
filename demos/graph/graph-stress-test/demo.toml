@@ -26,16 +26,16 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.graph.stress_test_network"
+name = "{{zone_name}}.stress_test_network.stress_test_network"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.st_edges"
+name = "{{zone_name}}.stress_test_network.st_edges"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.st_people"
+name = "{{zone_name}}.stress_test_network.st_people"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.st_departments"
+name = "{{zone_name}}.stress_test_network.st_departments"

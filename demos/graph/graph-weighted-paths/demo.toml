@@ -23,12 +23,12 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "graph"
-name = "{{zone_name}}.graph.shipping_network"
+name = "{{zone_name}}.shipping_network.shipping_network"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.ports"
+name = "{{zone_name}}.shipping_network.ports"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.graph.routes"
+name = "{{zone_name}}.shipping_network.routes"

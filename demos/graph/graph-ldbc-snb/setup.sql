@@ -26,7 +26,7 @@
 --   tagclass_is_subclass_of_tagclass (70)
 --
 -- Graph:
---   {{zone_name}}.ldbc.ldbc_social_network — Person vertices + KNOWS edges (core social graph)
+--   {{zone_name}}.ldbc_social_network.ldbc_social_network — Person vertices + KNOWS edges (core social graph)
 -- ============================================================================
 -- ############################################################################
 -- STEP 1: Zone & Schemas
@@ -34,7 +34,7 @@
 -- This demo creates 33 external tables, 31 Delta tables, and 1 graph.
 -- Two schemas keep staging separate from the materialized layer:
 --   {{zone_name}}.raw   — External CSV tables (staging / read-only)
---   {{zone_name}}.ldbc  — Delta tables + graph definition (queryable)
+--   {{zone_name}}.ldbc_social_network — Delta tables + graph definition (queryable)
 -- The cleanup script drops both schemas and everything in them.
 -- ############################################################################
 
@@ -44,8 +44,8 @@ CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
     COMMENT 'LDBC SNB — external CSV staging tables (pipe-delimited)';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.ldbc
-    COMMENT 'LDBC SNB — Delta tables, graph definition, and queries';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.ldbc_social_network
+    COMMENT 'LDBC SNB SF0.1 — Delta tables, Person-KNOWS graph, and Cypher/SQL queries';
 -- ############################################################################
 -- STEP 2: External Tables — Raw CSV Readers (pipe-delimited)
 -- ############################################################################
@@ -275,7 +275,7 @@ GRANT ADMIN ON TABLE {{zone_name}}.raw.post_is_located_in_place TO USER {{curren
 -- ############################################################################
 -- === Static Entity Tables ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.place
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.place
 LOCATION '{{data_path}}/delta/place'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -284,8 +284,8 @@ AS SELECT
     type
 FROM {{zone_name}}.raw.place;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.place TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.organisation
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.place TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.organisation
 LOCATION '{{data_path}}/delta/organisation'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -294,8 +294,8 @@ AS SELECT
     url
 FROM {{zone_name}}.raw.organisation;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.organisation TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.tag
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.organisation TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tag
 LOCATION '{{data_path}}/delta/tag'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -303,8 +303,8 @@ AS SELECT
     url
 FROM {{zone_name}}.raw.tag;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.tag TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.tagclass
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tag TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tagclass
 LOCATION '{{data_path}}/delta/tagclass'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -312,44 +312,44 @@ AS SELECT
     url
 FROM {{zone_name}}.raw.tagclass;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.tagclass TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tagclass TO USER {{current_user}};
 -- === Static Edge Tables ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.organisation_is_located_in_place
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.organisation_is_located_in_place
 LOCATION '{{data_path}}/delta/organisation_is_located_in_place'
 AS SELECT
     CAST(organisation_id AS BIGINT) AS organisation_id,
     CAST(place_id AS BIGINT) AS place_id
 FROM {{zone_name}}.raw.organisation_is_located_in_place;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.organisation_is_located_in_place TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.place_is_part_of_place
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.organisation_is_located_in_place TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.place_is_part_of_place
 LOCATION '{{data_path}}/delta/place_is_part_of_place'
 AS SELECT
     CAST(place_id AS BIGINT) AS place_id,
     CAST(parent_place_id AS BIGINT) AS parent_place_id
 FROM {{zone_name}}.raw.place_is_part_of_place;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.place_is_part_of_place TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.tag_has_type_tagclass
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.place_is_part_of_place TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tag_has_type_tagclass
 LOCATION '{{data_path}}/delta/tag_has_type_tagclass'
 AS SELECT
     CAST(tag_id AS BIGINT) AS tag_id,
     CAST(tagclass_id AS BIGINT) AS tagclass_id
 FROM {{zone_name}}.raw.tag_has_type_tagclass;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.tag_has_type_tagclass TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.tagclass_is_subclass_of_tagclass
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tag_has_type_tagclass TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass
 LOCATION '{{data_path}}/delta/tagclass_is_subclass_of_tagclass'
 AS SELECT
     CAST(tagclass_id AS BIGINT) AS tagclass_id,
     CAST(parent_tagclass_id AS BIGINT) AS parent_tagclass_id
 FROM {{zone_name}}.raw.tagclass_is_subclass_of_tagclass;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.tagclass_is_subclass_of_tagclass TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass TO USER {{current_user}};
 -- === Dynamic Entity Tables ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person
 LOCATION '{{data_path}}/delta/person'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -362,8 +362,8 @@ AS SELECT
     browser_used
 FROM {{zone_name}}.raw.person;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.comment
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment
 LOCATION '{{data_path}}/delta/comment'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -374,8 +374,8 @@ AS SELECT
     CAST(length AS INT) AS length
 FROM {{zone_name}}.raw.comment;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.comment TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.post
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post
 LOCATION '{{data_path}}/delta/post'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -388,8 +388,8 @@ AS SELECT
     CAST(length AS INT) AS length
 FROM {{zone_name}}.raw.post;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.post TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.forum
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum
 LOCATION '{{data_path}}/delta/forum'
 AS SELECT
     CAST(id AS BIGINT) AS id,
@@ -397,10 +397,10 @@ AS SELECT
     CAST(creation_date AS BIGINT) AS creation_date
 FROM {{zone_name}}.raw.forum;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.forum TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum TO USER {{current_user}};
 -- === Dynamic Edge Tables ===
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_knows_person
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_knows_person
 LOCATION '{{data_path}}/delta/person_knows_person'
 AS SELECT
     CAST(src AS BIGINT) AS src,
@@ -408,56 +408,56 @@ AS SELECT
     CAST(creation_date AS BIGINT) AS creation_date
 FROM {{zone_name}}.raw.person_knows_person;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_knows_person TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.comment_has_creator_person
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_knows_person TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_has_creator_person
 LOCATION '{{data_path}}/delta/comment_has_creator_person'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(person_id AS BIGINT) AS person_id
 FROM {{zone_name}}.raw.comment_has_creator_person;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.comment_has_creator_person TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.comment_has_tag_tag
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_has_creator_person TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_has_tag_tag
 LOCATION '{{data_path}}/delta/comment_has_tag_tag'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(tag_id AS BIGINT) AS tag_id
 FROM {{zone_name}}.raw.comment_has_tag_tag;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.comment_has_tag_tag TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.comment_is_located_in_place
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_has_tag_tag TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_is_located_in_place
 LOCATION '{{data_path}}/delta/comment_is_located_in_place'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(place_id AS BIGINT) AS place_id
 FROM {{zone_name}}.raw.comment_is_located_in_place;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.comment_is_located_in_place TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.comment_reply_of_comment
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_is_located_in_place TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_reply_of_comment
 LOCATION '{{data_path}}/delta/comment_reply_of_comment'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(reply_to_comment_id AS BIGINT) AS reply_to_comment_id
 FROM {{zone_name}}.raw.comment_reply_of_comment;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.comment_reply_of_comment TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.comment_reply_of_post
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_reply_of_comment TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_reply_of_post
 LOCATION '{{data_path}}/delta/comment_reply_of_post'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(post_id AS BIGINT) AS post_id
 FROM {{zone_name}}.raw.comment_reply_of_post;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.comment_reply_of_post TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.forum_container_of_post
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_reply_of_post TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_container_of_post
 LOCATION '{{data_path}}/delta/forum_container_of_post'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(post_id AS BIGINT) AS post_id
 FROM {{zone_name}}.raw.forum_container_of_post;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.forum_container_of_post TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.forum_has_member_person
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_container_of_post TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_has_member_person
 LOCATION '{{data_path}}/delta/forum_has_member_person'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
@@ -465,48 +465,48 @@ AS SELECT
     CAST(join_date AS BIGINT) AS join_date
 FROM {{zone_name}}.raw.forum_has_member_person;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.forum_has_member_person TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.forum_has_moderator_person
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_has_member_person TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_has_moderator_person
 LOCATION '{{data_path}}/delta/forum_has_moderator_person'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(person_id AS BIGINT) AS person_id
 FROM {{zone_name}}.raw.forum_has_moderator_person;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.forum_has_moderator_person TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.forum_has_tag_tag
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_has_moderator_person TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_has_tag_tag
 LOCATION '{{data_path}}/delta/forum_has_tag_tag'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(tag_id AS BIGINT) AS tag_id
 FROM {{zone_name}}.raw.forum_has_tag_tag;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.forum_has_tag_tag TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_email
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_has_tag_tag TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_email
 LOCATION '{{data_path}}/delta/person_email'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     email
 FROM {{zone_name}}.raw.person_email;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_email TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_has_interest_tag
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_email TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_has_interest_tag
 LOCATION '{{data_path}}/delta/person_has_interest_tag'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(tag_id AS BIGINT) AS tag_id
 FROM {{zone_name}}.raw.person_has_interest_tag;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_has_interest_tag TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_is_located_in_place
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_has_interest_tag TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_is_located_in_place
 LOCATION '{{data_path}}/delta/person_is_located_in_place'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(place_id AS BIGINT) AS place_id
 FROM {{zone_name}}.raw.person_is_located_in_place;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_is_located_in_place TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_likes_comment
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_is_located_in_place TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_likes_comment
 LOCATION '{{data_path}}/delta/person_likes_comment'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
@@ -514,8 +514,8 @@ AS SELECT
     CAST(creation_date AS BIGINT) AS creation_date
 FROM {{zone_name}}.raw.person_likes_comment;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_likes_comment TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_likes_post
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_likes_comment TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_likes_post
 LOCATION '{{data_path}}/delta/person_likes_post'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
@@ -523,16 +523,16 @@ AS SELECT
     CAST(creation_date AS BIGINT) AS creation_date
 FROM {{zone_name}}.raw.person_likes_post;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_likes_post TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_speaks_language
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_likes_post TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_speaks_language
 LOCATION '{{data_path}}/delta/person_speaks_language'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     language
 FROM {{zone_name}}.raw.person_speaks_language;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_speaks_language TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_study_at_organisation
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_speaks_language TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_study_at_organisation
 LOCATION '{{data_path}}/delta/person_study_at_organisation'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
@@ -540,8 +540,8 @@ AS SELECT
     CAST(class_year AS INT) AS class_year
 FROM {{zone_name}}.raw.person_study_at_organisation;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_study_at_organisation TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.person_work_at_organisation
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_study_at_organisation TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_work_at_organisation
 LOCATION '{{data_path}}/delta/person_work_at_organisation'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
@@ -549,40 +549,40 @@ AS SELECT
     CAST(work_from AS INT) AS work_from
 FROM {{zone_name}}.raw.person_work_at_organisation;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.person_work_at_organisation TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.post_has_creator_person
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_work_at_organisation TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post_has_creator_person
 LOCATION '{{data_path}}/delta/post_has_creator_person'
 AS SELECT
     CAST(post_id AS BIGINT) AS post_id,
     CAST(person_id AS BIGINT) AS person_id
 FROM {{zone_name}}.raw.post_has_creator_person;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.post_has_creator_person TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.post_has_tag_tag
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post_has_creator_person TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post_has_tag_tag
 LOCATION '{{data_path}}/delta/post_has_tag_tag'
 AS SELECT
     CAST(post_id AS BIGINT) AS post_id,
     CAST(tag_id AS BIGINT) AS tag_id
 FROM {{zone_name}}.raw.post_has_tag_tag;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.post_has_tag_tag TO USER {{current_user}};
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc.post_is_located_in_place
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post_has_tag_tag TO USER {{current_user}};
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post_is_located_in_place
 LOCATION '{{data_path}}/delta/post_is_located_in_place'
 AS SELECT
     CAST(post_id AS BIGINT) AS post_id,
     CAST(place_id AS BIGINT) AS place_id
 FROM {{zone_name}}.raw.post_is_located_in_place;
 
-GRANT ADMIN ON TABLE {{zone_name}}.ldbc.post_is_located_in_place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post_is_located_in_place TO USER {{current_user}};
 -- ############################################################################
 -- STEP 4: Graph Definition
 -- ############################################################################
 -- Creates a named graph coupling Person vertices with KNOWS edges.
 -- This is the core social graph used for algorithm verification.
--- Cypher queries reference this by name: USE {{zone_name}}.ldbc.ldbc_social_network MATCH ...
+-- Cypher queries reference this by name: USE {{zone_name}}.ldbc_social_network.ldbc_social_network MATCH ...
 -- ############################################################################
 
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.ldbc.ldbc_social_network
-    VERTEX TABLE {{zone_name}}.ldbc.person ID COLUMN id NODE TYPE COLUMN gender NODE NAME COLUMN first_name
-    EDGE TABLE {{zone_name}}.ldbc.person_knows_person SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.ldbc_social_network.ldbc_social_network
+    VERTEX TABLE {{zone_name}}.ldbc_social_network.person ID COLUMN id NODE TYPE COLUMN gender NODE NAME COLUMN first_name
+    EDGE TABLE {{zone_name}}.ldbc_social_network.person_knows_person SOURCE COLUMN src TARGET COLUMN dst
     DIRECTED;

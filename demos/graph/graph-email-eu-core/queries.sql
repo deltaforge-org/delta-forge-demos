@@ -32,11 +32,11 @@
 
 -- Verify vertex count
 ASSERT VALUE row_count = 1005
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.email_eu.vertices;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.email_eu_core.vertices;
 
 -- Verify edge count
 ASSERT VALUE row_count = 25571
-SELECT COUNT(*) AS row_count FROM {{zone_name}}.email_eu.edges;
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.email_eu_core.edges;
 
 
 -- ============================================================================
@@ -52,9 +52,9 @@ SHOW GRAPH;
 
 ASSERT VALUE orphan_edges = 0
 SELECT COUNT(*) AS orphan_edges
-FROM {{zone_name}}.email_eu.edges e
-WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu.vertices v WHERE v.vertex_id = e.src)
-   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu.vertices v WHERE v.vertex_id = e.dst);
+FROM {{zone_name}}.email_eu_core.edges e
+WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu_core.vertices v WHERE v.vertex_id = e.src)
+   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu_core.vertices v WHERE v.vertex_id = e.dst);
 
 
 -- ============================================================================
@@ -64,7 +64,7 @@ WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu.vertices v WHERE v.vertex
 
 ASSERT VALUE self_loops = 642
 SELECT COUNT(*) AS self_loops
-FROM {{zone_name}}.email_eu.edges
+FROM {{zone_name}}.email_eu_core.edges
 WHERE src = dst;
 
 
@@ -73,7 +73,7 @@ WHERE src = dst;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 6
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 MATCH (a)-[r]->(b)
 RETURN r.edge_type AS type, count(r) AS count
 ORDER BY count DESC;
@@ -89,7 +89,7 @@ ORDER BY count DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 MATCH (v)
 RETURN v.id AS member_id, v.name AS name, v.department AS department
 ORDER BY member_id
@@ -102,7 +102,7 @@ LIMIT 20;
 -- This is a directed graph, so in-degree and out-degree differ.
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 MATCH (a)-[r]->(b)
 RETURN a.id AS member_id, a.name AS name, COUNT(r) AS out_degree
 ORDER BY out_degree DESC, member_id ASC
@@ -115,7 +115,7 @@ LIMIT 20;
 -- Members who receive the most emails may be managers or key contacts.
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 MATCH (a)-[r]->(b)
 RETURN b.id AS member_id, b.name AS name, COUNT(r) AS in_degree
 ORDER BY in_degree DESC, member_id ASC
@@ -137,11 +137,11 @@ FROM (
         COALESCE(i.in_deg, 0) AS in_deg
     FROM (
         SELECT src AS member_id, COUNT(*) AS out_deg
-        FROM {{zone_name}}.email_eu.edges GROUP BY src
+        FROM {{zone_name}}.email_eu_core.edges GROUP BY src
     ) o
     FULL OUTER JOIN (
         SELECT dst AS member_id, COUNT(*) AS in_deg
-        FROM {{zone_name}}.email_eu.edges GROUP BY dst
+        FROM {{zone_name}}.email_eu_core.edges GROUP BY dst
     ) i ON o.member_id = i.member_id
 )
 ORDER BY total_degree DESC
@@ -161,14 +161,14 @@ SELECT hub, COUNT(DISTINCT reachable) AS reachable_in_2_hops
 FROM (
     -- 1-hop: direct targets of the top hub
     SELECT th.src AS hub, e1.dst AS reachable
-    FROM (SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu.edges GROUP BY src ORDER BY deg DESC LIMIT 1) th
-    JOIN {{zone_name}}.email_eu.edges e1 ON e1.src = th.src
+    FROM (SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu_core.edges GROUP BY src ORDER BY deg DESC LIMIT 1) th
+    JOIN {{zone_name}}.email_eu_core.edges e1 ON e1.src = th.src
     UNION
     -- 2-hop: targets of targets
     SELECT th.src AS hub, e2.dst AS reachable
-    FROM (SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu.edges GROUP BY src ORDER BY deg DESC LIMIT 1) th
-    JOIN {{zone_name}}.email_eu.edges e1 ON e1.src = th.src
-    JOIN {{zone_name}}.email_eu.edges e2 ON e2.src = e1.dst
+    FROM (SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu_core.edges GROUP BY src ORDER BY deg DESC LIMIT 1) th
+    JOIN {{zone_name}}.email_eu_core.edges e1 ON e1.src = th.src
+    JOIN {{zone_name}}.email_eu_core.edges e2 ON e2.src = e1.dst
 ) sub
 GROUP BY hub;
 
@@ -185,7 +185,7 @@ GROUP BY hub;
 -- from other influential members.
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -198,7 +198,7 @@ LIMIT 10;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -212,7 +212,7 @@ LIMIT 10;
 -- Members who bridge different departments will have high betweenness.
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.betweenness()
 YIELD node_id, centrality, rank
 RETURN node_id, centrality, rank
@@ -225,7 +225,7 @@ LIMIT 10;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 10
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.closeness()
 YIELD node_id, closeness, rank
 RETURN node_id, closeness, rank
@@ -241,7 +241,7 @@ LIMIT 10;
 
 -- Non-deterministic: Louvain is a stochastic algorithm; community count varies by run and resolution setting
 ASSERT WARNING ROW_COUNT >= 1
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
 RETURN community_id, count(*) AS members
@@ -257,7 +257,7 @@ LIMIT 20;
 -- Largest component has 986 nodes (98.1% of the network).
 
 ASSERT ROW_COUNT = 20
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS members
@@ -271,7 +271,7 @@ LIMIT 20;
 -- Diameter is 7, so shortest paths are relatively short.
 
 ASSERT ROW_COUNT = 2
-USE {{zone_name}}.email_eu.email_eu_core
+USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.shortestPath({source: 0, target: 1})
 YIELD node_id, step, distance
 RETURN node_id, step, distance
@@ -293,26 +293,26 @@ ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 8
 SELECT 'Vertex count = 1005' AS test,
        CASE WHEN cnt = 1005 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu.vertices)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu_core.vertices)
 
 UNION ALL
 SELECT 'Edge row count = 25571',
        CASE WHEN cnt = 25571 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu.edges)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu_core.edges)
 
 UNION ALL
 SELECT 'Has self-loops (directed network)',
        CASE WHEN cnt > 0 THEN 'PASS (' || CAST(cnt AS VARCHAR) || ' self-loops)'
             ELSE 'FAIL (expected self-loops but found 0)' END
-FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu.edges WHERE src = dst)
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu_core.edges WHERE src = dst)
 
 UNION ALL
 SELECT 'All edge endpoints exist',
        CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' orphans)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu.edges e
-    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu.vertices v WHERE v.vertex_id = e.src)
-       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu.vertices v WHERE v.vertex_id = e.dst)
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.email_eu_core.edges e
+    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu_core.vertices v WHERE v.vertex_id = e.src)
+       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.email_eu_core.vertices v WHERE v.vertex_id = e.dst)
 )
 
 UNION ALL
@@ -320,7 +320,7 @@ SELECT 'Vertex ID range = 0–1004',
        CASE WHEN min_id = 0 AND max_id = 1004 THEN 'PASS'
             ELSE 'FAIL (range ' || CAST(min_id AS VARCHAR) || '–' || CAST(max_id AS VARCHAR) || ')' END
 FROM (
-    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.email_eu.vertices
+    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.email_eu_core.vertices
 )
 
 UNION ALL
@@ -328,9 +328,9 @@ SELECT 'Directed graph (asymmetric edges)',
        CASE WHEN asym_count > 0 THEN 'PASS (' || CAST(asym_count AS VARCHAR) || ' edges without reverse)'
             ELSE 'FAIL (all edges symmetric — expected directed)' END
 FROM (
-    SELECT COUNT(*) AS asym_count FROM {{zone_name}}.email_eu.edges e1
+    SELECT COUNT(*) AS asym_count FROM {{zone_name}}.email_eu_core.edges e1
     WHERE NOT EXISTS (
-        SELECT 1 FROM {{zone_name}}.email_eu.edges e2
+        SELECT 1 FROM {{zone_name}}.email_eu_core.edges e2
         WHERE e2.src = e1.dst AND e2.dst = e1.src
     )
 )
@@ -341,7 +341,7 @@ SELECT 'Max out-degree check',
             ELSE 'FAIL (max out-degree = ' || CAST(max_deg AS VARCHAR) || ', expected >= 50)' END
 FROM (
     SELECT MAX(deg) AS max_deg FROM (
-        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu.edges GROUP BY src
+        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.email_eu_core.edges GROUP BY src
     )
 )
 
@@ -349,5 +349,5 @@ UNION ALL
 SELECT '6 edge types (including self-note)',
        CASE WHEN cnt = 6 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
 FROM (
-    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.email_eu.edges
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.email_eu_core.edges
 );

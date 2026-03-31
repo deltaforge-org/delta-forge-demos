@@ -23,8 +23,8 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
-    COMMENT 'Graph storage mode comparison tables';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.storage_modes
+    COMMENT 'Flattened, hybrid, and JSON graph property storage comparison';
 
 -- ############################################################################
 --  MODE 1: FLATTENED — All properties as individual columns
@@ -39,7 +39,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.graph_demos
 --   Level:      id%10=0 → L5/Director, id%5=0 → L4/Manager, id%3=0 → L3/Senior, else L2/L1
 -- ============================================================================
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.persons_flat (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_flat (
     id          BIGINT,
     name        STRING,
     age         INT,
@@ -50,9 +50,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.persons_flat (
     active      BOOLEAN
 ) LOCATION '{{data_path}}/persons_flat';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.persons_flat TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.persons_flat TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.persons_flat
+INSERT INTO {{zone_name}}.storage_modes.persons_flat
 SELECT
     id,
     CASE (id % 10)
@@ -91,7 +91,7 @@ FROM generate_series(1, 50) AS t(id);
 -- edges_flat — ~189 directed edges (all properties as columns)
 -- ============================================================================
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.edges_flat (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_flat (
     id                  BIGINT,
     src                 BIGINT,
     dst                 BIGINT,
@@ -103,10 +103,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.edges_flat (
     rating              INT
 ) LOCATION '{{data_path}}/edges_flat';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.edges_flat TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.edges_flat TO USER {{current_user}};
 
 -- Batch 1: Intra-department colleagues (~80 edges, stride 5)
-INSERT INTO {{zone_name}}.graph_demos.edges_flat
+INSERT INTO {{zone_name}}.storage_modes.edges_flat
 SELECT
     ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -130,7 +130,7 @@ FROM (
 WHERE src != dst;
 
 -- Batch 2: City cross-department social (~40 edges, stride 4)
-INSERT INTO {{zone_name}}.graph_demos.edges_flat
+INSERT INTO {{zone_name}}.storage_modes.edges_flat
 SELECT
     1000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -155,7 +155,7 @@ WHERE src != dst
   AND (src % 5) != (dst % 5);
 
 -- Batch 3: Hierarchical mentorship (~25 edges)
-INSERT INTO {{zone_name}}.graph_demos.edges_flat
+INSERT INTO {{zone_name}}.storage_modes.edges_flat
 SELECT
     2000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -188,7 +188,7 @@ WHERE src != dst
   AND dst BETWEEN 1 AND 50;
 
 -- Batch 4: Bridge node connections (~20 edges)
-INSERT INTO {{zone_name}}.graph_demos.edges_flat
+INSERT INTO {{zone_name}}.storage_modes.edges_flat
 SELECT
     3000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -215,7 +215,7 @@ WHERE src != dst
   AND dst BETWEEN 1 AND 50;
 
 -- Batch 5: Weak ties — pseudo-random long-range (~24 edges)
-INSERT INTO {{zone_name}}.graph_demos.edges_flat
+INSERT INTO {{zone_name}}.storage_modes.edges_flat
 SELECT
     4000 + ROW_NUMBER() OVER (ORDER BY src, dst) AS id,
     src, dst,
@@ -237,9 +237,9 @@ FROM (
 WHERE src != dst;
 
 -- Graph definition: FLATTENED (default — no PROPERTIES clause needed)
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.storage_flat
-    VERTEX TABLE {{zone_name}}.graph_demos.persons_flat ID COLUMN id NODE TYPE COLUMN department NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.edges_flat SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.storage_modes.storage_flat
+    VERTEX TABLE {{zone_name}}.storage_modes.persons_flat ID COLUMN id NODE TYPE COLUMN department NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.storage_modes.edges_flat SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN relationship_type
     DIRECTED;
@@ -249,7 +249,7 @@ CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.storage_flat
 --  MODE 2: HYBRID — Core columns + JSON extras
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.persons_hybrid (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_hybrid (
     id      BIGINT,
     name    STRING,
     age     INT,
@@ -257,9 +257,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.persons_hybrid (
     extras  STRING
 ) LOCATION '{{data_path}}/persons_hybrid';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.persons_hybrid TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.persons_hybrid TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.persons_hybrid
+INSERT INTO {{zone_name}}.storage_modes.persons_hybrid
 SELECT
     id, name, age, department AS label,
     '{"department": "' || department ||
@@ -268,9 +268,9 @@ SELECT
     '", "level": "' || level ||
     '", "active": ' || CASE WHEN active THEN 'true' ELSE 'false' END ||
     '}' AS extras
-FROM {{zone_name}}.graph_demos.persons_flat;
+FROM {{zone_name}}.storage_modes.persons_flat;
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.edges_hybrid (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_hybrid (
     src                 BIGINT,
     dst                 BIGINT,
     weight              DOUBLE,
@@ -278,9 +278,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.edges_hybrid (
     extras              STRING
 ) LOCATION '{{data_path}}/edges_hybrid';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.edges_hybrid TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.edges_hybrid TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.edges_hybrid
+INSERT INTO {{zone_name}}.storage_modes.edges_hybrid
 SELECT
     src, dst, weight, relationship_type,
     '{"since_year": ' || CAST(since_year AS VARCHAR) ||
@@ -288,12 +288,12 @@ SELECT
     '", "context": "' || context ||
     '", "rating": ' || CAST(rating AS VARCHAR) ||
     '}' AS extras
-FROM {{zone_name}}.graph_demos.edges_flat;
+FROM {{zone_name}}.storage_modes.edges_flat;
 
 -- Graph definition: HYBRID
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.storage_hybrid
-    VERTEX TABLE {{zone_name}}.graph_demos.persons_hybrid ID COLUMN id NODE TYPE COLUMN label NODE NAME COLUMN name
-    EDGE TABLE {{zone_name}}.graph_demos.edges_hybrid SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.storage_modes.storage_hybrid
+    VERTEX TABLE {{zone_name}}.storage_modes.persons_hybrid ID COLUMN id NODE TYPE COLUMN label NODE NAME COLUMN name
+    EDGE TABLE {{zone_name}}.storage_modes.edges_hybrid SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN relationship_type
     DIRECTED
@@ -305,15 +305,15 @@ CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.storage_hybrid
 --  MODE 3: JSON — Single JSON blob per vertex/edge
 -- ############################################################################
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.persons_json (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_json (
     id      BIGINT,
     label   STRING,
     props   STRING
 ) LOCATION '{{data_path}}/persons_json';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.persons_json TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.persons_json TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.persons_json
+INSERT INTO {{zone_name}}.storage_modes.persons_json
 SELECT
     id, department AS label,
     '{"name": "' || name ||
@@ -324,9 +324,9 @@ SELECT
     '", "level": "' || level ||
     '", "active": ' || CASE WHEN active THEN 'true' ELSE 'false' END ||
     '}' AS props
-FROM {{zone_name}}.graph_demos.persons_flat;
+FROM {{zone_name}}.storage_modes.persons_flat;
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.edges_json (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_json (
     src                BIGINT,
     dst                BIGINT,
     weight             DOUBLE,
@@ -334,9 +334,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.graph_demos.edges_json (
     props              STRING
 ) LOCATION '{{data_path}}/edges_json';
 
-GRANT ADMIN ON TABLE {{zone_name}}.graph_demos.edges_json TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.edges_json TO USER {{current_user}};
 
-INSERT INTO {{zone_name}}.graph_demos.edges_json
+INSERT INTO {{zone_name}}.storage_modes.edges_json
 SELECT
     src, dst, weight, relationship_type,
     '{"since_year": ' || CAST(since_year AS VARCHAR) ||
@@ -344,12 +344,12 @@ SELECT
     '", "context": "' || context ||
     '", "rating": ' || CAST(rating AS VARCHAR) ||
     '}' AS props
-FROM {{zone_name}}.graph_demos.edges_flat;
+FROM {{zone_name}}.storage_modes.edges_flat;
 
 -- Graph definition: JSON
-CREATE GRAPH IF NOT EXISTS {{zone_name}}.graph_demos.storage_json
-    VERTEX TABLE {{zone_name}}.graph_demos.persons_json ID COLUMN id NODE TYPE COLUMN label
-    EDGE TABLE {{zone_name}}.graph_demos.edges_json SOURCE COLUMN src TARGET COLUMN dst
+CREATE GRAPH IF NOT EXISTS {{zone_name}}.storage_modes.storage_json
+    VERTEX TABLE {{zone_name}}.storage_modes.persons_json ID COLUMN id NODE TYPE COLUMN label
+    EDGE TABLE {{zone_name}}.storage_modes.edges_json SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN relationship_type
     DIRECTED

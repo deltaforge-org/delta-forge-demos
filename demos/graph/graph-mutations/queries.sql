@@ -32,7 +32,7 @@ ASSERT VALUE hospital = 'General' WHERE name = 'Dr. Chen_1'
 ASSERT VALUE years_exp = 8 WHERE name = 'Dr. Chen_1'
 ASSERT VALUE specialty = 'Orthopedics' WHERE name = 'Dr. Patel_2'
 ASSERT VALUE hospital = 'University' WHERE name = 'Dr. Patel_2'
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (n)
 RETURN n.name AS name, n.specialty AS specialty, n.hospital AS hospital,
        n.years_exp AS years_exp
@@ -51,7 +51,7 @@ ASSERT VALUE referral_type = 'second-opinion' WHERE src = 1 AND dst = 4
 ASSERT VALUE referral_type = 'consult' WHERE src = 1 AND dst = 8
 ASSERT VALUE weight = 0.52 WHERE src = 1 AND dst = 4
 ASSERT VALUE weight = 0.64 WHERE src = 1 AND dst = 8
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 RETURN a.id AS src, b.id AS dst, r.referral_type AS referral_type,
        r.weight AS weight, r.status AS status
@@ -71,7 +71,7 @@ ASSERT VALUE cnt = 5 WHERE specialty = 'Oncology'
 ASSERT VALUE cnt = 5 WHERE specialty = 'Orthopedics'
 ASSERT VALUE cnt = 5 WHERE specialty = 'Pediatrics'
 ASSERT VALUE cnt = 5 WHERE specialty = 'Radiology'
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (n)
 RETURN n.specialty AS specialty, count(*) AS cnt
 ORDER BY specialty;
@@ -88,7 +88,7 @@ ORDER BY specialty;
 -- The hospital system hires Dr. Rivera_31, the first Emergency Medicine
 -- physician. This tests vertex insertion into an active graph.
 
-INSERT INTO {{zone_name}}.graph_demos.physicians
+INSERT INTO {{zone_name}}.hospital_referrals.physicians
 VALUES (31, 'Dr. Rivera_31', 'Emergency', 'Memorial', 15, true);
 
 
@@ -103,7 +103,7 @@ ASSERT VALUE name = 'Dr. Rivera_31' WHERE id = 31
 ASSERT VALUE specialty = 'Emergency' WHERE id = 31
 ASSERT VALUE hospital = 'Memorial' WHERE id = 31
 ASSERT VALUE years_exp = 15 WHERE id = 31
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (n)
 WHERE n.id = 31
 RETURN n.id AS id, n.name AS name, n.specialty AS specialty,
@@ -116,7 +116,7 @@ RETURN n.id AS id, n.name AS name, n.specialty AS specialty,
 -- Dr. Rivera_31 sends an urgent consult referral to Dr. Chen_1 (Neurology).
 -- This tests edge insertion connecting the new vertex to the existing graph.
 
-INSERT INTO {{zone_name}}.graph_demos.referrals
+INSERT INTO {{zone_name}}.hospital_referrals.referrals
 VALUES (9999, 31, 1, 0.9, 'consult', '2025-06-15', 'active');
 
 
@@ -131,7 +131,7 @@ ASSERT VALUE src_name = 'Dr. Rivera_31' WHERE dst_name = 'Dr. Chen_1'
 ASSERT VALUE weight = 0.9 WHERE dst_name = 'Dr. Chen_1'
 ASSERT VALUE referral_type = 'consult' WHERE dst_name = 'Dr. Chen_1'
 ASSERT VALUE status = 'active' WHERE dst_name = 'Dr. Chen_1'
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 WHERE a.id = 31
 RETURN a.name AS src_name, b.name AS dst_name, r.weight AS weight,
@@ -150,7 +150,7 @@ RETURN a.name AS src_name, b.name AS dst_name, r.weight AS weight,
 -- weight to 1.0 (maximum priority) and status to 'urgent' for all
 -- outgoing edges from physician 1.
 
-UPDATE {{zone_name}}.graph_demos.referrals
+UPDATE {{zone_name}}.hospital_referrals.referrals
 SET weight = 1.0, status = 'urgent'
 WHERE src = 1;
 
@@ -169,7 +169,7 @@ ASSERT VALUE referral_type = 'second-opinion' WHERE dst_id = 4
 ASSERT VALUE weight = 1.0 WHERE dst_id = 8
 ASSERT VALUE status = 'urgent' WHERE dst_id = 8
 ASSERT VALUE referral_type = 'consult' WHERE dst_id = 8
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 WHERE a.id = 1
 RETURN a.name AS src_name, b.id AS dst_id, b.name AS dst_name,
@@ -190,7 +190,7 @@ ORDER BY b.id;
 -- graph. Note: Dr. Chen's edges were updated to 'urgent' in step 8, so
 -- none of his edges will be deleted even if they were originally completed.
 
-DELETE FROM {{zone_name}}.graph_demos.referrals
+DELETE FROM {{zone_name}}.hospital_referrals.referrals
 WHERE status = 'completed';
 
 
@@ -201,7 +201,7 @@ WHERE status = 'completed';
 -- - 15 completed deleted). Zero edges should have status='completed'.
 
 ASSERT ROW_COUNT = 61
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 RETURN a.id AS src, b.id AS dst, r.status AS status
 ORDER BY a.id, b.id;
@@ -213,7 +213,7 @@ ORDER BY a.id, b.id;
 -- Explicitly filter for completed status to confirm none survive.
 
 ASSERT ROW_COUNT = 0
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 WHERE r.status = 'completed'
 RETURN a.id AS src, b.id AS dst;
@@ -232,7 +232,7 @@ RETURN a.id AS src, b.id AS dst;
 -- (1.0), boosting his referral targets' PageRank scores.
 
 ASSERT ROW_COUNT = 31
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -250,7 +250,7 @@ ASSERT ROW_COUNT = 31
 ASSERT VALUE out_degree = 1 WHERE node_id = 31
 ASSERT VALUE in_degree = 0 WHERE node_id = 31
 ASSERT VALUE total_degree = 1 WHERE node_id = 31
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
 RETURN node_id, in_degree, out_degree, total_degree
@@ -265,17 +265,17 @@ ORDER BY total_degree DESC;
 -- edges all have weight=1.0 and status='urgent'.
 
 ASSERT ROW_COUNT = 31
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (n)
 RETURN n.id AS id;
 
 ASSERT ROW_COUNT = 61
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 RETURN a.id AS src, b.id AS dst;
 
 ASSERT ROW_COUNT = 0
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 WHERE r.status = 'completed'
 RETURN a.id AS src;
@@ -285,7 +285,7 @@ ASSERT VALUE weight = 1.0 WHERE src = 1 AND dst = 4
 ASSERT VALUE weight = 1.0 WHERE src = 1 AND dst = 8
 ASSERT VALUE status = 'urgent' WHERE src = 1 AND dst = 4
 ASSERT VALUE status = 'urgent' WHERE src = 1 AND dst = 8
-USE {{zone_name}}.graph_demos.hospital_referrals
+USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 WHERE a.id = 1
 RETURN a.id AS src, b.id AS dst, r.weight AS weight, r.status AS status
