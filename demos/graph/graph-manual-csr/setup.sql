@@ -17,8 +17,8 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
-    COMMENT 'Manual CSR — external CSV staging tables (pipe-delimited)';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_manual_raw
+    COMMENT 'Manual CSR Karate — external CSV staging tables (pipe-delimited)';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_manual
     COMMENT 'Karate Club — Delta tables, graph with NO AUTO CACHE CSR, and manual CSR management queries';
@@ -27,17 +27,17 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_manual
 -- STEP 2: External Tables — Raw CSV Readers (pipe-delimited)
 -- ############################################################################
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.karate_edges
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.karate_manual_raw.karate_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.karate_manual_raw.karate_edges TO USER {{current_user}};
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.karate_vertices
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.karate_manual_raw.karate_vertices
 USING CSV LOCATION '{{data_path}}/vertices.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.karate_manual_raw.karate_vertices TO USER {{current_user}};
 
 -- ############################################################################
 -- STEP 3: Delta Tables — Materialized with Proper Types
@@ -52,7 +52,7 @@ AS SELECT
     CAST(dst AS BIGINT) AS dst,
     CAST(weight AS DOUBLE) AS weight,
     CAST(edge_type AS VARCHAR) AS edge_type
-FROM {{zone_name}}.raw.karate_edges;
+FROM {{zone_name}}.karate_manual_raw.karate_edges;
 
 GRANT ADMIN ON TABLE {{zone_name}}.karate_manual.edges TO USER {{current_user}};
 
@@ -64,7 +64,7 @@ AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
     CAST(name AS VARCHAR) AS name,
     CAST(category AS VARCHAR) AS role
-FROM {{zone_name}}.raw.karate_vertices;
+FROM {{zone_name}}.karate_manual_raw.karate_vertices;
 
 GRANT ADMIN ON TABLE {{zone_name}}.karate_manual.vertices TO USER {{current_user}};
 

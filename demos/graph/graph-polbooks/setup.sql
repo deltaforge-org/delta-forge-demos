@@ -20,8 +20,8 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
-    COMMENT 'Political Books — external CSV staging table';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.polbooks_raw
+    COMMENT 'Political Books — external CSV staging tables';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.political_books
     COMMENT 'Political Books — Delta tables, co-purchasing graph with ground-truth communities, and algorithm queries';
@@ -29,11 +29,11 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.political_books
 -- STEP 2: External Table — Raw CSV Reader (pipe-delimited)
 -- ############################################################################
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.polbooks_edges
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.polbooks_raw.polbooks_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.polbooks_edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.polbooks_raw.polbooks_edges TO USER {{current_user}};
 -- ############################################################################
 -- STEP 3: Delta Tables — Materialized with Proper Types
 -- ############################################################################
@@ -47,16 +47,16 @@ AS SELECT
     CAST(dst AS BIGINT) AS dst,
     CAST(weight AS DOUBLE) AS weight,
     CAST(edge_type AS VARCHAR) AS edge_type
-FROM {{zone_name}}.raw.polbooks_edges;
+FROM {{zone_name}}.polbooks_raw.polbooks_edges;
 
 GRANT ADMIN ON TABLE {{zone_name}}.political_books.edges TO USER {{current_user}};
 -- === Vertex Table (from CSV with book titles and political leanings) ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.polbooks_vertices
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.polbooks_raw.polbooks_vertices
 USING CSV LOCATION '{{data_path}}/vertices.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.polbooks_vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.polbooks_raw.polbooks_vertices TO USER {{current_user}};
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.political_books.vertices
 LOCATION '{{data_path}}/delta/vertices'
@@ -64,7 +64,7 @@ AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
     CAST(name AS VARCHAR) AS name,
     CAST(category AS VARCHAR) AS leaning
-FROM {{zone_name}}.raw.polbooks_vertices;
+FROM {{zone_name}}.polbooks_raw.polbooks_vertices;
 
 GRANT ADMIN ON TABLE {{zone_name}}.political_books.vertices TO USER {{current_user}};
 -- ############################################################################

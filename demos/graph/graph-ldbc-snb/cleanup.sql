@@ -5,7 +5,7 @@
 -- Graph definition must be dropped before the tables it references.
 -- Two schemas are cleaned up:
 --   {{zone_name}}.ldbc_social_network — Delta tables + graph definition
---   {{zone_name}}.raw  — External CSV staging tables
+--   {{zone_name}}.ldbc_snb_raw  — External CSV staging tables
 -- ============================================================================
 
 -- STEP 1: Drop graph definition (also cascade-deletes table mappings)
@@ -53,41 +53,41 @@ DROP DELTA TABLE IF EXISTS {{zone_name}}.ldbc_social_network.organisation WITH F
 DROP DELTA TABLE IF EXISTS {{zone_name}}.ldbc_social_network.place WITH FILES;
 
 -- STEP 6: Drop external tables (staging schema)
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.post_is_located_in_place WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.post_has_tag_tag WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.post_has_creator_person WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_work_at_organisation WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_study_at_organisation WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_speaks_language WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_likes_post WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_likes_comment WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_is_located_in_place WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_has_interest_tag WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_email WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.forum_has_tag_tag WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.forum_has_moderator_person WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.forum_has_member_person WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.forum_container_of_post WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.comment_reply_of_post WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.comment_reply_of_comment WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.comment_is_located_in_place WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.comment_has_tag_tag WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.comment_has_creator_person WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person_knows_person WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.forum WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.post WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.comment WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.person WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.tagclass_is_subclass_of_tagclass WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.tag_has_type_tagclass WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.place_is_part_of_place WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.organisation_is_located_in_place WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.tagclass WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.tag WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.organisation WITH FILES;
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.raw.place WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.post_is_located_in_place WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.post_has_tag_tag WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.post_has_creator_person WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_work_at_organisation WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_study_at_organisation WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_speaks_language WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_likes_post WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_likes_comment WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_is_located_in_place WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_has_interest_tag WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_email WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.forum_has_tag_tag WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.forum_has_moderator_person WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.forum_has_member_person WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.forum_container_of_post WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.comment_reply_of_post WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.comment_reply_of_comment WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.comment_is_located_in_place WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.comment_has_tag_tag WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.comment_has_creator_person WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person_knows_person WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.forum WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.post WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.comment WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.person WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.tagclass_is_subclass_of_tagclass WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.tag_has_type_tagclass WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.place_is_part_of_place WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.organisation_is_located_in_place WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.tagclass WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.tag WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.organisation WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.ldbc_snb_raw.place WITH FILES;
 
 -- STEP 7: Drop schemas and zone
 DROP SCHEMA IF EXISTS {{zone_name}}.ldbc_social_network;
-DROP SCHEMA IF EXISTS {{zone_name}}.raw;
+DROP SCHEMA IF EXISTS {{zone_name}}.ldbc_snb_raw;
 DROP ZONE IF EXISTS {{zone_name}};

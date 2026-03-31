@@ -33,7 +33,7 @@
 -- ############################################################################
 -- This demo creates 33 external tables, 31 Delta tables, and 1 graph.
 -- Two schemas keep staging separate from the materialized layer:
---   {{zone_name}}.raw   — External CSV tables (staging / read-only)
+--   {{zone_name}}.ldbc_snb_raw   — External CSV tables (staging / read-only)
 --   {{zone_name}}.ldbc_social_network — Delta tables + graph definition (queryable)
 -- The cleanup script drops both schemas and everything in them.
 -- ############################################################################
@@ -41,7 +41,7 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.ldbc_snb_raw
     COMMENT 'LDBC SNB — external CSV staging tables (pipe-delimited)';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.ldbc_social_network
@@ -56,138 +56,138 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.ldbc_social_network
 -- ############################################################################
 -- === Static Entities ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.place
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.place
 USING CSV LOCATION '{{data_path}}/place.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.organisation
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.organisation
 USING CSV LOCATION '{{data_path}}/organisation.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.tag
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.tag
 USING CSV LOCATION '{{data_path}}/tag.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.tagclass
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.tagclass
 USING CSV LOCATION '{{data_path}}/tagclass.csv'
 OPTIONS (header = 'true', delimiter = '|');
 -- === Static Edges ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.organisation_is_located_in_place
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.organisation_is_located_in_place
 USING CSV LOCATION '{{data_path}}/organisation_is_located_in_place.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.place_is_part_of_place
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.place_is_part_of_place
 USING CSV LOCATION '{{data_path}}/place_is_part_of_place.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.tag_has_type_tagclass
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.tag_has_type_tagclass
 USING CSV LOCATION '{{data_path}}/tag_has_type_tagclass.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.tagclass_is_subclass_of_tagclass
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.tagclass_is_subclass_of_tagclass
 USING CSV LOCATION '{{data_path}}/tagclass_is_subclass_of_tagclass.csv'
 OPTIONS (header = 'true', delimiter = '|');
 -- === Dynamic Entities ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person
 USING CSV LOCATION '{{data_path}}/person.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.comment
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.comment
 USING CSV LOCATION '{{data_path}}/comment.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.post
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.post
 USING CSV LOCATION '{{data_path}}/post.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.forum
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.forum
 USING CSV LOCATION '{{data_path}}/forum.csv'
 OPTIONS (header = 'true', delimiter = '|');
 -- === Dynamic Edges ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_knows_person
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_knows_person
 USING CSV LOCATION '{{data_path}}/person_knows_person.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.comment_has_creator_person
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.comment_has_creator_person
 USING CSV LOCATION '{{data_path}}/comment_has_creator_person.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.comment_has_tag_tag
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.comment_has_tag_tag
 USING CSV LOCATION '{{data_path}}/comment_has_tag_tag.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.comment_is_located_in_place
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.comment_is_located_in_place
 USING CSV LOCATION '{{data_path}}/comment_is_located_in_place.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.comment_reply_of_comment
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.comment_reply_of_comment
 USING CSV LOCATION '{{data_path}}/comment_reply_of_comment.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.comment_reply_of_post
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.comment_reply_of_post
 USING CSV LOCATION '{{data_path}}/comment_reply_of_post.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.forum_container_of_post
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.forum_container_of_post
 USING CSV LOCATION '{{data_path}}/forum_container_of_post.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.forum_has_member_person
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.forum_has_member_person
 USING CSV LOCATION '{{data_path}}/forum_has_member_person.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.forum_has_moderator_person
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.forum_has_moderator_person
 USING CSV LOCATION '{{data_path}}/forum_has_moderator_person.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.forum_has_tag_tag
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.forum_has_tag_tag
 USING CSV LOCATION '{{data_path}}/forum_has_tag_tag.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_email
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_email
 USING CSV LOCATION '{{data_path}}/person_email_emailaddress.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_has_interest_tag
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_has_interest_tag
 USING CSV LOCATION '{{data_path}}/person_has_interest_tag.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_is_located_in_place
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_is_located_in_place
 USING CSV LOCATION '{{data_path}}/person_is_located_in_place.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_likes_comment
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_likes_comment
 USING CSV LOCATION '{{data_path}}/person_likes_comment.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_likes_post
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_likes_post
 USING CSV LOCATION '{{data_path}}/person_likes_post.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_speaks_language
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_speaks_language
 USING CSV LOCATION '{{data_path}}/person_speaks_language.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_study_at_organisation
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_study_at_organisation
 USING CSV LOCATION '{{data_path}}/person_study_at_organisation.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.person_work_at_organisation
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.person_work_at_organisation
 USING CSV LOCATION '{{data_path}}/person_work_at_organisation.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.post_has_creator_person
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.post_has_creator_person
 USING CSV LOCATION '{{data_path}}/post_has_creator_person.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.post_has_tag_tag
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.post_has_tag_tag
 USING CSV LOCATION '{{data_path}}/post_has_tag_tag.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.post_is_located_in_place
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.ldbc_snb_raw.post_is_located_in_place
 USING CSV LOCATION '{{data_path}}/post_is_located_in_place.csv'
 OPTIONS (header = 'true', delimiter = '|');
 -- ############################################################################
@@ -197,74 +197,74 @@ OPTIONS (header = 'true', delimiter = '|');
 -- ############################################################################
 
 -- Static entities
-GRANT ADMIN ON TABLE {{zone_name}}.raw.place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.place TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.organisation TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.organisation TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.tag TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.tag TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.tagclass TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.tagclass TO USER {{current_user}};
 
 -- Static edges
-GRANT ADMIN ON TABLE {{zone_name}}.raw.organisation_is_located_in_place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.organisation_is_located_in_place TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.place_is_part_of_place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.place_is_part_of_place TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.tag_has_type_tagclass TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.tag_has_type_tagclass TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.tagclass_is_subclass_of_tagclass TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.tagclass_is_subclass_of_tagclass TO USER {{current_user}};
 
 -- Dynamic entities
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.comment TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.comment TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.post TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.post TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.forum TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.forum TO USER {{current_user}};
 
 -- Dynamic edges
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_knows_person TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_knows_person TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.comment_has_creator_person TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.comment_has_creator_person TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.comment_has_tag_tag TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.comment_has_tag_tag TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.comment_is_located_in_place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.comment_is_located_in_place TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.comment_reply_of_comment TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.comment_reply_of_comment TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.comment_reply_of_post TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.comment_reply_of_post TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.forum_container_of_post TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.forum_container_of_post TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.forum_has_member_person TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.forum_has_member_person TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.forum_has_moderator_person TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.forum_has_moderator_person TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.forum_has_tag_tag TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.forum_has_tag_tag TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_email TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_email TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_has_interest_tag TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_has_interest_tag TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_is_located_in_place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_is_located_in_place TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_likes_comment TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_likes_comment TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_likes_post TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_likes_post TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_speaks_language TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_speaks_language TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_study_at_organisation TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_study_at_organisation TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.person_work_at_organisation TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.person_work_at_organisation TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.post_has_creator_person TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.post_has_creator_person TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.post_has_tag_tag TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.post_has_tag_tag TO USER {{current_user}};
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.post_is_located_in_place TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.ldbc_snb_raw.post_is_located_in_place TO USER {{current_user}};
 -- ############################################################################
 -- STEP 3: Delta Tables — Materialized with Proper Types
 -- ############################################################################
@@ -282,7 +282,7 @@ AS SELECT
     name,
     url,
     type
-FROM {{zone_name}}.raw.place;
+FROM {{zone_name}}.ldbc_snb_raw.place;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.place TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.organisation
@@ -292,7 +292,7 @@ AS SELECT
     type,
     name,
     url
-FROM {{zone_name}}.raw.organisation;
+FROM {{zone_name}}.ldbc_snb_raw.organisation;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.organisation TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tag
@@ -301,7 +301,7 @@ AS SELECT
     CAST(id AS BIGINT) AS id,
     name,
     url
-FROM {{zone_name}}.raw.tag;
+FROM {{zone_name}}.ldbc_snb_raw.tag;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tag TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tagclass
@@ -310,7 +310,7 @@ AS SELECT
     CAST(id AS BIGINT) AS id,
     name,
     url
-FROM {{zone_name}}.raw.tagclass;
+FROM {{zone_name}}.ldbc_snb_raw.tagclass;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tagclass TO USER {{current_user}};
 -- === Static Edge Tables ===
@@ -320,7 +320,7 @@ LOCATION '{{data_path}}/delta/organisation_is_located_in_place'
 AS SELECT
     CAST(organisation_id AS BIGINT) AS organisation_id,
     CAST(place_id AS BIGINT) AS place_id
-FROM {{zone_name}}.raw.organisation_is_located_in_place;
+FROM {{zone_name}}.ldbc_snb_raw.organisation_is_located_in_place;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.organisation_is_located_in_place TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.place_is_part_of_place
@@ -328,7 +328,7 @@ LOCATION '{{data_path}}/delta/place_is_part_of_place'
 AS SELECT
     CAST(place_id AS BIGINT) AS place_id,
     CAST(parent_place_id AS BIGINT) AS parent_place_id
-FROM {{zone_name}}.raw.place_is_part_of_place;
+FROM {{zone_name}}.ldbc_snb_raw.place_is_part_of_place;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.place_is_part_of_place TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tag_has_type_tagclass
@@ -336,7 +336,7 @@ LOCATION '{{data_path}}/delta/tag_has_type_tagclass'
 AS SELECT
     CAST(tag_id AS BIGINT) AS tag_id,
     CAST(tagclass_id AS BIGINT) AS tagclass_id
-FROM {{zone_name}}.raw.tag_has_type_tagclass;
+FROM {{zone_name}}.ldbc_snb_raw.tag_has_type_tagclass;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tag_has_type_tagclass TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass
@@ -344,7 +344,7 @@ LOCATION '{{data_path}}/delta/tagclass_is_subclass_of_tagclass'
 AS SELECT
     CAST(tagclass_id AS BIGINT) AS tagclass_id,
     CAST(parent_tagclass_id AS BIGINT) AS parent_tagclass_id
-FROM {{zone_name}}.raw.tagclass_is_subclass_of_tagclass;
+FROM {{zone_name}}.ldbc_snb_raw.tagclass_is_subclass_of_tagclass;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass TO USER {{current_user}};
 -- === Dynamic Entity Tables ===
@@ -360,7 +360,7 @@ AS SELECT
     CAST(creation_date AS BIGINT) AS creation_date,
     location_ip,
     browser_used
-FROM {{zone_name}}.raw.person;
+FROM {{zone_name}}.ldbc_snb_raw.person;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment
@@ -372,7 +372,7 @@ AS SELECT
     browser_used,
     content,
     CAST(length AS INT) AS length
-FROM {{zone_name}}.raw.comment;
+FROM {{zone_name}}.ldbc_snb_raw.comment;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post
@@ -386,7 +386,7 @@ AS SELECT
     language,
     content,
     CAST(length AS INT) AS length
-FROM {{zone_name}}.raw.post;
+FROM {{zone_name}}.ldbc_snb_raw.post;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum
@@ -395,7 +395,7 @@ AS SELECT
     CAST(id AS BIGINT) AS id,
     title,
     CAST(creation_date AS BIGINT) AS creation_date
-FROM {{zone_name}}.raw.forum;
+FROM {{zone_name}}.ldbc_snb_raw.forum;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum TO USER {{current_user}};
 -- === Dynamic Edge Tables ===
@@ -406,7 +406,7 @@ AS SELECT
     CAST(src AS BIGINT) AS src,
     CAST(dst AS BIGINT) AS dst,
     CAST(creation_date AS BIGINT) AS creation_date
-FROM {{zone_name}}.raw.person_knows_person;
+FROM {{zone_name}}.ldbc_snb_raw.person_knows_person;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_knows_person TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_has_creator_person
@@ -414,7 +414,7 @@ LOCATION '{{data_path}}/delta/comment_has_creator_person'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(person_id AS BIGINT) AS person_id
-FROM {{zone_name}}.raw.comment_has_creator_person;
+FROM {{zone_name}}.ldbc_snb_raw.comment_has_creator_person;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_has_creator_person TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_has_tag_tag
@@ -422,7 +422,7 @@ LOCATION '{{data_path}}/delta/comment_has_tag_tag'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(tag_id AS BIGINT) AS tag_id
-FROM {{zone_name}}.raw.comment_has_tag_tag;
+FROM {{zone_name}}.ldbc_snb_raw.comment_has_tag_tag;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_has_tag_tag TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_is_located_in_place
@@ -430,7 +430,7 @@ LOCATION '{{data_path}}/delta/comment_is_located_in_place'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(place_id AS BIGINT) AS place_id
-FROM {{zone_name}}.raw.comment_is_located_in_place;
+FROM {{zone_name}}.ldbc_snb_raw.comment_is_located_in_place;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_is_located_in_place TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_reply_of_comment
@@ -438,7 +438,7 @@ LOCATION '{{data_path}}/delta/comment_reply_of_comment'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(reply_to_comment_id AS BIGINT) AS reply_to_comment_id
-FROM {{zone_name}}.raw.comment_reply_of_comment;
+FROM {{zone_name}}.ldbc_snb_raw.comment_reply_of_comment;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_reply_of_comment TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.comment_reply_of_post
@@ -446,7 +446,7 @@ LOCATION '{{data_path}}/delta/comment_reply_of_post'
 AS SELECT
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(post_id AS BIGINT) AS post_id
-FROM {{zone_name}}.raw.comment_reply_of_post;
+FROM {{zone_name}}.ldbc_snb_raw.comment_reply_of_post;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.comment_reply_of_post TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_container_of_post
@@ -454,7 +454,7 @@ LOCATION '{{data_path}}/delta/forum_container_of_post'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(post_id AS BIGINT) AS post_id
-FROM {{zone_name}}.raw.forum_container_of_post;
+FROM {{zone_name}}.ldbc_snb_raw.forum_container_of_post;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_container_of_post TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_has_member_person
@@ -463,7 +463,7 @@ AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(person_id AS BIGINT) AS person_id,
     CAST(join_date AS BIGINT) AS join_date
-FROM {{zone_name}}.raw.forum_has_member_person;
+FROM {{zone_name}}.ldbc_snb_raw.forum_has_member_person;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_has_member_person TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_has_moderator_person
@@ -471,7 +471,7 @@ LOCATION '{{data_path}}/delta/forum_has_moderator_person'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(person_id AS BIGINT) AS person_id
-FROM {{zone_name}}.raw.forum_has_moderator_person;
+FROM {{zone_name}}.ldbc_snb_raw.forum_has_moderator_person;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_has_moderator_person TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.forum_has_tag_tag
@@ -479,7 +479,7 @@ LOCATION '{{data_path}}/delta/forum_has_tag_tag'
 AS SELECT
     CAST(forum_id AS BIGINT) AS forum_id,
     CAST(tag_id AS BIGINT) AS tag_id
-FROM {{zone_name}}.raw.forum_has_tag_tag;
+FROM {{zone_name}}.ldbc_snb_raw.forum_has_tag_tag;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.forum_has_tag_tag TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_email
@@ -487,7 +487,7 @@ LOCATION '{{data_path}}/delta/person_email'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     email
-FROM {{zone_name}}.raw.person_email;
+FROM {{zone_name}}.ldbc_snb_raw.person_email;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_email TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_has_interest_tag
@@ -495,7 +495,7 @@ LOCATION '{{data_path}}/delta/person_has_interest_tag'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(tag_id AS BIGINT) AS tag_id
-FROM {{zone_name}}.raw.person_has_interest_tag;
+FROM {{zone_name}}.ldbc_snb_raw.person_has_interest_tag;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_has_interest_tag TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_is_located_in_place
@@ -503,7 +503,7 @@ LOCATION '{{data_path}}/delta/person_is_located_in_place'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(place_id AS BIGINT) AS place_id
-FROM {{zone_name}}.raw.person_is_located_in_place;
+FROM {{zone_name}}.ldbc_snb_raw.person_is_located_in_place;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_is_located_in_place TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_likes_comment
@@ -512,7 +512,7 @@ AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(comment_id AS BIGINT) AS comment_id,
     CAST(creation_date AS BIGINT) AS creation_date
-FROM {{zone_name}}.raw.person_likes_comment;
+FROM {{zone_name}}.ldbc_snb_raw.person_likes_comment;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_likes_comment TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_likes_post
@@ -521,7 +521,7 @@ AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(post_id AS BIGINT) AS post_id,
     CAST(creation_date AS BIGINT) AS creation_date
-FROM {{zone_name}}.raw.person_likes_post;
+FROM {{zone_name}}.ldbc_snb_raw.person_likes_post;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_likes_post TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_speaks_language
@@ -529,7 +529,7 @@ LOCATION '{{data_path}}/delta/person_speaks_language'
 AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     language
-FROM {{zone_name}}.raw.person_speaks_language;
+FROM {{zone_name}}.ldbc_snb_raw.person_speaks_language;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_speaks_language TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_study_at_organisation
@@ -538,7 +538,7 @@ AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(organisation_id AS BIGINT) AS organisation_id,
     CAST(class_year AS INT) AS class_year
-FROM {{zone_name}}.raw.person_study_at_organisation;
+FROM {{zone_name}}.ldbc_snb_raw.person_study_at_organisation;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_study_at_organisation TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.person_work_at_organisation
@@ -547,7 +547,7 @@ AS SELECT
     CAST(person_id AS BIGINT) AS person_id,
     CAST(organisation_id AS BIGINT) AS organisation_id,
     CAST(work_from AS INT) AS work_from
-FROM {{zone_name}}.raw.person_work_at_organisation;
+FROM {{zone_name}}.ldbc_snb_raw.person_work_at_organisation;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.person_work_at_organisation TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post_has_creator_person
@@ -555,7 +555,7 @@ LOCATION '{{data_path}}/delta/post_has_creator_person'
 AS SELECT
     CAST(post_id AS BIGINT) AS post_id,
     CAST(person_id AS BIGINT) AS person_id
-FROM {{zone_name}}.raw.post_has_creator_person;
+FROM {{zone_name}}.ldbc_snb_raw.post_has_creator_person;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post_has_creator_person TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post_has_tag_tag
@@ -563,7 +563,7 @@ LOCATION '{{data_path}}/delta/post_has_tag_tag'
 AS SELECT
     CAST(post_id AS BIGINT) AS post_id,
     CAST(tag_id AS BIGINT) AS tag_id
-FROM {{zone_name}}.raw.post_has_tag_tag;
+FROM {{zone_name}}.ldbc_snb_raw.post_has_tag_tag;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post_has_tag_tag TO USER {{current_user}};
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.ldbc_social_network.post_is_located_in_place
@@ -571,7 +571,7 @@ LOCATION '{{data_path}}/delta/post_is_located_in_place'
 AS SELECT
     CAST(post_id AS BIGINT) AS post_id,
     CAST(place_id AS BIGINT) AS place_id
-FROM {{zone_name}}.raw.post_is_located_in_place;
+FROM {{zone_name}}.ldbc_snb_raw.post_is_located_in_place;
 
 GRANT ADMIN ON TABLE {{zone_name}}.ldbc_social_network.post_is_located_in_place TO USER {{current_user}};
 -- ############################################################################

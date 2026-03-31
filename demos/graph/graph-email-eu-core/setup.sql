@@ -20,7 +20,7 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.email_eu_core_raw
     COMMENT 'Email-Eu-core — external CSV staging table';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.email_eu_core
@@ -29,11 +29,11 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.email_eu_core
 -- STEP 2: External Table — Raw CSV Reader (pipe-delimited)
 -- ############################################################################
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.email_eu_edges
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.email_eu_core_raw.email_eu_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.email_eu_edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.email_eu_core_raw.email_eu_edges TO USER {{current_user}};
 -- ############################################################################
 -- STEP 3: Delta Tables — Materialized with Proper Types
 -- ############################################################################
@@ -47,16 +47,16 @@ AS SELECT
     CAST(dst AS BIGINT) AS dst,
     CAST(weight AS DOUBLE) AS weight,
     CAST(edge_type AS VARCHAR) AS edge_type
-FROM {{zone_name}}.raw.email_eu_edges;
+FROM {{zone_name}}.email_eu_core_raw.email_eu_edges;
 
 GRANT ADMIN ON TABLE {{zone_name}}.email_eu_core.edges TO USER {{current_user}};
 -- === Vertex Table (from CSV with member names and departments) ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.email_eu_vertices
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.email_eu_core_raw.email_eu_vertices
 USING CSV LOCATION '{{data_path}}/vertices.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.email_eu_vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.email_eu_core_raw.email_eu_vertices TO USER {{current_user}};
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.email_eu_core.vertices
 LOCATION '{{data_path}}/delta/vertices'
@@ -64,7 +64,7 @@ AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
     CAST(name AS VARCHAR) AS name,
     CAST(category AS VARCHAR) AS department
-FROM {{zone_name}}.raw.email_eu_vertices;
+FROM {{zone_name}}.email_eu_core_raw.email_eu_vertices;
 
 GRANT ADMIN ON TABLE {{zone_name}}.email_eu_core.vertices TO USER {{current_user}};
 -- ############################################################################

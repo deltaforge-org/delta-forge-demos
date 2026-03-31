@@ -20,8 +20,8 @@
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External and Delta tables — demo datasets';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.raw
-    COMMENT 'Karate Club — external CSV staging table';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_club_raw
+    COMMENT 'Karate Club — external CSV staging tables';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_club
     COMMENT 'Karate club — Delta tables and graph definition for Zachary dataset';
@@ -29,11 +29,11 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_club
 -- STEP 2: External Table — Raw CSV Reader (pipe-delimited)
 -- ############################################################################
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.karate_edges
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.karate_club_raw.karate_edges
 USING CSV LOCATION '{{data_path}}/edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_edges TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.karate_club_raw.karate_edges TO USER {{current_user}};
 -- ############################################################################
 -- STEP 3: Delta Tables — Materialized with Proper Types
 -- ############################################################################
@@ -47,16 +47,16 @@ AS SELECT
     CAST(dst AS BIGINT) AS dst,
     CAST(weight AS DOUBLE) AS weight,
     CAST(edge_type AS VARCHAR) AS edge_type
-FROM {{zone_name}}.raw.karate_edges;
+FROM {{zone_name}}.karate_club_raw.karate_edges;
 
 GRANT ADMIN ON TABLE {{zone_name}}.karate_club.edges TO USER {{current_user}};
 -- === Vertex Table (from CSV with member names and roles) ===
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.raw.karate_vertices
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.karate_club_raw.karate_vertices
 USING CSV LOCATION '{{data_path}}/vertices.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
-GRANT ADMIN ON TABLE {{zone_name}}.raw.karate_vertices TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.karate_club_raw.karate_vertices TO USER {{current_user}};
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate_club.vertices
 LOCATION '{{data_path}}/delta/vertices'
@@ -64,7 +64,7 @@ AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
     CAST(name AS VARCHAR) AS name,
     CAST(category AS VARCHAR) AS role
-FROM {{zone_name}}.raw.karate_vertices;
+FROM {{zone_name}}.karate_club_raw.karate_vertices;
 
 GRANT ADMIN ON TABLE {{zone_name}}.karate_club.vertices TO USER {{current_user}};
 -- ############################################################################
