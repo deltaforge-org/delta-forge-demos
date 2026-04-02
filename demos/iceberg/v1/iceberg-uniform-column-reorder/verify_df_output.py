@@ -49,8 +49,8 @@ def verify_patient_records(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    # Format version (UniForm generates v2)
-    assert_format_version(metadata, 2)
+    # Format version
+    assert_format_version(metadata, 1)
 
     # Final state: 24 rows (20 seed + 4 inserted after reorder)
     assert_row_count(table, 24)

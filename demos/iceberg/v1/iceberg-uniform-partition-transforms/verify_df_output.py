@@ -53,7 +53,7 @@ def verify_app_events(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 2)
+    assert_format_version(metadata, 1)
 
     # Final: 36 seed + 3 (existing days) + 6 (new day) - 1 (delete error from 03-01) = 44
     assert_row_count(table, 44)

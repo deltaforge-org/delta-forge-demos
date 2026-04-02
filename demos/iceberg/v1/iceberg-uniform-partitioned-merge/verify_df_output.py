@@ -50,7 +50,7 @@ def verify_warehouse_inventory(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 2)
+    assert_format_version(metadata, 1)
 
     # Final: 36 seed + 6 new - 6 discontinued = 36
     assert_row_count(table, 36)

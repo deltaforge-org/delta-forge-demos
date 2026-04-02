@@ -50,7 +50,7 @@ def verify_delivery_tracking(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 2)
+    assert_format_version(metadata, 1)
 
     # Final: 36 + 18 + 18 = 72
     assert_row_count(table, 72)
