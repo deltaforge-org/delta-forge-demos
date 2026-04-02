@@ -66,11 +66,12 @@ WHERE order_id IN (1, 2, 3, 4, 5);
 -- ============================================================================
 -- The 5 pending→processing updates shift the counts.
 
-ASSERT ROW_COUNT = 4
+ASSERT ROW_COUNT = 5
 ASSERT VALUE order_count = 5 WHERE status = 'pending'
 ASSERT VALUE order_count = 12 WHERE status = 'processing'
 ASSERT VALUE order_count = 6 WHERE status = 'shipped'
 ASSERT VALUE order_count = 5 WHERE status = 'delivered'
+ASSERT VALUE order_count = 2 WHERE status = 'cancelled'
 SELECT
     status,
     COUNT(*) AS order_count
