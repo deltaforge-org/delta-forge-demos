@@ -7,7 +7,7 @@
 -- Zone & Schema
 -- --------------------------------------------------------------------------
 
-CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE DELTA COMMENT 'Iceberg UniForm constraints demo zone';
+CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL COMMENT 'External and Delta tables — demo datasets';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos COMMENT 'CHECK constraints with UniForm';
 
@@ -30,6 +30,8 @@ TBLPROPERTIES (
     'delta.constraints.positive_amount' = 'amount > 0',
     'delta.constraints.valid_currency' = 'currency IN (''USD'', ''EUR'', ''GBP'')'
 );
+
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.transactions TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 25 transactions across 5 accounts, 3 currencies
@@ -63,8 +65,7 @@ INSERT INTO {{zone_name}}.iceberg_demos.transactions VALUES
     (25, 'ACC-1004', 'transfer',   1500.00,  10000.00, 'USD', '2025-02-21');
 
 -- --------------------------------------------------------------------------
--- Schema Detection & Permissions
+-- Schema Detection
 -- --------------------------------------------------------------------------
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.transactions;
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.transactions TO USER {{current_user}};

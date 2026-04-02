@@ -7,7 +7,7 @@
 -- Zone & Schema
 -- --------------------------------------------------------------------------
 
-CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE DELTA COMMENT 'Iceberg UniForm CDF demo zone';
+CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL COMMENT 'External and Delta tables — demo datasets';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos COMMENT 'Change Data Feed with UniForm';
 
@@ -29,6 +29,8 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id',
     'delta.enableChangeDataFeed' = 'true'
 );
+
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.orders TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 30 e-commerce orders across 5 customers, 5 products, 5 statuses
@@ -67,8 +69,7 @@ INSERT INTO {{zone_name}}.iceberg_demos.orders VALUES
     (30, 'Eve Martinez',   'Laptop Pro',     2, 1299.99, 'processing', '2025-03-15');
 
 -- --------------------------------------------------------------------------
--- Schema Detection & Permissions
+-- Schema Detection
 -- --------------------------------------------------------------------------
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.orders;
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.orders TO USER {{current_user}};

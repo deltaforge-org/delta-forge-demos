@@ -7,7 +7,7 @@
 -- Zone & Schema
 -- --------------------------------------------------------------------------
 
-CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE DELTA COMMENT 'Iceberg UniForm bloom filter demo zone';
+CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL COMMENT 'External and Delta tables — demo datasets';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos COMMENT 'Bloom filters with UniForm';
 
@@ -28,6 +28,8 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 )
 BLOOM FILTER COLUMNS (member_id, full_name);
+
+GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.members TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 40 loyalty members across 4 tiers
@@ -76,8 +78,7 @@ INSERT INTO {{zone_name}}.iceberg_demos.members VALUES
     (40, 'Derek Collins',       'Bronze',   1350,  370.75,   '2023-10-22');
 
 -- --------------------------------------------------------------------------
--- Schema Detection & Permissions
+-- Schema Detection
 -- --------------------------------------------------------------------------
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.members;
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.members TO USER {{current_user}};
