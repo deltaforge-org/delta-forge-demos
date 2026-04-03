@@ -119,7 +119,15 @@ ASSERT VALUE iceberg_rows = 7
 ASSERT VALUE delta_deleted = 0
 ASSERT VALUE iceberg_deleted = 0
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.products) AS delta_rows,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.products_iceberg) AS iceberg_rows,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.products WHERE id IN (2, 5, 8)) AS delta_deleted,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.products_iceberg WHERE id IN (2, 5, 8)) AS iceberg_deleted;
+    d.delta_rows,
+    i.iceberg_rows,
+    dd.delta_deleted,
+    id.iceberg_deleted
+FROM
+    (SELECT COUNT(*) AS delta_rows FROM {{zone_name}}.iceberg_demos.products) d
+CROSS JOIN
+    (SELECT COUNT(*) AS iceberg_rows FROM {{zone_name}}.iceberg_demos.products_iceberg) i
+CROSS JOIN
+    (SELECT COUNT(*) AS delta_deleted FROM {{zone_name}}.iceberg_demos.products WHERE id IN (2, 5, 8)) dd
+CROSS JOIN
+    (SELECT COUNT(*) AS iceberg_deleted FROM {{zone_name}}.iceberg_demos.products_iceberg WHERE id IN (2, 5, 8)) id;
