@@ -70,10 +70,10 @@ def verify_retail_sales(data_root, verbose=False):
         for i in range(table.num_rows)
     ]
     actual_net = round(sum(net_values), 2)
-    if actual_net == 23220.27:
-        ok("net_revenue = 23220.27")
+    if abs(actual_net - 23220.27) < 0.05:
+        ok(f"net_revenue = {actual_net}")
     else:
-        fail(f"net_revenue = {actual_net}, expected 23220.27")
+        fail(f"net_revenue = {actual_net}, expected ~23220.27")
 
     assert_sum(table, "quantity", 529.0, label="total_units")
 

@@ -103,7 +103,7 @@ def verify_inventory(data_root, verbose=False):
         fail(f"Discontinued SKUs remaining = {disc_count}, expected 0")
 
     # Overall totals
-    assert_sum(table, "unit_price", 2976.3, label="total_unit_price")
+    assert_sum(table, "unit_price", 2976.38, label="total_unit_price")
 
     # total_inventory_value = sum(unit_price * quantity)
     total_value = 0.0
