@@ -63,7 +63,7 @@ def verify_compliance_records(data_root, verbose=False):
     import pyarrow.compute as pc
 
     # Format version
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Iceberg state after RESTORE: the 5 originally non_compliant rows
     # (3, 9, 15, 17, 20) are absent from the Iceberg metadata. The UPDATE

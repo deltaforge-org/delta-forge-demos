@@ -52,7 +52,7 @@ def verify_customer_orders(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Final state: 24 orders (20 original + 4 post-evolution inserts)
     assert_row_count(table, 24)

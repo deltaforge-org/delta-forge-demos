@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.ad_clicks (
 ) LOCATION '{{data_path}}/ad_clicks'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
-    'delta.universalFormat.icebergVersion' = '1',
+    'delta.universalFormat.icebergVersion' = '2',
     'delta.columnMapping.mode' = 'id'
 );
 

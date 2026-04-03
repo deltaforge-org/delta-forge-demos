@@ -30,7 +30,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_events (
 PARTITIONED BY (CAST(event_timestamp AS DATE))
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
-    'delta.universalFormat.icebergVersion' = '1',
+    'delta.universalFormat.icebergVersion' = '2',
     'delta.columnMapping.mode' = 'id'
 );
 

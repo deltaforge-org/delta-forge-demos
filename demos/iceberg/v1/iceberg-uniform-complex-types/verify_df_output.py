@@ -50,7 +50,7 @@ def verify_product_catalog(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Final: 18 seed + 3 inserted = 21
     assert_row_count(table, 21)

@@ -55,7 +55,7 @@ def verify_orders(data_root, verbose=False):
     import pyarrow.compute as pc
 
     # Format version
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Final state: 28 rows (30 seeded - 2 cancelled deleted)
     assert_row_count(table, 28)

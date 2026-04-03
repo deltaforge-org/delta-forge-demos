@@ -54,7 +54,7 @@ def verify_sales(data_root, verbose=False):
     import pyarrow.compute as pc
 
     # Format version
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Final state: 40 rows (seed data only, no DML mutations)
     assert_row_count(table, 40)

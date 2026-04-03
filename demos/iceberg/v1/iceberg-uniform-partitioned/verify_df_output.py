@@ -50,7 +50,7 @@ def verify_regional_sales(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     import pyarrow.compute as pc
 

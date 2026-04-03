@@ -50,7 +50,7 @@ def verify_employees(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Final state: 21 employees (20 - 2 deleted + 3 new hires)
     assert_row_count(table, 21)

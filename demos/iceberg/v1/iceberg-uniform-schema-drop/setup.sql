@@ -30,7 +30,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.user_profiles (
 ) LOCATION '{{data_path}}/user_profiles'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
-    'delta.universalFormat.icebergVersion' = '1',
+    'delta.universalFormat.icebergVersion' = '2',
     'delta.columnMapping.mode' = 'id'
 );
 

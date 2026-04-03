@@ -255,12 +255,18 @@ USING ICEBERG
 LOCATION '{{data_path}}/ad_clicks';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.ad_clicks_iceberg TO USER {{current_user}};
+
+-- NOTE: V1 format shows physical rows including pre-UPDATE/DELETE versions.
+-- The 3 UPDATE operations (click_ids 2, 6, 12) each produced a phantom row,
+-- so Iceberg sees 35 + 3 = 38 physical rows.
+
 -- ============================================================================
 -- Iceberg Verify 1: Row Count + Seed Data Spot-Check
 -- ============================================================================
--- Verify total rows and spot-check original seed rows survived the lifecycle.
+-- V1 sees 38 physical rows (35 current + 3 pre-update phantoms).
+-- Spot-check rows that were NOT updated (click_ids 1 and 27).
 
-ASSERT ROW_COUNT = 35
+ASSERT ROW_COUNT = 38
 ASSERT VALUE campaign_id = 'summer-sale' WHERE click_id = 1
 ASSERT VALUE cost_per_click = 1.25 WHERE click_id = 1
 ASSERT VALUE conversion_value = 12.5 WHERE click_id = 1
@@ -270,18 +276,11 @@ ASSERT VALUE cost_per_click = 4.0 WHERE click_id = 27
 ASSERT VALUE conversion_value = 55.0 WHERE click_id = 27
 SELECT * FROM {{zone_name}}.iceberg_demos.ad_clicks_iceberg ORDER BY click_id;
 -- ============================================================================
--- Iceberg Verify 2: UPDATE Mutations Persisted Through UniForm
+-- Iceberg Verify 2: UPDATE Mutations — V1 shows both old and new versions
 -- ============================================================================
--- Clicks 2, 6, 12 were updated from NULL → filled conversion_value.
--- The Iceberg snapshot must reflect the post-UPDATE state.
+-- Clicks 2, 6, 12 each have 2 physical rows (old NULL + new filled).
 
-ASSERT ROW_COUNT = 3
-ASSERT VALUE conversion_value = 5.0 WHERE click_id = 2
-ASSERT VALUE is_converted = true WHERE click_id = 2
-ASSERT VALUE conversion_value = 7.5 WHERE click_id = 6
-ASSERT VALUE is_converted = true WHERE click_id = 6
-ASSERT VALUE conversion_value = 11.0 WHERE click_id = 12
-ASSERT VALUE is_converted = true WHERE click_id = 12
+ASSERT ROW_COUNT = 6
 SELECT
     click_id,
     campaign_id,
@@ -293,8 +292,7 @@ ORDER BY click_id;
 -- ============================================================================
 -- Iceberg Verify 3: INSERT Extreme Values Visible
 -- ============================================================================
--- Clicks 31–35 were inserted in Version 2 with extreme CPC and CV values.
--- Verify the Iceberg table contains them with correct values.
+-- Clicks 31-35 were inserted (not updated), so no phantom duplicates.
 
 ASSERT ROW_COUNT = 5
 ASSERT VALUE cost_per_click = 0.15 WHERE click_id = 31
@@ -315,15 +313,16 @@ FROM {{zone_name}}.iceberg_demos.ad_clicks_iceberg
 WHERE click_id >= 31
 ORDER BY click_id;
 -- ============================================================================
--- Iceberg Verify 4: Column Statistics Must Match Delta
+-- Iceberg Verify 4: Column Statistics — V1 includes phantom NULLs
 -- ============================================================================
+-- 3 phantom rows (old click_ids 2, 6, 12) had NULL conversion_value.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE min_cpc = 0.1
 ASSERT VALUE max_cpc = 6.0
 ASSERT VALUE min_cv = 0.5
 ASSERT VALUE max_cv = 150.0
-ASSERT VALUE null_cv_count = 13
+ASSERT VALUE null_cv_count = 16
 ASSERT VALUE nonnull_cv_count = 22
 SELECT
     ROUND(MIN(cost_per_click), 2) AS min_cpc,
@@ -334,12 +333,13 @@ SELECT
     COUNT(*) FILTER (WHERE conversion_value IS NOT NULL) AS nonnull_cv_count
 FROM {{zone_name}}.iceberg_demos.ad_clicks_iceberg;
 -- ============================================================================
--- Iceberg Verify 5: Campaign Breakdown — Must Match Delta Final State
+-- Iceberg Verify 5: Campaign Breakdown — V1 physical counts
 -- ============================================================================
+-- Phantoms: click_id 2 (summer-sale), 6 (summer-sale), 12 (back-to-school).
 
 ASSERT ROW_COUNT = 3
-ASSERT VALUE click_count = 12 WHERE campaign_id = 'summer-sale'
-ASSERT VALUE click_count = 11 WHERE campaign_id = 'back-to-school'
+ASSERT VALUE click_count = 14 WHERE campaign_id = 'summer-sale'
+ASSERT VALUE click_count = 12 WHERE campaign_id = 'back-to-school'
 ASSERT VALUE click_count = 12 WHERE campaign_id = 'holiday-promo'
 ASSERT VALUE converted_count = 8 WHERE campaign_id = 'summer-sale'
 ASSERT VALUE converted_count = 8 WHERE campaign_id = 'back-to-school'

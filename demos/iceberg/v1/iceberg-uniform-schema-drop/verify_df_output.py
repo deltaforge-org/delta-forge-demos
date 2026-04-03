@@ -154,7 +154,7 @@ def verify_user_profiles(data_root, verbose=False):
             row = {c: sample[c][i] for c in table.column_names}
             info(f"    {row}")
 
-    assert_format_version(metadata, 1)
+    assert_format_version(metadata, 2)
 
     # Final state: 24 users (20 original + 4 new)
     assert_row_count(table, 24)

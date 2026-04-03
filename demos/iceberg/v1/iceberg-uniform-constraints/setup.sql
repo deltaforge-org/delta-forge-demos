@@ -26,7 +26,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.transactions (
 ) LOCATION '{{data_path}}/transactions'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
-    'delta.universalFormat.icebergVersion' = '1',
+    'delta.universalFormat.icebergVersion' = '2',
     'delta.columnMapping.mode' = 'id',
     'delta.constraints.positive_amount' = 'amount > 0',
     'delta.constraints.valid_currency' = 'currency IN (''USD'', ''EUR'', ''GBP'')'
