@@ -44,7 +44,7 @@ def verify_shipment_manifests(data_root, verbose=False):
     assert_row_count(table, 504)
 
     # SCAN-ERR scanner must be gone
-    assert_count_where(table, "scanner", "SCAN-ERR", 0)
+    assert_count_where(table, "scanner_id", "SCAN-ERR", 0)
 
     # Per-region counts
     assert_count_where(table, "region", "Americas", 144)
@@ -52,15 +52,15 @@ def verify_shipment_manifests(data_root, verbose=False):
     assert_count_where(table, "region", "APAC", 180)
 
     # Scanner count
-    assert_distinct_count(table, "scanner", 15)
+    assert_distinct_count(table, "scanner_id", 15)
 
     # Category counts
-    assert_count_where(table, "category", "Automotive-Parts", 86)
-    assert_count_where(table, "category", "Electronics", 107)
-    assert_count_where(table, "category", "Heavy-Machinery", 73)
-    assert_count_where(table, "category", "Perishable-Foods", 82)
-    assert_count_where(table, "category", "Pharmaceuticals", 77)
-    assert_count_where(table, "category", "Textiles", 79)
+    assert_count_where(table, "product_category", "Automotive-Parts", 86)
+    assert_count_where(table, "product_category", "Electronics", 107)
+    assert_count_where(table, "product_category", "Heavy-Machinery", 73)
+    assert_count_where(table, "product_category", "Perishable-Foods", 82)
+    assert_count_where(table, "product_category", "Pharmaceuticals", 77)
+    assert_count_where(table, "product_category", "Textiles", 79)
 
     # Total hazardous
     total_hazardous = pc.sum(pc.equal(table.column("is_hazardous"), True)).as_py()
@@ -89,7 +89,7 @@ def verify_shipment_manifests(data_root, verbose=False):
     assert_avg(table, "weight_kg", 1279.27)
 
     # Country and carrier counts
-    assert_distinct_count(table, "country", 18)
+    assert_distinct_count(table, "destination_country", 18)
     assert_distinct_count(table, "carrier", 12)
 
 

@@ -156,6 +156,69 @@ def _resolve_iceberg_file(fp, table_path):
 
 
 # ---------------------------------------------------------------------------
+# Puffin deletion vector parser
+# ---------------------------------------------------------------------------
+def _parse_puffin_deletion_vectors(puffin_path):
+    """Parse a Puffin file and return {referenced_data_file: set of row positions}.
+
+    Puffin layout: Magic(4) | Blob1..N | FooterJSON | PayloadSize(4) | Flags(4) | Magic(4)
+    DV blobs use the Roaring64Bitmap format:
+        magic(8 LE) | count(4 LE u32) | per-entry: high_key(8 LE u64) + RoaringBitmap
+    """
+    import struct
+    from pyroaring import BitMap
+
+    PUFFIN_MAGIC = b"PFA1"
+    ROARING64_MAGIC = 0x6439_d3d1_1f00_0000
+
+    with open(puffin_path, "rb") as f:
+        data = f.read()
+
+    if len(data) < 16 or data[:4] != PUFFIN_MAGIC or data[-4:] != PUFFIN_MAGIC:
+        return {}
+
+    flags = struct.unpack_from("<I", data, len(data) - 8)[0]
+    payload_size = struct.unpack_from("<I", data, len(data) - 12)[0]
+    payload_start = len(data) - 12 - payload_size
+    payload_bytes = data[payload_start:payload_start + payload_size]
+
+    if flags & 0x01:
+        return {}  # LZ4-compressed footer not supported
+
+    footer = json.loads(payload_bytes)
+    result = {}
+
+    for blob_meta in footer.get("blobs", []):
+        if blob_meta.get("type") != "deletion-vector-v1":
+            continue
+        ref_file = blob_meta.get("properties", {}).get("referenced-data-file", "")
+        if not ref_file:
+            continue
+
+        offset = blob_meta["offset"]
+        length = blob_meta["length"]
+        blob = data[offset:offset + length]
+
+        positions = set()
+        if len(blob) >= 12:
+            magic = struct.unpack_from("<Q", blob, 0)[0]
+            if magic == ROARING64_MAGIC:
+                count = struct.unpack_from("<I", blob, 8)[0]
+                pos = 12
+                for _ in range(count):
+                    high_key = struct.unpack_from("<Q", blob, pos)[0]
+                    pos += 8
+                    bm = BitMap.deserialize(blob[pos:])
+                    pos += len(bm.serialize())
+                    for row_pos in bm:
+                        positions.add((high_key << 32) | row_pos)
+
+        result[ref_file] = positions
+
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Iceberg reader
 # ---------------------------------------------------------------------------
 def read_iceberg_table(table_path):
@@ -264,6 +327,7 @@ def read_iceberg_table(table_path):
     # for the same file (hybrid copy-on-write + merge-on-read).  When position
     # deletes target a file, the file is kept and only specific rows removed.
     added_files = set()      # file paths with status ADDED or EXISTING
+    explicitly_added = set() # file paths with status ADDED (=1, not EXISTING)
     deleted_files = set()    # file paths with status DELETED
     pos_delete_files = []    # resolved paths to position-delete Parquet files
     eq_delete_files = []     # resolved paths to equality-delete Parquet files
@@ -299,6 +363,8 @@ def read_iceberg_table(table_path):
                     deleted_files.add(fp)
                 else:
                     added_files.add(fp)
+                    if status == 1:
+                        explicitly_added.add(fp)
 
     # Build position delete index: {file_path -> set of row positions}
     # Normalize file paths (strip file:// prefix) to match manifest entries.
@@ -309,11 +375,13 @@ def read_iceberg_table(table_path):
                   f"{pd_path}", file=sys.stderr)
             continue
         # Puffin deletion vector files (.puffin) encode row-level deletion
-        # bitmaps in a binary format that is NOT Parquet.  They appear in the
-        # manifest with content=1 (DELETES) but cannot be read by PyArrow's
-        # Parquet reader.  Skip them -- the Rust engine applies these DVs at
-        # query time; the verify reader does not need to handle them.
+        # bitmaps using the Roaring64Bitmap format.  Parse them to extract
+        # the deleted row positions per referenced data file.
         if pd_path.endswith(".puffin"):
+            puffin_dvs = _parse_puffin_deletion_vectors(pd_path)
+            for ref_file, positions in puffin_dvs.items():
+                normalized = from_uri(ref_file)
+                pos_deletes.setdefault(normalized, set()).update(positions)
             continue
         pd_table = pq.read_table(pd_path)
         if "file_path" in pd_table.column_names and "pos" in pd_table.column_names:
@@ -350,13 +418,20 @@ def read_iceberg_table(table_path):
             vals = ed_table.column(col_name).to_pylist()
             eq_delete_values.setdefault(col_name, set()).update(vals)
 
-    # A file targeted by position deletes is LIVE even if also marked DELETED
-    # (the UniForm writer emits both; the delete entry is for the old snapshot).
+    # Determine which data files are live in the current snapshot.
+    # A file is live if:
+    #   - It was explicitly ADDED (status=1), even if also DELETED (re-written
+    #     in place, common with UniForm copy-on-write + equality deletes)
+    #   - It was EXISTING (status=0) and NOT DELETED
+    #   - It has position deletes targeting it (kept for merge-on-read)
     live_files = set()
     for fp in added_files:
-        if fp in deleted_files and fp not in pos_deletes:
-            continue  # Truly deleted (copy-on-write, no position deletes)
-        live_files.add(fp)
+        if fp in deleted_files:
+            if fp in explicitly_added or fp in pos_deletes:
+                live_files.add(fp)  # Re-added or targeted by position deletes
+            # else: EXISTING + DELETED = truly removed
+        else:
+            live_files.add(fp)
 
     data_files = []
     for fp in live_files:
