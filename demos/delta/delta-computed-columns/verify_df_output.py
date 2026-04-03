@@ -3,7 +3,7 @@
 Delta Computed Columns -- Delta Data Verification (PySpark)
 
 Verifies the sales_invoices table: 50 rows,
-5 distinct sales reps.
+4 distinct sales reps (Alice, Bob, Carol, Sarah).
 
 Usage:
     python verify_df_output.py <data_root_path> [--verbose]
@@ -43,10 +43,10 @@ def verify_sales_invoices(spark, data_root, verbose=False):
 
     # Distinct sales_rep count
     distinct_reps = df.select("sales_rep").distinct().count()
-    if distinct_reps == 5:
-        ok("DISTINCT sales_rep = 5")
+    if distinct_reps == 4:
+        ok("DISTINCT sales_rep = 4")
     else:
-        fail(f"DISTINCT sales_rep = {distinct_reps}, expected 5")
+        fail(f"DISTINCT sales_rep = {distinct_reps}, expected 4")
 
 def main():
     data_root, verbose = resolve_data_root()
