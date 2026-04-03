@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", "..
 
 from verify_lib import (ok, fail, info,
     print_header, print_section, print_summary, exit_with_status)
+from verify_lib.spark_session import get_spark, resolve_data_root
 
 def verify_documents(spark, data_root, verbose=False):
     print_section("documents -- Final State")
