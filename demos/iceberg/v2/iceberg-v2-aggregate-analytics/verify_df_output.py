@@ -45,12 +45,37 @@ def verify_retail_sales(data_root, verbose=False):
     # Dimension cardinalities
     assert_distinct_count(table, "region", 3)
     assert_distinct_count(table, "category", 5)
-    assert_distinct_count(table, "store_id", 4)
+    assert_distinct_count(table, "store_name", 4)
 
-    # Revenue and unit totals
-    assert_sum(table, "gross_revenue", 25506.46, label="gross_revenue")
-    assert_sum(table, "net_revenue", 23220.27, label="net_revenue")
-    assert_sum(table, "units_sold", 529.0, label="total_units")
+    # Revenue and unit totals (computed from raw columns)
+    # gross_revenue = SUM(quantity * unit_price)
+    gross_values = [
+        round(table.column("quantity")[i].as_py() * table.column("unit_price")[i].as_py(), 2)
+        for i in range(table.num_rows)
+    ]
+    actual_gross = round(sum(gross_values), 2)
+    if actual_gross == 25506.46:
+        ok("gross_revenue = 25506.46")
+    else:
+        fail(f"gross_revenue = {actual_gross}, expected 25506.46")
+
+    # net_revenue = SUM(quantity * unit_price * (1 - discount_pct/100))
+    net_values = [
+        round(
+            table.column("quantity")[i].as_py()
+            * table.column("unit_price")[i].as_py()
+            * (1 - table.column("discount_pct")[i].as_py() / 100),
+            2,
+        )
+        for i in range(table.num_rows)
+    ]
+    actual_net = round(sum(net_values), 2)
+    if actual_net == 23220.27:
+        ok("net_revenue = 23220.27")
+    else:
+        fail(f"net_revenue = {actual_net}, expected 23220.27")
+
+    assert_sum(table, "quantity", 529.0, label="total_units")
 
     # Return count
     assert_count_where(table, "is_return", True, 9)
@@ -64,11 +89,15 @@ def verify_retail_sales(data_root, verbose=False):
         assert_count_where(table, "region", region, expected_cnt)
         mask = pc.equal(table.column("region"), region)
         filtered = table.filter(mask)
-        actual_gross = round(pc.sum(filtered.column("gross_revenue")).as_py(), 2)
-        if actual_gross == expected_gross:
+        region_gross = sum(
+            round(filtered.column("quantity")[i].as_py() * filtered.column("unit_price")[i].as_py(), 2)
+            for i in range(filtered.num_rows)
+        )
+        region_gross = round(region_gross, 2)
+        if region_gross == expected_gross:
             ok(f"Gross revenue for {region} = {expected_gross}")
         else:
-            fail(f"Gross revenue for {region} = {actual_gross}, expected {expected_gross}")
+            fail(f"Gross revenue for {region} = {region_gross}, expected {expected_gross}")
 
     # Per-category counts
     assert_count_where(table, "category", "Clothing", 28)
@@ -77,11 +106,15 @@ def verify_retail_sales(data_root, verbose=False):
     # Electronics gross revenue
     mask = pc.equal(table.column("category"), "Electronics")
     filtered = table.filter(mask)
-    actual = round(pc.sum(filtered.column("gross_revenue")).as_py(), 2)
-    if actual == 11302.93:
+    elec_gross = sum(
+        round(filtered.column("quantity")[i].as_py() * filtered.column("unit_price")[i].as_py(), 2)
+        for i in range(filtered.num_rows)
+    )
+    elec_gross = round(elec_gross, 2)
+    if elec_gross == 11302.93:
         ok("Electronics gross_revenue = 11302.93")
     else:
-        fail(f"Electronics gross_revenue = {actual}, expected 11302.93")
+        fail(f"Electronics gross_revenue = {elec_gross}, expected 11302.93")
 
 
 def main():

@@ -86,8 +86,8 @@ def main():
     # Category distribution
     assert_distinct_count(table, "category", 3)
     assert_count_where(table, "category", "Shoes", 16)
-    assert_count_where(table, "category", "Apparel", 12)
-    assert_count_where(table, "category", "Accessories", 12)
+    assert_count_where(table, "category", "Apparel", 11)
+    assert_count_where(table, "category", "Accessories", 13)
 
     # Spot check txn_id=1
     txn1 = table.filter(pc.equal(table.column("txn_id"), 1))

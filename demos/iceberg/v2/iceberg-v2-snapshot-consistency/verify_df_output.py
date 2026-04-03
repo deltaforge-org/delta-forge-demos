@@ -58,7 +58,7 @@ def verify_inventory(data_root, verbose=False):
     ]:
         mask = pc.equal(table.column("category"), cat)
         filtered = table.filter(mask)
-        actual = round(pc.sum(filtered.column("quantity")).as_py(), 2)
+        actual = round(pc.sum(filtered.column("quantity_on_hand")).as_py(), 2)
         if actual == expected_qty:
             ok(f"Total quantity for {cat} = {expected_qty}")
         else:
@@ -108,7 +108,7 @@ def verify_inventory(data_root, verbose=False):
     # total_inventory_value = sum(unit_price * quantity)
     total_value = 0.0
     price_col = table.column("unit_price")
-    qty_col = table.column("quantity")
+    qty_col = table.column("quantity_on_hand")
     for i in range(table.num_rows):
         total_value += price_col[i].as_py() * qty_col[i].as_py()
     total_value = round(total_value, 2)
@@ -118,7 +118,7 @@ def verify_inventory(data_root, verbose=False):
         fail(f"Total inventory value = {total_value}, expected 300102.64")
 
     assert_avg(table, "unit_price", 33.07, label="avg_price")
-    assert_sum(table, "quantity", 10032.0, label="total_quantity")
+    assert_sum(table, "quantity_on_hand", 10032.0, label="total_quantity")
 
     # Spot checks
     # SKU-C-N01: Compression Shorts, 24.99

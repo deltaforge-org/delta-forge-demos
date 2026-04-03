@@ -36,7 +36,7 @@ def verify_warehouse_inventory(data_root, verbose=False):
     if verbose:
         info(f"Columns: {table.column_names}")
 
-    assert_format_version(metadata, 2)
+    assert_format_version(metadata, 1)
     assert_row_count(table, 489)
 
     # Per-warehouse counts

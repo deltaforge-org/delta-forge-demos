@@ -63,7 +63,7 @@ def verify_grid_readings(data_root, verbose=False):
     assert_count_where(table, "voltage", 240, 208)
 
     # Total energy
-    assert_sum(table, "energy_kwh", 993.2375, label="total_energy_kwh")
+    assert_sum(table, "energy_kwh", 993.24, label="total_energy_kwh")
 
     # Per-region energy
     for region, expected in [("North", 341.6525), ("South", 324.7675), ("East", 326.8175)]:

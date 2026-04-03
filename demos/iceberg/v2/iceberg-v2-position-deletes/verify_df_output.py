@@ -47,10 +47,10 @@ def verify_cold_chain_readings(data_root, verbose=False):
     assert_count_where(table, "sensor_id", "SENSOR-F01", 0, label="faulty sensor removed")
 
     # Per-route distribution
-    assert_count_where(table, "route_id", "ROUTE-A", 120)
-    assert_count_where(table, "route_id", "ROUTE-B", 150)
-    assert_count_where(table, "route_id", "ROUTE-C", 150)
-    assert_count_where(table, "route_id", "ROUTE-D", 150)
+    assert_count_where(table, "route", "ROUTE-A", 120)
+    assert_count_where(table, "route", "ROUTE-B", 150)
+    assert_count_where(table, "route", "ROUTE-C", 150)
+    assert_count_where(table, "route", "ROUTE-D", 150)
 
     # Distinct sensors
     assert_distinct_count(table, "sensor_id", 20)
@@ -68,9 +68,9 @@ def verify_cold_chain_readings(data_root, verbose=False):
         ("ROUTE-C", 57),
         ("ROUTE-D", 63),
     ]:
-        mask = pc.equal(table.column("route_id"), route)
+        mask = pc.equal(table.column("route"), route)
         filtered = table.filter(mask)
-        exc_col = filtered.column("is_excursion")
+        exc_col = filtered.column("temp_excursion")
         exc_count = pc.sum(exc_col).as_py()
         if exc_count == expected_exc:
             ok(f"Excursions for {route} = {expected_exc}")
@@ -78,7 +78,7 @@ def verify_cold_chain_readings(data_root, verbose=False):
             fail(f"Excursions for {route} = {exc_count}, expected {expected_exc}")
 
     # Total excursions
-    total_exc = pc.sum(table.column("is_excursion")).as_py()
+    total_exc = pc.sum(table.column("temp_excursion")).as_py()
     if total_exc == 210:
         ok(f"Total excursions = 210")
     else:
@@ -91,7 +91,7 @@ def verify_cold_chain_readings(data_root, verbose=False):
         ("ROUTE-C", 0.21),
         ("ROUTE-D", -0.29),
     ]:
-        mask = pc.equal(table.column("route_id"), route)
+        mask = pc.equal(table.column("route"), route)
         filtered = table.filter(mask)
         actual = round(pc.mean(filtered.column("temperature_c")).as_py(), 2)
         if actual == expected_avg:

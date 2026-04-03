@@ -44,9 +44,9 @@ def verify_fleet_telemetry(data_root, verbose=False):
     assert_row_count(table, 450)
 
     # Fleet distribution: 3 fleets, 150 each
-    assert_distinct_count(table, "fleet_id", 3)
+    assert_distinct_count(table, "fleet", 3)
     for fleet in ["East-Coast", "Midwest", "West-Coast"]:
-        assert_count_where(table, "fleet_id", fleet, 150)
+        assert_count_where(table, "fleet", fleet, 150)
 
     # Vehicle type distribution
     assert_count_where(table, "vehicle_type", "Box-Truck", 132)
@@ -55,7 +55,7 @@ def verify_fleet_telemetry(data_root, verbose=False):
 
     # Average speed per fleet
     for fleet, expected_avg in [("East-Coast", 37.27), ("Midwest", 37.89), ("West-Coast", 37.13)]:
-        mask = pc.equal(table.column("fleet_id"), fleet)
+        mask = pc.equal(table.column("fleet"), fleet)
         filtered = table.filter(mask)
         actual = round(pc.mean(filtered.column("speed_mph")).as_py(), 2)
         if actual == expected_avg:
@@ -65,7 +65,7 @@ def verify_fleet_telemetry(data_root, verbose=False):
 
     # Total idle time per fleet
     for fleet, expected_idle in [("East-Coast", 3355), ("Midwest", 3439), ("West-Coast", 3751)]:
-        mask = pc.equal(table.column("fleet_id"), fleet)
+        mask = pc.equal(table.column("fleet"), fleet)
         filtered = table.filter(mask)
         actual = int(pc.sum(filtered.column("idle_minutes")).as_py())
         if actual == expected_idle:
@@ -77,7 +77,7 @@ def verify_fleet_telemetry(data_root, verbose=False):
     total_harsh = 0
     for fleet, expected_harsh in [("East-Coast", 27), ("Midwest", 20), ("West-Coast", 31)]:
         mask = pc.and_(
-            pc.equal(table.column("fleet_id"), fleet),
+            pc.equal(table.column("fleet"), fleet),
             pc.equal(table.column("harsh_braking"), True),
         )
         cnt = pc.sum(mask.cast("int64")).as_py()
@@ -100,7 +100,7 @@ def verify_fleet_telemetry(data_root, verbose=False):
         fail(f"Speeding events (>65 mph) = {speeding}, expected 53")
 
     # Low fuel events (fuel_pct < 20)
-    low_fuel = pc.sum(pc.less(table.column("fuel_pct"), 20).cast("int64")).as_py()
+    low_fuel = pc.sum(pc.less(table.column("fuel_level_pct"), 20).cast("int64")).as_py()
     if low_fuel == 74:
         ok("Low fuel events (<20%) = 74")
     else:
