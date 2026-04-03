@@ -41,12 +41,12 @@ def verify_iot_readings(spark, data_root, verbose=False):
     else:
         fail(f"ROW_COUNT = {row_count}, expected 70")
 
-    # Distinct metric_type count
-    distinct_metrics = df.select("metric_type").distinct().count()
+    # Distinct metric count
+    distinct_metrics = df.select("metric").distinct().count()
     if distinct_metrics == 7:
-        ok("DISTINCT metric_type = 7")
+        ok("DISTINCT metric = 7")
     else:
-        fail(f"DISTINCT metric_type = {distinct_metrics}, expected 7")
+        fail(f"DISTINCT metric = {distinct_metrics}, expected 7")
 
     # Distinct device_id count
     distinct_devices = df.select("device_id").distinct().count()
