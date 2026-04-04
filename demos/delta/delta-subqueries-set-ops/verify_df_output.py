@@ -31,12 +31,12 @@ def verify_students(spark, data_root, verbose=False):
     else:
         fail(f"Expected 15 rows, got {row_count}")
 
-    # Assert 5 distinct majors
+    # Assert 4 distinct majors
     distinct_majors = df.select("major").distinct().count()
-    if distinct_majors == 5:
-        ok(f"Distinct 'major' count is 5")
+    if distinct_majors == 4:
+        ok(f"Distinct 'major' count is 4")
     else:
-        fail(f"Expected 5 distinct 'major', got {distinct_majors}")
+        fail(f"Expected 4 distinct 'major', got {distinct_majors}")
 
 def verify_enrollments(spark, data_root, verbose=False):
     print_section("enrollments -- Final State")

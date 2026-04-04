@@ -37,11 +37,11 @@ def verify_portfolio_holdings(spark, data_root, verbose=False):
     else:
         fail(f"Expected 20 rows, got {row_count}")
 
-    distinct_portfolio = df.select("portfolio").distinct().count()
+    distinct_portfolio = df.select("portfolio_id").distinct().count()
     if distinct_portfolio == 3:
-        ok(f"Distinct portfolio count is 3")
+        ok(f"Distinct portfolio_id count is 3")
     else:
-        fail(f"Expected 3 distinct portfolio values, got {distinct_portfolio}")
+        fail(f"Expected 3 distinct portfolio_id values, got {distinct_portfolio}")
 
 def main():
     data_root, verbose = resolve_data_root()

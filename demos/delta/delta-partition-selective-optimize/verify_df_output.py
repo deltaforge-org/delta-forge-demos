@@ -44,7 +44,7 @@ def verify_warehouse_orders(spark, data_root, verbose=False):
     else:
         fail(f"Expected 3 distinct warehouses, got {distinct_wh}")
 
-    for wh_name, expected in [("us-east-dc", 20), ("eu-central", 20), ("ap-south", 25)]:
+    for wh_name, expected in [("us-east-dc", 20), ("eu-central-dc", 20), ("ap-south-dc", 25)]:
         actual = df.filter(col("warehouse") == wh_name).count()
         if actual == expected:
             ok(f"warehouse='{wh_name}' count is {expected}")

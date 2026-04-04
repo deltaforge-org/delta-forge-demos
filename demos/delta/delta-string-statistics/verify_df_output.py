@@ -40,7 +40,7 @@ def verify_product_catalog(spark, data_root, verbose=False):
         fail(f"Expected 4 distinct 'category', got {distinct_categories}")
 
     # Assert category counts
-    for category, expected in [("Accessories", 6), ("Audio", 3), ("Furniture", 6), ("Peripherals", 5)]:
+    for category, expected in [("accessories", 6), ("audio", 3), ("furniture", 6), ("peripherals", 5)]:
         actual = df.filter(col("category") == category).count()
         if actual == expected:
             ok(f"category='{category}' count is {expected}")

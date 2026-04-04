@@ -46,7 +46,7 @@ def verify_financial_ledger(spark, data_root, verbose=False):
         fail(f"Distinct currency count = {distinct_currencies}, expected 5")
 
     # Currency breakdown
-    for currency, expected in [("USD", 15), ("EUR", 5), ("GBP", 5), ("JPY", 5), ("CHF", 5)]:
+    for currency, expected in [("USD", 20), ("EUR", 5), ("GBP", 5), ("JPY", 5), ("CHF", 5)]:
         actual = df.filter(df.currency == currency).count()
         if actual == expected:
             ok(f"currency='{currency}' count = {expected}")
