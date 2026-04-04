@@ -14,6 +14,8 @@ Variables are resolved in this order:
 
 This module is the single source of truth for Spark configuration
 across all Delta demo verification scripts.
+
+Spark 4.0 + Delta 4.0 (on-prem, no cloud dependencies).
 """
 
 import argparse
@@ -23,11 +25,17 @@ import sys
 
 
 # ---------------------------------------------------------------------------
+# Spark 4.0 / Delta 4.0 versions
+# ---------------------------------------------------------------------------
+SPARK_VERSION = "4.0.0"
+DELTA_VERSION = "4.0.0"
+
+# ---------------------------------------------------------------------------
 # Auto-install missing pip dependencies
 # ---------------------------------------------------------------------------
 _REQUIRED = {
-    "pyspark": "pyspark",
-    "delta": "delta-spark",
+    "pyspark": f"pyspark=={SPARK_VERSION}",
+    "delta": f"delta-spark=={DELTA_VERSION}",
 }
 for _import_name, _pip_pkg in _REQUIRED.items():
     try:
@@ -41,15 +49,15 @@ for _import_name, _pip_pkg in _REQUIRED.items():
 
 
 # ---------------------------------------------------------------------------
-# Auto-detect JAVA_HOME if not set
+# Auto-detect JAVA_HOME if not set (Spark 4.0 requires JDK 17+)
 # ---------------------------------------------------------------------------
 if not os.environ.get("JAVA_HOME"):
     _JDK_CANDIDATES = [
         os.path.expanduser("~/local/jdk"),
         os.path.expanduser("~/.jdks/temurin-17"),
-        os.path.expanduser("~/.jdks/temurin-11"),
+        os.path.expanduser("~/.jdks/temurin-21"),
         "/usr/lib/jvm/java-17-openjdk-amd64",
-        "/usr/lib/jvm/java-11-openjdk-amd64",
+        "/usr/lib/jvm/java-21-openjdk-amd64",
     ]
     for _jh in _JDK_CANDIDATES:
         if os.path.isfile(os.path.join(_jh, "bin", "java")):
@@ -62,16 +70,18 @@ if not os.environ.get("JAVA_HOME"):
             _jh = jdk.install("17")
             os.environ["JAVA_HOME"] = _jh
         except Exception:
-            print("Error: JAVA_HOME is not set and no JDK found.")
+            print("Error: JAVA_HOME is not set and no JDK 17+ found.")
+            print("Spark 4.0 requires JDK 17+.")
             print("Install a JDK, set JAVA_HOME, or: pip install install-jdk")
             sys.exit(1)
 
 
+
 def get_spark():
-    """Create a SparkSession configured for Delta Lake reads.
+    """Create a local SparkSession configured for Delta Lake.
 
     Uses delta-spark's configure_spark_with_delta_pip() to handle
-    classpath setup automatically across PySpark versions.
+    classpath setup automatically. Runs on-prem with Spark 4.0.
     """
     from pyspark.sql import SparkSession
 
@@ -91,8 +101,7 @@ def get_spark():
         )
         return builder.getOrCreate()
     except ImportError:
-        # Fallback for environments without delta-spark pip package:
-        # assume Delta JARs are on the classpath already.
+        # Fallback: assume Delta JARs are on the classpath already.
         return SparkSession.builder \
             .appName("delta-verify") \
             .master("local[*]") \
