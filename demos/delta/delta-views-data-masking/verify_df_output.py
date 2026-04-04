@@ -37,11 +37,11 @@ def verify_customer_orders(spark, data_root, verbose=False):
     else:
         fail(f"Expected 30 rows, got {row_count}")
 
-    delivered_count = df.filter(df["status"] == "delivered").count()
+    delivered_count = df.filter(df["order_status"] == "delivered").count()
     if delivered_count == 19:
-        ok(f"status='delivered' count is 19")
+        ok(f"order_status='delivered' count is 19")
     else:
-        fail(f"Expected 19 rows with status='delivered', got {delivered_count}")
+        fail(f"Expected 19 rows with order_status='delivered', got {delivered_count}")
 
 def main():
     data_root, verbose = resolve_data_root()

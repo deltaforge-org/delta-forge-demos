@@ -37,11 +37,11 @@ def verify_customer_imports(spark, data_root, verbose=False):
     else:
         fail(f"Expected 25 rows, got {row_count}")
 
-    us_count = df.filter(df["country"] == "US").count()
+    us_count = df.filter(df["country_code"] == "US").count()
     if us_count == 11:
-        ok(f"country='US' count is 11")
+        ok(f"country_code='US' count is 11")
     else:
-        fail(f"Expected 11 rows with country='US', got {us_count}")
+        fail(f"Expected 11 rows with country_code='US', got {us_count}")
 
 def main():
     data_root, verbose = resolve_data_root()
