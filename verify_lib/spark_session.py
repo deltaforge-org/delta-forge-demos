@@ -95,7 +95,7 @@ def get_spark():
                         "io.delta.sql.DeltaSparkSessionExtension")
                 .config("spark.sql.catalog.spark_catalog",
                         "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-                .config("spark.driver.memory", "2g")
+                .config("spark.driver.memory", "4g")
                 .config("spark.ui.showConsoleProgress", "false")
                 .config("spark.log.level", "WARN")
         )
@@ -109,7 +109,7 @@ def get_spark():
                     "io.delta.sql.DeltaSparkSessionExtension") \
             .config("spark.sql.catalog.spark_catalog",
                     "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-            .config("spark.driver.memory", "2g") \
+            .config("spark.driver.memory", "4g") \
             .config("spark.ui.showConsoleProgress", "false") \
             .config("spark.log.level", "WARN") \
             .getOrCreate()
