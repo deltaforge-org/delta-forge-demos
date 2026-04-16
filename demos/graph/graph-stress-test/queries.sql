@@ -128,11 +128,11 @@ ORDER BY count DESC;
 -- 6. ENGINEERING VETERANS — Senior engineers over 50
 -- ============================================================================
 -- Age formula: 22 + floor((id × φ mod 1) × 38). The golden ratio
--- scattering gives ages 22–59 (38 integer buckets, 0-indexed).
--- In Engineering (id%20=0), there are exactly 11,842 people with age > 50.
+-- scattering gives ages 22–60 (38 integer buckets, 0-indexed).
+-- In Engineering (id%20=0), there are exactly 12,500 people with age > 50.
 
 ASSERT ROW_COUNT = 25
-ASSERT VALUE age = 59
+ASSERT VALUE age = 60
 USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.department = 'Engineering' AND n.age > 50
