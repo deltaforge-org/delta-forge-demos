@@ -1,0 +1,49 @@
+[demo]
+id = "graph-gpu-karate"
+name = "GPU-Accelerated Karate Club — Algorithm Quality Verification"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+GPU algorithm quality verification using Zachary's Karate Club (1977), \
+the most studied graph in network science. 34 members, 78 undirected \
+edges — decades of published reference values from NetworkX provide \
+golden truth for every algorithm. Forces GPU execution via \
+USING GPU MIN THRESHOLD 1 on all 5 GPU-accelerable algorithms \
+(PageRank, Connected Components, Louvain, Betweenness, Triangle Count) \
+and GPU MATCH expansion. Every assertion value matches NetworkX — if \
+GPU produces correct results on this benchmark, the implementation is \
+trustworthy. Also tests GPU with varying damping factors and resolution \
+parameters.
+"""
+categories = ["graph", "gpu"]
+tags = ["graph", "gpu", "karate", "benchmark", "quality", "golden-values", "community-detection", "centrality", "beginner"]
+difficulty = "beginner"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/edges.csv"
+format = "csv"
+description = "Edge list: 156 rows (78 undirected edges, both directions) with weight=1.0"
+size_bytes = 3956
+
+[[demo.data_files]]
+path = "data/vertices.csv"
+format = "csv"
+description = "Vertex list: 34 club members with name and category"
+size_bytes = 648
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.gpu_karate.gpu_karate"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.gpu_karate.vertices"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.gpu_karate.edges"

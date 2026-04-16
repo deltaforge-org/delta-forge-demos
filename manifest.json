@@ -4979,6 +4979,96 @@
       ]
     },
     {
+      "id": "graph-gpu-karate",
+      "path": "demos/graph/graph-gpu-karate",
+      "iconPath": "icons/graph-gpu-karate.svg",
+      "name": "GPU-Accelerated Karate Club — Algorithm Quality Verification",
+      "summary": "GPU algorithm quality verification using Zachary's Karate Club (1977). 34 members, 78 undirected edges. Forces GPU execution via USING GPU MIN THRESHOLD 1 on all 5 GPU-accelerable algorithms (PageRank, Connected Components, Louvain, Betweenness, Triangle Count) and GPU MATCH expansion. Every assertion value matches NetworkX published reference values.",
+      "categories": [
+        "graph",
+        "gpu"
+      ],
+      "tags": [
+        "graph",
+        "gpu",
+        "karate",
+        "benchmark",
+        "quality",
+        "golden-values",
+        "community-detection",
+        "centrality",
+        "beginner"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 4604,
+      "fileCount": 2,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-16T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "{{zone_name}}.gpu_karate.gpu_karate"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_karate.vertices"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_karate.edges"
+        }
+      ]
+    },
+    {
+      "id": "graph-gpu-stress-test",
+      "path": "demos/graph/graph-gpu-stress-test",
+      "iconPath": "icons/graph-gpu-stress-test.svg",
+      "name": "GPU-Accelerated Enterprise Network — 1M-Node Performance Benchmark",
+      "summary": "GPU-accelerated stress test on 1,000,000-node enterprise network with 5M+ directed edges. All 5 GPU-accelerable algorithms (PageRank, Connected Components, Louvain, Betweenness, Triangle Count) via USING GPU hints. Tests GPU MATCH expansion, GPU + streaming property loading, and GPU MIN THRESHOLD fallback behavior. Proves GPU/CPU equivalence at enterprise scale.",
+      "categories": [
+        "graph",
+        "gpu"
+      ],
+      "tags": [
+        "graph",
+        "gpu",
+        "stress-test",
+        "performance",
+        "benchmark",
+        "million-scale",
+        "cypher",
+        "algorithms",
+        "advanced"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 30,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-16T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_stress_network"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_st_edges"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_st_people"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_st_departments"
+        }
+      ]
+    },
+    {
       "id": "graph-karate-club",
       "path": "demos/graph/graph-karate-club",
       "iconPath": "icons/graph-karate-club.svg",

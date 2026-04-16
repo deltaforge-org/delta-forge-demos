@@ -1,0 +1,39 @@
+[demo]
+id = "graph-gpu-stress-test"
+name = "GPU-Accelerated Enterprise Network — 1M-Node Performance Benchmark"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """
+GPU-accelerated stress test on a 1,000,000-node enterprise organization \
+network with 5,000,000+ directed edges. Identical data to the CPU stress \
+test — the difference is every algorithm and MATCH query forces GPU \
+execution via USING GPU hints. Proves GPU/CPU equivalence at enterprise \
+scale across all 5 GPU-accelerable algorithms (PageRank, Connected \
+Components, Louvain, Betweenness, Triangle Count) plus GPU MATCH \
+expansion for pattern matching. Also tests GPU + streaming property \
+loading and GPU MIN THRESHOLD fallback behavior.
+"""
+categories = ["graph", "gpu"]
+tags = ["graph", "gpu", "stress-test", "performance", "benchmark", "million-scale", "cypher", "algorithms", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 30
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.gpu_stress_network.gpu_stress_network"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.gpu_stress_network.gpu_st_edges"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.gpu_stress_network.gpu_st_people"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.gpu_stress_network.gpu_st_departments"

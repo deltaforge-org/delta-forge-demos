@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gpuKa" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#a3e635"/>
+    </linearGradient>
+  </defs>
+  <!-- GPU chip outline (small) -->
+  <rect x="48" y="8" width="24" height="20" rx="3" fill="url(#gpuKa)" opacity=".15" stroke="url(#gpuKa)" stroke-width="1.2"/>
+  <!-- GPU chip grid -->
+  <rect x="52" y="12" width="4" height="4" rx="1" fill="url(#gpuKa)" opacity=".4"/>
+  <rect x="58" y="12" width="4" height="4" rx="1" fill="url(#gpuKa)" opacity=".4"/>
+  <rect x="64" y="12" width="4" height="4" rx="1" fill="url(#gpuKa)" opacity=".4"/>
+  <rect x="52" y="19" width="4" height="4" rx="1" fill="url(#gpuKa)" opacity=".4"/>
+  <rect x="58" y="19" width="4" height="4" rx="1" fill="url(#gpuKa)" opacity=".5"/>
+  <rect x="64" y="19" width="4" height="4" rx="1" fill="url(#gpuKa)" opacity=".4"/>
+  <!-- GPU chip pins -->
+  <line x1="53" y1="28" x2="53" y2="32" stroke="url(#gpuKa)" stroke-width="1" opacity=".3"/>
+  <line x1="60" y1="28" x2="60" y2="32" stroke="url(#gpuKa)" stroke-width="1" opacity=".3"/>
+  <line x1="67" y1="28" x2="67" y2="32" stroke="url(#gpuKa)" stroke-width="1" opacity=".3"/>
+  <!-- Karate figure — stylized martial artist -->
+  <!-- Head -->
+  <circle cx="24" cy="18" r="6" fill="url(#gpuKa)" opacity=".25" stroke="url(#gpuKa)" stroke-width="1.5"/>
+  <!-- Body -->
+  <line x1="24" y1="24" x2="24" y2="44" stroke="url(#gpuKa)" stroke-width="2" opacity=".5"/>
+  <!-- Belt -->
+  <line x1="18" y1="36" x2="30" y2="36" stroke="url(#gpuKa)" stroke-width="2" opacity=".6"/>
+  <!-- Arms — extended punch -->
+  <line x1="24" y1="30" x2="12" y2="24" stroke="url(#gpuKa)" stroke-width="1.8" opacity=".5"/>
+  <line x1="24" y1="30" x2="40" y2="26" stroke="url(#gpuKa)" stroke-width="1.8" opacity=".5"/>
+  <!-- Legs — wide stance -->
+  <line x1="24" y1="44" x2="14" y2="60" stroke="url(#gpuKa)" stroke-width="1.8" opacity=".5"/>
+  <line x1="24" y1="44" x2="34" y2="60" stroke="url(#gpuKa)" stroke-width="1.8" opacity=".5"/>
+  <!-- Network nodes around the figure (representing club members) -->
+  <circle cx="10" cy="50" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="38" cy="50" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="14" cy="68" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="34" cy="68" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="50" cy="46" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="62" cy="54" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="52" cy="68" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <circle cx="68" cy="66" r="2.5" fill="url(#gpuKa)" opacity=".6"/>
+  <!-- Network edges between members -->
+  <line x1="10" y1="50" x2="38" y2="50" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="10" y1="50" x2="14" y2="68" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="38" y1="50" x2="34" y2="68" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="14" y1="68" x2="34" y2="68" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="38" y1="50" x2="50" y2="46" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="50" y1="46" x2="62" y2="54" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="62" y1="54" x2="68" y2="66" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="52" y1="68" x2="68" y2="66" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="34" y1="68" x2="52" y2="68" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+  <line x1="50" y1="46" x2="52" y2="68" stroke="url(#gpuKa)" stroke-width="0.7" opacity=".3"/>
+</svg>
