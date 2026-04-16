@@ -16,6 +16,7 @@ DROP DELTA TABLE IF EXISTS {{zone_name}}.karate_manual.edges WITH FILES;
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.karate_manual_raw.karate_edges WITH FILES;
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.karate_manual_raw.karate_vertices WITH FILES;
 
--- STEP 4: Drop schemas
+-- STEP 4: Drop schemas and zone
 DROP SCHEMA IF EXISTS {{zone_name}}.karate_manual;
 DROP SCHEMA IF EXISTS {{zone_name}}.karate_manual_raw;
+DROP ZONE IF EXISTS {{zone_name}};

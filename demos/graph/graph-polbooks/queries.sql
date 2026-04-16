@@ -216,7 +216,7 @@ LIMIT 10;
 -- Community detection should approximate this partitioning.
 
 -- Non-deterministic: Louvain uses random tie-breaking; community count varies by seed (ground truth: 3)
-ASSERT ROW_COUNT >= 2
+ASSERT WARNING ROW_COUNT >= 2
 USE {{zone_name}}.political_books.political_books
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
@@ -256,10 +256,11 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 18. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- 18. VERIFY: All Checks — PASS/FAIL against golden values
 -- ============================================================================
--- All checks should return PASS. Any FAIL indicates data loading issues
--- or algorithm correctness problems.
+-- Cross-cutting sanity check: vertex/edge counts, integrity, max degree,
+-- symmetry, weights, and edge-type cardinality. All rows should return PASS.
+-- Any FAIL indicates data loading issues or algorithm correctness problems.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 9

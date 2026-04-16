@@ -65,6 +65,9 @@ WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.netscience_collab.vertices v WHERE
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE distinct_weights = 77
+-- Non-deterministic: floating-point min — stored value may vary in the last bit
+ASSERT WARNING VALUE min_weight BETWEEN 0.05 AND 0.06
+ASSERT VALUE max_weight = 4.75
 -- Non-deterministic: float aggregation — avg may vary by ±0.001 across platforms
 ASSERT WARNING VALUE avg_weight BETWEEN 0.433 AND 0.435
 SELECT
@@ -80,6 +83,11 @@ FROM {{zone_name}}.netscience_collab.edges;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 5
+ASSERT VALUE count = 1772 WHERE type = 'occasional-coauthor'
+ASSERT VALUE count = 1248 WHERE type = 'frequent-coauthor'
+ASSERT VALUE count = 954 WHERE type = 'cross-discipline'
+ASSERT VALUE count = 776 WHERE type = 'conference-collaborator'
+ASSERT VALUE count = 734 WHERE type = 'primary-collaborator'
 USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (a)-[r]->(b)
 RETURN r.edge_type AS type, count(r) AS count
@@ -109,6 +117,9 @@ LIMIT 20;
 -- Network scientists with the most collaborators appear at the top.
 
 ASSERT ROW_COUNT = 20
+ASSERT VALUE degree = 34 WHERE author_id = 33
+ASSERT VALUE degree = 27 WHERE author_id = 34
+ASSERT VALUE degree = 27 WHERE author_id = 78
 USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (a)-[r]->(b)
 RETURN a.id AS author_id, a.name AS name, COUNT(r) AS degree
@@ -122,6 +133,7 @@ LIMIT 20;
 -- The most prolific collaborators in the network science community.
 
 ASSERT ROW_COUNT = 10
+ASSERT VALUE degree = 34 WHERE author_id = 33
 USE {{zone_name}}.netscience_collab.netscience_collab
 MATCH (a)-[r]->(b)
 RETURN a.id AS author_id, a.name AS name, COUNT(r) AS degree
@@ -137,6 +149,9 @@ LIMIT 10;
 -- does not yet support SUM on edge properties).
 
 ASSERT ROW_COUNT = 10
+-- Non-deterministic: floating-point SUM over 34 edges — may vary by ~0.01 across platforms
+ASSERT WARNING VALUE total_weight BETWEEN 29.99 AND 30.01 WHERE author_id = 33
+ASSERT VALUE degree = 34 WHERE author_id = 33
 SELECT src AS author_id,
        COUNT(*) AS degree,
        ROUND(SUM(weight), 2) AS total_weight
@@ -154,7 +169,8 @@ LIMIT 10;
 -- row expansion limit on this 5,484-edge graph).
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE reachable_in_2_hops >= 1
+ASSERT VALUE hub = 33
+ASSERT VALUE reachable_in_2_hops = 68
 WITH hub AS (
     SELECT src AS hub_id
     FROM {{zone_name}}.netscience_collab.edges

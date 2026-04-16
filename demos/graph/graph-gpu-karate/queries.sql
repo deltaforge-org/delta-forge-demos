@@ -156,6 +156,7 @@ ORDER BY members DESC;
 -- Ground truth: 2 factions, but Louvain typically finds 3-6 sub-communities.
 -- Non-deterministic. Invariants: 3-6 communities, all 34 members assigned.
 
+-- Non-deterministic: Louvain is stochastic — community count varies by node ordering and seed
 ASSERT WARNING ROW_COUNT >= 3
 ASSERT WARNING ROW_COUNT <= 6
 USE {{zone_name}}.gpu_karate.gpu_karate
@@ -190,7 +191,6 @@ LIMIT 10;
 -- 11. GPU SCC — Strongly connected components
 -- ============================================================================
 -- Expected: 1 SCC with all 34 nodes (bidirectional edges).
--- Expected: 1 SCC with all 34 nodes (bidirectional edges).
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
@@ -206,10 +206,11 @@ ORDER BY members DESC;
 -- 12. GPU PAGERANK — Lower damping factor comparison
 -- ============================================================================
 -- Damping 0.50 (vs 0.85 standard) makes PageRank more uniform.
--- Node 33 should still be rank 1 (most connections = most teleport mass).
+-- NetworkX-verified at damping=0.50: Node 33 = rank 1, Node 0 = rank 2.
 
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 33
+ASSERT VALUE rank = 2 WHERE node_id = 0
 USE {{zone_name}}.gpu_karate.gpu_karate
 ON GPU THRESHOLD 1
 CALL algo.pageRank({dampingFactor: 0.50, iterations: 20})
@@ -238,8 +239,7 @@ ORDER BY members DESC;
 -- ============================================================================
 -- 14. CLOSENESS CENTRALITY — Proximity ranking
 -- ============================================================================
--- NetworkX-verified: Node 0 = rank 1, Node 2 = rank 2.
--- NetworkX-verified: Node 0 = rank 1, Node 2 = rank 2.
+-- NetworkX-verified: Node 0 = rank 1 (closeness=0.5690), Node 2 = rank 2 (0.5593).
 
 ASSERT ROW_COUNT = 10
 ASSERT VALUE rank = 1 WHERE node_id = 0
@@ -256,13 +256,16 @@ LIMIT 10;
 -- ============================================================================
 -- 15. SHORTEST PATH — Distance between faction leaders
 -- ============================================================================
--- Nodes 0 and 33 are NOT directly connected. Distance = 2 hops.
--- Nodes 0 and 33 are NOT directly connected. Distance = 2 hops.
+-- Nodes 0 and 33 are NOT directly connected. Distance = 2 hops via node 8.
+-- NetworkX-verified path: [0, 8, 33].
 
 ASSERT ROW_COUNT = 3
 ASSERT VALUE distance = 0 WHERE step = 0
+ASSERT VALUE distance = 1 WHERE step = 1
 ASSERT VALUE distance = 2 WHERE step = 2
 ASSERT VALUE node_id = 0 WHERE step = 0
+-- Non-deterministic intermediate: 4 equal-length paths exist (via 8, 13, 19, or 31)
+ASSERT WARNING VALUE node_id IN (8, 13, 19, 31) WHERE step = 1
 ASSERT VALUE node_id = 33 WHERE step = 2
 USE {{zone_name}}.gpu_karate.gpu_karate
 ON GPU THRESHOLD 1
@@ -342,8 +345,13 @@ ORDER BY degree DESC, member_id ASC;
 
 
 -- ============================================================================
--- 20. AUTOMATED VERIFICATION — GPU quality checks
+-- VERIFY: All Checks
 -- ============================================================================
+-- 20. AUTOMATED VERIFICATION — GPU quality checks
+-- Cross-cutting sanity check: vertex/edge counts, self-loop freedom, orphan
+-- freedom, max-degree invariant, vertex ID range, unit weights, symmetry, and
+-- edge-type diversity. If all 9 rows report PASS, the GPU data substrate is
+-- sound and the algorithm results above are trustworthy.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 9

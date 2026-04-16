@@ -137,6 +137,8 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE headcount = 10 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 10 WHERE department = 'Marketing'
 ASSERT VALUE headcount = 10 WHERE department = 'HR'
+ASSERT VALUE headcount = 10 WHERE department = 'Finance'
+ASSERT VALUE headcount = 10 WHERE department = 'Sales'
 USE {{zone_name}}.storage_modes.storage_hybrid
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
@@ -151,6 +153,8 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE headcount = 10 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 10 WHERE department = 'Marketing'
 ASSERT VALUE headcount = 10 WHERE department = 'HR'
+ASSERT VALUE headcount = 10 WHERE department = 'Finance'
+ASSERT VALUE headcount = 10 WHERE department = 'Sales'
 USE {{zone_name}}.storage_modes.storage_json
 MATCH (n)
 RETURN n.department AS department, count(n) AS headcount
@@ -162,7 +166,7 @@ ORDER BY department;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE size = 50 WHERE size = 50
+ASSERT VALUE size = 50
 USE {{zone_name}}.storage_modes.storage_flat
 CALL algo.connectedComponents()
 YIELD node_id, component_id
@@ -175,7 +179,7 @@ ORDER BY size DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE size = 50 WHERE size = 50
+ASSERT VALUE size = 50
 USE {{zone_name}}.storage_modes.storage_hybrid
 CALL algo.connectedComponents()
 YIELD node_id, component_id
@@ -188,7 +192,7 @@ ORDER BY size DESC;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE size = 50 WHERE size = 50
+ASSERT VALUE size = 50
 USE {{zone_name}}.storage_modes.storage_json
 CALL algo.connectedComponents()
 YIELD node_id, component_id

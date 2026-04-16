@@ -126,12 +126,15 @@ ORDER BY avg_rating DESC;
 -- ============================================================================
 -- The core recommendation pattern: 2-hop traversal through the bipartite
 -- graph. Start at The_Matrix, walk back to users who rated it, then
--- forward to other movies those users rated. Inception appears 3 times
--- (3 Matrix fans also rated it), making it the top recommendation.
+-- forward to other movies those users rated. Four movies tie at the top
+-- with 3 co-ratings each — Dark_Knight, Inception, Blade_Runner, and
+-- Fight_Club — ranked by avg rating to break ties.
 
 ASSERT ROW_COUNT >= 5
+ASSERT VALUE co_ratings = 3 WHERE recommended_movie = 'Dark_Knight'
 ASSERT VALUE co_ratings = 3 WHERE recommended_movie = 'Inception'
 ASSERT VALUE co_ratings = 3 WHERE recommended_movie = 'Blade_Runner'
+ASSERT VALUE co_ratings = 3 WHERE recommended_movie = 'Fight_Club'
 USE {{zone_name}}.movie_recs.movie_recs
 MATCH (m1)<-[r1]-(u)-[r2]->(m2)
 WHERE m1.name = 'The_Matrix' AND m2.name <> 'The_Matrix'
@@ -207,6 +210,10 @@ LIMIT 10;
 
 ASSERT ROW_COUNT = 10
 ASSERT VALUE total_degree = 12 WHERE node_id = 101
+ASSERT VALUE in_degree = 12 WHERE node_id = 101
+ASSERT VALUE out_degree = 0 WHERE node_id = 101
+ASSERT VALUE total_degree = 9 WHERE node_id = 102
+ASSERT VALUE total_degree = 5 WHERE node_id = 114
 USE {{zone_name}}.movie_recs.movie_recs
 CALL algo.degree()
 YIELD node_id, in_degree, out_degree, total_degree
@@ -223,7 +230,7 @@ LIMIT 10;
 -- components indicate cold-start users or orphaned movies.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE size = 45 WHERE component_id = 0
+ASSERT VALUE size = 45
 USE {{zone_name}}.movie_recs.movie_recs
 CALL algo.connectedComponents()
 YIELD node_id, component_id
@@ -232,7 +239,7 @@ ORDER BY size DESC;
 
 
 -- ============================================================================
--- 12. VERIFY — Structural integrity check
+-- 12. VERIFY: All Checks — Structural integrity
 -- ============================================================================
 -- Cross-cutting sanity check: total vertices, total edges, The_Matrix
 -- as most popular movie, and correct entity type distribution.

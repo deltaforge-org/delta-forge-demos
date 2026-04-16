@@ -452,10 +452,13 @@ RETURN score;
 
 
 -- ============================================================================
--- 26. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- VERIFY: All Checks
 -- ============================================================================
--- All checks should return PASS. Any FAIL indicates data loading issues
--- or algorithm correctness problems.
+-- 26. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- Cross-cutting sanity check: vertex count, edge count, referential integrity,
+-- self-loops, degree, ID range, weight uniformity, edge symmetry, and edge-type
+-- mix. All 9 checks must return 'PASS'. Any 'FAIL' indicates data loading or
+-- algorithm correctness problems.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 9

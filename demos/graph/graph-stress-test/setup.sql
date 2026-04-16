@@ -111,7 +111,7 @@ SELECT
         WHEN 36 THEN 'Kofi'     WHEN 37 THEN 'Maren'    WHEN 38 THEN 'Dante'
         WHEN 39 THEN 'Isla'
     END || '_' || CAST(id AS VARCHAR) AS name,
-    -- Age: 22–60 range, deterministic via golden ratio
+    -- Age: 22–59 range, deterministic via golden ratio (truncated CAST to INT)
     22 + CAST(((CAST(id AS DOUBLE) * 0.618033988749895) % 1.0) * 38.0 AS INT) AS age,
     -- Department: 20 departments
     CASE (id % 20)

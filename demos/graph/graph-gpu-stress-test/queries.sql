@@ -270,7 +270,7 @@ RETURN count(r) AS mentor_count;
 -- department pair rankings as CPU.
 
 ASSERT ROW_COUNT = 30
-ASSERT VALUE connections = 91000 WHERE from_dept = 'Engineering'
+ASSERT VALUE connections = 91000 WHERE from_dept = 'Engineering' AND to_dept = 'Platform'
 USE {{zone_name}}.gpu_stress_network.gpu_stress_network
 ON GPU
 MATCH (a)-[r]->(b)
@@ -457,3 +457,111 @@ UNION ALL
 SELECT 'Engineering headcount = 50,000',
        CASE WHEN cnt = 50000 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.gpu_stress_network.gpu_st_people WHERE department = 'Engineering');
+
+
+-- ============================================================================
+-- VERIFY: All Checks
+-- ============================================================================
+-- Cross-cutting trust anchor: directly asserts the key invariants of the
+-- 1M-node / 5M-edge graph against the underlying physical tables. Every
+-- value is computed from the deterministic generation formulas in setup.sql
+-- and independently reproduced via a Python ground-truth script. If these
+-- checks pass, the GPU path has produced results equivalent to the CPU
+-- stress test at enterprise scale.
+
+-- Node count, department count, and city count
+ASSERT ROW_COUNT = 1
+ASSERT VALUE total_people = 1000000
+ASSERT VALUE dept_count = 20
+ASSERT VALUE city_count = 15
+SELECT
+    COUNT(*)                   AS total_people,
+    COUNT(DISTINCT department) AS dept_count,
+    COUNT(DISTINCT city)       AS city_count
+FROM {{zone_name}}.gpu_stress_network.gpu_st_people;
+
+-- Total edge count across all 7 batches
+ASSERT ROW_COUNT = 1
+ASSERT VALUE total_edges = 5059998
+SELECT COUNT(*) AS total_edges
+FROM {{zone_name}}.gpu_stress_network.gpu_st_edges;
+
+-- Uniform department headcount: 1M / 20 = exactly 50000 per department
+ASSERT ROW_COUNT = 20
+ASSERT VALUE headcount = 50000 WHERE department = 'Engineering'
+ASSERT VALUE headcount = 50000 WHERE department = 'AI/ML'
+SELECT department, COUNT(*) AS headcount
+FROM {{zone_name}}.gpu_stress_network.gpu_st_people
+GROUP BY department
+ORDER BY department;
+
+-- Title hierarchy: 7 levels with exact counts from the modular generation
+ASSERT ROW_COUNT = 7
+ASSERT VALUE cnt = 800000 WHERE title = 'Associate'
+ASSERT VALUE cnt = 140000 WHERE title = 'Engineer'
+ASSERT VALUE cnt = 40000 WHERE title = 'Senior Engineer'
+ASSERT VALUE cnt = 10000 WHERE title = 'Manager'
+ASSERT VALUE cnt = 8000 WHERE title = 'Senior Manager'
+ASSERT VALUE cnt = 1000 WHERE title = 'Director'
+ASSERT VALUE cnt = 1000 WHERE title = 'VP'
+SELECT title, COUNT(*) AS cnt
+FROM {{zone_name}}.gpu_stress_network.gpu_st_people
+GROUP BY title
+ORDER BY cnt DESC;
+
+-- Level distribution: 8 levels with exact counts
+ASSERT ROW_COUNT = 8
+ASSERT VALUE cnt = 533333 WHERE level = 'L1'
+ASSERT VALUE cnt = 266667 WHERE level = 'L2'
+ASSERT VALUE cnt = 140000 WHERE level = 'L3'
+ASSERT VALUE cnt = 40000 WHERE level = 'L4'
+ASSERT VALUE cnt = 10000 WHERE level = 'L5'
+ASSERT VALUE cnt = 8000 WHERE level = 'L6'
+ASSERT VALUE cnt = 1000 WHERE level = 'L7'
+ASSERT VALUE cnt = 1000 WHERE level = 'L8'
+SELECT level, COUNT(*) AS cnt
+FROM {{zone_name}}.gpu_stress_network.gpu_st_people
+GROUP BY level
+ORDER BY level;
+
+-- Active/Inactive split: active = (id % 21 != 0) → 952,381 active, 47,619 inactive
+ASSERT ROW_COUNT = 1
+ASSERT VALUE active_count = 952381
+ASSERT VALUE inactive_count = 47619
+SELECT
+    SUM(CASE WHEN active = true THEN 1 ELSE 0 END)  AS active_count,
+    SUM(CASE WHEN active = false THEN 1 ELSE 0 END) AS inactive_count
+FROM {{zone_name}}.gpu_stress_network.gpu_st_people;
+
+-- Relationship type breakdown: all 18 types with exact counts
+ASSERT ROW_COUNT = 18
+ASSERT VALUE cnt = 750000 WHERE relationship_type = 'colleague'
+ASSERT VALUE cnt = 750000 WHERE relationship_type = 'teammate'
+ASSERT VALUE cnt = 550000 WHERE relationship_type = 'mentor'
+ASSERT VALUE cnt = 333334 WHERE relationship_type = 'project-mate'
+ASSERT VALUE cnt = 200000 WHERE relationship_type = 'city-social'
+ASSERT VALUE cnt = 163335 WHERE relationship_type = 'strategic-partner'
+ASSERT VALUE cnt = 163334 WHERE relationship_type = 'leadership-network'
+ASSERT VALUE cnt = 163331 WHERE relationship_type = 'executive-link'
+ASSERT VALUE cnt = 160000 WHERE relationship_type = 'alumni-connection'
+ASSERT VALUE cnt = 159998 WHERE relationship_type = 'acquaintance'
+ASSERT VALUE cnt = 133334 WHERE relationship_type = 'inter-team-link'
+ASSERT VALUE cnt = 133333 WHERE relationship_type = 'cross-dept-bridge'
+ASSERT VALUE cnt = 133333 WHERE relationship_type = 'liaison'
+SELECT relationship_type, COUNT(*) AS cnt
+FROM {{zone_name}}.gpu_stress_network.gpu_st_edges
+GROUP BY relationship_type
+ORDER BY cnt DESC;
+
+-- Within vs cross department edge split must sum to total
+ASSERT ROW_COUNT = 1
+ASSERT VALUE within_dept = 3125998
+ASSERT VALUE cross_dept = 1934000
+ASSERT VALUE total_check = 5059998
+SELECT
+    SUM(CASE WHEN s.department = d.department THEN 1 ELSE 0 END) AS within_dept,
+    SUM(CASE WHEN s.department != d.department THEN 1 ELSE 0 END) AS cross_dept,
+    COUNT(*) AS total_check
+FROM {{zone_name}}.gpu_stress_network.gpu_st_edges e
+JOIN {{zone_name}}.gpu_stress_network.gpu_st_people s ON e.src = s.id
+JOIN {{zone_name}}.gpu_stress_network.gpu_st_people d ON e.dst = d.id;

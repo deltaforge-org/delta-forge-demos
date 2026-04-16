@@ -246,8 +246,12 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 15. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- VERIFY: All Checks
 -- ============================================================================
+-- 15. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- Cross-cutting sanity check: vertex/edge counts, no self-loops, orphan-free,
+-- and symmetric (undirected) edge integrity — proves the Delta tables that
+-- back the graph (cached or uncached) are structurally correct end-to-end.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 5

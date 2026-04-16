@@ -99,8 +99,12 @@ SHOW GRAPH;
 -- ============================================================================
 -- 4. PLACE HIERARCHY — Countries, cities, continents
 -- ============================================================================
+-- Golden: 1343 cities, 6 continents, 111 countries (sum = 1460 places).
 
 ASSERT ROW_COUNT = 3
+ASSERT VALUE count = 1343 WHERE type = 'city'
+ASSERT VALUE count = 111 WHERE type = 'country'
+ASSERT VALUE count = 6 WHERE type = 'continent'
 SELECT type, COUNT(*) AS count
 FROM {{zone_name}}.ldbc_social_network.place
 GROUP BY type
@@ -205,6 +209,10 @@ RETURN count(*) AS mutual_friendship_count;
 -- 11. GENDER DISTRIBUTION OF CONNECTIONS
 -- ============================================================================
 -- Do people preferentially connect within or across genders?
+-- Golden (from raw KNOWS edges):
+--   female→male  = 3667   female→female = 3490
+--   male→female  = 3483   male→male     = 3433
+-- Sum = 14073 = total KNOWS edges.
 
 ASSERT ROW_COUNT = 4
 USE {{zone_name}}.ldbc_social_network.ldbc_social_network
@@ -343,7 +351,8 @@ ORDER BY size DESC;
 -- ============================================================================
 -- Detects communities based on actual connection density.
 
-ASSERT ROW_COUNT >= 2
+-- Non-deterministic: Louvain's community assignment depends on random tie-breaking
+ASSERT WARNING ROW_COUNT >= 2
 USE {{zone_name}}.ldbc_social_network.ldbc_social_network
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id
@@ -594,11 +603,13 @@ ORDER BY h.degree DESC;
 -- 31. LDBC SHORT Q1 — Person Profile
 -- ============================================================================
 -- Golden: first_name=Jun, last_name=Wang, gender=female, browser_used=Opera,
---         city_id=507
+--         city_id=507 (Shanxi)
 
 ASSERT VALUE first_name = 'Jun'
 ASSERT VALUE last_name = 'Wang'
 ASSERT VALUE gender = 'female'
+ASSERT VALUE browser_used = 'Opera'
+ASSERT VALUE city_id = 507
 ASSERT ROW_COUNT = 1
 SELECT
     p.first_name, p.last_name, p.birthday, p.location_ip,
@@ -613,9 +624,12 @@ WHERE p.id = 26388279068220;
 -- ============================================================================
 -- 32. LDBC SHORT Q3 — Person's Friends
 -- ============================================================================
--- Golden: friends include Jie Yang, Alexander Hleb, Otto Muller
+-- Golden: Jun Wang (26388279068220) has 2 outgoing KNOWS edges:
+--   Jie Yang (30786325577752) and Alexander Hleb (30786325578932)
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 2
+ASSERT VALUE first_name = 'Jie' WHERE person_id = 30786325577752
+ASSERT VALUE first_name = 'Alexander' WHERE person_id = 30786325578932
 SELECT
     p2.id AS person_id, p2.first_name, p2.last_name,
     k.creation_date AS friendship_creation_date
@@ -684,8 +698,9 @@ LIMIT 20;
 -- 36. LDBC Q4 — New Tags in Time Window
 -- ============================================================================
 -- Golden: Norodom_Sihanouk (3), George_Clooney (1), Louis_Philippe_I (1)
+-- Exactly 3 tag rows match the NOT-EXISTS 28-day window filter.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 3
 SELECT t.name AS tag_name, COUNT(DISTINCT po.id) AS post_count
 FROM {{zone_name}}.ldbc_social_network.person_knows_person k
 JOIN {{zone_name}}.ldbc_social_network.post_has_creator_person phc ON k.dst = phc.person_id
@@ -714,8 +729,9 @@ LIMIT 10;
 -- 37. LDBC Q6 — Tag Co-occurrence
 -- ============================================================================
 -- Golden: David_Foster (4), Harrison_Ford (2), Muammar_Gaddafi (2)
+-- Query uses LIMIT 10 and the unfiltered result has >= 10 co-occurring tags.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 10
 SELECT t2.name AS tag_name, COUNT(DISTINCT po.id) AS post_count
 FROM {{zone_name}}.ldbc_social_network.person_knows_person k1
 LEFT JOIN {{zone_name}}.ldbc_social_network.person_knows_person k2 ON k1.dst = k2.src
@@ -737,8 +753,9 @@ LIMIT 10;
 -- ============================================================================
 -- Golden: first liker = Anh Nguyen (32985348834301),
 --         like_date=1347061110109, message_id=1030792374999
+-- Person 26388279067534 has far more than 20 likes across their posts, so LIMIT 20.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 20
 SELECT
     p2.id AS person_id, p2.first_name, p2.last_name,
     lk.creation_date AS like_creation_date,
@@ -757,8 +774,9 @@ LIMIT 20;
 -- 39. LDBC Q8 — Recent Replies
 -- ============================================================================
 -- Golden: first reply by Ana Paula Silva, comment_id=1099511667820
+-- Person 2199023256816 has more than 20 replies on their posts, so LIMIT 20.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 20
 SELECT
     p2.id AS person_id, p2.first_name, p2.last_name,
     c.creation_date AS comment_creation_date,
@@ -778,8 +796,9 @@ LIMIT 20;
 -- 40. LDBC Q12 — Expert Friends by TagClass
 -- ============================================================================
 -- Golden: Mathieu Bemba (2199023257063), reply_count=3
+-- 11 friends of 2199023256816 have replied to posts tagged with BasketballPlayer topics.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 11
 SELECT
     p2.id AS person_id, p2.first_name, p2.last_name,
     COUNT(DISTINCT c.id) AS reply_count
@@ -802,8 +821,12 @@ LIMIT 20;
 -- ============================================================================
 -- 41. CONTENT ANALYSIS — Most discussed tags
 -- ============================================================================
+-- Top tag (most comment mentions): Augustine_of_Hippo with 1,064 comments.
+-- Muammar_Gaddafi is second with 697.
 
 ASSERT ROW_COUNT = 15
+ASSERT VALUE comment_count = 1064 WHERE tag_name = 'Augustine_of_Hippo'
+ASSERT VALUE comment_count = 697 WHERE tag_name = 'Muammar_Gaddafi'
 SELECT t.name AS tag_name, COUNT(*) AS comment_count
 FROM {{zone_name}}.ldbc_social_network.comment_has_tag_tag cht
 JOIN {{zone_name}}.ldbc_social_network.tag t ON cht.tag_id = t.id

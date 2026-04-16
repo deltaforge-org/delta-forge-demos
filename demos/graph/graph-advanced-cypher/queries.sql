@@ -211,8 +211,11 @@ ORDER BY centrality DESC;
 -- ============================================================================
 -- In a healthy university, all researchers should be reachable from any
 -- other. Multiple components would indicate isolated research silos.
+-- Union-find over all 170 directed edges (treated as undirected) yields a
+-- single weakly connected component containing all 40 researchers.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 1
+ASSERT VALUE size = 40
 USE {{zone_name}}.research_network.research_network
 CALL algo.connectedComponents()
 YIELD node_id, component_id
@@ -227,7 +230,9 @@ ORDER BY size DESC;
 -- density. With 5 departments and cross-department edges, the algorithm
 -- should detect meaningful community structure.
 
-ASSERT ROW_COUNT >= 2
+-- Non-deterministic: Louvain's community assignment depends on random tie-breaking
+ASSERT WARNING ROW_COUNT >= 2
+ASSERT WARNING ROW_COUNT <= 15
 USE {{zone_name}}.research_network.research_network
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id

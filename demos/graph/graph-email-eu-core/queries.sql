@@ -240,7 +240,9 @@ LIMIT 10;
 -- Louvain should find a comparable number of communities.
 
 -- Non-deterministic: Louvain is a stochastic algorithm; community count varies by run and resolution setting
-ASSERT WARNING ROW_COUNT >= 1
+-- With 42 ground-truth departments, expect many communities; LIMIT 20 caps the result
+ASSERT WARNING ROW_COUNT >= 10
+ASSERT WARNING ROW_COUNT <= 20
 USE {{zone_name}}.email_eu_core.email_eu_core
 CALL algo.louvain({resolution: 1.0})
 YIELD node_id, community_id

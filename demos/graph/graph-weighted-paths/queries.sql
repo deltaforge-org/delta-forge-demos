@@ -142,6 +142,10 @@ LIMIT 10;
 -- major European hubs (Rotterdam, Hamburg, Antwerp).
 
 ASSERT ROW_COUNT = 10
+-- Non-deterministic: PageRank scores depend on power-iteration convergence and
+-- damping math; assert a range consistent with the computed value (~0.1127).
+ASSERT WARNING VALUE score >= 0.08 WHERE node_id = 18
+ASSERT WARNING VALUE score <= 0.20 WHERE node_id = 18
 USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
 YIELD node_id, score, rank
@@ -151,15 +155,21 @@ LIMIT 10;
 
 
 -- ============================================================================
--- 7. SHORTEST ROUTE BY HOPS — Shanghai to Piraeus
+-- 7. SHORTEST ROUTE BY DISTANCE — Shanghai to Piraeus
 -- ============================================================================
--- Find the route with the fewest port stops from Shanghai (id=1) to the
--- Mediterranean hub Piraeus (id=22). The hop-minimal path goes through
--- Singapore and Dubai — 3 hops total.
+-- Find the distance-optimal route from Shanghai (id=1) to the Mediterranean
+-- hub Piraeus (id=22). algo.shortestPath uses weighted Dijkstra over the
+-- distance_nm edge weights. The optimal path travels 9750 nm in 4 hops:
+-- Shanghai -> Singapore -> Colombo -> Dubai -> Piraeus.
 
-ASSERT ROW_COUNT >= 2
+ASSERT ROW_COUNT = 5
 ASSERT VALUE node_id = 1 WHERE step = 0
 ASSERT VALUE distance = 0 WHERE step = 0
+ASSERT VALUE node_id = 2 WHERE step = 1
+ASSERT VALUE node_id = 20 WHERE step = 2
+ASSERT VALUE node_id = 8 WHERE step = 3
+ASSERT VALUE node_id = 22 WHERE step = 4
+ASSERT VALUE distance = 9750 WHERE step = 4
 USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.shortestPath({source: 1, target: 22})
 YIELD node_id, step, distance
@@ -168,15 +178,17 @@ ORDER BY step;
 
 
 -- ============================================================================
--- 8. SHORTEST ROUTE BY DISTANCE (Weighted) — Shanghai to Piraeus
+-- 8. SHORTEST ROUTE WITH EXPLICIT WEIGHTED FLAG — Shanghai to Piraeus
 -- ============================================================================
--- Now find the distance-optimal route. The weighted Dijkstra path from
--- Shanghai to Piraeus travels 9750nm via Singapore -> Colombo -> Dubai ->
--- Piraeus (4 hops), which is shorter in nautical miles than the 3-hop
--- path through the direct trunk route.
+-- algo.shortestPath is weighted by default, but the call below passes
+-- `weighted: true` explicitly for clarity. The result matches Query 7:
+-- the 9750 nm path Shanghai -> Singapore -> Colombo -> Dubai -> Piraeus.
 
-ASSERT ROW_COUNT >= 2
+ASSERT ROW_COUNT = 5
 ASSERT VALUE node_id = 1 WHERE step = 0
+ASSERT VALUE distance = 0 WHERE step = 0
+ASSERT VALUE node_id = 22 WHERE step = 4
+ASSERT VALUE distance = 9750 WHERE step = 4
 USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.shortestPath({source: 1, target: 22, weighted: true})
 YIELD node_id, step, distance
@@ -191,10 +203,11 @@ ORDER BY step;
 -- connected hub should reach most of the network in 2 hops. Shanghai
 -- reaches 10 ports directly, 12 more at depth 2, and the last 2 at depth 3.
 
-ASSERT ROW_COUNT >= 3
+ASSERT ROW_COUNT = 4
 ASSERT VALUE people_at_distance = 1 WHERE depth = 0
 ASSERT VALUE people_at_distance = 10 WHERE depth = 1
 ASSERT VALUE people_at_distance = 12 WHERE depth = 2
+ASSERT VALUE people_at_distance = 2 WHERE depth = 3
 USE {{zone_name}}.shipping_network.shipping_network
 CALL algo.bfs({source: 1})
 YIELD node_id, depth, parent_id

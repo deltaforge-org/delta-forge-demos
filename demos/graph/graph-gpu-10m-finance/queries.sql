@@ -403,8 +403,11 @@ LIMIT 25;
 
 
 -- ============================================================================
--- 23. AUTOMATED VERIFICATION — GPU/CPU equivalence checks
+-- VERIFY: All Checks
 -- ============================================================================
+-- Cross-cutting sanity check: account total, transaction total, bank count,
+-- transaction-type count, and JPMorgan headcount — the critical invariants
+-- that must hold for every query in this demo to be trustworthy.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 5

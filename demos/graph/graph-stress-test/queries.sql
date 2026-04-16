@@ -127,9 +127,11 @@ ORDER BY count DESC;
 -- ============================================================================
 -- 6. ENGINEERING VETERANS — Senior engineers over 50
 -- ============================================================================
--- Age formula: 22 + floor((id × φ mod 1) × 38). The golden ratio
--- scattering gives ages 22–60 (38 integer buckets, 0-indexed).
--- In Engineering (id%20=0), there are exactly 12,500 people with age > 50.
+-- Age formula: 22 + CAST(((id × φ) mod 1) × 38.0 AS INT). Due to DOUBLE
+-- rounding, the INT cast can occasionally yield 38 (not just 0..37), so
+-- the true age range is 22..60. In Engineering (id%20=0) there are
+-- 658 people at age = 60 (the max), so the top rows returned by
+-- ORDER BY age DESC all have age = 60.
 
 ASSERT ROW_COUNT = 25
 ASSERT VALUE age = 60
@@ -165,7 +167,7 @@ LIMIT 25;
 -- edges between departments that are 15 IDs apart.
 
 ASSERT ROW_COUNT = 30
-ASSERT VALUE connections = 91000 WHERE from_dept = 'Engineering'
+ASSERT VALUE connections = 91000 WHERE from_dept = 'Engineering' AND to_dept = 'Platform'
 USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r]->(b)
 WHERE a.department <> b.department
@@ -219,8 +221,10 @@ ORDER BY n.id;
 -- ============================================================================
 -- 11. KNOWLEDGE PATHS — 2-hop information flow from employee #1
 -- ============================================================================
+-- Employee #1 has 236 deterministic 2-hop (r1,r2) edge combinations.
+-- LIMIT 50 truncates to exactly 50 rows.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 50
 USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[]->(b)-[]->(c)
 WHERE a.id = 1
@@ -231,8 +235,10 @@ LIMIT 50;
 -- ============================================================================
 -- 12. REACHABILITY — Who can employee #1 reach within 2 hops?
 -- ============================================================================
+-- Employee #1 reaches 125 distinct employees within 2 hops; LIMIT 50
+-- truncates to exactly 50 rows.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 50
 USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[*1..2]->(b)
 WHERE a.id = 1 AND a <> b
@@ -243,8 +249,11 @@ LIMIT 50;
 -- ============================================================================
 -- 13. RECIPROCAL RELATIONSHIPS — Mutual bonds at scale
 -- ============================================================================
+-- Most edges flow forward (dst > src) from the deterministic stride-based
+-- generation. Only 3 bidirectional (a,b) pairs exist at a.id < b.id, all
+-- created by Batch 7's random long-range connections.
 
-ASSERT ROW_COUNT >= 1
+ASSERT ROW_COUNT = 3
 USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (a)-[r1]->(b)-[r2]->(a)
 WHERE a.id < b.id
