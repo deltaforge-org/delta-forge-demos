@@ -239,7 +239,7 @@ FROM {{zone_name}}.delta_demos.warehouse_orders;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-DROP TABLE IF EXISTS {{zone_name}}.delta_demos.warehouse_orders_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.delta_demos.warehouse_orders_iceberg;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.delta_demos.warehouse_orders_iceberg
 USING ICEBERG

@@ -56,9 +56,3 @@ INSERT INTO {{zone_name}}.iceberg_demos.compliance_records VALUES
     (18, 'Gamma LLC',   'HIPAA',   'compliant',     14, '2025-01-29'),
     (19, 'Delta Co',    'PCI_DSS', 'partial',       38, '2025-01-30'),
     (20, 'Epsilon SA',  'SOX',     'non_compliant', 75, '2025-02-01');
-
--- --------------------------------------------------------------------------
--- Schema Detection
--- --------------------------------------------------------------------------
-
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.compliance_records;

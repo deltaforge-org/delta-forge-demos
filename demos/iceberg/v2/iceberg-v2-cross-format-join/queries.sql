@@ -85,8 +85,15 @@ ORDER BY st.region;
 -- ============================================================================
 -- Query 5: Cross-Format JOIN — Top Products by Region
 -- ============================================================================
+-- ORDER BY region ASC, revenue DESC LIMIT 5 — all 5 rows fall in 'Midwest'
+-- (4 products) plus the first Northeast row.
 
 ASSERT ROW_COUNT = 5
+ASSERT VALUE revenue = 779.94 WHERE region = 'Midwest' AND product_name = 'Running Pro X'
+ASSERT VALUE revenue = 699.98 WHERE region = 'Midwest' AND product_name = 'Sport Watch'
+ASSERT VALUE revenue = 279.96 WHERE region = 'Midwest' AND product_name = 'Casual Slip-On'
+ASSERT VALUE revenue = 239.97 WHERE region = 'Midwest' AND product_name = 'Fleece Vest'
+ASSERT VALUE revenue = 1049.97 WHERE region = 'Northeast' AND product_name = 'Sport Watch'
 SELECT
     st.region,
     s.product_name,
@@ -139,7 +146,7 @@ JOIN {{zone_name}}.iceberg_demos.stores st ON s.store_id = st.store_id;
 -- This reads through the V2 metadata chain. Then JOIN with the CSV table
 -- to prove 3-way format interop: Iceberg (read) + CSV (read) + Delta (write).
 
-DROP TABLE IF EXISTS {{zone_name}}.iceberg_demos.sales_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sales_iceberg;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales_iceberg
 USING ICEBERG

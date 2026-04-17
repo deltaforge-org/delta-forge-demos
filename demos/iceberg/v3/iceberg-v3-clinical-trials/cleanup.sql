@@ -2,7 +2,7 @@
 -- Iceberg V3 Clinical Trial Lab Results — Cleanup
 -- ============================================================================
 
--- STEP 1: Drop external tables
+-- STEP 1: Drop the external Iceberg table and its backing files.
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.lab_results WITH FILES;
 
 -- STEP 2: Shared resources (used by other iceberg demos if present)

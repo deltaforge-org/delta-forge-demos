@@ -68,9 +68,3 @@ INSERT INTO {{zone_name}}.iceberg_demos.orders VALUES
     (28, 'Carol Davis',    'USB-C Hub',      3, 49.99,   'pending',    '2025-03-14'),
     (29, 'Dan Wilson',     'Keyboard Mech',  2, 149.99,  'processing', '2025-03-15'),
     (30, 'Eve Martinez',   'Laptop Pro',     2, 1299.99, 'processing', '2025-03-15');
-
--- --------------------------------------------------------------------------
--- Schema Detection
--- --------------------------------------------------------------------------
-
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.orders;

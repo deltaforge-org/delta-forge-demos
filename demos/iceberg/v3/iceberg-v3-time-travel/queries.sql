@@ -206,6 +206,9 @@ ORDER BY holding_id;
 -- ============================================================================
 -- Query 11: Version History
 -- ============================================================================
+-- Non-deterministic: DESCRIBE HISTORY returns commit timestamps and the
+-- version count can vary slightly depending on engine internals. Use a
+-- range assertion with WARNING severity.
 
 ASSERT WARNING ROW_COUNT >= 5
 DESCRIBE HISTORY {{zone_name}}.iceberg_demos.portfolio_holdings;

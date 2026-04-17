@@ -159,7 +159,7 @@ SELECT * FROM {{zone_name}}.iceberg_demos.orders VERSION AS OF 1 ORDER BY order_
 -- updated statuses, no cancelled) must match the Delta reader exactly.
 -- ============================================================================
 
-DROP TABLE IF EXISTS {{zone_name}}.iceberg_demos.orders_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.orders_iceberg WITH FILES;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders_iceberg
 USING ICEBERG

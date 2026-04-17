@@ -77,9 +77,3 @@ INSERT INTO {{zone_name}}.iceberg_demos.members VALUES
     (38, 'Eric Evans',          'Gold',     17000, 5100.00,  '2020-11-25'),
     (39, 'Courtney Edwards',    'Platinum', 31000, 9500.25,  '2019-08-30'),
     (40, 'Derek Collins',       'Bronze',   1350,  370.75,   '2023-10-22');
-
--- --------------------------------------------------------------------------
--- Schema Detection
--- --------------------------------------------------------------------------
-
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.members;

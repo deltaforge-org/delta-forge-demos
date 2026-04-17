@@ -234,6 +234,9 @@ ORDER BY drug_id;
 -- ============================================================================
 -- Query 12: Version History — Schema Evolution Trail
 -- ============================================================================
+-- Non-deterministic: DESCRIBE HISTORY returns commit timestamps and version
+-- counts that can vary by one or two based on engine internals. Use a range
+-- assertion with WARNING severity.
 
 ASSERT WARNING ROW_COUNT >= 6
 DESCRIBE HISTORY {{zone_name}}.iceberg_demos.drug_registry;

@@ -19,6 +19,9 @@ ASSERT ROW_COUNT = 3
 ASSERT VALUE record_count = 10 WHERE compliance_status = 'compliant'
 ASSERT VALUE record_count = 5 WHERE compliance_status = 'non_compliant'
 ASSERT VALUE record_count = 5 WHERE compliance_status = 'partial'
+ASSERT VALUE total_risk = 174 WHERE compliance_status = 'compliant'
+ASSERT VALUE total_risk = 360 WHERE compliance_status = 'non_compliant'
+ASSERT VALUE total_risk = 231 WHERE compliance_status = 'partial'
 SELECT
     compliance_status,
     COUNT(*) AS record_count,
@@ -34,7 +37,14 @@ ORDER BY compliance_status;
 ASSERT ROW_COUNT = 5
 ASSERT VALUE avg_risk = 16.25 WHERE entity_name = 'Acme Corp'
 ASSERT VALUE avg_risk = 58.25 WHERE entity_name = 'Beta Inc'
+ASSERT VALUE avg_risk = 36.25 WHERE entity_name = 'Delta Co'
 ASSERT VALUE avg_risk = 67.00 WHERE entity_name = 'Epsilon SA'
+ASSERT VALUE avg_risk = 13.50 WHERE entity_name = 'Gamma LLC'
+ASSERT VALUE total_risk = 65 WHERE entity_name = 'Acme Corp'
+ASSERT VALUE total_risk = 233 WHERE entity_name = 'Beta Inc'
+ASSERT VALUE total_risk = 145 WHERE entity_name = 'Delta Co'
+ASSERT VALUE total_risk = 268 WHERE entity_name = 'Epsilon SA'
+ASSERT VALUE total_risk = 54 WHERE entity_name = 'Gamma LLC'
 SELECT
     entity_name,
     COUNT(*) AS record_count,
@@ -162,6 +172,7 @@ SELECT * FROM {{zone_name}}.iceberg_demos.compliance_iceberg ORDER BY record_id;
 
 ASSERT ROW_COUNT = 3
 ASSERT VALUE record_count = 10 WHERE compliance_status = 'compliant'
+ASSERT VALUE record_count = 5 WHERE compliance_status = 'partial'
 ASSERT VALUE record_count = 5 WHERE compliance_status = 'under_review'
 SELECT
     compliance_status,

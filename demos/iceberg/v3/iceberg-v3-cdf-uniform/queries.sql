@@ -127,6 +127,9 @@ ASSERT ROW_COUNT = 3
 ASSERT VALUE cnt = 16 WHERE status = 'completed'
 ASSERT VALUE cnt = 14 WHERE status = 'pending'
 ASSERT VALUE cnt = 3 WHERE status = 'failed'
+ASSERT VALUE total_amount = 8955.80 WHERE status = 'completed'
+ASSERT VALUE total_amount = 10066.79 WHERE status = 'pending'
+ASSERT VALUE total_amount = 113.24 WHERE status = 'failed'
 SELECT
     status,
     COUNT(*) AS cnt,
@@ -141,9 +144,16 @@ ORDER BY status;
 -- ============================================================================
 
 ASSERT ROW_COUNT = 5
-ASSERT VALUE cnt = 7 WHERE merchant = 'TechGadgets Inc'
 ASSERT VALUE cnt = 6 WHERE merchant = 'CloudSoft SaaS'
+ASSERT VALUE cnt = 7 WHERE merchant = 'FreshMart Foods'
+ASSERT VALUE cnt = 7 WHERE merchant = 'MedPlus Pharmacy'
+ASSERT VALUE cnt = 7 WHERE merchant = 'TechGadgets Inc'
+ASSERT VALUE cnt = 6 WHERE merchant = 'UrbanStyle Apparel'
+ASSERT VALUE total_amount = 6294.00 WHERE merchant = 'CloudSoft SaaS'
+ASSERT VALUE total_amount = 881.09 WHERE merchant = 'FreshMart Foods'
+ASSERT VALUE total_amount = 941.05 WHERE merchant = 'MedPlus Pharmacy'
 ASSERT VALUE total_amount = 9673.45 WHERE merchant = 'TechGadgets Inc'
+ASSERT VALUE total_amount = 1346.24 WHERE merchant = 'UrbanStyle Apparel'
 SELECT
     merchant,
     COUNT(*) AS cnt,
@@ -161,7 +171,7 @@ ORDER BY merchant;
 -- V3 shadow metadata is readable by an Iceberg engine even after CDF
 -- was generating change records alongside.
 
-DROP TABLE IF EXISTS {{zone_name}}.iceberg_demos.payment_transactions_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.payment_transactions_iceberg;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.payment_transactions_iceberg
 USING ICEBERG

@@ -77,9 +77,3 @@ INSERT INTO {{zone_name}}.iceberg_demos.sales VALUES
     (38, 'Olivia Kim',    'Northeast', 'Electronics', 6800.00,  9.0,  '2025-03-10'),
     (39, 'James Lee',     'Southeast', 'Electronics', 5300.00,  8.5,  '2025-03-12'),
     (40, 'Ava Moore',     'West',      'Furniture',   4200.00,  7.5,  '2025-03-14');
-
--- --------------------------------------------------------------------------
--- Schema Detection
--- --------------------------------------------------------------------------
-
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.sales;

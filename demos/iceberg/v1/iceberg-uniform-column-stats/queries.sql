@@ -248,7 +248,7 @@ FROM {{zone_name}}.iceberg_demos.ad_clicks;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-DROP TABLE IF EXISTS {{zone_name}}.iceberg_demos.ad_clicks_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.ad_clicks_iceberg WITH FILES;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.ad_clicks_iceberg
 USING ICEBERG

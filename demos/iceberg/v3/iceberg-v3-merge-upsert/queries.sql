@@ -34,10 +34,13 @@ ORDER BY item_id;
 ASSERT ROW_COUNT = 3
 ASSERT VALUE item_count = 10 WHERE warehouse = 'WH-CENTRAL'
 ASSERT VALUE total_qty = 608 WHERE warehouse = 'WH-CENTRAL'
+ASSERT VALUE inventory_value = 43943.92 WHERE warehouse = 'WH-CENTRAL'
 ASSERT VALUE item_count = 10 WHERE warehouse = 'WH-EAST'
 ASSERT VALUE total_qty = 787 WHERE warehouse = 'WH-EAST'
+ASSERT VALUE inventory_value = 58092.13 WHERE warehouse = 'WH-EAST'
 ASSERT VALUE item_count = 10 WHERE warehouse = 'WH-WEST'
 ASSERT VALUE total_qty = 978 WHERE warehouse = 'WH-WEST'
+ASSERT VALUE inventory_value = 73190.22 WHERE warehouse = 'WH-WEST'
 SELECT
     warehouse,
     COUNT(*) AS item_count,
@@ -183,10 +186,13 @@ ORDER BY item_id;
 ASSERT ROW_COUNT = 3
 ASSERT VALUE item_count = 10 WHERE warehouse = 'WH-CENTRAL'
 ASSERT VALUE total_qty = 608 WHERE warehouse = 'WH-CENTRAL'
+ASSERT VALUE inventory_value = 43943.92 WHERE warehouse = 'WH-CENTRAL'
 ASSERT VALUE item_count = 12 WHERE warehouse = 'WH-EAST'
 ASSERT VALUE total_qty = 1122 WHERE warehouse = 'WH-EAST'
+ASSERT VALUE inventory_value = 75838.78 WHERE warehouse = 'WH-EAST'
 ASSERT VALUE item_count = 11 WHERE warehouse = 'WH-WEST'
 ASSERT VALUE total_qty = 1138 WHERE warehouse = 'WH-WEST'
+ASSERT VALUE inventory_value = 82573.62 WHERE warehouse = 'WH-WEST'
 SELECT
     warehouse,
     COUNT(*) AS item_count,
@@ -302,10 +308,13 @@ WHERE item_id = 21;
 ASSERT ROW_COUNT = 3
 ASSERT VALUE item_count = 10 WHERE warehouse = 'WH-CENTRAL'
 ASSERT VALUE total_qty = 608 WHERE warehouse = 'WH-CENTRAL'
+ASSERT VALUE inventory_value = 43943.92 WHERE warehouse = 'WH-CENTRAL'
 ASSERT VALUE item_count = 12 WHERE warehouse = 'WH-EAST'
 ASSERT VALUE total_qty = 1122 WHERE warehouse = 'WH-EAST'
+ASSERT VALUE inventory_value = 75838.78 WHERE warehouse = 'WH-EAST'
 ASSERT VALUE item_count = 11 WHERE warehouse = 'WH-WEST'
 ASSERT VALUE total_qty = 1138 WHERE warehouse = 'WH-WEST'
+ASSERT VALUE inventory_value = 82573.62 WHERE warehouse = 'WH-WEST'
 SELECT
     warehouse,
     COUNT(*) AS item_count,

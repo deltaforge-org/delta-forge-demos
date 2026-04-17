@@ -17,6 +17,7 @@ SELECT * FROM {{zone_name}}.iceberg_demos.transactions ORDER BY txn_id;
 -- ============================================================================
 -- Verify that the CHECK constraints are registered in the table properties.
 
+ASSERT WARNING ROW_COUNT >= 4
 SHOW TBLPROPERTIES {{zone_name}}.iceberg_demos.transactions;
 
 -- ============================================================================
@@ -98,7 +99,8 @@ WHERE currency NOT IN ('USD', 'EUR', 'GBP');
 -- ============================================================================
 -- Query 8: Latest Balance per Account
 -- ============================================================================
--- Uses a correlated subquery to find the most recent transaction per account.
+-- Finds the most recent transaction per account via CTE + ROW_NUMBER + JOIN
+-- (Delta Forge does not currently support correlated scalar subqueries).
 
 ASSERT ROW_COUNT = 5
 ASSERT VALUE balance_after = 8000.00 WHERE account_id = 'ACC-1001'
@@ -106,20 +108,24 @@ ASSERT VALUE balance_after = 4000.00 WHERE account_id = 'ACC-1002'
 ASSERT VALUE balance_after = 5000.00 WHERE account_id = 'ACC-1003'
 ASSERT VALUE balance_after = 10000.00 WHERE account_id = 'ACC-1004'
 ASSERT VALUE balance_after = 2900.00 WHERE account_id = 'ACC-1005'
-SELECT t.account_id, t.balance_after, t.txn_date
-FROM {{zone_name}}.iceberg_demos.transactions t
-WHERE t.txn_date = (
-    SELECT MAX(t2.txn_date)
-    FROM {{zone_name}}.iceberg_demos.transactions t2
-    WHERE t2.account_id = t.account_id
+WITH ranked AS (
+    SELECT
+        account_id,
+        balance_after,
+        txn_date,
+        ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_date DESC) AS rn
+    FROM {{zone_name}}.iceberg_demos.transactions
 )
-ORDER BY t.account_id;
+SELECT account_id, balance_after, txn_date
+FROM ranked
+WHERE rn = 1
+ORDER BY account_id;
 
 -- ============================================================================
 -- ICEBERG READ-BACK VERIFICATION
 -- ============================================================================
 
-DROP TABLE IF EXISTS {{zone_name}}.iceberg_demos.transactions_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.transactions_iceberg WITH FILES;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.transactions_iceberg
 USING ICEBERG

@@ -192,7 +192,7 @@ FROM {{zone_name}}.iceberg_demos.patient_records;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-DROP TABLE IF EXISTS {{zone_name}}.iceberg_demos.patient_records_iceberg;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.patient_records_iceberg WITH FILES;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.patient_records_iceberg
 USING ICEBERG

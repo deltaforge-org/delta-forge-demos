@@ -64,9 +64,3 @@ INSERT INTO {{zone_name}}.iceberg_demos.transactions VALUES
     (23, 'ACC-1002', 'transfer',   4000.00,  4000.00,  'EUR', '2025-02-19'),
     (24, 'ACC-1003', 'withdrawal', 700.00,   5000.00,  'GBP', '2025-02-20'),
     (25, 'ACC-1004', 'transfer',   1500.00,  10000.00, 'USD', '2025-02-21');
-
--- --------------------------------------------------------------------------
--- Schema Detection
--- --------------------------------------------------------------------------
-
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.transactions;

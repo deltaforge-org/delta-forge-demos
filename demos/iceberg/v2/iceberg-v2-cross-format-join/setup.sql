@@ -25,7 +25,6 @@ OPTIONS (
 );
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.stores TO USER {{current_user}};
-DETECT SCHEMA FOR TABLE {{zone_name}}.iceberg_demos.stores;
 
 -- STEP 3: Delta table with UniForm V2 — sales transactions
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales (
