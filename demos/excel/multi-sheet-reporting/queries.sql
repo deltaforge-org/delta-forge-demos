@@ -117,8 +117,14 @@ FROM {{zone_name}}.excel_demos.all_staff;
 -- ============================================================================
 -- 8. STAFF ROSTER — Distinct roles and headcount
 -- ============================================================================
+-- 4 distinct roles across both regions: Sales Manager (2), Account Executive
+-- (2), Sales Rep (2), Support (1).
 
-ASSERT ROW_COUNT >= 3
+ASSERT ROW_COUNT = 4
+ASSERT VALUE headcount = 2 WHERE role = 'Sales Manager'
+ASSERT VALUE headcount = 2 WHERE role = 'Account Executive'
+ASSERT VALUE headcount = 2 WHERE role = 'Sales Rep'
+ASSERT VALUE headcount = 1 WHERE role = 'Support'
 SELECT role,
        COUNT(*) AS headcount
 FROM {{zone_name}}.excel_demos.all_staff
