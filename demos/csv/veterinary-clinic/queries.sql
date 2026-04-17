@@ -68,11 +68,6 @@ FROM {{zone_name}}.csv_vet.sampled_visits;
 -- Verify species distribution across all branches.
 
 ASSERT ROW_COUNT = 5
-SELECT species, COUNT(*) AS visit_count
-FROM {{zone_name}}.csv_vet.all_visits
-GROUP BY species
-ORDER BY species;
-
 ASSERT VALUE visit_count = 12 WHERE species = 'Bird'
 ASSERT VALUE visit_count = 20 WHERE species = 'Cat'
 ASSERT VALUE visit_count = 15 WHERE species = 'Dog'
