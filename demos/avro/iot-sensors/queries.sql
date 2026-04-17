@@ -142,8 +142,11 @@ ASSERT ROW_COUNT = 10
 ASSERT VALUE result = 'PASS' WHERE check_name = 'total_count_2500'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'five_source_files'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'floor4_has_battery'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'floor4_has_firmware'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'filter_floor4_count'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'max_rows_250'
 ASSERT VALUE result = 'PASS' WHERE check_name = 'file_metadata_populated'
+ASSERT VALUE result = 'PASS' WHERE check_name = 'sample_all_files'
 SELECT check_name, result FROM (
 
     -- Check 1: Total row count = 2,500
