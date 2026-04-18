@@ -717,13 +717,9 @@ RETURN n;
 
 
 -- ============================================================================
--- VERIFY: All Checks
+-- VERIFY 1: Node count, department count, city count
 -- ============================================================================
--- Cross-cutting sanity check: proves the full 1M-node / 5M-edge graph
--- loaded with the correct topology, uniform department distribution,
--- correct title hierarchy, and accurate active/inactive split.
 
--- Node count, department count, and city count
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_people = 1000000
 ASSERT VALUE dept_count = 20
@@ -734,13 +730,21 @@ SELECT
     COUNT(DISTINCT city)       AS city_count
 FROM {{zone_name}}.stress_test_network.st_people;
 
--- Total edge count across all 7 batches
+
+-- ============================================================================
+-- VERIFY 2: Total edge count across all 7 batches
+-- ============================================================================
+
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_edges = 5059998
 SELECT COUNT(*) AS total_edges
 FROM {{zone_name}}.stress_test_network.st_edges;
 
--- Uniform department headcount: 1M / 20 = exactly 50000 per department
+
+-- ============================================================================
+-- VERIFY 3: Uniform department headcount (1M / 20 = 50000 per dept)
+-- ============================================================================
+
 ASSERT ROW_COUNT = 20
 ASSERT VALUE headcount = 50000 WHERE department = 'Engineering'
 ASSERT VALUE headcount = 50000 WHERE department = 'AI/ML'
@@ -749,7 +753,11 @@ FROM {{zone_name}}.stress_test_network.st_people
 GROUP BY department
 ORDER BY department;
 
--- Title hierarchy: 7 levels with exact counts from the modular generation
+
+-- ============================================================================
+-- VERIFY 4: Title hierarchy (7 levels)
+-- ============================================================================
+
 ASSERT ROW_COUNT = 7
 ASSERT VALUE cnt = 800000 WHERE title = 'Associate'
 ASSERT VALUE cnt = 140000 WHERE title = 'Engineer'
@@ -763,7 +771,11 @@ FROM {{zone_name}}.stress_test_network.st_people
 GROUP BY title
 ORDER BY cnt DESC;
 
--- Level distribution: 8 levels with exact counts
+
+-- ============================================================================
+-- VERIFY 5: Level distribution (8 levels)
+-- ============================================================================
+
 ASSERT ROW_COUNT = 8
 ASSERT VALUE cnt = 533333 WHERE level = 'L1'
 ASSERT VALUE cnt = 266667 WHERE level = 'L2'
@@ -778,7 +790,11 @@ FROM {{zone_name}}.stress_test_network.st_people
 GROUP BY level
 ORDER BY level;
 
--- Active/Inactive split: active = (id % 21 != 0) → 952,381 active, 47,619 inactive
+
+-- ============================================================================
+-- VERIFY 6: Active/Inactive split (active = id % 21 != 0)
+-- ============================================================================
+
 ASSERT ROW_COUNT = 1
 ASSERT VALUE active_count = 952381
 ASSERT VALUE inactive_count = 47619
@@ -787,7 +803,11 @@ SELECT
     SUM(CASE WHEN active = false THEN 1 ELSE 0 END) AS inactive_count
 FROM {{zone_name}}.stress_test_network.st_people;
 
--- Relationship type breakdown: all 18 types with exact counts
+
+-- ============================================================================
+-- VERIFY 7: Relationship type breakdown (18 types)
+-- ============================================================================
+
 ASSERT ROW_COUNT = 18
 ASSERT VALUE cnt = 750000 WHERE relationship_type = 'colleague'
 ASSERT VALUE cnt = 750000 WHERE relationship_type = 'teammate'
@@ -807,7 +827,11 @@ FROM {{zone_name}}.stress_test_network.st_edges
 GROUP BY relationship_type
 ORDER BY cnt DESC;
 
--- Within vs cross department edge split must sum to total
+
+-- ============================================================================
+-- VERIFY 8: Within vs cross department edge split
+-- ============================================================================
+
 ASSERT ROW_COUNT = 1
 ASSERT VALUE within_dept = 3125998
 ASSERT VALUE cross_dept = 1934000
