@@ -54,13 +54,16 @@ ORDER BY p.capacity_teu DESC;
 -- Operations needs to see every active route: origin, destination, distance,
 -- transit time, route classification, and fuel cost for budgeting.
 
--- ROW_COUNT covers the network size invariant; specific distance/transit_days
--- spot checks live in the verify-all section where SQL WHERE composition is
--- available (ASSERT WHERE supports single predicate only).
+-- ASSERT WHERE supports a single predicate; identify each route by a composite
+-- route_key = 'from->to' so a single-equality WHERE can disambiguate.
 ASSERT ROW_COUNT = 55
+ASSERT VALUE distance_nm = 2200.0 WHERE route_key = 'Shanghai->Singapore'
+ASSERT VALUE transit_days = 26 WHERE route_key = 'Shanghai->Rotterdam'
+ASSERT VALUE distance_nm = 3300.0 WHERE route_key = 'Singapore->Dubai'
 USE {{zone_name}}.shipping_network.shipping_network
 MATCH (a)-[r]->(b)
-RETURN a.name AS from_port, b.name AS to_port,
+RETURN a.name || '->' || b.name AS route_key,
+       a.name AS from_port, b.name AS to_port,
        r.distance_nm AS distance_nm, r.transit_days AS transit_days,
        r.route_type AS route_type, r.fuel_cost_usd AS fuel_cost_usd
 ORDER BY r.distance_nm DESC;
