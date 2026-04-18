@@ -80,13 +80,9 @@ WHERE src = dst;
 -- 5 distinct edge types: training-partner, sparring-buddy, class-friend,
 -- practice-mate, social-contact.
 
--- NOTE: Undirected edges materialize both directions in CSR. We filter to the
--- canonical (src<dst) direction via r.edge_type IS NOT NULL to avoid double-
--- counting the reverse-materialized edges.
 ASSERT ROW_COUNT = 5
 USE {{zone_name}}.karate_club.karate_club
 MATCH (a)-[r]->(b)
-WHERE r.edge_type IS NOT NULL
 RETURN r.edge_type AS type, count(r) AS count
 ORDER BY count DESC;
 
