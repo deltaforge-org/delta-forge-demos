@@ -280,13 +280,11 @@ MATCH (a)-[r]->(b)
 WHERE r.status = 'completed'
 RETURN a.id AS src;
 
--- ASSERT WHERE supports a single predicate only. Since MATCH filters a.id=1
--- already, we identify each row by its distinct dst (4 vs 8).
 ASSERT ROW_COUNT = 2
-ASSERT VALUE weight = 1.0 WHERE dst = 4
-ASSERT VALUE weight = 1.0 WHERE dst = 8
-ASSERT VALUE status = 'urgent' WHERE dst = 4
-ASSERT VALUE status = 'urgent' WHERE dst = 8
+ASSERT VALUE weight = 1.0 WHERE src = 1 AND dst = 4
+ASSERT VALUE weight = 1.0 WHERE src = 1 AND dst = 8
+ASSERT VALUE status = 'urgent' WHERE src = 1 AND dst = 4
+ASSERT VALUE status = 'urgent' WHERE src = 1 AND dst = 8
 USE {{zone_name}}.hospital_referrals.hospital_referrals
 MATCH (a)-[r]->(b)
 WHERE a.id = 1
