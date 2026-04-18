@@ -329,23 +329,46 @@ ASSERT VALUE total_customers = 975
 ASSERT VALUE best_category = 'Electronics'
 ASSERT VALUE best_store = 'Mall'
 ASSERT VALUE stock_net_gain = 8.80
+WITH
+    sales_agg AS (
+        SELECT
+            COUNT(*)               AS sales_rows,
+            ROUND(SUM(revenue), 2) AS total_revenue,
+            SUM(units_sold)        AS total_units,
+            SUM(customers)         AS total_customers
+        FROM {{zone_name}}.retail.sales_daily
+    ),
+    stock_agg AS (
+        SELECT
+            COUNT(*)                                                           AS stock_rows,
+            MAX(CASE WHEN week_start = DATE '2026-01-05' THEN open_price END)  AS first_open,
+            MAX(CASE WHEN week_start = DATE '2026-03-09' THEN close_price END) AS last_close
+        FROM {{zone_name}}.retail.stock_prices
+    ),
+    best_cat AS (
+        SELECT category AS best_category
+        FROM {{zone_name}}.retail.sales_daily
+        GROUP BY category
+        ORDER BY SUM(revenue) DESC
+        LIMIT 1
+    ),
+    best_st AS (
+        SELECT store_name AS best_store
+        FROM {{zone_name}}.retail.sales_daily
+        GROUP BY store_name
+        ORDER BY SUM(revenue) DESC
+        LIMIT 1
+    )
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.retail.sales_daily)                   AS sales_rows,
-    (SELECT COUNT(*) FROM {{zone_name}}.retail.stock_prices)                  AS stock_rows,
-    (SELECT ROUND(SUM(revenue), 2) FROM {{zone_name}}.retail.sales_daily)     AS total_revenue,
-    (SELECT SUM(units_sold) FROM {{zone_name}}.retail.sales_daily)            AS total_units,
-    (SELECT SUM(customers) FROM {{zone_name}}.retail.sales_daily)             AS total_customers,
-    (SELECT category FROM (
-        SELECT category, SUM(revenue) AS r
-        FROM {{zone_name}}.retail.sales_daily
-        GROUP BY category ORDER BY r DESC LIMIT 1
-    ))                                                                        AS best_category,
-    (SELECT store_name FROM (
-        SELECT store_name, SUM(revenue) AS r
-        FROM {{zone_name}}.retail.sales_daily
-        GROUP BY store_name ORDER BY r DESC LIMIT 1
-    ))                                                                        AS best_store,
-    ROUND(
-        (SELECT close_price FROM {{zone_name}}.retail.stock_prices WHERE week_start = DATE '2026-03-09')
-        - (SELECT open_price FROM {{zone_name}}.retail.stock_prices WHERE week_start = DATE '2026-01-05'),
-        2)                                                                    AS stock_net_gain;
+    sa.sales_rows,
+    st.stock_rows,
+    sa.total_revenue,
+    sa.total_units,
+    sa.total_customers,
+    bc.best_category,
+    bs.best_store,
+    ROUND(st.last_close - st.first_open, 2) AS stock_net_gain
+FROM sales_agg sa
+CROSS JOIN stock_agg st
+CROSS JOIN best_cat bc
+CROSS JOIN best_st bs;

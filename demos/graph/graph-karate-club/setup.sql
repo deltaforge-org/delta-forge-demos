@@ -8,7 +8,8 @@
 -- Format: pipe-delimited CSV with header (src|dst|weight|edge_type)
 --
 -- Vertices: 34 club members (IDs 0–33)
--- Edges: 156 rows (78 undirected edges stored bidirectionally, weight=1.0)
+-- Edges: 78 rows in canonical form (src < dst); graph is UNDIRECTED, so the
+--        engine infers the reverse direction at CSR build time. Weight = 1.0.
 --
 -- Graph:
 --   {{zone_name}}.karate_club.karate_club — All members as vertices, friendships as edges
@@ -78,7 +79,7 @@ CREATE GRAPH IF NOT EXISTS {{zone_name}}.karate_club.karate_club
     EDGE TABLE {{zone_name}}.karate_club.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN edge_type
-    DIRECTED;
+    UNDIRECTED;
 
 -- ############################################################################
 -- STEP 5: Warm the CSR cache

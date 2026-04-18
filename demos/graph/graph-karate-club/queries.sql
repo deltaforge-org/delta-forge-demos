@@ -2,7 +2,7 @@
 -- ############################################################################
 --
 --   ZACHARY'S KARATE CLUB — CLASSIC GRAPH BENCHMARK
---   34 Vertices / 78 Undirected Edges (156 rows) / Weight = 1.0
+--   34 Vertices / 78 Undirected Edges (canonical src<dst) / Weight = 1.0
 --
 -- ############################################################################
 -- ############################################################################
@@ -28,14 +28,16 @@
 -- ============================================================================
 -- 1. VERTEX & EDGE COUNTS — Verify data loaded correctly
 -- ============================================================================
--- 34 vertices, 156 edge rows (78 undirected edges x 2)
+-- 34 vertices, 78 canonical edge rows (src < dst). The graph is UNDIRECTED,
+-- so the engine materializes the reverse direction internally when building
+-- the CSR — no need to duplicate rows in storage.
 
 -- Verify vertex count
 ASSERT VALUE row_count = 34
 SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_club.vertices;
 
--- Verify edge count (78 undirected edges x 2)
-ASSERT VALUE row_count = 156
+-- Verify edge count (78 canonical rows; engine doubles to 156 CSR edges)
+ASSERT VALUE row_count = 78
 SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_club.edges;
 
 
@@ -99,8 +101,9 @@ ORDER BY member_id;
 -- ============================================================================
 -- 7. DEGREE DISTRIBUTION — How many friends does each member have?
 -- ============================================================================
--- Counts outgoing edges per node. Since edges are stored bidirectionally,
--- out-degree equals the undirected degree.
+-- Counts outgoing edges per node. Graph is UNDIRECTED, so the engine adds
+-- the reverse of each canonical (src < dst) edge at CSR build time — each
+-- node's out-degree in the CSR equals its undirected degree.
 -- Known (NetworkX-verified): Node 33 = 17, Node 0 = 16, Node 32 = 12,
 -- Node 2 = 10, Node 1 = 9.
 
@@ -188,18 +191,16 @@ LIMIT 10;
 -- ============================================================================
 -- 12. DEGREE CENTRALITY — Raw connection counts
 -- ============================================================================
--- Graph is DIRECTED with bidirectional edges, so in_degree = out_degree.
+-- Graph is UNDIRECTED. For undirected graphs the engine reports
+-- in_degree = out_degree = total_degree = the node's friend count (the CSR
+-- doubles the edges internally, so neighbours are visible via out_degree).
 -- NetworkX-verified top-5:
---   Node 33: in=17, out=17, total=34
---   Node  0: in=16, out=16, total=32
---   Node 32: in=12, out=12, total=24
---   Node  2: in=10, out=10, total=20
---   Node  1: in= 9, out= 9, total=18
+--   Node 33: 17,  Node  0: 16,  Node 32: 12,  Node  2: 10,  Node  1:  9
 
 ASSERT ROW_COUNT = 10
-ASSERT VALUE total_degree = 34 WHERE node_id = 33
-ASSERT VALUE total_degree = 32 WHERE node_id = 0
-ASSERT VALUE total_degree = 24 WHERE node_id = 32
+ASSERT VALUE total_degree = 17 WHERE node_id = 33
+ASSERT VALUE total_degree = 16 WHERE node_id = 0
+ASSERT VALUE total_degree = 12 WHERE node_id = 32
 ASSERT VALUE in_degree = 17 WHERE node_id = 33
 ASSERT VALUE in_degree = 16 WHERE node_id = 0
 USE {{zone_name}}.karate_club.karate_club
@@ -308,8 +309,8 @@ ORDER BY step;
 -- 18. STRONGLY CONNECTED COMPONENTS — All nodes mutually reachable?
 -- ============================================================================
 -- Expected: 1 SCC containing all 34 nodes (NetworkX-verified).
--- Because edges are bidirectional, every node can reach every other node
--- following directed edges, making the entire graph one SCC.
+-- The graph is UNDIRECTED, so the engine traverses each edge in both
+-- directions — every node reaches every other node, giving a single SCC.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
@@ -455,10 +456,11 @@ RETURN score;
 -- VERIFY: All Checks
 -- ============================================================================
 -- 26. AUTOMATED VERIFICATION — PASS/FAIL against golden values
--- Cross-cutting sanity check: vertex count, edge count, referential integrity,
--- self-loops, degree, ID range, weight uniformity, edge symmetry, and edge-type
--- mix. All 9 checks must return 'PASS'. Any 'FAIL' indicates data loading or
--- algorithm correctness problems.
+-- Cross-cutting sanity check: vertex count, canonical edge count, referential
+-- integrity, self-loops, max undirected degree, ID range, weight uniformity,
+-- canonical-form invariant (src < dst), and edge-type mix. All 9 checks must
+-- return 'PASS'. Any 'FAIL' indicates data loading or algorithm correctness
+-- problems.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 9
@@ -467,8 +469,8 @@ SELECT 'Vertex count = 34' AS test,
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.vertices)
 
 UNION ALL
-SELECT 'Edge row count = 156',
-       CASE WHEN cnt = 156 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+SELECT 'Edge row count = 78 (canonical)',
+       CASE WHEN cnt = 78 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges)
 
 UNION ALL
@@ -486,11 +488,15 @@ FROM (
 )
 
 UNION ALL
-SELECT 'Max degree >= 16 (faction leader)',
-       CASE WHEN max_deg >= 16 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
+SELECT 'Max undirected degree = 17 (president)',
+       CASE WHEN max_deg = 17 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
 FROM (
     SELECT MAX(deg) AS max_deg FROM (
-        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.karate_club.edges GROUP BY src
+        SELECT vertex_id, SUM(cnt) AS deg FROM (
+            SELECT src AS vertex_id, COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges GROUP BY src
+            UNION ALL
+            SELECT dst AS vertex_id, COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges GROUP BY dst
+        ) GROUP BY vertex_id
     )
 )
 
@@ -510,14 +516,10 @@ FROM (
 )
 
 UNION ALL
-SELECT 'Symmetric edges (undirected)',
-       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' missing reverse edges)' END
+SELECT 'Canonical form (src < dst)',
+       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' non-canonical rows)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges e1
-    WHERE NOT EXISTS (
-        SELECT 1 FROM {{zone_name}}.karate_club.edges e2
-        WHERE e2.src = e1.dst AND e2.dst = e1.src
-    )
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges WHERE src >= dst
 )
 
 UNION ALL

@@ -9,7 +9,8 @@
 -- Data source: W. W. Zachary, Journal of Anthropological Research, 1977
 --
 -- Vertices: 34 club members (IDs 0-33)
--- Edges: 156 rows (78 undirected edges stored bidirectionally, weight=1.0)
+-- Edges: 78 rows in canonical form (src < dst); graph is UNDIRECTED, so the
+--        engine infers the reverse direction at CSR build time. Weight = 1.0.
 --
 -- Graph:
 --   {{zone_name}}.gpu_karate.gpu_karate — All members, friendships as edges
@@ -82,7 +83,7 @@ CREATE GRAPH IF NOT EXISTS {{zone_name}}.gpu_karate.gpu_karate
     EDGE TABLE {{zone_name}}.gpu_karate.edges SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN edge_type
-    DIRECTED;
+    UNDIRECTED;
 
 -- ############################################################################
 -- STEP 5: Warm the CSR cache

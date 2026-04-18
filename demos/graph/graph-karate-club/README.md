@@ -18,7 +18,7 @@ W. W. Zachary, "An information flow model for conflict and fission in small grou
 | Object | Type | Rows | Purpose |
 |--------|------|------|---------|
 | vertices | Delta Table | 34 | Club members (IDs 0–33) |
-| edges | Delta Table | 156 | Friendships (78 undirected, stored bidirectionally) |
+| edges | Delta Table | 78 | Friendships (canonical src < dst; graph is UNDIRECTED) |
 
 ## Schema
 
@@ -29,7 +29,7 @@ W. W. Zachary, "An information flow model for conflict and fission in small grou
 ## Graph Properties
 
 - **Vertices:** 34 (club members)
-- **Edges:** 78 undirected (156 rows, bidirectional)
+- **Edges:** 78 undirected (canonical src < dst; engine doubles to 156 CSR edges at build time)
 - **Weighted:** All weights = 1.0 (effectively unweighted)
 - **Connected:** Yes (1 component)
 - **Self-loops:** None
@@ -41,7 +41,7 @@ All values verified using NetworkX 3.5 on the exact edge data in this demo.
 | Metric | Expected Value | Source |
 |--------|---------------|--------|
 | Vertex count | 34 | Zachary (1977) |
-| Edge count | 78 undirected (156 directed rows) | Zachary (1977) |
+| Edge count | 78 canonical rows (UNDIRECTED) | Zachary (1977) |
 | Connected components | 1 | NetworkX verified |
 | Ground-truth communities | 2 (instructor vs president) | Zachary (1977) |
 | Louvain communities | typically 4 (modularity ~0.42) | NetworkX verified |
@@ -53,8 +53,8 @@ All values verified using NetworkX 3.5 on the exact edge data in this demo.
 | Closeness centrality (node 33) | 0.5500 | NetworkX verified |
 | Highest out-degree | Node 33 (17) | NetworkX verified |
 | 2nd highest out-degree | Node 0 (16) | NetworkX verified |
-| Degree centrality total (node 33) | in=17, out=17, total=34 | NetworkX verified (directed) |
-| Degree centrality total (node 0) | in=16, out=16, total=32 | NetworkX verified (directed) |
+| Degree centrality total (node 33) | in=17, out=17, total=17 | NetworkX verified (undirected) |
+| Degree centrality total (node 0) | in=16, out=16, total=16 | NetworkX verified (undirected) |
 | PageRank (node 33, d=0.85) | 0.1009 | NetworkX verified |
 | PageRank (node 0, d=0.85) | 0.0970 | NetworkX verified |
 | Shortest path 0 to 33 | 0 -> 8 -> 33 (distance 2) | NetworkX verified |
@@ -70,9 +70,11 @@ All values verified using NetworkX 3.5 on the exact edge data in this demo.
 | KNN node 0 top-1 (Jaccard) | Node 1 = 0.3889 | NetworkX verified |
 | Similarity 0 vs 33 (Jaccard) | 0.1379 (4 common neighbors) | NetworkX verified |
 
-**Note:** Graph is created as DIRECTED with bidirectional edges. For symmetric
-graphs, betweenness and closeness values match the standard undirected values.
-Degree centrality total_degree = in_degree + out_degree (doubled vs undirected).
+**Note:** Graph is created as UNDIRECTED with canonical (src < dst) edge
+storage. The engine materializes the reverse direction internally when
+building the CSR, so `MATCH (a)-[r]->(b)` traverses both directions
+automatically. For UNDIRECTED graphs `algo.degree()` reports
+`in_degree = out_degree = total_degree = friend count` (no doubling).
 
 ## Algorithms Demonstrated
 

@@ -27,8 +27,8 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 [[demo.data_files]]
 path = "data/edges.csv"
 format = "csv"
-description = "Edge list: 156 rows (78 undirected edges, both directions) with weight=1.0"
-size_bytes = 3956
+description = "Edge list: 78 canonical rows (src < dst); graph is UNDIRECTED, weight=1.0"
+size_bytes = 1912
 
 [[demo.data_files]]
 path = "data/vertices.csv"

@@ -2,7 +2,7 @@
 -- ############################################################################
 --
 --   GPU-ACCELERATED ZACHARY'S KARATE CLUB — ALGORITHM QUALITY VERIFICATION
---   34 Vertices / 78 Undirected Edges (156 rows) / Weight = 1.0
+--   34 Vertices / 78 Undirected Edges (canonical src<dst) / Weight = 1.0
 --
 -- ############################################################################
 -- ############################################################################
@@ -39,10 +39,11 @@ SELECT COUNT(*) AS row_count FROM {{zone_name}}.gpu_karate.vertices;
 
 
 -- ============================================================================
--- 2. EDGE COUNT — 156 rows (78 undirected edges x 2)
+-- 2. EDGE COUNT — 78 canonical rows (src < dst); graph is UNDIRECTED
 -- ============================================================================
+-- Engine doubles to 156 CSR edges at build time for bidirectional traversal.
 
-ASSERT VALUE row_count = 156
+ASSERT VALUE row_count = 78
 SELECT COUNT(*) AS row_count FROM {{zone_name}}.gpu_karate.edges;
 
 
@@ -96,15 +97,15 @@ LIMIT 10;
 -- ============================================================================
 -- 6. GPU DEGREE CENTRALITY — Connection counts
 -- ============================================================================
+-- Graph is UNDIRECTED, so in_degree = out_degree = total_degree = friend count.
 -- NetworkX-verified top-5:
---   Node 33: total=34, Node 0: total=32, Node 32: total=24,
---   Node 2: total=20, Node 1: total=18
+--   Node 33: 17,  Node  0: 16,  Node 32: 12,  Node  2: 10,  Node  1:  9
 -- Degree is deterministic from edge data — GPU must produce identical counts.
 
 ASSERT ROW_COUNT = 10
-ASSERT VALUE total_degree = 34 WHERE node_id = 33
-ASSERT VALUE total_degree = 32 WHERE node_id = 0
-ASSERT VALUE total_degree = 24 WHERE node_id = 32
+ASSERT VALUE total_degree = 17 WHERE node_id = 33
+ASSERT VALUE total_degree = 16 WHERE node_id = 0
+ASSERT VALUE total_degree = 12 WHERE node_id = 32
 ASSERT VALUE in_degree = 17 WHERE node_id = 33
 ASSERT VALUE in_degree = 16 WHERE node_id = 0
 USE {{zone_name}}.gpu_karate.gpu_karate
@@ -190,7 +191,9 @@ LIMIT 10;
 -- ============================================================================
 -- 11. GPU SCC — Strongly connected components
 -- ============================================================================
--- Expected: 1 SCC with all 34 nodes (bidirectional edges).
+-- Expected: 1 SCC with all 34 nodes. The graph is UNDIRECTED, so the CSR
+-- carries both directions of each canonical edge — every node reaches every
+-- other node.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE members = 34
@@ -285,7 +288,9 @@ ORDER BY step;
 -- ============================================================================
 -- 16. GPU MATCH — Full graph edge scan
 -- ============================================================================
--- All 156 directed edges via GPU expansion.
+-- All 156 CSR edges via GPU expansion. The edge table stores 78 canonical
+-- rows; UNDIRECTED graph semantics materialise the reverse at CSR build, so
+-- MATCH (a)-[r]->(b) returns every pair once per direction = 156 rows.
 
 ASSERT ROW_COUNT = 156
 USE {{zone_name}}.gpu_karate.gpu_karate
@@ -348,10 +353,11 @@ ORDER BY degree DESC, member_id ASC;
 -- VERIFY: All Checks
 -- ============================================================================
 -- 20. AUTOMATED VERIFICATION — GPU quality checks
--- Cross-cutting sanity check: vertex/edge counts, self-loop freedom, orphan
--- freedom, max-degree invariant, vertex ID range, unit weights, symmetry, and
--- edge-type diversity. If all 9 rows report PASS, the GPU data substrate is
--- sound and the algorithm results above are trustworthy.
+-- Cross-cutting sanity check: vertex count, canonical edge count, self-loop
+-- freedom, orphan freedom, max undirected degree, vertex ID range, unit
+-- weights, canonical-form invariant (src < dst), and edge-type diversity.
+-- If all 9 rows report PASS, the GPU data substrate is sound and the
+-- algorithm results above are trustworthy.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 9
@@ -360,8 +366,8 @@ SELECT 'Vertex count = 34' AS test,
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.gpu_karate.vertices)
 
 UNION ALL
-SELECT 'Edge row count = 156',
-       CASE WHEN cnt = 156 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+SELECT 'Edge row count = 78 (canonical)',
+       CASE WHEN cnt = 78 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
 FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.gpu_karate.edges)
 
 UNION ALL
@@ -379,11 +385,15 @@ FROM (
 )
 
 UNION ALL
-SELECT 'Max degree >= 16 (faction leader)',
-       CASE WHEN max_deg >= 16 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
+SELECT 'Max undirected degree = 17 (president)',
+       CASE WHEN max_deg = 17 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
 FROM (
     SELECT MAX(deg) AS max_deg FROM (
-        SELECT src, COUNT(*) AS deg FROM {{zone_name}}.gpu_karate.edges GROUP BY src
+        SELECT vertex_id, SUM(cnt) AS deg FROM (
+            SELECT src AS vertex_id, COUNT(*) AS cnt FROM {{zone_name}}.gpu_karate.edges GROUP BY src
+            UNION ALL
+            SELECT dst AS vertex_id, COUNT(*) AS cnt FROM {{zone_name}}.gpu_karate.edges GROUP BY dst
+        ) GROUP BY vertex_id
     )
 )
 
@@ -403,14 +413,10 @@ FROM (
 )
 
 UNION ALL
-SELECT 'Symmetric edges (undirected)',
-       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' missing reverse edges)' END
+SELECT 'Canonical form (src < dst)',
+       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' non-canonical rows)' END
 FROM (
-    SELECT COUNT(*) AS cnt FROM {{zone_name}}.gpu_karate.edges e1
-    WHERE NOT EXISTS (
-        SELECT 1 FROM {{zone_name}}.gpu_karate.edges e2
-        WHERE e2.src = e1.dst AND e2.dst = e1.src
-    )
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.gpu_karate.edges WHERE src >= dst
 )
 
 UNION ALL
