@@ -319,10 +319,14 @@ ORDER BY friend_id;
 -- ============================================================================
 -- 5 distinct edge types via GPU-expanded edges.
 
+-- NOTE: Undirected edges materialize both directions in CSR. Filter to the
+-- canonical (src<dst) direction via r.edge_type IS NOT NULL to avoid double-
+-- counting reverse-materialized edges.
 ASSERT ROW_COUNT = 5
 USE {{zone_name}}.gpu_karate.gpu_karate
 ON GPU THRESHOLD 1
 MATCH (a)-[r]->(b)
+WHERE r.edge_type IS NOT NULL
 RETURN r.edge_type AS type, count(r) AS count
 ORDER BY count DESC;
 
