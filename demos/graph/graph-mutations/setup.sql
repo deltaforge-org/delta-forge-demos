@@ -169,12 +169,19 @@ OPTIMIZE {{zone_name}}.hospital_referrals.referrals
 -- ============================================================================
 -- GRAPH DEFINITION
 -- ============================================================================
+-- AUTO REFRESH CSR: this demo validates DML visibility (INSERT of a new
+-- physician, UPDATE of referral priorities, DELETE of completed referrals)
+-- through Cypher MATCH after each mutation. That test requires the CSR
+-- to rebuild whenever the backing tables advance their Delta version —
+-- exactly what AUTO REFRESH CSR enables. Default (NO AUTO REFRESH) is
+-- geared toward large read-heavy graphs and would keep a stale CSR.
 CREATE GRAPH IF NOT EXISTS {{zone_name}}.hospital_referrals.hospital_referrals
     VERTEX TABLE {{zone_name}}.hospital_referrals.physicians ID COLUMN id NODE TYPE COLUMN specialty NODE NAME COLUMN name
     EDGE TABLE {{zone_name}}.hospital_referrals.referrals SOURCE COLUMN src TARGET COLUMN dst
     WEIGHT COLUMN weight
     EDGE TYPE COLUMN referral_type
-    DIRECTED;
+    DIRECTED
+    AUTO REFRESH CSR;
 
 -- ============================================================================
 -- WARM CSR CACHE — Pre-build the Compressed Sparse Row topology
