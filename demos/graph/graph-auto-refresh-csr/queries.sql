@@ -165,19 +165,17 @@ RETURN a.hub_id AS src, b.hub_id AS dst, r.price_usd AS price_usd, r.status AS s
 
 
 -- ============================================================================
--- 10. BATCH GRAPH — STILL shows the OLD price (stale cache by design)
+-- 10. BATCH GRAPH — property UPDATE is visible (CSR caches topology only)
 -- ============================================================================
--- This is the headline teaching moment. dispatch_batch is declared with
--- NO AUTO REFRESH CSR, so its cache entry is served on version mismatch
--- rather than evicted. The Cypher MATCH returns price_usd=226 — the
--- baseline value, not the post-UPDATE value. The corresponding row in
--- Delta (see Q8) has price_usd=9999, so the divergence is real and
--- intentional: NO AUTO REFRESH CSR prioritises predictable latency over
--- freshness. Users are expected to refresh with CREATE GRAPHCSR when
--- they're ready to pay the rebuild cost.
+-- Important semantic: `AUTO REFRESH CSR` (opt-in) / `NO AUTO REFRESH CSR`
+-- (default) gates rebuild of the *CSR topology*, not the per-edge
+-- property arrays. Properties are loaded freshly per query from the
+-- current Delta snapshot, so UPDATE values show up even on the batched
+-- view. The staleness contract applies to *topology* — which is what
+-- Q16 demonstrates after DELETE changes the row count.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE price_usd = 226
+ASSERT VALUE price_usd = 9999
 ASSERT VALUE status = 'active'
 USE {{zone_name}}.fleet_dispatch.dispatch_batch
 MATCH (a)-[r]->(b)
@@ -186,22 +184,23 @@ RETURN a.hub_id AS src, b.hub_id AS dst, r.price_usd AS price_usd, r.status AS s
 
 
 -- ############################################################################
--- PART 4: Manual refresh brings the batched view back in sync
+-- PART 4: Manual refresh keeps the batched view explicit
 -- ############################################################################
 
 
 -- ============================================================================
--- 11. CREATE GRAPHCSR — force a full rebuild of the batched graph
+-- 11. CREATE GRAPHCSR — refresh dispatch_batch to the current version
 -- ============================================================================
--- CREATE GRAPHCSR always triggers a full rebuild, regardless of the
--- AUTO REFRESH CSR setting. After this runs, the dispatch_batch cache
--- entry is at the current Delta version with the UPDATE applied.
+-- CREATE GRAPHCSR always forces a full rebuild. It evicts the in-memory
+-- cache entry and the on-disk .dcsr sidecar for this graph, then reads
+-- from the current Delta snapshot. After this runs, dispatch_batch is
+-- pinned at the latest version (topology + fresh properties).
 
 CREATE GRAPHCSR {{zone_name}}.fleet_dispatch.dispatch_batch;
 
 
 -- ============================================================================
--- 12. BATCH GRAPH — now reflects the UPDATE, matching dispatch_live
+-- 12. BATCH GRAPH — still reflects the UPDATE after explicit refresh
 -- ============================================================================
 
 ASSERT ROW_COUNT = 1
