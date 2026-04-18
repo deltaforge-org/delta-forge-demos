@@ -16,16 +16,20 @@ expansion — 10x scale-up from the 1M-node GPU stress test. Tests GPU \
 memory management, streaming property loading, and threshold fallback at \
 enterprise financial-services scale. \
 \
-RESOURCE WARNING — RUN ON A HOST SIZED FOR THIS DEMO: the compute node's \
-RSS peaks at roughly 6-8 GB during the CSR build and again during full \
-algorithm runs (PageRank, Louvain, all-edge Triangle Count on 48M edges). \
-Per-query peaks depend on which analysis is running; betweenness sampling \
-and community detection are the heaviest. Setup + first Cypher query \
-together take ~5-10 minutes on a modern workstation; the HTTP client \
-should be run with DF_HTTP_TIMEOUT_SECS=0 (or at least 1800) so the \
-first CSR build doesn't hit a client-side timeout. If the compute node \
-has less than 16 GB of addressable memory, expect OOM during \
-algorithm runs — drop to graph-gpu-stress-test (1M/5M) instead.
+RESOURCE WARNING — RUN ON A HOST SIZED FOR THIS DEMO: the compute \
+node's RSS peaks at roughly 10 GB during the heavy Cypher algorithms \
+(PageRank, Louvain community detection, all-edge Triangle Count, and \
+especially the betweenness-centrality sampling on 48M edges). The CSR \
+topology build itself is far cheaper — memory pressure lives in the \
+algorithm executors that materialise per-node scores, queues, and \
+per-edge accumulators. Setup + first Cypher query take ~5-10 minutes \
+on a modern workstation; run the HTTP client with DF_HTTP_TIMEOUT_SECS=0 \
+(or at least 1800) so the first query doesn't trip a client-side \
+timeout while the cold-path CSR loads. Recommended host size: 24 GB+ \
+addressable memory so the OS, Delta Forge's working buffers, and \
+DataFusion's query executor have headroom above the algorithm peak. \
+If less is available, expect OOM during betweenness / community \
+detection — drop to graph-gpu-stress-test (1M/5M) instead.
 """
 categories = ["graph", "gpu"]
 tags = ["graph", "gpu", "finance", "fraud-detection", "stress-test", "performance", "benchmark", "10-million-scale", "cypher", "algorithms", "advanced", "high-memory"]
@@ -35,7 +39,8 @@ estimated_time_minutes = 60
 # heaviest queries (connected components + betweenness + triangle count
 # against the full 48M-edge graph).  Display in the demo picker so users
 # on laptops / small hosts can skip it.
-peak_memory_gb = 8
+peak_memory_gb = 10
+recommended_host_memory_gb = 24
 
 [demo.variables]
 data_path = { description = "Path to the demo data directory", required = true }

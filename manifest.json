@@ -5164,7 +5164,7 @@
       "path": "demos/graph/graph-gpu-10m-finance",
       "iconPath": "icons/graph-gpu-10m-finance.svg",
       "name": "GPU-Accelerated Global Banking Network — 10M-Account Fraud Analytics",
-      "summary": "GPU-accelerated stress test on 10,000,000-account global banking network with ~48M directed transaction edges. 30 banks, 25 cities, 3 account tiers. All 5 GPU-accelerable algorithms (PageRank, Connected Components, Louvain, Betweenness, Triangle Count) via ON GPU hints. Tests GPU MATCH expansion, streaming property loading, and threshold fallback at 10x the 1M-node benchmark scale. HIGH-MEMORY: compute node RSS peaks at 6-8 GB during CSR build and full algorithm runs; require DF_HTTP_TIMEOUT_SECS=0 (or >=1800) on the CLI so the first Cypher query doesn't trip the client-side timeout during the 48M-edge CSR construction. Run on a host with at least 16 GB of addressable memory; otherwise prefer graph-gpu-stress-test (1M/5M).",
+      "summary": "GPU-accelerated stress test on 10,000,000-account global banking network with ~48M directed transaction edges. 30 banks, 25 cities, 3 account tiers. All 5 GPU-accelerable algorithms (PageRank, Connected Components, Louvain, Betweenness, Triangle Count) via ON GPU hints. Tests GPU MATCH expansion, streaming property loading, and threshold fallback at 10x the 1M-node benchmark scale. HIGH-MEMORY: compute-node RSS peaks at ~10 GB during the heavy Cypher algorithms (betweenness sampling and Louvain are the worst offenders); the CSR topology build itself is much cheaper. Require DF_HTTP_TIMEOUT_SECS=0 (or >=1800) on the CLI so the first cold-path query doesn't trip the client-side timeout. Recommended host size: 24 GB+ addressable memory; otherwise prefer graph-gpu-stress-test (1M/5M).",
       "categories": [
         "graph",
         "gpu"
@@ -5185,8 +5185,9 @@
       ],
       "difficulty": "advanced",
       "estimatedTimeMinutes": 60,
-      "peakMemoryGB": 8,
-      "resourceWarning": "Compute node RSS peaks at 6-8 GB during the CSR build and full-scan algorithms. Requires 16 GB+ of addressable memory. Set DF_HTTP_TIMEOUT_SECS=0 (or >=1800) on the CLI so the initial 48M-edge CSR build doesn't hit the client-side timeout.",
+      "peakMemoryGB": 10,
+      "recommendedHostMemoryGB": 24,
+      "resourceWarning": "Compute-node RSS peaks at ~10 GB during the heavy Cypher algorithms (betweenness and Louvain). CSR topology build is cheaper. Recommended host memory: 24 GB+. Set DF_HTTP_TIMEOUT_SECS=0 (or >=1800) on the CLI so the initial cold-path Cypher query doesn't hit the client-side timeout.",
       "dataSizeBytes": 0,
       "fileCount": 0,
       "author": "Delta Forge Team",
