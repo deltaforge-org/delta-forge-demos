@@ -198,10 +198,9 @@ LIMIT 30;
 -- Use SQL self-join to always return a single COUNT row (Cypher aggregates on
 -- empty matches can elide the row in DF's engine, so SQL is safer here).
 
--- Asserts that NO mutual (reciprocal) KNOWS pairs exist — KNOWS is stored in
--- canonical (src<dst) form only. Query returns 0 rows when invariant holds.
-ASSERT ROW_COUNT = 0
-SELECT 1 AS mutual_found
+ASSERT VALUE mutual_friendship_count = 0
+ASSERT ROW_COUNT = 1
+SELECT COUNT(*) AS mutual_friendship_count
 FROM {{zone_name}}.ldbc_social_network.person_knows_person a
 JOIN {{zone_name}}.ldbc_social_network.person_knows_person b
   ON a.src = b.dst AND a.dst = b.src
