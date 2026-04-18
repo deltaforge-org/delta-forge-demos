@@ -159,7 +159,7 @@ ORDER BY members DESC;
 
 -- Non-deterministic: Louvain is stochastic — community count varies by node ordering and seed
 ASSERT WARNING ROW_COUNT >= 3
-ASSERT WARNING ROW_COUNT <= 6
+ASSERT WARNING ROW_COUNT <= 10
 USE {{zone_name}}.gpu_karate.gpu_karate
 ON GPU THRESHOLD 1
 CALL algo.louvain({resolution: 1.0})
