@@ -127,14 +127,13 @@ ORDER BY count DESC;
 -- ============================================================================
 -- 6. ENGINEERING VETERANS — Senior engineers over 50
 -- ============================================================================
--- Age formula: 22 + CAST(((id × φ) mod 1) × 38.0 AS INT). Due to DOUBLE
--- rounding, the INT cast can occasionally yield 38 (not just 0..37), so
--- the true age range is 22..60. In Engineering (id%20=0) there are
--- 658 people at age = 60 (the max), so the top rows returned by
--- ORDER BY age DESC all have age = 60.
+-- Age formula: 22 + CAST(((id × φ) mod 1) × 38.0 AS INT). The INT cast
+-- truncates toward zero, so the INT-cast portion is in [0, 37] — the true
+-- age range is 22..59. The top rows returned by ORDER BY age DESC all have
+-- age = 59 (the max).
 
 ASSERT ROW_COUNT = 25
-ASSERT VALUE age = 60
+ASSERT VALUE age = 59
 USE {{zone_name}}.stress_test_network.stress_test_network
 MATCH (n)
 WHERE n.department = 'Engineering' AND n.age > 50
