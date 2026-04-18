@@ -1,5 +1,5 @@
 [demo]
-id = "delta-chart-gallery"
+id = "chart-gallery"
 name = "Mira's Mercantile — Retail Analytics Chart Gallery"
 version = "1.0.0"
 author = "Delta Forge Team"
@@ -11,7 +11,7 @@ stock OHLC. Renders BAR, HBAR, LINE, AREA (stacked), SCATTER, PIE, HISTOGRAM, \
 HEATMAP, RADAR, and CANDLESTICK charts. Every chart is preceded by a validated \
 SELECT with ASSERTs proving the underlying data is correct before visualization.
 """
-categories = ["delta-table", "visualization"]
+categories = ["chart", "visualization"]
 tags = ["chart", "visualization", "bar", "line", "pie", "scatter", "heatmap", "radar", "candlestick", "histogram", "area", "gui"]
 difficulty = "intermediate"
 estimated_time_minutes = 5

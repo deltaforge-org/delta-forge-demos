@@ -1,9 +1,9 @@
-"""Build the enriched demo JSON for delta-chart-gallery from source SQL."""
+"""Build the enriched demo JSON for chart-gallery from source SQL."""
 import json
 import re
 
-BASE = 'a:/delta-forge/delta-forge-demos/demos/delta/delta-chart-gallery'
-OUT = 'a:/delta-forge/delta-forge-docs/enriched/demo/delta-chart-gallery.json'
+BASE = 'a:/delta-forge/delta-forge-demos/demos/chart'
+OUT = 'a:/delta-forge/delta-forge-docs/enriched/demo/chart-gallery.json'
 
 
 def substitute_vars(sql: str) -> str:
@@ -176,7 +176,7 @@ pitfalls = [
 ]
 
 doc = {
-    "id": "demo_delta_chart_gallery",
+    "id": "demo_chart_gallery",
     "name": "Demo: Mira's Mercantile \u2014 Retail Analytics Chart Gallery",
     "category": "Analytics",
     "difficulty": "intermediate",
@@ -201,9 +201,10 @@ doc = {
     "examples": [],
     "pitfalls": pitfalls,
     "tags": [
-        "delta-table", "intermediate", "visualization", "chart", "bar", "hbar", "line",
+        "chart", "intermediate", "visualization", "bar", "hbar", "line",
         "area", "scatter", "pie", "histogram", "heatmap", "radar", "candlestick",
-        "gui", "query-explorer", "retail", "ohlc", "stacked", "group-by", "pivot"
+        "gui", "query-explorer", "retail", "ohlc", "stacked", "group-by", "pivot",
+        "delta-table"
     ],
     "see_also": [
         "CREATE_CHART", "SELECT", "GROUP_BY", "UNION_ALL", "CAST", "ROUND",
