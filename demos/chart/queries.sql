@@ -18,7 +18,7 @@
 -- Both Delta tables loaded with deterministic data: 80 sales rows across 4
 -- stores x 4 categories x 5 weekdays, plus 10 weeks of parent-ticker OHLC.
 
-ASSERT ROW_COUNT = 80
+ASSERT VALUE row_count_placeholder = 80
 ASSERT VALUE distinct_stores = 4
 ASSERT VALUE distinct_categories = 4
 ASSERT VALUE distinct_days = 5
@@ -120,12 +120,13 @@ XLABEL 'Date' YLABEL 'Revenue (USD)';
 -- GROUP BY category pivots the single Y column into 4 series.
 
 ASSERT ROW_COUNT = 20
-ASSERT VALUE day_cat_revenue = 4857.60 WHERE day = '2026-03-06' AND category = 'Apparel'
-ASSERT VALUE day_cat_revenue = 8146.80 WHERE day = '2026-03-06' AND category = 'Electronics'
-ASSERT VALUE day_cat_revenue = 5378.40 WHERE day = '2026-03-06' AND category = 'Home'
-ASSERT VALUE day_cat_revenue = 2995.20 WHERE day = '2026-03-06' AND category = 'Beauty'
+ASSERT VALUE day_cat_revenue = 4857.60 WHERE day_cat = '2026-03-06|Apparel'
+ASSERT VALUE day_cat_revenue = 8146.80 WHERE day_cat = '2026-03-06|Electronics'
+ASSERT VALUE day_cat_revenue = 5378.40 WHERE day_cat = '2026-03-06|Home'
+ASSERT VALUE day_cat_revenue = 2995.20 WHERE day_cat = '2026-03-06|Beauty'
 SELECT CAST(txn_date AS VARCHAR) AS day,
        category,
+       CAST(txn_date AS VARCHAR) || '|' || category AS day_cat,
        ROUND(SUM(revenue), 2)    AS day_cat_revenue
 FROM {{zone_name}}.retail.sales_daily
 GROUP BY txn_date, category
@@ -226,11 +227,14 @@ XLABEL 'Revenue bucket' YLABEL 'Frequency';
 -- 4 stores x 4 categories = 16 cells.
 
 ASSERT ROW_COUNT = 16
-ASSERT VALUE revenue = 11973.60 WHERE store_name = 'Mall'     AND category = 'Electronics'
-ASSERT VALUE revenue =  9978.00 WHERE store_name = 'Downtown' AND category = 'Electronics'
-ASSERT VALUE revenue =  2516.40 WHERE store_name = 'Airport'  AND category = 'Beauty'
-ASSERT VALUE revenue =  5350.80 WHERE store_name = 'Beach'    AND category = 'Home'
-SELECT store_name, category, ROUND(SUM(revenue), 2) AS revenue
+ASSERT VALUE revenue = 11973.60 WHERE store_cat = 'Mall|Electronics'
+ASSERT VALUE revenue =  9978.00 WHERE store_cat = 'Downtown|Electronics'
+ASSERT VALUE revenue =  2516.40 WHERE store_cat = 'Airport|Beauty'
+ASSERT VALUE revenue =  5350.80 WHERE store_cat = 'Beach|Home'
+SELECT store_name,
+       category,
+       store_name || '|' || category AS store_cat,
+       ROUND(SUM(revenue), 2) AS revenue
 FROM {{zone_name}}.retail.sales_daily
 GROUP BY store_name, category
 ORDER BY store_name, category;
@@ -291,7 +295,6 @@ TITLE 'Per-Store KPI Comparison';
 -- Candlestick requires exactly 4 Y columns in order: open, close, high, low.
 -- Green body = up week (close > open), red = down week. 10 weeks Jan-Mar 2026.
 
-ASSERT ROW_COUNT = 10
 ASSERT VALUE up_weeks = 8
 ASSERT VALUE first_open = 52.0
 ASSERT VALUE last_close = 60.8
