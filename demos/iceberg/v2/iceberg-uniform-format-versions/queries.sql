@@ -263,7 +263,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v1_iceberg WIT
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v1_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/sensors_v1';
+LOCATION '{{data_subdir}}/sensors_v1';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v1_iceberg TO USER {{current_user}};
 -- ============================================================================
@@ -275,7 +275,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v2_iceberg WIT
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v2_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/sensors_v2';
+LOCATION '{{data_subdir}}/sensors_v2';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v2_iceberg TO USER {{current_user}};
 -- ============================================================================
@@ -287,7 +287,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v3_iceberg WIT
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v3_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/sensors_v3';
+LOCATION '{{data_subdir}}/sensors_v3';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v3_iceberg TO USER {{current_user}};
 -- ============================================================================

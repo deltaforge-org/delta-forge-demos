@@ -24,7 +24,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.products (
     category    VARCHAR,
     price       DOUBLE,
     in_stock    BOOLEAN
-) LOCATION '{{data_path}}/puffin_dv_products'
+) LOCATION '{{data_subdir}}/puffin_dv_products'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '3',
@@ -57,6 +57,6 @@ DELETE FROM {{zone_name}}.iceberg_demos.products WHERE id IN (2, 5, 8);
 -- deletion vector, to verify the deletes are correctly applied.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.products_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/puffin_dv_products';
+LOCATION '{{data_subdir}}/puffin_dv_products';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.products_iceberg TO USER {{current_user}};

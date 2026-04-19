@@ -252,7 +252,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.ad_clicks_iceberg WITH
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.ad_clicks_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/ad_clicks';
+LOCATION '{{data_subdir}}/ad_clicks';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.ad_clicks_iceberg TO USER {{current_user}};
 -- ============================================================================

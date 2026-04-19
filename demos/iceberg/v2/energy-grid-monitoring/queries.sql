@@ -194,7 +194,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.grid_readings_delta
     energy_kwh         DOUBLE,
     power_factor       INT,
     grid_frequency_hz  DOUBLE
-) LOCATION '{{data_path}}/grid_readings_delta'
+) LOCATION '{{data_subdir}}/grid_readings_delta'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.columnMapping.mode' = 'id'
@@ -209,7 +209,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.grid_readings_iceberg_
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.grid_readings_iceberg_readback
 USING ICEBERG
-LOCATION '{{data_path}}/grid_readings_delta';
+LOCATION '{{data_subdir}}/grid_readings_delta';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.grid_readings_iceberg_readback TO USER {{current_user}};
 -- ============================================================================

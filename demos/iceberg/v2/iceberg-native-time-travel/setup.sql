@@ -28,6 +28,6 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- Position delete files are resolved automatically during merge-on-read.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.stock_prices
 USING ICEBERG
-LOCATION '{{data_path}}/stock_prices';
+LOCATION '{{data_subdir}}/stock_prices';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.stock_prices TO USER {{current_user}};

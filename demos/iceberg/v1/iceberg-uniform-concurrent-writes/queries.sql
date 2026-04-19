@@ -346,7 +346,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.ingestion_log_iceberg 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.ingestion_log_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/ingestion_log';
+LOCATION '{{data_subdir}}/ingestion_log';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.ingestion_log_iceberg TO USER {{current_user}};
 -- ============================================================================

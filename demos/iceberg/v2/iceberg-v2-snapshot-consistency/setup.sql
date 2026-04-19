@@ -23,6 +23,6 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- STEP 2: Register the Iceberg V2 table
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.inventory
 USING ICEBERG
-LOCATION '{{data_path}}/inventory';
+LOCATION '{{data_subdir}}/inventory';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.inventory TO USER {{current_user}};

@@ -175,7 +175,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.payment_transactions_i
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.payment_transactions_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/payment_transactions';
+LOCATION '{{data_subdir}}/payment_transactions';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.payment_transactions_iceberg TO USER {{current_user}};
 

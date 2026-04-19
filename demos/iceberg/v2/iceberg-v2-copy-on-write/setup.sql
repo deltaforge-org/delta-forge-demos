@@ -24,6 +24,6 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- overwrite (delete 10). Only one data file is current — no delete files.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.shipments
 USING ICEBERG
-LOCATION '{{data_path}}/shipments';
+LOCATION '{{data_subdir}}/shipments';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.shipments TO USER {{current_user}};

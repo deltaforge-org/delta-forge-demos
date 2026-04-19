@@ -209,7 +209,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensor_readings_iceber
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensor_readings_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/sensor_readings';
+LOCATION '{{data_subdir}}/sensor_readings';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensor_readings_iceberg TO USER {{current_user}};
 -- ============================================================================

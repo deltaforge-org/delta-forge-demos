@@ -292,7 +292,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.delivery_tracking_iceb
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.delivery_tracking_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/delivery_tracking';
+LOCATION '{{data_subdir}}/delivery_tracking';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.delivery_tracking_iceberg TO USER {{current_user}};
 -- ============================================================================

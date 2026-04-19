@@ -200,7 +200,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.financial_transactions
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.financial_transactions_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/financial_transactions';
+LOCATION '{{data_subdir}}/financial_transactions';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.financial_transactions_iceberg TO USER {{current_user}};
 -- ============================================================================

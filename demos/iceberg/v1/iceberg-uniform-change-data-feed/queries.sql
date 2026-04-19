@@ -163,7 +163,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.orders_iceberg WITH FI
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/orders';
+LOCATION '{{data_subdir}}/orders';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.orders_iceberg TO USER {{current_user}};
 

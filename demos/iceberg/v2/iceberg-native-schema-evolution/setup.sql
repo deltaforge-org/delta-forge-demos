@@ -32,6 +32,6 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- schema with 7 columns including the renamed 'department' column.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.employee_directory
 USING ICEBERG
-LOCATION '{{data_path}}/employee_directory';
+LOCATION '{{data_subdir}}/employee_directory';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.employee_directory TO USER {{current_user}};

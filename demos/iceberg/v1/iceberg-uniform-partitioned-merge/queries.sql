@@ -314,7 +314,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory_ic
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/warehouse_inventory';
+LOCATION '{{data_subdir}}/warehouse_inventory';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg TO USER {{current_user}};
 -- ============================================================================

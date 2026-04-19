@@ -155,7 +155,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.compliance_iceberg WIT
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.compliance_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/compliance_records';
+LOCATION '{{data_subdir}}/compliance_records';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.compliance_iceberg TO USER {{current_user}};
 

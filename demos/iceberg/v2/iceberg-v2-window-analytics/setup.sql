@@ -21,6 +21,6 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- STEP 2: Register the Iceberg V2 table
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.loyalty_members
 USING ICEBERG
-LOCATION '{{data_path}}/loyalty_members';
+LOCATION '{{data_subdir}}/loyalty_members';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.loyalty_members TO USER {{current_user}};

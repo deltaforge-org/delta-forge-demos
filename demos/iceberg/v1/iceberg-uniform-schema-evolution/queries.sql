@@ -246,7 +246,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.customer_orders_iceber
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.customer_orders_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/customer_orders';
+LOCATION '{{data_subdir}}/customer_orders';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.customer_orders_iceberg TO USER {{current_user}};
 -- ============================================================================
