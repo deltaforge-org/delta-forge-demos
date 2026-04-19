@@ -9,14 +9,16 @@ verifies the final state after all DML operations:
   - DELETE: risk_score > 50 removed (7 rows, leaving 13)
   - RESTORE TO VERSION 2: recovers the post-UPDATE/pre-DELETE state
 
-Iceberg after RESTORE: The UniForm Iceberg metadata after RESTORE reflects a
-state where the 5 originally non_compliant rows (3, 9, 15, 17, 20) are absent.
-The UPDATE rewrote those rows into new parquet files (with under_review status)
-and the DELETE removed the high-risk rows. RESTORE replays the Delta log but
-the Iceberg metadata only sees the surviving original parquet files.
+Iceberg after RESTORE: UniForm regenerates Iceberg metadata on every Delta
+commit, including RESTORE commits. After RESTORE TO VERSION 2 the Iceberg
+metadata reflects the V2 state — the same 20 rows the Delta reader sees:
+10 compliant, 5 under_review (the originally non_compliant rows, now
+re-classified), 5 partial. The DELETE's row removals are undone by RESTORE
+and the Iceberg manifest chain is rewritten to point back at the V2 active
+file set, so the Iceberg view stays in sync with the Delta view.
 
-Final Iceberg state: 15 rows, 2 statuses (compliant=10, partial=5),
-total risk 405, avg risk 27.0.
+Final Iceberg state: 20 rows, 3 statuses (compliant=10, under_review=5,
+partial=5), total risk 765, avg risk 38.25.
 
 Usage:
     python verify.py <data_root_path> [--verbose]
@@ -65,50 +67,49 @@ def verify_compliance_records(data_root, verbose=False):
     # Format version
     assert_format_version(metadata, 2)
 
-    # Iceberg state after RESTORE: the 5 originally non_compliant rows
-    # (3, 9, 15, 17, 20) are absent from the Iceberg metadata. The UPDATE
-    # rewrote those rows into new parquet files and the RESTORE does not
-    # reconstruct them in the Iceberg layer. Result: 15 rows with only
-    # compliant and partial statuses.
-    assert_row_count(table, 15)
+    # Iceberg state after RESTORE TO VERSION 2: the table reflects the V2
+    # state (20 rows, UPDATE applied, DELETE undone). The UPDATE rewrote
+    # the 5 originally non_compliant rows into files tagged under_review;
+    # RESTORE brings those files back into the active manifest set.
+    assert_row_count(table, 20)
 
-    # 5 distinct entities (all entities still have at least one row)
+    # 5 distinct entities (all original entities still present)
     assert_distinct_count(table, "entity_name", 5)
 
     # 4 distinct regulations
     assert_distinct_count(table, "regulation", 4)
 
-    # 2 distinct statuses: compliant, partial
-    # (non_compliant rows were rewritten by UPDATE; under_review rows are
-    #  not visible in the Iceberg metadata after RESTORE)
-    assert_distinct_count(table, "compliance_status", 2)
+    # 3 distinct statuses: compliant, under_review, partial
+    # (non_compliant was renamed to under_review by the V2 UPDATE)
+    assert_distinct_count(table, "compliance_status", 3)
 
-    # Status distribution after restore (Iceberg view)
+    # Status distribution after RESTORE to V2 (Iceberg view mirrors Delta view)
     assert_count_where(table, "compliance_status", "compliant", 10)
+    assert_count_where(table, "compliance_status", "under_review", 5)
     assert_count_where(table, "compliance_status", "partial", 5)
-    assert_count_where(table, "compliance_status", "under_review", 0)
 
-    # No non_compliant rows either
+    # No non_compliant rows — the UPDATE is still in effect after RESTORE
     assert_count_where(table, "compliance_status", "non_compliant", 0)
 
-    # Total risk = 405 (765 minus the 5 absent non_compliant rows: 68+72+80+65+75=360)
-    assert_sum(table, "risk_score", 405)
+    # Total risk = 765 (sum of all V1 risk scores; UPDATE doesn't touch risk)
+    assert_sum(table, "risk_score", 765)
 
-    # Average risk = 27.0 (405 / 15)
-    assert_avg(table, "risk_score", 27.0)
+    # Average risk = 38.25 (765 / 20)
+    assert_avg(table, "risk_score", 38.25)
 
-    # High-risk records (risk_score > 50): only 2 remain (records 7=52, 12=55)
+    # High-risk records (risk_score > 50): 7 rows — the 5 originally
+    # non_compliant (now under_review) plus records 7 (52) and 12 (55).
     high_risk_mask = pc.greater(table.column("risk_score"), 50)
     high_risk = table.filter(high_risk_mask)
-    if high_risk.num_rows == 2:
-        ok(f"High-risk records (risk > 50) = 2")
+    if high_risk.num_rows == 7:
+        ok(f"High-risk records (risk > 50) = 7")
     else:
-        fail(f"High-risk records (risk > 50) = {high_risk.num_rows}, expected 2")
+        fail(f"High-risk records (risk > 50) = {high_risk.num_rows}, expected 7")
 
-    # Per-entity risk profile (Iceberg view -- missing non_compliant rows)
-    for entity, exp_avg in [("Acme Corp", 16.25), ("Beta Inc", 50.0),
+    # Per-entity risk profile — all rows present, so V1/V2 averages apply
+    for entity, exp_avg in [("Acme Corp", 16.25), ("Beta Inc", 58.25),
                              ("Gamma LLC", 13.5), ("Delta Co", 36.25),
-                             ("Epsilon SA", 41.0)]:
+                             ("Epsilon SA", 67.0)]:
         mask = pc.equal(table.column("entity_name"), entity)
         entity_table = table.filter(mask)
         entity_avg = round(pc.mean(entity_table.column("risk_score")).as_py(), 2)
@@ -117,20 +118,22 @@ def verify_compliance_records(data_root, verbose=False):
         else:
             fail(f"AVG(risk_score) for {entity} = {entity_avg}, expected {exp_avg}")
 
-    # Spot-check: record_id=10 -> Epsilon SA, PCI_DSS, risk_score=41
-    # (record 15 is absent from Iceberg view, so we check record 10 instead)
-    assert_value_where(table, "entity_name", "Epsilon SA", "record_id", 10)
-    assert_value_where(table, "risk_score", 41, "record_id", 10)
+    # Spot-check: record_id=15 -> Epsilon SA, HIPAA, risk_score=80.
+    # This row was originally non_compliant in V1 and was UPDATEd to
+    # under_review in V2, then DELETEd in V3; RESTORE TO VERSION 2 brings
+    # it back, so the Iceberg view sees it.
+    assert_value_where(table, "entity_name", "Epsilon SA", "record_id", 15)
+    assert_value_where(table, "risk_score", 80, "record_id", 15)
 
-    # The 5 originally non_compliant records (3, 9, 15, 17, 20) are absent
-    # from the Iceberg metadata after RESTORE. Verify they are not present.
+    # The 5 originally non_compliant records (3, 9, 15, 17, 20) are present
+    # after RESTORE — they survived as under_review rows in V2.
     for rid in [3, 9, 15, 17, 20]:
         mask = pc.equal(table.column("record_id"), rid)
         filtered = table.filter(mask)
-        if filtered.num_rows == 0:
-            ok(f"Record {rid} absent from Iceberg view (expected)")
+        if filtered.num_rows == 1:
+            ok(f"Record {rid} present in Iceberg view (expected)")
         else:
-            fail(f"Record {rid} found in Iceberg view but expected absent")
+            fail(f"Record {rid} count = {filtered.num_rows}, expected 1")
 
 
 def main():
