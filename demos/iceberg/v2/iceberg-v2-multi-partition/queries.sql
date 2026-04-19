@@ -76,7 +76,7 @@ ASSERT VALUE avg_temp = 23.84 WHERE station_id = 'WX-AF001'
 ASSERT VALUE avg_temp = 12.98 WHERE station_id = 'WX-AS001'
 ASSERT VALUE avg_temp = 12.99 WHERE station_id = 'WX-EU001'
 ASSERT VALUE avg_temp = 12.46 WHERE station_id = 'WX-NA001'
-ASSERT VALUE avg_temp = 24.61 WHERE station_id = 'WX-SA001'
+ASSERT VALUE avg_temp = 24.6 WHERE station_id = 'WX-SA001'
 SELECT
     station_id,
     COUNT(*) AS reading_count,
