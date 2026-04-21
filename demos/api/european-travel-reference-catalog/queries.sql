@@ -40,16 +40,18 @@ FROM {{zone_name}}.travel_geo.european_countries;
 -- Query 2: Norway Reference Lookup — proves the JSON flatten worked
 -- ============================================================================
 -- Pick a stable, isolated country whose key fields don't change.
--- Norway: cca2 = NO, cca3 = NOR, sovereign, UN member, not landlocked.
--- We assert against bronze for the string columns; boolean/array-shaped
--- columns from the JSON flatten don't have a stable scalar form yet, so
--- we leave those to silver in Query 4.
+-- Norway: cca2 = NO, cca3 = NOR, capital Oslo. The capital assertion
+-- exercises array-index extraction in json_flatten_config — the
+-- `$.capital[0]` path picks the first element of the capitals array
+-- as a scalar string (not as an array). If you see `["Oslo"]` instead
+-- of `Oslo` here, the [N] index isn't being honoured at flatten time.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE name_common = 'Norway' WHERE cca2 = 'NO'
 ASSERT VALUE cca3 = 'NOR' WHERE cca2 = 'NO'
+ASSERT VALUE capital = 'Oslo' WHERE cca2 = 'NO'
 ASSERT VALUE region = 'Europe' WHERE cca2 = 'NO'
-SELECT name_common, cca2, cca3, region, subregion
+SELECT name_common, cca2, cca3, capital, region, subregion
 FROM {{zone_name}}.travel_geo.european_countries
 WHERE cca2 = 'NO';
 

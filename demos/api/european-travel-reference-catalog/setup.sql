@@ -132,7 +132,7 @@ OPTIONS (
             "$.cca3",
             "$.region",
             "$.subregion",
-            "$.capital",
+            "$.capital[0]",
             "$.population",
             "$.area",
             "$.independent",
@@ -146,7 +146,7 @@ OPTIONS (
             "$.cca3":           "cca3",
             "$.region":         "region",
             "$.subregion":      "subregion",
-            "$.capital":        "capital",
+            "$.capital[0]":     "capital",
             "$.population":     "population",
             "$.area":           "area_sq_km",
             "$.independent":    "is_independent",
@@ -155,7 +155,6 @@ OPTIONS (
         },
         "max_depth": 3,
         "separator": "_",
-        "default_array_handling": "to_json",
         "infer_types": true
     }'
 );
