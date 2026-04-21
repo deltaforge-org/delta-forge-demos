@@ -5928,6 +5928,43 @@
       ]
     },
     {
+      "id": "hl7-chemistry-panel-typed",
+      "path": "demos/hl7/hl7-chemistry-panel-typed",
+      "iconPath": "icons/hl7-chemistry-panel-typed.svg",
+      "name": "HL7 Chemistry Panel — Typed Multi-OBX Ingestion",
+      "summary": "Hospital lab results dashboard for Comprehensive Metabolic Panels (CMP). 4 ORU^R01 messages (1 normal, 1 diabetic, 1 AKI pattern, 1 hepatic) each carrying 14 OBX analyte segments. Exercises the new HL7 type-inference engine: infer_timestamps promotes MSH-7 / OBR-7 to Timestamp(Microsecond), infer_integers promotes PID-7 (DOB) to Int64, and repeating_segment_mode = 'to_json' collapses every OBX field into a JSON array per OBX-N column. Demonstrates native timestamp filtering, integer aggregation, and per-message JSON unpacking via json_array_length / get_json_object — none of which previously worked without explicit CAST.",
+      "categories": [
+        "healthcare",
+        "hl7"
+      ],
+      "tags": [
+        "hl7",
+        "hl7v2",
+        "intermediate",
+        "chemistry",
+        "lab",
+        "oru",
+        "typed",
+        "multi-obx",
+        "infer-timestamps",
+        "infer-integers",
+        "to-json"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 7157,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.hl7_demos.chem_panels_typed"
+        }
+      ]
+    },
+    {
       "id": "hl7-clinical-workflows",
       "path": "demos/hl7/hl7-clinical-workflows",
       "iconPath": "icons/hl7-clinical-workflows.svg",

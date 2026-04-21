@@ -1,0 +1,54 @@
+[demo]
+id = "hl7-chemistry-panel-typed"
+name = "HL7 Chemistry Panel — Typed Multi-OBX Ingestion"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Hospital lab results dashboard for Comprehensive Metabolic Panels (CMP). \
+Four ORU^R01 messages — each carrying 14 OBX segments for the standard CMP \
+analytes (glucose, BUN, creatinine, sodium, potassium, chloride, CO2, \
+calcium, total protein, albumin, bilirubin, alk phos, AST, ALT) — are \
+landed in bronze with the new HL7 type-inference engine. MSH-7 / OBR-7 \
+become real Timestamp(Microsecond) columns, PID-7 (DOB) becomes Int64, and \
+repeating_segment_mode = 'to_json' collapses every OBX field into a JSON \
+array per OBX-N column so analysts can json_array_length / get_json_object \
+each panel without UNNESTing rows. Demonstrates trend analysis, abnormal \
+value alerting, and time-window queries — none of which previously worked \
+without explicit CAST.
+"""
+categories = ["hl7", "healthcare"]
+tags = ["hl7", "hl7v2", "chemistry", "lab", "oru", "typed", "multi-obx", "infer-timestamps", "infer-integers", "to-json"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Path to the directory containing HL7 ORU^R01 message files", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/oru_r01_cmp_msg20240301a.hl7"
+format = "hl7"
+description = "ORU^R01 — CMP for ANDERSON, 2024-03-01: all-normal panel (14 OBX)"
+size_bytes = 1792
+
+[[demo.data_files]]
+path = "data/oru_r01_cmp_msg20240315b.hl7"
+format = "hl7"
+description = "ORU^R01 — CMP for BERGEN, 2024-03-15: high glucose (diabetic, 14 OBX)"
+size_bytes = 1790
+
+[[demo.data_files]]
+path = "data/oru_r01_cmp_msg20240402c.hl7"
+format = "hl7"
+description = "ORU^R01 — CMP for CHEN, 2024-04-02: AKI pattern with multiple H/L flags (14 OBX)"
+size_bytes = 1784
+
+[[demo.data_files]]
+path = "data/oru_r01_cmp_msg20240418d.hl7"
+format = "hl7"
+description = "ORU^R01 — CMP for DAVIES, 2024-04-18: mild hepatic — AST/ALT high (14 OBX)"
+size_bytes = 1791
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7_demos.chem_panels_typed"

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="hcpt" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#84cc16"/>
+    </linearGradient>
+  </defs>
+  <!-- Erlenmeyer flask body -->
+  <path d="M30 18 L30 32 L18 60 Q16 66 22 66 L58 66 Q64 66 62 60 L50 32 L50 18 Z"
+        fill="url(#hcpt)" opacity=".18"
+        stroke="url(#hcpt)" stroke-width="1.5"
+        stroke-linejoin="round"/>
+  <!-- Flask neck rim -->
+  <line x1="28" y1="18" x2="52" y2="18" stroke="url(#hcpt)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Liquid level -->
+  <path d="M22 50 Q40 46 58 50 L60 60 Q60 64 56 64 L24 64 Q20 64 20 60 Z"
+        fill="url(#hcpt)" opacity=".5"/>
+  <!-- Bubbles in liquid -->
+  <circle cx="30" cy="56" r="1.5" fill="url(#hcpt)" opacity=".7"/>
+  <circle cx="40" cy="58" r="2"   fill="url(#hcpt)" opacity=".6"/>
+  <circle cx="48" cy="55" r="1.2" fill="url(#hcpt)" opacity=".6"/>
+  <circle cx="36" cy="52" r="1"   fill="url(#hcpt)" opacity=".5"/>
+  <!-- Measurement ticks on the side -->
+  <line x1="33" y1="42" x2="36" y2="42" stroke="url(#hcpt)" stroke-width="1" opacity=".5"/>
+  <line x1="33" y1="38" x2="36" y2="38" stroke="url(#hcpt)" stroke-width="1" opacity=".5"/>
+  <line x1="33" y1="34" x2="36" y2="34" stroke="url(#hcpt)" stroke-width="1" opacity=".5"/>
+  <!-- Clock badge (typed timestamp marker) top-right -->
+  <circle cx="60" cy="20" r="10" fill="url(#hcpt)" opacity=".25"/>
+  <circle cx="60" cy="20" r="10" stroke="url(#hcpt)" stroke-width="1.5" fill="none"/>
+  <!-- Clock hands -->
+  <line x1="60" y1="20" x2="60" y2="14" stroke="url(#hcpt)" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="60" y1="20" x2="65" y2="22" stroke="url(#hcpt)" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Clock center pin -->
+  <circle cx="60" cy="20" r="1.3" fill="url(#hcpt)"/>
+</svg>
