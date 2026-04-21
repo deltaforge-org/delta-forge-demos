@@ -39,6 +39,52 @@
       ]
     },
     {
+      "id": "api-european-travel-incremental-enrichment",
+      "path": "demos/api/european-travel-incremental-enrichment",
+      "iconPath": "icons/api-european-travel-incremental-enrichment.svg",
+      "name": "European Travel — Incremental Wave-Based Enrichment",
+      "summary": "Parameter-driven REST API ingest demo. A travel-tech startup enriches its country catalog in geographical waves: the Nordic wave (NO, SE, DK, IS) is seeded into a silver Delta table; this demo runs the Baltic+Finland wave (FI, EE, LV, LT) by narrowing the REST Countries /v3.1/alpha batch endpoint with query_param.codes. Walks the 'check target table → compute gap → parameterise ingest → invoke' pattern a scheduled pipeline runs weekly: an anti-join against silver computes the missing codes, the ingest's query parameter is set to that gap, INVOKE fetches just the missing wave over HTTPS, and a NOT EXISTS merge from bronze into silver keeps the load idempotent. 8 queries with 40+ assertions cover wave composition, seed preservation, the exact anti-join a pipeline would run for the next wave, bronze narrowing, ISO-code coverage, and Delta history. Requires internet — INVOKE issues a real GET against https://restcountries.com.",
+      "categories": [
+        "api",
+        "rest-ingest",
+        "incremental"
+      ],
+      "tags": [
+        "api",
+        "advanced",
+        "rest",
+        "ingest",
+        "incremental",
+        "parameters",
+        "query-param",
+        "watermark",
+        "credentials",
+        "keychain",
+        "json",
+        "flatten",
+        "delta-table",
+        "anti-join",
+        "idempotent"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.travel_waves.country_catalog"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.travel_waves.alpha_batch_bronze"
+        }
+      ]
+    },
+    {
       "id": "avro-ecommerce-orders",
       "path": "demos/avro/ecommerce-orders",
       "iconPath": "icons/avro-ecommerce-orders.svg",
@@ -4812,6 +4858,49 @@
         {
           "objectType": "external_table",
           "name": "{{zone_name}}.fhir.allergies"
+        }
+      ]
+    },
+    {
+      "id": "fhir-hospital-bundle-ingest",
+      "path": "demos/fhir/hospital-bundle-ingest",
+      "iconPath": "icons/fhir-hospital-bundle-ingest.svg",
+      "name": "FHIR Hospital Bundle Ingest — Dedicated FHIR Provider with Unbundle",
+      "summary": "Hospital interoperability gateway lands one FHIR R4 transaction Bundle per patient encounter (admit/discharge/transfer plus observations and medications). Uses the dedicated USING fhir provider with unbundle = 'true', include_bundle_metadata = 'true', resource_types, path_separator and materialized_paths to land 24 clinical resources across 4 Bundles into a single bronze external table. Every row carries df_full_url (Bundle.entry.fullUrl) — required to resolve in-Bundle references — plus bundle_id, bundle_type, bundle_timestamp, bundle_total for audit trail. Promotes Observation -> Patient join into a silver Delta table using df_full_url as the cross-resource key. 7 queries with 36+ assertions cover row counts by resource type, fullUrl preservation, bundle metadata, distinct-bundle count, LOINC code lookup, in-Bundle cross-reference resolution, and a cross-cutting VERIFY block.",
+      "categories": [
+        "fhir",
+        "healthcare"
+      ],
+      "tags": [
+        "fhir",
+        "healthcare",
+        "bundle",
+        "unbundle",
+        "clinical",
+        "interop",
+        "hospital",
+        "loinc",
+        "rxnorm",
+        "intermediate",
+        "external-table",
+        "delta-table",
+        "bronze-silver"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 16864,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.fhir_bronze.bundle_resources"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "clinical_silver.fhir_silver.encounter_observations"
         }
       ]
     },

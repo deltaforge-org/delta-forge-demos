@@ -1,0 +1,194 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-enc-1003",
+  "type": "transaction",
+  "timestamp": "2026-04-16T05:30:00Z",
+  "total": 8,
+  "entry": [
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-1003",
+        "active": true,
+        "gender": "female",
+        "birthDate": "1948-02-14",
+        "name": [
+          {
+            "family": "Tanaka",
+            "given": [
+              "Hiroko"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Encounter/enc-1003",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-1003",
+        "status": "in-progress",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient"
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "period": {
+          "start": "2026-04-12T14:20:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Observation/obs-1003-bp",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1003-bp",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "effectiveDateTime": "2026-04-16T05:00:00Z",
+        "valueQuantity": {
+          "value": 128,
+          "unit": "mm[Hg]",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Observation/obs-1003-hr",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1003-hr",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "effectiveDateTime": "2026-04-16T05:00:00Z",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Observation/obs-1003-glu",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1003-glu",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "effectiveDateTime": "2026-04-16T05:15:00Z",
+        "valueQuantity": {
+          "value": 110,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Observation/obs-1003-creat",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1003-creat",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2160-0",
+              "display": "Creatinine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "effectiveDateTime": "2026-04-16T05:15:00Z",
+        "valueQuantity": {
+          "value": 1.4,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/MedicationRequest/mr-1003-fur",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "mr-1003-fur",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "authoredOn": "2026-04-13T09:00:00Z",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "310429",
+              "display": "Furosemide 40 MG Oral Tablet"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/MedicationRequest/mr-1003-asp",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "mr-1003-asp",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1003"
+        },
+        "authoredOn": "2026-04-13T09:00:00Z",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "243670",
+              "display": "Aspirin 81 MG Oral Tablet"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+[demo]
+id = "fhir-hospital-bundle-ingest"
+name = "FHIR Hospital Bundle Ingest — Dedicated FHIR Provider with Unbundle"
+version = "1.0.0"
+author = "Delta Forge Team"
+description = """\
+Hospital interoperability gateway lands one FHIR R4 transaction Bundle per \
+patient encounter (admit/discharge/transfer plus observations and \
+medications). Uses the dedicated `USING fhir` provider with \
+`unbundle = 'true'`, `include_bundle_metadata = 'true'`, \
+`resource_types`, `path_separator`, and `materialized_paths` to land 24 \
+clinical resources across 4 Bundles into a single bronze external table. \
+Every row carries the new `df_full_url` column (Bundle.entry.fullUrl) — \
+required to resolve in-Bundle references — plus `bundle_id`, \
+`bundle_type`, `bundle_timestamp`, `bundle_total` for full audit trail. \
+Promotes a focused Observation → Patient join into a silver Delta table \
+using df_full_url as the cross-resource key. 7 queries with 36+ \
+assertions cover row counts by resource type, fullUrl preservation, \
+bundle metadata preservation, distinct-bundle count, LOINC code lookup, \
+in-Bundle cross-reference resolution, and a cross-cutting VERIFY block.
+"""
+categories = ["fhir", "healthcare"]
+tags = ["fhir", "healthcare", "bundle", "unbundle", "clinical", "interop", "hospital", "loinc", "rxnorm", "intermediate", "external-table", "delta-table", "bronze-silver"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the directory containing FHIR R4 transaction Bundle JSON files", required = true }
+zone_name = { description = "Target zone name for the bronze external table (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/bundle-enc-1001.json"
+format = "json"
+description = "Bundle enc-1001 — Maria Hernandez admit/discharge: 1 Patient + 1 Encounter + 3 Observations (BP, HR, glucose) + 1 MedicationRequest (metformin)"
+size_bytes = 4237
+
+[[demo.data_files]]
+path = "data/bundle-enc-1002.json"
+format = "json"
+description = "Bundle enc-1002 — Daniel Okafor ED visit: 1 Patient + 1 Encounter + 2 Observations (temp, SpO2) + 1 MedicationRequest (ceftriaxone)"
+size_bytes = 3473
+
+[[demo.data_files]]
+path = "data/bundle-enc-1003.json"
+format = "json"
+description = "Bundle enc-1003 — Hiroko Tanaka long inpatient stay: 1 Patient + 1 Encounter + 4 Observations (BP, HR, glucose, creatinine) + 2 MedicationRequests (furosemide, aspirin)"
+size_bytes = 5681
+
+[[demo.data_files]]
+path = "data/bundle-enc-1004.json"
+format = "json"
+description = "Bundle enc-1004 — Alexei Petrov outpatient visit: 1 Patient + 1 Encounter + 2 Observations (BP, glucose) + 1 MedicationRequest (lisinopril)"
+size_bytes = 3473
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir_bronze.bundle_resources"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "clinical_silver.fhir_silver.encounter_observations"
