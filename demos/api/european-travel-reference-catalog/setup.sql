@@ -87,14 +87,14 @@ CREATE CONNECTION IF NOT EXISTS rest_countries
     CREDENTIAL = travel_api_token;
 
 -- --------------------------------------------------------------------------
--- 4. API ingest endpoint (definition only — no HTTP yet)
+-- 4. API endpoint definition (definition only — no HTTP yet)
 -- --------------------------------------------------------------------------
--- Qualified name `<zone>.<source>.<endpoint>` ties the endpoint to its
--- destination zone in one place. SHOW API INGESTS lists this row;
--- DESCRIBE API INGEST shows its full config.
+-- Qualified name `<zone>.<source>.<name>` ties the endpoint to its
+-- destination zone in one place. SHOW API ENDPOINTS lists this row;
+-- DESCRIBE API ENDPOINT shows its full config.
 
-CREATE API INGEST {{zone_name}}.rest_countries.europe
-    ENDPOINT '/v3.1/region/europe'
+CREATE API ENDPOINT {{zone_name}}.rest_countries.europe
+    URL '/v3.1/region/europe'
     RESPONSE FORMAT JSON;
 
 -- --------------------------------------------------------------------------
@@ -104,7 +104,7 @@ CREATE API INGEST {{zone_name}}.rest_countries.europe
 -- one call), so pagination isn't needed. The engine writes one
 -- `page_0001.json` under a timestamped per-run folder.
 
-INVOKE API INGEST {{zone_name}}.rest_countries.europe;
+INVOKE API ENDPOINT {{zone_name}}.rest_countries.europe;
 
 -- --------------------------------------------------------------------------
 -- 6. External table over the landed JSON

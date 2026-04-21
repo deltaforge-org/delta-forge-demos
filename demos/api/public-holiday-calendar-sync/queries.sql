@@ -71,7 +71,7 @@ WHERE country_code = 'NO'
 --
 -- In production the output of this query (a list of (country, year)
 -- rows) drives:
---     ALTER API INGEST ... SET OPTIONS (
+--     ALTER API ENDPOINT ... SET OPTIONS (
 --         path_param.year         = '<year-from-anti-join>',
 --         path_param.country_code = '<country-from-anti-join>'
 --     );

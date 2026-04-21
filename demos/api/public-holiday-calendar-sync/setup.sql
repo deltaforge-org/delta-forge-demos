@@ -20,7 +20,7 @@
 --   2. INVOKE with runtime overrides: `USING (path_param.year = $next_year,
 --                                             path_param.country_code = $next_country);`
 --      The engine resolves $next_year / $next_country from the script
---      bag against the actual ScalarValues, merges them into the ingest's
+--      bag against the actual ScalarValues, merges them into the endpoint's
 --      path_param map, and issues the HTTPS GET against:
 --         https://date.nager.at/api/v3/PublicHolidays/2025/NO
 --
@@ -102,11 +102,11 @@ CREATE CONNECTION IF NOT EXISTS nager_date_holidays
     CREDENTIAL = holiday_api_token;
 
 -- --------------------------------------------------------------------------
--- 5. API ingest — endpoint template only, NO stored path_params
+-- 5. API endpoint — URL template only, NO stored path_params
 -- --------------------------------------------------------------------------
 
-CREATE API INGEST {{zone_name}}.nager_date_holidays.public_holidays
-    ENDPOINT '/api/v3/PublicHolidays/{year}/{country_code}'
+CREATE API ENDPOINT {{zone_name}}.nager_date_holidays.public_holidays
+    URL '/api/v3/PublicHolidays/{year}/{country_code}'
     RESPONSE FORMAT JSON;
 
 -- --------------------------------------------------------------------------
@@ -130,12 +130,12 @@ INTO $next_country, $next_year;
 -- --------------------------------------------------------------------------
 -- The engine resolves $next_year / $next_country against the script
 -- param bag populated in step 6, merges the ScalarValues into the
--- ingest's path_param map, and assembles the URL:
+-- endpoint's path_param map, and assembles the URL:
 --     https://date.nager.at/api/v3/PublicHolidays/2025/NO
--- The SAME ingest row is reusable across every wave — only the USING
+-- The SAME endpoint row is reusable across every wave — only the USING
 -- clause's resolved values change between calls.
 
-INVOKE API INGEST {{zone_name}}.nager_date_holidays.public_holidays
+INVOKE API ENDPOINT {{zone_name}}.nager_date_holidays.public_holidays
     USING (
         path_param.year         = $next_year,
         path_param.country_code = $next_country

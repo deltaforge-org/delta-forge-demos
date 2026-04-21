@@ -6,13 +6,13 @@ description = """
 End-to-end REST API ingest demo: a travel-tech startup keeps its European
 country reference data fresh by syncing from the public REST Countries API.
 Walks the full Phase 1 path — credential stored in OS keychain, REST API
-data source bound to a bronze zone, ingest endpoint definition, INVOKE
+data source bound to a bronze zone, API endpoint definition, INVOKE
 to download raw JSON, then a flattened external table that the localization
 + compliance teams can query directly.
 
 Demonstrates: CREATE CREDENTIAL STORAGE (OS keychain), CREATE CREDENTIAL
 with vault-stored secret, CREATE CONNECTION TYPE = rest_api, CREATE API
-INGEST with a 3-part qualified name, INVOKE API INGEST (live HTTP fetch),
+ENDPOINT with a 3-part qualified name, INVOKE API ENDPOINT (live HTTP fetch),
 and CREATE EXTERNAL TABLE USING JSON with json_flatten_config to project
 the nested response into a flat queryable shape.
 

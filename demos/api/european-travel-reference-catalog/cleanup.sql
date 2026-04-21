@@ -2,7 +2,7 @@
 -- Cleanup: European Travel Reference Catalog
 -- ============================================================================
 -- Reverse order of creation: silver delta table → bronze external table →
--- API ingest → connection → vault entry → schema → zone. WITH FILES on
+-- API endpoint → connection → vault entry → schema → zone. WITH FILES on
 -- both tables also removes their on-disk artefacts (Delta log + parquet
 -- for silver, raw JSON pages for bronze). The OS keychain backend is the
 -- always-on default and is never dropped.
@@ -14,8 +14,8 @@ DROP DELTA TABLE IF EXISTS {{zone_name}}.travel_geo.european_countries_silver WI
 -- 2. Bronze external table (also removes the JSON files INVOKE wrote)
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.travel_geo.european_countries WITH FILES;
 
--- 3. API ingest definition (cascades its run history)
-DROP API INGEST IF EXISTS {{zone_name}}.rest_countries.europe;
+-- 3. API endpoint definition (cascades its run history)
+DROP API ENDPOINT IF EXISTS {{zone_name}}.rest_countries.europe;
 
 -- 4. REST API connection (data source)
 DROP CONNECTION IF EXISTS rest_countries;

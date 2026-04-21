@@ -19,7 +19,7 @@ the ingest definition. The pattern is:
          FROM silver WHERE country_code = 'NO'
          INTO $next_country, $next_year;
   2. INVOKE with per-call overrides referencing those script params:
-         INVOKE API INGEST ... USING (
+         INVOKE API ENDPOINT ... USING (
              'path_param.year'         = $next_year,
              'path_param.country_code' = $next_country
          );
@@ -30,9 +30,9 @@ the ingest definition. The pattern is:
      keeps replays idempotent.
 
 Demonstrates: CREATE CREDENTIAL (OS keychain), CREATE CONNECTION
-TYPE = rest_api, CREATE API INGEST with an endpoint template but NO
+TYPE = rest_api, CREATE API ENDPOINT with a URL template but NO
 stored path_params (the caller supplies them per-invoke), SELECT ...
-INTO $params for target-table-driven gap lookup, INVOKE API INGEST
+INTO $params for target-table-driven gap lookup, INVOKE API ENDPOINT
 ... USING (...) for per-call parameter overrides, CREATE EXTERNAL
 TABLE USING JSON with json_flatten_config on a bare top-level array
 response, and the composite-key anti-join INSERT pattern.
