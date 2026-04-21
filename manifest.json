@@ -9,6 +9,7 @@
       "name": "European Travel Reference Catalog — REST API Ingest End-to-End",
       "summary": "End-to-end REST API ingest demo. A travel-tech startup syncs the public REST Countries API to keep its European country reference data (population for GDPR thresholds, languages for localization, currencies for the multi-currency cart) fresh in bronze. Walks the full Phase 1 path: CREATE CREDENTIAL STORAGE (OS keychain), CREATE CREDENTIAL with vault-stored secret, CREATE CONNECTION TYPE = rest_api, CREATE API INGEST with a 3-part qualified name, INVOKE API INGEST (live HTTP fetch), and CREATE EXTERNAL TABLE USING JSON with json_flatten_config to project the nested response into a flat queryable shape. 6 queries with 22 assertions cover row-count range, ISO-code lookups (Norway, Iceland, Malta, Monaco), region invariant, total-population aggregate, and a cross-cutting VERIFY block. Requires internet — INVOKE issues a real GET against https://restcountries.com.",
       "categories": [
+        "json",
         "api",
         "rest-ingest"
       ],
