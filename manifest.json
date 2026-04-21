@@ -3978,6 +3978,41 @@
       ]
     },
     {
+      "id": "edi-850-purchase-orders-aliased",
+      "path": "demos/edi/850-purchase-orders-aliased",
+      "iconPath": "icons/edi-850-purchase-orders-aliased.svg",
+      "name": "Wholesale Distributor PO Inbox — Aliased Columns + JSON Line Items",
+      "summary": "Wholesale-distributor purchase-order inbox proving the just-landed EDI engine wiring for aliasFormat='friendly_column' (rewrites materialized columns from opaque numeric names like beg_2 / po1_7 to human-readable identifiers like purchaseordernumber_beg_2 / productserviceidqualifier_po1_7 using the per-segment X12 V5010 element catalog) and repeating_segment_mode='to_json' (collapses every PO1 line-item segment and N1 party loop into a JSON array per element column). Four synthetic 850 transactions (3-6 PO1 line items each, 18 total) drive 7 queries with 40+ ASSERTs covering aliased-column lookup, json_array_length() per PO, cross-PO line aggregation, vendor JSON membership, schema introspection, and combined alias+to_json analysis.",
+      "categories": [
+        "edi",
+        "commerce"
+      ],
+      "tags": [
+        "edi",
+        "x12",
+        "850",
+        "purchase-order",
+        "alias",
+        "to-json",
+        "loops",
+        "json-array",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 2311,
+      "fileCount": 4,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.commerce.purchase_orders"
+        }
+      ]
+    },
+    {
       "id": "edi-compliance-validation",
       "path": "demos/edi/edi-compliance-validation",
       "iconPath": "icons/edi-compliance-validation.svg",
