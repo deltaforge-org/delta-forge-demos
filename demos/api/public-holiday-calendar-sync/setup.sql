@@ -167,8 +167,12 @@ CREATE API INGEST {{zone_name}}.nager_date_holidays.public_holidays
     ENDPOINT '/api/v3/PublicHolidays/{year}/{country_code}'
     RESPONSE FORMAT JSON
     OPTIONS (
-        path_param.year         = '2025',
-        path_param.country_code = 'NO'
+        -- Dotted option keys MUST be single-quoted — the parser only
+        -- treats quoted-string LHS as a verbatim key; an unquoted
+        -- `path_param.year` is tokenised as two separate idents and
+        -- silently drops the suffix at parse_options_list.
+        'path_param.year'         = '2025',
+        'path_param.country_code' = 'NO'
     );
 
 -- --------------------------------------------------------------------------
