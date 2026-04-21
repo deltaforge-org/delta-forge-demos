@@ -1,0 +1,55 @@
+[demo]
+id = "api-public-holiday-calendar-sync"
+name = "Public Holiday Calendar Sync — Path-Parameter Incremental Enrichment"
+version = "1.0.0"
+description = """
+Path-parameter-driven REST API ingest demo using a completely different
+public source than the reference-catalog demo — Nager.Date
+(https://date.nager.at), a no-auth public-holiday service used by HR
+and scheduling platforms worldwide.
+
+Scenario: a multinational HR platform syncs public-holiday calendars
+per (country, year) so its time-off tracker and billable-day calculator
+stay accurate. Launch seed = Norway 2024 + Sweden 2024 (8 rows, hand-
+picked highest-signal holidays). This demo runs one wave: Norway 2025.
+
+The "check target → compute gap → parameterise → invoke" pattern:
+  1. Silver is the source of incremental truth — an anti-join against
+     it computes which (country, year) combos are still missing.
+  2. path_param.year and path_param.country_code on the ingest are
+     set to the next missing combo. Real pipelines do this with
+     ALTER API INGEST ... SET OPTIONS; this demo encodes them on
+     CREATE so replays are idempotent.
+  3. INVOKE substitutes both path params into the URL template
+     /api/v3/PublicHolidays/{year}/{country_code} → produces
+     /api/v3/PublicHolidays/2025/NO on the wire.
+  4. NOT EXISTS merge on the composite key (country_code,
+     holiday_year, holiday_date) keeps replays as no-ops.
+
+Demonstrates: CREATE CREDENTIAL (OS keychain), CREATE CONNECTION
+TYPE = rest_api, CREATE API INGEST with path_param.<name> bindings
+(distinct from the reference-catalog demo's query_param style),
+INVOKE API INGEST against a live HTTPS endpoint with path
+substitution, CREATE EXTERNAL TABLE USING JSON with json_flatten_config
+on a bare top-level array response, DATE casting from JSON ISO-8601
+strings, and the composite-key anti-join INSERT pattern.
+
+NOTE: requires internet. INVOKE issues a real GET against
+https://date.nager.at/api/v3/PublicHolidays/2025/NO.
+"""
+categories = ["api", "rest-ingest", "incremental"]
+tags = ["api", "rest", "ingest", "incremental", "parameters", "path-param", "nager-date", "holidays", "hr", "credentials", "keychain", "json", "flatten", "delta-table", "anti-join", "idempotent", "composite-key"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE rather than reading shipped files. LOCATIONs resolve relative to the bronze zone's storage root.", required = false }
+zone_name = { description = "Target zone for the bronze landing path and the silver catalog. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.hr_calendar.country_holidays"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hr_calendar.public_holidays_bronze"

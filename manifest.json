@@ -39,11 +39,11 @@
       ]
     },
     {
-      "id": "api-european-travel-incremental-enrichment",
-      "path": "demos/api/european-travel-incremental-enrichment",
-      "iconPath": "icons/api-european-travel-incremental-enrichment.svg",
-      "name": "European Travel — Incremental Wave-Based Enrichment",
-      "summary": "Parameter-driven REST API ingest demo. A travel-tech startup enriches its country catalog in geographical waves: the Nordic wave (NO, SE, DK, IS) is seeded into a silver Delta table; this demo runs the Baltic+Finland wave (FI, EE, LV, LT) by narrowing the REST Countries /v3.1/alpha batch endpoint with query_param.codes. Walks the 'check target table → compute gap → parameterise ingest → invoke' pattern a scheduled pipeline runs weekly: an anti-join against silver computes the missing codes, the ingest's query parameter is set to that gap, INVOKE fetches just the missing wave over HTTPS, and a NOT EXISTS merge from bronze into silver keeps the load idempotent. 8 queries with 40+ assertions cover wave composition, seed preservation, the exact anti-join a pipeline would run for the next wave, bronze narrowing, ISO-code coverage, and Delta history. Requires internet — INVOKE issues a real GET against https://restcountries.com.",
+      "id": "api-public-holiday-calendar-sync",
+      "path": "demos/api/public-holiday-calendar-sync",
+      "iconPath": "icons/api-public-holiday-calendar-sync.svg",
+      "name": "Public Holiday Calendar Sync — Path-Parameter Incremental Enrichment",
+      "summary": "Path-parameter-driven REST API ingest against a distinct public source (Nager.Date, https://date.nager.at) — picked deliberately to avoid reusing REST Countries from the reference-catalog demo. A multinational HR platform syncs public-holiday calendars per (country, year) for its time-off tracker and billable-day calculator. Launch seed = Norway 2024 + Sweden 2024 (8 rows); this demo runs one wave — Norway 2025 — by substituting path_param.year and path_param.country_code into the endpoint template /api/v3/PublicHolidays/{year}/{country_code}. Walks the 'check target → compute gap → parameterise → invoke' pattern: an anti-join against silver computes the missing (country, year) combos, path_params are set accordingly, INVOKE fetches just Norway 2025 over HTTPS, and a NOT EXISTS merge on the composite key (country_code, holiday_year, holiday_date) keeps replays idempotent. 6 queries with 30+ assertions cover wave composition, fixed-date wire proof (NO Constitution Day, NO Christmas Day), the exact anti-join a pipeline runs for the next wave, bronze narrowing to one country, seed preservation, and Delta history. Requires internet — INVOKE issues a real GET against https://date.nager.at.",
       "categories": [
         "api",
         "rest-ingest",
@@ -56,15 +56,18 @@
         "ingest",
         "incremental",
         "parameters",
-        "query-param",
-        "watermark",
+        "path-param",
+        "nager-date",
+        "holidays",
+        "hr",
         "credentials",
         "keychain",
         "json",
         "flatten",
         "delta-table",
         "anti-join",
-        "idempotent"
+        "idempotent",
+        "composite-key"
       ],
       "difficulty": "advanced",
       "estimatedTimeMinutes": 5,
@@ -76,11 +79,11 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.travel_waves.country_catalog"
+          "name": "{{zone_name}}.hr_calendar.country_holidays"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.travel_waves.alpha_batch_bronze"
+          "name": "{{zone_name}}.hr_calendar.public_holidays_bronze"
         }
       ]
     },
