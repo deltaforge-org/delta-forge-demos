@@ -7949,6 +7949,45 @@
       ]
     },
     {
+      "id": "json-typed-billing-events",
+      "path": "demos/json/typed-billing-events",
+      "iconPath": "icons/json-typed-billing-events.svg",
+      "name": "JSON Typed Billing Events — type_hints + as_list",
+      "summary": "Subscription billing webhook events delivered as Stripe-style NDJSON: numeric amounts and booleans arrive as quoted strings, tag arrays arrive as native JSON arrays. 50 events across 5 NDJSON files exercise the json_flatten_config `type_hints` map (forces $.amount to int64, $.is_active and $.is_trialing to boolean, $.event_timestamp to timestamp) and `default_array_handling = 'as_list'` (lands $.tags as a real Arrow List<Utf8>). 7 queries with 22 assertions cover SUM(amount) without CAST, boolean filters, timestamp comparisons, and array_length / array_contains over the typed list column. A silver Delta promotion proves the typed columns and the ARRAY<STRING> column round-trip cleanly into Delta storage.",
+      "categories": [
+        "json"
+      ],
+      "tags": [
+        "json",
+        "intermediate",
+        "type_hints",
+        "as_list",
+        "arrow_list",
+        "typed",
+        "billing",
+        "webhook",
+        "flatten",
+        "bronze-silver"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 12528,
+      "fileCount": 5,
+      "author": "Delta Forge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.billing.events"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.billing.events_curated"
+        }
+      ]
+    },
+    {
       "id": "orc-banking-transactions",
       "path": "demos/orc/banking-transactions",
       "iconPath": "icons/orc-banking-transactions.svg",
