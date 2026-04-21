@@ -26,9 +26,16 @@
 --                                response format
 --   5. INVOKE                  — actual HTTP GET, writes raw JSON to
 --                                bronze under a timestamped per-run folder
---   6. External table          — JSON over the bronze landing with
+--   6. External table (bronze) — JSON over the bronze landing with
 --                                json_flatten_config to project nested
 --                                fields into flat columns
+--   7. Delta table   (silver)  — curated copy of the bronze data into a
+--                                Delta table, demonstrating the typical
+--                                bronze→silver promotion. The Delta layer
+--                                gives ACID writes, time travel,
+--                                schema evolution, and OPTIMIZE/VACUUM —
+--                                queries from BI tools point here, not at
+--                                the raw JSON landing.
 -- ============================================================================
 
 -- --------------------------------------------------------------------------
@@ -153,8 +160,64 @@ OPTIONS (
 );
 
 -- --------------------------------------------------------------------------
--- Schema detection + permissions
+-- Schema detection + permissions (bronze)
 -- --------------------------------------------------------------------------
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.travel_geo.european_countries;
 GRANT ADMIN ON TABLE {{zone_name}}.travel_geo.european_countries TO USER {{current_user}};
+
+-- --------------------------------------------------------------------------
+-- 7. Silver layer — curated Delta table promoted from the bronze landing
+-- --------------------------------------------------------------------------
+-- Bronze (the external table above) is the raw source-of-truth: every
+-- INVOKE adds another timestamped page under the landing folder, and the
+-- external table reads them all on every query. That's the right shape
+-- for ingest auditing and reprocessing, but it isn't what you point a
+-- dashboard at — every query re-parses every page.
+--
+-- The silver Delta table is the curated layer downstream consumers
+-- query. It carries the same flat-column shape as bronze but lives in
+-- Delta format, which gives:
+--   • ACID multi-row writes (this INSERT lands atomically)
+--   • Time travel via VERSION AS OF / TIMESTAMP AS OF
+--   • Schema evolution + ALTER TABLE
+--   • OPTIMIZE / VACUUM lifecycle for storage efficiency
+--   • Cross-engine portability (Spark, DuckDB, Polars all read it)
+--
+-- Re-running INVOKE writes new bronze pages, but silver only updates
+-- when this INSERT (or a downstream MERGE in a real pipeline) runs.
+-- That separation is what makes the medallion model auditable.
+
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.travel_geo.european_countries_silver (
+    name_common     STRING,
+    name_official   STRING,
+    cca2            STRING,
+    cca3            STRING,
+    region          STRING,
+    subregion       STRING,
+    capital         STRING,
+    population      BIGINT,
+    area_sq_km      DOUBLE,
+    is_independent  BOOLEAN,
+    is_un_member    BOOLEAN,
+    is_landlocked   BOOLEAN
+)
+LOCATION 'silver/european_countries';
+
+INSERT INTO {{zone_name}}.travel_geo.european_countries_silver
+SELECT
+    name_common,
+    name_official,
+    cca2,
+    cca3,
+    region,
+    subregion,
+    capital,
+    population,
+    area_sq_km,
+    is_independent,
+    is_un_member,
+    is_landlocked
+FROM {{zone_name}}.travel_geo.european_countries;
+
+GRANT ADMIN ON TABLE {{zone_name}}.travel_geo.european_countries_silver TO USER {{current_user}};

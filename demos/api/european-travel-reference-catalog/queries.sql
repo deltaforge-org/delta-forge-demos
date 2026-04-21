@@ -100,23 +100,62 @@ FROM {{zone_name}}.travel_geo.european_countries
 WHERE subregion IS NOT NULL;
 
 -- ============================================================================
+-- Query 7: Silver Delta Table — promoted copy is byte-equivalent to bronze
+-- ============================================================================
+-- INSERT INTO ... SELECT FROM in setup.sql copied bronze (the external
+-- JSON-flattened table) into the silver Delta table. After that single
+-- promotion, every aggregate must match exactly — same row count, same
+-- distinct cca2 codes, same population total. Any drift means the
+-- promotion lost or duplicated rows.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE bronze_count = silver_count
+ASSERT VALUE bronze_distinct_cca2 = silver_distinct_cca2
+ASSERT VALUE bronze_population = silver_population
+SELECT
+    (SELECT COUNT(*)              FROM {{zone_name}}.travel_geo.european_countries)         AS bronze_count,
+    (SELECT COUNT(*)              FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_count,
+    (SELECT COUNT(DISTINCT cca2)  FROM {{zone_name}}.travel_geo.european_countries)         AS bronze_distinct_cca2,
+    (SELECT COUNT(DISTINCT cca2)  FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_distinct_cca2,
+    (SELECT SUM(population)       FROM {{zone_name}}.travel_geo.european_countries)         AS bronze_population,
+    (SELECT SUM(population)       FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_population;
+
+-- ============================================================================
+-- Query 8: Silver Time-Travel Smoke Check — DESCRIBE HISTORY shows v0 + v1
+-- ============================================================================
+-- The Delta table got two writes during setup: the CREATE (v0, schema only)
+-- and the INSERT (v1, the bronze→silver promotion). DESCRIBE HISTORY
+-- exposes the transaction log and proves the table is queryable with
+-- VERSION AS OF semantics — the headline Delta capability you don't get
+-- from a bare external JSON table.
+
+ASSERT ROW_COUNT >= 2
+SELECT version, operation
+FROM (DESCRIBE HISTORY {{zone_name}}.travel_geo.european_countries_silver)
+ORDER BY version;
+
+-- ============================================================================
 -- VERIFY: All Checks
 -- ============================================================================
 -- One cross-cutting query exercising the whole pipeline: row count is
 -- in range, Norway is present and looks right, total population is in
--- range. If this passes, the credential resolved, the HTTP fetch
--- succeeded, the bronze write landed, and the JSON flatten produced
--- the expected shape — all in one assertion block.
+-- range, AND the silver Delta table is in sync with bronze. If this
+-- passes, the credential resolved, the HTTPS fetch succeeded, the
+-- bronze write landed, the JSON flatten produced the expected shape,
+-- AND the bronze→silver promotion preserved every row.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE country_count BETWEEN 40 AND 60
 ASSERT VALUE has_norway = 1
 ASSERT VALUE total_population BETWEEN 700000000 AND 800000000
 ASSERT VALUE region_invariant_holds = 1
+ASSERT VALUE silver_matches_bronze = 1
 SELECT
-    COUNT(*)                                                   AS country_count,
-    SUM(CASE WHEN cca2 = 'NO' THEN 1 ELSE 0 END)               AS has_norway,
-    SUM(population)                                            AS total_population,
-    CASE WHEN COUNT(DISTINCT region) = 1 AND MAX(region) = 'Europe' THEN 1 ELSE 0 END
-                                                               AS region_invariant_holds
+    COUNT(*)                                                                                   AS country_count,
+    SUM(CASE WHEN cca2 = 'NO' THEN 1 ELSE 0 END)                                               AS has_norway,
+    SUM(population)                                                                            AS total_population,
+    CASE WHEN COUNT(DISTINCT region) = 1 AND MAX(region) = 'Europe' THEN 1 ELSE 0 END          AS region_invariant_holds,
+    CASE WHEN COUNT(*) = (SELECT COUNT(*) FROM {{zone_name}}.travel_geo.european_countries_silver)
+              AND SUM(population) = (SELECT SUM(population) FROM {{zone_name}}.travel_geo.european_countries_silver)
+         THEN 1 ELSE 0 END                                                                     AS silver_matches_bronze
 FROM {{zone_name}}.travel_geo.european_countries;
