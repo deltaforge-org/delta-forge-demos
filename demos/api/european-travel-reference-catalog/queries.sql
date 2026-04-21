@@ -123,17 +123,24 @@ WHERE subregion IS NOT NULL;
 -- exactly. Any drift means the promotion lost or duplicated rows.
 -- We compare population SUM only on the silver side (bronze population
 -- is Utf8 — the typed silver column is what dashboards aggregate over).
+--
+-- ASSERT VALUE compares against literal scalars, not column references,
+-- so we collapse the bronze↔silver comparison into a pre-computed delta
+-- and assert it equals zero — same invariant, but in a shape ASSERT
+-- can express.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE bronze_count = silver_count
-ASSERT VALUE bronze_distinct_cca2 = silver_distinct_cca2
+ASSERT VALUE row_count_delta = 0
+ASSERT VALUE distinct_cca2_delta = 0
 ASSERT VALUE silver_population BETWEEN 700000000 AND 800000000
 SELECT
-    (SELECT COUNT(*)              FROM {{zone_name}}.travel_geo.european_countries)         AS bronze_count,
-    (SELECT COUNT(*)              FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_count,
-    (SELECT COUNT(DISTINCT cca2)  FROM {{zone_name}}.travel_geo.european_countries)         AS bronze_distinct_cca2,
-    (SELECT COUNT(DISTINCT cca2)  FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_distinct_cca2,
-    (SELECT SUM(population)       FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_population;
+    (SELECT COUNT(*) FROM {{zone_name}}.travel_geo.european_countries)
+        - (SELECT COUNT(*) FROM {{zone_name}}.travel_geo.european_countries_silver)
+                                                                                      AS row_count_delta,
+    (SELECT COUNT(DISTINCT cca2) FROM {{zone_name}}.travel_geo.european_countries)
+        - (SELECT COUNT(DISTINCT cca2) FROM {{zone_name}}.travel_geo.european_countries_silver)
+                                                                                      AS distinct_cca2_delta,
+    (SELECT SUM(population) FROM {{zone_name}}.travel_geo.european_countries_silver)  AS silver_population;
 
 -- ============================================================================
 -- Query 8: Silver Delta Time-Travel — DESCRIBE HISTORY shows v0 + v1
