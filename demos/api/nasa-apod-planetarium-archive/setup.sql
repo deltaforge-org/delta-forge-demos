@@ -90,7 +90,7 @@ CREATE CONNECTION IF NOT EXISTS nasa_api
 -- by USING below. The endpoint itself is shape-only.
 
 CREATE API ENDPOINT {{zone_name}}.nasa_api.apod_archive
-    URL '/planetary/apod'
+    URL '/planetary/apod?start_date=2024-12-20&end_date=2024-12-27'
     RESPONSE FORMAT JSON
     OPTIONS (
         rate_limit_rps     = '1',
@@ -98,28 +98,13 @@ CREATE API ENDPOINT {{zone_name}}.nasa_api.apod_archive
     );
 
 -- --------------------------------------------------------------------------
--- 5. INVOKE with query_param + header overrides via USING
+-- 5. INVOKE — single-page fetch
 -- --------------------------------------------------------------------------
--- Three override kinds mixed in one call:
---   • query_param.start_date = '2024-12-20'  → URL
---   • query_param.end_date   = '2024-12-27'  → URL
---   • header.X-Request-ID = 'planetarium-archive-20241220-20241227'
---                                             → HTTP header
--- The engine merges query_param.* into the query string, pastes
--- header.* into the request's header map, evaluates each expression
--- to a scalar (literal strings here), URL-encodes values, and fires
--- the GET.
---
--- Secret-pattern guard: merged keys like `header.authorization` or
--- `header.x-api-key` are rejected at USING evaluation time. Plain
--- `header.X-Request-ID` passes.
+-- The date window (2024-12-20..2024-12-27) is baked into the URL.
+-- With that window NASA returns a JSON array of 8 APOD records in
+-- one response.
 
-INVOKE API ENDPOINT {{zone_name}}.nasa_api.apod_archive
-    USING (
-        query_param.start_date = '2024-12-20',
-        query_param.end_date   = '2024-12-27',
-        header.X-Request-ID    = 'planetarium-archive-20241220-20241227'
-    );
+INVOKE API ENDPOINT {{zone_name}}.nasa_api.apod_archive;
 
 -- --------------------------------------------------------------------------
 -- 6. External table — flatten each APOD entry
