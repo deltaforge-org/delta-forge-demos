@@ -73,11 +73,12 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.space_imagery
 CREATE CONNECTION IF NOT EXISTS nasa_api
     TYPE = rest_api
     OPTIONS (
-        base_url     = 'https://api.nasa.gov',
-        auth_mode    = 'api_key_query',
-        storage_zone = '{{zone_name}}',
-        base_path    = 'nasa_api',
-        timeout_secs = '30'
+        base_url        = 'https://api.nasa.gov',
+        auth_mode       = 'api_key_query',
+        auth_query_name = 'api_key',
+        storage_zone    = '{{zone_name}}',
+        base_path       = 'nasa_api',
+        timeout_secs    = '30'
     )
     CREDENTIAL = nasa_apod_key;
 
