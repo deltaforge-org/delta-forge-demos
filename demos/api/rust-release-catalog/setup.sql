@@ -1,7 +1,7 @@
 -- ============================================================================
 -- Demo: Rust Release Catalog
--- Feature: End-to-end REST API ingest — keychain credential, connection,
---          endpoint, INVOKE, external table with JSON flattening
+-- Feature: End-to-end REST API ingest — connection, endpoint, INVOKE,
+--          external table with JSON flattening, silver Delta promotion
 -- ============================================================================
 --
 -- Real-world story: a platform/DevRel team tracks the cadence of upstream
@@ -13,25 +13,23 @@
 -- dashboards point at.
 --
 -- Pipeline:
---   1. Vault entry             — placeholder API token in the OS keychain
---                                (the always-on default credential
---                                storage). GitHub's releases endpoint is
---                                public and works without auth, but we
---                                exercise the full credential path so
---                                production APIs that DO require auth use
---                                the same pattern verbatim.
---   2. Zone + schema           — bronze landing + release_intel for the
+--   1. Zone + schema           — bronze landing + release_intel for the
 --                                queryable external table
---   3. REST API connection     — base URL + auth_mode + storage_zone +
---                                base_path on the data source
---   4. API ingest endpoint     — qualified name + endpoint path +
+--   2. REST API connection     — base URL + auth_mode + storage_zone +
+--                                base_path on the data source. `auth_mode =
+--                                'none'` here because GitHub's public
+--                                releases endpoint rejects placeholder
+--                                bearer tokens with HTTP 401; a protected
+--                                API just flips to `bearer` and adds a
+--                                `CREDENTIAL = <vault_entry>` line.
+--   3. API ingest endpoint     — qualified name + endpoint path +
 --                                response format
---   5. INVOKE                  — actual HTTPS GET, writes raw JSON to
+--   4. INVOKE                  — actual HTTPS GET, writes raw JSON to
 --                                bronze under a timestamped per-run folder
---   6. External table (bronze) — JSON over the bronze landing with
+--   5. External table (bronze) — JSON over the bronze landing with
 --                                json_flatten_config to project nested
 --                                fields into flat columns
---   7. Delta table   (silver)  — curated copy of the bronze data into a
+--   6. Delta table   (silver)  — curated copy of the bronze data into a
 --                                Delta table, demonstrating the typical
 --                                bronze→silver promotion. The Delta layer
 --                                gives ACID writes, time travel,
@@ -41,24 +39,7 @@
 -- ============================================================================
 
 -- --------------------------------------------------------------------------
--- 1. Vault entry (the API token itself)
--- --------------------------------------------------------------------------
--- The OS keychain backend (Windows Credential Manager / macOS Keychain /
--- Linux Secret Service) is the always-on default storage — no explicit
--- registration needed. CREATE CREDENTIAL writes to it directly.
---
--- The literal SECRET below is a placeholder — GitHub's /repos/.../releases
--- endpoint is public and ignores the Authorization header. The same syntax
--- + flow applies unchanged for bearer-protected APIs (private repos, the
--- full GitHub Apps flow, Stripe, etc.); only the literal value changes.
-
-CREATE CREDENTIAL IF NOT EXISTS github_api_token
-    TYPE = CREDENTIAL
-    SECRET 'demo-placeholder-token-public-releases-endpoint'
-    DESCRIPTION 'Bearer token for the GitHub release-catalog sync';
-
--- --------------------------------------------------------------------------
--- 2. Zone + schema
+-- 1. Zone + schema
 -- --------------------------------------------------------------------------
 -- Zone is the permission boundary. INVOKE writes downloaded files under
 -- <zone-root>/<source>/<endpoint>/<run-ts>/page_NNNN.json — the zone
@@ -71,11 +52,16 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.release_intel
     COMMENT 'Upstream OSS release intelligence — GitHub releases feed for the toolchains the platform team tracks';
 
 -- --------------------------------------------------------------------------
--- 3. REST API connection (a `data_sources` row of source_type = rest_api)
+-- 2. REST API connection (a `data_sources` row of source_type = rest_api)
 -- --------------------------------------------------------------------------
--- Carries the host, auth mode, and storage destination. CREDENTIAL = …
--- references the vault entry above by name; the executor resolves the
--- secret material at INVOKE time without it ever crossing back into SQL.
+-- Carries the host, auth mode, and storage destination. `auth_mode = 'none'`
+-- here because GitHub's /repos/.../releases endpoint is public — it
+-- validates every Authorization header it receives (even for public
+-- resources) and rejects placeholder tokens with HTTP 401, so sending
+-- none is the right move. For a protected API you would flip this to
+-- `auth_mode = 'bearer'`, add `CREDENTIAL = <vault_entry>` below, and
+-- keep everything else unchanged — the INVOKE path and the JSON flatten
+-- are auth-agnostic.
 --
 -- The connection name is reused as the middle segment of the API endpoint's
 -- qualified 3-part name (<zone>.<connection>.<endpoint>), so each connection
@@ -85,15 +71,14 @@ CREATE CONNECTION IF NOT EXISTS github_releases
     TYPE = rest_api
     OPTIONS (
         base_url      = 'https://api.github.com',
-        auth_mode     = 'bearer',
+        auth_mode     = 'none',
         storage_zone  = '{{zone_name}}',
         base_path     = 'github_releases',
         timeout_secs  = '30'
-    )
-    CREDENTIAL = github_api_token;
+    );
 
 -- --------------------------------------------------------------------------
--- 4. API endpoint definition (definition only — no HTTP yet)
+-- 3. API endpoint definition (definition only — no HTTP yet)
 -- --------------------------------------------------------------------------
 -- Qualified name `<zone>.<source>.<name>` ties the endpoint to its
 -- destination zone in one place. SHOW API ENDPOINTS lists this row;
@@ -109,7 +94,7 @@ CREATE API ENDPOINT {{zone_name}}.github_releases.rust_releases
     RESPONSE FORMAT JSON;
 
 -- --------------------------------------------------------------------------
--- 5. INVOKE — actual HTTPS fetch, lands raw JSON under bronze
+-- 4. INVOKE — actual HTTPS fetch, lands raw JSON under bronze
 -- --------------------------------------------------------------------------
 -- Single-page response (`per_page=30` gives us the full window in one call),
 -- so pagination isn't needed. The engine writes one `page_0001.json` under
@@ -118,7 +103,7 @@ CREATE API ENDPOINT {{zone_name}}.github_releases.rust_releases
 INVOKE API ENDPOINT {{zone_name}}.github_releases.rust_releases;
 
 -- --------------------------------------------------------------------------
--- 6. External table over the landed JSON
+-- 5. External table over the landed JSON
 -- --------------------------------------------------------------------------
 -- LOCATION is relative to the zone's storage_root, so it resolves to the
 -- same path the ingest engine wrote to. `recursive` walks the
@@ -172,7 +157,7 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.release_intel.rust_releases;
 GRANT ADMIN ON TABLE {{zone_name}}.release_intel.rust_releases TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
--- 7. Silver layer — curated Delta table promoted from the bronze landing
+-- 6. Silver layer — curated Delta table promoted from the bronze landing
 -- --------------------------------------------------------------------------
 -- Bronze (the external table above) is the raw source-of-truth: every
 -- INVOKE adds another timestamped page under the landing folder, and the

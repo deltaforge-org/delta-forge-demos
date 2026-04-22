@@ -6,17 +6,17 @@ description = """
 End-to-end REST API ingest demo: a platform/DevRel team tracks the cadence
 of upstream rust-lang/rust releases (used by their build toolchain) by
 syncing from GitHub's public releases API. Walks the full Phase 1 path —
-credential stored in OS keychain, REST API data source bound to a bronze
-zone, API endpoint definition, INVOKE to download raw JSON, then a flattened
-external table the platform + release-engineering teams can query directly,
-promoted into a typed silver Delta table dashboards aggregate over.
+REST API data source bound to a bronze zone, API endpoint definition,
+INVOKE to download raw JSON, then a flattened external table the platform
++ release-engineering teams can query directly, promoted into a typed
+silver Delta table dashboards aggregate over.
 
-Demonstrates: CREATE CREDENTIAL STORAGE (OS keychain), CREATE CREDENTIAL
-with vault-stored secret, CREATE CONNECTION TYPE = rest_api, CREATE API
-ENDPOINT with a 3-part qualified name, INVOKE API ENDPOINT (live HTTPS
-fetch against GitHub), and CREATE EXTERNAL TABLE USING JSON with
-json_flatten_config to project the nested release records into a flat
-queryable shape.
+Demonstrates: CREATE CONNECTION TYPE = rest_api (auth_mode = 'none'),
+CREATE API ENDPOINT with a 3-part qualified name, INVOKE API ENDPOINT
+(live HTTPS fetch against GitHub), CREATE EXTERNAL TABLE USING JSON with
+json_flatten_config to project nested release records into a flat
+queryable shape, and a bronze→silver promotion into a typed Delta
+table.
 
 NOTE: requires internet. INVOKE issues a real GET against
 https://api.github.com/repos/rust-lang/rust/releases?per_page=30.
@@ -24,7 +24,7 @@ GitHub's public API is one of the most reliable endpoints available —
 anonymous callers get 60 req/hour per IP, which is plenty for this demo.
 """
 categories = ["api", "rest-ingest"]
-tags = ["api", "rest", "ingest", "credentials", "keychain", "json", "flatten", "external-table", "github"]
+tags = ["api", "rest", "ingest", "json", "flatten", "external-table", "github"]
 difficulty = "advanced"
 estimated_time_minutes = 5
 
