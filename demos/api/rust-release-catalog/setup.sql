@@ -1,30 +1,32 @@
 -- ============================================================================
--- Demo: European Travel Reference Catalog
+-- Demo: Rust Release Catalog
 -- Feature: End-to-end REST API ingest — keychain credential, connection,
 --          endpoint, INVOKE, external table with JSON flattening
 -- ============================================================================
 --
--- Real-world story: a travel-tech startup keeps European country reference
--- data (population for GDPR thresholds, languages for localization,
--- currencies for the multi-currency cart) fresh by syncing the public
--- REST Countries API. The data lands as raw JSON in bronze, then a
--- flattened external table makes it queryable for the compliance +
--- localization teams.
+-- Real-world story: a platform/DevRel team tracks the cadence of upstream
+-- rust-lang/rust releases so they can plan toolchain rollouts, schedule
+-- engineering windows for compiler upgrades, and feed a release-intel
+-- dashboard. They sync the public GitHub releases API into a bronze
+-- landing, flatten the nested release records into a queryable shape,
+-- then promote the result into a typed silver Delta table that
+-- dashboards point at.
 --
 -- Pipeline:
 --   1. Vault entry             — placeholder API token in the OS keychain
 --                                (the always-on default credential
---                                storage). REST Countries doesn't require
---                                auth, but we exercise the full credential
---                                path so production APIs that DO require
---                                auth use the same pattern verbatim.
---   2. Zone + schema           — bronze landing + travel_catalog for the
+--                                storage). GitHub's releases endpoint is
+--                                public and works without auth, but we
+--                                exercise the full credential path so
+--                                production APIs that DO require auth use
+--                                the same pattern verbatim.
+--   2. Zone + schema           — bronze landing + release_intel for the
 --                                queryable external table
 --   3. REST API connection     — base URL + auth_mode + storage_zone +
 --                                base_path on the data source
 --   4. API ingest endpoint     — qualified name + endpoint path +
 --                                response format
---   5. INVOKE                  — actual HTTP GET, writes raw JSON to
+--   5. INVOKE                  — actual HTTPS GET, writes raw JSON to
 --                                bronze under a timestamped per-run folder
 --   6. External table (bronze) — JSON over the bronze landing with
 --                                json_flatten_config to project nested
@@ -45,28 +47,28 @@
 -- Linux Secret Service) is the always-on default storage — no explicit
 -- registration needed. CREATE CREDENTIAL writes to it directly.
 --
--- The literal SECRET below is a placeholder — REST Countries v3 is fully
--- public and ignores the Authorization header. The same syntax + flow
--- applies unchanged for bearer-protected APIs (GitHub, Stripe, etc.);
--- only the literal value changes.
+-- The literal SECRET below is a placeholder — GitHub's /repos/.../releases
+-- endpoint is public and ignores the Authorization header. The same syntax
+-- + flow applies unchanged for bearer-protected APIs (private repos, the
+-- full GitHub Apps flow, Stripe, etc.); only the literal value changes.
 
-CREATE CREDENTIAL IF NOT EXISTS travel_api_token
+CREATE CREDENTIAL IF NOT EXISTS github_api_token
     TYPE = CREDENTIAL
-    SECRET 'demo-placeholder-token-restcountries-is-public'
-    DESCRIPTION 'Bearer token for the REST Countries reference catalog sync';
+    SECRET 'demo-placeholder-token-public-releases-endpoint'
+    DESCRIPTION 'Bearer token for the GitHub release-catalog sync';
 
 -- --------------------------------------------------------------------------
 -- 2. Zone + schema
 -- --------------------------------------------------------------------------
 -- Zone is the permission boundary. INVOKE writes downloaded files under
--- <zone-root>/<source>/<endpoint>/<run-ts>/page_NNNN.json — `bronze`
+-- <zone-root>/<source>/<endpoint>/<run-ts>/page_NNNN.json — the zone
 -- here is the destination + the right that gates who can run the ingest.
 
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'Bronze landing zone for REST API ingests';
 
-CREATE SCHEMA IF NOT EXISTS {{zone_name}}.travel_catalog
-    COMMENT 'Travel geography reference data — country, currency, language metadata';
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.release_intel
+    COMMENT 'Upstream OSS release intelligence — GitHub releases feed for the toolchains the platform team tracks';
 
 -- --------------------------------------------------------------------------
 -- 3. REST API connection (a `data_sources` row of source_type = rest_api)
@@ -74,17 +76,21 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.travel_catalog
 -- Carries the host, auth mode, and storage destination. CREDENTIAL = …
 -- references the vault entry above by name; the executor resolves the
 -- secret material at INVOKE time without it ever crossing back into SQL.
+--
+-- The connection name is reused as the middle segment of the API endpoint's
+-- qualified 3-part name (<zone>.<connection>.<endpoint>), so each connection
+-- + endpoint pair stays traceable end-to-end.
 
-CREATE CONNECTION IF NOT EXISTS travel_catalog
+CREATE CONNECTION IF NOT EXISTS github_releases
     TYPE = rest_api
     OPTIONS (
-        base_url      = 'https://restcountries.com',
+        base_url      = 'https://api.github.com',
         auth_mode     = 'bearer',
         storage_zone  = '{{zone_name}}',
-        base_path     = 'travel_catalog',
+        base_path     = 'github_releases',
         timeout_secs  = '30'
     )
-    CREDENTIAL = travel_api_token;
+    CREDENTIAL = github_api_token;
 
 -- --------------------------------------------------------------------------
 -- 4. API endpoint definition (definition only — no HTTP yet)
@@ -92,19 +98,24 @@ CREATE CONNECTION IF NOT EXISTS travel_catalog
 -- Qualified name `<zone>.<source>.<name>` ties the endpoint to its
 -- destination zone in one place. SHOW API ENDPOINTS lists this row;
 -- DESCRIBE API ENDPOINT shows its full config.
+--
+-- `per_page=30` pins the response size to exactly 30 releases, which makes
+-- every ROW_COUNT assertion below stable across runs. Without that, the
+-- default of 30 is what GitHub returns today, but any future default
+-- change would silently shift the row count.
 
-CREATE API ENDPOINT {{zone_name}}.travel_catalog.europe
-    URL '/v3.1/region/europe'
+CREATE API ENDPOINT {{zone_name}}.github_releases.rust_releases
+    URL '/repos/rust-lang/rust/releases?per_page=30'
     RESPONSE FORMAT JSON;
 
 -- --------------------------------------------------------------------------
--- 5. INVOKE — actual HTTP fetch, lands raw JSON under bronze
+-- 5. INVOKE — actual HTTPS fetch, lands raw JSON under bronze
 -- --------------------------------------------------------------------------
--- Single-page response (REST Countries returns the full European array in
--- one call), so pagination isn't needed. The engine writes one
--- `page_0001.json` under a timestamped per-run folder.
+-- Single-page response (`per_page=30` gives us the full window in one call),
+-- so pagination isn't needed. The engine writes one `page_0001.json` under
+-- a timestamped per-run folder.
 
-INVOKE API ENDPOINT {{zone_name}}.travel_catalog.europe;
+INVOKE API ENDPOINT {{zone_name}}.github_releases.rust_releases;
 
 -- --------------------------------------------------------------------------
 -- 6. External table over the landed JSON
@@ -114,44 +125,38 @@ INVOKE API ENDPOINT {{zone_name}}.travel_catalog.europe;
 -- timestamped per-run subfolders so adding more INVOKE runs over time
 -- expands the row set without editing the table definition.
 --
--- json_flatten_config picks specific fields out of each country object
--- in the response array and maps them to friendly flat column names —
--- the queryable shape the localization + compliance teams want.
+-- json_flatten_config picks specific fields out of each release object in
+-- the response array and maps them to friendly flat column names — the
+-- queryable shape the platform + release-engineering teams want.
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.travel_catalog.european_countries
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.release_intel.rust_releases
 USING JSON
-LOCATION 'travel_catalog/europe'
+LOCATION 'github_releases/rust_releases'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
         "root_path": "$",
         "include_paths": [
-            "$.name.common",
-            "$.name.official",
-            "$.cca2",
-            "$.cca3",
-            "$.region",
-            "$.subregion",
-            "$.capital[0]",
-            "$.population",
-            "$.area",
-            "$.independent",
-            "$.unMember",
-            "$.landlocked"
+            "$.id",
+            "$.tag_name",
+            "$.name",
+            "$.draft",
+            "$.prerelease",
+            "$.created_at",
+            "$.published_at",
+            "$.html_url",
+            "$.author.login"
         ],
         "column_mappings": {
-            "$.name.common":    "name_common",
-            "$.name.official":  "name_official",
-            "$.cca2":           "cca2",
-            "$.cca3":           "cca3",
-            "$.region":         "region",
-            "$.subregion":      "subregion",
-            "$.capital[0]":     "capital",
-            "$.population":     "population",
-            "$.area":           "area_sq_km",
-            "$.independent":    "is_independent",
-            "$.unMember":       "is_un_member",
-            "$.landlocked":     "is_landlocked"
+            "$.id":            "release_id",
+            "$.tag_name":      "tag_name",
+            "$.name":          "release_name",
+            "$.draft":         "is_draft",
+            "$.prerelease":    "is_prerelease",
+            "$.created_at":    "created_at",
+            "$.published_at":  "published_at",
+            "$.html_url":      "html_url",
+            "$.author.login":  "author_login"
         },
         "max_depth": 3,
         "separator": "_",
@@ -163,8 +168,8 @@ OPTIONS (
 -- Schema detection + permissions (bronze)
 -- --------------------------------------------------------------------------
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.travel_catalog.european_countries;
-GRANT ADMIN ON TABLE {{zone_name}}.travel_catalog.european_countries TO USER {{current_user}};
+DETECT SCHEMA FOR TABLE {{zone_name}}.release_intel.rust_releases;
+GRANT ADMIN ON TABLE {{zone_name}}.release_intel.rust_releases TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 7. Silver layer — curated Delta table promoted from the bronze landing
@@ -188,36 +193,30 @@ GRANT ADMIN ON TABLE {{zone_name}}.travel_catalog.european_countries TO USER {{c
 -- when this INSERT (or a downstream MERGE in a real pipeline) runs.
 -- That separation is what makes the medallion model auditable.
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.travel_catalog.european_countries_silver (
-    name_common     STRING,
-    name_official   STRING,
-    cca2            STRING,
-    cca3            STRING,
-    region          STRING,
-    subregion       STRING,
-    capital         STRING,
-    population      BIGINT,
-    area_sq_km      DOUBLE,
-    is_independent  BOOLEAN,
-    is_un_member    BOOLEAN,
-    is_landlocked   BOOLEAN
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.release_intel.rust_releases_silver (
+    release_id     BIGINT,
+    tag_name       STRING,
+    release_name   STRING,
+    is_draft       BOOLEAN,
+    is_prerelease  BOOLEAN,
+    created_at     STRING,
+    published_at   STRING,
+    html_url       STRING,
+    author_login   STRING
 )
-LOCATION 'silver/european_countries';
+LOCATION 'silver/rust_releases';
 
-INSERT INTO {{zone_name}}.travel_catalog.european_countries_silver
+INSERT INTO {{zone_name}}.release_intel.rust_releases_silver
 SELECT
-    name_common,
-    name_official,
-    cca2,
-    cca3,
-    region,
-    subregion,
-    capital,
-    population,
-    area_sq_km,
-    is_independent,
-    is_un_member,
-    is_landlocked
-FROM {{zone_name}}.travel_catalog.european_countries;
+    release_id,
+    tag_name,
+    release_name,
+    is_draft,
+    is_prerelease,
+    created_at,
+    published_at,
+    html_url,
+    author_login
+FROM {{zone_name}}.release_intel.rust_releases;
 
-GRANT ADMIN ON TABLE {{zone_name}}.travel_catalog.european_countries_silver TO USER {{current_user}};
+GRANT ADMIN ON TABLE {{zone_name}}.release_intel.rust_releases_silver TO USER {{current_user}};

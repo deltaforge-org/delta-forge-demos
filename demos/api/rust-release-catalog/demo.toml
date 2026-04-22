@@ -1,0 +1,41 @@
+[demo]
+id = "api-rust-release-catalog"
+name = "Rust Release Catalog"
+version = "1.0.0"
+description = """
+End-to-end REST API ingest demo: a platform/DevRel team tracks the cadence
+of upstream rust-lang/rust releases (used by their build toolchain) by
+syncing from GitHub's public releases API. Walks the full Phase 1 path —
+credential stored in OS keychain, REST API data source bound to a bronze
+zone, API endpoint definition, INVOKE to download raw JSON, then a flattened
+external table the platform + release-engineering teams can query directly,
+promoted into a typed silver Delta table dashboards aggregate over.
+
+Demonstrates: CREATE CREDENTIAL STORAGE (OS keychain), CREATE CREDENTIAL
+with vault-stored secret, CREATE CONNECTION TYPE = rest_api, CREATE API
+ENDPOINT with a 3-part qualified name, INVOKE API ENDPOINT (live HTTPS
+fetch against GitHub), and CREATE EXTERNAL TABLE USING JSON with
+json_flatten_config to project the nested release records into a flat
+queryable shape.
+
+NOTE: requires internet. INVOKE issues a real GET against
+https://api.github.com/repos/rust-lang/rust/releases?per_page=30.
+GitHub's public API is one of the most reliable endpoints available —
+anonymous callers get 60 req/hour per IP, which is plenty for this demo.
+"""
+categories = ["api", "rest-ingest"]
+tags = ["api", "rest", "ingest", "credentials", "keychain", "json", "flatten", "external-table", "github"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE rather than reading shipped files. The external-table LOCATION is resolved relative to the bronze zone's storage root.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.release_intel.rust_releases"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.release_intel.rust_releases_silver"
