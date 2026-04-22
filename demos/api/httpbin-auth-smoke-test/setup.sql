@@ -1,7 +1,6 @@
 -- ============================================================================
--- Demo: Vendor Auth Smoke Test — api_key_header + Explicit CREDENTIAL STORAGE
--- Feature: CREATE CREDENTIAL STORAGE (explicit OS_KEYCHAIN), CREATE
---          CREDENTIAL ... IN CREDENTIAL STORAGE, auth_mode =
+-- Demo: Vendor Auth Smoke Test — api_key_header
+-- Feature: CREATE CREDENTIAL on the default OS Keychain, auth_mode =
 --          'api_key_header', X-API-Key echo round-trip proof,
 --          standalone DROP API ENDPOINT
 -- ============================================================================
@@ -13,67 +12,47 @@
 -- team can run anytime to confirm the machinery is intact.
 --
 -- Pipeline:
---   1. CREDENTIAL STORAGE — explicit OS_KEYCHAIN declaration (most demos
---                            use the default; this one surfaces the layer
---                            so SHOW / DESCRIBE can introspect it).
---   2. SHOW / DESCRIBE    — backend-level audit commands
---   3. CREDENTIAL         — stored in the named backend via
---                            `IN CREDENTIAL STORAGE local_os_vault`
---   4. Zone + schema
---   5. Connection         — auth_mode = 'api_key_header' binds the
+--   1. SHOW CREDENTIAL STORAGES — surfaces the always-on OS Keychain
+--                                  default backend (no CREATE needed;
+--                                  OS Keychain is auto-provisioned).
+--   2. CREDENTIAL         — stored on the default OS Keychain backend.
+--   3. Zone + schema
+--   4. Connection         — auth_mode = 'api_key_header' binds the
 --                            credential so every request gets
 --                            `X-API-Key: <secret>` appended.
---   6. Endpoint 1         — /headers (echoes all request headers back)
---   7. Endpoint 2         — /uuid    (returns a random UUID)
---   8. Endpoint 3         — /anything — created then IMMEDIATELY
+--   5. Endpoint 1         — /headers (echoes all request headers back)
+--   6. Endpoint 2         — /uuid    (returns a random UUID)
+--   7. Endpoint 3         — /anything — created then IMMEDIATELY
 --                            DROPped as a DROP API ENDPOINT syntax demo
---   9. SHOW API ENDPOINTS — verifies the drop took effect (only 2
+--   8. SHOW API ENDPOINTS — verifies the drop took effect (only 2
 --                            survive)
---   10. INVOKE both       — one page each
---   11. External tables   — flatten the /headers response (specifically
+--   9. INVOKE both        — one page each
+--   10. External tables   — flatten the /headers response (specifically
 --                            the X-API-Key echo) and the /uuid response
 -- ============================================================================
 
 -- --------------------------------------------------------------------------
--- 1. CREDENTIAL STORAGE — explicit OS_KEYCHAIN backend declaration
+-- 1. SHOW CREDENTIAL STORAGES — audit the default OS Keychain backend
 -- --------------------------------------------------------------------------
--- TYPE = OS_KEYCHAIN is the default backend every demo has been using
--- implicitly. This demo declares it up front so the backend shows up
--- as a first-class auditable catalog entry. Every CREDENTIAL below
--- then binds to this named backend via the IN CREDENTIAL STORAGE
--- clause — explicit enough that a security reviewer can trace "where
--- does this secret live?" in one SHOW CREDENTIAL STORAGES query.
---
--- ACTIVE marks the backend live; INACTIVE would park it as a
--- placeholder. The DESCRIPTION is stored as metadata and shows up on
--- DESCRIBE.
-
-CREATE CREDENTIAL STORAGE IF NOT EXISTS local_os_vault
-    TYPE = OS_KEYCHAIN
-    DESCRIPTION 'Local OS keychain backend for REST API smoke tests'
-    ACTIVE;
-
--- --------------------------------------------------------------------------
--- 2. SHOW / DESCRIBE CREDENTIAL STORAGE — audit commands
--- --------------------------------------------------------------------------
+-- OS Keychain is the always-on default credential storage — it's
+-- auto-provisioned at catalog migration time and cannot be
+-- user-created. CREATE CREDENTIAL STORAGE is reserved for cloud
+-- backends (AZURE, AWS, GCP). This SHOW surfaces the default
+-- backend so the security reviewer can see it catalogued.
 
 SHOW CREDENTIAL STORAGES;
 
-DESCRIBE CREDENTIAL STORAGE local_os_vault;
-
 -- --------------------------------------------------------------------------
--- 3. CREDENTIAL — stored in the named backend
+-- 2. CREDENTIAL — stored on the default OS Keychain
 -- --------------------------------------------------------------------------
--- The `IN CREDENTIAL STORAGE` clause explicitly routes this vault entry
--- to the named backend above. Without the clause, the default (OS
--- Keychain with name = system default) would be used — functionally
--- identical here, but declarative routing makes the "where does this
--- secret live" question one-line-of-SQL answerable.
+-- Omitting `IN CREDENTIAL STORAGE` routes the secret to the default
+-- OS Keychain backend. The secret material is inner-sealed into the
+-- session token at resolve time — the engine never reads the
+-- keychain on the per-page HTTP path.
 
 CREATE CREDENTIAL IF NOT EXISTS vendor_smoke_api_key
     TYPE = CREDENTIAL
     SECRET 'df-smoke-test-abc123'
-    IN CREDENTIAL STORAGE local_os_vault
     DESCRIPTION 'Placeholder vendor API key for httpbin.org smoke testing';
 
 -- --------------------------------------------------------------------------

@@ -21,6 +21,4 @@ DROP CONNECTION IF EXISTS httpbin_smoke;
 
 DROP CREDENTIAL IF EXISTS vendor_smoke_api_key;
 
-DROP CREDENTIAL STORAGE IF EXISTS local_os_vault;
-
 DROP SCHEMA IF EXISTS {{zone_name}}.vendor_smoke;
