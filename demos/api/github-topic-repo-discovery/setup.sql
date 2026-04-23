@@ -70,16 +70,16 @@ CREATE CONNECTION IF NOT EXISTS github_search_api
 -- hints. Unlike page/offset pagination the engine doesn't synthesise
 -- URLs — it reads the one GitHub sends on every response, so topic
 -- search, cursor-based endpoints, and federated gateways all work
--- without grammar changes. max_pages = 1 bounds the crawl at 30 repos
--- (single page). header.Accept carries GitHub's v3 media type so the
--- response shape stays stable across API migrations.
+-- without grammar changes. max_pages = 3 bounds the crawl at 90 repos
+-- (30 per page × 3 pages). header.Accept carries GitHub's v3 media
+-- type so the response shape stays stable across API migrations.
 
 CREATE API ENDPOINT {{zone_name}}.github_search_api.delta_lake_topic
     URL '/search/repositories?q=topic%3Adelta-lake&per_page=30&sort=stars&order=desc'
     RESPONSE FORMAT JSON
     OPTIONS (
         pagination         = 'link_header',
-        max_pages          = '1',
+        max_pages          = '3',
         rate_limit_rps     = '1',
         retry_max_attempts = '3',
         header.Accept      = 'application/vnd.github+json'
@@ -114,7 +114,6 @@ OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
         "root_path": "$.items",
-        "explode_paths": ["$.items"],
         "include_paths": [
             "$.id",
             "$.full_name",

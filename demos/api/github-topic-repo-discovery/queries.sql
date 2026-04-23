@@ -3,7 +3,7 @@
 -- ============================================================================
 -- Validates link-header pagination + FULL REFRESH + nested-flatten on
 -- GitHub search responses:
---   • Exactly 30 rows (one page, single-page crawl bounded by max_pages).
+--   • Exactly 90 rows (30 per page × 3 pages, bounded by max_pages).
 --   • Every row has a distinct repo_id and full_name (the search API
 --     never returns duplicates across pages of a single sort order).
 --   • Every html_url is a github.com URL (SSRF guard proof).
@@ -20,7 +20,7 @@
 -- ============================================================================
 
 -- ============================================================================
--- Query 1: Page Budget — 30 per page × 3 pages = 30 rows
+-- Query 1: Page Budget — 30 per page × 3 pages = 90 rows
 -- ============================================================================
 -- max_pages = 3 is the hard cap. The `topic:delta-lake` search returns
 -- far more than 90 matches, so the crawl is guaranteed bounded. Any
@@ -28,7 +28,7 @@
 -- per_page pin was stripped (variable), or a page response double-wrote.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE repo_count = 30
+ASSERT VALUE repo_count = 90
 SELECT COUNT(*) AS repo_count
 FROM {{zone_name}}.oss_intel.delta_lake_repos_bronze;
 
@@ -41,8 +41,8 @@ FROM {{zone_name}}.oss_intel.delta_lake_repos_bronze;
 -- misinterpret `rel="next"` (a common bug: jumping back to page 1).
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE distinct_repos = 30
-ASSERT VALUE distinct_full_names = 30
+ASSERT VALUE distinct_repos = 90
+ASSERT VALUE distinct_full_names = 90
 SELECT
     COUNT(DISTINCT repo_id)   AS distinct_repos,
     COUNT(DISTINCT full_name) AS distinct_full_names
@@ -56,9 +56,9 @@ FROM {{zone_name}}.oss_intel.delta_lake_repos_bronze;
 -- these would surface immediately as a count mismatch.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE github_urls = 30
-ASSERT VALUE non_null_full_names = 30
-ASSERT VALUE non_null_owners = 30
+ASSERT VALUE github_urls = 90
+ASSERT VALUE non_null_full_names = 90
+ASSERT VALUE non_null_owners = 90
 SELECT
     SUM(CASE WHEN html_url LIKE 'https://github.com/%' THEN 1 ELSE 0 END) AS github_urls,
     SUM(CASE WHEN full_name IS NOT NULL                THEN 1 ELSE 0 END) AS non_null_full_names,
@@ -105,7 +105,7 @@ FROM {{zone_name}}.oss_intel.delta_lake_repos_silver;
 -- trimming, no splitting.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE full_name_has_slash = 30
+ASSERT VALUE full_name_has_slash = 90
 SELECT
     SUM(CASE WHEN full_name LIKE '%/%' THEN 1 ELSE 0 END) AS full_name_has_slash
 FROM {{zone_name}}.oss_intel.delta_lake_repos_silver;
@@ -127,8 +127,8 @@ DESCRIBE HISTORY {{zone_name}}.oss_intel.delta_lake_repos_silver;
 -- and bronze↔silver row parity.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE total_repos = 30
-ASSERT VALUE distinct_repos = 30
+ASSERT VALUE total_repos = 90
+ASSERT VALUE distinct_repos = 90
 ASSERT VALUE all_github_urls = 1
 ASSERT VALUE all_have_slash = 1
 ASSERT VALUE stars_monotonic_plausible = 1

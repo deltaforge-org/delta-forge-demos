@@ -114,7 +114,6 @@ OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
         "root_path": "$.results",
-        "explode_paths": ["$.results"],
         "include_paths": [
             "$.name",
             "$.url"
@@ -149,7 +148,7 @@ LOCATION 'silver/pokedex_silver';
 INSERT INTO {{zone_name}}.game_ref.pokedex_silver
 SELECT
     CAST(
-        REPLACE(REGEXP_SUBSTR(detail_url, '[0-9]+/?$'), '/', '')
+        REGEXP_REPLACE(detail_url, '^.*/pokemon/([0-9]+)/$', '\1')
         AS BIGINT
     )                AS dex_id,
     pokemon_name,
