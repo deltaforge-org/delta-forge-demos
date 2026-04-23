@@ -263,7 +263,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.app_events_iceberg WIT
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_events_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/app_events';
+LOCATION 'app_events';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.app_events_iceberg TO USER {{current_user}};
 -- ============================================================================

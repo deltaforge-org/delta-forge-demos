@@ -232,7 +232,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.employees_iceberg WITH
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.employees_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/employees';
+LOCATION 'employees';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.employees_iceberg TO USER {{current_user}};
 -- ============================================================================

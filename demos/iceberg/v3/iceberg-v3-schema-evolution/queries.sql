@@ -276,7 +276,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.drug_registry_iceberg 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.drug_registry_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/drug_registry';
+LOCATION 'drug_registry';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.drug_registry_iceberg TO USER {{current_user}};
 

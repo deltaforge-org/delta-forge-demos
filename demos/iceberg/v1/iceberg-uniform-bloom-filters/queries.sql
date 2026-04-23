@@ -126,7 +126,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.members_iceberg WITH F
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.members_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/members';
+LOCATION 'members';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.members_iceberg TO USER {{current_user}};
 

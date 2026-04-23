@@ -285,7 +285,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.app_logs_iceberg WITH 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_logs_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/app_logs';
+LOCATION 'app_logs';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.app_logs_iceberg TO USER {{current_user}};
 -- ============================================================================

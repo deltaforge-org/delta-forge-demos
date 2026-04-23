@@ -300,7 +300,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.product_catalog_nested
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.product_catalog_nested_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/product_catalog_nested';
+LOCATION 'product_catalog_nested';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.product_catalog_nested_iceberg TO USER {{current_user}};
 -- ============================================================================

@@ -296,7 +296,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.order_fulfillment_iceb
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.order_fulfillment_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/order_fulfillment';
+LOCATION 'order_fulfillment';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.order_fulfillment_iceberg TO USER {{current_user}};
 -- ============================================================================

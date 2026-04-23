@@ -247,7 +247,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.regional_sales_iceberg
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.regional_sales_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/regional_sales';
+LOCATION 'regional_sales';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.regional_sales_iceberg TO USER {{current_user}};
 -- ============================================================================

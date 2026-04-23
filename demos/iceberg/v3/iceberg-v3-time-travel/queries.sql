@@ -241,7 +241,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.portfolio_holdings_ice
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.portfolio_holdings_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/portfolio_holdings';
+LOCATION 'portfolio_holdings';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.portfolio_holdings_iceberg TO USER {{current_user}};
 

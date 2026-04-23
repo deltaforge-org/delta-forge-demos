@@ -129,7 +129,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.transactions_iceberg W
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.transactions_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/transactions';
+LOCATION 'transactions';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.transactions_iceberg TO USER {{current_user}};
 

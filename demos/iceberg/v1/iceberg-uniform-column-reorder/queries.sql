@@ -196,7 +196,7 @@ DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.patient_records_iceber
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.patient_records_iceberg
 USING ICEBERG
-LOCATION '{{data_path}}/patient_records';
+LOCATION 'patient_records';
 
 GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.patient_records_iceberg TO USER {{current_user}};
 -- ============================================================================
