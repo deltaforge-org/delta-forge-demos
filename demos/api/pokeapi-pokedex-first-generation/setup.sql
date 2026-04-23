@@ -149,7 +149,7 @@ LOCATION 'silver/pokedex_silver';
 INSERT INTO {{zone_name}}.game_ref.pokedex_silver
 SELECT
     CAST(
-        REGEXP_REPLACE(detail_url, '^.*/pokemon/([0-9]+)/$', '\1')
+        REPLACE(REGEXP_SUBSTR(detail_url, '[0-9]+/?$'), '/', '')
         AS BIGINT
     )                AS dex_id,
     pokemon_name,
