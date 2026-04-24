@@ -179,7 +179,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.vendor_smoke.headers_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.vendor_smoke.headers_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 12. External table — /uuid flatten
@@ -201,4 +200,3 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.vendor_smoke.uuid_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.vendor_smoke.uuid_bronze TO USER {{current_user}};

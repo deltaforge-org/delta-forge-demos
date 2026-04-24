@@ -47,6 +47,3 @@ OPTIONS (
 -- Permissions (schema discovery runs automatically on CREATE EXTERNAL TABLE)
 -- --------------------------------------------------------------------------
 
-GRANT ADMIN ON TABLE {{zone_name}}.ecommerce.all_orders TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.ecommerce.q1_orders TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.ecommerce.sample_orders TO USER {{current_user}};

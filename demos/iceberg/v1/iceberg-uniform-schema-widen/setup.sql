@@ -35,7 +35,6 @@ TBLPROPERTIES (
     'delta.enableTypeWidening' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensor_readings TO USER {{current_user}};
 
 -- STEP 3: Seed 24 sensors (Version 1, Iceberg Snapshot 1)
 INSERT INTO {{zone_name}}.iceberg_demos.sensor_readings VALUES

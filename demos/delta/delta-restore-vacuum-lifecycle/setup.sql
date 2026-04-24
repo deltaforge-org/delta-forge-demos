@@ -38,8 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_readings (
     status          VARCHAR
 ) LOCATION 'sensor_readings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sensor_readings TO USER {{current_user}};
-
 
 -- ============================================================================
 -- V1: INSERT 30 baseline readings — all normal, across 3 rooms

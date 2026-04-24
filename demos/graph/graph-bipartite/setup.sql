@@ -33,7 +33,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.movie_recs.entities (
     release_year    INT
 ) LOCATION 'entities';
 
-GRANT ADMIN ON TABLE {{zone_name}}.movie_recs.entities TO USER {{current_user}};
 
 -- 25 subscribers (id 1-25)
 INSERT INTO {{zone_name}}.movie_recs.entities VALUES
@@ -103,7 +102,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.movie_recs.ratings (
     watch_date      STRING
 ) LOCATION 'ratings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.movie_recs.ratings TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.movie_recs.ratings VALUES
     (1, 1, 101, 2.7, 'watched', '2024-08-19'),

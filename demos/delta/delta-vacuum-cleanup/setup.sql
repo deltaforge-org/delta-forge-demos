@@ -36,7 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.hr_employees (
     hire_date       VARCHAR
 ) LOCATION 'hr_employees';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.hr_employees TO USER {{current_user}};
 
 -- STEP 2: Insert 50 employees across 5 departments
 INSERT INTO {{zone_name}}.delta_demos.hr_employees VALUES

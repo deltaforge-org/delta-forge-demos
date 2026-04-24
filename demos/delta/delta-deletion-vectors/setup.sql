@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.web_sessions (
     started_at  VARCHAR
 ) LOCATION 'web_sessions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.web_sessions TO USER {{current_user}};
 
 -- Region 1: us-east (20 sessions)
 INSERT INTO {{zone_name}}.delta_demos.web_sessions VALUES

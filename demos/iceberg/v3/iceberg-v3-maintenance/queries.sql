@@ -274,8 +274,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.subscriptions_ic
 USING ICEBERG
 LOCATION 'subscriptions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.subscriptions_iceberg TO USER {{current_user}};
-
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 50 Active Subscriptions

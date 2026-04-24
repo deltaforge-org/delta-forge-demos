@@ -28,4 +28,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.web_analytics
 USING ICEBERG
 LOCATION '{{data_path}}/web_analytics';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.web_analytics TO USER {{current_user}};

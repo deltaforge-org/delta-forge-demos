@@ -28,7 +28,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.course_grades (
     semester     VARCHAR
 ) LOCATION 'course_grades';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.course_grades TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.course_grades VALUES
     (1,  'Alice', 'CS101',    82, 'Fall-2025'),

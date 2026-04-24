@@ -31,7 +31,6 @@ TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.orders TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 30 e-commerce orders across 5 customers, 5 products, 5 statuses

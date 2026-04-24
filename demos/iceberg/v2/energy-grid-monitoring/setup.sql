@@ -29,4 +29,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.grid_readings
 USING ICEBERG
 LOCATION '{{data_path}}';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.grid_readings TO USER {{current_user}};

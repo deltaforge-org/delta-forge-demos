@@ -25,5 +25,4 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.orc_trials.patients
 USING ORC
 LOCATION '{{data_path}}/patients.orc';
 
-GRANT ADMIN ON TABLE {{zone_name}}.orc_trials.patients TO USER {{current_user}};
 DETECT SCHEMA FOR TABLE {{zone_name}}.orc_trials.patients;

@@ -58,4 +58,3 @@ OPTIONS (
     edi_config = '{"ediFormat": "tradacoms"}',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.tradacoms_json_messages TO USER {{current_user}};

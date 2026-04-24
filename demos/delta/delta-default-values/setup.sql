@@ -37,8 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.audit_log (
     notes        VARCHAR
 ) LOCATION 'audit_log';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.audit_log TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Insert 25 rows — all columns explicitly provided (baseline data)

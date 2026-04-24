@@ -129,7 +129,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.game_ref.pokedex_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.game_ref.pokedex_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 7. Silver Delta table — typed promotion with parsed dex_id
@@ -155,4 +154,3 @@ SELECT
     detail_url
 FROM {{zone_name}}.game_ref.pokedex_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.game_ref.pokedex_silver TO USER {{current_user}};

@@ -39,7 +39,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     recorded_at    VARCHAR
 ) LOCATION 'sensor_telemetry';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sensor_telemetry TO USER {{current_user}};
 
 -- STEP 2: Insert batch B001 — 08:00 and 09:00 readings (10 rows)
 INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES

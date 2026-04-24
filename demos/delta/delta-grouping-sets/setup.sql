@@ -34,7 +34,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.production_runs (
     operator_name    VARCHAR
 ) LOCATION 'production_runs';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.production_runs TO USER {{current_user}};
 
 -- Line-A: 12 rows (3 shifts x 4 dates)
 INSERT INTO {{zone_name}}.delta_demos.production_runs VALUES

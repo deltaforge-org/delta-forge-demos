@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.research_network.researchers (
     active      BOOLEAN
 ) LOCATION 'researchers';
 
-GRANT ADMIN ON TABLE {{zone_name}}.research_network.researchers TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.research_network.researchers
 SELECT
@@ -70,7 +69,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.research_network.collaborations (
     since_year      INT
 ) LOCATION 'collaborations';
 
-GRANT ADMIN ON TABLE {{zone_name}}.research_network.collaborations TO USER {{current_user}};
 
 -- Batch 1: Intra-department co-authors (~70 edges)
 -- Each researcher connects to the next (+1 position) and back-skip (-2 positions)

@@ -47,7 +47,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.policy_dim (
     is_current     INT
 ) LOCATION 'policy_dim';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.policy_dim TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.policy_dim VALUES
     (1,  'POL-1001', 'Alice Johnson',    'standard',  2400.00, 'northeast', 45, '2024-01-01', '9999-12-31', 1),
@@ -89,7 +88,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.policy_changes (
     effective_date VARCHAR
 ) LOCATION 'policy_changes';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.policy_changes TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.policy_changes VALUES
     ('POL-1001', 'Alice Johnson',    'premium',   4200.00, 'northeast', 52, '2025-01-15'),

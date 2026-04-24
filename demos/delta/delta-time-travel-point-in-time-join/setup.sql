@@ -32,7 +32,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fx_trades (
     traded_at  VARCHAR
 ) LOCATION 'fx_trades';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.fx_trades TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.fx_trades VALUES
     -- Morning trades (09:xx) — should be valued at V1 rates
@@ -61,7 +60,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fx_rates (
     effective_from VARCHAR
 ) LOCATION 'fx_rates';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.fx_rates TO USER {{current_user}};
 
 -- VERSION 1: Morning rates
 INSERT INTO {{zone_name}}.delta_demos.fx_rates VALUES

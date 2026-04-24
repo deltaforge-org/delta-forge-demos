@@ -41,7 +41,6 @@ TBLPROPERTIES (
     'delta.constraints.discount_non_negative' = 'discount >= 0'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.products TO USER {{current_user}};
 
 -- Insert 20 products (all satisfy constraints)
 INSERT INTO {{zone_name}}.delta_demos.products VALUES

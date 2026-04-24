@@ -122,7 +122,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_xml.patients_xml TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -218,4 +217,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_xml.observations_xml TO USER {{current_user}};

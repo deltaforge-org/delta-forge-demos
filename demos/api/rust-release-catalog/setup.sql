@@ -154,7 +154,6 @@ OPTIONS (
 -- --------------------------------------------------------------------------
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.release_intel.rust_releases;
-GRANT ADMIN ON TABLE {{zone_name}}.release_intel.rust_releases TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 6. Silver layer — curated Delta table promoted from the bronze landing
@@ -204,4 +203,3 @@ SELECT
     author_login
 FROM {{zone_name}}.release_intel.rust_releases;
 
-GRANT ADMIN ON TABLE {{zone_name}}.release_intel.rust_releases_silver TO USER {{current_user}};

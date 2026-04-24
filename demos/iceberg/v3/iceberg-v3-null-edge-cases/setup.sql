@@ -25,4 +25,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.lab_results
 USING ICEBERG
 LOCATION '{{data_path}}/lab_results';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.lab_results TO USER {{current_user}};

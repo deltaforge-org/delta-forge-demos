@@ -38,7 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.events_by_customer (
 ) LOCATION 'events_by_customer'
 PARTITIONED BY (customer_id);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.events_by_customer TO USER {{current_user}};
 
 -- 2024-01 events: ids 1-20
 INSERT INTO {{zone_name}}.delta_demos.events_by_customer VALUES

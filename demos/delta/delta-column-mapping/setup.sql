@@ -39,8 +39,6 @@ TBLPROPERTIES (
     'delta.minWriterVersion' = '5'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.employee_directory TO USER {{current_user}};
-
 
 -- ============================================================================
 -- Insert 30 employees — Engineering, Sales, Marketing, HR, Finance, Operations

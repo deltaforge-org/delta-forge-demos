@@ -32,7 +32,6 @@ TBLPROPERTIES (
     'delta.constraints.valid_currency' = 'currency IN (''USD'', ''EUR'', ''GBP'')'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.transactions TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 25 transactions across 5 accounts, 3 currencies

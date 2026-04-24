@@ -62,7 +62,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.claims_header TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: claims_remittance — Payment + adjustment detail (4 transactions)
 -- ============================================================================
@@ -97,4 +96,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.claims_remittance TO USER {{current_user}};

@@ -42,7 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sales_facts (
 ) LOCATION 'sales_facts'
 PARTITIONED BY (region);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sales_facts TO USER {{current_user}};
 
 -- us-east region: ids 1-15
 -- Quarters: 1-4=Q1, 5-8=Q2, 9-12=Q3, 13-15=Q4
@@ -132,7 +131,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.region_targets (
     target_qty    INT
 ) LOCATION 'region_targets';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.region_targets TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.region_targets VALUES
     ('us-east',  75000.00, 500),

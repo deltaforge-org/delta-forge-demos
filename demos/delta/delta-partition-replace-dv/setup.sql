@@ -36,7 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.monthly_settlements (
 ) LOCATION 'monthly_settlements'
 PARTITIONED BY (settlement_month);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.monthly_settlements TO USER {{current_user}};
 
 -- January 2024: ids 1-20 (contains 2 duplicate payments and 2 incorrect adjustments)
 INSERT INTO {{zone_name}}.delta_demos.monthly_settlements VALUES

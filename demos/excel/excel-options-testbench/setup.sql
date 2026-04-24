@@ -33,7 +33,6 @@ OPTIONS (
     file_filter = '01_multi_sheet*',
     sheet_name = 'Details'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_opts.opt_sheet_name TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: opt_no_header — Read file with no header row
 -- ============================================================================
@@ -50,7 +49,6 @@ OPTIONS (
     file_filter = '02_no_header*',
     has_header = 'false'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_opts.opt_no_header TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 3: opt_skip_rows — Skip first N data rows after the header
 -- ============================================================================
@@ -67,7 +65,6 @@ OPTIONS (
     skip_rows = '3',
     has_header = 'true'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_opts.opt_skip_rows TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 4: opt_max_rows — Limit the number of rows read
 -- ============================================================================
@@ -84,7 +81,6 @@ OPTIONS (
     sheet_name = 'Inventory',
     max_rows = '5'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_opts.opt_max_rows TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 5: opt_file_filter — Include only matching files from a directory
 -- ============================================================================
@@ -100,4 +96,3 @@ OPTIONS (
     file_filter = '05_target*',
     sheet_name = 'Data'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_opts.opt_file_filter TO USER {{current_user}};

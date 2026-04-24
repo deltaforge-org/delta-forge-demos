@@ -41,7 +41,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.landmarks (
     lng DOUBLE
 ) LOCATION 'landmarks';
 
-GRANT ADMIN ON TABLE {{zone_name}}.spatial_demos.landmarks TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.spatial_demos.landmarks VALUES
     (1,  'Golden Gate Bridge',     'San Francisco', 'USA',       37.8199, -122.4783),
@@ -70,7 +69,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.regions (
     timezone VARCHAR
 ) LOCATION 'regions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.spatial_demos.regions TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.spatial_demos.regions VALUES
     (1, 'San Francisco', 'USA',    'POLYGON((-122.52 37.70, -122.35 37.70, -122.35 37.82, -122.52 37.82, -122.52 37.70))', 'America/Los_Angeles'),
@@ -95,7 +93,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.gps_points (
     city VARCHAR
 ) LOCATION 'gps_points';
 
-GRANT ADMIN ON TABLE {{zone_name}}.spatial_demos.gps_points TO USER {{current_user}};
 
 -- San Francisco: 2,000 points within bounding box
 INSERT INTO {{zone_name}}.spatial_demos.gps_points

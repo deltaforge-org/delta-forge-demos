@@ -99,7 +99,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.billing.events;
-GRANT ADMIN ON TABLE {{zone_name}}.billing.events TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 3. Silver Delta table — curated promotion of the bronze landing
@@ -146,4 +145,3 @@ SELECT
     country
 FROM {{zone_name}}.billing.events;
 
-GRANT ADMIN ON TABLE {{zone_name}}.billing.events_curated TO USER {{current_user}};

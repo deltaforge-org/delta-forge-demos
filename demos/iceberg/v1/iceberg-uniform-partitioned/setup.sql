@@ -33,7 +33,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.regional_sales TO USER {{current_user}};
 
 -- STEP 3: Seed 24 transactions (Version 1, Iceberg Snapshot 1)
 -- 8 transactions per region, 2 per quarter.

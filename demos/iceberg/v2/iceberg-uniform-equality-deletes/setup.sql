@@ -32,7 +32,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.products TO USER {{current_user}};
 
 -- STEP 3: Seed 10 products
 INSERT INTO {{zone_name}}.iceberg_demos.products VALUES
@@ -59,4 +58,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.products_iceberg
 USING ICEBERG
 LOCATION 'eq_del_products';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.products_iceberg TO USER {{current_user}};

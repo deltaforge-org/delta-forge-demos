@@ -29,5 +29,4 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.orc_energy.readings TO USER {{current_user}};
 DETECT SCHEMA FOR TABLE {{zone_name}}.orc_energy.readings;

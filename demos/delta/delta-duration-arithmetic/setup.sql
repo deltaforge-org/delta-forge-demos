@@ -43,8 +43,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vessel_transit (
     status              VARCHAR
 ) LOCATION 'vessel_transit';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.vessel_transit TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 3: INSERT batch 1 — 12 North Lock vessels (ids 1-12)

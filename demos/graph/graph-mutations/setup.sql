@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hospital_referrals.physicians (
     accepting_referrals BOOLEAN
 ) LOCATION 'physicians';
 
-GRANT ADMIN ON TABLE {{zone_name}}.hospital_referrals.physicians TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.hospital_referrals.physicians
 SELECT
@@ -67,7 +66,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hospital_referrals.referrals (
     status          STRING
 ) LOCATION 'referrals';
 
-GRANT ADMIN ON TABLE {{zone_name}}.hospital_referrals.referrals TO USER {{current_user}};
 
 -- Batch 1: Intra-hospital referrals (stride 3, same hospital) — 30 edges
 INSERT INTO {{zone_name}}.hospital_referrals.referrals

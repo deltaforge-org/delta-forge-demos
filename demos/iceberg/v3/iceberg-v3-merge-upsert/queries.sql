@@ -232,8 +232,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_invent
 USING ICEBERG
 LOCATION 'warehouse_inventory';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg TO USER {{current_user}};
-
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 33 Items

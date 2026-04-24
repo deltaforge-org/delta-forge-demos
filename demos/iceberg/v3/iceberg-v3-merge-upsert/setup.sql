@@ -33,7 +33,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.warehouse_inventory TO USER {{current_user}};
 
 -- STEP 3: Seed 30 inventory records (10 per warehouse)
 INSERT INTO {{zone_name}}.iceberg_demos.warehouse_inventory VALUES

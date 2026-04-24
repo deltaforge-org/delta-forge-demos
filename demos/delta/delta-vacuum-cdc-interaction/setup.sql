@@ -32,7 +32,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_lifecycle (
 ) LOCATION 'order_lifecycle'
 TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true');
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_lifecycle TO USER {{current_user}};
 
 -- V0: Insert 40 orders — all start as 'pending'
 INSERT INTO {{zone_name}}.delta_demos.order_lifecycle VALUES

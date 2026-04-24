@@ -28,4 +28,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders
 USING ICEBERG
 LOCATION '{{data_path}}/orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.orders TO USER {{current_user}};

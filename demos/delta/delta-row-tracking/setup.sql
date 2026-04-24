@@ -43,8 +43,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.compliance_audit (
     audit_timestamp   VARCHAR
 ) LOCATION 'compliance_audit';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.compliance_audit TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 3: INSERT 30 initial audit entries — action='create', version_tag=1

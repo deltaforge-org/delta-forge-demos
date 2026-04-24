@@ -143,7 +143,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.oss_intel.delta_lake_repos_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.oss_intel.delta_lake_repos_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 6. Silver Delta table — typed promotion
@@ -178,4 +177,3 @@ SELECT
     html_url
 FROM {{zone_name}}.oss_intel.delta_lake_repos_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.oss_intel.delta_lake_repos_silver TO USER {{current_user}};

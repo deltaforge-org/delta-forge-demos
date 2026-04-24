@@ -30,7 +30,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_inventory (
     status          VARCHAR
 ) LOCATION 'product_inventory';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_inventory TO USER {{current_user}};
 
 -- V1: Insert 30 products across 5 categories
 INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES

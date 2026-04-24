@@ -56,7 +56,6 @@ OPTIONS (
     edi_config = '{"ediFormat": "x12"}',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.supply_chain_messages TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: supply_chain_materialized — Key business fields extracted
 -- ============================================================================
@@ -92,4 +91,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.supply_chain_materialized TO USER {{current_user}};

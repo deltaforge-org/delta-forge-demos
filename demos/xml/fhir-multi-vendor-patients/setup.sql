@@ -75,7 +75,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.hie.patients;
-GRANT ADMIN ON TABLE {{zone_name}}.hie.patients TO USER {{current_user}};
 
 -- ============================================================================
 -- TABLE 2: patients_silver (Delta) - typed silver layer promoted from bronze
@@ -106,4 +105,3 @@ SELECT
     gender
 FROM {{zone_name}}.hie.patients;
 
-GRANT ADMIN ON TABLE {{zone_name}}.hie.patients_silver TO USER {{current_user}};

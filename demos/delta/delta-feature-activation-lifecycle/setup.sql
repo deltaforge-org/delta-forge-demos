@@ -27,7 +27,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_events (
     event_date      VARCHAR
 ) LOCATION 'customer_events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.customer_events TO USER {{current_user}};
 
 -- 25 customer interaction events across 8 customers and 5 channels
 INSERT INTO {{zone_name}}.delta_demos.customer_events VALUES

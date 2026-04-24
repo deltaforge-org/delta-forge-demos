@@ -28,7 +28,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.maritime.ports (
     harbor_wkt   VARCHAR
 ) LOCATION 'maritime_ports';
 
-GRANT ADMIN ON TABLE {{zone_name}}.maritime.ports TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.maritime.ports VALUES
     (1,  'Singapore',   'Singapore',    1.2644,   103.8200, 'POLYGON((103.81 1.2544, 103.83 1.2544, 103.83 1.2744, 103.81 1.2744, 103.81 1.2544))'),
@@ -54,7 +53,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.maritime.vessels (
     deadweight_tons INT
 ) LOCATION 'maritime_vessels';
 
-GRANT ADMIN ON TABLE {{zone_name}}.maritime.vessels TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.maritime.vessels VALUES
     (1, 'MV Pacific Star',    'Container Ship', 'Panama',           65000),
@@ -79,7 +77,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.maritime.positions (
     recorded_at  VARCHAR
 ) LOCATION 'maritime_positions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.maritime.positions TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.maritime.positions VALUES
     -- Vessel 1 (Pacific Star): Singapore -> Shanghai

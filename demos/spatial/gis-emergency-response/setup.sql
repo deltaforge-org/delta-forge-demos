@@ -25,7 +25,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.emergency.hospitals (
     bed_capacity   INT
 ) LOCATION 'emergency_hospitals';
 
-GRANT ADMIN ON TABLE {{zone_name}}.emergency.hospitals TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.emergency.hospitals VALUES
     (1, 'Bellevue Hospital',       40.7390, -73.9750, 1,  828),
@@ -53,7 +52,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.emergency.incidents (
     reported_at     VARCHAR
 ) LOCATION 'emergency_incidents';
 
-GRANT ADMIN ON TABLE {{zone_name}}.emergency.incidents TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.emergency.incidents VALUES
     (1,  'cardiac_arrest',       40.7480, -73.9855, 'critical', '2026-03-15 08:23:00'),
@@ -86,7 +84,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.emergency.response_zones (
     priority_level  INT
 ) LOCATION 'emergency_zones';
 
-GRANT ADMIN ON TABLE {{zone_name}}.emergency.response_zones TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.emergency.response_zones VALUES
     (1, 'Downtown Manhattan', 'POLYGON((-74.02 40.70, -73.97 40.70, -73.97 40.76, -74.02 40.76, -74.02 40.70))', 1),

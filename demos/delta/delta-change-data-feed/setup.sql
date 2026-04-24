@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
 ) LOCATION 'customer_accounts'
 TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true');
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.customer_accounts TO USER {{current_user}};
 
 -- V0: Insert 40 customer accounts
 INSERT INTO {{zone_name}}.delta_demos.customer_accounts VALUES

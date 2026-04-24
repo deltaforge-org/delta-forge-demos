@@ -35,7 +35,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.portfolio_holdings TO USER {{current_user}};
 
 -- STEP 3: Seed 25 portfolio holdings (Version 1)
 INSERT INTO {{zone_name}}.iceberg_demos.portfolio_holdings VALUES

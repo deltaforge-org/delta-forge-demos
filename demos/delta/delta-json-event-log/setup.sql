@@ -41,7 +41,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.payment_events (
     created_at     VARCHAR
 ) LOCATION 'payment_events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.payment_events TO USER {{current_user}};
 
 -- STEP 2: Insert 15 charge events
 INSERT INTO {{zone_name}}.delta_demos.payment_events VALUES

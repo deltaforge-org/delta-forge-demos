@@ -44,7 +44,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.documents (
     created_at      VARCHAR
 ) LOCATION 'documents';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.documents TO USER {{current_user}};
 
 -- Insert 30 documents (ids 1-30)
 -- Duplicate hash pairs: (1,16), (2,17), (5,18), (8,19), (10,20)
@@ -97,7 +96,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.locations (
     elevation_m INT
 ) LOCATION 'locations';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.locations TO USER {{current_user}};
 
 -- 15 POINT locations
 INSERT INTO {{zone_name}}.delta_demos.locations VALUES
@@ -146,7 +144,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.audit_log (
     accessed_at VARCHAR
 ) LOCATION 'audit_log';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.audit_log TO USER {{current_user}};
 
 -- 40 access events across documents and locations
 INSERT INTO {{zone_name}}.delta_demos.audit_log VALUES

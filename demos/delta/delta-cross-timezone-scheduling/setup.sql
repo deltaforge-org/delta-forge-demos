@@ -37,7 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.conference_schedule (
     priority            VARCHAR
 ) LOCATION 'conference_schedule';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.conference_schedule TO USER {{current_user}};
 
 -- ============================================================================
 -- Batch 1: New York (ids 1-8) + London (ids 9-10)

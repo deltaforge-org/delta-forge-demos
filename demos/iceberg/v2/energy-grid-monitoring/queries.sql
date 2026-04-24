@@ -200,7 +200,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.grid_readings_delta TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.iceberg_demos.grid_readings_delta
 SELECT * FROM {{zone_name}}.iceberg_demos.grid_readings;
@@ -211,7 +210,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.grid_readings_ic
 USING ICEBERG
 LOCATION 'grid_readings_delta';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.grid_readings_iceberg_readback TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — All 600 Readings via Iceberg Reader
 -- ============================================================================

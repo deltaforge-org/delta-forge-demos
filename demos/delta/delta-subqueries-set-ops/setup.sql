@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.students (
     enrollment_year INT
 ) LOCATION 'students';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.students TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.students VALUES
     (1,  'Alice Chen',       'Computer Science', 3.85, 2022),
@@ -67,7 +66,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.enrollments (
     credits         INT
 ) LOCATION 'enrollments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.enrollments TO USER {{current_user}};
 
 -- Alice Chen (1) — CS major, takes CS + Math courses
 INSERT INTO {{zone_name}}.delta_demos.enrollments VALUES

@@ -27,4 +27,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_invent
 USING ICEBERG
 LOCATION '{{data_path}}/warehouse_inventory';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.warehouse_inventory TO USER {{current_user}};

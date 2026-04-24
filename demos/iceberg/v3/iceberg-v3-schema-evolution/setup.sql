@@ -34,7 +34,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.drug_registry TO USER {{current_user}};
 
 -- STEP 3: Seed 30 pharmaceutical compounds
 INSERT INTO {{zone_name}}.iceberg_demos.drug_registry VALUES

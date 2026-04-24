@@ -32,7 +32,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.ingestion_log TO USER {{current_user}};
 
 -- STEP 3: Seed 20 records from etl-team-alpha (Version 1, Iceberg Snapshot 1)
 INSERT INTO {{zone_name}}.iceberg_demos.ingestion_log VALUES
@@ -73,4 +72,3 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.beta_corrections TO USER {{current_user}};

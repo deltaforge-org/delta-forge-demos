@@ -24,7 +24,6 @@ OPTIONS (
     header = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.stores TO USER {{current_user}};
 
 -- STEP 3: Delta table with UniForm V2 — sales transactions
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales (
@@ -43,7 +42,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sales TO USER {{current_user}};
 
 -- STEP 4: Seed 40 sales transactions (4 per store)
 INSERT INTO {{zone_name}}.iceberg_demos.sales VALUES

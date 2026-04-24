@@ -36,4 +36,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.patient_visits
 USING ICEBERG
 LOCATION '{{data_path}}/patient_visits';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.patient_visits TO USER {{current_user}};

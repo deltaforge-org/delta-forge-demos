@@ -33,7 +33,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.quarterly_revenue (
 ) PARTITIONED BY (quarter)
   LOCATION 'quarterly_revenue';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.quarterly_revenue TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.quarterly_revenue VALUES
     -- Q1: 10 rows, stores STR01-STR05, tax_rate = 0.08

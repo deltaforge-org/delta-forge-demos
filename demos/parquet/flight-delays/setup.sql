@@ -33,7 +33,6 @@ LOCATION '{{data_path}}'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.parquet_flights.all_flights TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: q1_flights — Q1 only via file_filter (40 rows)
 -- ============================================================================
@@ -47,4 +46,3 @@ OPTIONS (
     file_filter = '*q1*',
     file_metadata = '{"columns":["df_file_name"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.parquet_flights.q1_flights TO USER {{current_user}};

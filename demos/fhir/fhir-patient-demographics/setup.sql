@@ -54,7 +54,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_demos.patients_bulk TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: patients_detailed — 7 individual FHIR Patient JSON files
 -- ============================================================================
@@ -99,4 +98,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_demos.patients_detailed TO USER {{current_user}};

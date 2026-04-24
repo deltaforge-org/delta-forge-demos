@@ -42,7 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_readings (
     ingested_at VARCHAR
 ) LOCATION 'sensor_readings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sensor_readings TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
     -- TEMP-01: Server Room A (5 metrics)
@@ -93,7 +92,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_batch (
     batch_id    VARCHAR
 ) LOCATION 'sensor_batch';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sensor_batch TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.sensor_batch VALUES
     -- 10 NEWER readings (recorded_at = '2024-01-01 13:00:00' > target 12:00)

@@ -34,7 +34,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.user_profiles TO USER {{current_user}};
 
 -- STEP 3: Seed 20 user profiles (Version 1, Iceberg Snapshot 1)
 INSERT INTO {{zone_name}}.iceberg_demos.user_profiles VALUES

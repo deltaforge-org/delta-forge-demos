@@ -37,7 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.support_tickets (
     status            VARCHAR
 ) LOCATION 'support_tickets';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.support_tickets TO USER {{current_user}};
 
 -- STEP 2: Insert 20 tickets spanning 15+ scripts
 INSERT INTO {{zone_name}}.delta_demos.support_tickets VALUES

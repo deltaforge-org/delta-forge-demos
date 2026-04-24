@@ -30,4 +30,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.stock_prices
 USING ICEBERG
 LOCATION '{{data_path}}/stock_prices';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.stock_prices TO USER {{current_user}};

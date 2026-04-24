@@ -58,7 +58,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.bank_custo
     active         BOOLEAN
 ) LOCATION 'bank_customers';
 
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation_demos.bank_customers TO USER {{current_user}};
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.bank_customers WHERE 1=1;
 

@@ -36,7 +36,6 @@ OPTIONS (
     infer_schema_rows = '100',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_demos.all_sales TO USER {{current_user}};
 
 -- ============================================================================
 -- TABLE 2: all_returns — Returns sheet from both regions (7 rows)
@@ -53,7 +52,6 @@ OPTIONS (
     infer_schema_rows = '100',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_demos.all_returns TO USER {{current_user}};
 
 -- ============================================================================
 -- TABLE 3: all_staff — Staff sheet from both regions (7 rows)
@@ -70,4 +68,3 @@ OPTIONS (
     infer_schema_rows = '100',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_demos.all_staff TO USER {{current_user}};

@@ -40,8 +40,6 @@ TBLPROPERTIES (
     'spark.databricks.delta.autoCompact.minNumFiles' = '3'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.iot_readings TO USER {{current_user}};
-
 
 -- ============================================================================
 -- ENABLE AUTO-OPTIMIZE — explicitly opt in

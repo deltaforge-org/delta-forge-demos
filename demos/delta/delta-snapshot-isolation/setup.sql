@@ -36,8 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fund_holdings (
     trade_date  VARCHAR
 ) LOCATION 'fund_holdings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.fund_holdings TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Batch 1 — Growth Fund (GF01) + Value Fund (VF02) — 20 positions

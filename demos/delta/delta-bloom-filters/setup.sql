@@ -42,7 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.transaction_log (
 ) LOCATION 'transaction_log'
 TBLPROPERTIES ('delta.dataSkippingNumIndexedCols'='8');
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.transaction_log TO USER {{current_user}};
 
 -- STEP 2: Batch 1 — 30 online purchases
 INSERT INTO {{zone_name}}.delta_demos.transaction_log VALUES

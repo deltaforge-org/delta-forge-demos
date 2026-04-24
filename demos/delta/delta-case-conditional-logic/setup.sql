@@ -33,7 +33,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.insurance_claims (
     fraud_score    DOUBLE
 ) LOCATION 'insurance_claims';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.insurance_claims TO USER {{current_user}};
 -- Auto claims (11 rows)
 INSERT INTO {{zone_name}}.delta_demos.insurance_claims VALUES
     (1,  'Alice Johnson',  'auto',  2500.00,   500.00,  '2024-01-05', '2024-01-07', 'approved',     101,  0.05),

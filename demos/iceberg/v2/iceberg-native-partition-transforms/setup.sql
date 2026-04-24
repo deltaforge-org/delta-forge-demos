@@ -33,4 +33,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.network_traffic
 USING ICEBERG
 LOCATION '{{data_path}}/network_traffic';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.network_traffic TO USER {{current_user}};

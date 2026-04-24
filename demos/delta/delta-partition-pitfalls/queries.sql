@@ -105,7 +105,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.events_by_month (
 ) LOCATION 'events_by_month'
 PARTITIONED BY (event_month);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.events_by_month TO USER {{current_user}};
 
 -- Migrate all 60 rows from the over-partitioned table into the new one.
 -- INSERT INTO...SELECT reads from events_by_customer and writes into

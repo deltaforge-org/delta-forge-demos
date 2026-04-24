@@ -222,7 +222,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.product_catalog_
 USING ICEBERG
 LOCATION 'product_catalog';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.product_catalog_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count
 -- ============================================================================

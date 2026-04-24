@@ -60,7 +60,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.eligibility_messages TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: enrollment_details — Enrollment and plan fields
 -- ============================================================================
@@ -96,4 +95,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.enrollment_details TO USER {{current_user}};

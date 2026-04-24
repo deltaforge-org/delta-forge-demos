@@ -44,7 +44,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.employees (
     level            VARCHAR
 ) LOCATION 'employees';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.employees TO USER {{current_user}};
 
 -- STEP 2: Insert 30 employees across 5 departments
 INSERT INTO {{zone_name}}.delta_demos.employees VALUES

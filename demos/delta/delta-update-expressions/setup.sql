@@ -42,8 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.portfolio_holdings (
     last_rebalance VARCHAR
 ) LOCATION 'portfolio_holdings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.portfolio_holdings TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: Initial positions — 20 holdings across 3 portfolios

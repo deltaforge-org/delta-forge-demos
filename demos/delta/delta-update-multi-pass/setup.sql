@@ -43,8 +43,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
     processed_at      VARCHAR
 ) LOCATION 'order_pipeline';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_pipeline TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: Raw orders — 30 rows with messy status codes and empty deriveds

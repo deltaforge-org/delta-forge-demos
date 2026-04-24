@@ -36,8 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_metrics (
     conversion_rate DOUBLE
 ) LOCATION 'product_metrics';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_metrics TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: INSERT 20 baseline metric records (correct data)

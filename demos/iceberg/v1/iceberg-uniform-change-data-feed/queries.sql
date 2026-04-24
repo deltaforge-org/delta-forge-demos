@@ -165,7 +165,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders_iceberg
 USING ICEBERG
 LOCATION 'orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.orders_iceberg TO USER {{current_user}};
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 28 Orders After CDF Mutations

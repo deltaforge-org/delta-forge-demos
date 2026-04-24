@@ -278,8 +278,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.drug_registry_ic
 USING ICEBERG
 LOCATION 'drug_registry';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.drug_registry_iceberg TO USER {{current_user}};
-
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 35 Drugs

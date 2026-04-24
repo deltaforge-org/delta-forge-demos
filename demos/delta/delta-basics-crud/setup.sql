@@ -29,7 +29,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.products (
     is_active  BOOLEAN
 ) LOCATION 'products';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.products TO USER {{current_user}};
 
 -- Insert 20 known products as baseline data
 INSERT INTO {{zone_name}}.delta_demos.products VALUES

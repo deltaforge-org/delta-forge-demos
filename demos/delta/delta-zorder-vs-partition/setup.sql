@@ -38,8 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.orders_partitioned (
 ) PARTITIONED BY (customer_region)
   LOCATION 'orders_partitioned';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.orders_partitioned TO USER {{current_user}};
-
 
 -- ============================================================================
 -- TABLE 2: orders_zorder — Unpartitioned (Z-ORDER applied later)
@@ -56,8 +54,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.orders_zorder (
     shipping_priority VARCHAR,
     customer_rating   INT
 ) LOCATION 'orders_zorder';
-
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.orders_zorder TO USER {{current_user}};
 
 
 -- ============================================================================

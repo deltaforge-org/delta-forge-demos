@@ -37,7 +37,6 @@ TBLPROPERTIES (
     'delta.appendOnly' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_events TO USER {{current_user}};
 
 -- Insert 60 events across 14 orders in 2 batches
 -- Order lifecycles:

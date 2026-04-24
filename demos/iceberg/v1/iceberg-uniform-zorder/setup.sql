@@ -37,7 +37,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.delivery_tracking TO USER {{current_user}};
 
 -- STEP 3: Seed 36 deliveries across 6 cities (Batch 1)
 INSERT INTO {{zone_name}}.iceberg_demos.delivery_tracking VALUES

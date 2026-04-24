@@ -38,8 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.shipments (
     ship_date      VARCHAR
 ) LOCATION 'shipments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.shipments TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: INSERT 20 shipments across 3 carriers

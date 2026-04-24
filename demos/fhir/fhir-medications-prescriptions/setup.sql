@@ -76,7 +76,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_demos.prescriptions TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: coverage — 4 Coverage resources (insurance plans)
 -- ============================================================================
@@ -122,4 +121,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_demos.coverage TO USER {{current_user}};

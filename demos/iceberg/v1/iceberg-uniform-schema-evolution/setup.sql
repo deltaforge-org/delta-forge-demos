@@ -31,7 +31,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.customer_orders TO USER {{current_user}};
 
 -- STEP 3: Seed 20 orders (Version 1, Iceberg Snapshot 1)
 INSERT INTO {{zone_name}}.iceberg_demos.customer_orders VALUES

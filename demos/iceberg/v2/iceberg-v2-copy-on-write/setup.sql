@@ -26,4 +26,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.shipments
 USING ICEBERG
 LOCATION '{{data_path}}/shipments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.shipments TO USER {{current_user}};

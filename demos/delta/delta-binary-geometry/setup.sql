@@ -38,7 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.document_store (
     created_at      VARCHAR
 ) LOCATION 'document_store';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.document_store TO USER {{current_user}};
 
 -- STEP 2: Insert 25 documents
 INSERT INTO {{zone_name}}.delta_demos.document_store VALUES
@@ -82,7 +81,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.geo_locations (
     region      VARCHAR
 ) LOCATION 'geo_locations';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.geo_locations TO USER {{current_user}};
 
 -- STEP 3: Insert 20 POINT locations (batch 1)
 INSERT INTO {{zone_name}}.delta_demos.geo_locations VALUES

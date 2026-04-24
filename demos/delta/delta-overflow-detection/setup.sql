@@ -37,8 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.transaction_ledger (
     tx_date         VARCHAR
 ) LOCATION 'transaction_ledger';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.transaction_ledger TO USER {{current_user}};
-
 
 -- STEP 2: Insert 30 baseline transactions (all values fit in INT)
 INSERT INTO {{zone_name}}.delta_demos.transaction_ledger VALUES

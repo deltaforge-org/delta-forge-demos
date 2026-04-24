@@ -31,4 +31,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.equity_trades
 USING ICEBERG
 LOCATION '{{data_path}}/equity_trades';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.equity_trades TO USER {{current_user}};

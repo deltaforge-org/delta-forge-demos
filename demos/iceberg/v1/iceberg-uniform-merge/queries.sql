@@ -298,7 +298,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.order_fulfillmen
 USING ICEBERG
 LOCATION 'order_fulfillment';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.order_fulfillment_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 36 Orders After Both MERGEs
 -- ============================================================================

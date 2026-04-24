@@ -45,7 +45,6 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.hl7_demos.clinical_messages TO USER {{current_user}};
 
 -- ============================================================================
 -- TABLE 2: clinical_materialized — Key fields extracted
@@ -71,5 +70,4 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.hl7_demos.clinical_materialized TO USER {{current_user}};
 

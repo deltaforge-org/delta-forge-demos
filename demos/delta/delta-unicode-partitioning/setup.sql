@@ -38,7 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.cdn_content (
 ) PARTITIONED BY (locale)
   LOCATION 'cdn_content';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.cdn_content TO USER {{current_user}};
 
 -- STEP 2: Insert 30 content items across 5 locales
 

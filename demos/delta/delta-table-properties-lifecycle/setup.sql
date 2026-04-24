@@ -45,8 +45,6 @@ TBLPROPERTIES (
     'delta.checkpointInterval' = '5'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.inventory_items TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: Initial inventory — 15 items across 5 categories, 3 warehouses

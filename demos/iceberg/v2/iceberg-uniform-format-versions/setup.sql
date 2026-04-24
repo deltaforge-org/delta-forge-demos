@@ -34,7 +34,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v1 TO USER {{current_user}};
 
 -- STEP 2b: V2 table — Iceberg format version 2 (default)
 -- V2: Schema evolution array, sequence numbers, row-level deletes.
@@ -53,7 +52,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v2 TO USER {{current_user}};
 
 -- STEP 2c: V3 table — Iceberg format version 3
 -- V3: Nanosecond timestamps, deletion vectors, named references.
@@ -72,7 +70,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v3 TO USER {{current_user}};
 
 -- STEP 3: Seed identical data into all three tables
 INSERT INTO {{zone_name}}.iceberg_demos.sensors_v1 VALUES

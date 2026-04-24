@@ -65,7 +65,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.json_demos.listings_captured TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: listings_flattened — Same data, fully flattened (no json_paths)
 -- ============================================================================
@@ -129,4 +128,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.json_demos.listings_flattened TO USER {{current_user}};

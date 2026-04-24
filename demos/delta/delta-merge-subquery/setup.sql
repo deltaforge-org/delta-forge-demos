@@ -39,7 +39,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.daily_revenue (
     last_updated    VARCHAR
 ) LOCATION 'daily_revenue';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.daily_revenue TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.daily_revenue VALUES
     -- PROD-001: Wireless Headphones ($49.99 - $79.99)
@@ -86,7 +85,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_events (
     region          VARCHAR
 ) LOCATION 'order_events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_events TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.order_events VALUES
     -- =====================================================================

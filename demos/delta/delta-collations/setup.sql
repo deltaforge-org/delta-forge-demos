@@ -40,8 +40,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.global_contacts (
     email           VARCHAR
 ) LOCATION 'global_contacts';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.global_contacts TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 3: INSERT batch 1 — 20 European names

@@ -36,8 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.user_events (
     event_date  VARCHAR
 ) LOCATION 'user_events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.user_events TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Batch 1 — 40 trial_start events (every user begins with a trial)

@@ -44,7 +44,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.fleet_dispatch.hubs (
     population BIGINT
 ) LOCATION 'hubs';
 
-GRANT ADMIN ON TABLE {{zone_name}}.fleet_dispatch.hubs TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.fleet_dispatch.hubs
 SELECT
@@ -79,7 +78,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.fleet_dispatch.routes (
     status      VARCHAR
 ) LOCATION 'routes';
 
-GRANT ADMIN ON TABLE {{zone_name}}.fleet_dispatch.routes TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.fleet_dispatch.routes
 SELECT

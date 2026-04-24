@@ -79,7 +79,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.order_lines TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: order_summary — One row per order (5 total)
 -- ============================================================================
@@ -126,4 +125,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.order_summary TO USER {{current_user}};

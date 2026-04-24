@@ -39,7 +39,6 @@ TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.warehouse_orders TO USER {{current_user}};
 
 -- Warehouse 1: us-east-dc (25 orders)
 INSERT INTO {{zone_name}}.delta_demos.warehouse_orders VALUES

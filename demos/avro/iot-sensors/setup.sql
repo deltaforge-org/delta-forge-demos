@@ -37,7 +37,6 @@ LOCATION '{{data_path}}'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.avro_demos.all_readings TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: floor4_only — Single floor via file_filter (500 rows)
 -- ============================================================================
@@ -51,7 +50,6 @@ OPTIONS (
     file_filter = 'floor4*',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.avro_demos.floor4_only TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 3: readings_sample — Data profiling via max_rows (50 per file)
 -- ============================================================================
@@ -66,4 +64,3 @@ OPTIONS (
     max_rows = '50',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.avro_demos.readings_sample TO USER {{current_user}};

@@ -128,7 +128,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.members_iceberg
 USING ICEBERG
 LOCATION 'members';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.members_iceberg TO USER {{current_user}};
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count

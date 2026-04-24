@@ -37,7 +37,6 @@ TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.subscriptions TO USER {{current_user}};
 
 -- Region 1: americas (20 rows)
 INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES

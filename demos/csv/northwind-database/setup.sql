@@ -141,22 +141,3 @@ OPTIONS (
     header = 'true',
     delimiter = ';'
 );
--- ============================================================================
--- ============================================================================
--- Discovers column metadata from the CSV files and saves it to the catalog.
-
--- ============================================================================
--- STEP 5: Table Permissions
--- ============================================================================
-
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_customers TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_employees TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_orders TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_order_details TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_products TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_categories TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_suppliers TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_shippers TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_regions TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_territories TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.nw_employee_territories TO USER {{current_user}};

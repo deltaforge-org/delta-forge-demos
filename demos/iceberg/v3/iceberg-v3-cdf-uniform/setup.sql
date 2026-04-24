@@ -36,7 +36,6 @@ TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.payment_transactions TO USER {{current_user}};
 
 -- STEP 3: Seed 30 payment transactions
 INSERT INTO {{zone_name}}.iceberg_demos.payment_transactions VALUES

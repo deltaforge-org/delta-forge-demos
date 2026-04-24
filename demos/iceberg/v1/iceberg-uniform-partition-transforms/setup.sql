@@ -34,7 +34,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.app_events TO USER {{current_user}};
 
 -- STEP 3: Seed 36 events — 6 per day across 6 days (Version 1, Iceberg Snapshot 1)
 INSERT INTO {{zone_name}}.iceberg_demos.app_events VALUES

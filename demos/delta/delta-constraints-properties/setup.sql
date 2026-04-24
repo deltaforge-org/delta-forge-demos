@@ -42,7 +42,6 @@ TBLPROPERTIES (
     'delta.constraints.total_positive' = 'total > 0'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.invoices TO USER {{current_user}};
 
 -- Insert 30 valid invoices (all satisfy constraints)
 INSERT INTO {{zone_name}}.delta_demos.invoices VALUES
@@ -91,7 +90,6 @@ TBLPROPERTIES (
     'delta.appendOnly' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.event_log TO USER {{current_user}};
 
 -- Insert 50 events in 2 batches
 INSERT INTO {{zone_name}}.delta_demos.event_log VALUES

@@ -30,7 +30,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sales_reps (
     quota         DOUBLE
 ) LOCATION 'sales_reps';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sales_reps TO USER {{current_user}};
 -- Rep 1: Alice Chen — North, strong performer
 -- Rep 2: Bob Martinez — North, average
 -- Rep 3: Carol Wu — South, top performer

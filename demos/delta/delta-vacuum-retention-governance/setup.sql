@@ -32,7 +32,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.settlement_records (
     trader            VARCHAR
 ) LOCATION 'settlement_records';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.settlement_records TO USER {{current_user}};
 
 -- V1: Insert 35 pending settlements across 5 counterparties
 INSERT INTO {{zone_name}}.delta_demos.settlement_records VALUES

@@ -73,9 +73,6 @@ OPTIONS (
 );
 
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.repeating_indexed TO USER {{current_user}};
-
-
 -- ============================================================================
 -- TABLE 2: repeating_concat — Concatenate mode (14 transactions)
 -- ============================================================================
@@ -100,9 +97,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-
-
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.repeating_concat TO USER {{current_user}};
 
 
 -- ============================================================================
@@ -131,4 +125,3 @@ OPTIONS (
 );
 
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.repeating_json TO USER {{current_user}};

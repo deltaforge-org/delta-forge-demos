@@ -36,7 +36,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.patient_records TO USER {{current_user}};
 
 -- STEP 3: Seed 20 patient records (Version 1, Iceberg Snapshot 1)
 INSERT INTO {{zone_name}}.iceberg_demos.patient_records VALUES

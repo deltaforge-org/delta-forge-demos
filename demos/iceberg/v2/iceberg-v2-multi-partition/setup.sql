@@ -30,4 +30,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.weather_readings
 USING ICEBERG
 LOCATION '{{data_path}}/weather_readings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.weather_readings TO USER {{current_user}};

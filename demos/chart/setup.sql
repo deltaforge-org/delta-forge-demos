@@ -146,5 +146,3 @@ INSERT INTO {{zone_name}}.retail.stock_prices (week_start, open_price, high_pric
 -- Permissions
 -- --------------------------------------------------------------------------
 
-GRANT ADMIN ON TABLE {{zone_name}}.retail.sales_daily TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.stock_prices TO USER {{current_user}};

@@ -35,7 +35,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.monthly_sales (
 ) LOCATION 'monthly_sales'
 PARTITIONED BY (sale_month);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.monthly_sales TO USER {{current_user}};
 
 -- January 2024: ids 1-20
 INSERT INTO {{zone_name}}.delta_demos.monthly_sales VALUES

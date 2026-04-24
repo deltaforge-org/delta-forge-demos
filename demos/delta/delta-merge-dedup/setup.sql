@@ -43,7 +43,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.events (
     received_at VARCHAR
 ) LOCATION 'events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.events TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.events VALUES
     -- E001: 3 copies (user clicked, then purchased, then confirmed)
@@ -89,4 +88,3 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.events_deduped (
     received_at VARCHAR
 ) LOCATION 'events_deduped';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.events_deduped TO USER {{current_user}};

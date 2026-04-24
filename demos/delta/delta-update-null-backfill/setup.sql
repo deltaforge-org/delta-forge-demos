@@ -46,8 +46,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.patient_records (
     notes             VARCHAR
 ) LOCATION 'patient_records';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.patient_records TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: Raw migration data — 25 patient records

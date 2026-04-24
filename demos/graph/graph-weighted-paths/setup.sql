@@ -36,7 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.shipping_network.ports (
     crane_count     INT
 ) LOCATION 'ports';
 
-GRANT ADMIN ON TABLE {{zone_name}}.shipping_network.ports TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.shipping_network.ports VALUES
     (1,  'Shanghai',     'Asia',        43500, 6),
@@ -82,7 +81,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.shipping_network.routes (
     fuel_cost_usd   DOUBLE
 ) LOCATION 'routes';
 
-GRANT ADMIN ON TABLE {{zone_name}}.shipping_network.routes TO USER {{current_user}};
 
 -- ============================================================================
 -- Batch 1: Asia intra-regional trunk routes (16 edges)

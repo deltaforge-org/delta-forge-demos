@@ -36,7 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.survey_responses (
     referral_source     VARCHAR
 ) LOCATION 'survey_responses';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.survey_responses TO USER {{current_user}};
 
 -- ============================================================================
 -- INSERT: 30 survey responses (rows 1-15)

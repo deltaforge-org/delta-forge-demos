@@ -40,8 +40,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.financial_ledger (
     currency            VARCHAR
 ) LOCATION 'financial_ledger';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.financial_ledger TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 3: INSERT batch 1 — 30 rows (USD, EUR, GBP)

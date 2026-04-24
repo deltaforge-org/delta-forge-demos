@@ -41,7 +41,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fleet_daily_summary (
     last_sync          VARCHAR
 ) LOCATION 'fleet_daily_summary';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.fleet_daily_summary TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.fleet_daily_summary VALUES
     -- VH-101: Long-haul delivery van
@@ -89,7 +88,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.telemetry_batch (
     last_sync          VARCHAR
 ) LOCATION 'telemetry_batch';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.telemetry_batch TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.telemetry_batch VALUES
     -- Corrections for existing data (late-arriving GPS recalculations)

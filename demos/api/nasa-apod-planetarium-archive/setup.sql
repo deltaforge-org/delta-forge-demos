@@ -147,7 +147,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.space_imagery.apod_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.space_imagery.apod_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 7. Silver Delta table — typed promotion with parsed DATE
@@ -180,4 +179,3 @@ SELECT
     copyright_holder
 FROM {{zone_name}}.space_imagery.apod_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.space_imagery.apod_silver TO USER {{current_user}};

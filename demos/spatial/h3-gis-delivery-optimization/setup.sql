@@ -26,7 +26,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.logistics.warehouses (
     capacity_pallets  INT
 ) LOCATION 'logistics_warehouses';
 
-GRANT ADMIN ON TABLE {{zone_name}}.logistics.warehouses TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.logistics.warehouses VALUES
     (1, 'Chicago Distribution Center', 41.8781, -87.6298, 50000),
@@ -53,7 +52,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.logistics.stores (
     monthly_orders  INT
 ) LOCATION 'logistics_stores';
 
-GRANT ADMIN ON TABLE {{zone_name}}.logistics.stores TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.logistics.stores VALUES
     (1,  'Milwaukee Store',      43.0389, -87.9065,  1, 2800),

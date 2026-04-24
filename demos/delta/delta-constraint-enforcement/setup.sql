@@ -34,7 +34,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.validated_employees (
     hire_date   VARCHAR
 ) LOCATION 'validated_employees';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.validated_employees TO USER {{current_user}};
 
 -- INSERT 50 employees — all satisfying constraints:
 --   age: 18-70, salary > 0, rating: 0.0-5.0, id NOT NULL

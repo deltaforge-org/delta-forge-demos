@@ -80,7 +80,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.news_articles TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: news_categories — Exploded: one row per <category> per article
 -- ============================================================================
@@ -129,4 +128,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.news_categories TO USER {{current_user}};

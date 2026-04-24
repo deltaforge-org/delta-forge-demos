@@ -33,7 +33,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.subscriptions TO USER {{current_user}};
 
 -- STEP 3: Seed 30 subscriptions (Version 1)
 INSERT INTO {{zone_name}}.iceberg_demos.subscriptions VALUES

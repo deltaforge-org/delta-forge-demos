@@ -36,7 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_orders (
     region            VARCHAR
 ) LOCATION 'customer_orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.customer_orders TO USER {{current_user}};
 
 -- STEP 2: Insert 30 orders spanning 6 regions, 7 products, 4 statuses
 INSERT INTO {{zone_name}}.delta_demos.customer_orders VALUES

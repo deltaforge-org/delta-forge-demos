@@ -254,7 +254,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.ad_clicks_iceber
 USING ICEBERG
 LOCATION 'ad_clicks';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.ad_clicks_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count + Seed Data Spot-Check
 -- ============================================================================

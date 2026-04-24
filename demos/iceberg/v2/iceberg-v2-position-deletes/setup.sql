@@ -25,4 +25,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.cold_chain_readi
 USING ICEBERG
 LOCATION '{{data_path}}/cold_chain_readings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.cold_chain_readings TO USER {{current_user}};

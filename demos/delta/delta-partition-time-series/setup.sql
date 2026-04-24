@@ -23,7 +23,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.line_metrics (
 ) LOCATION 'line_metrics'
 PARTITIONED BY (year_month);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.line_metrics TO USER {{current_user}};
 
 -- ============================================================================
 -- January 2024 — Coldest month (base temperatures, no seasonal offset)

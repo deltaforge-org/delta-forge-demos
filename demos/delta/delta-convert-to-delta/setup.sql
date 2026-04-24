@@ -34,8 +34,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.legacy_data (
     migrated_flag     INT
 ) LOCATION 'legacy_data';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.legacy_data TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: INSERT 40 rows — migrated legacy data (migrated_flag=1)

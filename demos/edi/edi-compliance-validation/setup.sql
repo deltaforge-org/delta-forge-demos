@@ -57,7 +57,6 @@ OPTIONS (
     edi_config = '{"ediFormat": "x12"}',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.compliance_messages TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: compliance_details — 997/824 error-reporting segments extracted
 -- ============================================================================
@@ -117,4 +116,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.compliance_details TO USER {{current_user}};

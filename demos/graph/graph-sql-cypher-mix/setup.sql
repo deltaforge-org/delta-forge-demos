@@ -44,7 +44,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.customers (
     annual_contract INT
 ) LOCATION 'sales/customers';
 
-GRANT ADMIN ON TABLE {{zone_name}}.customer_network.customers TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.customer_network.customers VALUES
     ( 1, 'Bolt_Inc',        'South', 'Finance',       'Standard',   10500),
@@ -105,7 +104,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.referrals (
     year_established INT
 ) LOCATION 'sales/referrals';
 
-GRANT ADMIN ON TABLE {{zone_name}}.customer_network.referrals TO USER {{current_user}};
 
 -- Batch 1: Regional partnerships (stride 4, same region)
 INSERT INTO {{zone_name}}.customer_network.referrals VALUES
@@ -228,7 +226,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.orders (
     quarter     STRING
 ) LOCATION 'sales/orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.customer_network.orders TO USER {{current_user}};
 
 -- Pass 1: orders 1-40 (one per customer)
 INSERT INTO {{zone_name}}.customer_network.orders VALUES
@@ -370,7 +367,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.sales_reps (
     quota     INT
 ) LOCATION 'sales/sales_reps';
 
-GRANT ADMIN ON TABLE {{zone_name}}.customer_network.sales_reps TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.customer_network.sales_reps VALUES
     (1, 'Alice_Chen',   'North', 200000),
@@ -392,14 +388,12 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.influence_scores
     influence_rank  BIGINT
 ) LOCATION 'sales/influence_scores';
 
-GRANT ADMIN ON TABLE {{zone_name}}.customer_network.influence_scores TO USER {{current_user}};
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.community_assignments (
     customer_id  BIGINT,
     community_id BIGINT
 ) LOCATION 'sales/community_assignments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.customer_network.community_assignments TO USER {{current_user}};
 
 -- ############################################################################
 -- STEP 6b: Physical Layout — Z-ORDER for fast data skipping

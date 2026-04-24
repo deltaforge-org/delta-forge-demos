@@ -63,7 +63,6 @@ OPTIONS (
     edi_config = '{"ediFormat": "edifact"}',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.commerce_messages TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: commerce_materialized — Key commerce fields extracted
 -- ============================================================================
@@ -101,4 +100,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.commerce_materialized TO USER {{current_user}};

@@ -32,7 +32,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     last_updated    VARCHAR
 ) LOCATION 'product_catalog';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_catalog TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
     ('ELEC-1001', 'Wireless Bluetooth Earbuds', 'electronics', 49.99, 120, 'AudioWave', '2025-03-01'),
@@ -93,7 +92,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.supplier_feed (
     last_updated    VARCHAR
 ) LOCATION 'supplier_feed';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.supplier_feed TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.supplier_feed VALUES
     -- Updates: existing SKUs with new price/stock (stock > 0 → UPDATE)

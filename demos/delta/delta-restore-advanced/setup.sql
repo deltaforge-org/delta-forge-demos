@@ -30,7 +30,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.config_settings (
     updated_at  VARCHAR
 ) LOCATION 'config_settings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.config_settings TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.config_settings VALUES
     -- database (10 entries: ids 1-10)

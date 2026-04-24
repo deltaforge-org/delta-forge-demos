@@ -21,4 +21,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.retail_sales
 USING ICEBERG
 LOCATION '{{data_path}}/retail_sales';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.retail_sales TO USER {{current_user}};

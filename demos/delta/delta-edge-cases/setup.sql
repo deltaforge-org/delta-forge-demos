@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.config_singleton (
     updated_at      VARCHAR
 ) LOCATION 'config_singleton';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.config_singleton TO USER {{current_user}};
 
 -- Insert the single configuration row (version 1 — baseline)
 INSERT INTO {{zone_name}}.delta_demos.config_singleton VALUES
@@ -74,7 +73,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.wide_metrics (
     m28_engagement_rate DOUBLE
 ) LOCATION 'wide_metrics';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.wide_metrics TO USER {{current_user}};
 
 -- Insert 20 rows of monthly KPI data
 INSERT INTO {{zone_name}}.delta_demos.wide_metrics VALUES
@@ -111,5 +109,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.empty_staging (
     received_at     VARCHAR
 ) LOCATION 'empty_staging';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.empty_staging TO USER {{current_user}};
 

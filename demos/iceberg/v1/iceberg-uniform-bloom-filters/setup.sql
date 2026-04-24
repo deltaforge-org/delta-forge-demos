@@ -30,7 +30,6 @@ TBLPROPERTIES (
 )
 BLOOM FILTER COLUMNS (member_id, full_name);
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.members TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 40 loyalty members across 4 tiers

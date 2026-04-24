@@ -35,8 +35,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.daily_orders (
     order_date  VARCHAR
 ) LOCATION 'daily_orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.daily_orders TO USER {{current_user}};
-
 
 -- ============================================================================
 -- DAY 1: Monday orders (10 rows)

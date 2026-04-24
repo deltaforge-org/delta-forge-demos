@@ -162,7 +162,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.fx_catalog.fx_rates_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.fx_catalog.fx_rates_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 11. Silver Delta table — typed promotion with parsed DATE
@@ -182,7 +181,6 @@ SELECT
     CAST(base_amount AS DOUBLE) AS base_amount
 FROM {{zone_name}}.fx_catalog.fx_rates_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.fx_catalog.fx_rates_silver TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 12. SHOW RUNS per endpoint — per-stream audit

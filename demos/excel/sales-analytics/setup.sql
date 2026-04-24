@@ -37,7 +37,6 @@ OPTIONS (
     infer_schema_rows = '1000',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_demos.all_orders TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: orders_2017 — Single file only (3,312 rows)
 -- ============================================================================
@@ -53,4 +52,3 @@ OPTIONS (
     file_filter = 'sales-data-2017*',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.excel_demos.orders_2017 TO USER {{current_user}};

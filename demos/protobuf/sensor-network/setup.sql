@@ -63,7 +63,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_iot.sensor_readings TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: sensor_summary — One row per sensor (20 total)
 -- ============================================================================
@@ -105,4 +104,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_iot.sensor_summary TO USER {{current_user}};

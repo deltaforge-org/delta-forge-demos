@@ -46,8 +46,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.release_tracker (
 ) LOCATION 'release_tracker'
 TBLPROPERTIES ('delta.enableInCommitTimestamps' = 'true');
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.release_tracker TO USER {{current_user}};
-
 
 -- ============================================================================
 -- V1: INSERT 15 production releases (5 apps × 3 releases each)

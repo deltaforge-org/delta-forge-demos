@@ -294,7 +294,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.delivery_trackin
 USING ICEBERG
 LOCATION 'delivery_tracking';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.delivery_tracking_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Spot-Check Individual Rows — Data Fidelity
 -- ============================================================================

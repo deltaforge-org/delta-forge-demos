@@ -245,7 +245,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.delta_demos.warehouse_orders_i
 USING ICEBERG
 LOCATION 'warehouse_orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.warehouse_orders_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 33 Orders After All Deletes
 -- ============================================================================

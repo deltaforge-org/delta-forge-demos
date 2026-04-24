@@ -44,8 +44,6 @@ TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.compliance_events TO USER {{current_user}};
-
 
 -- ============================================================================
 -- VERSION 1: Account openings and initial deposits (20 rows)

@@ -56,7 +56,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.insurance_
     filed_date      VARCHAR
 ) LOCATION 'insurance_claims';
 
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation_demos.insurance_claims TO USER {{current_user}};
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.insurance_claims WHERE 1=1;
 

@@ -265,7 +265,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_events_icebe
 USING ICEBERG
 LOCATION 'app_events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.app_events_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count + Spot-Check Individual Rows
 -- ============================================================================

@@ -71,7 +71,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.json_demos.album_tracks TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: album_summary — One row per album (347 total)
 -- ============================================================================
@@ -108,4 +107,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.json_demos.album_summary TO USER {{current_user}};

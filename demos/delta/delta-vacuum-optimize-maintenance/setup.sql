@@ -42,8 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
     order_date      VARCHAR
 ) LOCATION 'order_pipeline';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_pipeline TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Monday batch — 8 orders (version 1)

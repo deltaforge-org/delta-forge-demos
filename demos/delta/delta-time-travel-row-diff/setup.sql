@@ -35,7 +35,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.ecom_orders (
     order_date  VARCHAR
 ) LOCATION 'ecom_orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.ecom_orders TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.ecom_orders VALUES
     -- delivered (6 orders)

@@ -44,7 +44,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sales_ml (
 ) LOCATION 'sales_ml'
 PARTITIONED BY (region, quarter);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sales_ml TO USER {{current_user}};
 
 -- us-east region: ids 1-15 (Q1: 4 rows, Q2: 4 rows, Q3: 4 rows, Q4: 3 rows)
 INSERT INTO {{zone_name}}.delta_demos.sales_ml VALUES
@@ -129,7 +128,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.region_dim (
     market        VARCHAR
 ) LOCATION 'region_dim';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.region_dim TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.region_dim VALUES
     ('us-east',  75000.00, 500, 'domestic'),
@@ -148,7 +146,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.quarter_dim (
     half_year  VARCHAR
 ) LOCATION 'quarter_dim';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.quarter_dim TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.quarter_dim VALUES
     ('Q1-2024', 20000.00, 150, 'H1'),

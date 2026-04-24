@@ -76,4 +76,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.books_evolved TO USER {{current_user}};

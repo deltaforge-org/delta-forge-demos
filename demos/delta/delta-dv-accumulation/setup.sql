@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.patient_visits (
     status        VARCHAR
 ) LOCATION 'patient_visits';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.patient_visits TO USER {{current_user}};
 
 -- Cardiology department (20 visits)
 INSERT INTO {{zone_name}}.delta_demos.patient_visits VALUES

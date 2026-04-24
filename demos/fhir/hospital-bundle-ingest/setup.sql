@@ -78,7 +78,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.fhir_bronze.bundle_resources;
-GRANT ADMIN ON TABLE {{zone_name}}.fhir_bronze.bundle_resources TO USER {{current_user}};
 
 -- ----------------------------------------------------------------------------
 -- SILVER: encounter_observations — observations joined to their patient row
@@ -125,4 +124,3 @@ JOIN {{zone_name}}.fhir_bronze.bundle_resources pat
 WHERE obs.resourcetype = 'Observation';
 
 DETECT SCHEMA FOR TABLE clinical_silver.fhir_silver.encounter_observations;
-GRANT ADMIN ON TABLE clinical_silver.fhir_silver.encounter_observations TO USER {{current_user}};

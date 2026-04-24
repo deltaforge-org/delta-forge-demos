@@ -80,7 +80,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_freight.shipments TO USER {{current_user}};
 
 -- ==========================================================================
 -- TABLE 2: shipment_packages — One row per package (24 total)
@@ -133,7 +132,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_freight.shipment_packages TO USER {{current_user}};
 
 -- ==========================================================================
 -- TABLE 3: shipment_tracking — One row per tracking event (39 total)
@@ -175,4 +173,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_freight.shipment_tracking TO USER {{current_user}};

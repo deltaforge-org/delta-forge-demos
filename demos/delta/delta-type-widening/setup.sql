@@ -38,8 +38,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.device_telemetry (
     reported_date   VARCHAR
 ) LOCATION 'device_telemetry';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.device_telemetry TO USER {{current_user}};
-
 
 -- STEP 2: Insert 25 baseline device readings (all values fit comfortably in INT)
 INSERT INTO {{zone_name}}.delta_demos.device_telemetry VALUES

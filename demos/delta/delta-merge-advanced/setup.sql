@@ -28,7 +28,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.inventory_master (
     last_updated    VARCHAR
 ) LOCATION 'inventory_master';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.inventory_master TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.inventory_master VALUES
     (1,  'ELEC-001', 'Wireless Mouse',       'Electronics',  29.99,  150, 'TechCorp',    '2024-01-01'),
@@ -89,7 +88,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.inventory_updates (
     last_updated    VARCHAR
 ) LOCATION 'inventory_updates';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.inventory_updates TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.inventory_updates VALUES
     -- Existing SKU updates (qty > 0 → UPDATE price & qty)

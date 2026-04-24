@@ -249,7 +249,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.regional_sales_i
 USING ICEBERG
 LOCATION 'regional_sales';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.regional_sales_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 26 Transactions After All Mutations
 -- ============================================================================

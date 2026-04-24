@@ -59,7 +59,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.trial_part
     outcome         VARCHAR
 ) LOCATION 'trial_participants';
 
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation_demos.trial_participants TO USER {{current_user}};
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.trial_participants WHERE 1=1;
 

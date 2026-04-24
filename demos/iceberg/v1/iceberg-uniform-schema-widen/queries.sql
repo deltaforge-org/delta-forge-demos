@@ -211,7 +211,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensor_readings_
 USING ICEBERG
 LOCATION 'sensor_readings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensor_readings_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Per-Location Aggregates Match Delta Final State
 -- ============================================================================

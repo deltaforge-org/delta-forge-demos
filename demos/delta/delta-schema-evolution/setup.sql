@@ -22,8 +22,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.contacts (
     email      VARCHAR
 ) LOCATION 'contacts';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.contacts TO USER {{current_user}};
-
 
 -- STEP 3: Insert 30 baseline contacts
 INSERT INTO {{zone_name}}.delta_demos.contacts VALUES

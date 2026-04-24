@@ -29,4 +29,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.fleet_telemetry
 USING ICEBERG
 LOCATION '{{data_path}}/fleet_telemetry';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.fleet_telemetry TO USER {{current_user}};

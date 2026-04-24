@@ -41,8 +41,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     recorded_date   VARCHAR
 ) LOCATION 'sensor_telemetry';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.sensor_telemetry TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Batch 1 — 30 rows: temperature & humidity from us-east, eu-west

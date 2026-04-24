@@ -67,14 +67,3 @@ OPTIONS (
     header = 'true',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
--- ============================================================================
--- ============================================================================
--- Discovers column metadata from the CSV files and saves it to the catalog.
--- This populates the external_table_columns so the engine knows what columns
--- each file contains (crucial for schema-evolution scenarios).
-
--- ============================================================================
--- STEP 5: Table Permission
--- ============================================================================
-
-GRANT ADMIN ON TABLE {{zone_name}}.csv_demos.sales TO USER {{current_user}};

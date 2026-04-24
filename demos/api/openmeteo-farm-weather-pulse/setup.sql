@@ -127,7 +127,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.agri_telemetry.weather_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.agri_telemetry.weather_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 7. Silver Delta table — typed promotion with farm_name lookup
@@ -168,4 +167,3 @@ SELECT
     CAST(precipitation_mm AS DOUBLE)    AS precipitation_mm
 FROM {{zone_name}}.agri_telemetry.weather_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.agri_telemetry.weather_silver TO USER {{current_user}};

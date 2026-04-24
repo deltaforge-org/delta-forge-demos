@@ -177,8 +177,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.payment_transact
 USING ICEBERG
 LOCATION 'payment_transactions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.payment_transactions_iceberg TO USER {{current_user}};
-
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count Matches Delta

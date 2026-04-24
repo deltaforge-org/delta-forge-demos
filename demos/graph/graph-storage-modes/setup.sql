@@ -50,7 +50,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_flat (
     active      BOOLEAN
 ) LOCATION 'persons_flat';
 
-GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.persons_flat TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.storage_modes.persons_flat
 SELECT
@@ -103,7 +102,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_flat (
     rating              INT
 ) LOCATION 'edges_flat';
 
-GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.edges_flat TO USER {{current_user}};
 
 -- Batch 1: Intra-department colleagues (~80 edges, stride 5)
 INSERT INTO {{zone_name}}.storage_modes.edges_flat
@@ -287,7 +285,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_hybrid (
     extras  STRING
 ) LOCATION 'persons_hybrid';
 
-GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.persons_hybrid TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.storage_modes.persons_hybrid
 SELECT
@@ -308,7 +305,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_hybrid (
     extras              STRING
 ) LOCATION 'edges_hybrid';
 
-GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.edges_hybrid TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.storage_modes.edges_hybrid
 SELECT
@@ -352,7 +348,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_json (
     props   STRING
 ) LOCATION 'persons_json';
 
-GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.persons_json TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.storage_modes.persons_json
 SELECT
@@ -375,7 +370,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_json (
     props              STRING
 ) LOCATION 'edges_json';
 
-GRANT ADMIN ON TABLE {{zone_name}}.storage_modes.edges_json TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.storage_modes.edges_json
 SELECT

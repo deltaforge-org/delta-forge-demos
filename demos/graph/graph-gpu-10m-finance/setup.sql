@@ -54,7 +54,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_finance_network.gfn_banks (
     tier        STRING
 ) LOCATION 'gfn_banks';
 
-GRANT ADMIN ON TABLE {{zone_name}}.gpu_finance_network.gfn_banks TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.gpu_finance_network.gfn_banks VALUES
     (0,  'JPMorgan',           'US',          'Americas',  'Tier-1'),
@@ -105,7 +104,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_finance_network.gfn_accounts 
     active          BOOLEAN
 ) LOCATION 'gfn_accounts';
 
-GRANT ADMIN ON TABLE {{zone_name}}.gpu_finance_network.gfn_accounts TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.gpu_finance_network.gfn_accounts
 SELECT
@@ -198,8 +196,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_finance_network.gfn_transacti
     transaction_type    STRING,
     tx_year             INT
 ) LOCATION 'gfn_transactions';
-
-GRANT ADMIN ON TABLE {{zone_name}}.gpu_finance_network.gfn_transactions TO USER {{current_user}};
 
 
 -- ============================================================================

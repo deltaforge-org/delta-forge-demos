@@ -35,7 +35,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
 ) LOCATION 'product_catalog'
 PARTITIONED BY (category);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_catalog TO USER {{current_user}};
 
 -- Electronics: ids 1-15
 INSERT INTO {{zone_name}}.delta_demos.product_catalog
@@ -137,7 +136,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.supplier_feed (
     category   VARCHAR
 ) LOCATION 'supplier_feed';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.supplier_feed TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.supplier_feed VALUES
     -- Electronics updates (5 existing products: price down, stock up)

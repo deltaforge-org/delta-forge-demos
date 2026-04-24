@@ -48,7 +48,6 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.hl7_demos.lab_orders TO USER {{current_user}};
 
 -- ============================================================================
 -- TABLE 2: lab_results — All messages with materialized observation fields
@@ -80,5 +79,4 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.hl7_demos.lab_results TO USER {{current_user}};
 

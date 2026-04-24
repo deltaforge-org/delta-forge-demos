@@ -265,7 +265,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v1_icebe
 USING ICEBERG
 LOCATION 'sensors_v1';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v1_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Read-Back: Register V2 as External Iceberg Table
 -- ============================================================================
@@ -277,7 +276,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v2_icebe
 USING ICEBERG
 LOCATION 'sensors_v2';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v2_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Read-Back: Register V3 as External Iceberg Table
 -- ============================================================================
@@ -289,7 +287,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v3_icebe
 USING ICEBERG
 LOCATION 'sensors_v3';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sensors_v3_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Counts — All Three Format Versions
 -- ============================================================================

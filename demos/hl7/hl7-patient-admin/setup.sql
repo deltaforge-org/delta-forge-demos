@@ -48,7 +48,6 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.hl7_demos.adt_messages TO USER {{current_user}};
 
 -- ============================================================================
 -- TABLE 2: adt_materialized — Key patient fields extracted (8 messages)
@@ -81,5 +80,4 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.hl7_demos.adt_materialized TO USER {{current_user}};
 

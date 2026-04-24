@@ -202,7 +202,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.financial_transa
 USING ICEBERG
 LOCATION 'financial_transactions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.financial_transactions_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Data Integrity — Spot-Check Rows via Renamed Columns
 -- ============================================================================

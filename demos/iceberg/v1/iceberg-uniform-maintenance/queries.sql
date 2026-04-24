@@ -287,7 +287,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_logs_iceberg
 USING ICEBERG
 LOCATION 'app_logs';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.app_logs_iceberg TO USER {{current_user}};
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 60 Logs After Full Maintenance Lifecycle
 -- ============================================================================

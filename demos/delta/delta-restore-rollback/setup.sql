@@ -29,7 +29,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_inventory (
     status          VARCHAR
 ) LOCATION 'product_inventory';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_inventory TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES
     (1,  'Laptop Pro 15',       'Electronics', 1299.99, 50,  'active'),

@@ -34,7 +34,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.products (
     in_stock    INT
 ) LOCATION 'products';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.products TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.products VALUES
     (1,  'SKU-001', 'Wireless Mouse',       'electronics', 29.99,  150),
@@ -69,7 +68,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_feed (
     in_stock    INT
 ) LOCATION 'product_feed';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_feed TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.product_feed VALUES
     -- Updated products (price adjustments + restocking)

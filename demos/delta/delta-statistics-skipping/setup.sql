@@ -37,8 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.orders (
     order_date      VARCHAR
 ) LOCATION 'orders';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.orders TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Batch 1 — January 2025, unit_price range [10.99 - 95.00]

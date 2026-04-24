@@ -37,7 +37,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscriptions (
     priority_score  DOUBLE
 ) LOCATION 'subscriptions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.subscriptions TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
     (1,  'Acme Corp',       'business',   150.00, 24, 'gold',     10.0, 360.0),
@@ -67,7 +66,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscription_changes 
     months_active   INT
 ) LOCATION 'subscription_changes';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.subscription_changes TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.subscription_changes VALUES
     -- Renewals (plan upgrades and extended tenure)

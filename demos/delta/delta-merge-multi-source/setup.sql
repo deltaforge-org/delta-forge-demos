@@ -45,7 +45,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_status (
     last_updated     VARCHAR
 ) LOCATION 'order_status';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_status TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.order_status VALUES
     ('ORD-5001', 'Alice Johnson',    '2025-03-01', 129.99, 3,  'pending', NULL, NULL, NULL, 'authorized', NULL, NULL, 'none', NULL, 0.00, '2025-03-01'),
@@ -85,7 +84,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.shipping_updates (
     last_updated     VARCHAR
 ) LOCATION 'shipping_updates';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.shipping_updates TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.shipping_updates VALUES
     ('ORD-5001', 'delivered', 'FedEx', 'FX-78234561', '2025-03-02', '2025-03-15'),
@@ -118,7 +116,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.payment_updates (
     last_updated     VARCHAR
 ) LOCATION 'payment_updates';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.payment_updates TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.payment_updates VALUES
     ('ORD-5001', 'captured', 'credit_card', 'TXN-CC-90001', '2025-03-15'),
@@ -153,7 +150,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.return_updates (
     last_updated     VARCHAR
 ) LOCATION 'return_updates';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.return_updates TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.return_updates VALUES
     ('ORD-5002', 'approved',  'wrong_item',       249.50, '2025-03-15'),

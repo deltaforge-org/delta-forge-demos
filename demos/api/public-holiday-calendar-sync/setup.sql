@@ -84,7 +84,6 @@ INSERT INTO {{zone_name}}.holiday_calendar.country_holidays VALUES
     ('SE', 2024, DATE '2024-06-06', 'Sveriges nationaldag', 'National Day',      true, true, 'launch_seed'),
     ('SE', 2024, DATE '2024-12-25', 'Juldagen',             'Christmas Day',     true, true, 'launch_seed');
 
-GRANT ADMIN ON TABLE {{zone_name}}.holiday_calendar.country_holidays TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 4. REST API connection
@@ -175,7 +174,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.holiday_calendar.public_holidays_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.holiday_calendar.public_holidays_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 9. Anti-join merge — bronze → silver on composite key

@@ -34,7 +34,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.orders (
 ) LOCATION 'orders'
 PARTITIONED BY (region);
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.orders TO USER {{current_user}};
 
 -- North region: ids 1-20
 INSERT INTO {{zone_name}}.delta_demos.orders VALUES

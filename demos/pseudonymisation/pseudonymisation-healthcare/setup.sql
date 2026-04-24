@@ -60,7 +60,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.hl7_patien
     status          VARCHAR
 ) LOCATION 'hl7_patients';
 
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation_demos.hl7_patients TO USER {{current_user}};
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.hl7_patients WHERE 1=1;
 
@@ -96,7 +95,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.fhir_patie
     active          BOOLEAN
 ) LOCATION 'fhir_patients';
 
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation_demos.fhir_patients TO USER {{current_user}};
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.fhir_patients WHERE 1=1;
 
@@ -132,7 +130,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.edi_claims
     bpr_14          VARCHAR
 ) LOCATION 'edi_claims';
 
-GRANT ADMIN ON TABLE {{zone_name}}.pseudonymisation_demos.edi_claims TO USER {{current_user}};
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.edi_claims WHERE 1=1;
 

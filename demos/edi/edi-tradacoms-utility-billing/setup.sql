@@ -74,7 +74,6 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.tradacoms_bills TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: tradacoms_bill_details — Deep field extraction via materialized_paths
 -- ============================================================================
@@ -121,4 +120,3 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.tradacoms_bill_details TO USER {{current_user}};

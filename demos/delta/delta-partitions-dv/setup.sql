@@ -35,7 +35,6 @@ TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.cloud_events TO USER {{current_user}};
 
 -- Region 1: us-east (30 events)
 INSERT INTO {{zone_name}}.delta_demos.cloud_events VALUES

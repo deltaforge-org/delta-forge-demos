@@ -79,4 +79,3 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.edifact_messages TO USER {{current_user}};

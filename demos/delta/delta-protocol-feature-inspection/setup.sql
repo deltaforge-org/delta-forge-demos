@@ -32,7 +32,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.inherited_plain (
     last_updated    VARCHAR
 ) LOCATION 'inherited_plain';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.inherited_plain TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.inherited_plain VALUES
     (1,  'Laptop Pro 15',      'electronics',  1299.99, true,  '2025-03-01'),
@@ -67,7 +66,6 @@ TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.inherited_cdc TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.inherited_cdc VALUES
     (1,  'Acme Corp',        'billing@acme.com',       'enterprise', 2500.00, '2024-06-01'),
@@ -99,7 +97,6 @@ TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.inherited_constrained TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.inherited_constrained VALUES
     (1,  'Steel Beam 10m',   200,  85.00,  0.00, 'warehouse-east'),

@@ -29,7 +29,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.compliance_records TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 20 compliance records across 5 entities, 4 regulations

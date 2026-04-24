@@ -57,7 +57,6 @@ OPTIONS (
     edi_config = '{"ediFormat": "x12"}',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.logistics_messages TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: logistics_materialized -- Key logistics fields extracted
 -- ============================================================================
@@ -94,4 +93,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.logistics_materialized TO USER {{current_user}};

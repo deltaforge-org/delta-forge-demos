@@ -61,7 +61,6 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.tradacoms_order_compact TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: tradacoms_order_lines — Deep field extraction via materialized_paths
 -- ============================================================================
@@ -100,4 +99,3 @@ OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.edi_demos.tradacoms_order_lines TO USER {{current_user}};

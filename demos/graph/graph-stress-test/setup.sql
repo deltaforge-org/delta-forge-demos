@@ -44,7 +44,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_department
     region      STRING
 ) LOCATION 'st_departments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.stress_test_network.st_departments TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.stress_test_network.st_departments VALUES
     (0,  'Engineering',       3, 8000, 'Americas'),
@@ -89,7 +88,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_people (
     active          BOOLEAN
 ) LOCATION 'st_people';
 
-GRANT ADMIN ON TABLE {{zone_name}}.stress_test_network.st_people TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.stress_test_network.st_people
 SELECT
@@ -206,7 +204,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_edges (
     since_year          INT
 ) LOCATION 'st_edges';
 
-GRANT ADMIN ON TABLE {{zone_name}}.stress_test_network.st_edges TO USER {{current_user}};
 -- ============================================================================
 -- Batch 1: Intra-department local neighborhood (~1.5M edges)
 -- ============================================================================

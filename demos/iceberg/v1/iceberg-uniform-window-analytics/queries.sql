@@ -132,7 +132,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales_iceberg
 USING ICEBERG
 LOCATION 'sales';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sales_iceberg TO USER {{current_user}};
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count

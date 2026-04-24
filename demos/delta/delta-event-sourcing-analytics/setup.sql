@@ -42,7 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.ed_events (
     event_time     VARCHAR
 ) LOCATION 'ed_events';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.ed_events TO USER {{current_user}};
 
 -- STEP 2: Insert events for patients P001–P004 (14 events)
 INSERT INTO {{zone_name}}.delta_demos.ed_events VALUES

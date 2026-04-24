@@ -243,8 +243,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.portfolio_holdin
 USING ICEBERG
 LOCATION 'portfolio_holdings';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.portfolio_holdings_iceberg TO USER {{current_user}};
-
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 25 Holdings

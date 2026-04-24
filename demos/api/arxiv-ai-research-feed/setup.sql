@@ -144,7 +144,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.research_intel.arxiv_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.research_intel.arxiv_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 6. Silver Delta table — typed promotion
@@ -173,4 +172,3 @@ SELECT
     author_names
 FROM {{zone_name}}.research_intel.arxiv_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.research_intel.arxiv_silver TO USER {{current_user}};

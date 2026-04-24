@@ -41,7 +41,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_stress_network.gpu_st_departm
     region      STRING
 ) LOCATION 'gpu_st_departments';
 
-GRANT ADMIN ON TABLE {{zone_name}}.gpu_stress_network.gpu_st_departments TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.gpu_stress_network.gpu_st_departments VALUES
     (0,  'Engineering',       3, 8000, 'Americas'),
@@ -82,7 +81,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_stress_network.gpu_st_people 
     active          BOOLEAN
 ) LOCATION 'gpu_st_people';
 
-GRANT ADMIN ON TABLE {{zone_name}}.gpu_stress_network.gpu_st_people TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.gpu_stress_network.gpu_st_people
 SELECT
@@ -170,7 +168,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_stress_network.gpu_st_edges (
     since_year          INT
 ) LOCATION 'gpu_st_edges';
 
-GRANT ADMIN ON TABLE {{zone_name}}.gpu_stress_network.gpu_st_edges TO USER {{current_user}};
 -- ============================================================================
 -- Batch 1: Intra-department local neighborhood (~1.5M edges)
 -- ============================================================================

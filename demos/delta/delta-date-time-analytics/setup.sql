@@ -35,7 +35,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.attendance_records (
     is_remote       BOOLEAN
 ) LOCATION 'attendance_records';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.attendance_records TO USER {{current_user}};
 -- ============================================================================
 -- INSERT: Alice Chen — Engineering (record_ids 1-10)
 -- ============================================================================

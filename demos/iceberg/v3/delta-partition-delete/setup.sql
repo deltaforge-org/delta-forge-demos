@@ -32,7 +32,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.warehouse_orders (
     order_date  VARCHAR
 ) LOCATION 'warehouse_orders'
 PARTITIONED BY (region);
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.warehouse_orders TO USER {{current_user}};
 ALTER TABLE {{zone_name}}.delta_demos.warehouse_orders SET TBLPROPERTIES (
   'delta.universalFormat.enabledFormats' = 'iceberg',
   'delta.universalFormat.icebergVersion' = '3'

@@ -35,8 +35,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     url         VARCHAR
 ) LOCATION 'product_catalog';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.product_catalog TO USER {{current_user}};
-
 
 -- ============================================================================
 -- STEP 2: Insert 20 products — SKUs (8 chars), names (8-24), descriptions

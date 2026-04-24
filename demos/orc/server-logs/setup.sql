@@ -35,7 +35,6 @@ LOCATION '{{data_path}}'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.orc_demos.all_requests TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: api01_only — Single server via LOCATION glob (500 rows)
 -- ============================================================================
@@ -48,4 +47,3 @@ LOCATION '{{data_path}}/api-01*.orc'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.orc_demos.api01_only TO USER {{current_user}};

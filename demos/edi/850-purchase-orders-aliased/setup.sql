@@ -92,8 +92,7 @@ OPTIONS (
 
 
 -- ============================================================================
--- STEP 3: Schema detection & permissions
+-- STEP 3: Schema detection
 -- ============================================================================
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.commerce.purchase_orders;
-GRANT ADMIN ON TABLE {{zone_name}}.commerce.purchase_orders TO USER {{current_user}};

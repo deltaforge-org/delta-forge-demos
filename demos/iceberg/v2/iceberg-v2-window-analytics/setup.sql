@@ -23,4 +23,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.loyalty_members
 USING ICEBERG
 LOCATION '{{data_path}}/loyalty_members';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.loyalty_members TO USER {{current_user}};

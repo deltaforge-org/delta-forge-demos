@@ -34,7 +34,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
     balance          DECIMAL(12,2)
 ) LOCATION 'customer_accounts';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.customer_accounts TO USER {{current_user}};
 
 -- STEP 2: Insert 30 customer accounts with full PII
 INSERT INTO {{zone_name}}.delta_demos.customer_accounts VALUES

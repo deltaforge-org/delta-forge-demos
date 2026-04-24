@@ -34,4 +34,3 @@ CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.employee_directo
 USING ICEBERG
 LOCATION '{{data_path}}/employee_directory';
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.employee_directory TO USER {{current_user}};

@@ -35,7 +35,6 @@ TBLPROPERTIES (
     'delta.appendOnly' = 'true'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.compliance_ledger TO USER {{current_user}};
 
 -- 20 financial transactions across 5 accounts
 INSERT INTO {{zone_name}}.delta_demos.compliance_ledger VALUES
@@ -75,7 +74,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.mutable_ledger (
     reference       VARCHAR
 ) LOCATION 'mutable_ledger';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.mutable_ledger TO USER {{current_user}};
 
 -- Same 20 transactions for comparison
 INSERT INTO {{zone_name}}.delta_demos.mutable_ledger VALUES

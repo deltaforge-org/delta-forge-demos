@@ -33,7 +33,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.ad_clicks TO USER {{current_user}};
 
 -- STEP 3: Seed 30 ad clicks (Version 1, Iceberg Snapshot 1)
 -- 10 per campaign, ~half with NULL conversion_value (non-converted)

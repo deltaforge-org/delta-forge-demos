@@ -63,7 +63,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_demos.contacts TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: contact_phones — One row per phone number (22 total)
 -- ============================================================================
@@ -103,4 +102,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.protobuf_demos.contact_phones TO USER {{current_user}};

@@ -36,8 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_history (
     order_date  VARCHAR
 ) LOCATION 'order_history';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_history TO USER {{current_user}};
-
 
 -- ============================================================================
 -- TABLE: order_archive — empty archive for cancelled-order DML demo
@@ -52,8 +50,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_archive (
     region      VARCHAR,
     order_date  VARCHAR
 ) LOCATION 'order_archive';
-
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.order_archive TO USER {{current_user}};
 
 
 -- STEP 2: Insert 60 known orders

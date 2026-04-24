@@ -46,7 +46,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.shift_handover (
     status              VARCHAR
 ) LOCATION 'shift_handover';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.shift_handover TO USER {{current_user}};
 
 -- ============================================================================
 -- Batch 1: Metro General NYC (UTC-4) + Pacific Medical LA (UTC-7)

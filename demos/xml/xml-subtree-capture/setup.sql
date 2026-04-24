@@ -68,7 +68,6 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.products_json TO USER {{current_user}};
 -- ============================================================================
 -- TABLE 2: products_xml — Subtrees captured as raw XML strings
 -- ============================================================================
@@ -116,4 +115,3 @@ OPTIONS (
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
-GRANT ADMIN ON TABLE {{zone_name}}.xml_demos.products_xml TO USER {{current_user}};

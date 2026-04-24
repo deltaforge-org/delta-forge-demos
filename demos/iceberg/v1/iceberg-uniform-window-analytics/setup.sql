@@ -30,7 +30,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.sales TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- Seed Data — 40 sales across 7 reps, 4 regions, 3 categories

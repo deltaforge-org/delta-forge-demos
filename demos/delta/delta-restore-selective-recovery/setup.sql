@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.portfolio_positions (
     last_updated  VARCHAR
 ) LOCATION 'portfolio_positions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.portfolio_positions TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.portfolio_positions VALUES
     -- Growth Portfolio (8 positions)

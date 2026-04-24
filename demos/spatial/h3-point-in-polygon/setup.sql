@@ -40,7 +40,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.zones (
     surcharge_pct DOUBLE
 ) LOCATION 'pip_zones';
 
-GRANT ADMIN ON TABLE {{zone_name}}.spatial_demos.zones TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.spatial_demos.zones VALUES
     -- San Francisco
@@ -113,7 +112,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.driver_positions (
     city VARCHAR
 ) LOCATION 'pip_driver_positions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.spatial_demos.driver_positions TO USER {{current_user}};
 
 -- San Francisco: 150,000 points (bbox covers SFO Airport + SF Downtown)
 -- Lat: 37.58–37.82, Lng: -122.52–-122.34

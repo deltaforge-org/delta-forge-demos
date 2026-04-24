@@ -34,7 +34,6 @@ TBLPROPERTIES (
     'delta.columnMapping.mode' = 'id'
 );
 
-GRANT ADMIN ON TABLE {{zone_name}}.iceberg_demos.product_catalog TO USER {{current_user}};
 
 -- STEP 3: Seed data — 15 products across 3 categories
 INSERT INTO {{zone_name}}.iceberg_demos.product_catalog VALUES

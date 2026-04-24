@@ -31,7 +31,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.activity_log (
     logged_at      VARCHAR
 ) LOCATION 'activity_log';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.activity_log TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.activity_log VALUES
     -- User 1

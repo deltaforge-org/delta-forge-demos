@@ -42,7 +42,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.billing_transactions 
     created_date    VARCHAR
 ) LOCATION 'billing_transactions';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.billing_transactions TO USER {{current_user}};
 
 -- STEP 2: Insert 30 billing transactions across 3 months (Jan/Feb/Mar 2025)
 INSERT INTO {{zone_name}}.delta_demos.billing_transactions VALUES

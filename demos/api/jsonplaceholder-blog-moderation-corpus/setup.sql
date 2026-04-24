@@ -151,7 +151,6 @@ OPTIONS (
 );
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.content_moderation.posts_bronze;
-GRANT ADMIN ON TABLE {{zone_name}}.content_moderation.posts_bronze TO USER {{current_user}};
 
 -- --------------------------------------------------------------------------
 -- 9. Silver Delta table — typed promotion with computed length
@@ -179,4 +178,3 @@ SELECT
     CAST(LENGTH(body) AS BIGINT) AS char_len
 FROM {{zone_name}}.content_moderation.posts_bronze;
 
-GRANT ADMIN ON TABLE {{zone_name}}.content_moderation.posts_silver TO USER {{current_user}};

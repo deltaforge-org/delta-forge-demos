@@ -36,7 +36,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vendors (
     last_verified   VARCHAR
 ) LOCATION 'vendors';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.vendors TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.vendors VALUES
     (1,  'Alpha Supplies',    'materials',  120000.00, 1, 'verified',        '2025-01-10'),
@@ -68,7 +67,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vendor_feed (
     annual_spend    DOUBLE
 ) LOCATION 'vendor_feed';
 
-GRANT ADMIN ON TABLE {{zone_name}}.delta_demos.vendor_feed TO USER {{current_user}};
 
 INSERT INTO {{zone_name}}.delta_demos.vendor_feed VALUES
     -- Existing vendors with refreshed data
