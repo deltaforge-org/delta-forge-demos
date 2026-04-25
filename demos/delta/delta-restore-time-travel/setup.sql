@@ -26,7 +26,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.course_grades (
     course       VARCHAR,
     grade        INT,
     semester     VARCHAR
-) LOCATION '{{data_path}}/course_grades';
+) LOCATION 'course_grades';
 
 
 INSERT INTO {{zone_name}}.delta_demos.course_grades VALUES

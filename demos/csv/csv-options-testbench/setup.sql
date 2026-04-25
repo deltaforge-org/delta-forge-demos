@@ -19,7 +19,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.csv_demos
 -- line becomes a single column instead of 4 separate columns.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_delimiter
 USING CSV
-LOCATION '{{data_path}}/01_pipe_delimited.csv'
+LOCATION '01_pipe_delimited.csv'
 OPTIONS (
     has_header = 'true',
     delimiter = '|'
@@ -32,7 +32,7 @@ OPTIONS (
 -- those become SQL NULL. If not, they remain the literal string "N/A".
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_null_value
 USING CSV
-LOCATION '{{data_path}}/02_null_markers.csv'
+LOCATION '02_null_markers.csv'
 OPTIONS (
     has_header = 'true',
     null_value = 'N/A'
@@ -46,7 +46,7 @@ OPTIONS (
 -- garbage rows from the comment lines.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_comment
 USING CSV
-LOCATION '{{data_path}}/03_comment_lines.csv'
+LOCATION '03_comment_lines.csv'
 OPTIONS (
     has_header = 'true',
     comment_char = '#'
@@ -60,7 +60,7 @@ OPTIONS (
 -- becomes the first column name.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_skip_rows
 USING CSV
-LOCATION '{{data_path}}/04_skip_metadata.csv'
+LOCATION '04_skip_metadata.csv'
 OPTIONS (
     has_header = 'true',
     skip_starting_rows = '3'
@@ -73,7 +73,7 @@ OPTIONS (
 -- If not, all 10 rows appear.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_max_rows
 USING CSV
-LOCATION '{{data_path}}/05_max_rows.csv'
+LOCATION '05_max_rows.csv'
 OPTIONS (
     has_header = 'true',
     max_rows = '5'
@@ -86,7 +86,7 @@ OPTIONS (
 -- name='Alice' (length 5). If not, name='  Alice  ' (length 9).
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_trim
 USING CSV
-LOCATION '{{data_path}}/06_whitespace.csv'
+LOCATION '06_whitespace.csv'
 OPTIONS (
     has_header = 'true',
     trim_whitespace = 'true'
@@ -99,7 +99,7 @@ OPTIONS (
 -- inside quotes. If quoting is not handled, columns split incorrectly.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_quoted
 USING CSV
-LOCATION '{{data_path}}/07_semicolon_quoted.csv'
+LOCATION '07_semicolon_quoted.csv'
 OPTIONS (
     has_header = 'true',
     delimiter = ';',
@@ -113,7 +113,7 @@ OPTIONS (
 -- All options must work simultaneously for correct results.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.opt_combined
 USING CSV
-LOCATION '{{data_path}}/08_combined.csv'
+LOCATION '08_combined.csv'
 OPTIONS (
     has_header = 'true',
     delimiter = '|',

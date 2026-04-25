@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_lifecycle (
     status          VARCHAR,
     updated_by      VARCHAR,
     updated_at      VARCHAR
-) LOCATION '{{data_path}}/order_lifecycle'
+) LOCATION 'order_lifecycle'
 TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true');
 
 

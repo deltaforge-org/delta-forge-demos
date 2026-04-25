@@ -31,7 +31,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.orders (
     amount     DOUBLE,
     order_date VARCHAR,
     region     VARCHAR
-) LOCATION '{{data_path}}/orders'
+) LOCATION 'orders'
 PARTITIONED BY (region);
 
 

@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_inventory (
     price           DOUBLE,
     qty             INT,
     status          VARCHAR
-) LOCATION '{{data_path}}/product_inventory';
+) LOCATION 'product_inventory';
 
 
 INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES

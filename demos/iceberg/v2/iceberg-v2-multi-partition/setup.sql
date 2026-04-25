@@ -28,5 +28,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- The table is partitioned by region (identity) and years(observation_date).
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.weather_readings
 USING ICEBERG
-LOCATION '{{data_path}}/weather_readings';
+LOCATION 'weather_readings';
 

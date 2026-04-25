@@ -38,7 +38,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.global_contacts (
     language        VARCHAR,
     sort_key        VARCHAR,
     email           VARCHAR
-) LOCATION '{{data_path}}/global_contacts';
+) LOCATION 'global_contacts';
 
 
 -- ============================================================================

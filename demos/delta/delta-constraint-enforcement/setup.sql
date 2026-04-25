@@ -32,7 +32,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.validated_employees (
     rating      DOUBLE,
     department  VARCHAR,
     hire_date   VARCHAR
-) LOCATION '{{data_path}}/validated_employees';
+) LOCATION 'validated_employees';
 
 
 -- INSERT 50 employees — all satisfying constraints:

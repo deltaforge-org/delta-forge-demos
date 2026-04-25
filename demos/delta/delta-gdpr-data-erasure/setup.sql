@@ -32,7 +32,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
     country          VARCHAR,
     opened_date      VARCHAR,
     balance          DECIMAL(12,2)
-) LOCATION '{{data_path}}/customer_accounts';
+) LOCATION 'customer_accounts';
 
 
 -- STEP 2: Insert 30 customer accounts with full PII

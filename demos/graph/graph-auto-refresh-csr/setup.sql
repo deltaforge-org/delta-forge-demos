@@ -42,7 +42,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.fleet_dispatch.hubs (
     hub_name   VARCHAR,
     region     VARCHAR,
     population BIGINT
-) LOCATION '{{data_path}}/hubs';
+) LOCATION 'hubs';
 
 
 INSERT INTO {{zone_name}}.fleet_dispatch.hubs
@@ -76,7 +76,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.fleet_dispatch.routes (
     eta_hours   BIGINT,
     price_usd   BIGINT,
     status      VARCHAR
-) LOCATION '{{data_path}}/routes';
+) LOCATION 'routes';
 
 
 INSERT INTO {{zone_name}}.fleet_dispatch.routes

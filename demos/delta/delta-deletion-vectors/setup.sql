@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.web_sessions (
     status      VARCHAR,
     region      VARCHAR,
     started_at  VARCHAR
-) LOCATION '{{data_path}}/web_sessions';
+) LOCATION 'web_sessions';
 
 
 -- Region 1: us-east (20 sessions)

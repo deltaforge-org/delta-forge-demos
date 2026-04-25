@@ -42,7 +42,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.customers (
     industry   STRING,
     tier       STRING,
     annual_contract INT
-) LOCATION '{{data_path}}/sales/customers';
+) LOCATION 'sales/customers';
 
 
 INSERT INTO {{zone_name}}.customer_network.customers VALUES
@@ -102,7 +102,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.referrals (
     weight         DOUBLE,
     referral_type  STRING,
     year_established INT
-) LOCATION '{{data_path}}/sales/referrals';
+) LOCATION 'sales/referrals';
 
 
 -- Batch 1: Regional partnerships (stride 4, same region)
@@ -224,7 +224,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.orders (
     amount      DOUBLE,
     product     STRING,
     quarter     STRING
-) LOCATION '{{data_path}}/sales/orders';
+) LOCATION 'sales/orders';
 
 
 -- Pass 1: orders 1-40 (one per customer)
@@ -365,7 +365,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.sales_reps (
     rep_name  STRING,
     territory STRING,
     quota     INT
-) LOCATION '{{data_path}}/sales/sales_reps';
+) LOCATION 'sales/sales_reps';
 
 
 INSERT INTO {{zone_name}}.customer_network.sales_reps VALUES
@@ -386,13 +386,13 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.influence_scores
     customer_id     BIGINT,
     influence_score DOUBLE,
     influence_rank  BIGINT
-) LOCATION '{{data_path}}/sales/influence_scores';
+) LOCATION 'sales/influence_scores';
 
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.customer_network.community_assignments (
     customer_id  BIGINT,
     community_id BIGINT
-) LOCATION '{{data_path}}/sales/community_assignments';
+) LOCATION 'sales/community_assignments';
 
 
 -- ############################################################################

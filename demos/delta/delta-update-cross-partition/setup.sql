@@ -31,7 +31,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscriptions (
     usage_gb     INT,
     signup_date  VARCHAR,
     status       VARCHAR
-) LOCATION '{{data_path}}/subscriptions'
+) LOCATION 'subscriptions'
 PARTITIONED BY (region)
 TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true'

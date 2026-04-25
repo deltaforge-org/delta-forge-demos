@@ -26,7 +26,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_events (
     payload_size    INT,
     source_app      VARCHAR,
     severity        VARCHAR
-) LOCATION '{{data_path}}/app_events'
+) LOCATION 'app_events'
 PARTITIONED BY (CAST(event_timestamp AS DATE))
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',

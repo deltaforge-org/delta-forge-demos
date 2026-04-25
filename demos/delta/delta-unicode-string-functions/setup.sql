@@ -35,7 +35,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.support_tickets (
     message_snippet   VARCHAR,
     priority          VARCHAR,
     status            VARCHAR
-) LOCATION '{{data_path}}/support_tickets';
+) LOCATION 'support_tickets';
 
 
 -- STEP 2: Insert 20 tickets spanning 15+ scripts

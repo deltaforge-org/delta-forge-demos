@@ -46,7 +46,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.csv_demos
 -- CUSTOMERS — 91 customer companies with contact and address details
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_customers
 USING CSV
-LOCATION '{{data_path}}/customers.csv'
+LOCATION 'customers.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -55,7 +55,7 @@ OPTIONS (
 -- EMPLOYEES — 9 sales employees with hire dates and reporting hierarchy
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_employees
 USING CSV
-LOCATION '{{data_path}}/employees.csv'
+LOCATION 'employees.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -64,7 +64,7 @@ OPTIONS (
 -- ORDERS — 830 customer orders with dates, shipping info, and freight costs
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_orders
 USING CSV
-LOCATION '{{data_path}}/orders.csv'
+LOCATION 'orders.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -73,7 +73,7 @@ OPTIONS (
 -- ORDER_DETAILS — 2,155 line items linking orders to products with pricing
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_order_details
 USING CSV
-LOCATION '{{data_path}}/order_details.csv'
+LOCATION 'order_details.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -82,7 +82,7 @@ OPTIONS (
 -- PRODUCTS — 77 products with pricing, stock levels, and reorder thresholds
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_products
 USING CSV
-LOCATION '{{data_path}}/products.csv'
+LOCATION 'products.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -91,7 +91,7 @@ OPTIONS (
 -- CATEGORIES — 8 product categories (Beverages, Condiments, Seafood, etc.)
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_categories
 USING CSV
-LOCATION '{{data_path}}/categories.csv'
+LOCATION 'categories.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -100,7 +100,7 @@ OPTIONS (
 -- SUPPLIERS — 29 product suppliers with contact and location details
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_suppliers
 USING CSV
-LOCATION '{{data_path}}/suppliers.csv'
+LOCATION 'suppliers.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -109,7 +109,7 @@ OPTIONS (
 -- SHIPPERS — 3 shipping companies used for order delivery
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_shippers
 USING CSV
-LOCATION '{{data_path}}/shippers.csv'
+LOCATION 'shippers.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -118,7 +118,7 @@ OPTIONS (
 -- REGIONS — 4 geographic sales regions (Eastern, Western, Northern, Southern)
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_regions
 USING CSV
-LOCATION '{{data_path}}/regions.csv'
+LOCATION 'regions.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -127,7 +127,7 @@ OPTIONS (
 -- TERRITORIES — 53 sales territories linked to regions
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_territories
 USING CSV
-LOCATION '{{data_path}}/territories.csv'
+LOCATION 'territories.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'
@@ -136,7 +136,7 @@ OPTIONS (
 -- EMPLOYEE_TERRITORIES — Maps employees to the territories they cover
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.nw_employee_territories
 USING CSV
-LOCATION '{{data_path}}/employee_territories.csv'
+LOCATION 'employee_territories.csv'
 OPTIONS (
     header = 'true',
     delimiter = ';'

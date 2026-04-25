@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.survey_responses (
     feedback_text       VARCHAR,
     response_date       VARCHAR,
     referral_source     VARCHAR
-) LOCATION '{{data_path}}/survey_responses';
+) LOCATION 'survey_responses';
 
 
 -- ============================================================================

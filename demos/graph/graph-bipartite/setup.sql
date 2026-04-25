@@ -31,7 +31,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.movie_recs.entities (
     genre           STRING,
     join_year       INT,
     release_year    INT
-) LOCATION '{{data_path}}/entities';
+) LOCATION 'entities';
 
 
 -- 25 subscribers (id 1-25)
@@ -100,7 +100,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.movie_recs.ratings (
     weight          DOUBLE,
     rating_type     STRING,
     watch_date      STRING
-) LOCATION '{{data_path}}/ratings';
+) LOCATION 'ratings';
 
 
 INSERT INTO {{zone_name}}.movie_recs.ratings VALUES

@@ -43,7 +43,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.shipment_orders (
     destination     VARCHAR,
     placed_at       VARCHAR,
     eta_date        VARCHAR
-) LOCATION '{{data_path}}/shipment_orders'
+) LOCATION 'shipment_orders'
 TBLPROPERTIES ('delta.enableDeletionVectors' = 'true');
 
 

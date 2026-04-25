@@ -57,7 +57,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.trial_part
     treatment_arm   VARCHAR,
     efficacy_score  DOUBLE,
     outcome         VARCHAR
-) LOCATION '{{data_path}}/trial_participants';
+) LOCATION 'trial_participants';
 
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.trial_participants WHERE 1=1;

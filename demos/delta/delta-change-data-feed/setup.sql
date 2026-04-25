@@ -28,7 +28,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
     balance         DOUBLE,
     status          VARCHAR,
     created_date    VARCHAR
-) LOCATION '{{data_path}}/customer_accounts'
+) LOCATION 'customer_accounts'
 TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true');
 
 

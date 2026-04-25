@@ -41,7 +41,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vessel_transit (
     pilot_name          VARCHAR,
     direction           VARCHAR,
     status              VARCHAR
-) LOCATION '{{data_path}}/vessel_transit';
+) LOCATION 'vessel_transit';
 
 
 -- ============================================================================

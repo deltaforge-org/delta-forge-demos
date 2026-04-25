@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.payment_events (
     metadata       VARCHAR,
     status         VARCHAR,
     created_at     VARCHAR
-) LOCATION '{{data_path}}/payment_events';
+) LOCATION 'payment_events';
 
 
 -- STEP 2: Insert 15 charge events

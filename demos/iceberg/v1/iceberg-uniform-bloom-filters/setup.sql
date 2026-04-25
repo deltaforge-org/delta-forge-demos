@@ -22,7 +22,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.members (
     points         INT,
     lifetime_spend DECIMAL(10,2),
     join_date      DATE
-) LOCATION '{{data_path}}/members'
+) LOCATION 'members'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

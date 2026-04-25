@@ -35,7 +35,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.conference_schedule (
     room                VARCHAR,
     organizer           VARCHAR,
     priority            VARCHAR
-) LOCATION '{{data_path}}/conference_schedule';
+) LOCATION 'conference_schedule';
 
 
 -- ============================================================================

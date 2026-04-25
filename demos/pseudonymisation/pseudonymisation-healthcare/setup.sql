@@ -58,7 +58,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.hl7_patien
     pv1_7           VARCHAR,
     evn_1           VARCHAR,
     status          VARCHAR
-) LOCATION '{{data_path}}/hl7_patients';
+) LOCATION 'hl7_patients';
 
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.hl7_patients WHERE 1=1;
@@ -93,7 +93,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.fhir_patie
     ssn             VARCHAR,
     marital_status  VARCHAR,
     active          BOOLEAN
-) LOCATION '{{data_path}}/fhir_patients';
+) LOCATION 'fhir_patients';
 
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.fhir_patients WHERE 1=1;
@@ -128,7 +128,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.edi_claims
     bpr_2           DOUBLE,
     bpr_8           VARCHAR,
     bpr_14          VARCHAR
-) LOCATION '{{data_path}}/edi_claims';
+) LOCATION 'edi_claims';
 
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.edi_claims WHERE 1=1;

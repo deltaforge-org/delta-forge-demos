@@ -30,7 +30,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.marketplace_listings 
     stock         INT,
     seller_id     VARCHAR,
     listed_at     VARCHAR
-) LOCATION '{{data_path}}/marketplace_listings';
+) LOCATION 'marketplace_listings';
 
 
 -- Batch 1 — 40 listings

@@ -31,7 +31,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.karate_club
 -- ############################################################################
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.karate_club_raw.karate_edges
-USING CSV LOCATION '{{data_path}}/edges.csv'
+USING CSV LOCATION 'edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
 -- ############################################################################
@@ -41,7 +41,7 @@ OPTIONS (header = 'true', delimiter = '|');
 -- === Edge Table (CTAS from external) ===
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate_club.edges
-LOCATION '{{data_path}}/delta/edges'
+LOCATION 'delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
     CAST(dst AS BIGINT) AS dst,
@@ -52,12 +52,12 @@ FROM {{zone_name}}.karate_club_raw.karate_edges;
 -- === Vertex Table (from CSV with member names and roles) ===
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.karate_club_raw.karate_vertices
-USING CSV LOCATION '{{data_path}}/vertices.csv'
+USING CSV LOCATION 'vertices.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.karate_club.vertices
-LOCATION '{{data_path}}/delta/vertices'
+LOCATION 'delta/vertices'
 AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
     CAST(name AS VARCHAR) AS name,

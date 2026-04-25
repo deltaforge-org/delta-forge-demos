@@ -40,7 +40,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.portfolio_holdings (
     weight_pct     DECIMAL(6,2),
     risk_rating    VARCHAR,
     last_rebalance VARCHAR
-) LOCATION '{{data_path}}/portfolio_holdings';
+) LOCATION 'portfolio_holdings';
 
 
 -- ============================================================================

@@ -43,7 +43,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.release_tracker (
     duration_sec        INT,
     deployed_at         VARCHAR,
     commit_hash         VARCHAR
-) LOCATION '{{data_path}}/release_tracker'
+) LOCATION 'release_tracker'
 TBLPROPERTIES ('delta.enableInCommitTimestamps' = 'true');
 
 

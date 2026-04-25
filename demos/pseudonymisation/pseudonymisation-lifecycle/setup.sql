@@ -54,7 +54,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pseudonymisation_demos.insurance_
     amount          DOUBLE,
     status          VARCHAR,
     filed_date      VARCHAR
-) LOCATION '{{data_path}}/insurance_claims';
+) LOCATION 'insurance_claims';
 
 
 DELETE FROM {{zone_name}}.pseudonymisation_demos.insurance_claims WHERE 1=1;

@@ -45,7 +45,7 @@ CREATE CONNECTION IF NOT EXISTS frankfurter_fx
         base_url     = 'https://api.frankfurter.dev',
         auth_mode    = 'none',
         storage_zone = '{{zone_name}}',
-        base_path    = '{{data_path}}/frankfurter_fx',
+        base_path    = 'frankfurter_fx',
         timeout_secs = '30'
     );
 
@@ -110,7 +110,7 @@ ALTER API ENDPOINT {{zone_name}}.frankfurter_fx.historical_stub
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.frankfurter_fx.fx_rates_bronze
 USING JSON
-LOCATION '{{data_path}}/frankfurter_fx'
+LOCATION 'frankfurter_fx'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -140,4 +140,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.frankfurter_fx.fx_rates_silver (
     rate_date      DATE,
     base_amount    DOUBLE
 )
-LOCATION '{{data_path}}/silver/fx_rates';
+LOCATION 'silver/fx_rates';

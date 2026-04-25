@@ -19,5 +19,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- STEP 2: Register the Iceberg V2 table
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.retail_sales
 USING ICEBERG
-LOCATION '{{data_path}}/retail_sales';
+LOCATION 'retail_sales';
 

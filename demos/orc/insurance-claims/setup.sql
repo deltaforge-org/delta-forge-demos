@@ -19,7 +19,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.orc_insurance
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.orc_insurance.policies
 USING ORC
-LOCATION '{{data_path}}/policies.orc';
+LOCATION 'policies.orc';
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.orc_insurance.policies;
 
@@ -29,6 +29,6 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.orc_insurance.policies;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.orc_insurance.claims
 USING ORC
-LOCATION '{{data_path}}/claims.orc';
+LOCATION 'claims.orc';
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.orc_insurance.claims;

@@ -35,7 +35,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.transaction_ledger (
     running_balance INT,
     description     VARCHAR,
     tx_date         VARCHAR
-) LOCATION '{{data_path}}/transaction_ledger';
+) LOCATION 'transaction_ledger';
 
 
 -- STEP 2: Insert 30 baseline transactions (all values fit in INT)

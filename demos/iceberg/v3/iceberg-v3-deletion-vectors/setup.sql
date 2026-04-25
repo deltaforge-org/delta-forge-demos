@@ -35,5 +35,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- Puffin deletion vector. The format-version field in metadata.json is 3.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.shipment_manifests
 USING ICEBERG
-LOCATION '{{data_path}}/shipment_manifests';
+LOCATION 'shipment_manifests';
 

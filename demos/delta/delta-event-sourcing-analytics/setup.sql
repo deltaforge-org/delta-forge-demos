@@ -40,7 +40,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.ed_events (
     severity       VARCHAR,
     payload        VARCHAR,
     event_time     VARCHAR
-) LOCATION '{{data_path}}/ed_events';
+) LOCATION 'ed_events';
 
 
 -- STEP 2: Insert events for patients P001–P004 (14 events)

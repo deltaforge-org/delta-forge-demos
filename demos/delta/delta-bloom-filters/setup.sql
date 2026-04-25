@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.transaction_log (
     category    VARCHAR,
     status      VARCHAR,
     txn_date    VARCHAR
-) LOCATION '{{data_path}}/transaction_log'
+) LOCATION 'transaction_log'
 TBLPROPERTIES ('delta.dataSkippingNumIndexedCols'='8');
 
 

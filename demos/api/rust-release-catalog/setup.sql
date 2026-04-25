@@ -53,7 +53,7 @@ CREATE CONNECTION IF NOT EXISTS github_releases
         base_url      = 'https://api.github.com',
         auth_mode     = 'none',
         storage_zone  = '{{zone_name}}',
-        base_path     = '{{data_path}}/github_releases',
+        base_path     = 'github_releases',
         timeout_secs  = '30'
     );
 
@@ -88,7 +88,7 @@ CREATE API ENDPOINT {{zone_name}}.github_releases.rust_releases
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.github_releases.rust_releases_bronze
 USING JSON
-LOCATION '{{data_path}}/github_releases/rust_releases'
+LOCATION 'github_releases/rust_releases'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -154,4 +154,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.github_releases.rust_releases_sil
     html_url       STRING,
     author_login   STRING
 )
-LOCATION '{{data_path}}/silver/rust_releases';
+LOCATION 'silver/rust_releases';

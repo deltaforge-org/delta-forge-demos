@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v1 (
     humidity     DOUBLE,
     reading_time VARCHAR,
     status       VARCHAR
-) LOCATION '{{data_path}}/sensors_v1'
+) LOCATION 'sensors_v1'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '1',
@@ -45,7 +45,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v2 (
     humidity     DOUBLE,
     reading_time VARCHAR,
     status       VARCHAR
-) LOCATION '{{data_path}}/sensors_v2'
+) LOCATION 'sensors_v2'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',
@@ -63,7 +63,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensors_v3 (
     humidity     DOUBLE,
     reading_time VARCHAR,
     status       VARCHAR
-) LOCATION '{{data_path}}/sensors_v3'
+) LOCATION 'sensors_v3'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '3',

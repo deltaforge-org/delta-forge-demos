@@ -23,7 +23,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.emergency.hospitals (
     lng            DOUBLE,
     trauma_level   INT,
     bed_capacity   INT
-) LOCATION '{{data_path}}/emergency_hospitals';
+) LOCATION 'emergency_hospitals';
 
 
 INSERT INTO {{zone_name}}.emergency.hospitals VALUES
@@ -50,7 +50,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.emergency.incidents (
     lng             DOUBLE,
     severity        VARCHAR,
     reported_at     VARCHAR
-) LOCATION '{{data_path}}/emergency_incidents';
+) LOCATION 'emergency_incidents';
 
 
 INSERT INTO {{zone_name}}.emergency.incidents VALUES
@@ -82,7 +82,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.emergency.response_zones (
     zone_name       VARCHAR,
     zone_polygon    VARCHAR,
     priority_level  INT
-) LOCATION '{{data_path}}/emergency_zones';
+) LOCATION 'emergency_zones';
 
 
 INSERT INTO {{zone_name}}.emergency.response_zones VALUES

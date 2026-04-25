@@ -58,7 +58,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.edi_demos
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.edi_demos.repeating_indexed
 USING EDI
-LOCATION '{{data_path}}/*.edi'
+LOCATION '*.edi'
 OPTIONS (
     edi_config = '{
         "ediFormat": "x12",
@@ -84,7 +84,7 @@ OPTIONS (
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.edi_demos.repeating_concat
 USING EDI
-LOCATION '{{data_path}}/*.edi'
+LOCATION '*.edi'
 OPTIONS (
     edi_config = '{
         "ediFormat": "x12",
@@ -110,7 +110,7 @@ OPTIONS (
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.edi_demos.repeating_json
 USING EDI
-LOCATION '{{data_path}}/*.edi'
+LOCATION '*.edi'
 OPTIONS (
     edi_config = '{
         "ediFormat": "x12",

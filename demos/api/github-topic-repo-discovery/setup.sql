@@ -42,7 +42,7 @@ CREATE CONNECTION IF NOT EXISTS github_search_api
         base_url     = 'https://api.github.com',
         auth_mode    = 'none',
         storage_zone = '{{zone_name}}',
-        base_path    = '{{data_path}}/github_search',
+        base_path    = 'github_search',
         timeout_secs = '30'
     );
 
@@ -79,7 +79,7 @@ CREATE API ENDPOINT {{zone_name}}.github_search_api.delta_lake_topic
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.github_search_api.delta_lake_repos_bronze
 USING JSON
-LOCATION '{{data_path}}/github_search/delta_lake_topic'
+LOCATION 'github_search/delta_lake_topic'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -131,4 +131,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.github_search_api.delta_lake_repo
     is_fork      BOOLEAN,
     html_url     STRING
 )
-LOCATION '{{data_path}}/silver/delta_lake_repos';
+LOCATION 'silver/delta_lake_repos';

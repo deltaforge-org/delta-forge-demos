@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     region          VARCHAR,
     quality_score   INT,
     recorded_date   VARCHAR
-) LOCATION '{{data_path}}/sensor_telemetry';
+) LOCATION 'sensor_telemetry';
 
 
 -- ============================================================================

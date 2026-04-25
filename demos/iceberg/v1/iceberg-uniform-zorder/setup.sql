@@ -30,7 +30,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.delivery_tracking (
     delivery_fee      DOUBLE,
     delivery_date     VARCHAR,
     city              VARCHAR
-) LOCATION '{{data_path}}/delivery_tracking'
+) LOCATION 'delivery_tracking'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

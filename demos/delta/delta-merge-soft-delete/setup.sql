@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vendors (
     is_active       INT,
     status_note     VARCHAR,
     last_verified   VARCHAR
-) LOCATION '{{data_path}}/vendors';
+) LOCATION 'vendors';
 
 
 INSERT INTO {{zone_name}}.delta_demos.vendors VALUES
@@ -65,7 +65,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vendor_feed (
     vendor_name     VARCHAR,
     category        VARCHAR,
     annual_spend    DOUBLE
-) LOCATION '{{data_path}}/vendor_feed';
+) LOCATION 'vendor_feed';
 
 
 INSERT INTO {{zone_name}}.delta_demos.vendor_feed VALUES

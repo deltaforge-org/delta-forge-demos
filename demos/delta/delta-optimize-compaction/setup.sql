@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.daily_orders (
     status      VARCHAR,
     region      VARCHAR,
     order_date  VARCHAR
-) LOCATION '{{data_path}}/daily_orders';
+) LOCATION 'daily_orders';
 
 
 -- ============================================================================

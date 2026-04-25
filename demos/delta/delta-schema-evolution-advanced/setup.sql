@@ -21,7 +21,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     category VARCHAR,
     price    DOUBLE,
     stock    INT
-) LOCATION '{{data_path}}/product_catalog';
+) LOCATION 'product_catalog';
 
 
 -- STEP 3: Insert 30 baseline products

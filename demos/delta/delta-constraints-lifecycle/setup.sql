@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.products (
     price     DOUBLE,
     stock     INT,
     discount  DOUBLE
-) LOCATION '{{data_path}}/products'
+) LOCATION 'products'
 TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true',
     'delta.constraints.price_positive' = 'price > 0',

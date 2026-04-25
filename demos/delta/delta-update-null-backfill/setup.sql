@@ -44,7 +44,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.patient_records (
     last_visit        VARCHAR,
     temperature       DECIMAL(5,2),
     notes             VARCHAR
-) LOCATION '{{data_path}}/patient_records';
+) LOCATION 'patient_records';
 
 
 -- ============================================================================

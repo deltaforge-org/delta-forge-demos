@@ -23,7 +23,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders (
     unit_price      DECIMAL(10,2),
     status          VARCHAR,
     order_date      DATE
-) LOCATION '{{data_path}}/orders'
+) LOCATION 'orders'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

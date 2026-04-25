@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.ecom_orders (
     unit_price  DOUBLE,
     status      VARCHAR,
     order_date  VARCHAR
-) LOCATION '{{data_path}}/ecom_orders';
+) LOCATION 'ecom_orders';
 
 
 INSERT INTO {{zone_name}}.delta_demos.ecom_orders VALUES

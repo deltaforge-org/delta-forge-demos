@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hospital_referrals.physicians (
     hospital            STRING,
     years_exp           INT,
     accepting_referrals BOOLEAN
-) LOCATION '{{data_path}}/physicians';
+) LOCATION 'physicians';
 
 
 INSERT INTO {{zone_name}}.hospital_referrals.physicians
@@ -64,7 +64,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hospital_referrals.referrals (
     referral_type   STRING,
     referral_date   STRING,
     status          STRING
-) LOCATION '{{data_path}}/referrals';
+) LOCATION 'referrals';
 
 
 -- Batch 1: Intra-hospital referrals (stride 3, same hospital) — 30 edges

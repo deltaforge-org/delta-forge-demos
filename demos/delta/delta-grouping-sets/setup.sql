@@ -32,7 +32,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.production_runs (
     defect_count     INT,
     runtime_hours    DOUBLE,
     operator_name    VARCHAR
-) LOCATION '{{data_path}}/production_runs';
+) LOCATION 'production_runs';
 
 
 -- Line-A: 12 rows (3 shifts x 4 dates)

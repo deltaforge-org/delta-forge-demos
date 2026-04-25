@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fund_holdings (
     price       DECIMAL(10,2),
     sector      VARCHAR,
     trade_date  VARCHAR
-) LOCATION '{{data_path}}/fund_holdings';
+) LOCATION 'fund_holdings';
 
 
 -- ============================================================================

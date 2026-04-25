@@ -92,7 +92,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.hie.patients_silver (
     birth_date        STRING,
     gender            STRING
 )
-LOCATION '{{data_path}}/silver/patients';
+LOCATION 'silver/patients';
 
 INSERT INTO {{zone_name}}.hie.patients_silver
 SELECT

@@ -60,7 +60,7 @@ CREATE CONNECTION IF NOT EXISTS httpbin_smoke
         auth_mode        = 'api_key_header',
         auth_header_name = 'X-API-Key',
         storage_zone     = '{{zone_name}}',
-        base_path        = '{{data_path}}/httpbin_smoke',
+        base_path        = 'httpbin_smoke',
         timeout_secs     = '30'
     )
     CREDENTIAL = httpbin_smoke_api_key;
@@ -120,7 +120,7 @@ DROP API ENDPOINT {{zone_name}}.httpbin_smoke.probe_dropped_example;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.httpbin_smoke.headers_bronze
 USING JSON
-LOCATION '{{data_path}}/httpbin_smoke/probe_headers'
+LOCATION 'httpbin_smoke/probe_headers'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -147,7 +147,7 @@ OPTIONS (
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.httpbin_smoke.uuid_bronze
 USING JSON
-LOCATION '{{data_path}}/httpbin_smoke/probe_uuid'
+LOCATION 'httpbin_smoke/probe_uuid'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{

@@ -23,7 +23,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales (
     sale_amount      DECIMAL(10,2),
     commission_pct   DECIMAL(4,1),
     sale_date        DATE
-) LOCATION '{{data_path}}/sales'
+) LOCATION 'sales'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

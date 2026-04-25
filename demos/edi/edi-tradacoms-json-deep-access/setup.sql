@@ -53,7 +53,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.edi_demos
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.edi_demos.tradacoms_json_messages
 USING EDI
-LOCATION '{{data_path}}/*.edi'
+LOCATION '*.edi'
 OPTIONS (
     edi_config = '{"ediFormat": "tradacoms"}',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'

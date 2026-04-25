@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.warehouse_orders (
     unit_price  DECIMAL(10,2),
     order_date  VARCHAR,
     priority    VARCHAR
-) LOCATION '{{data_path}}/warehouse_orders'
+) LOCATION 'warehouse_orders'
 PARTITIONED BY (warehouse)
 TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true'

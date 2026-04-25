@@ -26,5 +26,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- The table contains STRUCT and ARRAY<STRUCT> columns for nested data.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders
 USING ICEBERG
-LOCATION '{{data_path}}/orders';
+LOCATION 'orders';
 

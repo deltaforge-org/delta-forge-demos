@@ -60,7 +60,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.holiday_calendar.country_holidays
     is_global      BOOLEAN,
     source_batch   STRING
 )
-LOCATION '{{data_path}}/silver/country_holidays';
+LOCATION 'silver/country_holidays';
 
 INSERT INTO {{zone_name}}.holiday_calendar.country_holidays VALUES
     ('NO', 2024, DATE '2024-01-01', 'Forste nyttarsdag',    'New Year''s Day',   true, true, 'launch_seed'),
@@ -82,7 +82,7 @@ CREATE CONNECTION IF NOT EXISTS holiday_calendar
         base_url     = 'https://date.nager.at',
         auth_mode    = 'bearer',
         storage_zone = '{{zone_name}}',
-        base_path    = '{{data_path}}/holiday_calendar',
+        base_path    = 'holiday_calendar',
         timeout_secs = '30'
     )
     CREDENTIAL = holiday_api_token;
@@ -105,7 +105,7 @@ CREATE API ENDPOINT {{zone_name}}.holiday_calendar.public_holidays
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.holiday_calendar.public_holidays_bronze
 USING JSON
-LOCATION '{{data_path}}/holiday_calendar/public_holidays'
+LOCATION 'holiday_calendar/public_holidays'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{

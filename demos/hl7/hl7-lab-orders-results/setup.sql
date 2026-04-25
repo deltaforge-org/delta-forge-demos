@@ -43,7 +43,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.hl7_demos
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.hl7_demos.lab_orders
 USING HL7
-LOCATION '{{data_path}}/orm*.hl7'
+LOCATION 'orm*.hl7'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
@@ -67,7 +67,7 @@ OPTIONS (
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.hl7_demos.lab_results
 USING HL7
-LOCATION '{{data_path}}/*.hl7'
+LOCATION '*.hl7'
 OPTIONS (
     hl7_config = '{
         "materialized_paths": [

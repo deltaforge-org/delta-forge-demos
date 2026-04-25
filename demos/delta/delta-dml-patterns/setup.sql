@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_history (
     status      VARCHAR,
     region      VARCHAR,
     order_date  VARCHAR
-) LOCATION '{{data_path}}/order_history';
+) LOCATION 'order_history';
 
 
 -- ============================================================================
@@ -49,7 +49,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_archive (
     status      VARCHAR,
     region      VARCHAR,
     order_date  VARCHAR
-) LOCATION '{{data_path}}/order_archive';
+) LOCATION 'order_archive';
 
 
 -- STEP 2: Insert 60 known orders

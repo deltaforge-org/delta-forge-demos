@@ -26,7 +26,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory
     quantity       INT,
     unit_price     DOUBLE,
     last_received  VARCHAR
-) LOCATION '{{data_path}}/warehouse_inventory'
+) LOCATION 'warehouse_inventory'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '3',

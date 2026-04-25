@@ -27,5 +27,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- The partition-spec uses months(pickup_date) — a hidden partition transform.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.trips
 USING ICEBERG
-LOCATION '{{data_path}}/trips';
+LOCATION 'trips';
 

@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.user_profiles (
     signup_date        VARCHAR,
     last_login         VARCHAR,
     subscription_tier  VARCHAR
-) LOCATION '{{data_path}}/user_profiles'
+) LOCATION 'user_profiles'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

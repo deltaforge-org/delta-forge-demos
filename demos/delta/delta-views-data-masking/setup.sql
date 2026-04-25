@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_orders (
     order_status      VARCHAR,
     order_date        VARCHAR,
     region            VARCHAR
-) LOCATION '{{data_path}}/customer_orders';
+) LOCATION 'customer_orders';
 
 
 -- STEP 2: Insert 30 orders spanning 6 regions, 7 products, 4 statuses

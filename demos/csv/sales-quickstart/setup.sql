@@ -62,7 +62,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.csv_demos
 -- DeltaForge unifies all schemas; missing columns appear as NULL.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.csv_demos.sales
 USING CSV
-LOCATION '{{data_path}}/sales*.csv'
+LOCATION 'sales*.csv'
 OPTIONS (
     header = 'true',
     file_metadata = '{"columns":["df_file_name","df_file_modified","df_dataset","df_row_number"]}'

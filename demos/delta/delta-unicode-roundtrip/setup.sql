@@ -35,7 +35,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.global_bazaar (
     country             VARCHAR,
     region              VARCHAR
 ) PARTITIONED BY (region)
-  LOCATION '{{data_path}}/global_bazaar';
+  LOCATION 'global_bazaar';
 
 
 -- STEP 2: Insert 30 products across 3 regions

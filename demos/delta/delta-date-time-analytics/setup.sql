@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.attendance_records (
     clock_out       TIMESTAMP,
     record_date     DATE,
     is_remote       BOOLEAN
-) LOCATION '{{data_path}}/attendance_records';
+) LOCATION 'attendance_records';
 
 -- ============================================================================
 -- INSERT: Alice Chen — Engineering (record_ids 1-10)

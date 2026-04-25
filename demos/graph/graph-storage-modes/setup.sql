@@ -48,7 +48,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_flat (
     title       STRING,
     level       STRING,
     active      BOOLEAN
-) LOCATION '{{data_path}}/persons_flat';
+) LOCATION 'persons_flat';
 
 
 INSERT INTO {{zone_name}}.storage_modes.persons_flat
@@ -100,7 +100,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_flat (
     frequency           STRING,
     context             STRING,
     rating              INT
-) LOCATION '{{data_path}}/edges_flat';
+) LOCATION 'edges_flat';
 
 
 -- Batch 1: Intra-department colleagues (~80 edges, stride 5)
@@ -283,7 +283,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_hybrid (
     age     INT,
     label   STRING,
     extras  STRING
-) LOCATION '{{data_path}}/persons_hybrid';
+) LOCATION 'persons_hybrid';
 
 
 INSERT INTO {{zone_name}}.storage_modes.persons_hybrid
@@ -303,7 +303,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_hybrid (
     weight              DOUBLE,
     relationship_type   STRING,
     extras              STRING
-) LOCATION '{{data_path}}/edges_hybrid';
+) LOCATION 'edges_hybrid';
 
 
 INSERT INTO {{zone_name}}.storage_modes.edges_hybrid
@@ -346,7 +346,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.persons_json (
     id      BIGINT,
     label   STRING,
     props   STRING
-) LOCATION '{{data_path}}/persons_json';
+) LOCATION 'persons_json';
 
 
 INSERT INTO {{zone_name}}.storage_modes.persons_json
@@ -368,7 +368,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.storage_modes.edges_json (
     weight             DOUBLE,
     relationship_type  VARCHAR,
     props              STRING
-) LOCATION '{{data_path}}/edges_json';
+) LOCATION 'edges_json';
 
 
 INSERT INTO {{zone_name}}.storage_modes.edges_json

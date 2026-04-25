@@ -24,7 +24,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.customer_orders (
     quantity       INT,
     unit_price     DOUBLE,
     order_date     VARCHAR
-) LOCATION '{{data_path}}/customer_orders'
+) LOCATION 'customer_orders'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

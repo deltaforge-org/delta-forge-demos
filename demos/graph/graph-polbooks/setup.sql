@@ -30,7 +30,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.political_books
 -- ############################################################################
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.polbooks_raw.polbooks_edges
-USING CSV LOCATION '{{data_path}}/edges.csv'
+USING CSV LOCATION 'edges.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
 -- ############################################################################
@@ -40,7 +40,7 @@ OPTIONS (header = 'true', delimiter = '|');
 -- === Edge Table (CTAS from external) ===
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.political_books.edges
-LOCATION '{{data_path}}/delta/edges'
+LOCATION 'delta/edges'
 AS SELECT
     CAST(src AS BIGINT) AS src,
     CAST(dst AS BIGINT) AS dst,
@@ -51,12 +51,12 @@ FROM {{zone_name}}.polbooks_raw.polbooks_edges;
 -- === Vertex Table (from CSV with book titles and political leanings) ===
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.polbooks_raw.polbooks_vertices
-USING CSV LOCATION '{{data_path}}/vertices.csv'
+USING CSV LOCATION 'vertices.csv'
 OPTIONS (header = 'true', delimiter = '|');
 
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.political_books.vertices
-LOCATION '{{data_path}}/delta/vertices'
+LOCATION 'delta/vertices'
 AS SELECT
     CAST(vertex_id AS BIGINT) AS vertex_id,
     CAST(name AS VARCHAR) AS name,

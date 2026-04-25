@@ -42,7 +42,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.employees (
     is_active        BOOLEAN,
     manager_id       INT,
     level            VARCHAR
-) LOCATION '{{data_path}}/employees';
+) LOCATION 'employees';
 
 
 -- STEP 2: Insert 30 employees across 5 departments

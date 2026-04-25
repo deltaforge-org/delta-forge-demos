@@ -23,7 +23,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.transactions (
     balance_after DECIMAL(12,2),
     currency      VARCHAR,
     txn_date      DATE
-) LOCATION '{{data_path}}/transactions'
+) LOCATION 'transactions'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

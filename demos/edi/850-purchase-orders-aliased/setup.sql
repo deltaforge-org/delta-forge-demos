@@ -74,7 +74,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.commerce
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.commerce.purchase_orders
 USING EDI
-LOCATION '{{data_path}}/*.edi'
+LOCATION '*.edi'
 OPTIONS (
     edi_config = '{
         "ediFormat": "x12",

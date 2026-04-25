@@ -62,7 +62,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.edi_demos
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.edi_demos.lifecycle_tracking
 USING EDI
-LOCATION '{{data_path}}/*.edi'
+LOCATION '*.edi'
 OPTIONS (
     edi_config = '{
         "ediFormat": "x12",

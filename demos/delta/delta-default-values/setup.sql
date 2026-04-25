@@ -35,7 +35,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.audit_log (
     is_archived  INT,
     created_at   VARCHAR,
     notes        VARCHAR
-) LOCATION '{{data_path}}/audit_log';
+) LOCATION 'audit_log';
 
 
 -- ============================================================================

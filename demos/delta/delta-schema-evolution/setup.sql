@@ -20,7 +20,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.contacts (
     first_name VARCHAR,
     last_name  VARCHAR,
     email      VARCHAR
-) LOCATION '{{data_path}}/contacts';
+) LOCATION 'contacts';
 
 
 -- STEP 3: Insert 30 baseline contacts

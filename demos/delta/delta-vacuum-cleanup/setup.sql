@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.hr_employees (
     salary          DOUBLE,
     status          VARCHAR,
     hire_date       VARCHAR
-) LOCATION '{{data_path}}/hr_employees';
+) LOCATION 'hr_employees';
 
 
 -- STEP 2: Insert 50 employees across 5 departments

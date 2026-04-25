@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.sales_daily (
     revenue       DOUBLE,
     discount_pct  DOUBLE,
     customers     INT
-) LOCATION '{{data_path}}/sales_daily';
+) LOCATION 'sales_daily';
 
 INSERT INTO {{zone_name}}.retail.sales_daily (txn_id, txn_date, store_name, category, units_sold, revenue, discount_pct, customers) VALUES
     (1, '2026-03-02', 'Downtown', 'Apparel', 30, 1080.00, 0.10, 15),
@@ -128,7 +128,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.stock_prices (
     high_price   DOUBLE,
     low_price    DOUBLE,
     close_price  DOUBLE
-) LOCATION '{{data_path}}/stock_prices';
+) LOCATION 'stock_prices';
 
 INSERT INTO {{zone_name}}.retail.stock_prices (week_start, open_price, high_price, low_price, close_price) VALUES
     ('2026-01-05', 52.00, 54.50, 51.20, 53.80),

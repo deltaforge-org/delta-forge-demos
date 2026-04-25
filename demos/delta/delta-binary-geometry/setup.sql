@@ -36,7 +36,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.document_store (
     content_hash    VARCHAR,
     size_bytes      INT,
     created_at      VARCHAR
-) LOCATION '{{data_path}}/document_store';
+) LOCATION 'document_store';
 
 
 -- STEP 2: Insert 25 documents
@@ -79,7 +79,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.geo_locations (
     latitude    DOUBLE,
     longitude   DOUBLE,
     region      VARCHAR
-) LOCATION '{{data_path}}/geo_locations';
+) LOCATION 'geo_locations';
 
 
 -- STEP 3: Insert 20 POINT locations (batch 1)

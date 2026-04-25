@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.config_singleton (
     version         INT,
     updated_by      VARCHAR,
     updated_at      VARCHAR
-) LOCATION '{{data_path}}/config_singleton';
+) LOCATION 'config_singleton';
 
 
 -- Insert the single configuration row (version 1 — baseline)
@@ -71,7 +71,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.wide_metrics (
     m26_click_rate      DOUBLE,
     m27_social_reach    INT,
     m28_engagement_rate DOUBLE
-) LOCATION '{{data_path}}/wide_metrics';
+) LOCATION 'wide_metrics';
 
 
 -- Insert 20 rows of monthly KPI data
@@ -107,6 +107,6 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.empty_staging (
     raw_data        VARCHAR,
     status          VARCHAR,
     received_at     VARCHAR
-) LOCATION '{{data_path}}/empty_staging';
+) LOCATION 'empty_staging';
 
 

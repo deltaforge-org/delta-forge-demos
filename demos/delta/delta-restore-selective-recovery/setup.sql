@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.portfolio_positions (
     market_value  DOUBLE,
     sector        VARCHAR,
     last_updated  VARCHAR
-) LOCATION '{{data_path}}/portfolio_positions';
+) LOCATION 'portfolio_positions';
 
 
 INSERT INTO {{zone_name}}.delta_demos.portfolio_positions VALUES

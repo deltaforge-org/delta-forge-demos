@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.compliance_events (
     officer         VARCHAR,
     branch          VARCHAR,
     event_date      VARCHAR
-) LOCATION '{{data_path}}/compliance_events'
+) LOCATION 'compliance_events'
 TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true'
 );

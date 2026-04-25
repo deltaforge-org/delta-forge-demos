@@ -22,7 +22,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.compliance_records 
     compliance_status VARCHAR,
     risk_score        INT,
     review_date       DATE
-) LOCATION '{{data_path}}/compliance_records'
+) LOCATION 'compliance_records'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

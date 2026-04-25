@@ -43,7 +43,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.orc_demos.api01_only
 USING ORC
-LOCATION '{{data_path}}/api-01*.orc'
+LOCATION 'api-01*.orc'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );

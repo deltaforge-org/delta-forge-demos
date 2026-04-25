@@ -25,7 +25,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.ingestion_log (
     payload_hash    VARCHAR,
     ingested_at     VARCHAR,
     batch_id        VARCHAR
-) LOCATION '{{data_path}}/ingestion_log'
+) LOCATION 'ingestion_log'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',
@@ -65,7 +65,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.beta_corrections (
     payload_hash    VARCHAR,
     ingested_at     VARCHAR,
     batch_id        VARCHAR
-) LOCATION '{{data_path}}/beta_corrections'
+) LOCATION 'beta_corrections'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

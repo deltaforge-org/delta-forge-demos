@@ -128,7 +128,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.billing.events_curated (
     plan            STRING,
     country         STRING
 )
-LOCATION '{{data_path}}/silver/events_curated';
+LOCATION 'silver/events_curated';
 
 INSERT INTO {{zone_name}}.billing.events_curated
 SELECT

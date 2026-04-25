@@ -44,7 +44,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.shift_handover (
     role                VARCHAR,
     department          VARCHAR,
     status              VARCHAR
-) LOCATION '{{data_path}}/shift_handover';
+) LOCATION 'shift_handover';
 
 
 -- ============================================================================

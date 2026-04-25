@@ -29,7 +29,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.product_catalog_nes
     tags             ARRAY(VARCHAR),
     localized_names  MAP(VARCHAR, VARCHAR),
     in_stock         BOOLEAN
-) LOCATION '{{data_path}}/product_catalog_nested'
+) LOCATION 'product_catalog_nested'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

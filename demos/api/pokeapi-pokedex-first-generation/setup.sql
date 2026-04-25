@@ -40,7 +40,7 @@ CREATE CONNECTION IF NOT EXISTS pokedex_api
         base_url     = 'https://pokeapi.co',
         auth_mode    = 'none',
         storage_zone = '{{zone_name}}',
-        base_path    = '{{data_path}}/pokedex_api',
+        base_path    = 'pokedex_api',
         timeout_secs = '30'
     );
 
@@ -75,7 +75,7 @@ CREATE API ENDPOINT {{zone_name}}.pokedex_api.first_generation
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.pokedex_api.pokedex_bronze
 USING JSON
-LOCATION '{{data_path}}/pokedex_api/first_generation'
+LOCATION 'pokedex_api/first_generation'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -106,4 +106,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pokedex_api.pokedex_silver (
     pokemon_name  STRING,
     detail_url    STRING
 )
-LOCATION '{{data_path}}/silver/pokedex_silver';
+LOCATION 'silver/pokedex_silver';

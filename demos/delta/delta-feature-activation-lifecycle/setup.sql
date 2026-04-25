@@ -25,7 +25,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_events (
     channel         VARCHAR,
     revenue         DOUBLE,
     event_date      VARCHAR
-) LOCATION '{{data_path}}/customer_events';
+) LOCATION 'customer_events';
 
 
 -- 25 customer interaction events across 8 customers and 5 channels

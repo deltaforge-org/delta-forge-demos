@@ -35,7 +35,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.patient_records (
     discharge_date        VARCHAR,
     secondary_insurance   VARCHAR,
     ward                  VARCHAR
-) LOCATION '{{data_path}}/patient_records';
+) LOCATION 'patient_records';
 
 
 -- ============================================================================

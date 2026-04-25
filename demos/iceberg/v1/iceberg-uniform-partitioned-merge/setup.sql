@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory
     reorder_point     INT,
     unit_cost         DOUBLE,
     last_received     VARCHAR
-) LOCATION '{{data_path}}/warehouse_inventory'
+) LOCATION 'warehouse_inventory'
 PARTITIONED BY (warehouse)
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',

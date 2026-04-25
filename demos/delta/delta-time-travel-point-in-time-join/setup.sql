@@ -30,7 +30,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fx_trades (
     amount     DOUBLE,
     direction  VARCHAR,
     traded_at  VARCHAR
-) LOCATION '{{data_path}}/fx_trades';
+) LOCATION 'fx_trades';
 
 
 INSERT INTO {{zone_name}}.delta_demos.fx_trades VALUES
@@ -58,7 +58,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.fx_rates (
     pair           VARCHAR,
     rate           DOUBLE,
     effective_from VARCHAR
-) LOCATION '{{data_path}}/fx_rates';
+) LOCATION 'fx_rates';
 
 
 -- VERSION 1: Morning rates

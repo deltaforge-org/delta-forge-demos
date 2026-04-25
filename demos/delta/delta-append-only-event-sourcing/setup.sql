@@ -32,7 +32,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_events (
     amount     DOUBLE,
     actor      VARCHAR,
     created_at VARCHAR
-) LOCATION '{{data_path}}/order_events'
+) LOCATION 'order_events'
 TBLPROPERTIES (
     'delta.appendOnly' = 'true'
 );

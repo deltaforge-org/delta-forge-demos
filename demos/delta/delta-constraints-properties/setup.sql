@@ -34,7 +34,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.invoices (
     total        DOUBLE,
     status       VARCHAR,
     created_date VARCHAR
-) LOCATION '{{data_path}}/invoices'
+) LOCATION 'invoices'
 TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true',
     'delta.constraints.amount_positive' = 'amount > 0',
@@ -85,7 +85,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.event_log (
     event_type VARCHAR,
     payload    VARCHAR,
     created_at VARCHAR
-) LOCATION '{{data_path}}/event_log'
+) LOCATION 'event_log'
 TBLPROPERTIES (
     'delta.appendOnly' = 'true'
 );

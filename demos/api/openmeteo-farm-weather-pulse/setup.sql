@@ -40,7 +40,7 @@ CREATE CONNECTION IF NOT EXISTS openmeteo_api
         base_url     = 'https://api.open-meteo.com',
         auth_mode    = 'none',
         storage_zone = '{{zone_name}}',
-        base_path    = '{{data_path}}/openmeteo_api',
+        base_path    = 'openmeteo_api',
         timeout_secs = '30'
     );
 
@@ -73,7 +73,7 @@ CREATE API ENDPOINT {{zone_name}}.openmeteo_api.observation_dublin
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.openmeteo_api.weather_bronze
 USING JSON
-LOCATION '{{data_path}}/openmeteo_api'
+LOCATION 'openmeteo_api'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -126,4 +126,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.openmeteo_api.weather_silver (
     humidity_pct      DOUBLE,
     precipitation_mm  DOUBLE
 )
-LOCATION '{{data_path}}/silver/farm_weather';
+LOCATION 'silver/farm_weather';

@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.product_catalog (
     price      DOUBLE,
     stock      INT,
     rating     DOUBLE
-) LOCATION '{{data_path}}/product_catalog'
+) LOCATION 'product_catalog'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

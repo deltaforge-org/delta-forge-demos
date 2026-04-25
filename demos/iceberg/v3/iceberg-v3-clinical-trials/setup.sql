@@ -29,5 +29,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- The format-version field in metadata.json is 3 (latest Iceberg spec).
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.lab_results
 USING ICEBERG
-LOCATION '{{data_path}}/iceberg_warehouse/trials/lab_results';
+LOCATION 'iceberg_warehouse/trials/lab_results';
 

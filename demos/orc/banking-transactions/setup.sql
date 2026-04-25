@@ -38,7 +38,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.orc_bank.downtown_only
 USING ORC
-LOCATION '{{data_path}}/branch_downtown.orc'
+LOCATION 'branch_downtown.orc'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );

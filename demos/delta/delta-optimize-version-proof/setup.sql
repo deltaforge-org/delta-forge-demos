@@ -36,7 +36,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.shipments (
     weight_kg      DOUBLE,
     status         VARCHAR,
     ship_date      VARCHAR
-) LOCATION '{{data_path}}/shipments';
+) LOCATION 'shipments';
 
 
 -- ============================================================================

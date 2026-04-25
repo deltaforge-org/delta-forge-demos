@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sensor_readings (
     humidity       FLOAT,
     battery_pct    INT,
     reading_date   VARCHAR
-) LOCATION '{{data_path}}/sensor_readings'
+) LOCATION 'sensor_readings'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

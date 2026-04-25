@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.landmarks (
     country VARCHAR,
     lat DOUBLE,
     lng DOUBLE
-) LOCATION '{{data_path}}/landmarks';
+) LOCATION 'landmarks';
 
 
 INSERT INTO {{zone_name}}.spatial_demos.landmarks VALUES
@@ -67,7 +67,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.regions (
     country VARCHAR,
     polygon_wkt VARCHAR,
     timezone VARCHAR
-) LOCATION '{{data_path}}/regions';
+) LOCATION 'regions';
 
 
 INSERT INTO {{zone_name}}.spatial_demos.regions VALUES
@@ -91,7 +91,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.spatial_demos.gps_points (
     lng DOUBLE,
     device_id VARCHAR,
     city VARCHAR
-) LOCATION '{{data_path}}/gps_points';
+) LOCATION 'gps_points';
 
 
 -- San Francisco: 2,000 points within bounding box

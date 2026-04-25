@@ -40,7 +40,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.billing_transactions 
     amount          DOUBLE,
     status          VARCHAR,
     created_date    VARCHAR
-) LOCATION '{{data_path}}/billing_transactions';
+) LOCATION 'billing_transactions';
 
 
 -- STEP 2: Insert 30 billing transactions across 3 months (Jan/Feb/Mar 2025)

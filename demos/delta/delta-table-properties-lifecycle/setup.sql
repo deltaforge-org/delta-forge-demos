@@ -38,7 +38,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.inventory_items (
     unit_price    DECIMAL(10,2),
     warehouse     VARCHAR,
     last_updated  VARCHAR
-) LOCATION '{{data_path}}/inventory_items'
+) LOCATION 'inventory_items'
 TBLPROPERTIES (
     'delta.enableChangeDataFeed' = 'true',
     'delta.autoOptimize.optimizeWrite' = 'true',

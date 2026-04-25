@@ -26,7 +26,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.financial_transacti
     ccy          VARCHAR,
     txn_date     VARCHAR,
     branch_code  VARCHAR
-) LOCATION '{{data_path}}/financial_transactions'
+) LOCATION 'financial_transactions'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

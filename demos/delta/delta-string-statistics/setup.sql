@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     category    VARCHAR,
     price       DOUBLE,
     url         VARCHAR
-) LOCATION '{{data_path}}/product_catalog';
+) LOCATION 'product_catalog';
 
 
 -- ============================================================================

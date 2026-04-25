@@ -38,7 +38,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.financial_ledger (
     balance             DECIMAL(18,6),
     exchange_rate       DECIMAL(10,8),
     currency            VARCHAR
-) LOCATION '{{data_path}}/financial_ledger';
+) LOCATION 'financial_ledger';
 
 
 -- ============================================================================

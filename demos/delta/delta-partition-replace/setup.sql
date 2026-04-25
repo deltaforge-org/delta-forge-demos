@@ -32,7 +32,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.monthly_sales (
     qty        INT,
     sale_date  VARCHAR,
     sale_month VARCHAR
-) LOCATION '{{data_path}}/monthly_sales'
+) LOCATION 'monthly_sales'
 PARTITIONED BY (sale_month);
 
 

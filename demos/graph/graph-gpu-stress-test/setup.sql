@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_stress_network.gpu_st_departm
     floor_num   INT,
     budget_k    INT,
     region      STRING
-) LOCATION '{{data_path}}/gpu_st_departments';
+) LOCATION 'gpu_st_departments';
 
 
 INSERT INTO {{zone_name}}.gpu_stress_network.gpu_st_departments VALUES
@@ -79,7 +79,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_stress_network.gpu_st_people 
     level           STRING,
     salary_band     STRING,
     active          BOOLEAN
-) LOCATION '{{data_path}}/gpu_st_people';
+) LOCATION 'gpu_st_people';
 
 
 INSERT INTO {{zone_name}}.gpu_stress_network.gpu_st_people
@@ -166,7 +166,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.gpu_stress_network.gpu_st_edges (
     weight              DOUBLE,
     relationship_type   STRING,
     since_year          INT
-) LOCATION '{{data_path}}/gpu_st_edges';
+) LOCATION 'gpu_st_edges';
 
 -- ============================================================================
 -- Batch 1: Intra-department local neighborhood (~1.5M edges)

@@ -42,7 +42,7 @@ CREATE CONNECTION IF NOT EXISTS blog_moderation
         base_url     = 'https://jsonplaceholder.typicode.com',
         auth_mode    = 'none',
         storage_zone = '{{zone_name}}',
-        base_path    = '{{data_path}}/blog_moderation',
+        base_path    = 'blog_moderation',
         timeout_secs = '30'
     );
 
@@ -82,7 +82,7 @@ CREATE API ENDPOINT {{zone_name}}.blog_moderation.blog_posts
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.blog_moderation.posts_bronze
 USING JSON
-LOCATION '{{data_path}}/blog_moderation/blog_posts'
+LOCATION 'blog_moderation/blog_posts'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -121,4 +121,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.blog_moderation.posts_silver (
     body      STRING,
     char_len  BIGINT
 )
-LOCATION '{{data_path}}/silver/posts_silver';
+LOCATION 'silver/posts_silver';

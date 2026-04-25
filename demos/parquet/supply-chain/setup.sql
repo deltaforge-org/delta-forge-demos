@@ -33,7 +33,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.parquet_demos
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.parquet_demos.all_orders
 USING PARQUET
-LOCATION '{{data_path}}/orders'
+LOCATION 'orders'
 OPTIONS (
     recursive = 'true',
     row_group_filter = 'true',
@@ -47,7 +47,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.parquet_demos.orders_2015
 USING PARQUET
-LOCATION '{{data_path}}/orders'
+LOCATION 'orders'
 OPTIONS (
     recursive = 'true',
     file_filter = 'Orders_2015*',
@@ -62,7 +62,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.parquet_demos.orders_sample
 USING PARQUET
-LOCATION '{{data_path}}/orders'
+LOCATION 'orders'
 OPTIONS (
     recursive = 'true',
     max_rows = '100',
@@ -76,7 +76,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.parquet_demos.orders_q1_2014
 USING PARQUET
-LOCATION '{{data_path}}/orders'
+LOCATION 'orders'
 OPTIONS (
     recursive = 'true',
     file_filter = 'Orders_2014-03*',

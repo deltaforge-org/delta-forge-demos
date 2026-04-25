@@ -28,7 +28,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.portfolio_holdings 
     cost_basis     DOUBLE,
     market_price   DOUBLE,
     acquired_date  VARCHAR
-) LOCATION '{{data_path}}/portfolio_holdings'
+) LOCATION 'portfolio_holdings'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '3',

@@ -30,7 +30,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.app_logs (
     response_time_ms  INT,
     endpoint          VARCHAR,
     log_date          VARCHAR
-) LOCATION '{{data_path}}/app_logs'
+) LOCATION 'app_logs'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',

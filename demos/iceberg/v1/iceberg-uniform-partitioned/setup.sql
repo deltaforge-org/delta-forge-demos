@@ -25,7 +25,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.regional_sales (
     amount      DOUBLE,
     quantity    INT,
     sales_rep   VARCHAR
-) LOCATION '{{data_path}}/regional_sales'
+) LOCATION 'regional_sales'
 PARTITIONED BY (region)
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',

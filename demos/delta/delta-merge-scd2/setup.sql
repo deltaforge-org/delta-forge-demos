@@ -45,7 +45,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.policy_dim (
     valid_from     VARCHAR,
     valid_to       VARCHAR,
     is_current     INT
-) LOCATION '{{data_path}}/policy_dim';
+) LOCATION 'policy_dim';
 
 
 INSERT INTO {{zone_name}}.delta_demos.policy_dim VALUES
@@ -86,7 +86,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.policy_changes (
     region         VARCHAR,
     risk_score     INT,
     effective_date VARCHAR
-) LOCATION '{{data_path}}/policy_changes';
+) LOCATION 'policy_changes';
 
 
 INSERT INTO {{zone_name}}.delta_demos.policy_changes VALUES

@@ -44,7 +44,7 @@ CREATE CONNECTION IF NOT EXISTS arxiv_api
         base_url       = 'http://export.arxiv.org',
         auth_mode      = 'none',
         storage_zone   = '{{zone_name}}',
-        base_path      = '{{data_path}}/arxiv_api',
+        base_path      = 'arxiv_api',
         timeout_secs   = '60',
         rate_limit_rps = '1'
     );
@@ -89,7 +89,7 @@ CREATE API ENDPOINT {{zone_name}}.arxiv_api.cs_ai_latest
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.arxiv_api.arxiv_bronze
 USING XML
-LOCATION '{{data_path}}/arxiv_api/cs_ai_latest'
+LOCATION 'arxiv_api/cs_ai_latest'
 OPTIONS (
     recursive = 'true',
     xml_flatten_config = '{
@@ -138,4 +138,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.arxiv_api.arxiv_silver (
     summary       STRING,
     author_names  STRING
 )
-LOCATION '{{data_path}}/silver/arxiv_latest';
+LOCATION 'silver/arxiv_latest';

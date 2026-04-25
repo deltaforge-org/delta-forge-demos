@@ -42,7 +42,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_department
     floor_num   INT,
     budget_k    INT,
     region      STRING
-) LOCATION '{{data_path}}/st_departments';
+) LOCATION 'st_departments';
 
 
 INSERT INTO {{zone_name}}.stress_test_network.st_departments VALUES
@@ -86,7 +86,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_people (
     level           STRING,
     salary_band     STRING,
     active          BOOLEAN
-) LOCATION '{{data_path}}/st_people';
+) LOCATION 'st_people';
 
 
 INSERT INTO {{zone_name}}.stress_test_network.st_people
@@ -202,7 +202,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.stress_test_network.st_edges (
     weight              DOUBLE,
     relationship_type   STRING,
     since_year          INT
-) LOCATION '{{data_path}}/st_edges';
+) LOCATION 'st_edges';
 
 -- ============================================================================
 -- Batch 1: Intra-department local neighborhood (~1.5M edges)

@@ -33,7 +33,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     value         DOUBLE,
     unit          VARCHAR,
     quality       VARCHAR
-) LOCATION '{{data_path}}/sensor_telemetry';
+) LOCATION 'sensor_telemetry';
 
 
 -- Batch 1 — 40 morning readings (08:00..12:30)

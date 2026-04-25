@@ -23,5 +23,5 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- metadata.json v3 has the current snapshot with delete manifest references.
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.cold_chain_readings
 USING ICEBERG
-LOCATION '{{data_path}}/cold_chain_readings';
+LOCATION 'cold_chain_readings';
 

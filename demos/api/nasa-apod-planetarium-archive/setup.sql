@@ -60,7 +60,7 @@ CREATE CONNECTION IF NOT EXISTS nasa_api
         auth_mode       = 'api_key_query',
         auth_query_name = 'api_key',
         storage_zone    = '{{zone_name}}',
-        base_path       = '{{data_path}}/nasa_api',
+        base_path       = 'nasa_api',
         timeout_secs    = '30'
     )
     CREDENTIAL = nasa_apod_key;
@@ -89,7 +89,7 @@ CREATE API ENDPOINT {{zone_name}}.nasa_api.apod_archive
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.nasa_api.apod_bronze
 USING JSON
-LOCATION '{{data_path}}/nasa_api/apod_archive'
+LOCATION 'nasa_api/apod_archive'
 OPTIONS (
     recursive = 'true',
     json_flatten_config = '{
@@ -138,4 +138,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.nasa_api.apod_silver (
     service_version   STRING,
     copyright_holder  STRING
 )
-LOCATION '{{data_path}}/silver/apod_archive';
+LOCATION 'silver/apod_archive';

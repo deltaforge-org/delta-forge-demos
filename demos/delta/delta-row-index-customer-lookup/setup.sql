@@ -39,7 +39,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customers (
     signup_date   VARCHAR,
     lifetime_spend DOUBLE,
     active        BOOLEAN
-) LOCATION '{{data_path}}/customers';
+) LOCATION 'customers';
 
 
 -- Batch 1 — 30 legacy customers (customer_id 1000..1029)
