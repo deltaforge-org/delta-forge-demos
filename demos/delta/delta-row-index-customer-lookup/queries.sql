@@ -1,14 +1,62 @@
 -- ============================================================================
--- Online Retail Customer Lookup with Row-Level Index — Educational Queries
+-- Online Retail Customer Lookup with Row-Level Index
 -- ============================================================================
--- WHAT: A row-level index records, for each indexed column, where the
---       matching rows live so the engine can read just those rows.
--- WHY:  Without an index, every customer lookup forces a scan of every
---       data file. With high-cardinality customer IDs spread across many
---       files, file-level min/max ranges overlap heavily and prune little.
--- HOW:  CREATE INDEX builds a sorted child structure that answers
---       "which file (and which slice of which file) contains this key?"
---       The planner consults it whenever a query filters on customer_id.
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                    WHAT IS A ROW-LEVEL INDEX?                        │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ A Delta table is stored as many parquet files. To answer             │
+--  │   SELECT * FROM customers WHERE customer_id = 9005                   │
+--  │ the engine must figure out which file holds customer_id 9005 — and   │
+--  │ then read only that file.                                            │
+--  │                                                                      │
+--  │ Delta has BUILT-IN min/max statistics for the first ~32 columns of   │
+--  │ a table. For those columns, file pruning is free and an index would  │
+--  │ be redundant.                                                        │
+--  │                                                                      │
+--  │ A row-level index extends that pruning to columns Delta doesn't      │
+--  │ already track, and refines it from "which file" down to "which       │
+--  │ slice of which file". You can think of it as a sorted lookup table:  │
+--  │                                                                      │
+--  │     customer_id  →  (file_path, row_group_inside_that_file)          │
+--  │                                                                      │
+--  │ A query that filters on customer_id consults the index, gets the     │
+--  │ list of slices to read, and skips everything else.                   │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                       WHEN TO USE AN INDEX                           │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ ✓ Predicates target a specific column repeatedly                     │
+--  │   (point lookups, narrow ranges, IN lists, prefix LIKE)              │
+--  │ ✓ The column is high-cardinality (most values are distinct)          │
+--  │ ✓ Delta's built-in stats don't already prune well for this column    │
+--  │ ✓ The column is filtered by UPDATE / DELETE / MERGE — these          │
+--  │   operations spend most of their time *finding* the row before       │
+--  │   rewriting it. The index turns the find step from a full scan       │
+--  │   into a targeted read.                                              │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                    WHEN NOT TO USE AN INDEX                          │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ ✗ The column is in the first ~32 positions and Delta's stats         │
+--  │   already prune it for free                                          │
+--  │ ✗ Predicates are low-selectivity (matches most rows anyway)          │
+--  │ ✗ The table is small (a handful of files) — overhead won't pay back  │
+--  │ ✗ The table is heavily written by external tools that don't update   │
+--  │   the index — it'll be stale most of the time and ignored            │
+--  │ ✗ The column has very few distinct values (e.g. boolean, status)     │
+--  │   — bloom filters or partition columns are usually a better fit      │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+-- IMPORTANT: A stale or unused index NEVER produces wrong answers. If the
+-- index can't be used, the engine falls back to ordinary file pruning.
+-- Indexes only ever make things *faster*, never *different*.
+--
+-- This demo shows the four canonical lookup shapes a service desk runs
+-- every day: point, range, IN list, and combined index-plus-residual.
 -- ============================================================================
 
 

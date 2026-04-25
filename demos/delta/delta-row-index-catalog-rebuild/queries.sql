@@ -1,14 +1,78 @@
 -- ============================================================================
 -- Library Catalog — Index Lifecycle, Staleness, and Rebuild
 -- ============================================================================
--- WHAT: Walks the index status state machine — current → stale →
---       rebuilt → current — with assertions at each transition.
--- WHY:  Indexes are managed objects, not magic. Knowing how they go
---       stale and how they recover is what lets you operate them
---       safely. The headline guarantee: a stale index NEVER produces
---       wrong answers; readers fall back to ordinary file pruning.
--- HOW:  This demo's index was created with auto_update = false, so any
---       write to the parent leaves it stale until REBUILD INDEX runs.
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                INDEXES ARE MANAGED OBJECTS                           │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ A row-level index is built from the table at a specific moment.     │
+--  │ When the table changes (INSERT, UPDATE, DELETE, MERGE), the index   │
+--  │ has to change too — otherwise it would point at rows that no       │
+--  │ longer exist or miss rows that just got added.                       │
+--  │                                                                      │
+--  │ There are two ways to keep an index in sync with its table:         │
+--  │                                                                      │
+--  │   1. AUTO-UPDATE      — every write to the table also updates the   │
+--  │   (auto_update=true)   index, in the same commit. Simple and       │
+--  │                        always-correct, but adds work to writers.   │
+--  │                                                                      │
+--  │   2. MANUAL REBUILD   — writes leave the index alone. The index    │
+--  │   (auto_update=false)  goes STALE the moment the table changes.    │
+--  │                        An operator runs REBUILD INDEX later to     │
+--  │                        bring it back in sync.                       │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                  INDEX STATUS STATE MACHINE                          │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │   building  ──→  current  ──→  stale  ──→  current                  │
+--  │                    ↑              │           ↑                      │
+--  │                    │              │           │                      │
+--  │              CREATE INDEX     write to       REBUILD INDEX           │
+--  │                                table                                 │
+--  │                                                                      │
+--  │   • current     — index version equals table version. USABLE.       │
+--  │   • stale       — table moved on, index didn't. IGNORED by readers. │
+--  │   • building    — initial CREATE INDEX still running. NOT YET USABLE│
+--  │   • tombstoned  — DROP INDEX issued, awaiting VACUUM. NOT USED.     │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                    THE SAFETY GUARANTEE                              │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ A stale index NEVER causes wrong answers. When the engine sees a    │
+--  │ stale index it ignores it and falls back to ordinary file pruning. │
+--  │ Queries during the stale window are CORRECT, just possibly SLOWER.  │
+--  │                                                                      │
+--  │ This means you can safely turn auto-update off, batch your writes,  │
+--  │ and rebuild on a schedule. You never have to choose between fast    │
+--  │ writes and correct reads.                                            │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │              WHEN TO TURN AUTO-UPDATE OFF                            │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ ✓ Writes are batched (e.g. a nightly bulk load) and a single         │
+--  │   REBUILD afterward is cheaper than per-write maintenance            │
+--  │ ✓ Writers are latency-sensitive and you can tolerate a stale         │
+--  │   window between writes and the rebuild                              │
+--  │ ✓ External tools write to the table without going through Delta     │
+--  │   Forge — they can't update the index, so auto-update is moot       │
+--  │                                                                      │
+--  │ When to leave auto-update ON (the default):                          │
+--  │ ✓ Writes are continuous and small — many tiny writes amortise the   │
+--  │   index maintenance cheaply                                          │
+--  │ ✓ Reads can't tolerate a stale window                                │
+--  │ ✓ You don't want to remember to schedule a rebuild                   │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+-- This demo creates an index with auto_update=false on purpose, then
+-- walks the full lifecycle: BUILD → use → write (which makes it stale)
+-- → correct-but-slower lookups → REBUILD → ALTER to switch on
+-- auto-update.
 -- ============================================================================
 
 

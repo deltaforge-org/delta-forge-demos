@@ -13,7 +13,7 @@ real cost — the headline ACID payoff. This demo seeds 50 orders, then \
 runs single-row UPDATE, batched UPDATE, DELETE, and a MERGE upsert, \
 asserting the post-mutation state at each step.
 """
-categories = ["delta-table"]
+categories = ["index"]
 tags = ["delta-table", "intermediate", "row-level-index", "index", "update", "delete", "merge", "acid"]
 difficulty = "intermediate"
 estimated_time_minutes = 7

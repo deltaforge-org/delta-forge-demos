@@ -1,14 +1,58 @@
 -- ============================================================================
 -- E-Commerce Order Tracking — Indexed UPDATE / DELETE / MERGE
 -- ============================================================================
--- WHAT: Demonstrates how a row-level index changes the cost shape of
---       UPDATE, DELETE, and MERGE on a high-cardinality column.
--- WHY:  Mutations on a tracking number normally read every file just to
---       locate the row before rewriting. With an index on tracking_number
---       the locate step is a targeted read; the rewrite is the only real
---       cost. Combined with deletion vectors, the rewrite shrinks too.
--- HOW:  Each query asserts the post-mutation state of the table — single
---       row, batched IN list, DELETE, then MERGE upsert.
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │              WHY UPDATE / DELETE / MERGE LOVE INDEXES                │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ A SQL `UPDATE table SET col = X WHERE key = Y` looks like one        │
+--  │ operation, but the engine actually does TWO things:                  │
+--  │                                                                      │
+--  │   1. LOCATE — find the file (and row group) containing the row      │
+--  │   2. REWRITE — produce a new file with the changed value            │
+--  │                                                                      │
+--  │ Without an index on `key`, step 1 forces a full-table scan: the      │
+--  │ engine has to open every file and look inside to find the row.       │
+--  │ For a 5M-row table spread across hundreds of files, that means       │
+--  │ hundreds of file opens and reads — JUST TO FIND THE ROW.             │
+--  │                                                                      │
+--  │ With an index on `key`, step 1 becomes a targeted read. Step 2       │
+--  │ still happens — you can't change a parquet file in place — but it    │
+--  │ is no longer dwarfed by the locate cost.                             │
+--  │                                                                      │
+--  │ The same logic applies to DELETE (locate, then mark/rewrite) and     │
+--  │ MERGE (locate the source rows in the target, then update/insert).    │
+--  │ MERGE multiplies the savings across many source rows.                │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                  WHEN TO INDEX A MUTATION COLUMN                     │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ ✓ Workload includes UPDATE / DELETE / MERGE keyed on the column     │
+--  │ ✓ The mutation predicate is selective (a single row, or a small    │
+--  │   batch) — broad mutations like UPDATE ... WHERE region = 'EU'      │
+--  │   touch most files anyway and don't benefit                          │
+--  │ ✓ The column is high-cardinality                                    │
+--  │ ✓ The column is NOT already covered by Delta's built-in stats        │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                  PAIRING WITH DELETION VECTORS                       │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ The table below uses 'delta.enableDeletionVectors' = 'true'. With    │
+--  │ deletion vectors, an UPDATE/DELETE no longer rewrites the entire     │
+--  │ file containing the row — instead it writes a tiny bitmap marking   │
+--  │ which rows are logically removed. The index identifies the row to    │
+--  │ mark; the deletion vector avoids the full-file rewrite.              │
+--  │                                                                      │
+--  │ Index + deletion vectors together is the standard recipe for cheap   │
+--  │ single-row mutations on big Delta tables.                            │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+-- This demo runs four mutation shapes back to back: single-row UPDATE,
+-- batched IN-list UPDATE, DELETE, then MERGE upsert. Each query asserts
+-- the post-mutation state.
 -- ============================================================================
 
 

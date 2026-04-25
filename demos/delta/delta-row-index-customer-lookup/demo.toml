@@ -12,7 +12,7 @@ seeds 60 customers across multiple insert batches, builds an index on \
 customer_id, and runs the four canonical lookup shapes a service desk \
 exercises every day.
 """
-categories = ["delta-table"]
+categories = ["index"]
 tags = ["delta-table", "beginner", "row-level-index", "index", "point-lookup", "range-scan"]
 difficulty = "beginner"
 estimated_time_minutes = 5

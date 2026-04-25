@@ -1,16 +1,72 @@
 -- ============================================================================
 -- Industrial IoT Telemetry — Composite Row-Level Index
 -- ============================================================================
--- WHAT: Composite indexes cover several columns in a fixed order. A
---       composite on (sensor_id, reading_time) is a single sorted
---       structure where the rows are sorted first by sensor_id, then
---       by reading_time within each sensor.
--- WHY:  Two query shapes share one index: a sensor's full history,
---       and a sensor's history within a time window. Reverse direction
---       is not free: a query on reading_time alone gets no help.
--- HOW:  This is the leftmost-prefix rule — predicates on the leading
---       column (or leading + trailing) hit the index; predicates on a
---       non-leading column fall back to the standard pruning path.
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                   WHAT IS A COMPOSITE INDEX?                         │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ A composite index covers several columns at once, in a FIXED order.  │
+--  │ For an index on (sensor_id, reading_time) the rows of the index are  │
+--  │ sorted FIRST by sensor_id, then by reading_time within each sensor:  │
+--  │                                                                      │
+--  │     sensor_id         reading_time                                   │
+--  │     ──────────────    ────────────                                   │
+--  │     TMP-A05           08:00                                          │
+--  │     TMP-A05           08:30                                          │
+--  │     TMP-A05           09:00                                          │
+--  │     TMP-B07           08:00      ← sensor_id changed, time resets    │
+--  │     TMP-B07           08:30                                          │
+--  │     VIB-A01           08:00                                          │
+--  │     ...                                                              │
+--  │                                                                      │
+--  │ This shape is great for "give me a specific sensor, optionally with  │
+--  │ a time window". It's NOT helpful for "give me everything at 09:00    │
+--  │ across all sensors" — the rows for 09:00 are scattered across the    │
+--  │ structure rather than grouped together.                              │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                THE LEFTMOST-PREFIX RULE                              │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ A composite index on (a, b, c) helps queries that filter on:         │
+--  │                                                                      │
+--  │     ✓ a                  (leftmost column alone)                     │
+--  │     ✓ a AND b            (leading prefix)                            │
+--  │     ✓ a AND b AND c      (full prefix)                               │
+--  │     ✗ b                  (skips the leading column — NO HELP)        │
+--  │     ✗ c                  (skips the leading columns — NO HELP)       │
+--  │     ✗ b AND c            (skips the leading column — NO HELP)        │
+--  │                                                                      │
+--  │ "Leftmost prefix" means: predicates must constrain the columns       │
+--  │ from the left, in order, with no gaps. The moment you skip a leading │
+--  │ column, the index can no longer narrow the search.                   │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │             WHEN TO USE A COMPOSITE INDEX                            │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ ✓ Two or more columns are filtered TOGETHER in the same query        │
+--  │ ✓ The columns have a natural lookup order (e.g. sensor first,       │
+--  │   then time within that sensor)                                      │
+--  │ ✓ Single-column queries on the LEADING column are also common —     │
+--  │   the index serves both shapes at once                               │
+--  │                                                                      │
+--  │ When NOT to use one:                                                 │
+--  │ ✗ The columns are usually queried independently — build separate    │
+--  │   indexes instead                                                    │
+--  │ ✗ The "natural" leading column is low-cardinality (e.g. status):   │
+--  │   the leading-column narrowing is weak, hurting overall benefit      │
+--  │ ✗ The trailing column is queried on its own — that path won't be   │
+--  │   accelerated; you'd need a second index keyed on it                 │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+-- This demo runs five queries: one with the leading column alone (index
+-- helps), one with both columns (index helps fully), one with the
+-- TRAILING column alone (leftmost-prefix violated — index does NOT
+-- help, but the answer is still correct), and an IN list on the
+-- leading column. The contrast makes the rule concrete.
 -- ============================================================================
 
 

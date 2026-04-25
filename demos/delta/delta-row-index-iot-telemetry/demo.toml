@@ -13,7 +13,7 @@ rule. This demo seeds 80 readings across 8 sensors, builds the composite \
 index, and demonstrates the queries it accelerates and the ones it does \
 not.
 """
-categories = ["delta-table"]
+categories = ["index"]
 tags = ["delta-table", "intermediate", "row-level-index", "composite-index", "leftmost-prefix", "iot", "time-series"]
 difficulty = "intermediate"
 estimated_time_minutes = 6

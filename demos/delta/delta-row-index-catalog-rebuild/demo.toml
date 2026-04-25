@@ -12,7 +12,7 @@ through the full lifecycle: build → use → write → stale → rebuild → us
 showing both the status transitions and the absence of wrong answers in \
 the stale window.
 """
-categories = ["delta-table"]
+categories = ["index"]
 tags = ["delta-table", "advanced", "row-level-index", "rebuild", "stale", "lifecycle", "auto-update"]
 difficulty = "advanced"
 estimated_time_minutes = 8

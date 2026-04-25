@@ -1,14 +1,63 @@
 -- ============================================================================
 -- Multi-Vendor Marketplace — Multiple Indexes on the Same Table
 -- ============================================================================
--- WHAT: A table can carry several row-level indexes side by side.
--- WHY:  Different query shapes benefit from differently-keyed
---       indexes. The planner picks the cheapest applicable index per
---       query, falling back to ordinary file pruning when no index
---       beats it.
--- HOW:  This demo has three indexes — sku, brand, (category, price).
---       The queries below each match one of those (or none, to show
---       graceful fallback).
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │            ONE TABLE CAN CARRY SEVERAL INDEXES                       │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │                                                                      │
+--  │ Real workloads rarely have a single query shape. A marketplace      │
+--  │ catalog gets pinged by:                                              │
+--  │                                                                      │
+--  │   • the WAREHOUSE service     → "where is SKU X?"                    │
+--  │   • the STOREFRONT service    → "show me everything from brand Y"   │
+--  │   • the BROWSE pages          → "category Z under $100"             │
+--  │                                                                      │
+--  │ One composite index can't cover all three — they filter on           │
+--  │ different leading columns. The clean answer: build SEPARATE indexes  │
+--  │ for each shape. The planner picks the cheapest applicable one for   │
+--  │ each query at runtime; the caller writes ordinary SQL.              │
+--  │                                                                      │
+--  │ You don't tell the planner which index to use. It looks at every    │
+--  │ index that COULD apply (matches the predicate columns), estimates   │
+--  │ the cost of each, and picks the cheapest. If none beats ordinary    │
+--  │ file pruning it falls back. No hints, no manual selection.          │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                 WHEN TO HAVE MULTIPLE INDEXES                        │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ ✓ Several distinct query shapes hit the table regularly             │
+--  │ ✓ Each shape filters on a different leading column                   │
+--  │ ✓ Each shape is selective enough that an index helps it             │
+--  │ ✓ The combined storage + write overhead of N indexes is justified   │
+--  │   by the read savings                                                │
+--  │                                                                      │
+--  │ When NOT to multiply indexes:                                        │
+--  │ ✗ Only one query shape matters — extra indexes are dead weight     │
+--  │ ✗ Writes are very heavy — every index multiplies write cost (each  │
+--  │   index has to update on every commit if auto_update is on)        │
+--  │ ✗ Several queries share a common LEFTMOST PREFIX — one composite   │
+--  │   index can serve all of them. (See the IoT telemetry demo.)        │
+--  │ ✗ Two indexes cover the same column with similar cost — pick the   │
+--  │   tighter one and drop the other                                    │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+--  ┌──────────────────────────────────────────────────────────────────────┐
+--  │                   AUDITING YOUR INDEXES                              │
+--  ├──────────────────────────────────────────────────────────────────────┤
+--  │ • SHOW INDEXES ON TABLE T          — list every index on the table  │
+--  │ • DESCRIBE INDEX idx ON TABLE T    — status, columns, version       │
+--  │ • DROP INDEX idx ON TABLE T        — remove one when it stops       │
+--  │                                       earning its keep              │
+--  └──────────────────────────────────────────────────────────────────────┘
+--
+-- This demo builds three indexes: idx_sku for warehouse fulfillment,
+-- idx_brand for storefront, and a composite (category, price) for
+-- faceted browse. Each query targets a different one. A final query
+-- (predicate on `stock`) shows graceful fallback when no index applies.
+-- The demo finishes by DROPping a redundant index and re-running the
+-- query that used it — same answer, different (still-correct) path.
 -- ============================================================================
 
 

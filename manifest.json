@@ -3228,7 +3228,7 @@
       "name": "Library Catalog — Index Lifecycle, Staleness, and Rebuild",
       "summary": "Public library catalog of 40 books with an index on isbn deliberately created with auto_update=false. Walks the full index lifecycle: build, use, write (which makes the index stale), correct-but-slower lookups during the stale window, REBUILD INDEX, and ALTER to switch on auto_update. Demonstrates that stale indexes never produce wrong answers.",
       "categories": [
-        "delta-table"
+        "index"
       ],
       "tags": [
         "delta-table",
@@ -3260,7 +3260,7 @@
       "name": "Online Retail Customer Lookup with Row-Level Index",
       "summary": "Online retailer support desk workflow on a 60-customer Delta table built across three insert batches. A row-level index on customer_id accelerates the four lookup shapes the desk runs every day: point lookup, range scan, IN list, and a combined index-plus-residual query. Beginner-level introduction to row-level indexes.",
       "categories": [
-        "delta-table"
+        "index"
       ],
       "tags": [
         "delta-table",
@@ -3291,7 +3291,7 @@
       "name": "Industrial IoT Telemetry — Composite Row-Level Index",
       "summary": "Manufacturing plant telemetry from 8 sensors (4 vibration, 4 temperature) producing 80 readings across morning and afternoon ingest batches. A composite index on (sensor_id, reading_time) accelerates leading-column and prefix queries; a final query on reading_time alone shows the leftmost-prefix rule and graceful fallback when violated.",
       "categories": [
-        "delta-table"
+        "index"
       ],
       "tags": [
         "delta-table",
@@ -3323,7 +3323,7 @@
       "name": "Multi-Vendor Marketplace — Multiple Indexes on the Same Table",
       "summary": "Marketplace catalog of 70 listings across 6 brands and 5 categories carrying three concurrent indexes: idx_sku for warehouse fulfillment, idx_brand for storefront, and a composite (category, price) for faceted browse. Demonstrates the planner picking the cheapest applicable index per query, leftmost-prefix on composites, and graceful fallback when no index applies.",
       "categories": [
-        "delta-table"
+        "index"
       ],
       "tags": [
         "delta-table",
@@ -3355,7 +3355,7 @@
       "name": "E-Commerce Order Tracking — Indexed UPDATE / DELETE / MERGE",
       "summary": "E-commerce fulfillment table of 50 active orders keyed by tracking_number, with deletion vectors enabled. Walks single-row UPDATE, batched IN-list UPDATE, DELETE for a cancelled shipment, and a MERGE upsert from a carrier event stream. Each mutation asserts the post-state. Headline ACID payoff for row-level indexes.",
       "categories": [
-        "delta-table"
+        "index"
       ],
       "tags": [
         "delta-table",

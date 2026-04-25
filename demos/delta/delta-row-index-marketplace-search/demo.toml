@@ -12,7 +12,7 @@ query without the caller having to choose. This demo seeds 70 listings, \
 builds three indexes, and runs the queries each one was designed for, \
 plus a query that none of them help (showing graceful fallback).
 """
-categories = ["delta-table"]
+categories = ["index"]
 tags = ["delta-table", "advanced", "row-level-index", "multiple-indexes", "selector", "marketplace", "search"]
 difficulty = "advanced"
 estimated_time_minutes = 8
