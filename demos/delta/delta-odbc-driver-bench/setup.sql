@@ -140,12 +140,12 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.bench.decimal_temporal (
     d_d     DECIMAL(38,9) NOT NULL,
     dt_a    DATE NOT NULL,
     dt_b    DATE NOT NULL,
-    ts_a    TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    ts_b    TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    ts_a    TIMESTAMP NOT NULL,
+    ts_b    TIMESTAMP NOT NULL,
     tm_a    TIME NOT NULL,
     tm_b    TIME NOT NULL,
-    tsltz_a TIMESTAMP NOT NULL,
-    tsltz_b TIMESTAMP NOT NULL
+    tsltz_a TIMESTAMPTZ NOT NULL,
+    tsltz_b TIMESTAMPTZ NOT NULL
 )
 LOCATION '{{data_path}}/bench/decimal_temporal'
 TBLPROPERTIES (
@@ -403,8 +403,9 @@ SELECT
 FROM generate_series(1, 50000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.decimal_temporal (5M rows). Two TIMESTAMP cols are NTZ
--- (TIMESTAMP WITHOUT TIME ZONE), two are LTZ (plain TIMESTAMP, UTC anchor).
+-- Populate bench.decimal_temporal (5M rows). ts_a / ts_b are NTZ (bare
+-- TIMESTAMP in DeltaForge stores TIMESTAMP_NTZ). tsltz_a / tsltz_b are
+-- timezone-aware (TIMESTAMPTZ, UTC anchor).
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.decimal_temporal
@@ -420,8 +421,8 @@ SELECT
     TIMESTAMP '2030-06-15 12:00:00' - (CAST(rn % 86400 AS INT) * INTERVAL '1 second')    AS ts_b,
     TIME '00:00:00' + (CAST(rn % 86400 AS INT) * INTERVAL '1 second')                    AS tm_a,
     TIME '12:00:00' + (CAST(rn % 43200 AS INT) * INTERVAL '1 second')                    AS tm_b,
-    TIMESTAMP '2024-01-01 00:00:00 UTC' + (CAST(rn % 86400 AS INT) * INTERVAL '1 second') AS tsltz_a,
-    TIMESTAMP '2027-12-31 23:59:59 UTC' - (CAST(rn % 86400 AS INT) * INTERVAL '1 second') AS tsltz_b
+    TIMESTAMPTZ '2024-01-01 00:00:00 UTC' + (CAST(rn % 86400 AS INT) * INTERVAL '1 second') AS tsltz_a,
+    TIMESTAMPTZ '2027-12-31 23:59:59 UTC' - (CAST(rn % 86400 AS INT) * INTERVAL '1 second') AS tsltz_b
 FROM (
     SELECT a.v * 1000000 + b.v AS rn
     FROM generate_series(0, 4) AS a(v)
