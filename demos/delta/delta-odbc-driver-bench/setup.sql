@@ -149,7 +149,7 @@ LOCATION '{{data_path}}/bench/decimal_temporal';
 
 -- --------------------------------------------------------------------------
 -- Table 8: bench.nested_json
--- 500K rows, 8 cols: 3 STRUCT, 2 ARRAY<INT>, 2 MAP<STRING,STRING>, 1 VARIANT.
+-- 500K rows, 7 cols: 3 STRUCT, 2 ARRAY<INT>, 2 MAP<STRING,STRING>.
 -- Exercises the format-bound path that shipments_full_types first exposed.
 -- --------------------------------------------------------------------------
 
@@ -161,13 +161,9 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.bench.nested_json (
     ar_a ARRAY<INT>,
     ar_b ARRAY<INT>,
     mp_a MAP<STRING, STRING>,
-    mp_b MAP<STRING, STRING>,
-    js   VARIANT
+    mp_b MAP<STRING, STRING>
 )
-LOCATION '{{data_path}}/bench/nested_json'
-TBLPROPERTIES (
-    'delta.feature.variantType' = 'supported'
-);
+LOCATION '{{data_path}}/bench/nested_json';
 
 -- --------------------------------------------------------------------------
 -- Table 9: bench.null_heavy
@@ -421,7 +417,7 @@ FROM (
 ) t;
 
 -- --------------------------------------------------------------------------
--- Populate bench.nested_json (500K rows). Mix of STRUCT, ARRAY, MAP, VARIANT.
+-- Populate bench.nested_json (500K rows). Mix of STRUCT, ARRAY, MAP.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.nested_json
@@ -433,10 +429,7 @@ SELECT
     array(CAST(b.v AS INT), CAST(b.v % 100 AS INT), CAST(b.v % 1000 AS INT)),
     array(CAST(b.v % 7 AS INT), CAST(b.v % 13 AS INT)),
     map('id', CAST(b.v AS STRING), 'mod10', CAST(b.v % 10 AS STRING)),
-    map('hash', md5(CAST(b.v AS STRING))),
-    parse_json(CONCAT('{"id":', CAST(b.v AS STRING),
-                      ',"flag":', CASE WHEN b.v % 2 = 0 THEN 'true' ELSE 'false' END,
-                      '}'))
+    map('hash', md5(CAST(b.v AS STRING)))
 FROM generate_series(1, 500000) AS b(v);
 
 -- --------------------------------------------------------------------------
