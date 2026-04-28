@@ -406,8 +406,18 @@ SELECT
     CAST(rn % 1000000 AS DECIMAL(38,9)) + CAST(0.000000001 AS DECIMAL(38,9))             AS d_d,
     DATE '2000-01-01' + CAST(rn % 18250 AS INT)                                          AS dt_a,
     DATE '1970-01-01' + CAST(rn % 36500 AS INT)                                          AS dt_b,
-    to_timestamp(to_unix_timestamp(TIMESTAMP '2025-01-01 00:00:00') + CAST(rn % 86400 AS BIGINT))    AS ts_a,
-    to_timestamp(to_unix_timestamp(TIMESTAMP '2030-06-15 12:00:00') - CAST(rn % 86400 AS BIGINT))    AS ts_b,
+    make_timestamp(
+        2025, 1, 1,
+        CAST((rn % 86400) / 3600 AS INT),
+        CAST(((rn % 86400) % 3600) / 60 AS INT),
+        CAST((rn % 86400) % 60 AS DOUBLE)
+    )                                                                                                AS ts_a,
+    make_timestamp(
+        2030, 6, 15,
+        CAST((rn % 86400) / 3600 AS INT),
+        CAST(((rn % 86400) % 3600) / 60 AS INT),
+        CAST((rn % 86400) % 60 AS DOUBLE)
+    )                                                                                                AS ts_b,
     make_time(
         CAST((rn % 86400) / 3600 AS INT),
         CAST(((rn % 86400) % 3600) / 60 AS INT),
@@ -475,8 +485,18 @@ SELECT
     CASE WHEN rn % 20 = 0 THEN DATE '2000-01-01' + CAST(rn % 18250 AS INT) ELSE NULL END,
     CASE WHEN rn % 20 = 0 THEN DATE '1970-01-01' + CAST((rn * 3) % 36500 AS INT) ELSE NULL END,
     CASE WHEN rn % 20 = 0 THEN DATE '2025-01-01' + CAST(rn % 1000 AS INT) ELSE NULL END,
-    CASE WHEN rn % 20 = 0 THEN to_timestamp(to_unix_timestamp(TIMESTAMP '2025-01-01 00:00:00') + CAST(rn % 86400 AS BIGINT)) ELSE NULL END,
-    CASE WHEN rn % 20 = 0 THEN to_timestamp(to_unix_timestamp(TIMESTAMP '2030-06-15 12:00:00') - CAST(rn % 86400 AS BIGINT)) ELSE NULL END,
+    CASE WHEN rn % 20 = 0 THEN make_timestamp(
+        2025, 1, 1,
+        CAST((rn % 86400) / 3600 AS INT),
+        CAST(((rn % 86400) % 3600) / 60 AS INT),
+        CAST((rn % 86400) % 60 AS DOUBLE)
+    ) ELSE NULL END,
+    CASE WHEN rn % 20 = 0 THEN make_timestamp(
+        2030, 6, 15,
+        CAST((rn % 86400) / 3600 AS INT),
+        CAST(((rn % 86400) % 3600) / 60 AS INT),
+        CAST((rn % 86400) % 60 AS DOUBLE)
+    ) ELSE NULL END,
     CASE WHEN rn % 20 = 0 THEN rn % 2 = 0 ELSE NULL END
 FROM (
     SELECT a.v * 1000000 + b.v AS rn
