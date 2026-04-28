@@ -140,10 +140,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.bench.decimal_temporal (
     d_d     DECIMAL(38,9) NOT NULL,
     dt_a    DATE NOT NULL,
     dt_b    DATE NOT NULL,
-    ts_a    TIMESTAMP NOT NULL,
-    ts_b    TIMESTAMP NOT NULL,
-    tm_a    TIME NOT NULL,
-    tm_b    TIME NOT NULL
+    ts_a    TIMESTAMP,
+    ts_b    TIMESTAMP,
+    tm_a    TIME,
+    tm_b    TIME
 )
 LOCATION '{{data_path}}/bench/decimal_temporal';
 
