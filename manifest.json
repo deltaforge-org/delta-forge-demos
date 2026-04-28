@@ -2609,6 +2609,86 @@
       ]
     },
     {
+      "id": "delta-odbc-driver-bench",
+      "path": "demos/delta/delta-odbc-driver-bench",
+      "iconPath": "icons/delta-odbc-driver-bench.svg",
+      "name": "ODBC Driver Wire Benchmark Suite",
+      "summary": "Ten Delta tables totalling ~81.65M rows that isolate one ODBC wire dimension at a time so a regression on byte counts or throughput points at one code path. Every cell is row_number-derived (deterministic, bit-identical between runs). Tables: fixed_narrow (50M rows, 8 INT64/DOUBLE cols, no nulls, the speed-of-light memcpy baseline), fixed_wide (5M rows, 60 fixed-width primitives, per-cell overhead and column slab cache), string_narrow (10M rows, 5 cols, 30% NULL), string_wide_kv (1M rows, 40 cols, 5% NULL, indicator-array path), string_long (100K rows, 4 cols of ~6.4KB strings for SQLGetData chunked reads), binary_blobs (50K rows, BINARY 32B-64KB for SQL_C_BINARY chunked truncation), decimal_temporal (5M rows, 12 cols spanning DECIMAL(38,9), DATE, TIMESTAMP_NTZ, TIME, TIMESTAMP_LTZ), nested_json (500K rows of STRUCT, ARRAY, MAP, VARIANT for the format-bound path), null_heavy (5M rows, 30 cols at 95% NULL, indicator-only fast path), and skewed_strings (5M rows where one column is 99% short with 1% 100KB cells). Assertions are closed-form math, never engine round trips: 17 query blocks plus a final cross-table verification.",
+      "categories": [
+        "delta-table",
+        "benchmark",
+        "odbc"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "benchmark",
+        "odbc",
+        "wire-format",
+        "regression-suite",
+        "deterministic",
+        "fixed-width",
+        "string-decode",
+        "binary-blobs",
+        "decimal",
+        "temporal",
+        "nested-types",
+        "variant",
+        "null-density",
+        "skewed-data",
+        "large-rows"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 60,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.fixed_narrow"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.fixed_wide"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.string_narrow"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.string_wide_kv"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.string_long"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.binary_blobs"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.decimal_temporal"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.nested_json"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.null_heavy"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.bench.skewed_strings"
+        }
+      ]
+    },
+    {
       "id": "delta-odbc-type-coverage",
       "path": "demos/delta/delta-odbc-type-coverage",
       "iconPath": "icons/delta-odbc-type-coverage.svg",

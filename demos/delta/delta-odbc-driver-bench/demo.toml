@@ -1,0 +1,91 @@
+[demo]
+id = "delta-odbc-driver-bench"
+name = "ODBC Driver Wire Benchmark Suite"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+The DeltaForge driver-engineering team needs a deterministic, regression-safe \
+corpus that isolates one ODBC wire dimension at a time so that when a build \
+regresses on byte counts or throughput, the responsible code path is obvious. \
+This suite seeds ten Delta tables totalling ~81.65M rows: a fixed-narrow \
+speed-of-light baseline (50M rows, all int64/double, no nulls), a 60-column \
+fixed-wide table that stresses per-cell overhead and the column slab cache, \
+narrow and wide UTF-8 string tables (10M and 1M rows) to measure decode and \
+indicator-array hot paths, a 6KB-per-cell long-string table that exercises \
+SQLGetData chunked reads, a 1-64KB per-cell BINARY blob table that stresses \
+SQL_C_BINARY chunked truncation, a 12-column decimal_temporal table covering \
+DECIMAL(38,9), DATE, TIMESTAMP_NTZ, TIME, and TIMESTAMP_LTZ formatting paths, \
+a deeply-nested table with STRUCT, ARRAY, MAP, and VARIANT to exercise the \
+format-bound path that shipments_full_types first exposed, a 30-column 95% \
+NULL fact-table simulator for the indicator-only fast path, and a skewed \
+strings table whose one column mixes 99% short with 1% 100KB strings to \
+stress the chunked-read offset machinery under realistic skew. \
+Every value is row_number-derived so two runs are bit-identical and any \
+byte-count regression is real, not noise.
+"""
+categories = ["delta-table", "benchmark", "odbc"]
+tags = [
+    "delta-table",
+    "advanced",
+    "benchmark",
+    "odbc",
+    "wire-format",
+    "regression-suite",
+    "deterministic",
+    "fixed-width",
+    "string-decode",
+    "binary-blobs",
+    "decimal",
+    "temporal",
+    "nested-types",
+    "variant",
+    "null-density",
+    "skewed-data",
+    "large-rows"
+]
+difficulty = "advanced"
+estimated_time_minutes = 60
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'bench_zone')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.fixed_narrow"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.fixed_wide"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.string_narrow"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.string_wide_kv"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.string_long"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.binary_blobs"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.decimal_temporal"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.nested_json"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.null_heavy"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bench.skewed_strings"
