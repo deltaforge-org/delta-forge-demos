@@ -447,7 +447,7 @@ SELECT
     END                                                                 AS season
 FROM (
     SELECT DATE '2010-01-01' + CAST(rn AS INT) AS d
-    FROM (SELECT generate_series(0, 7304) AS rn) t
+    FROM generate_series(0, 7304) AS t(rn)
 ) s;
 
 -- --------------------------------------------------------------------------
