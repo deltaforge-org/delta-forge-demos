@@ -22,6 +22,10 @@ DROP DELTA TABLE IF EXISTS {{zone_name}}.acme.forum_posts           WITH FILES;
 DROP SCHEMA IF EXISTS {{zone_name}}.acme;
 
 -- Legacy schema cleanup (one-release transition; remove after the next cycle).
+-- Tables only: the bench schema itself is left in place because user-driven
+-- extras like extras/huge_fixed_narrow_200m.sql may have created tables
+-- under it (e.g. bench.fixed_narrow_200m) that live outside the demo's
+-- lifecycle and should not be dropped automatically.
 DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.fixed_narrow      WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.fixed_wide        WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.string_narrow     WITH FILES;
@@ -32,4 +36,3 @@ DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.decimal_temporal  WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.nested_json       WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.null_heavy        WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.bench.skewed_strings    WITH FILES;
-DROP SCHEMA IF EXISTS {{zone_name}}.bench;
