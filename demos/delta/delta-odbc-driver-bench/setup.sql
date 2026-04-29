@@ -1,9 +1,12 @@
 -- ==========================================================================
 -- Demo: ODBC Driver Wire Benchmark Suite
--- Feature: Ten Delta tables, ~81.65M rows total, each isolating one ODBC wire
+-- Feature: Ten Delta tables, ~3.27M rows total, each isolating one ODBC wire
 --          dimension so a regression on byte counts or throughput points at
 --          one code path. Every cell is row_number-derived: two runs are
 --          bit-identical and any drift is a real regression.
+--
+-- Sizes are sized to stay safely under Arrow's 2GB i32-offset limit per
+-- StringArray batch. Scale up table-by-table once the engine path is proven.
 -- ==========================================================================
 
 -- --------------------------------------------------------------------------
@@ -18,7 +21,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.bench
 
 -- --------------------------------------------------------------------------
 -- Table 1: bench.fixed_narrow
--- 50M rows, 8 cols, all INT64/DOUBLE, no nulls.
+-- 1M rows, 8 cols, all INT64/DOUBLE, no nulls.
 -- Stresses driver upper bound: pure decode + memcpy. Speed-of-light baseline.
 -- --------------------------------------------------------------------------
 
@@ -36,7 +39,7 @@ LOCATION '{{data_path}}/bench/fixed_narrow';
 
 -- --------------------------------------------------------------------------
 -- Table 2: bench.fixed_wide
--- 5M rows, 60 cols, all fixed-width primitives.
+-- 100K rows, 60 cols, all fixed-width primitives.
 -- Stresses per-cell overhead at scale and the column slab cache hit path.
 -- --------------------------------------------------------------------------
 
@@ -63,7 +66,7 @@ LOCATION '{{data_path}}/bench/fixed_wide';
 
 -- --------------------------------------------------------------------------
 -- Table 3: bench.string_narrow
--- 10M rows, 5 cols (one short + four long), ~30% NULL density.
+-- 500K rows, 5 cols (one short + four long), ~30% NULL density.
 -- Stresses the UTF-8 decode hot path and the indicator-array path with
 -- realistic null sparsity.
 -- --------------------------------------------------------------------------
@@ -80,7 +83,7 @@ LOCATION '{{data_path}}/bench/string_narrow';
 
 -- --------------------------------------------------------------------------
 -- Table 4: bench.string_wide_kv
--- 1M rows, 40 cols, all ~50-char UTF-8, ~5% NULL.
+-- 100K rows, 40 cols, all ~50-char UTF-8, ~5% NULL.
 -- Stresses indicator-array path plus UTF-8 cost when most cells are present.
 -- --------------------------------------------------------------------------
 
@@ -99,7 +102,7 @@ LOCATION '{{data_path}}/bench/string_wide_kv';
 
 -- --------------------------------------------------------------------------
 -- Table 5: bench.string_long
--- 100K rows, 4 cols of ~6.4KB strings each.
+-- 10K rows, 4 cols of ~6.4KB strings each.
 -- Tests SQLGetData chunked reads (buf_len smaller than cell).
 -- --------------------------------------------------------------------------
 
@@ -114,7 +117,7 @@ LOCATION '{{data_path}}/bench/string_long';
 
 -- --------------------------------------------------------------------------
 -- Table 6: bench.binary_blobs
--- 50K rows, 3 cols of BINARY 32B-2KB per cell (last col reaches ~64KB).
+-- 5K rows, 3 cols of BINARY 32B-32KB per cell.
 -- Stresses SQL_C_BINARY path and chunked truncation.
 -- --------------------------------------------------------------------------
 
@@ -128,7 +131,7 @@ LOCATION '{{data_path}}/bench/binary_blobs';
 
 -- --------------------------------------------------------------------------
 -- Table 7: bench.decimal_temporal
--- 5M rows, 10 cols: DECIMAL(38,9), DATE, TIMESTAMP, TIME.
+-- 500K rows, 10 cols: DECIMAL(38,9), DATE, TIMESTAMP, TIME.
 -- Tests decimal cast and temporal formatting, often a regression hot spot.
 -- --------------------------------------------------------------------------
 
@@ -149,7 +152,7 @@ LOCATION '{{data_path}}/bench/decimal_temporal';
 
 -- --------------------------------------------------------------------------
 -- Table 8: bench.nested_json
--- 500K rows, 7 cols: 3 STRUCT, 2 ARRAY<INT>, 2 MAP<STRING,STRING>.
+-- 50K rows, 7 cols: 3 STRUCT, 2 ARRAY<INT>, 2 MAP<STRING,STRING>.
 -- Exercises the format-bound path that shipments_full_types first exposed.
 -- --------------------------------------------------------------------------
 
@@ -167,7 +170,7 @@ LOCATION '{{data_path}}/bench/nested_json';
 
 -- --------------------------------------------------------------------------
 -- Table 9: bench.null_heavy
--- 5M rows, 30 mixed-type cols, 95% NULL. Common shape in real fact tables.
+-- 500K rows, 30 mixed-type cols, 95% NULL. Common shape in real fact tables.
 -- Exercises the indicator-only fast path.
 -- --------------------------------------------------------------------------
 
@@ -186,7 +189,7 @@ LOCATION '{{data_path}}/bench/null_heavy';
 
 -- --------------------------------------------------------------------------
 -- Table 10: bench.skewed_strings
--- 5M rows, 6 cols. The skew column is 99% short strings + 1% 100KB strings.
+-- 500K rows, 6 cols. The skew column is 99% short strings + 1% 100KB strings.
 -- Stresses chunked-read offset machinery under realistic skew.
 -- --------------------------------------------------------------------------
 
@@ -202,30 +205,30 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.bench.skewed_strings (
 LOCATION '{{data_path}}/bench/skewed_strings';
 
 -- ==========================================================================
--- Population: each INSERT below is fully deterministic. The cross-join
--- factoring of generate_series keeps any single series at <= 1M values to
--- avoid the documented "very large ranges materialize in memory" pitfall.
+-- Population: each INSERT below is fully deterministic. Single
+-- generate_series per insert keeps the input stream simple, with N <= 1M
+-- in every case to stay well under the documented "very large ranges
+-- materialize in memory" pitfall and Arrow's i32 offset limit.
 -- ==========================================================================
 
 -- --------------------------------------------------------------------------
--- Populate bench.fixed_narrow (50M rows). rn ranges 1..50_000_000.
+-- Populate bench.fixed_narrow (1M rows). rn ranges 1..1_000_000.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.fixed_narrow
 SELECT
-    a.v * 1000000 + b.v AS rn,
-    a.v * 1000000 + b.v AS i64_a,
-    (a.v * 1000000 + b.v) * 7 AS i64_b,
-    (a.v * 1000000 + b.v) % 1024 AS i64_c,
-    CAST(a.v * 1000000 + b.v AS DOUBLE) AS f64_a,
-    CAST(a.v * 1000000 + b.v AS DOUBLE) * 0.5 AS f64_b,
-    CAST((a.v * 1000000 + b.v) % 1000 AS DOUBLE) / 100.0 AS f64_c,
-    SQRT(CAST(a.v * 1000000 + b.v AS DOUBLE)) AS f64_d
-FROM generate_series(0, 49) AS a(v)
-CROSS JOIN generate_series(1, 1000000) AS b(v);
+    b.v AS rn,
+    b.v AS i64_a,
+    b.v * 7 AS i64_b,
+    b.v % 1024 AS i64_c,
+    CAST(b.v AS DOUBLE) AS f64_a,
+    CAST(b.v AS DOUBLE) * 0.5 AS f64_b,
+    CAST(b.v % 1000 AS DOUBLE) / 100.0 AS f64_c,
+    SQRT(CAST(b.v AS DOUBLE)) AS f64_d
+FROM generate_series(1, 1000000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.fixed_wide (5M rows). rn ranges 1..5_000_000.
+-- Populate bench.fixed_wide (100K rows). rn ranges 1..100_000.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.fixed_wide
@@ -281,41 +284,39 @@ SELECT
     DATE '2000-01-01' + CAST(rn % 18250 AS INT),
     DATE '1970-01-01' + CAST((rn * 7) % 36500 AS INT)
 FROM (
-    SELECT a.v * 1000000 + b.v AS rn
-    FROM generate_series(0, 4) AS a(v)
-    CROSS JOIN generate_series(1, 1000000) AS b(v)
+    SELECT b.v AS rn
+    FROM generate_series(1, 100000) AS b(v)
 ) t;
 
 -- --------------------------------------------------------------------------
--- Populate bench.string_narrow (10M rows). NULL when rn % 10 IN (0, 1, 2)
+-- Populate bench.string_narrow (500K rows). NULL when rn % 10 IN (0, 1, 2)
 -- which gives exactly 30% NULL density. s_short = lpad to 20 chars,
 -- s_long_* = repeat(md5, 6) which is 192 chars per cell.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.string_narrow
 SELECT
-    a.v * 1000000 + b.v AS rn,
-    CASE WHEN (a.v * 1000000 + b.v) % 10 IN (0, 1, 2) THEN NULL
-         ELSE lpad(CAST(a.v * 1000000 + b.v AS STRING), 20, '0')
+    b.v AS rn,
+    CASE WHEN b.v % 10 IN (0, 1, 2) THEN NULL
+         ELSE lpad(CAST(b.v AS STRING), 20, '0')
     END AS s_short,
-    CASE WHEN (a.v * 1000000 + b.v) % 10 IN (0, 1, 2) THEN NULL
-         ELSE repeat(md5(CAST(a.v * 1000000 + b.v AS STRING)), 6)
+    CASE WHEN b.v % 10 IN (0, 1, 2) THEN NULL
+         ELSE repeat(md5(CAST(b.v AS STRING)), 6)
     END AS s_long_a,
-    CASE WHEN (a.v * 1000000 + b.v) % 10 IN (0, 1, 2) THEN NULL
-         ELSE repeat(md5(CAST((a.v * 1000000 + b.v) * 3 AS STRING)), 6)
+    CASE WHEN b.v % 10 IN (0, 1, 2) THEN NULL
+         ELSE repeat(md5(CAST(b.v * 3 AS STRING)), 6)
     END AS s_long_b,
-    CASE WHEN (a.v * 1000000 + b.v) % 10 IN (0, 1, 2) THEN NULL
-         ELSE repeat(md5(CAST((a.v * 1000000 + b.v) * 7 AS STRING)), 6)
+    CASE WHEN b.v % 10 IN (0, 1, 2) THEN NULL
+         ELSE repeat(md5(CAST(b.v * 7 AS STRING)), 6)
     END AS s_long_c,
-    CASE WHEN (a.v * 1000000 + b.v) % 10 IN (0, 1, 2) THEN NULL
-         ELSE repeat(md5(CAST((a.v * 1000000 + b.v) * 11 AS STRING)), 6)
+    CASE WHEN b.v % 10 IN (0, 1, 2) THEN NULL
+         ELSE repeat(md5(CAST(b.v * 11 AS STRING)), 6)
     END AS s_long_d
-FROM generate_series(0, 9) AS a(v)
-CROSS JOIN generate_series(1, 1000000) AS b(v);
+FROM generate_series(1, 500000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.string_wide_kv (1M rows). NULL when rn % 20 = 0 which gives
--- exactly 5% NULL density. Each non-null cell is exactly 50 chars (lpad).
+-- Populate bench.string_wide_kv (100K rows). NULL when rn % 20 = 0 which
+-- gives exactly 5% NULL density. Each non-null cell is exactly 50 chars.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.string_wide_kv
@@ -361,10 +362,10 @@ SELECT
     CASE WHEN b.v % 20 = 0 THEN NULL ELSE lpad(CONCAT('k38-', CAST(b.v AS STRING)), 50, 'x') END,
     CASE WHEN b.v % 20 = 0 THEN NULL ELSE lpad(CONCAT('k39-', CAST(b.v AS STRING)), 50, 'x') END,
     CASE WHEN b.v % 20 = 0 THEN NULL ELSE lpad(CONCAT('k40-', CAST(b.v AS STRING)), 50, 'x') END
-FROM generate_series(1, 1000000) AS b(v);
+FROM generate_series(1, 100000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.string_long (100K rows). md5 is 32 hex chars; repeat 200x
+-- Populate bench.string_long (10K rows). md5 is 32 hex chars; repeat 200x
 -- gives a 6400-char cell.
 -- --------------------------------------------------------------------------
 
@@ -375,14 +376,14 @@ SELECT
     repeat(md5(CAST(b.v * 3 AS STRING)), 200)    AS s2,
     repeat(md5(CAST(b.v * 7 AS STRING)), 200)    AS s3,
     repeat(md5(CAST(b.v * 11 AS STRING)), 200)   AS s4
-FROM generate_series(1, 100000) AS b(v);
+FROM generate_series(1, 10000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.binary_blobs (50K rows). Sizes vary by (rn mod K) so the
+-- Populate bench.binary_blobs (5K rows). Sizes vary by (rn mod K) so the
 -- driver sees the full chunked-truncation matrix:
 --   b1: 32 .. 1024 bytes  (1 + rn%32 repeats of 32-byte md5)
 --   b2: 32 .. 2048 bytes  (1 + rn%64 repeats)
---   b3: 32 .. 65536 bytes (1 + rn%2048 repeats; ~64KB max)
+--   b3: 32 .. 32768 bytes (1 + rn%1024 repeats; ~32KB max)
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.binary_blobs
@@ -390,11 +391,11 @@ SELECT
     b.v AS rn,
     CAST(repeat(md5(CAST(b.v AS STRING)), 1 + CAST(b.v % 32 AS INT)) AS BINARY)        AS b1,
     CAST(repeat(md5(CAST(b.v * 3 AS STRING)), 1 + CAST(b.v % 64 AS INT)) AS BINARY)    AS b2,
-    CAST(repeat(md5(CAST(b.v * 7 AS STRING)), 1 + CAST(b.v % 2048 AS INT)) AS BINARY)  AS b3
-FROM generate_series(1, 50000) AS b(v);
+    CAST(repeat(md5(CAST(b.v * 7 AS STRING)), 1 + CAST(b.v % 1024 AS INT)) AS BINARY)  AS b3
+FROM generate_series(1, 5000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.decimal_temporal (5M rows). ts_a / ts_b are bare TIMESTAMP.
+-- Populate bench.decimal_temporal (500K rows). ts_a / ts_b are bare TIMESTAMP.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.decimal_temporal
@@ -429,13 +430,12 @@ SELECT
         CAST((43200 + rn % 43200) % 60 AS DOUBLE)
     )                                                                                                AS tm_b
 FROM (
-    SELECT a.v * 1000000 + b.v AS rn
-    FROM generate_series(0, 4) AS a(v)
-    CROSS JOIN generate_series(1, 1000000) AS b(v)
+    SELECT b.v AS rn
+    FROM generate_series(1, 500000) AS b(v)
 ) t;
 
 -- --------------------------------------------------------------------------
--- Populate bench.nested_json (500K rows). Mix of STRUCT, ARRAY, MAP.
+-- Populate bench.nested_json (50K rows). Mix of STRUCT, ARRAY, MAP.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.nested_json
@@ -448,10 +448,10 @@ SELECT
     array(CAST(b.v % 7 AS INT), CAST(b.v % 13 AS INT)),
     map('id', CAST(b.v AS STRING), 'mod10', CAST(b.v % 10 AS STRING)),
     map('hash', md5(CAST(b.v AS STRING)))
-FROM generate_series(1, 500000) AS b(v);
+FROM generate_series(1, 50000) AS b(v);
 
 -- --------------------------------------------------------------------------
--- Populate bench.null_heavy (5M rows). All 30 nullable cols populated only
+-- Populate bench.null_heavy (500K rows). All 30 nullable cols populated only
 -- when rn % 20 = 0, so 5% non-null density per column.
 -- --------------------------------------------------------------------------
 
@@ -499,31 +499,29 @@ SELECT
     ) ELSE NULL END,
     CASE WHEN rn % 20 = 0 THEN rn % 2 = 0 ELSE NULL END
 FROM (
-    SELECT a.v * 1000000 + b.v AS rn
-    FROM generate_series(0, 4) AS a(v)
-    CROSS JOIN generate_series(1, 1000000) AS b(v)
+    SELECT b.v AS rn
+    FROM generate_series(1, 500000) AS b(v)
 ) t;
 
 -- --------------------------------------------------------------------------
--- Populate bench.skewed_strings (5M rows). The skew column is a 1%/99% mix:
--- when rn % 100 = 0 the cell is repeat(md5,3125) = 100,000 chars; otherwise
--- the cell is just CAST(rn AS STRING) which is 1-7 chars.
+-- Populate bench.skewed_strings (500K rows). The skew column is a 1%/99% mix:
+-- when rn % 100 = 0 the cell is repeat(md5,3125) = 100,000 chars (5K cells
+-- total = 500MB); otherwise CAST(rn AS STRING) which is 1-6 chars.
 -- --------------------------------------------------------------------------
 
 INSERT INTO {{zone_name}}.bench.skewed_strings
 SELECT
-    a.v * 1000000 + b.v AS rn,
-    CAST(a.v * 1000000 + b.v AS STRING)                              AS c1,
-    CONCAT('row-', CAST(a.v * 1000000 + b.v AS STRING))              AS c2,
-    CONCAT('mod10-', CAST((a.v * 1000000 + b.v) % 10 AS STRING))     AS c3,
-    CONCAT('mod100-', CAST((a.v * 1000000 + b.v) % 100 AS STRING))   AS c4,
-    md5(CAST(a.v * 1000000 + b.v AS STRING))                         AS c5,
-    CASE WHEN (a.v * 1000000 + b.v) % 100 = 0
-         THEN repeat(md5(CAST(a.v * 1000000 + b.v AS STRING)), 3125)
-         ELSE CAST(a.v * 1000000 + b.v AS STRING)
+    b.v AS rn,
+    CAST(b.v AS STRING)                              AS c1,
+    CONCAT('row-', CAST(b.v AS STRING))              AS c2,
+    CONCAT('mod10-', CAST(b.v % 10 AS STRING))       AS c3,
+    CONCAT('mod100-', CAST(b.v % 100 AS STRING))     AS c4,
+    md5(CAST(b.v AS STRING))                         AS c5,
+    CASE WHEN b.v % 100 = 0
+         THEN repeat(md5(CAST(b.v AS STRING)), 3125)
+         ELSE CAST(b.v AS STRING)
     END AS skew
-FROM generate_series(0, 4) AS a(v)
-CROSS JOIN generate_series(1, 1000000) AS b(v);
+FROM generate_series(1, 500000) AS b(v);
 
 -- --------------------------------------------------------------------------
 -- Schema Detection & Permissions
