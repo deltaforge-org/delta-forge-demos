@@ -6,7 +6,9 @@
 --          bit-identical and any drift is a real regression.
 --
 -- Sizes are sized to stay safely under Arrow's 2GB i32-offset limit per
--- StringArray batch. Scale up table-by-table once the engine path is proven.
+-- StringArray batch. To stress-test fixed_narrow at 200M rows separately,
+-- run the standalone script:
+--   demos/delta/delta-odbc-driver-bench/extras/huge_fixed_narrow_200m.sql
 -- ==========================================================================
 
 -- --------------------------------------------------------------------------
