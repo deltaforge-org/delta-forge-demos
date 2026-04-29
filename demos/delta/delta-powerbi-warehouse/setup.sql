@@ -405,7 +405,7 @@ TBLPROPERTIES (
 
 INSERT INTO {{zone_name}}.retail.dim_date
 SELECT
-    CAST(year(d) * 10000 + month(d) * 100 + day(d) AS INT)              AS date_key,
+    CAST(year(d) * 10000 + month(d) * 100 + dayofmonth(d) AS INT)              AS date_key,
     d                                                                   AS full_date,
     CAST(year(d) AS INT)                                                AS year,
     CAST(quarter(d) AS INT)                                             AS quarter,
@@ -415,7 +415,7 @@ SELECT
     date_format(d, 'MMMM')                                              AS month_name,
     date_format(d, 'MMM')                                               AS month_short,
     concat(CAST(year(d) AS STRING), '-', lpad(CAST(month(d) AS STRING), 2, '0')) AS month_year,
-    CAST(day(d) AS INT)                                                 AS day_of_month,
+    CAST(dayofmonth(d) AS INT)                                                 AS day_of_month,
     CAST(dayofyear(d) AS INT)                                           AS day_of_year,
     CAST(dayofweek(d) AS INT)                                           AS day_of_week,
     date_format(d, 'EEEE')                                              AS day_name,
@@ -429,15 +429,15 @@ SELECT
         ELSE 4
     END AS INT)                                                         AS fiscal_quarter,
     dayofweek(d) IN (1, 7)                                              AS is_weekend,
-    d = last_day(d)                                                     AS is_month_end,
-    d = last_day(d) AND month(d) IN (3, 6, 9, 12)                       AS is_quarter_end,
-    month(d) = 12 AND day(d) = 31                                       AS is_year_end,
-    (month(d) = 1  AND day(d) = 1)
-        OR (month(d) = 7  AND day(d) = 4)
-        OR (month(d) = 12 AND day(d) = 25)
-        OR (month(d) = 11 AND day(d) BETWEEN 22 AND 28 AND dayofweek(d) = 5)
-        OR (month(d) = 5  AND day(d) BETWEEN 25 AND 31 AND dayofweek(d) = 2)
-        OR (month(d) = 9  AND day(d) BETWEEN 1  AND 7  AND dayofweek(d) = 2)
+    d = last_dayofmonth(d)                                                     AS is_month_end,
+    d = last_dayofmonth(d) AND month(d) IN (3, 6, 9, 12)                       AS is_quarter_end,
+    month(d) = 12 AND dayofmonth(d) = 31                                       AS is_year_end,
+    (month(d) = 1  AND dayofmonth(d) = 1)
+        OR (month(d) = 7  AND dayofmonth(d) = 4)
+        OR (month(d) = 12 AND dayofmonth(d) = 25)
+        OR (month(d) = 11 AND dayofmonth(d) BETWEEN 22 AND 28 AND dayofweek(d) = 5)
+        OR (month(d) = 5  AND dayofmonth(d) BETWEEN 25 AND 31 AND dayofweek(d) = 2)
+        OR (month(d) = 9  AND dayofmonth(d) BETWEEN 1  AND 7  AND dayofweek(d) = 2)
                                                                         AS is_holiday,
     CASE
         WHEN month(d) IN (12, 1, 2) THEN 'Winter'
@@ -700,7 +700,7 @@ SELECT
     lpad(CAST(rn AS STRING), 32, '0')                                   AS transaction_uuid,
     CAST(year(DATE '2020-01-01' + CAST(rn % 1825 AS INT)) * 10000
        + month(DATE '2020-01-01' + CAST(rn % 1825 AS INT)) * 100
-       + day(DATE '2020-01-01' + CAST(rn % 1825 AS INT)) AS INT)        AS date_key,
+       + dayofmonth(DATE '2020-01-01' + CAST(rn % 1825 AS INT)) AS INT)        AS date_key,
     CAST((rn * 17) % 5000000 + 1 AS BIGINT)                             AS customer_key,
     CAST((rn * 13) % 1000000 + 1 AS BIGINT)                             AS product_key,
     CAST((rn * 7)  % 25000 + 1 AS BIGINT)                               AS store_key,
@@ -839,7 +839,7 @@ SELECT
     DATE '2024-01-01' + CAST(rn % 365 AS INT)                           AS snapshot_date,
     CAST(year(DATE '2024-01-01' + CAST(rn % 365 AS INT)) * 10000
        + month(DATE '2024-01-01' + CAST(rn % 365 AS INT)) * 100
-       + day(DATE '2024-01-01' + CAST(rn % 365 AS INT)) AS INT)         AS snapshot_date_key,
+       + dayofmonth(DATE '2024-01-01' + CAST(rn % 365 AS INT)) AS INT)         AS snapshot_date_key,
     CAST((rn * 7)  % 25000 + 1 AS BIGINT)                               AS store_key,
     CAST((rn * 13) % 1000000 + 1 AS BIGINT)                             AS product_key,
     CAST(rn % 1000 AS INT)                                              AS on_hand_units,
@@ -891,7 +891,7 @@ SELECT
                    CAST((rn % 86400) % 60 AS DOUBLE))                   AS event_ts,
     CAST(year(DATE '2024-01-01' + CAST(rn % 365 AS INT)) * 10000
        + month(DATE '2024-01-01' + CAST(rn % 365 AS INT)) * 100
-       + day(DATE '2024-01-01' + CAST(rn % 365 AS INT)) AS INT)         AS event_date_key,
+       + dayofmonth(DATE '2024-01-01' + CAST(rn % 365 AS INT)) AS INT)         AS event_date_key,
     element_at(array('page_view','add_to_cart','remove_from_cart','checkout_start','checkout_complete','search','product_view','click_recommendation','share','wishlist_add'),
         1 + CAST((rn - 1) % 10 AS INT))                                 AS event_type,
     concat('/',
