@@ -7,11 +7,10 @@
 -- and ~265 columns. Every value is row_number-derived through array
 -- lookups so two runs are bit-identical and any drift is real.
 --
--- All fact tables set delta.targetFileSize = 157286400 (150 MB) so the
--- writer produces predictable Parquet file sizes that align with
--- Power BI Import refresh, partition pruning, and DirectQuery scan
--- behaviour. 150 MB amortises per-file overhead while still allowing
--- parallel scan dispatch.
+-- File sizing inherits the workspace default (delta.targetFileSize = 256 MB,
+-- the value Databricks autotune targets for tables under 2.56 TB). The
+-- writer rotates files at that size by direct measurement of bytes-on-disk;
+-- no per-table override is needed.
 --
 -- Setup time on local SSD is measured in hours, not minutes. This is
 -- intentional: the demo exists to drive ODBC perf measurement against
@@ -63,10 +62,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.dim_date (
     is_holiday          BOOLEAN NOT NULL,
     season              STRING NOT NULL
 )
-LOCATION '{{data_path}}/retail/dim_date'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/dim_date';
 
 -- --------------------------------------------------------------------------
 -- dim_store (25,000 rows, 30 cols)
@@ -106,10 +102,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.dim_store (
     has_cafe            BOOLEAN NOT NULL,
     target_segment      STRING NOT NULL
 )
-LOCATION '{{data_path}}/retail/dim_store'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/dim_store';
 
 -- --------------------------------------------------------------------------
 -- dim_product (1,000,000 rows, 36 cols)
@@ -157,10 +150,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.dim_product (
     is_taxable              BOOLEAN NOT NULL,
     abc_class               STRING NOT NULL
 )
-LOCATION '{{data_path}}/retail/dim_product'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/dim_product';
 
 -- --------------------------------------------------------------------------
 -- dim_customer (5,000,000 rows, 40 cols)
@@ -212,10 +202,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.dim_customer (
     churn_risk_score            DOUBLE NOT NULL,
     segment                     STRING NOT NULL
 )
-LOCATION '{{data_path}}/retail/dim_customer'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/dim_customer';
 
 -- ==========================================================================
 -- FACT TABLES
@@ -304,10 +291,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.fact_sales (
     sales_associate_team        STRING NOT NULL,
     fiscal_year_label           STRING NOT NULL
 )
-LOCATION '{{data_path}}/retail/fact_sales'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/fact_sales';
 
 -- --------------------------------------------------------------------------
 -- fact_inventory_snapshot (100,000,000 rows, 28 cols)
@@ -344,10 +328,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.fact_inventory_snapshot (
     store_region                    STRING NOT NULL,
     product_category_l1             STRING NOT NULL
 )
-LOCATION '{{data_path}}/retail/fact_inventory_snapshot'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/fact_inventory_snapshot';
 
 -- --------------------------------------------------------------------------
 -- fact_web_events (200,000,000 rows, 32 cols)
@@ -388,10 +369,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.retail.fact_web_events (
     products_viewed_count   INT NOT NULL,
     search_query            STRING
 )
-LOCATION '{{data_path}}/retail/fact_web_events'
-TBLPROPERTIES (
-    'delta.targetFileSize' = '157286400'
-);
+LOCATION '{{data_path}}/retail/fact_web_events';
 
 -- ==========================================================================
 -- POPULATION
