@@ -7,7 +7,7 @@
 -- and ~265 columns. Every value is row-index-derived so two runs are
 -- deterministic and any drift is real.
 --
--- Synthesis path: the dim and fact INSERTs use df.generate.table, a
+-- Synthesis path: the dim and fact INSERTs use df_generate_table, a
 -- streaming TableProvider that builds Arrow batches in tight Rust loops
 -- (parallelised across cores) and yields them on demand to the Delta
 -- writer. Memory in flight is bounded to one chunk per partition, so a
@@ -445,7 +445,7 @@ FROM (
 -- --------------------------------------------------------------------------
 -- Populate dim_store (25,000 rows). 5 banners x 5 store types x 5 regions
 -- cycle in lockstep so every closed-form COUNT-by-attribute is exact.
--- Native synthesis: df.generate.table streams the simple columns directly
+-- Native synthesis: df_generate_table streams the simple columns directly
 -- from row index in chunks; the few compound strings (store_name,
 -- address_line, manager_name) and the decimal cast are derived in SQL on
 -- top of those chunks at vectorised speed.
@@ -484,7 +484,7 @@ SELECT
     g.has_garden,
     g.has_cafe,
     g.target_segment
-FROM df.generate.table(25000, '[
+FROM df_generate_table(25000, '[
     {"type": "row_index",     "name": "store_id", "start": 1},
     {"type": "id_sequence",   "name": "store_code", "prefix": "STORE-", "pad": 6, "start": 1},
     {"type": "cyclic_lookup", "name": "store_type", "values": ["Hypermarket","Supermarket","Express","Online","Marketplace"]},
@@ -563,7 +563,7 @@ SELECT
     g.is_eco_certified,
     g.is_taxable,
     g.abc_class
-FROM df.generate.table(1000000, '[
+FROM df_generate_table(1000000, '[
     {"type": "row_index",     "name": "product_id", "start": 1},
     {"type": "id_sequence",   "name": "sku", "prefix": "SKU-", "pad": 8, "start": 1},
     {"type": "padded_hash",   "name": "upc_barcode", "multiplier": 13, "pad": 14, "modulo": 100000000000000},
@@ -652,7 +652,7 @@ SELECT
     g.last_purchase_date,
     g.churn_risk_score,
     g.segment
-FROM df.generate.table(5000000, '[
+FROM df_generate_table(5000000, '[
     {"type": "row_index",     "name": "customer_id",   "start": 1},
     {"type": "id_sequence",   "name": "customer_code", "prefix": "CUST-", "pad": 8, "start": 1},
     {"type": "cyclic_lookup", "name": "salutation",    "values": ["Mr.","Mrs.","Ms.","Dr.","Prof."]},
@@ -793,7 +793,7 @@ SELECT
     g.sales_associate_team,
     concat('FY', CAST(year(g.order_date)
         + CASE WHEN month(g.order_date) >= 4 THEN 1 ELSE 0 END AS STRING)) AS fiscal_year_label
-FROM df.generate.table(200000000, '[
+FROM df_generate_table(200000000, '[
     {"type": "row_index",     "name": "sale_id", "start": 1},
     {"type": "id_sequence",   "name": "transaction_uuid", "prefix": "", "pad": 32, "start": 1},
     {"type": "arithmetic",    "name": "customer_key",          "multiplier": 17, "modulo": 5000000, "offset": 1},
@@ -883,7 +883,7 @@ SELECT
     g.stock_status,
     g.store_region,
     g.product_category_l1
-FROM df.generate.table(100000000, '[
+FROM df_generate_table(100000000, '[
     {"type": "row_index",     "name": "inventory_snapshot_id", "start": 1},
     {"type": "date",          "name": "snapshot_date",      "base": "2024-01-01", "multiplier": 1, "modulo": 365},
     {"type": "arithmetic",    "name": "store_key",           "multiplier": 7,  "modulo": 25000,   "offset": 1},
@@ -957,7 +957,7 @@ SELECT
         THEN concat('q-', CAST(g.search_q_id AS STRING))
         ELSE NULL
     END                                                                 AS search_query
-FROM df.generate.table(200000000, '[
+FROM df_generate_table(200000000, '[
     {"type": "row_index",     "name": "event_id", "start": 1},
     {"type": "arithmetic",    "name": "customer_key",  "multiplier": 17, "modulo": 5000000, "offset": 1},
     {"type": "timestamp",     "name": "event_ts",      "base_micros": 1704067200000000, "step_micros": 1000000},
