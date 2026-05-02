@@ -20,11 +20,9 @@ SELECT * FROM {{zone_name}}.iceberg_demos.products;
 -- Query 2: Iceberg External Table — Post-Delete Row Count
 -- ============================================================================
 -- The Iceberg external table reads through the metadata chain including the
--- equality delete file. It should show exactly 7 rows after deletes.
--- Known engine limitation: Iceberg equality delete files are not yet applied
--- during external table reads; all 10 rows are visible.
+-- equality delete file and applies the deletes during the scan.
 
-ASSERT WARNING ROW_COUNT = 10
+ASSERT ROW_COUNT = 7
 SELECT * FROM {{zone_name}}.iceberg_demos.products_iceberg;
 
 
@@ -42,10 +40,8 @@ SELECT * FROM {{zone_name}}.iceberg_demos.products WHERE id IN (2, 5, 8);
 -- ============================================================================
 -- Confirm the equality delete file correctly filters out the same 3 products
 -- when reading through Iceberg metadata.
--- Known engine limitation: Iceberg equality delete files are not yet applied
--- during external table reads; the 3 deleted products remain visible.
 
-ASSERT WARNING ROW_COUNT = 3
+ASSERT ROW_COUNT = 0
 SELECT * FROM {{zone_name}}.iceberg_demos.products_iceberg WHERE id IN (2, 5, 8);
 
 
@@ -67,12 +63,9 @@ FROM {{zone_name}}.iceberg_demos.products;
 -- Query 6: Iceberg — Remaining Products Match
 -- ============================================================================
 -- The Iceberg read should produce identical aggregates to Delta.
--- Known engine limitation: Iceberg equality delete files are not yet applied
--- during external table reads. The reader returns all 10 rows including the
--- 3 equality-deleted products. Tracked as a known engine issue.
 
 ASSERT ROW_COUNT = 1
-ASSERT WARNING VALUE total_price = 4302.97
+ASSERT VALUE total_price = 2813.48
 SELECT
     ROUND(SUM(price), 2) AS total_price
 FROM {{zone_name}}.iceberg_demos.products_iceberg;
@@ -99,17 +92,13 @@ ORDER BY category;
 -- ============================================================================
 -- Query 8: Iceberg — Category Distribution
 -- ============================================================================
--- Same category breakdown via Iceberg — must match Delta exactly.
--- Known engine limitation: Iceberg equality delete files are not yet applied
--- during external table reads. All 10 original rows are visible, so counts
--- include the 3 deleted products (id 2=Electronics, id 5=Industrial,
--- id 8=Science). Tracked as a known engine issue.
+-- Same category breakdown via Iceberg, must match Delta exactly.
 
 ASSERT ROW_COUNT = 4
-ASSERT WARNING VALUE product_count = 3 WHERE category = 'Electronics'
+ASSERT VALUE product_count = 2 WHERE category = 'Electronics'
 ASSERT VALUE product_count = 2 WHERE category = 'Energy'
-ASSERT WARNING VALUE product_count = 3 WHERE category = 'Industrial'
-ASSERT WARNING VALUE product_count = 2 WHERE category = 'Science'
+ASSERT VALUE product_count = 2 WHERE category = 'Industrial'
+ASSERT VALUE product_count = 1 WHERE category = 'Science'
 SELECT
     category,
     COUNT(*) AS product_count
@@ -124,14 +113,11 @@ ORDER BY category;
 -- Cross-cutting sanity check: both Delta and Iceberg views agree on row
 -- count, deleted product visibility, and total price.
 
--- Known engine limitation: Iceberg equality delete files not applied during
--- external table reads, so iceberg_rows = 10 and iceberg_deleted = 3 (deleted
--- rows still visible via Iceberg path).
 ASSERT ROW_COUNT = 1
 ASSERT VALUE delta_rows = 7
-ASSERT WARNING VALUE iceberg_rows = 10
+ASSERT VALUE iceberg_rows = 7
 ASSERT VALUE delta_deleted = 0
-ASSERT WARNING VALUE iceberg_deleted = 3
+ASSERT VALUE iceberg_deleted = 0
 SELECT
     d.delta_rows,
     i.iceberg_rows,
