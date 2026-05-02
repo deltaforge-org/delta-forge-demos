@@ -223,7 +223,6 @@ ORDER BY record_id;
 -- Query 10: Beta Total After MERGE
 -- ============================================================================
 
-ASSERT ROW_COUNT = 1
 ASSERT VALUE beta_count = 20
 SELECT
     COUNT(*) AS beta_count
