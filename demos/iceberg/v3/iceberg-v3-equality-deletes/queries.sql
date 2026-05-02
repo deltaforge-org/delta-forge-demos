@@ -38,15 +38,13 @@ WHERE patient_id IN ('P-0012', 'P-0025', 'P-0041', 'P-0067');
 -- ============================================================================
 -- Post-delete distribution across 5 hospitals. Totals reflect removal of
 -- GDPR patients' visits from each hospital they visited.
--- Known engine limitation: GROUP BY aggregations bypass equality delete
--- filtering; counts include all 500 rows instead of 445.
 
 ASSERT ROW_COUNT = 5
-ASSERT WARNING VALUE visit_count = 107 WHERE hospital = 'Cleveland-Clinic-OH'
-ASSERT WARNING VALUE visit_count = 90 WHERE hospital = 'Johns-Hopkins-Baltimore'
-ASSERT WARNING VALUE visit_count = 103 WHERE hospital = 'Mass-General-Boston'
-ASSERT WARNING VALUE visit_count = 97 WHERE hospital = 'Mayo-Clinic-Rochester'
-ASSERT WARNING VALUE visit_count = 103 WHERE hospital = 'Mount-Sinai-NYC'
+ASSERT VALUE visit_count = 96 WHERE hospital = 'Cleveland-Clinic-OH'
+ASSERT VALUE visit_count = 80 WHERE hospital = 'Johns-Hopkins-Baltimore'
+ASSERT VALUE visit_count = 93 WHERE hospital = 'Mass-General-Boston'
+ASSERT VALUE visit_count = 84 WHERE hospital = 'Mayo-Clinic-Rochester'
+ASSERT VALUE visit_count = 92 WHERE hospital = 'Mount-Sinai-NYC'
 SELECT
     hospital,
     COUNT(*) AS visit_count
@@ -58,12 +56,9 @@ ORDER BY hospital;
 -- ============================================================================
 -- Query 4: Distinct Patient Count
 -- ============================================================================
--- 4 GDPR patients removed from the original 80, but the post-delete
--- distinct count reflects the actual remaining unique patient_id values.
--- Known engine limitation: ASSERT ROW_COUNT = 1 misreports aggregate value
--- as row count for single-column bare aggregates.
+-- 4 GDPR patients removed from the original 79, leaving 75 distinct patients.
 
-ASSERT WARNING VALUE patient_count = 75
+ASSERT VALUE patient_count = 75
 SELECT
     COUNT(DISTINCT patient_id) AS patient_count
 FROM {{zone_name}}.iceberg_demos.patient_visits;
@@ -73,18 +68,16 @@ FROM {{zone_name}}.iceberg_demos.patient_visits;
 -- Query 5: Per-Department Distribution
 -- ============================================================================
 -- Visit counts by department after equality deletes are applied.
--- Known engine limitation: GROUP BY aggregations bypass equality delete
--- filtering; counts include all 500 rows instead of 445.
 
 ASSERT ROW_COUNT = 8
-ASSERT WARNING VALUE visit_count = 60 WHERE department = 'Cardiology'
-ASSERT WARNING VALUE visit_count = 65 WHERE department = 'Dermatology'
-ASSERT WARNING VALUE visit_count = 54 WHERE department = 'Emergency'
-ASSERT WARNING VALUE visit_count = 68 WHERE department = 'Neurology'
-ASSERT WARNING VALUE visit_count = 64 WHERE department = 'Oncology'
-ASSERT WARNING VALUE visit_count = 73 WHERE department = 'Orthopedics'
-ASSERT WARNING VALUE visit_count = 65 WHERE department = 'Pediatrics'
-ASSERT WARNING VALUE visit_count = 51 WHERE department = 'Radiology'
+ASSERT VALUE visit_count = 52 WHERE department = 'Cardiology'
+ASSERT VALUE visit_count = 58 WHERE department = 'Dermatology'
+ASSERT VALUE visit_count = 50 WHERE department = 'Emergency'
+ASSERT VALUE visit_count = 63 WHERE department = 'Neurology'
+ASSERT VALUE visit_count = 59 WHERE department = 'Oncology'
+ASSERT VALUE visit_count = 63 WHERE department = 'Orthopedics'
+ASSERT VALUE visit_count = 55 WHERE department = 'Pediatrics'
+ASSERT VALUE visit_count = 45 WHERE department = 'Radiology'
 SELECT
     department,
     COUNT(*) AS visit_count
@@ -97,15 +90,13 @@ ORDER BY department;
 -- Query 6: Emergency Visits by Hospital
 -- ============================================================================
 -- Filters on boolean is_emergency column combined with hospital grouping.
--- Known engine limitation: GROUP BY aggregations bypass equality delete
--- filtering.
 
 ASSERT ROW_COUNT = 5
-ASSERT WARNING VALUE emergency_count = 11 WHERE hospital = 'Cleveland-Clinic-OH'
-ASSERT WARNING VALUE emergency_count = 13 WHERE hospital = 'Johns-Hopkins-Baltimore'
-ASSERT WARNING VALUE emergency_count = 17 WHERE hospital = 'Mass-General-Boston'
-ASSERT WARNING VALUE emergency_count = 6 WHERE hospital = 'Mayo-Clinic-Rochester'
-ASSERT WARNING VALUE emergency_count = 10 WHERE hospital = 'Mount-Sinai-NYC'
+ASSERT VALUE emergency_count = 10 WHERE hospital = 'Cleveland-Clinic-OH'
+ASSERT VALUE emergency_count = 9 WHERE hospital = 'Johns-Hopkins-Baltimore'
+ASSERT VALUE emergency_count = 16 WHERE hospital = 'Mass-General-Boston'
+ASSERT VALUE emergency_count = 5 WHERE hospital = 'Mayo-Clinic-Rochester'
+ASSERT VALUE emergency_count = 10 WHERE hospital = 'Mount-Sinai-NYC'
 SELECT
     hospital,
     COUNT(*) AS emergency_count
@@ -119,15 +110,13 @@ ORDER BY hospital;
 -- Query 7: Average Treatment Cost by Hospital
 -- ============================================================================
 -- Floating-point aggregation per hospital after equality deletes.
--- Known engine limitation: GROUP BY aggregations bypass equality delete
--- filtering; averages include the deleted rows' costs.
 
 ASSERT ROW_COUNT = 5
-ASSERT WARNING VALUE avg_cost = 11665.53 WHERE hospital = 'Cleveland-Clinic-OH'
-ASSERT WARNING VALUE avg_cost = 13864.75 WHERE hospital = 'Johns-Hopkins-Baltimore'
-ASSERT WARNING VALUE avg_cost = 13961.24 WHERE hospital = 'Mass-General-Boston'
-ASSERT WARNING VALUE avg_cost = 12534.83 WHERE hospital = 'Mayo-Clinic-Rochester'
-ASSERT WARNING VALUE avg_cost = 13918.1 WHERE hospital = 'Mount-Sinai-NYC'
+ASSERT VALUE avg_cost = 11490.21 WHERE hospital = 'Cleveland-Clinic-OH'
+ASSERT VALUE avg_cost = 14292.6 WHERE hospital = 'Johns-Hopkins-Baltimore'
+ASSERT VALUE avg_cost = 13725.55 WHERE hospital = 'Mass-General-Boston'
+ASSERT VALUE avg_cost = 12337.53 WHERE hospital = 'Mayo-Clinic-Rochester'
+ASSERT VALUE avg_cost = 14129.32 WHERE hospital = 'Mount-Sinai-NYC'
 SELECT
     hospital,
     ROUND(AVG(treatment_cost), 2) AS avg_cost
@@ -139,12 +128,11 @@ ORDER BY hospital;
 -- ============================================================================
 -- Query 8: Total and Average Cost
 -- ============================================================================
--- Grand totals across all 445 remaining visits (with engine limitation).
--- Known engine limitation: SUM includes deleted rows; total reflects 500 rows.
+-- Grand totals across all 445 remaining visits.
 
 ASSERT ROW_COUNT = 1
-ASSERT WARNING VALUE total_cost = 6583489.03
-ASSERT WARNING VALUE avg_cost = 13166.98
+ASSERT VALUE total_cost = 5859194.13
+ASSERT VALUE avg_cost = 13166.73
 SELECT
     ROUND(SUM(treatment_cost), 2) AS total_cost,
     ROUND(AVG(treatment_cost), 2) AS avg_cost
@@ -155,20 +143,19 @@ FROM {{zone_name}}.iceberg_demos.patient_visits;
 -- Query 9: Top 5 Physicians by Visit Count
 -- ============================================================================
 -- Attending physician workload after GDPR patient removal.
--- Known engine limitation: counts include all 500 rows; top-5 ordering
--- and values change when deleted rows are included.
 
 ASSERT ROW_COUNT = 5
-ASSERT WARNING VALUE visit_count = 72 WHERE attending_physician = 'Dr-Chen'
-ASSERT WARNING VALUE visit_count = 58 WHERE attending_physician = 'Dr-Jackson'
-ASSERT WARNING VALUE visit_count = 55 WHERE attending_physician = 'Dr-Huang'
-ASSERT WARNING VALUE visit_count = 49 WHERE attending_physician = 'Dr-Becker'
+ASSERT VALUE visit_count = 65 WHERE attending_physician = 'Dr-Chen'
+ASSERT VALUE visit_count = 55 WHERE attending_physician = 'Dr-Jackson'
+ASSERT VALUE visit_count = 47 WHERE attending_physician = 'Dr-Huang'
+ASSERT VALUE visit_count = 46 WHERE attending_physician = 'Dr-Becker'
+ASSERT VALUE visit_count = 42 WHERE attending_physician = 'Dr-Ivanova'
 SELECT
     attending_physician,
     COUNT(*) AS visit_count
 FROM {{zone_name}}.iceberg_demos.patient_visits
 GROUP BY attending_physician
-ORDER BY visit_count DESC
+ORDER BY visit_count DESC, attending_physician
 LIMIT 5;
 
 
@@ -176,19 +163,18 @@ LIMIT 5;
 -- Query 10: Diagnosis Code Distribution
 -- ============================================================================
 -- ICD-10 code frequency across all remaining visits.
--- Known engine limitation: counts include all 500 rows.
 
 ASSERT ROW_COUNT = 10
-ASSERT WARNING VALUE visit_count = 58 WHERE diagnosis_code = 'C34.9'
-ASSERT WARNING VALUE visit_count = 43 WHERE diagnosis_code = 'E11.9'
-ASSERT WARNING VALUE visit_count = 46 WHERE diagnosis_code = 'F32.9'
-ASSERT WARNING VALUE visit_count = 50 WHERE diagnosis_code = 'G43.9'
-ASSERT WARNING VALUE visit_count = 50 WHERE diagnosis_code = 'I25.1'
-ASSERT WARNING VALUE visit_count = 54 WHERE diagnosis_code = 'J06.9'
-ASSERT WARNING VALUE visit_count = 51 WHERE diagnosis_code = 'K21.0'
-ASSERT WARNING VALUE visit_count = 54 WHERE diagnosis_code = 'L30.9'
-ASSERT WARNING VALUE visit_count = 46 WHERE diagnosis_code = 'M54.5'
-ASSERT WARNING VALUE visit_count = 48 WHERE diagnosis_code = 'N39.0'
+ASSERT VALUE visit_count = 53 WHERE diagnosis_code = 'C34.9'
+ASSERT VALUE visit_count = 36 WHERE diagnosis_code = 'E11.9'
+ASSERT VALUE visit_count = 43 WHERE diagnosis_code = 'F32.9'
+ASSERT VALUE visit_count = 44 WHERE diagnosis_code = 'G43.9'
+ASSERT VALUE visit_count = 39 WHERE diagnosis_code = 'I25.1'
+ASSERT VALUE visit_count = 51 WHERE diagnosis_code = 'J06.9'
+ASSERT VALUE visit_count = 46 WHERE diagnosis_code = 'K21.0'
+ASSERT VALUE visit_count = 47 WHERE diagnosis_code = 'L30.9'
+ASSERT VALUE visit_count = 41 WHERE diagnosis_code = 'M54.5'
+ASSERT VALUE visit_count = 45 WHERE diagnosis_code = 'N39.0'
 SELECT
     diagnosis_code,
     COUNT(*) AS visit_count
