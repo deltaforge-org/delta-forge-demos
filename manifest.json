@@ -525,7 +525,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.avro_insurance.sampled_claims"
         }
-      ]
+      ],
+      "verifyScript": "compute_proof.py"
     },
     {
       "id": "avro-iot-sensors",
@@ -810,7 +811,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.csv_vet.sampled_visits"
         }
-      ]
+      ],
+      "verifyScript": "compute_assertions.py"
     },
     {
       "id": "delta-advanced-sql",
@@ -843,7 +845,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.stock_prices"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-append-only-enforcement",
@@ -880,7 +883,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.mutable_ledger"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-append-only-event-sourcing",
@@ -913,7 +917,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.order_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-audit-trail-versioning",
@@ -947,7 +952,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.audit_demos.compliance_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-auto-optimize",
@@ -980,7 +986,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.iot_readings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-basics-crud",
@@ -1013,7 +1020,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.products"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-binary-geometry",
@@ -1050,7 +1058,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.geo_locations"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-binary-geometry-advanced",
@@ -1096,7 +1105,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.audit_log"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-bloom-filters",
@@ -1129,7 +1139,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.transaction_log"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-case-conditional-logic",
@@ -1161,7 +1172,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.insurance_claims"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-change-data-feed",
@@ -1194,7 +1206,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.customer_accounts"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-collations",
@@ -1226,7 +1239,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.global_contacts"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-column-mapping",
@@ -1260,7 +1274,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.employee_directory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-complex-types",
@@ -1293,7 +1308,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.employees"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-computed-columns",
@@ -1326,7 +1342,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sales_invoices"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-constraint-enforcement",
@@ -1358,7 +1375,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.validated_employees"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-constraints-lifecycle",
@@ -1392,7 +1410,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.products"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-constraints-properties",
@@ -1429,7 +1448,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.event_log"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-convert-to-delta",
@@ -1463,7 +1483,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.legacy_data"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-cross-timezone-scheduling",
@@ -1495,7 +1516,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.conference_schedule"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-date-time-analytics",
@@ -1529,7 +1551,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.attendance_records"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-decimal-precision",
@@ -1561,7 +1584,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.financial_ledger"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-default-values",
@@ -1593,7 +1617,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.audit_log"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-deletion-vectors",
@@ -1625,7 +1650,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.web_sessions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-dml-patterns",
@@ -1661,7 +1687,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.order_archive"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-duration-arithmetic",
@@ -1693,7 +1720,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.vessel_transit"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-dv-accumulation",
@@ -1726,7 +1754,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.patient_visits"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-dynamic-partition-pruning",
@@ -1763,7 +1792,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.region_targets"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-edge-cases",
@@ -1803,7 +1833,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.empty_staging"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-event-sourcing-analytics",
@@ -1838,7 +1869,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.ed_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-feature-activation-lifecycle",
@@ -1871,7 +1903,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.customer_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-funnel-analysis",
@@ -1905,7 +1938,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.user_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-gdpr-data-erasure",
@@ -1939,7 +1973,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.customer_accounts"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-grouping-sets",
@@ -1971,7 +2006,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.production_runs"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-history-investigation",
@@ -2004,7 +2040,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.product_metrics"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-in-commit-timestamps",
@@ -2036,7 +2073,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.release_tracker"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-json-event-log",
@@ -2071,7 +2109,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.payment_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-advanced",
@@ -2108,7 +2147,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.inventory_updates"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-composite-keys",
@@ -2147,7 +2187,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.telemetry_batch"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-computed-columns",
@@ -2184,7 +2225,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.subscription_changes"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-dedup",
@@ -2222,7 +2264,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.events_deduped"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-dv-lifecycle",
@@ -2259,7 +2302,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.supplier_feed"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-idempotent",
@@ -2298,7 +2342,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sensor_batch"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-multi-source",
@@ -2345,7 +2390,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.return_updates"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-scd2",
@@ -2384,7 +2430,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.policy_changes"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-soft-delete",
@@ -2422,7 +2469,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.vendor_feed"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-subquery",
@@ -2461,7 +2509,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.order_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-merge-upsert",
@@ -2499,7 +2548,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.product_feed"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-multi-level-partitioning",
@@ -2540,7 +2590,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.quarter_dim"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-null-handling",
@@ -2573,7 +2624,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.survey_responses"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-null-statistics",
@@ -2606,7 +2658,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.null_demos.patient_records"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-odbc-driver-bench",
@@ -2770,7 +2823,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.daily_orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-optimize-version-proof",
@@ -2803,7 +2857,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.shipments"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-overflow-detection",
@@ -2835,7 +2890,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.transaction_ledger"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-merge",
@@ -2873,7 +2929,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.supplier_feed"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-pitfalls",
@@ -2909,7 +2966,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.events_by_month"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-replace",
@@ -2943,7 +3001,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.monthly_sales"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-replace-dv",
@@ -2978,7 +3037,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.monthly_settlements"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-selective-optimize",
@@ -3011,7 +3071,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.warehouse_orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-time-series",
@@ -3043,7 +3104,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.line_metrics"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partitioning",
@@ -3075,7 +3137,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partitions-dv",
@@ -3108,7 +3171,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.cloud_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-powerbi-warehouse",
@@ -3227,7 +3291,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.inherited_constrained"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-restore-advanced",
@@ -3260,7 +3325,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.config_settings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-restore-partitioned",
@@ -3294,7 +3360,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.quarterly_revenue"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-restore-rollback",
@@ -3327,7 +3394,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.product_inventory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-restore-selective-recovery",
@@ -3361,7 +3429,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.portfolio_positions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-restore-time-travel",
@@ -3395,7 +3464,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.course_grades"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-restore-vacuum-lifecycle",
@@ -3429,7 +3499,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sensor_readings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-row-index-catalog-rebuild",
@@ -3621,7 +3692,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.compliance_audit"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-schema-evolution",
@@ -3653,7 +3725,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.contacts"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-schema-evolution-advanced",
@@ -3687,7 +3760,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.product_catalog"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-schema-flexible-ingestion",
@@ -3721,7 +3795,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sensor_telemetry"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-snapshot-isolation",
@@ -3755,7 +3830,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.fund_holdings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-statistics-skipping",
@@ -3788,7 +3864,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.skipping_demos.orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-string-statistics",
@@ -3821,7 +3898,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.string_demos.product_catalog"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-subqueries-set-ops",
@@ -3859,7 +3937,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.enrollments"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-table-properties-lifecycle",
@@ -3892,7 +3971,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.props_demos.inventory_items"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-time-travel-optimize",
@@ -3923,7 +4003,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.inventory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-time-travel-point-in-time-join",
@@ -3959,7 +4040,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.fx_rates"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-time-travel-row-diff",
@@ -3991,7 +4073,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.ecom_orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-time-travel-vacuum-boundary",
@@ -4024,7 +4107,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.activity_log"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-timestamp-ntz",
@@ -4056,7 +4140,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.shift_handover"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-type-widening",
@@ -4088,7 +4173,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.device_telemetry"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-unicode-partitioning",
@@ -4121,7 +4207,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.cdn_content"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-unicode-roundtrip",
@@ -4155,7 +4242,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.global_bazaar"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-unicode-string-functions",
@@ -4189,7 +4277,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.support_tickets"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-update-cross-partition",
@@ -4222,7 +4311,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.subscriptions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-update-expressions",
@@ -4256,7 +4346,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.update_demos.portfolio_holdings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-update-multi-pass",
@@ -4292,7 +4383,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.pipeline_demos.order_pipeline"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-update-null-backfill",
@@ -4327,7 +4419,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.backfill_demos.patient_records"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-update-string-cleansing",
@@ -4363,7 +4456,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.cleansing_demos.customer_imports"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-vacuum-cdc-interaction",
@@ -4395,7 +4489,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.order_lifecycle"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-vacuum-cleanup",
@@ -4428,7 +4523,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.hr_employees"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-vacuum-optimize-maintenance",
@@ -4462,7 +4558,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.order_pipeline"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-vacuum-retention-governance",
@@ -4496,7 +4593,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.settlement_records"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-vacuum-storage-diagnostics",
@@ -4529,7 +4627,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.product_inventory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-vacuum-storage-savings",
@@ -4563,7 +4662,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.billing_transactions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-views-data-masking",
@@ -4595,7 +4695,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.customer_orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-window-functions-advanced",
@@ -4629,7 +4730,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sales_reps"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-zorder-deep",
@@ -4665,7 +4767,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.sensor_telemetry"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-zorder-vs-partition",
@@ -4704,7 +4807,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.orders_zorder"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "edi-850-purchase-orders-aliased",
@@ -5874,7 +5978,8 @@
           "objectType": "graph",
           "name": "{{zone_name}}.fleet_dispatch.dispatch_batch"
         }
-      ]
+      ],
+      "verifyScript": "proof.py"
     },
     {
       "id": "graph-bipartite",
@@ -6874,7 +6979,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.product_catalog"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-bloom-filters",
@@ -6907,7 +7013,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_bloom.members"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-change-data-feed",
@@ -6940,7 +7047,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_cdf.orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-column-reorder",
@@ -6973,7 +7081,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.patient_records"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-column-stats",
@@ -7007,7 +7116,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.ad_clicks"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-complex-types",
@@ -7041,7 +7151,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.product_catalog_nested"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-concurrent-writes",
@@ -7079,7 +7190,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.beta_corrections"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-constraints",
@@ -7112,7 +7224,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_constraints.transactions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-crud-lifecycle",
@@ -7145,7 +7258,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.employees"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-maintenance",
@@ -7183,7 +7297,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg_demos.app_logs_iceberg"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-merge",
@@ -7216,7 +7331,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.order_fulfillment"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-partition-transforms",
@@ -7249,7 +7365,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.app_events"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-partitioned",
@@ -7281,7 +7398,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.regional_sales"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-partitioned-merge",
@@ -7314,7 +7432,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.warehouse_inventory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-restore",
@@ -7347,7 +7466,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_restore.compliance_records"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-schema-drop",
@@ -7380,7 +7500,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.user_profiles"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-schema-evolution",
@@ -7412,7 +7533,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.customer_orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-schema-rename",
@@ -7444,7 +7566,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.financial_transactions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-schema-widen",
@@ -7478,7 +7601,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.sensor_readings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-window-analytics",
@@ -7512,7 +7636,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_window.sales"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-zorder",
@@ -7550,7 +7675,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg_demos.delivery_tracking_iceberg"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v1-warehouse-inventory",
@@ -7583,7 +7709,8 @@
           "name": "{{zone_name}}.iceberg.warehouse_inventory",
           "objectType": "external_table"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-energy-grid-monitoring",
@@ -7615,7 +7742,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.grid_readings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-native-large-manifests",
@@ -7649,7 +7777,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.web_analytics"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-native-partition-transforms",
@@ -7684,7 +7813,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.network_traffic"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-native-schema-evolution",
@@ -7719,7 +7849,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.employee_directory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-native-time-travel",
@@ -7753,7 +7884,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.stock_prices"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-equality-deletes",
@@ -7788,7 +7920,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.eq_del_demo.products_iceberg"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-format-versions",
@@ -7830,7 +7963,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.sensors_v3"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-aggregate-analytics",
@@ -7865,7 +7999,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.retail_sales"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-complex-types",
@@ -7900,7 +8035,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-copy-on-write",
@@ -7933,7 +8069,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.shipments"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-cross-format-join",
@@ -7972,7 +8109,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.retail_demo.stores"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-fleet-telemetry",
@@ -8006,7 +8144,8 @@
           "name": "{{zone_name}}.iceberg.fleet_telemetry",
           "objectType": "external_table"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-hidden-partitions",
@@ -8039,7 +8178,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.trips"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-multi-partition",
@@ -8072,7 +8212,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.weather_readings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-position-deletes",
@@ -8107,7 +8248,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.cold_chain_readings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-snapshot-consistency",
@@ -8141,7 +8283,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.inventory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v2-window-analytics",
@@ -8175,7 +8318,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.loyalty_members"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "delta-partition-delete",
@@ -8206,7 +8350,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.warehouse_orders"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-puffin-dv",
@@ -8243,7 +8388,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.puffin_dv_demo.products_iceberg"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-cdf-uniform",
@@ -8277,7 +8423,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.payment_transactions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-clinical-trials",
@@ -8310,7 +8457,8 @@
           "name": "{{zone_name}}.iceberg.lab_results",
           "objectType": "external_table"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-deletion-vectors",
@@ -8344,7 +8492,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.shipment_manifests"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-equality-deletes",
@@ -8378,7 +8527,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.patient_visits"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-maintenance",
@@ -8412,7 +8562,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.subscriptions"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-merge-upsert",
@@ -8446,7 +8597,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.warehouse_inventory"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-null-edge-cases",
@@ -8481,7 +8633,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.lab_results"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-position-deletes",
@@ -8515,7 +8668,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.equity_trades"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-schema-evolution",
@@ -8548,7 +8702,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.drug_registry"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-v3-time-travel",
@@ -8582,7 +8737,8 @@
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.portfolio_holdings"
         }
-      ]
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "json-country-factbook",
@@ -8993,7 +9149,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.parquet_flights.q1_flights"
         }
-      ]
+      ],
+      "verifyScript": "compute_proof.py"
     },
     {
       "id": "parquet-supply-chain",
@@ -9118,7 +9275,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.protobuf_freight.shipment_tracking"
         }
-      ]
+      ],
+      "verifyScript": "compute_proofs.py"
     },
     {
       "id": "protobuf-sensor-network",
@@ -9155,7 +9313,8 @@
           "objectType": "external_table",
           "name": "{{zone_name}}.protobuf_iot.sensor_summary"
         }
-      ]
+      ],
+      "verifyScript": "compute_proofs.py"
     },
     {
       "id": "pseudonymisation-apply",
