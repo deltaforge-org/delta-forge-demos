@@ -5,22 +5,28 @@ version = "1.0.0"
 author = "DeltaForge Team"
 description = """
 GPU-accelerated stress test on a 10,000,000-account global banking network \
-with ~48,000,000 directed transaction edges. Models realistic financial \
-topology: 30 banks, 25 cities, 3 account tiers (retail 80%, corporate 15%, \
-institutional 5%). Dense intra-bank payment clusters, cross-bank clearing \
-corridors, hierarchical advisory trees, compliance bridge nodes, and \
-pseudo-random weak ties create community structure for fraud ring detection. \
-Forces GPU execution on all 5 GPU-accelerable algorithms (PageRank, \
-Connected Components, Louvain, Betweenness, Triangle Count) plus GPU MATCH \
-expansion — 10x scale-up from the 1M-node GPU stress test. Tests GPU \
-memory management, streaming property loading, and threshold fallback at \
-enterprise financial-services scale. \
+with 48,099,998 directed transaction edges. Realistic financial topology: \
+30 of the world's largest banks, 25 global financial-centre cities, real \
+first/last names sourced from the fake-rs corpus, three account tiers \
+(retail 80%, corporate 15%, institutional 5%). Dense intra-bank payment \
+clusters, cross-bank clearing corridors, hierarchical advisory trees, \
+compliance bridge nodes, and pseudo-random P2P weak ties create the \
+community structure that fraud-ring detection needs. \
 \
-RESOURCE WARNING — RUN ON A HOST SIZED FOR THIS DEMO: the compute \
+The accounts dimension is generated via the native synthetic kernel \
+df_generate_table (Arrow record batches written in tight Rust loops, \
+parallelised across cores via Rayon), which is roughly 10x faster than \
+the equivalent generate_series + multi-branch CASE pattern. Forces GPU \
+execution on all 5 GPU-accelerable algorithms (PageRank, Connected \
+Components, Louvain, Betweenness, Triangle Count) plus GPU MATCH \
+expansion. Tests GPU memory management, streaming property loading, and \
+threshold fallback at enterprise financial-services scale. \
+\
+RESOURCE WARNING -- RUN ON A HOST SIZED FOR THIS DEMO: the compute \
 node's RSS peaks at roughly 10 GB during the heavy Cypher algorithms \
 (PageRank, Louvain community detection, all-edge Triangle Count, and \
 especially the betweenness-centrality sampling on 48M edges). The CSR \
-topology build itself is far cheaper — memory pressure lives in the \
+topology build itself is far cheaper -- memory pressure lives in the \
 algorithm executors that materialise per-node scores, queues, and \
 per-edge accumulators. Setup + first Cypher query take ~5-10 minutes \
 on a modern workstation; run the HTTP client with DF_HTTP_TIMEOUT_SECS=0 \
@@ -29,7 +35,7 @@ timeout while the cold-path CSR loads. Recommended host size: 24 GB+ \
 addressable memory so the OS, DeltaForge's working buffers, and \
 DataFusion's query executor have headroom above the algorithm peak. \
 If less is available, expect OOM during betweenness / community \
-detection — drop to graph-gpu-stress-test (1M/5M) instead.
+detection; drop to graph-gpu-stress-test (1M/5M) instead.
 """
 categories = ["graph", "gpu"]
 tags = ["graph", "gpu", "finance", "fraud-detection", "stress-test", "performance", "benchmark", "10-million-scale", "cypher", "algorithms", "advanced", "high-memory"]
