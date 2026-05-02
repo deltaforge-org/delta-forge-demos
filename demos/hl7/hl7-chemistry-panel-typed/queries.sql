@@ -130,8 +130,8 @@ ORDER BY df_file_name;
 -- engine would error. We also verify the truncated month for one row.
 
 ASSERT ROW_COUNT = 4
-ASSERT VALUE month_start = '2024-03-01 00:00:00' WHERE df_file_name LIKE '%msg20240301a%'
-ASSERT VALUE month_start = '2024-04-01 00:00:00' WHERE df_file_name LIKE '%msg20240418d%'
+ASSERT VALUE month_start = '2024-03-01T00:00:00' WHERE df_file_name LIKE '%msg20240301a%'
+ASSERT VALUE month_start = '2024-04-01T00:00:00' WHERE df_file_name LIKE '%msg20240418d%'
 SELECT
     df_file_name,
     CAST(DATE_TRUNC('month', msh_7) AS VARCHAR) AS month_start
