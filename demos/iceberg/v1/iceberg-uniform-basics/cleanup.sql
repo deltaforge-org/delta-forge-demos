@@ -10,4 +10,3 @@ DROP DELTA TABLE IF EXISTS {{zone_name}}.iceberg_demos.product_catalog WITH FILE
 
 -- STEP 3: Shared resources (used by other iceberg demos if present)
 DROP SCHEMA IF EXISTS {{zone_name}}.iceberg_demos;
-DROP ZONE IF EXISTS {{zone_name}};
