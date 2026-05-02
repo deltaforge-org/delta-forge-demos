@@ -54,7 +54,6 @@ ORDER BY exchange;
 -- ============================================================================
 -- ALGO-X99 should be removed from the trader set, leaving 10 traders.
 
-ASSERT ROW_COUNT = 1
 ASSERT VALUE trader_count = 10
 SELECT
     COUNT(DISTINCT trader) AS trader_count

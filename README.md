@@ -1,121 +1,88 @@
 # DeltaForge Demos
 
-180+ self-contained, ASSERT-validated demonstrations across every supported format and industry vertical.
+**258 ASSERT-validated demos. 10,500+ machine-checked assertions. 18 formats and industry verticals. Every result reproducible from seed data.**
 
-## Overview
+This repository is the public proof that DeltaForge does what it says.
 
-DeltaForge Demos is a structured library of end-to-end demonstrations that exercise the full breadth of the SQL engine. Each demo is a self-contained unit with setup SQL, analytical queries, cleanup SQL, and mathematically validated expected results. Demos serve a dual purpose: they are both interactive learning material for users and the source of truth for the automated correctness test suite.
+## Why this exists
 
-## Key Features
+Every evaluator asks the same question: *does it really work?* This repo is the answer. Each demo is a self-contained scenario that:
 
-### Self-Contained Demo Structure
-- **setup.sql** - Creates tables, inserts seed data, registers external sources
-- **queries.sql** - Analytical queries with inline `ASSERT` statements for expected values
-- **cleanup.sql** - Drops all objects for clean teardown
-- **demo.toml** - Metadata, configuration, and category tags
-- **README.md** - Human-readable explanation of what the demo proves
+1. Builds tables, registers external sources, and loads realistic seed data.
+2. Runs analytical queries that pin down behaviour with inline `ASSERT` annotations.
+3. Validates the engine against pre-calculated expected values, refusing to pass on any drift.
+4. Tears itself down cleanly so the next run starts from a fresh state.
 
-### ASSERT-Based Validation
-- Every query includes `ASSERT` annotations with pre-calculated expected values
-- Assertions are mathematically verified — complex scenarios include Python proof scripts
-- Results are deterministic and reproducible across platforms
-- Demos double as regression tests when loaded by the test harness
+If a demo passes on your install, the engine implements that capability correctly. If it fails, the failure is concrete: a specific query, an expected value, and the actual value the engine produced.
 
-### Delta Lake (100+ Demos)
-- **CRUD operations** - INSERT, UPDATE, DELETE, MERGE with all clause combinations
-- **MERGE patterns** - SCD Type 2, deduplication, idempotent upserts, composite keys, multi-source, soft delete, subquery predicates, computed columns
-- **Time travel** - VERSION AS OF, TIMESTAMP AS OF, point-in-time joins, row-level diffs, vacuum boundary behavior
-- **Partitioning** - Single/multi-level, cross-partition updates, selective OPTIMIZE, partition pruning, Unicode partition keys, DV interaction
-- **Schema evolution** - Column addition, type widening, flexible ingestion, column mapping modes
-- **Table maintenance** - VACUUM, OPTIMIZE, RESTORE, Z-ORDER, bloom filters, deletion vector accumulation, storage diagnostics
-- **Advanced SQL** - Window functions, grouping sets, funnel analysis, overflow detection, subqueries, set operations, CASE expressions, duration arithmetic
-- **Governance** - GDPR data erasure, audit trail versioning, views with data masking, constraint enforcement, append-only tables
-- **Timestamps** - Timezone-naive types, cross-timezone scheduling, date/time analytics
+## Trust signals
 
-### Healthcare (12 Demos)
-- **FHIR** - Patient demographics, clinical observations, medication prescriptions, clinical records, XML clinical resources
-- **HL7 v2** - Patient administration (ADT), lab orders and results, clinical workflows
-- **Pseudonymisation** - Quickstart, apply, lifecycle, and healthcare-specific PII handling
+**Mathematical, not anecdotal.** The 10,500+ assertions are not "looks about right" checks. They cover exact row counts, column-by-column expected values, statistical aggregates, time-travel snapshots, and cross-format equivalence comparisons.
 
-### EDI / Supply Chain (18 Demos)
-- **HIPAA** - Claims processing (837), remittance (835), eligibility (270/271), claim status (276/277)
-- **X12** - Supply chain purchase orders, transportation logistics, order lifecycle tracking
-- **EDIFACT** - International trade, customs/border, invoice reconciliation
-- **TRADACOMS** - UK retail purchase orders, utility billing, deep JSON access
-- **EANCOM** - Retail supply chain with ORDERS/DESADV/INVOIC
+**Independently verified.** Every assertion value was computed outside the engine before being written into the SQL, so the test never grades the engine using output from the same engine. Verification methods vary by demo: a handful of the most intricate EDI scenarios ship committed Python proof scripts under `demo-proofs/` that re-parse the raw X12 / EDIFACT payloads end to end; other demos were verified by hand calculation against the seed data, by cross-checking against reference implementations of the source format, or by running an alternative tool over the same input. In every case the expected value is traceable back to the raw source, not to a previous run of the system under test.
 
-### Graph Analytics (13 Demos)
-- **Cypher queries** - Pattern matching, variable-length paths, weighted shortest paths
-- **Graph algorithms** - PageRank, community detection, centrality measures via SQL and Cypher
-- **Storage modes** - Flattened, hybrid, and JSON-based graph representations
-- **Real networks** - Karate Club, EU email, NetScience, political books, LDBC Social Network Benchmark
-- **Mutations** - Node/edge creation and deletion within graph workspaces
+**Deterministic.** Demos are reproducible across platforms and runs. Seed data is fixed. Random-looking values are seeded. Time-travel demos pin to absolute version IDs and timestamps so snapshot queries return identical results every time.
 
-### Geospatial (5 Demos)
-- **H3 hexagonal indexing** - Delivery optimization, GPS fleet tracking, point-in-polygon
-- **GIS operations** - Emergency response routing, maritime shipping lane analysis
+**Production-shape data.** No toy "hello world" tables. The demos use realistic payloads: FHIR R4 patient bundles, HL7 v2 lab results, X12 837 claims, EDIFACT customs messages, TRADACOMS retail orders, EANCOM ORDERS/DESADV/INVOIC chains, NYT RSS, arXiv Atom feeds, GPS hexes, NetScience co-authorship graphs, multi-sheet Excel workbooks, multi-vendor XML clinical resources.
 
-### Multi-Format Coverage
-- **Avro** - E-commerce orders, insurance claims, IoT sensors (logical types, schema evolution, compression)
-- **CSV** - Northwind database, sales quickstart, veterinary clinic, CSV options testbench
-- **Excel** - Sales analytics, multi-sheet reporting, options testbench
-- **JSON** - CIA World Factbook, customer records, music catalog, subtree capture
-- **ORC** - Banking transactions, clinical trials, energy meters, insurance claims, server logs, warehouse inventory
-- **Parquet** - Flight delays, supply chain analytics
-- **Protobuf** - Address book contacts, freight shipping manifests, sensor networks
-- **XML** - Books with schema evolution, e-commerce order lines, NYT news RSS, subtree capture
-- **Iceberg** - V1, V2, and V3 table format demonstrations
+**Regression-locked.** The same `queries.sql` files that read as documentation are consumed by the automated test harness. If the engine ever drifts from documented behaviour, a build breaks before any release ships.
 
-### Mathematical Proofs
-- Python proof scripts validate complex ASSERT values for EDI and healthcare demos
-- Proofs parse raw source data and independently compute expected aggregates
-- Guarantees that every assertion is traceable back to the seed data
+## Coverage
 
-## Demo Structure
+| Category | Demos | What it proves |
+|---|---:|---|
+| Delta Lake | 110 | CRUD, MERGE patterns (SCD2, dedup, idempotent upsert, composite keys, multi-source, soft delete), time travel, partitioning, schema evolution and column mapping, deletion vectors, OPTIMIZE / VACUUM / RESTORE, Z-order, bloom filters, change data feed, computed columns, constraints, GDPR erasure, audit trail versioning |
+| Iceberg | 51 | Format V1, V2, and V3. UniForm interop with Delta, position deletes, equality deletes, Puffin deletion vectors, partition transforms, hidden partitions, copy-on-write and merge-on-read, time travel, large manifest handling |
+| EDI | 19 | HIPAA 837 / 835 / 270 / 271 / 276 / 277, X12 850 and 856, EDIFACT (customs, invoice reconciliation, international trade), TRADACOMS (UK retail, utility billing, deep JSON access), EANCOM ORDERS / DESADV / INVOIC |
+| Graph analytics | 17 | Cypher pattern matching, variable-length paths, weighted shortest paths, PageRank, community detection, GPU-accelerated graph workloads, real-world networks (Karate Club, EU email, NetScience, polbooks, LDBC SNB) |
+| REST APIs | 10 | Live ingestion from arXiv (Atom XML), Frankfurter FX, GitHub topic search, NASA APOD, Open-Meteo, PokeAPI, public-holiday calendars, Rust release feed, JSONPlaceholder, httpbin auth flows |
+| FHIR | 6 | R4 patient demographics, clinical observations, medication prescriptions, clinical records, multi-vendor XML resources, hospital bundle ingest |
+| ORC | 6 | Banking transactions, clinical trials, energy meters, insurance claims, server logs, warehouse inventory |
+| JSON | 5 | Country factbook, customer records, music catalog, subtree capture, typed billing events |
+| Geospatial | 5 | H3 hexagonal indexing, GIS emergency response, maritime shipping lanes, point-in-polygon, GPS fleet tracking |
+| XML | 5 | Schema evolution, e-commerce order lines, multi-vendor FHIR, NYT RSS, subtree capture |
+| CSV | 4 | Northwind, sales quickstart, veterinary clinic, options testbench |
+| HL7 v2 | 4 | ADT patient admin, lab orders / results, clinical workflows, typed chemistry panels |
+| Pseudonymisation | 4 | Apply, lifecycle, exempt roles, healthcare PII handling |
+| Avro | 3 | E-commerce orders, insurance claims, IoT sensors (logical types, schema evolution, compression) |
+| Excel | 3 | Sales analytics, multi-sheet reporting, options testbench |
+| Protobuf | 3 | Address book, freight shipping manifests, sensor networks |
+| Parquet | 2 | Flight delays, supply-chain analytics |
+| Charts | 1 | Server-rendered chart pipeline |
 
-```
-delta-forge-demos
-├── manifest.json          # Machine-readable index of all demos
-├── demos/
-│   ├── avro/              # 3 demos
-│   ├── csv/               # 4 demos
-│   ├── delta/             # 100+ demos
-│   ├── edi/               # 18 demos
-│   ├── excel/             # 3 demos
-│   ├── fhir/              # 5 demos
-│   ├── graph/             # 13 demos
-│   ├── hl7/               # 3 demos
-│   ├── iceberg/           # 3 demos (v1, v2, v3)
-│   ├── json/              # 4 demos
-│   ├── orc/               # 6 demos
-│   ├── parquet/           # 2 demos
-│   ├── protobuf/          # 3 demos
-│   ├── pseudonymisation/  # 4 demos
-│   ├── spatial/           # 5 demos
-│   └── xml/               # 4 demos
-├── demo-proofs/           # Python proof scripts for complex assertions
-├── icons/                 # SVG icons for each demo
-└── QUERY_ANNOTATIONS.md   # Annotation format documentation
+258 demos in total. 17 beginner, 137 intermediate, 104 advanced.
+
+## Run any demo
+
+```bash
+delta-forge-cli demo-test <node> <zone> demos/edi/edi-hipaa-claims-financial
 ```
 
-## Usage
+Each `ASSERT` is checked. The runner reports pass / fail per query and a final summary. No fixtures or scaffolding required beyond a running engine.
 
-### Running a Demo Manually
+## Anatomy of a demo
 
-```sql
--- 1. Execute setup.sql to create tables and load data
--- 2. Execute queries.sql — each query includes ASSERT for validation
--- 3. Execute cleanup.sql to tear down
+```
+demos/<category>/<demo-name>/
+├── setup.sql        Tables, seed data, external source registration
+├── queries.sql      Analytical queries with inline ASSERT annotations
+├── cleanup.sql      Object teardown
+├── demo.toml        Metadata, tags, difficulty, target objects
+└── README.md        What the demo proves, in business terms
 ```
 
-### Loading via Manifest
+The annotation format is documented in `QUERY_ANNOTATIONS.md`. Supported annotations include exact row counts, range bounds, pipe-delimited value matrices, ordering constraints, set membership, and tolerance windows for floating-point comparisons.
 
-The `manifest.json` file provides a machine-readable index with metadata for every demo — categories, tags, difficulty level, estimated runtime, data size, and target objects. The test harness and GUI both consume this manifest to discover and execute demos automatically.
+## manifest.json
 
-### Adding a New Demo
+A single machine-readable index of all 258 demos with categories, tags, difficulty, estimated runtime, data size, and target objects. The CLI test runner, the evaluation tooling, and the GUI all consume this manifest to discover and execute demos.
 
-Each demo folder requires four files:
-1. `setup.sql` - Table creation and data loading
-2. `queries.sql` - Queries with ASSERT annotations
-3. `cleanup.sql` - Object teardown
-4. `demo.toml` - Demo metadata and configuration
+## Adding a demo
+
+1. Create a folder under the appropriate category.
+2. Write `setup.sql`, `queries.sql` (with `ASSERT` annotations), and `cleanup.sql`.
+3. Add `demo.toml` with metadata.
+4. If your assertions involve non-trivial aggregation, add a Python proof under `demo-proofs/` that re-derives the expected values from the raw source data.
+5. Regenerate `manifest.json`.
+
+Bar for inclusion: the demo must run end-to-end clean on a fresh engine, every assertion must hold deterministically, and the demo's `README.md` must explain what business capability it proves.

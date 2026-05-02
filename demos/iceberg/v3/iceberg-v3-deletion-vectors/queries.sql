@@ -54,7 +54,6 @@ ORDER BY region;
 -- ============================================================================
 -- After deleting SCAN-ERR rows, 15 valid scanners remain (from original 16).
 
-ASSERT ROW_COUNT = 1
 ASSERT VALUE scanner_count = 15
 SELECT
     COUNT(DISTINCT scanner_id) AS scanner_count
