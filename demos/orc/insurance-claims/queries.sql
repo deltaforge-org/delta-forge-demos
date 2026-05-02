@@ -35,10 +35,11 @@ INNER JOIN {{zone_name}}.orc_insurance.policies p
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE orphan_count = 20
-SELECT COUNT(*) FILTER (WHERE p.policy_id IS NULL) AS orphan_count
+SELECT COUNT(*) AS orphan_count
 FROM {{zone_name}}.orc_insurance.claims c
 LEFT JOIN {{zone_name}}.orc_insurance.policies p
-    ON c.policy_id = p.policy_id;
+    ON c.policy_id = p.policy_id
+WHERE p.policy_id IS NULL;
 
 -- ============================================================================
 -- Query 4: Anti-Join — policies with zero claims
