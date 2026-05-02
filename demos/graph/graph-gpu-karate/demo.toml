@@ -16,8 +16,8 @@ trustworthy. Also tests GPU with varying damping factors and resolution \
 parameters.
 """
 categories = ["graph", "gpu"]
-tags = ["graph", "gpu", "karate", "benchmark", "quality", "golden-values", "community-detection", "centrality", "beginner"]
-difficulty = "beginner"
+tags = ["graph", "gpu", "karate", "benchmark", "quality", "golden-values", "community-detection", "centrality", "basic"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

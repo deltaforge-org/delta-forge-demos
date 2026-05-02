@@ -12,8 +12,8 @@ explosion via UNNEST, and aggregations over nested data — all without \
 conversion to Delta format.
 """
 categories = ["iceberg"]
-tags = ["iceberg", "beginner", "read-only", "native-format", "v2", "complex-types", "struct", "array", "nested", "e-commerce"]
-difficulty = "beginner"
+tags = ["iceberg", "basic", "read-only", "native-format", "v2", "complex-types", "struct", "array", "nested", "e-commerce"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

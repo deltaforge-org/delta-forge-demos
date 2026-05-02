@@ -13,8 +13,8 @@ Covers NDJSON line-delimited format, nested array flattening, column_mappings, \
 and multi-file schema evolution.
 """
 categories = ["healthcare", "json"]
-tags = ["fhir", "healthcare", "json", "beginner", "patient", "demographics", "ndjson", "column-mappings"]
-difficulty = "beginner"
+tags = ["fhir", "healthcare", "json", "basic", "patient", "demographics", "ndjson", "column-mappings"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

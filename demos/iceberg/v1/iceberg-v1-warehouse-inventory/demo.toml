@@ -13,8 +13,8 @@ reorder-point analysis, and inventory valuation — all without conversion \
 to Delta format.
 """
 categories = ["iceberg"]
-tags = ["iceberg", "beginner", "read-only", "native-format", "v1", "metadata-chain", "warehouse", "inventory"]
-difficulty = "beginner"
+tags = ["iceberg", "basic", "read-only", "native-format", "v1", "metadata-chain", "warehouse", "inventory"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

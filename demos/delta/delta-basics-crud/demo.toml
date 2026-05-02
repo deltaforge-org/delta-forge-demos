@@ -12,8 +12,8 @@ four operations on a products table, showing how Delta manages data files \
 and versioning under the hood.
 """
 categories = ["getting-started", "delta-table"]
-tags = ["delta-table", "beginner", "crud", "insert", "update", "delete", "create"]
-difficulty = "beginner"
+tags = ["delta-table", "basic", "crud", "insert", "update", "delete", "create"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

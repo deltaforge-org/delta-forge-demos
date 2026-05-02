@@ -11,8 +11,8 @@ filtering, risk score analysis, and per-account summaries with \
 file_metadata for traceability.\
 """
 categories = ["orc", "banking"]
-tags = ["orc", "beginner", "multi-file", "file-metadata", "aggregation", "fraud-monitoring"]
-difficulty = "beginner"
+tags = ["orc", "basic", "multi-file", "file-metadata", "aggregation", "fraud-monitoring"]
+difficulty = "basic"
 estimated_time_minutes = 4
 
 [demo.variables]

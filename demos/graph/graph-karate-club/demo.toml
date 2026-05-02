@@ -16,8 +16,8 @@ Data source: W. W. Zachary, "An information flow model for conflict and \
 fission in small groups," Journal of Anthropological Research, 1977.
 """
 categories = ["graph"]
-tags = ["graph", "karate", "benchmark", "community-detection", "centrality", "classic", "beginner"]
-difficulty = "beginner"
+tags = ["graph", "karate", "benchmark", "community-detection", "centrality", "classic", "basic"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

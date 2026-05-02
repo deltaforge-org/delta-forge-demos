@@ -13,8 +13,8 @@ region-level aggregations, and Parquet row-group filtering — all without \
 any conversion to Delta format.
 """
 categories = ["iceberg", "energy"]
-tags = ["iceberg", "beginner", "read-only", "native-format", "metadata-chain", "aggregation"]
-difficulty = "beginner"
+tags = ["iceberg", "basic", "read-only", "native-format", "metadata-chain", "aggregation"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

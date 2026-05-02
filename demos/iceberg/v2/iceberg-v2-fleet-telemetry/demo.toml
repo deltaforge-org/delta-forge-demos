@@ -13,8 +13,8 @@ safety analytics (harsh braking, speeding), and fuel monitoring — all without 
 conversion to Delta format.
 """
 categories = ["iceberg"]
-tags = ["iceberg", "beginner", "read-only", "native-format", "v2", "metadata-chain", "fleet", "telemetry", "iot"]
-difficulty = "beginner"
+tags = ["iceberg", "basic", "read-only", "native-format", "v2", "metadata-chain", "fleet", "telemetry", "iot"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

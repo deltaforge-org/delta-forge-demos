@@ -13,8 +13,8 @@ pruning, cross-partition aggregations, NULL handling, and predicate pushdown \
 on double columns — all without conversion to Delta format.
 """
 categories = ["iceberg"]
-tags = ["iceberg", "beginner", "read-only", "native-format", "v2", "partitioning", "multi-partition", "weather", "pruning"]
-difficulty = "beginner"
+tags = ["iceberg", "basic", "read-only", "native-format", "v2", "partitioning", "multi-partition", "weather", "pruning"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

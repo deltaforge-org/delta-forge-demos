@@ -28,7 +28,7 @@ JSONPlaceholder is one of the most reliable public mocks on the web —
 no auth, no rate limits, deterministic 100-row corpus.
 """
 categories = ["api", "rest-ingest", "pagination"]
-tags = ["api", "rest", "ingest", "pagination", "page-pagination", "json", "jsonplaceholder", "show-endpoints", "describe-endpoint", "show-runs", "beginner", "catalog-inspection"]
+tags = ["api", "rest", "ingest", "pagination", "page-pagination", "json", "jsonplaceholder", "show-endpoints", "describe-endpoint", "show-runs", "basic", "catalog-inspection"]
 difficulty = "intermediate"
 estimated_time_minutes = 5
 

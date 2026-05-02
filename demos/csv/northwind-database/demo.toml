@@ -13,7 +13,7 @@ across multiple CSV files. See queries.sql for ready-to-run demo queries.
 """
 categories = ["retail", "csv"]
 tags = ["csv", "relational", "joins", "analytics", "northwind", "orders", "products", "rbac", "cross-table"]
-difficulty = "beginner"
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

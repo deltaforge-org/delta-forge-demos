@@ -26,8 +26,8 @@ regardless (topology-changing operations can't be cheaply patched in). \
 See architecture doc arch_graph_csr_caching for the full design.
 """
 categories = ["graph", "delta", "cypher"]
-tags = ["graph", "cypher", "auto-refresh", "csr", "cache", "update", "delete", "create-graphcsr", "live-vs-batch", "beginner"]
-difficulty = "beginner"
+tags = ["graph", "cypher", "auto-refresh", "csr", "cache", "update", "delete", "create-graphcsr", "live-vs-batch", "basic"]
+difficulty = "basic"
 estimated_time_minutes = 3
 
 [demo.variables]

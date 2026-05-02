@@ -13,8 +13,8 @@ customer_id, and runs the four canonical lookup shapes a service desk \
 exercises every day.
 """
 categories = ["index"]
-tags = ["delta-table", "beginner", "row-level-index", "index", "point-lookup", "range-scan"]
-difficulty = "beginner"
+tags = ["delta-table", "basic", "row-level-index", "index", "point-lookup", "range-scan"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

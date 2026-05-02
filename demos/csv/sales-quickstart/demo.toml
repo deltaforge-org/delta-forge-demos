@@ -11,8 +11,8 @@ across the series. A single external table unifies them all; missing columns \
 from older files surface as NULL.
 """
 categories = ["getting-started", "csv"]
-tags = ["csv", "beginner", "quickstart", "sales", "schema-evolution"]
-difficulty = "beginner"
+tags = ["csv", "basic", "quickstart", "sales", "schema-evolution"]
+difficulty = "basic"
 estimated_time_minutes = 3
 
 [demo.variables]

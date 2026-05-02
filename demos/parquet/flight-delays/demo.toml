@@ -11,8 +11,8 @@ evolved columns, file_filter for single-quarter extraction, and file_metadata \
 for source traceability.
 """
 categories = ["parquet", "aviation"]
-tags = ["parquet", "beginner", "schema-evolution", "file-filter", "file-metadata", "multi-file", "null-filling"]
-difficulty = "beginner"
+tags = ["parquet", "basic", "schema-evolution", "file-filter", "file-metadata", "multi-file", "null-filling"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]

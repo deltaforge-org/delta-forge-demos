@@ -10,8 +10,8 @@ proper timestamp handling. A CRM customer export with 200 records shows \
 include_paths, column_mappings, and file_metadata features.
 """
 categories = ["json"]
-tags = ["json", "beginner", "column-mappings", "type-inference", "basics"]
-difficulty = "beginner"
+tags = ["json", "basic", "column-mappings", "type-inference", "basics"]
+difficulty = "basic"
 estimated_time_minutes = 5
 
 [demo.variables]
