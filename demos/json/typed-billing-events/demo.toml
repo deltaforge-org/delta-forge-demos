@@ -1,31 +1,31 @@
 [demo]
 id = "typed-billing-events"
-name = "JSON Typed Billing Events — type_hints + as_list"
-version = "1.0.1"
+name = "JSON Typed Billing Events: Bronze Utf8 to Silver Typed via TRY_CAST"
+version = "2.0.0"
 author = "DeltaForge Team"
 description = """\
 Subscription billing webhook events delivered as Stripe-style NDJSON: numeric \
 amounts and booleans arrive as quoted strings, tag arrays arrive as native JSON \
-arrays. Exercises the json_flatten_config `type_hints` map (forces $.amount to \
-int64, $.is_active and $.is_trialing to boolean, $.event_timestamp to timestamp) \
-and `default_array_handling = 'as_list'` (lands $.tags as a real Arrow \
-List<Utf8> instead of a JSON-string column). Aggregates (SUM(amount)), boolean \
-filters, timestamp filters, and array_length / array_contains all work natively \
-without CAST or json_array_* calls. A silver Delta promotion proves the typed \
-columns and the ARRAY<STRING> column round-trip cleanly into Delta storage.\
+arrays. Demonstrates the canonical DeltaForge two-phase typing model. Bronze \
+lands every column as Utf8 (no type coercion in the JSON reader, by design). \
+Silver promotes scalars via TRY_CAST in the INSERT: amount to BIGINT, \
+is_active and is_trialing to BOOLEAN, event_timestamp to TIMESTAMP. The tags \
+array is kept as a JSON literal in silver and queried with JSON_ARRAY_LENGTH \
+and LIKE, since DeltaForge has no first-class JSON-string-to-ARRAY function. \
+SUM(amount), boolean filters, and timestamp comparisons all run natively \
+against the typed silver columns without per-query CAST.\
 """
 categories = ["json"]
 tags = [
     "json",
     "intermediate",
-    "type_hints",
-    "as_list",
-    "arrow_list",
-    "typed",
+    "try_cast",
+    "type_promotion",
+    "bronze-silver",
     "billing",
     "webhook",
     "flatten",
-    "bronze-silver",
+    "json_array_length",
 ]
 difficulty = "intermediate"
 estimated_time_minutes = 5
@@ -37,31 +37,31 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 [[demo.data_files]]
 path = "data/events_2024_part_01.json"
 format = "json"
-description = "Billing webhook events — Jan/Feb/early-Mar 2024 (10 events)"
+description = "Billing webhook events: Jan/Feb/early-Mar 2024 (10 events)"
 size_bytes = 2511
 
 [[demo.data_files]]
 path = "data/events_2024_part_02.json"
 format = "json"
-description = "Billing webhook events — Mar/Apr/May 2024 (10 events)"
+description = "Billing webhook events: Mar/Apr/May 2024 (10 events)"
 size_bytes = 2498
 
 [[demo.data_files]]
 path = "data/events_2024_part_03.json"
 format = "json"
-description = "Billing webhook events — May/Jun/Jul 2024 (10 events)"
+description = "Billing webhook events: May/Jun/Jul 2024 (10 events)"
 size_bytes = 2508
 
 [[demo.data_files]]
 path = "data/events_2024_part_04.json"
 format = "json"
-description = "Billing webhook events — Aug/Sep/Oct 2024 (10 events)"
+description = "Billing webhook events: Aug/Sep/Oct 2024 (10 events)"
 size_bytes = 2504
 
 [[demo.data_files]]
 path = "data/events_2024_part_05.json"
 format = "json"
-description = "Billing webhook events — Oct/Nov/early-Dec 2024 (10 events)"
+description = "Billing webhook events: Oct/Nov/early-Dec 2024 (10 events)"
 size_bytes = 2507
 
 [[demo.target_objects]]

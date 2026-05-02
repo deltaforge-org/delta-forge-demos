@@ -3,35 +3,26 @@
 -- ============================================================================
 -- Real-world story: a SaaS subscription billing platform's webhook delivers
 -- JSON events. Per Stripe-style convention, numeric amounts arrive as quoted
--- strings ("amount": "2999" for $29.99) and booleans arrive as quoted strings
--- ("is_active": "true"). Tag arrays arrive as native JSON arrays.
+-- strings ("amount": "2999" for $29.99), booleans arrive as quoted strings
+-- ("is_active": "true"), and tag arrays arrive as native JSON arrays.
 --
--- The data team needs the bronze table to expose these as their "natural"
--- analytical types — BIGINT for revenue aggregation, BOOLEAN for filtering,
--- TIMESTAMP for time-bucketing, and Arrow List<Utf8> for tag membership tests
--- — without scattering CAST and json_array_* calls across every query.
+-- DeltaForge enforces a strict two-phase typing model:
+--   Bronze: every column lands as Utf8. No type coercion in the reader.
+--   Silver: explicit TRY_CAST (or TRY_CAST_INT / TRY_CAST_BOOL) at INSERT
+--           time promotes each column to its analytical type.
 --
--- This demo exercises two json_flatten_config features:
---   1. type_hints — path -> Arrow type override. Forces $.amount to int64,
---      $.is_active and $.is_trialing to boolean, $.event_timestamp to
---      timestamp. Without these the columns land as Utf8 and every query
---      needs CAST.
---   2. default_array_handling = 'as_list' — when a flattened path lands on
---      an array, the column is built as a real Arrow ListArray of the
---      inferred element type. Previously this produced a JSON-string column.
---      Now SQL functions like array_length, array_contains, and cardinality
---      work natively against the column.
---
--- Pipeline:
---   1. Zone + schema           — bronze landing + billing schema
---   2. External table (bronze) — JSON over the 5 NDJSON webhook drops with
---                                json_flatten_config carrying the type_hints
---                                and as_list settings
---   3. Delta table   (silver)  — curated copy of bronze, demonstrating that
---                                the typed columns (BIGINT / BOOLEAN /
---                                TIMESTAMP) and the ARRAY<STRING> column
---                                round-trip cleanly into a Delta table for
---                                downstream BI consumers.
+-- This demo follows that pattern end-to-end:
+--   1. Zone + schema           bronze landing + billing schema
+--   2. External table (bronze) JSON over the 5 NDJSON webhook drops; every
+--                              flattened column is Utf8. Tag arrays are
+--                              kept as JSON-literal strings (default
+--                              array_handling = 'to_json').
+--   3. Delta table   (silver)  curated copy of bronze, with TRY_CAST in
+--                              the INSERT promoting amount to BIGINT,
+--                              is_active / is_trialing to BOOLEAN, and
+--                              event_timestamp to TIMESTAMP. The tags
+--                              column stays as a JSON-array string and is
+--                              queried with JSON_ARRAY_LENGTH and LIKE.
 -- ============================================================================
 
 -- --------------------------------------------------------------------------
@@ -39,23 +30,22 @@
 -- --------------------------------------------------------------------------
 
 CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
-    COMMENT 'External tables — demo datasets and file-backed data';
+    COMMENT 'External tables: demo datasets and file-backed data';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.billing
-    COMMENT 'Subscription billing events — webhook landing + curated silver';
+    COMMENT 'Subscription billing events: webhook landing + curated silver';
 
 -- --------------------------------------------------------------------------
--- 2. Bronze external table over the raw NDJSON webhook drops
+-- 2. Bronze external table over the raw NDJSON webhook drops (Utf8 only)
 -- --------------------------------------------------------------------------
--- type_hints forces inferred Arrow types for paths that the JSON-side has
--- as quoted strings. default_array_handling = 'as_list' makes $.tags land
--- as Arrow List<Utf8> instead of a JSON-encoded string.
+-- Every flattened column is Utf8 by design. The tags JSON array is kept as
+-- a JSON-literal string via default_array_handling = 'to_json'. Type
+-- promotion happens in the silver INSERT, not here.
 
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.billing.events
 USING JSON
 LOCATION '{{data_path}}'
 OPTIONS (
-    recursive = 'true',
     json_flatten_config = '{
         "root_path": "$",
         "include_paths": [
@@ -84,43 +74,28 @@ OPTIONS (
             "$.plan":            "plan",
             "$.country":         "country"
         },
-        "type_hints": {
-            "$.amount":          "int64",
-            "$.is_active":       "boolean",
-            "$.is_trialing":     "boolean",
-            "$.event_timestamp": "timestamp"
-        },
-        "default_array_handling": "as_list",
+        "default_array_handling": "to_json",
         "max_depth": 3,
         "separator": "_",
-        "infer_types": true
+        "infer_types": false
     }',
     file_metadata = '{"columns":["df_file_name","df_row_number"]}'
 );
 
-DETECT SCHEMA FOR TABLE {{zone_name}}.billing.events;
-
 -- --------------------------------------------------------------------------
--- 3. Silver Delta table — curated promotion of the bronze landing
+-- 3. Silver Delta table: typed promotion of the bronze landing
 -- --------------------------------------------------------------------------
--- Bronze is the raw source-of-truth: every webhook drop adds another file
--- under the landing folder. Silver is the curated layer downstream
--- consumers (BI, finance, retention) query — same shape, but stored as
--- Delta with ACID writes, time travel, schema evolution, OPTIMIZE/VACUUM,
--- and cross-engine portability.
---
--- This INSERT exercises the engine end-to-end: the Arrow List<Utf8> column
--- from the JSON flattener round-trips into a Delta ARRAY<STRING> column,
--- and the BIGINT / BOOLEAN / TIMESTAMP columns land natively without any
--- CAST in this statement (they arrive pre-typed thanks to the type_hints
--- on the bronze side).
+-- Bronze is the Utf8 source-of-truth. Silver is the typed layer downstream
+-- consumers (BI, finance, retention) query: same shape, but stored as
+-- Delta with proper analytical types so SUM(amount), WHERE is_active,
+-- and event_timestamp > TIMESTAMP comparisons work without per-query CAST.
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.billing.events_curated (
     id              STRING,
     customer_id     STRING,
     amount          BIGINT,
     currency        STRING,
-    tags            ARRAY<STRING>,
+    tags            STRING,
     is_active       BOOLEAN,
     is_trialing     BOOLEAN,
     event_timestamp TIMESTAMP,
@@ -130,18 +105,22 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.billing.events_curated (
 )
 LOCATION 'typed-billing-events/silver/events_curated';
 
+-- TRY_CAST returns NULL on parse failure rather than erroring, which is the
+-- canonical bronze-to-silver coercion pattern. Tags stays as a Utf8 JSON
+-- literal because DeltaForge has no first-class JSON-string-to-ARRAY
+-- function; queries use JSON_ARRAY_LENGTH and LIKE against the literal.
+
 INSERT INTO {{zone_name}}.billing.events_curated
 SELECT
     id,
     customer_id,
-    amount,
+    TRY_CAST(amount AS BIGINT)            AS amount,
     currency,
     tags,
-    is_active,
-    is_trialing,
-    event_timestamp,
+    TRY_CAST(is_active AS BOOLEAN)        AS is_active,
+    TRY_CAST(is_trialing AS BOOLEAN)      AS is_trialing,
+    TRY_CAST(event_timestamp AS TIMESTAMP) AS event_timestamp,
     event_type,
     plan,
     country
 FROM {{zone_name}}.billing.events;
-
