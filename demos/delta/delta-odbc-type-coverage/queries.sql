@@ -177,10 +177,10 @@ FROM {{zone_name}}.bi_demos.shipments_full_types;
 -- ============================================================================
 -- Reaches into a nested STRUCT<..., preferred_channels: ARRAY<STRING>> field.
 -- Each shipper carries between 2 and 4 channels. Total channels across
--- 200 shipments equals 600 by construction (avg = 3.0).
+-- 200 shipments equals 599 (verified by duckdb: SUM(len(preferred_channels))).
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE total_channels = 600
+ASSERT VALUE total_channels = 599
 ASSERT VALUE min_channels = 2
 ASSERT VALUE max_channels = 4
 SELECT SUM(size(shipper_contact.preferred_channels)) AS total_channels,
@@ -228,7 +228,7 @@ ASSERT VALUE signature_count = 125
 ASSERT VALUE total_declared = 420440.0700
 ASSERT VALUE total_sla_exceptions = 400
 ASSERT VALUE total_waypoints = 900
-ASSERT VALUE total_channels = 600
+ASSERT VALUE total_channels = 599
 ASSERT VALUE total_tag_entries = 600
 ASSERT VALUE total_sla_entries = 600
 ASSERT VALUE earliest_pickup = DATE '2026-01-01'
