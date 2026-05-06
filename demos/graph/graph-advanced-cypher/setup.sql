@@ -54,7 +54,11 @@ SELECT
     END AS rank,
     5 + CAST((id * 7) % 45 AS INT) AS h_index,
     (id % 9 != 0) AS active
-FROM generate_series(1, 40) AS t(id);
+FROM (
+    SELECT gs AS id FROM generate_series(1, 20) AS t(gs)
+    UNION ALL
+    SELECT gs AS id FROM generate_series(21, 40) AS t(gs)
+) src;
 
 -- ============================================================================
 -- TABLE 2: collaborations — 170 directed edges
@@ -133,7 +137,10 @@ SELECT
     2015 + CAST((src + dst) % 10 AS INT) AS since_year
 FROM (
     SELECT gs AS src, ((gs - 1 + 3) % 40) + 1 AS dst
-    FROM generate_series(1, 35) AS t(gs)
+    FROM generate_series(1, 17) AS t(gs)
+    UNION ALL
+    SELECT gs AS src, ((gs - 1 + 3) % 40) + 1 AS dst
+    FROM generate_series(18, 35) AS t(gs)
 ) sub
 WHERE src % 5 != dst % 5;
 
