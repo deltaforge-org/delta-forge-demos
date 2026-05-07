@@ -12,10 +12,10 @@ CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL COMMENT 'External and Delt
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos COMMENT 'Window functions with UniForm';
 
 -- --------------------------------------------------------------------------
--- Sales Table
+-- Regional Sales Table
 -- --------------------------------------------------------------------------
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.windowed_sales (
     sale_id          INT,
     rep_name         VARCHAR,
     region           VARCHAR,
@@ -23,7 +23,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales (
     sale_amount      DECIMAL(10,2),
     commission_pct   DECIMAL(4,1),
     sale_date        DATE
-) LOCATION 'iceberg-uniform-window-analytics/sales'
+) LOCATION 'iceberg-uniform-window-analytics/windowed_sales'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '2',
@@ -35,7 +35,7 @@ TBLPROPERTIES (
 -- Seed Data — 40 sales across 7 reps, 4 regions, 3 categories
 -- --------------------------------------------------------------------------
 
-INSERT INTO {{zone_name}}.iceberg_demos.sales VALUES
+INSERT INTO {{zone_name}}.iceberg_demos.windowed_sales VALUES
     (1,  'Emma Clark',    'Northeast', 'Electronics', 4500.00,  8.5,  '2025-01-05'),
     (2,  'Liam Foster',   'Southeast', 'Furniture',   3200.00,  7.0,  '2025-01-07'),
     (3,  'Sophia Grant',  'West',      'Electronics', 5100.00,  9.0,  '2025-01-08'),

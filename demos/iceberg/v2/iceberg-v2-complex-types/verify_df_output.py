@@ -2,8 +2,8 @@
 """
 Iceberg V2 Complex Types -- Data Verification
 ===============================================
-Reads the orders table through the Iceberg metadata chain and verifies
-100 orders with nested STRUCT and ARRAY<STRUCT> columns.
+Reads the nested_orders table through the Iceberg metadata chain and verifies
+100 nested_orders with nested STRUCT and ARRAY<STRUCT> columns.
 
 Usage:
     python verify_df_output.py <data_root_path> [--verbose]
@@ -27,12 +27,12 @@ from verify_lib import (
 from verify_lib import print_header, print_section, print_summary, exit_with_status
 
 
-def verify_orders(data_root, verbose=False):
+def verify_nested_orders(data_root, verbose=False):
     import pyarrow.compute as pc
 
-    print_section("orders -- Complex Types")
+    print_section("nested_orders -- Complex Types")
 
-    table_path = os.path.join(data_root, "orders")
+    table_path = os.path.join(data_root, "nested_orders")
     table, metadata = read_iceberg_table(table_path)
     ok(f"Loaded {table.num_rows} rows, {len(table.column_names)} columns via Iceberg")
 
@@ -69,7 +69,7 @@ def verify_orders(data_root, verbose=False):
         else:
             fail(f"Could not access shipping_address.city: {e}")
 
-    # Total items across all orders (sum of list lengths in items column)
+    # Total items across all nested_orders (sum of list lengths in items column)
     try:
         items_col = table.column("items")
         total_items = sum(len(items_col[i].as_py()) for i in range(table.num_rows))
@@ -85,7 +85,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Verify Iceberg data for iceberg-v2-complex-types demo"
     )
-    parser.add_argument("data_root", help="Root path containing orders/")
+    parser.add_argument("data_root", help="Root path containing nested_orders/")
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()
 
@@ -94,12 +94,12 @@ def main():
     print_header("Iceberg V2 Complex Types -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "orders")
+    tbl_dir = os.path.join(data_root, "nested_orders")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)
 
-    verify_orders(data_root, verbose=args.verbose)
+    verify_nested_orders(data_root, verbose=args.verbose)
 
     print_summary()
     exit_with_status()

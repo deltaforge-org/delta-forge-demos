@@ -2,7 +2,7 @@
 """
 Regional Sales Performance — Window Analytics with UniForm — Iceberg Data Verification
 ========================================================================================
-Reads the sales table purely through the Iceberg metadata chain and verifies
+Reads the windowed_sales table purely through the Iceberg metadata chain and verifies
 the final state (no DML mutations — seed data only):
   - 40 sales across 7 reps, 4 regions, 3 product categories
   - Window function results verified: ROW_NUMBER, RANK, running totals, LAG/LEAD
@@ -12,7 +12,7 @@ Final state: 40 rows, total revenue 185300.00, avg sale 4632.50.
 Usage:
     python verify.py <data_root_path> [--verbose]
 
-    data_root_path: parent folder containing sales/
+    data_root_path: parent folder containing windowed_sales/
 
 Requirements:
     pip install pyiceberg[pyarrow] fastavro
@@ -37,9 +37,9 @@ from verify_lib import (
 # Verification
 # ---------------------------------------------------------------------------
 def verify_sales(data_root, verbose=False):
-    print_section("sales — Window Analytics with UniForm")
+    print_section("windowed_sales — Window Analytics with UniForm")
 
-    table_path = os.path.join(data_root, "sales")
+    table_path = os.path.join(data_root, "windowed_sales")
     table, metadata = read_iceberg_table(table_path)
     ok(f"Loaded {table.num_rows} rows, {len(table.column_names)} columns via Iceberg")
 
@@ -164,7 +164,7 @@ def main():
     )
     parser.add_argument(
         "data_root",
-        help="Root path containing sales/"
+        help="Root path containing windowed_sales/"
     )
     parser.add_argument(
         "--verbose", "-v",
@@ -178,7 +178,7 @@ def main():
     print_header("Window Analytics with UniForm — Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "sales")
+    tbl_dir = os.path.join(data_root, "windowed_sales")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

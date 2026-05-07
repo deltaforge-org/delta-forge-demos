@@ -18,7 +18,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
     COMMENT 'Puffin deletion vector write/read demo';
 
 -- STEP 2: Create Delta table with UniForm + puffin-v1 delete mode
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.products (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.puffin_products (
     id          INT,
     name        VARCHAR,
     category    VARCHAR,
@@ -34,7 +34,7 @@ TBLPROPERTIES (
 
 
 -- STEP 3: Seed 10 products
-INSERT INTO {{zone_name}}.iceberg_demos.products VALUES
+INSERT INTO {{zone_name}}.iceberg_demos.puffin_products VALUES
     (1,  'Quantum Widget',     'Electronics', 299.99,  true),
     (2,  'Nano Sensor',        'Electronics', 149.50,  true),
     (3,  'Bio Reactor Kit',    'Science',     599.00,  true),
@@ -49,12 +49,12 @@ INSERT INTO {{zone_name}}.iceberg_demos.products VALUES
 -- STEP 4: Delete 3 products (triggers Puffin DV generation)
 -- These deletes create DVs on the Delta side, which the UniForm writer
 -- translates into a Puffin file containing a Roaring64Bitmap deletion vector.
-DELETE FROM {{zone_name}}.iceberg_demos.products WHERE id IN (2, 5, 8);
+DELETE FROM {{zone_name}}.iceberg_demos.puffin_products WHERE id IN (2, 5, 8);
 
 -- STEP 5: Register an Iceberg external table pointing at the same location
 -- This reads through the Iceberg metadata chain, including the Puffin
 -- deletion vector, to verify the deletes are correctly applied.
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.products_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.puffin_products_iceberg
 USING ICEBERG
 LOCATION 'iceberg-uniform-puffin-dv/puffin_dv_products';
 

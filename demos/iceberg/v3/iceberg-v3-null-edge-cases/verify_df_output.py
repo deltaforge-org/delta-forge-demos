@@ -2,7 +2,7 @@
 """
 Iceberg V3 NULL Edge Cases -- Lab Results Verification
 ========================================================
-Reads the lab_results table through Iceberg metadata with 50 rows
+Reads the null_lab_results table through Iceberg metadata with 50 rows
 containing intentional NULLs across multiple columns.
 
 Usage:
@@ -28,9 +28,9 @@ from verify_lib import print_header, print_section, print_summary, exit_with_sta
 def verify_lab_results(data_root, verbose=False):
     import pyarrow.compute as pc
 
-    print_section("lab_results -- NULL Edge Cases")
+    print_section("null_lab_results -- NULL Edge Cases")
 
-    table_path = os.path.join(data_root, "lab_results")
+    table_path = os.path.join(data_root, "null_lab_results")
     table, metadata = read_iceberg_table(table_path)
     ok(f"Loaded {table.num_rows} rows, {len(table.column_names)} columns via Iceberg")
 
@@ -128,7 +128,7 @@ def main():
     )
     parser.add_argument(
         "data_root",
-        help="Root path containing lab_results/"
+        help="Root path containing null_lab_results/"
     )
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()
@@ -138,7 +138,7 @@ def main():
     print_header("Iceberg V3 NULL Edge Cases -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "lab_results")
+    tbl_dir = os.path.join(data_root, "null_lab_results")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

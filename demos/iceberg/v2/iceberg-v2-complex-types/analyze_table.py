@@ -3,7 +3,7 @@
 
 import duckdb
 
-DATA_DIR = "/home/chess/delta-forge/delta-forge-demos/demos/iceberg/v2/iceberg-v2-complex-types/orders/data"
+DATA_DIR = "/home/chess/delta-forge/delta-forge-demos/demos/iceberg/v2/iceberg-v2-complex-types/nested_orders/data"
 
 # Find the parquet file
 import glob
@@ -15,28 +15,28 @@ con = duckdb.connect()
 
 # Load data
 con.execute(f"""
-CREATE TABLE orders AS
+CREATE TABLE nested_orders AS
 SELECT * FROM read_parquet('{PARQUET}')
 """)
 
 # Schema
 print("=== SCHEMA ===")
-print(con.execute("DESCRIBE SELECT * FROM orders").fetchdf().to_string())
+print(con.execute("DESCRIBE SELECT * FROM nested_orders").fetchdf().to_string())
 
-print(f"\n=== Total rows: {con.execute('SELECT COUNT(*) FROM orders').fetchone()[0]} ===")
+print(f"\n=== Total rows: {con.execute('SELECT COUNT(*) FROM nested_orders').fetchone()[0]} ===")
 
 # Q1: Full scan — ROW_COUNT=100
 print("\n=== Query 1: Full scan ===")
-print(f"ROW_COUNT = {con.execute('SELECT COUNT(*) FROM orders').fetchone()[0]}")
+print(f"ROW_COUNT = {con.execute('SELECT COUNT(*) FROM nested_orders').fetchone()[0]}")
 # Spot check first few order_ids
 print("First 5 order_ids:")
-print(con.execute("SELECT order_id FROM orders ORDER BY order_id LIMIT 5").fetchdf().to_string())
+print(con.execute("SELECT order_id FROM nested_orders ORDER BY order_id LIMIT 5").fetchdf().to_string())
 
 # Q2: Shipping address city breakdown
 print("\n=== Query 2: City breakdown ===")
 city_df = con.execute("""
     SELECT shipping_address.city AS city, COUNT(*) AS order_count
-    FROM orders
+    FROM nested_orders
     GROUP BY shipping_address.city
     ORDER BY order_count DESC, city
 """).fetchdf()
@@ -46,7 +46,7 @@ print(city_df.to_string())
 print("\n=== Query 3: Total line items (unnested) ===")
 total_items = con.execute("""
     SELECT COUNT(*) AS total_line_items
-    FROM orders, UNNEST(items) AS t(item)
+    FROM nested_orders, UNNEST(items) AS t(item)
 """).fetchone()[0]
 print(f"total_line_items = {total_items}")
 
@@ -56,7 +56,7 @@ status_df = con.execute("""
     SELECT status,
            COUNT(*) AS order_count,
            ROUND(AVG(order_total), 2) AS avg_total
-    FROM orders
+    FROM nested_orders
     GROUP BY status
     ORDER BY status
 """).fetchdf()
@@ -67,7 +67,7 @@ print("\n=== Query 5: Top products by quantity ===")
 product_df = con.execute("""
     SELECT item.product_name AS product_name,
            SUM(item.quantity) AS total_qty
-    FROM orders, UNNEST(items) AS t(item)
+    FROM nested_orders, UNNEST(items) AS t(item)
     GROUP BY item.product_name
     ORDER BY total_qty DESC
 """).fetchdf()
@@ -79,7 +79,7 @@ state_df = con.execute("""
     SELECT shipping_address.state AS state,
            COUNT(*) AS order_count,
            ROUND(SUM(order_total), 2) AS total_revenue
-    FROM orders
+    FROM nested_orders
     GROUP BY shipping_address.state
     ORDER BY total_revenue DESC
 """).fetchdf()
@@ -92,13 +92,13 @@ verify = con.execute("""
         COUNT(*) AS total_orders,
         ROUND(SUM(order_total), 2) AS sum_order_total,
         COUNT(DISTINCT shipping_address.city) AS distinct_cities,
-        (SELECT COUNT(*) FROM orders, UNNEST(items) AS t(item)) AS total_items
-    FROM orders
+        (SELECT COUNT(*) FROM nested_orders, UNNEST(items) AS t(item)) AS total_items
+    FROM nested_orders
 """).fetchdf()
 print(verify.to_string())
 
 # Also: null notes count
-null_notes = con.execute("SELECT COUNT(*) FROM orders WHERE notes IS NULL").fetchone()[0]
+null_notes = con.execute("SELECT COUNT(*) FROM nested_orders WHERE notes IS NULL").fetchone()[0]
 print(f"\nNull notes count: {null_notes}")
 
 print("\n" + "=" * 70)

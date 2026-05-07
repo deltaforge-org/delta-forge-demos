@@ -9,7 +9,7 @@ non-standard (NULL reference ranges), and most have no notes (NULL notes).
 This exercises Iceberg V3's NULL handling in statistics, column-level
 min/max tracking, and predicate evaluation with missing data.
 
-Output: lab_results/ directory with Iceberg V3 metadata chain.
+Output: null_lab_results/ directory with Iceberg V3 metadata chain.
 """
 import os
 import sys
@@ -24,7 +24,7 @@ os.environ["JAVA_HOME"] = JAVA_HOME
 os.environ["PATH"] = f"{JAVA_HOME}/bin:{os.environ['PATH']}"
 
 DEMO_DIR = os.path.dirname(os.path.abspath(__file__))
-TABLE_NAME = "lab_results"
+TABLE_NAME = "null_lab_results"
 TABLE_OUTPUT = os.path.join(DEMO_DIR, TABLE_NAME)
 WAREHOUSE = "/tmp/iceberg_v3_null_warehouse"
 

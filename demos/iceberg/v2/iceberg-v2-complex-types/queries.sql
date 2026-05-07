@@ -13,7 +13,7 @@
 -- Query 1: Baseline — Full Scan
 -- ============================================================================
 -- Verifies that DeltaForge discovered the Parquet data file via the
--- Iceberg v2 manifest chain and correctly reads all 100 orders including
+-- Iceberg v2 manifest chain and correctly reads all 100 nested_orders including
 -- nested STRUCT and ARRAY columns.
 
 ASSERT ROW_COUNT = 100
@@ -23,7 +23,7 @@ ASSERT VALUE customer_name = 'Iris Williams' WHERE order_id = 50
 ASSERT VALUE status = 'Delivered' WHERE order_id = 50
 ASSERT VALUE customer_name = 'Leo Davis' WHERE order_id = 100
 ASSERT VALUE status = 'Processing' WHERE order_id = 100
-SELECT * FROM {{zone_name}}.iceberg_demos.orders
+SELECT * FROM {{zone_name}}.iceberg_demos.nested_orders
 ORDER BY order_id;
 
 
@@ -40,7 +40,7 @@ ASSERT VALUE order_count = 8 WHERE city = 'New York'
 SELECT
     shipping_address.city AS city,
     COUNT(*) AS order_count
-FROM {{zone_name}}.iceberg_demos.orders
+FROM {{zone_name}}.iceberg_demos.nested_orders
 GROUP BY shipping_address.city
 ORDER BY order_count DESC, city;
 
@@ -54,7 +54,7 @@ ORDER BY order_count DESC, city;
 ASSERT ROW_COUNT = 311
 WITH exploded AS (
     SELECT order_id, unnest(items) AS item
-    FROM {{zone_name}}.iceberg_demos.orders
+    FROM {{zone_name}}.iceberg_demos.nested_orders
 )
 SELECT
     order_id,
@@ -69,7 +69,7 @@ ORDER BY order_id, product_name;
 -- ============================================================================
 -- Query 4: Status Breakdown
 -- ============================================================================
--- Groups orders by status with count and average total.
+-- Groups nested_orders by status with count and average total.
 
 ASSERT ROW_COUNT = 4
 ASSERT VALUE order_count = 6 WHERE status = 'Cancelled'
@@ -84,7 +84,7 @@ SELECT
     status,
     COUNT(*) AS order_count,
     ROUND(AVG(order_total), 2) AS avg_total
-FROM {{zone_name}}.iceberg_demos.orders
+FROM {{zone_name}}.iceberg_demos.nested_orders
 GROUP BY status
 ORDER BY status;
 
@@ -101,7 +101,7 @@ ASSERT VALUE total_qty = 70 WHERE product_name = 'Keyboard'
 ASSERT VALUE total_qty = 50 WHERE product_name = 'Laptop'
 WITH exploded AS (
     SELECT unnest(items) AS item
-    FROM {{zone_name}}.iceberg_demos.orders
+    FROM {{zone_name}}.iceberg_demos.nested_orders
 )
 SELECT
     item['product_name'] AS product_name,
@@ -124,7 +124,7 @@ SELECT
     shipping_address.state AS state,
     COUNT(*) AS order_count,
     ROUND(SUM(order_total), 2) AS total_revenue
-FROM {{zone_name}}.iceberg_demos.orders
+FROM {{zone_name}}.iceberg_demos.nested_orders
 GROUP BY shipping_address.state
 ORDER BY total_revenue DESC;
 
@@ -132,8 +132,8 @@ ORDER BY total_revenue DESC;
 -- ============================================================================
 -- VERIFY: Grand Totals
 -- ============================================================================
--- Cross-cutting sanity check: total orders, sum of order totals, distinct
--- cities, and total line items across all orders.
+-- Cross-cutting sanity check: total nested_orders, sum of order totals, distinct
+-- cities, and total line items across all nested_orders.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_orders = 100
@@ -144,5 +144,5 @@ SELECT
     COUNT(*) AS total_orders,
     ROUND(SUM(order_total), 2) AS sum_order_total,
     COUNT(DISTINCT shipping_address.city) AS distinct_cities,
-    (SELECT COUNT(*) FROM (SELECT unnest(items) AS item FROM {{zone_name}}.iceberg_demos.orders) sub) AS total_items
-FROM {{zone_name}}.iceberg_demos.orders;
+    (SELECT COUNT(*) FROM (SELECT unnest(items) AS item FROM {{zone_name}}.iceberg_demos.nested_orders) sub) AS total_items
+FROM {{zone_name}}.iceberg_demos.nested_orders;

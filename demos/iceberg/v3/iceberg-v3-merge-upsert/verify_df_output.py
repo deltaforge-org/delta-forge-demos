@@ -2,7 +2,7 @@
 """
 Iceberg V3 UniForm Supply Chain Inventory MERGE Sync -- Data Verification
 ==========================================================================
-Reads the warehouse_inventory table through Iceberg metadata after two
+Reads the supply_chain_inventory table through Iceberg metadata after two
 MERGE rounds. Final state: 33 items (30 seed + 3 inserted), with updated
 quantities and prices from MERGE operations.
 
@@ -25,13 +25,13 @@ from verify_lib import (read_iceberg_table, ok, fail, info,
 from verify_lib import print_header, print_section, print_summary, exit_with_status
 
 
-def verify_warehouse_inventory(data_root, verbose=False):
+def verify_supply_chain_inventory(data_root, verbose=False):
     import pyarrow as pa
     import pyarrow.compute as pc
 
-    print_section("warehouse_inventory -- Post-MERGE Final State")
+    print_section("supply_chain_inventory -- Post-MERGE Final State")
 
-    table_path = os.path.join(data_root, "warehouse_inventory")
+    table_path = os.path.join(data_root, "supply_chain_inventory")
     table, metadata = read_iceberg_table(table_path)
     ok(f"Loaded {table.num_rows} rows, {len(table.column_names)} columns via Iceberg")
 
@@ -112,7 +112,7 @@ def main():
     )
     parser.add_argument(
         "data_root",
-        help="Root path containing warehouse_inventory/"
+        help="Root path containing supply_chain_inventory/"
     )
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()
@@ -122,12 +122,12 @@ def main():
     print_header("Iceberg V3 MERGE Upsert -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "warehouse_inventory")
+    tbl_dir = os.path.join(data_root, "supply_chain_inventory")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)
 
-    verify_warehouse_inventory(data_root, verbose=args.verbose)
+    verify_supply_chain_inventory(data_root, verbose=args.verbose)
 
     print_summary()
     exit_with_status()

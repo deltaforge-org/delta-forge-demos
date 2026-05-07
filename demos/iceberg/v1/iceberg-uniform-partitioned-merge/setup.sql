@@ -19,7 +19,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
     COMMENT 'Iceberg UniForm demo tables';
 
 -- STEP 2: Create partitioned table with UniForm
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.partitioned_inventory (
     sku               VARCHAR,
     warehouse         VARCHAR,
     product_name      VARCHAR,
@@ -27,7 +27,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory
     reorder_point     INT,
     unit_cost         DOUBLE,
     last_received     VARCHAR
-) LOCATION 'iceberg-uniform-partitioned-merge/warehouse_inventory'
+) LOCATION 'iceberg-uniform-partitioned-merge/partitioned_inventory'
 PARTITIONED BY (warehouse)
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
@@ -37,7 +37,7 @@ TBLPROPERTIES (
 
 
 -- STEP 3: Seed 36 SKUs — 12 per warehouse (Version 1, Iceberg Snapshot 1)
-INSERT INTO {{zone_name}}.iceberg_demos.warehouse_inventory VALUES
+INSERT INTO {{zone_name}}.iceberg_demos.partitioned_inventory VALUES
     -- portland: 12 SKUs
     ('WH-P001', 'portland',  'Industrial Bolt M10',       500,  100, 0.45,  '2024-01-10'),
     ('WH-P002', 'portland',  'Steel Washer 3/8"',         1200, 200, 0.12,  '2024-01-10'),

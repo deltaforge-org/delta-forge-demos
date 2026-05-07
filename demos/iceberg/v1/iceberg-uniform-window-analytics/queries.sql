@@ -10,7 +10,7 @@
 -- ============================================================================
 
 ASSERT ROW_COUNT = 40
-SELECT * FROM {{zone_name}}.iceberg_demos.sales ORDER BY sale_id;
+SELECT * FROM {{zone_name}}.iceberg_demos.windowed_sales ORDER BY sale_id;
 
 -- ============================================================================
 -- Query 2: ROW_NUMBER — Top Sale per Rep
@@ -34,7 +34,7 @@ FROM (
         product_category,
         sale_amount,
         ROW_NUMBER() OVER (PARTITION BY rep_name ORDER BY sale_amount DESC) AS rn
-    FROM {{zone_name}}.iceberg_demos.sales
+    FROM {{zone_name}}.iceberg_demos.windowed_sales
 ) ranked
 WHERE rn = 1
 ORDER BY sale_amount DESC;
@@ -55,7 +55,7 @@ SELECT
     rep_name,
     SUM(sale_amount) AS total_revenue,
     COUNT(*) AS sale_count
-FROM {{zone_name}}.iceberg_demos.sales
+FROM {{zone_name}}.iceberg_demos.windowed_sales
 GROUP BY rep_name
 ORDER BY revenue_rank;
 
@@ -78,7 +78,7 @@ FROM (
         SUM(sale_amount) OVER (PARTITION BY region) AS region_total,
         COUNT(*) OVER (PARTITION BY region) AS sale_count,
         ROW_NUMBER() OVER (PARTITION BY region ORDER BY sale_date DESC, sale_id DESC) AS rn
-    FROM {{zone_name}}.iceberg_demos.sales
+    FROM {{zone_name}}.iceberg_demos.windowed_sales
 ) t
 WHERE rn = 1
 ORDER BY region_total DESC;
@@ -100,7 +100,7 @@ SELECT
     LAG(sale_amount) OVER (ORDER BY sale_date, sale_id) AS prev_sale,
     LEAD(sale_amount) OVER (ORDER BY sale_date, sale_id) AS next_sale,
     sale_amount - LAG(sale_amount) OVER (ORDER BY sale_date, sale_id) AS sale_change
-FROM {{zone_name}}.iceberg_demos.sales
+FROM {{zone_name}}.iceberg_demos.windowed_sales
 WHERE rep_name = 'Emma Clark'
 ORDER BY sale_date, sale_id;
 
@@ -118,7 +118,7 @@ SELECT
     SUM(sale_amount) AS total_revenue,
     COUNT(*) AS sale_count,
     ROUND(100.0 * SUM(sale_amount) / SUM(SUM(sale_amount)) OVER (), 2) AS pct_of_total
-FROM {{zone_name}}.iceberg_demos.sales
+FROM {{zone_name}}.iceberg_demos.windowed_sales
 GROUP BY product_category
 ORDER BY total_revenue DESC;
 
@@ -126,11 +126,11 @@ ORDER BY total_revenue DESC;
 -- ICEBERG READ-BACK VERIFICATION
 -- ============================================================================
 
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sales_iceberg WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.windowed_sales_iceberg WITH FILES;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.sales_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.windowed_sales_iceberg
 USING ICEBERG
-LOCATION 'iceberg-uniform-window-analytics/sales';
+LOCATION 'iceberg-uniform-window-analytics/windowed_sales';
 
 
 -- ============================================================================
@@ -138,7 +138,7 @@ LOCATION 'iceberg-uniform-window-analytics/sales';
 -- ============================================================================
 
 ASSERT ROW_COUNT = 40
-SELECT * FROM {{zone_name}}.iceberg_demos.sales_iceberg ORDER BY sale_id;
+SELECT * FROM {{zone_name}}.iceberg_demos.windowed_sales_iceberg ORDER BY sale_id;
 
 -- ============================================================================
 -- Iceberg Verify 2: Top Sale per Rep via Iceberg
@@ -154,7 +154,7 @@ FROM (
         sale_id,
         sale_amount,
         ROW_NUMBER() OVER (PARTITION BY rep_name ORDER BY sale_amount DESC) AS rn
-    FROM {{zone_name}}.iceberg_demos.sales_iceberg
+    FROM {{zone_name}}.iceberg_demos.windowed_sales_iceberg
 ) ranked
 WHERE rn = 1
 ORDER BY sale_amount DESC;
@@ -170,7 +170,7 @@ SELECT
     region,
     SUM(sale_amount) AS total_revenue,
     COUNT(*) AS sale_count
-FROM {{zone_name}}.iceberg_demos.sales_iceberg
+FROM {{zone_name}}.iceberg_demos.windowed_sales_iceberg
 GROUP BY region
 ORDER BY total_revenue DESC;
 
@@ -196,4 +196,4 @@ SELECT
     ROUND(AVG(sale_amount), 2) AS avg_sale,
     MAX(sale_amount) AS max_sale,
     MIN(sale_amount) AS min_sale
-FROM {{zone_name}}.iceberg_demos.sales;
+FROM {{zone_name}}.iceberg_demos.windowed_sales;

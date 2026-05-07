@@ -2,11 +2,11 @@
 """
 Generate Iceberg V2 table with complex types (struct, array) using PySpark.
 
-Scenario: E-Commerce Order Processing — 100 orders with nested product items
+Scenario: E-Commerce Order Processing — 100 nested_orders with nested product items
 (array of structs) and shipping address (struct). Tests Iceberg's support for
 complex/nested column types.
 
-Output: orders/ directory with Iceberg V2 metadata and data files.
+Output: nested_orders/ directory with Iceberg V2 metadata and data files.
 """
 import os
 import sys
@@ -23,7 +23,7 @@ os.environ["JAVA_HOME"] = JAVA_HOME
 os.environ["PATH"] = f"{JAVA_HOME}/bin:{os.environ['PATH']}"
 
 DEMO_DIR = os.path.dirname(os.path.abspath(__file__))
-TABLE_NAME = "orders"
+TABLE_NAME = "nested_orders"
 TABLE_OUTPUT = os.path.join(DEMO_DIR, TABLE_NAME)
 WAREHOUSE = "/tmp/iceberg_complex_types_warehouse"
 
@@ -187,7 +187,7 @@ df.printSchema()
 spark.sql("CREATE NAMESPACE IF NOT EXISTS local.default")
 
 spark.sql("""
-CREATE TABLE IF NOT EXISTS local.default.orders (
+CREATE TABLE IF NOT EXISTS local.default.nested_orders (
     order_id INT,
     customer_name STRING,
     order_date DATE,
@@ -201,16 +201,16 @@ TBLPROPERTIES ('format-version' = '2')
 """)
 
 # Insert data — coalesce to 1 for a single data file
-df.coalesce(1).writeTo("local.default.orders").append()
+df.coalesce(1).writeTo("local.default.nested_orders").append()
 print(f"Loaded data into Iceberg table")
 
 # Verify
-count = spark.sql("SELECT COUNT(*) as cnt FROM local.default.orders").collect()[0].cnt
+count = spark.sql("SELECT COUNT(*) as cnt FROM local.default.nested_orders").collect()[0].cnt
 print(f"Row count: {count}")
 
 # Show sample
 print("\nSample rows:")
-spark.sql("SELECT order_id, customer_name, order_date, shipping_address.city, size(items) as item_count, order_total, status FROM local.default.orders ORDER BY order_id LIMIT 5").show(truncate=False)
+spark.sql("SELECT order_id, customer_name, order_date, shipping_address.city, size(items) as item_count, order_total, status FROM local.default.nested_orders ORDER BY order_id LIMIT 5").show(truncate=False)
 
 # ── Step 3: Copy table to demo directory ──────────────────────────────
 table_loc = f"{WAREHOUSE}/default/{TABLE_NAME}"

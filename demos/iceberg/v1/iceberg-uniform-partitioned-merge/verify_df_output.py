@@ -2,7 +2,7 @@
 """
 Iceberg UniForm Partitioned MERGE (Inventory Sync) — Data Verification
 ========================================================================
-Reads the warehouse_inventory table through the Iceberg metadata chain and
+Reads the partitioned_inventory table through the Iceberg metadata chain and
 verifies the final state after two MERGE operations (shipment + audit).
 
 Final state: 36 SKUs (12 per warehouse), partitioned by warehouse.
@@ -35,10 +35,10 @@ from verify_lib.assertions import CYAN, RESET
 # ---------------------------------------------------------------------------
 # Verification
 # ---------------------------------------------------------------------------
-def verify_warehouse_inventory(data_root, verbose=False):
-    print_section("warehouse_inventory — Partitioned MERGE Final State")
+def verify_partitioned_inventory(data_root, verbose=False):
+    print_section("partitioned_inventory — Partitioned MERGE Final State")
 
-    table_path = os.path.join(data_root, "warehouse_inventory")
+    table_path = os.path.join(data_root, "partitioned_inventory")
     table, metadata = read_iceberg_table(table_path)
     ok(f"Loaded {table.num_rows} rows, {len(table.column_names)} columns via Iceberg")
 
@@ -137,7 +137,7 @@ def main():
     )
     parser.add_argument(
         "data_root",
-        help="Root path containing warehouse_inventory/"
+        help="Root path containing partitioned_inventory/"
     )
     parser.add_argument(
         "--verbose", "-v",
@@ -151,12 +151,12 @@ def main():
     print_header("Iceberg UniForm Partitioned MERGE — Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "warehouse_inventory")
+    tbl_dir = os.path.join(data_root, "partitioned_inventory")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)
 
-    verify_warehouse_inventory(data_root, verbose=args.verbose)
+    verify_partitioned_inventory(data_root, verbose=args.verbose)
 
     print_summary()
     exit_with_status()

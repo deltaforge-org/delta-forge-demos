@@ -30,7 +30,7 @@ SELECT
     SUM(CASE WHEN is_critical IS NULL THEN 1 ELSE 0 END) AS null_critical,
     SUM(CASE WHEN lab_technician IS NULL THEN 1 ELSE 0 END) AS null_technician,
     SUM(CASE WHEN notes IS NULL THEN 1 ELSE 0 END) AS null_notes
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;
 
 
 -- ============================================================================
@@ -49,7 +49,7 @@ SELECT
     COUNT(result_value) AS count_result,
     COUNT(unit) AS count_unit,
     COUNT(notes) AS count_notes
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;
 
 
 -- ============================================================================
@@ -65,7 +65,7 @@ SELECT
     COUNT(*) AS total,
     SUM(CASE WHEN COALESCE(result_value, -1) = -1 THEN 1 ELSE 0 END) AS coalesced_to_default,
     SUM(CASE WHEN COALESCE(lab_technician, 'Automated') = 'Automated' THEN 1 ELSE 0 END) AS automated_count
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;
 
 
 -- ============================================================================
@@ -78,7 +78,7 @@ ASSERT ROW_COUNT = 1
 ASSERT VALUE nullif_zero_or_null = 26
 SELECT
     SUM(CASE WHEN NULLIF(is_critical, 0) IS NULL THEN 1 ELSE 0 END) AS nullif_zero_or_null
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;
 
 
 -- ============================================================================
@@ -93,7 +93,7 @@ SELECT
     test_name,
     collected_date,
     notes
-FROM {{zone_name}}.iceberg_demos.lab_results
+FROM {{zone_name}}.iceberg_demos.null_lab_results
 WHERE result_value IS NULL
 ORDER BY sample_id;
 
@@ -114,7 +114,7 @@ SELECT
     ROUND(MIN(result_value), 2) AS min_result,
     ROUND(MAX(result_value), 2) AS max_result,
     ROUND(SUM(result_value), 2) AS sum_result
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;
 
 
 -- ============================================================================
@@ -130,7 +130,7 @@ ASSERT VALUE cnt = 9 WHERE lab_technician = 'Dr. Smith'
 SELECT
     lab_technician,
     COUNT(*) AS cnt
-FROM {{zone_name}}.iceberg_demos.lab_results
+FROM {{zone_name}}.iceberg_demos.null_lab_results
 GROUP BY lab_technician
 ORDER BY lab_technician NULLS FIRST;
 
@@ -149,7 +149,7 @@ SELECT
     SUM(CASE WHEN is_critical = 1 THEN 1 ELSE 0 END) AS critical_count,
     SUM(CASE WHEN is_critical = 0 THEN 1 ELSE 0 END) AS normal_count,
     SUM(CASE WHEN is_critical IS NULL THEN 1 ELSE 0 END) AS unknown_count
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;
 
 
 -- ============================================================================
@@ -169,7 +169,7 @@ SELECT
     COUNT(*) AS cnt,
     COUNT(result_value) AS has_result,
     ROUND(AVG(result_value), 2) AS avg_result
-FROM {{zone_name}}.iceberg_demos.lab_results
+FROM {{zone_name}}.iceberg_demos.null_lab_results
 GROUP BY test_name
 ORDER BY test_name;
 
@@ -197,4 +197,4 @@ SELECT
     ROUND(SUM(result_value), 2) AS sum_result,
     SUM(CASE WHEN is_critical = 1 THEN 1 ELSE 0 END) AS critical_count,
     SUM(CASE WHEN lab_technician IS NULL THEN 1 ELSE 0 END) AS automated_runs
-FROM {{zone_name}}.iceberg_demos.lab_results;
+FROM {{zone_name}}.iceberg_demos.null_lab_results;

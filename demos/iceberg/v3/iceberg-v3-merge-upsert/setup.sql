@@ -1,7 +1,7 @@
 -- ============================================================================
 -- Iceberg V3 UniForm — Supply Chain Inventory MERGE Sync — Setup
 -- ============================================================================
--- Creates a Delta table with UniForm V3 tracking warehouse inventory.
+-- Creates a Delta table with UniForm V3 tracking supply chain inventory.
 -- Seeds 30 SKUs (10 per warehouse) across 3 categories. MERGE operations
 -- happen in queries.sql to simulate inventory sync from supplier feeds.
 --
@@ -17,7 +17,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
     COMMENT 'Iceberg UniForm demo tables';
 
 -- STEP 2: Create table with UniForm V3
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.supply_chain_inventory (
     item_id        INT,
     warehouse      VARCHAR,
     sku            VARCHAR,
@@ -26,7 +26,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory
     quantity       INT,
     unit_price     DOUBLE,
     last_received  VARCHAR
-) LOCATION 'iceberg-v3-merge-upsert/warehouse_inventory'
+) LOCATION 'iceberg-v3-merge-upsert/supply_chain_inventory'
 TBLPROPERTIES (
     'delta.universalFormat.enabledFormats' = 'iceberg',
     'delta.universalFormat.icebergVersion' = '3',
@@ -35,7 +35,7 @@ TBLPROPERTIES (
 
 
 -- STEP 3: Seed 30 inventory records (10 per warehouse)
-INSERT INTO {{zone_name}}.iceberg_demos.warehouse_inventory VALUES
+INSERT INTO {{zone_name}}.iceberg_demos.supply_chain_inventory VALUES
     (1,  'WH-EAST',    'SKU-1001', 'Electronics', 'Wireless Mouse',        150, 24.99,  '2024-01-05'),
     (2,  'WH-EAST',    'SKU-1002', 'Electronics', 'USB-C Hub',             80,  39.99,  '2024-01-05'),
     (3,  'WH-EAST',    'SKU-1003', 'Office',      'Ergonomic Chair',       25,  299.99, '2024-01-10'),

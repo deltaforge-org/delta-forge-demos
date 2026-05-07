@@ -23,7 +23,7 @@ ASSERT ROW_COUNT = 30
 ASSERT VALUE product_name = 'Wireless Mouse' WHERE item_id = 1
 ASSERT VALUE quantity = 150 WHERE item_id = 1
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory
 ORDER BY item_id;
 
 
@@ -46,7 +46,7 @@ SELECT
     COUNT(*) AS item_count,
     SUM(quantity) AS total_qty,
     ROUND(SUM(quantity * unit_price), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory
 GROUP BY warehouse
 ORDER BY warehouse;
 
@@ -63,7 +63,7 @@ SELECT
     COUNT(*) AS total_items,
     SUM(quantity) AS total_qty,
     ROUND(SUM(quantity * unit_price), 2) AS total_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory;
 
 
 -- ============================================================================
@@ -72,7 +72,7 @@ FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
 -- Source data: 5 items from supplier feed. 3 match existing WH-EAST SKUs
 -- (quantity update), 2 are new products (insert).
 
-MERGE INTO {{zone_name}}.iceberg_demos.warehouse_inventory AS t
+MERGE INTO {{zone_name}}.iceberg_demos.supply_chain_inventory AS t
 USING (
     SELECT * FROM (VALUES
         (1,  'WH-EAST', 'SKU-1001', 'Electronics', 'Wireless Mouse',     175, 24.99,  '2024-02-01'),
@@ -99,7 +99,7 @@ WHEN NOT MATCHED THEN INSERT VALUES (
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_items = 32
 SELECT COUNT(*) AS total_items
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory;
 
 
 -- ============================================================================
@@ -111,7 +111,7 @@ ASSERT VALUE quantity = 175 WHERE item_id = 1
 ASSERT VALUE quantity = 30 WHERE item_id = 3
 ASSERT VALUE quantity = 110 WHERE item_id = 7
 SELECT item_id, sku, product_name, quantity, last_received
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory
 WHERE item_id IN (1, 3, 7)
 ORDER BY item_id;
 
@@ -126,7 +126,7 @@ ASSERT VALUE quantity = 200 WHERE item_id = 31
 ASSERT VALUE product_name = 'Desk Lamp LED' WHERE item_id = 32
 ASSERT VALUE quantity = 85 WHERE item_id = 32
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory
 WHERE item_id IN (31, 32)
 ORDER BY item_id;
 
@@ -136,7 +136,7 @@ ORDER BY item_id;
 -- ============================================================================
 -- Supplier raised prices on 3 items. Also stocking new Wireless Earbuds.
 
-MERGE INTO {{zone_name}}.iceberg_demos.warehouse_inventory AS t
+MERGE INTO {{zone_name}}.iceberg_demos.supply_chain_inventory AS t
 USING (
     SELECT * FROM (VALUES
         (11, 'WH-WEST', 'SKU-1001', 'Electronics', 'Wireless Mouse',   180, 26.99,  '2024-02-05'),
@@ -162,7 +162,7 @@ WHEN NOT MATCHED THEN INSERT VALUES (
 ASSERT ROW_COUNT = 1
 ASSERT VALUE total_items = 33
 SELECT COUNT(*) AS total_items
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory;
 
 
 -- ============================================================================
@@ -174,7 +174,7 @@ ASSERT VALUE unit_price = 26.99 WHERE item_id = 11
 ASSERT VALUE unit_price = 84.99 WHERE item_id = 15
 ASSERT VALUE unit_price = 64.99 WHERE item_id = 19
 SELECT item_id, sku, product_name, unit_price, last_received
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory
 WHERE item_id IN (11, 15, 19)
 ORDER BY item_id;
 
@@ -198,7 +198,7 @@ SELECT
     COUNT(*) AS item_count,
     SUM(quantity) AS total_qty,
     ROUND(SUM(quantity * unit_price), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory
 GROUP BY warehouse
 ORDER BY warehouse;
 
@@ -219,18 +219,18 @@ SELECT
     ROUND(SUM(quantity * unit_price), 2) AS total_value,
     COUNT(DISTINCT warehouse) AS warehouse_count,
     COUNT(DISTINCT sku) AS distinct_skus
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory;
 
 
 -- ============================================================================
 -- ICEBERG V3 READ-BACK VERIFICATION
 -- ============================================================================
 
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg WITH FILES;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg
 USING ICEBERG
-LOCATION 'iceberg-v3-merge-upsert/warehouse_inventory';
+LOCATION 'iceberg-v3-merge-upsert/supply_chain_inventory';
 
 
 -- ============================================================================
@@ -238,7 +238,7 @@ LOCATION 'iceberg-v3-merge-upsert/warehouse_inventory';
 -- ============================================================================
 
 ASSERT ROW_COUNT = 33
-SELECT * FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg ORDER BY item_id;
+SELECT * FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg ORDER BY item_id;
 
 
 -- ============================================================================
@@ -253,7 +253,7 @@ ASSERT VALUE product_name = 'Wireless Mouse' WHERE item_id = 1
 ASSERT VALUE quantity = 175 WHERE item_id = 1
 ASSERT VALUE unit_price = 24.99 WHERE item_id = 1
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg
 WHERE item_id = 1;
 
 
@@ -267,7 +267,7 @@ ASSERT VALUE product_name = 'Wireless Earbuds' WHERE item_id = 31
 ASSERT VALUE quantity = 200 WHERE item_id = 31
 ASSERT VALUE unit_price = 49.99 WHERE item_id = 31
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg
 WHERE item_id = 31;
 
 
@@ -281,7 +281,7 @@ ASSERT VALUE warehouse = 'WH-WEST' WHERE item_id = 11
 ASSERT VALUE quantity = 180 WHERE item_id = 11
 ASSERT VALUE unit_price = 26.99 WHERE item_id = 11
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg
 WHERE item_id = 11;
 
 
@@ -295,7 +295,7 @@ ASSERT VALUE sku = 'SKU-1001' WHERE item_id = 21
 ASSERT VALUE quantity = 100 WHERE item_id = 21
 ASSERT VALUE unit_price = 24.99 WHERE item_id = 21
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg
 WHERE item_id = 21;
 
 
@@ -318,7 +318,7 @@ SELECT
     COUNT(*) AS item_count,
     SUM(quantity) AS total_qty,
     ROUND(SUM(quantity * unit_price), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg
 GROUP BY warehouse
 ORDER BY warehouse;
 
@@ -335,4 +335,4 @@ SELECT
     COUNT(*) AS total_items,
     SUM(quantity) AS total_qty,
     ROUND(SUM(quantity * unit_price), 2) AS total_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg;
+FROM {{zone_name}}.iceberg_demos.supply_chain_inventory_iceberg;

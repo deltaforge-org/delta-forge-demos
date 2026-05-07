@@ -18,7 +18,7 @@
 -- VERIFYING THE ICEBERG OUTPUT
 -- ----------------------------
 -- After running, verify partition specs in the Iceberg metadata:
---   python3 verify_iceberg_metadata.py <table_data_path>/warehouse_inventory -v
+--   python3 verify_iceberg_metadata.py <table_data_path>/partitioned_inventory -v
 -- ============================================================================
 -- ============================================================================
 -- EXPLORE: Baseline State (Version 1 / Snapshot 1)
@@ -26,7 +26,7 @@
 -- 36 SKUs: 12 per warehouse.
 
 ASSERT ROW_COUNT = 36
-SELECT * FROM {{zone_name}}.iceberg_demos.warehouse_inventory ORDER BY sku;
+SELECT * FROM {{zone_name}}.iceberg_demos.partitioned_inventory ORDER BY sku;
 -- ============================================================================
 -- Query 1: Per-Warehouse Summary
 -- ============================================================================
@@ -43,7 +43,7 @@ SELECT
     COUNT(*) AS sku_count,
     SUM(quantity_on_hand) AS total_qty,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory
 GROUP BY warehouse
 ORDER BY warehouse;
 -- ============================================================================
@@ -56,7 +56,7 @@ ASSERT VALUE total_quantity = 13380
 SELECT
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS total_value,
     SUM(quantity_on_hand) AS total_quantity
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory;
 -- ============================================================================
 -- LEARN: MERGE 1 — Receive Shipment (Version 2 / Snapshot 2)
 -- ============================================================================
@@ -65,7 +65,7 @@ FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
 -- WHEN MATCHED: add received quantity to existing on-hand, update last_received
 -- WHEN NOT MATCHED: insert new SKU
 
-MERGE INTO {{zone_name}}.iceberg_demos.warehouse_inventory t
+MERGE INTO {{zone_name}}.iceberg_demos.partitioned_inventory t
 USING (VALUES
     -- Portland shipment (6 existing + 2 new)
     ('WH-P001', 'portland',  'Industrial Bolt M10',       250,  100, 0.45,  '2024-02-15'),
@@ -107,7 +107,7 @@ WHEN NOT MATCHED THEN INSERT (sku, warehouse, product_name, quantity_on_hand, re
 -- 36 + 6 new = 42 SKUs
 
 ASSERT ROW_COUNT = 42
-SELECT * FROM {{zone_name}}.iceberg_demos.warehouse_inventory ORDER BY sku;
+SELECT * FROM {{zone_name}}.iceberg_demos.partitioned_inventory ORDER BY sku;
 -- ============================================================================
 -- Query 4: Post-Shipment Per-Warehouse Summary
 -- ============================================================================
@@ -124,7 +124,7 @@ SELECT
     COUNT(*) AS sku_count,
     SUM(quantity_on_hand) AS total_qty,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory
 GROUP BY warehouse
 ORDER BY warehouse;
 -- ============================================================================
@@ -144,7 +144,7 @@ SELECT
     warehouse,
     quantity_on_hand,
     last_received
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory
 WHERE sku IN ('WH-P001', 'WH-P003', 'WH-D001', 'WH-D003', 'WH-C001', 'WH-C003')
 ORDER BY sku;
 -- ============================================================================
@@ -157,7 +157,7 @@ ASSERT VALUE total_quantity = 16665
 SELECT
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS total_value,
     SUM(quantity_on_hand) AS total_quantity
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory;
 -- ============================================================================
 -- LEARN: MERGE 2 — Inventory Audit (Version 3 / Snapshot 3)
 -- ============================================================================
@@ -166,7 +166,7 @@ FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
 -- Discontinued: Silicone Sealant and Stainless Hinge across all warehouses.
 -- Corrections: Steel Washer and Concrete Anchor quantities adjusted.
 
-MERGE INTO {{zone_name}}.iceberg_demos.warehouse_inventory t
+MERGE INTO {{zone_name}}.iceberg_demos.partitioned_inventory t
 USING (VALUES
     -- Discontinued items (DELETE) — Silicone Sealant
     ('WH-P012', 'portland',  'Silicone Sealant 10oz',      0,   0,   4.50,  'discontinued'),
@@ -198,14 +198,14 @@ WHEN NOT MATCHED THEN INSERT (sku, warehouse, product_name, quantity_on_hand, re
 -- 42 - 6 discontinued = 36 SKUs
 
 ASSERT ROW_COUNT = 36
-SELECT * FROM {{zone_name}}.iceberg_demos.warehouse_inventory ORDER BY sku;
+SELECT * FROM {{zone_name}}.iceberg_demos.partitioned_inventory ORDER BY sku;
 -- ============================================================================
 -- Query 8: Discontinued SKUs Removed
 -- ============================================================================
 
 ASSERT ROW_COUNT = 0
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory
 WHERE sku IN ('WH-P012', 'WH-D012', 'WH-C012', 'WH-P008', 'WH-D008', 'WH-C008');
 -- ============================================================================
 -- Query 9: Post-Audit Per-Warehouse Summary
@@ -223,7 +223,7 @@ SELECT
     COUNT(*) AS sku_count,
     SUM(quantity_on_hand) AS total_qty,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory
 GROUP BY warehouse
 ORDER BY warehouse;
 -- ============================================================================
@@ -243,7 +243,7 @@ SELECT
     product_name,
     quantity_on_hand,
     last_received
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory
 WHERE sku IN ('WH-P002', 'WH-D002', 'WH-C002', 'WH-P006', 'WH-D006', 'WH-C006')
 ORDER BY sku;
 -- ============================================================================
@@ -256,9 +256,9 @@ ASSERT VALUE v1_count = 36
 ASSERT VALUE v2_count = 42
 ASSERT VALUE v3_count = 36
 SELECT
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.warehouse_inventory VERSION AS OF 1) AS v1_count,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.warehouse_inventory VERSION AS OF 2) AS v2_count,
-    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.warehouse_inventory) AS v3_count;
+    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.partitioned_inventory VERSION AS OF 1) AS v1_count,
+    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.partitioned_inventory VERSION AS OF 2) AS v2_count,
+    (SELECT COUNT(*) FROM {{zone_name}}.iceberg_demos.partitioned_inventory) AS v3_count;
 -- ============================================================================
 -- Query 12: Time Travel — Inventory Value Across Versions
 -- ============================================================================
@@ -268,10 +268,10 @@ ASSERT VALUE v1_value = 70762.90
 ASSERT VALUE v2_value = 104791.10
 ASSERT VALUE v3_value = 93761.00
 SELECT
-    ROUND((SELECT SUM(quantity_on_hand * unit_cost) FROM {{zone_name}}.iceberg_demos.warehouse_inventory VERSION AS OF 1), 2) AS v1_value,
-    ROUND((SELECT SUM(quantity_on_hand * unit_cost) FROM {{zone_name}}.iceberg_demos.warehouse_inventory VERSION AS OF 2), 2) AS v2_value,
+    ROUND((SELECT SUM(quantity_on_hand * unit_cost) FROM {{zone_name}}.iceberg_demos.partitioned_inventory VERSION AS OF 1), 2) AS v1_value,
+    ROUND((SELECT SUM(quantity_on_hand * unit_cost) FROM {{zone_name}}.iceberg_demos.partitioned_inventory VERSION AS OF 2), 2) AS v2_value,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS v3_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory;
 -- ============================================================================
 -- Query 13: Version History
 -- ============================================================================
@@ -280,7 +280,7 @@ FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
 -- V3: MERGE audit (6 discontinuations + 6 quantity corrections)
 
 ASSERT WARNING ROW_COUNT >= 3
-DESCRIBE HISTORY {{zone_name}}.iceberg_demos.warehouse_inventory;
+DESCRIBE HISTORY {{zone_name}}.iceberg_demos.partitioned_inventory;
 -- ============================================================================
 -- VERIFY: All Checks
 -- ============================================================================
@@ -296,7 +296,7 @@ SELECT
     COUNT(DISTINCT warehouse) AS warehouse_count,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS total_inventory_value,
     SUM(quantity_on_hand) AS total_quantity
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory;
 -- ============================================================================
 -- ICEBERG READ-BACK VERIFICATION
 -- ============================================================================
@@ -310,18 +310,18 @@ FROM {{zone_name}}.iceberg_demos.warehouse_inventory;
 -- use forward-slash paths or UNC paths for the data_path variable.
 -- ============================================================================
 
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg WITH FILES;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg
 USING ICEBERG
-LOCATION 'iceberg-uniform-partitioned-merge/warehouse_inventory';
+LOCATION 'iceberg-uniform-partitioned-merge/partitioned_inventory';
 
 -- ============================================================================
 -- Iceberg Verify 1: Row Count — 36 SKUs After Both MERGEs
 -- ============================================================================
 
 ASSERT ROW_COUNT = 36
-SELECT * FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg ORDER BY sku;
+SELECT * FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg ORDER BY sku;
 -- ============================================================================
 -- Iceberg Verify 2: Per-Warehouse Inventory Values — Full Data Check
 -- ============================================================================
@@ -339,7 +339,7 @@ SELECT
     COUNT(*) AS sku_count,
     SUM(quantity_on_hand) AS total_qty,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS inventory_value
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg
 GROUP BY warehouse
 ORDER BY warehouse;
 -- ============================================================================
@@ -359,7 +359,7 @@ SELECT
     warehouse,
     quantity_on_hand,
     last_received
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg
 WHERE sku IN ('WH-P001', 'WH-P003', 'WH-D001', 'WH-D003', 'WH-C001', 'WH-C003')
 ORDER BY sku;
 -- ============================================================================
@@ -380,7 +380,7 @@ SELECT
     product_name,
     quantity_on_hand,
     last_received
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg
 WHERE sku IN ('WH-P002', 'WH-D002', 'WH-C002', 'WH-P006', 'WH-D006', 'WH-C006')
 ORDER BY sku;
 -- ============================================================================
@@ -390,7 +390,7 @@ ORDER BY sku;
 
 ASSERT ROW_COUNT = 0
 SELECT *
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg
 WHERE sku IN ('WH-P012', 'WH-D012', 'WH-C012', 'WH-P008', 'WH-D008', 'WH-C008');
 -- ============================================================================
 -- Iceberg Verify 6: New SKUs Present — Iceberg Reflects Inserts
@@ -409,7 +409,7 @@ SELECT
     product_name,
     quantity_on_hand,
     unit_cost
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg
 WHERE sku IN ('WH-P013', 'WH-P014', 'WH-D013', 'WH-D014', 'WH-C013', 'WH-C014')
 ORDER BY sku;
 -- ============================================================================
@@ -424,4 +424,4 @@ SELECT
     COUNT(*) AS total_skus,
     ROUND(SUM(quantity_on_hand * unit_cost), 2) AS total_inventory_value,
     SUM(quantity_on_hand) AS total_quantity
-FROM {{zone_name}}.iceberg_demos.warehouse_inventory_iceberg;
+FROM {{zone_name}}.iceberg_demos.partitioned_inventory_iceberg;

@@ -23,8 +23,8 @@ zone_name = { description = "Target zone name (defaults to 'demo_zone')", requir
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.iceberg_demos.products"
+name = "{{zone_name}}.iceberg_demos.puffin_products"
 
 [[demo.target_objects]]
 type = "external_table"
-name = "{{zone_name}}.iceberg_demos.products_iceberg"
+name = "{{zone_name}}.iceberg_demos.puffin_products_iceberg"

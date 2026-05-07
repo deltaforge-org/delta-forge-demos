@@ -23,4 +23,4 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.iceberg_demos.warehouse_inventory"
+name = "{{zone_name}}.iceberg_demos.supply_chain_inventory"

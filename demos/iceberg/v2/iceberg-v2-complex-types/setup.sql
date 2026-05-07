@@ -4,11 +4,11 @@
 -- Creates an external table backed by a native Apache Iceberg v2 table with
 -- complex/nested column types: STRUCT and ARRAY<STRUCT>.
 --
--- Scenario: E-Commerce Order Processing — 100 orders with nested product
+-- Scenario: E-Commerce Order Processing — 100 nested_orders with nested product
 -- items (array of structs) and shipping address (struct). Tests Iceberg's
 -- support for complex/nested column types through the native reader.
 --
--- Dataset: 100 orders with 8 columns including:
+-- Dataset: 100 nested_orders with 8 columns including:
 --   - shipping_address: STRUCT<street, city, state, zip_code>
 --   - items: ARRAY<STRUCT<product_name, quantity, unit_price>>
 -- ============================================================================
@@ -24,7 +24,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
 -- The LOCATION points to the Iceberg table root (containing metadata/ and data/).
 -- DeltaForge parses metadata.json to discover schema and data files automatically.
 -- The table contains STRUCT and ARRAY<STRUCT> columns for nested data.
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.orders
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.nested_orders
 USING ICEBERG
-LOCATION 'iceberg-v2-complex-types/orders';
+LOCATION 'iceberg-v2-complex-types/nested_orders';
 

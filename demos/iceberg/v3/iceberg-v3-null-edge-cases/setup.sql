@@ -21,7 +21,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.iceberg_demos
     COMMENT 'Apache Iceberg native table demos';
 
 -- STEP 2: Register the Iceberg V3 table
-CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.lab_results
+CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.iceberg_demos.null_lab_results
 USING ICEBERG
-LOCATION 'iceberg-v3-null-edge-cases/lab_results';
+LOCATION 'iceberg-v3-null-edge-cases/null_lab_results';
 
