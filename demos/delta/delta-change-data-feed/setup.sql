@@ -20,7 +20,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: customer_accounts — Customer account management with CDF
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.cdf_customer_accounts (
     id              INT,
     name            VARCHAR,
     email           VARCHAR,
@@ -28,12 +28,12 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
     balance         DOUBLE,
     status          VARCHAR,
     created_date    VARCHAR
-) LOCATION 'delta-change-data-feed/customer_accounts'
+) LOCATION 'delta-change-data-feed/cdf_customer_accounts'
 TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true');
 
 
 -- V0: Insert 40 customer accounts
-INSERT INTO {{zone_name}}.delta_demos.customer_accounts VALUES
+INSERT INTO {{zone_name}}.delta_demos.cdf_customer_accounts VALUES
     (1,  'Alice Morgan',     'alice.morgan@mail.com',     'silver', 5200.00,  'active', '2023-01-05'),
     (2,  'Bob Fischer',      'bob.fischer@mail.com',      'silver', 3100.00,  'active', '2023-01-10'),
     (3,  'Carol Reeves',     'carol.reeves@mail.com',     'bronze', 1800.00,  'active', '2023-01-15'),

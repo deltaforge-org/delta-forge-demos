@@ -135,18 +135,18 @@ INSERT INTO {{zone_name}}.delta_demos.locations VALUES
 -- ============================================================================
 -- TABLE 3: audit_log — document access events for cross-table analytics
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.audit_log (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.geo_audit_log (
     id          INT,
     doc_id      INT,
     location_id INT,
     user_name   VARCHAR,
     action      VARCHAR,
     accessed_at VARCHAR
-) LOCATION 'delta-binary-geometry-advanced/audit_log';
+) LOCATION 'delta-binary-geometry-advanced/geo_audit_log';
 
 
 -- 40 access events across documents and locations
-INSERT INTO {{zone_name}}.delta_demos.audit_log VALUES
+INSERT INTO {{zone_name}}.delta_demos.geo_audit_log VALUES
     (1,  1,  1,  'alice',   'view',     '2024-01-16 09:00:00'),
     (2,  1,  1,  'bob',     'download', '2024-01-16 10:30:00'),
     (3,  2,  2,  'alice',   'view',     '2024-01-21 08:15:00'),

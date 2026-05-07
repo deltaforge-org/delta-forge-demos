@@ -22,7 +22,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: subscriptions — SaaS billing platform subscriptions
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscriptions (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.crosspart_subscriptions (
     id           INT,
     customer     VARCHAR,
     region       VARCHAR,
@@ -31,7 +31,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscriptions (
     usage_gb     INT,
     signup_date  VARCHAR,
     status       VARCHAR
-) LOCATION 'delta-update-cross-partition/subscriptions'
+) LOCATION 'delta-update-cross-partition/crosspart_subscriptions'
 PARTITIONED BY (region)
 TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true'
@@ -39,7 +39,7 @@ TBLPROPERTIES (
 
 
 -- Region 1: americas (20 rows)
-INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
+INSERT INTO {{zone_name}}.delta_demos.crosspart_subscriptions VALUES
     ( 1, 'Acme Corp',          'americas', 'starter',      29.99,  50,   '2024-01-15', 'active'),
     ( 2, 'Beta Industries',    'americas', 'professional', 99.99,  250,  '2024-02-01', 'active'),
     ( 3, 'Cloud Nine LLC',     'americas', 'enterprise',   299.99, 2000, '2023-06-10', 'active'),
@@ -62,7 +62,7 @@ INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
     (20, 'TerraNode Labs',     'americas', 'starter',      34.99,  200,  '2024-09-05', 'trial');
 
 -- Region 2: europe (20 rows)
-INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
+INSERT INTO {{zone_name}}.delta_demos.crosspart_subscriptions VALUES
     (21, 'Albion Digital',     'europe', 'starter',      29.99,  40,   '2024-01-20', 'active'),
     (22, 'BerlinTech GmbH',   'europe', 'professional', 119.99, 350,  '2023-08-15', 'active'),
     (23, 'Cypher Security',   'europe', 'enterprise',   349.99, 2500, '2023-04-01', 'active'),
@@ -85,7 +85,7 @@ INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
     (40, 'UppsalaAI AB',      'europe', 'starter',      39.99,  180,  '2024-09-01', 'trial');
 
 -- Region 3: asia-pacific (20 rows)
-INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
+INSERT INTO {{zone_name}}.delta_demos.crosspart_subscriptions VALUES
     (41, 'AsiaPay Ltd',       'asia-pacific', 'starter',      34.99,  60,   '2024-02-01', 'active'),
     (42, 'BangkokCloud Co',   'asia-pacific', 'professional', 99.99,  200,  '2023-10-15', 'active'),
     (43, 'ChennaiByte Pvt',   'asia-pacific', 'enterprise',   299.99, 1900, '2023-05-01', 'active'),

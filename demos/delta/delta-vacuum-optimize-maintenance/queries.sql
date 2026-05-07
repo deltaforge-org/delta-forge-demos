@@ -21,7 +21,7 @@
 
 -- Non-deterministic: num_files depends on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
-DESCRIBE DETAIL {{zone_name}}.delta_demos.order_pipeline;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 
 -- ============================================================================
@@ -39,7 +39,7 @@ ASSERT ROW_COUNT = 4
 SELECT category,
        COUNT(*) AS order_count,
        ROUND(SUM(price), 2) AS revenue
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.vacuum_order_pipeline
 GROUP BY category
 ORDER BY category;
 
@@ -56,7 +56,7 @@ ASSERT ROW_COUNT = 2
 SELECT status,
        COUNT(*) AS status_count,
        ROUND(SUM(price), 2) AS status_revenue
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.vacuum_order_pipeline
 GROUP BY status
 ORDER BY status;
 
@@ -69,7 +69,7 @@ ORDER BY status;
 -- file-open overhead. The old small files become orphaned — they're still
 -- on disk but no longer referenced by the current table version.
 
-OPTIMIZE {{zone_name}}.delta_demos.order_pipeline;
+OPTIMIZE {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 
 -- ============================================================================
@@ -82,7 +82,7 @@ OPTIMIZE {{zone_name}}.delta_demos.order_pipeline;
 
 -- Non-deterministic: num_files depends on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
-DESCRIBE DETAIL {{zone_name}}.delta_demos.order_pipeline;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 
 -- ============================================================================
@@ -93,7 +93,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.order_pipeline;
 -- removes ALL orphans immediately (default retention is 7 days).
 -- After this, storage contains only the compacted files from OPTIMIZE.
 
-VACUUM {{zone_name}}.delta_demos.order_pipeline RETAIN 0 HOURS;
+VACUUM {{zone_name}}.delta_demos.vacuum_order_pipeline RETAIN 0 HOURS;
 
 
 -- ============================================================================
@@ -106,7 +106,7 @@ VACUUM {{zone_name}}.delta_demos.order_pipeline RETAIN 0 HOURS;
 
 -- Non-deterministic: num_files depends on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
-DESCRIBE DETAIL {{zone_name}}.delta_demos.order_pipeline;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 
 -- ============================================================================
@@ -123,7 +123,7 @@ ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_orders,
        ROUND(SUM(price), 2) AS total_revenue,
        COUNT(DISTINCT category) AS categories
-FROM {{zone_name}}.delta_demos.order_pipeline;
+FROM {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 
 -- ============================================================================
@@ -137,7 +137,7 @@ ASSERT ROW_COUNT = 8
 ASSERT VALUE shipped_revenue = 694.94
 SELECT id, order_ref, product, price, status,
        ROUND(SUM(price) OVER (), 2) AS shipped_revenue
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.vacuum_order_pipeline
 WHERE status = 'shipped'
 ORDER BY id;
 
@@ -151,7 +151,7 @@ ORDER BY id;
 ASSERT VALUE cancelled_count = 0
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS cancelled_count
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.vacuum_order_pipeline
 WHERE id IN (11, 22, 37);
 
 
@@ -167,7 +167,7 @@ ASSERT VALUE price = 24.99 WHERE id = 25
 ASSERT VALUE price = 20.99 WHERE id = 33
 ASSERT ROW_COUNT = 4
 SELECT id, order_ref, product, price
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.vacuum_order_pipeline
 WHERE id IN (9, 17, 25, 33)
 ORDER BY id;
 
@@ -178,39 +178,39 @@ ORDER BY id;
 
 -- Verify total row count is 37
 ASSERT ROW_COUNT = 37
-SELECT * FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT * FROM {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 -- Verify total revenue
 ASSERT VALUE total_revenue = 2143.77
-SELECT ROUND(SUM(price), 2) AS total_revenue FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT ROUND(SUM(price), 2) AS total_revenue FROM {{zone_name}}.delta_demos.vacuum_order_pipeline;
 
 -- Verify shipped count
 ASSERT VALUE shipped_count = 8
-SELECT COUNT(*) AS shipped_count FROM {{zone_name}}.delta_demos.order_pipeline WHERE status = 'shipped';
+SELECT COUNT(*) AS shipped_count FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE status = 'shipped';
 
 -- Verify pending count
 ASSERT VALUE pending_count = 29
-SELECT COUNT(*) AS pending_count FROM {{zone_name}}.delta_demos.order_pipeline WHERE status = 'pending';
+SELECT COUNT(*) AS pending_count FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE status = 'pending';
 
 -- Verify id=1 is shipped with original price
 ASSERT VALUE status = 'shipped'
-SELECT status FROM {{zone_name}}.delta_demos.order_pipeline WHERE id = 1;
+SELECT status FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE id = 1;
 
 ASSERT VALUE price = 79.99
-SELECT price FROM {{zone_name}}.delta_demos.order_pipeline WHERE id = 1;
+SELECT price FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE id = 1;
 
 -- Verify id=9 has corrected price
 ASSERT VALUE price = 44.99
-SELECT price FROM {{zone_name}}.delta_demos.order_pipeline WHERE id = 9;
+SELECT price FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE id = 9;
 
 -- Verify cancelled order id=11 is gone
 ASSERT VALUE gone_count = 0
-SELECT COUNT(*) AS gone_count FROM {{zone_name}}.delta_demos.order_pipeline WHERE id = 11;
+SELECT COUNT(*) AS gone_count FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE id = 11;
 
 -- Verify Electronics count
 ASSERT VALUE electronics_count = 10
-SELECT COUNT(*) AS electronics_count FROM {{zone_name}}.delta_demos.order_pipeline WHERE category = 'Electronics';
+SELECT COUNT(*) AS electronics_count FROM {{zone_name}}.delta_demos.vacuum_order_pipeline WHERE category = 'Electronics';
 
 -- Verify 4 distinct categories
 ASSERT VALUE category_count = 4
-SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.vacuum_order_pipeline;

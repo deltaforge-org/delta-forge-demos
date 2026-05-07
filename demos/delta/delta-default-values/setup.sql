@@ -26,7 +26,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 --   is_archived DEFAULT 0
 --   notes       DEFAULT 'N/A'
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.audit_log (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.defaults_audit_log (
     id           INT,
     action       VARCHAR,
     user_name    VARCHAR,
@@ -35,13 +35,13 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.audit_log (
     is_archived  INT,
     created_at   VARCHAR,
     notes        VARCHAR
-) LOCATION 'delta-default-values/audit_log';
+) LOCATION 'delta-default-values/defaults_audit_log';
 
 
 -- ============================================================================
 -- STEP 2: Insert 25 rows — all columns explicitly provided (baseline data)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.audit_log
+INSERT INTO {{zone_name}}.delta_demos.defaults_audit_log
 SELECT * FROM (VALUES
     (1,  'user.login',       'admin',   'info',     0, 0, '2024-01-01 08:00:00', 'Admin morning login'),
     (2,  'user.login',       'jdoe',    'info',     0, 0, '2024-01-01 08:15:00', 'Regular user login'),

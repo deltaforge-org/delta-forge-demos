@@ -80,7 +80,7 @@
 -- index; predicates on the trailing column alone do not.
 
 CREATE INDEX idx_sensor_time
-    ON TABLE {{zone_name}}.delta_demos.sensor_telemetry (sensor_id, reading_time)
+    ON TABLE {{zone_name}}.delta_demos.iot_sensor_telemetry (sensor_id, reading_time)
     WITH (auto_update = true);
 
 
@@ -96,7 +96,7 @@ SELECT sensor_id,
        COUNT(*)        AS reading_count,
        MAX(value)      AS peak_value,
        MIN(value)      AS lowest_value
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.iot_sensor_telemetry
 GROUP BY sensor_id
 ORDER BY sensor_id;
 
@@ -116,7 +116,7 @@ SELECT COUNT(*)                                      AS reading_count,
        MAX(value)                                    AS max_value,
        COUNT(*) FILTER (WHERE quality = 'alarm')     AS alarm_count,
        COUNT(*) FILTER (WHERE quality = 'warn')      AS warn_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.iot_sensor_telemetry
 WHERE sensor_id = 'VIB-B03';
 
 
@@ -134,7 +134,7 @@ ASSERT VALUE alarm_count = 4
 SELECT COUNT(*)                                  AS reading_count,
        MAX(value)                                AS max_temp,
        COUNT(*) FILTER (WHERE quality = 'alarm') AS alarm_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.iot_sensor_telemetry
 WHERE sensor_id = 'TMP-B08'
   AND reading_time BETWEEN '2026-04-15T09:00:00' AND '2026-04-15T13:00:00';
 
@@ -153,7 +153,7 @@ ASSERT ROW_COUNT = 8
 ASSERT VALUE alarm_count = 2
 SELECT COUNT(*)                                  AS reading_count,
        COUNT(*) FILTER (WHERE quality = 'alarm') AS alarm_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.iot_sensor_telemetry
 WHERE reading_time = '2026-04-15T10:00:00';
 
 
@@ -167,7 +167,7 @@ ASSERT ROW_COUNT = 20
 ASSERT VALUE warn_count = 10
 SELECT COUNT(*)                                AS reading_count,
        COUNT(*) FILTER (WHERE quality = 'warn') AS warn_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.iot_sensor_telemetry
 WHERE sensor_id IN ('VIB-A01', 'TMP-A06');
 
 
@@ -175,7 +175,7 @@ WHERE sensor_id IN ('VIB-A01', 'TMP-A06');
 -- LEARN: Index Status
 -- ============================================================================
 
-DESCRIBE INDEX idx_sensor_time ON TABLE {{zone_name}}.delta_demos.sensor_telemetry;
+DESCRIBE INDEX idx_sensor_time ON TABLE {{zone_name}}.delta_demos.iot_sensor_telemetry;
 
 
 -- ============================================================================
@@ -197,4 +197,4 @@ SELECT COUNT(*)                                                    AS total_read
        COUNT(*) FILTER (WHERE quality = 'alarm')                    AS alarm_count,
        COUNT(DISTINCT sensor_id) FILTER (WHERE sensor_kind = 'vibration')   AS vibration_sensors,
        COUNT(DISTINCT sensor_id) FILTER (WHERE sensor_kind = 'temperature') AS temperature_sensors
-FROM {{zone_name}}.delta_demos.sensor_telemetry;
+FROM {{zone_name}}.delta_demos.iot_sensor_telemetry;

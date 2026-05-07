@@ -11,13 +11,13 @@ deactivated then removed, and new products are introduced.
 
 ## Table
 
-| Object | Type | Rows | Purpose |
-|--------|------|------|---------|
-| `products` | Delta Table | 22 (final) | Product catalog with CRUD operations |
+| Object          | Type        | Rows       | Purpose                              |
+|-----------------|-------------|------------|--------------------------------------|
+| `crud_products` | Delta Table | 22 (final) | Product catalog with CRUD operations |
 
 ## Schema
 
-**products:** `id INT, name VARCHAR, category VARCHAR, price DOUBLE, stock INT, is_active BOOLEAN`
+**crud_products:** `id INT, name VARCHAR, category VARCHAR, price DOUBLE, stock INT, is_active BOOLEAN`
 
 ## Operations Demonstrated
 

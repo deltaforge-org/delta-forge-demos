@@ -42,7 +42,7 @@ SELECT
     COUNT(*) FILTER (WHERE diagnosis_code IS NULL) AS null_diagnosis,
     COUNT(*) FILTER (WHERE discharge_date IS NULL) AS null_discharge,
     COUNT(*) FILTER (WHERE secondary_insurance IS NULL) AS null_insurance
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.nullstats_patient_records
 GROUP BY CASE
     WHEN id BETWEEN 1 AND 15 THEN 'Batch 1 (admitted)'
     WHEN id BETWEEN 16 AND 30 THEN 'Batch 2 (partial)'
@@ -65,7 +65,7 @@ ORDER BY batch;
 ASSERT VALUE still_admitted = 22
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS still_admitted
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.nullstats_patient_records
 WHERE discharge_date IS NULL;
 
 
@@ -83,7 +83,7 @@ WHERE discharge_date IS NULL;
 ASSERT VALUE has_insurance = 21
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS has_insurance
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.nullstats_patient_records
 WHERE secondary_insurance IS NOT NULL;
 
 
@@ -101,7 +101,7 @@ WHERE secondary_insurance IS NOT NULL;
 ASSERT VALUE missing_diagnosis = 10
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS missing_diagnosis
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.nullstats_patient_records
 WHERE diagnosis_code IS NULL;
 
 
@@ -114,7 +114,7 @@ WHERE diagnosis_code IS NULL;
 ASSERT VALUE complete_records = 16
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS complete_records
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.nullstats_patient_records
 WHERE diagnosis_code IS NOT NULL
   AND discharge_date IS NOT NULL
   AND secondary_insurance IS NOT NULL;
@@ -134,7 +134,7 @@ SELECT ward,
        COUNT(*) AS total_patients,
        COUNT(*) FILTER (WHERE discharge_date IS NULL) AS still_admitted,
        COUNT(*) FILTER (WHERE discharge_date IS NOT NULL) AS discharged
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.nullstats_patient_records
 GROUP BY ward
 ORDER BY ward;
 
@@ -145,27 +145,27 @@ ORDER BY ward;
 
 -- Verify total row count is 45
 ASSERT ROW_COUNT = 45
-SELECT * FROM {{zone_name}}.delta_demos.patient_records;
+SELECT * FROM {{zone_name}}.delta_demos.nullstats_patient_records;
 
 -- Verify 22 patients still admitted
 ASSERT VALUE admitted = 22
-SELECT COUNT(*) AS admitted FROM {{zone_name}}.delta_demos.patient_records WHERE discharge_date IS NULL;
+SELECT COUNT(*) AS admitted FROM {{zone_name}}.delta_demos.nullstats_patient_records WHERE discharge_date IS NULL;
 
 -- Verify 21 patients have secondary insurance
 ASSERT VALUE insured = 21
-SELECT COUNT(*) AS insured FROM {{zone_name}}.delta_demos.patient_records WHERE secondary_insurance IS NOT NULL;
+SELECT COUNT(*) AS insured FROM {{zone_name}}.delta_demos.nullstats_patient_records WHERE secondary_insurance IS NOT NULL;
 
 -- Verify 10 patients missing diagnosis
 ASSERT VALUE no_diag = 10
-SELECT COUNT(*) AS no_diag FROM {{zone_name}}.delta_demos.patient_records WHERE diagnosis_code IS NULL;
+SELECT COUNT(*) AS no_diag FROM {{zone_name}}.delta_demos.nullstats_patient_records WHERE diagnosis_code IS NULL;
 
 -- Verify 16 fully complete records
 ASSERT VALUE complete = 16
-SELECT COUNT(*) AS complete FROM {{zone_name}}.delta_demos.patient_records WHERE diagnosis_code IS NOT NULL AND discharge_date IS NOT NULL AND secondary_insurance IS NOT NULL;
+SELECT COUNT(*) AS complete FROM {{zone_name}}.delta_demos.nullstats_patient_records WHERE diagnosis_code IS NOT NULL AND discharge_date IS NOT NULL AND secondary_insurance IS NOT NULL;
 
 -- Verify ward distribution
 ASSERT VALUE cardiac = 13
-SELECT COUNT(*) AS cardiac FROM {{zone_name}}.delta_demos.patient_records WHERE ward = 'cardiac';
+SELECT COUNT(*) AS cardiac FROM {{zone_name}}.delta_demos.nullstats_patient_records WHERE ward = 'cardiac';
 
 ASSERT VALUE surgical = 8
-SELECT COUNT(*) AS surgical FROM {{zone_name}}.delta_demos.patient_records WHERE ward = 'surgical';
+SELECT COUNT(*) AS surgical FROM {{zone_name}}.delta_demos.nullstats_patient_records WHERE ward = 'surgical';

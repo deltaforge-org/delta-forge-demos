@@ -25,7 +25,7 @@ SELECT category,
        ROUND(MIN(price), 2) AS min_price,
        ROUND(MAX(price), 2) AS max_price,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.crud_products
 GROUP BY category
 ORDER BY category;
 
@@ -40,7 +40,7 @@ ORDER BY category;
 --      in the _delta_log/ transaction log
 -- This creates a new table version while preserving the old data for time travel.
 
-UPDATE {{zone_name}}.delta_demos.products
+UPDATE {{zone_name}}.delta_demos.crud_products
 SET price = ROUND(price * 1.10, 2)
 WHERE category = 'Electronics';
 
@@ -50,12 +50,12 @@ WHERE category = 'Electronics';
 ASSERT ROW_COUNT = 10
 WITH old AS (
     SELECT id, price AS old_price
-    FROM {{zone_name}}.delta_demos.products VERSION AS OF 1
+    FROM {{zone_name}}.delta_demos.crud_products VERSION AS OF 1
 )
 SELECT p.id, p.name, p.category, old.old_price, p.price AS new_price,
        CASE WHEN p.price > old.old_price THEN 'Price increased 10%'
             ELSE 'Price unchanged' END AS update_note
-FROM {{zone_name}}.delta_demos.products p
+FROM {{zone_name}}.delta_demos.crud_products p
 JOIN old ON p.id = old.id
 WHERE p.category IN ('Electronics', 'Furniture')
 ORDER BY p.category, p.id;
@@ -68,7 +68,7 @@ ORDER BY p.category, p.id;
 -- Earbuds (id=19). We'll mark them as inactive.
 
 ASSERT ROW_COUNT = 3
-UPDATE {{zone_name}}.delta_demos.products
+UPDATE {{zone_name}}.delta_demos.crud_products
 SET is_active = false
 WHERE stock = 0;
 
@@ -77,12 +77,12 @@ WHERE stock = 0;
 ASSERT ROW_COUNT = 3
 WITH before AS (
     SELECT id, is_active AS was_active
-    FROM {{zone_name}}.delta_demos.products VERSION AS OF 2
+    FROM {{zone_name}}.delta_demos.crud_products VERSION AS OF 2
 )
 SELECT p.id, p.name, p.stock, before.was_active, p.is_active,
        CASE WHEN before.was_active AND NOT p.is_active THEN 'Deactivated'
             ELSE 'No change' END AS update_note
-FROM {{zone_name}}.delta_demos.products p
+FROM {{zone_name}}.delta_demos.crud_products p
 JOIN before ON p.id = before.id
 WHERE p.stock = 0
 ORDER BY p.id;
@@ -96,7 +96,7 @@ ORDER BY p.id;
 -- This removes the 3 inactive products (Desk Lamp, Binder Clips, Earbuds).
 
 ASSERT ROW_COUNT = 3
-DELETE FROM {{zone_name}}.delta_demos.products
+DELETE FROM {{zone_name}}.delta_demos.crud_products
 WHERE is_active = false;
 
 -- Confirm: show which products were removed using time travel
@@ -105,12 +105,12 @@ WHERE is_active = false;
 ASSERT ROW_COUNT = 3
 WITH before_delete AS (
     SELECT id, name, category
-    FROM {{zone_name}}.delta_demos.products VERSION AS OF 3
+    FROM {{zone_name}}.delta_demos.crud_products VERSION AS OF 3
 )
 SELECT b.id, b.name, b.category,
        CASE WHEN p.id IS NULL THEN 'Deleted' ELSE 'Still exists' END AS status
 FROM before_delete b
-LEFT JOIN {{zone_name}}.delta_demos.products p ON b.id = p.id
+LEFT JOIN {{zone_name}}.delta_demos.crud_products p ON b.id = p.id
 WHERE p.id IS NULL
 ORDER BY b.id;
 
@@ -121,7 +121,7 @@ ORDER BY b.id;
 -- INSERT creates a new data file and a new commit version in the log.
 -- Here we add 5 new products using INSERT INTO...SELECT with a VALUES clause.
 
-INSERT INTO {{zone_name}}.delta_demos.products
+INSERT INTO {{zone_name}}.delta_demos.crud_products
 SELECT * FROM (VALUES
     (21, 'Webcam',         'Electronics', 69.99,  80,  true),
     (22, 'Footrest',       'Furniture',   49.99,  55,  true),
@@ -133,7 +133,7 @@ SELECT * FROM (VALUES
 -- Confirm: the 5 new products exist
 ASSERT ROW_COUNT = 5
 SELECT id, name, category, price, stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.crud_products
 WHERE id BETWEEN 21 AND 25
 ORDER BY id;
 
@@ -145,7 +145,7 @@ ORDER BY id;
 
 ASSERT ROW_COUNT = 22
 SELECT id, name, category, price, stock, is_active
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.crud_products
 ORDER BY category, name;
 
 
@@ -156,52 +156,52 @@ ORDER BY category, name;
 
 -- Verify total row count
 ASSERT ROW_COUNT = 22
-SELECT * FROM {{zone_name}}.delta_demos.products;
+SELECT * FROM {{zone_name}}.delta_demos.crud_products;
 
 -- Verify all products are active
 ASSERT VALUE inactive_count = 0
-SELECT COUNT(*) FILTER (WHERE is_active = false) AS inactive_count FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE is_active = false) AS inactive_count FROM {{zone_name}}.delta_demos.crud_products;
 
 -- Verify deleted products are gone
 ASSERT VALUE deleted_count = 0
-SELECT COUNT(*) FILTER (WHERE id IN (9, 15, 19)) AS deleted_count FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE id IN (9, 15, 19)) AS deleted_count FROM {{zone_name}}.delta_demos.crud_products;
 
 -- Verify electronics prices increased by 10%
 ASSERT VALUE electronics_price_match = 5
 SELECT COUNT(*) AS electronics_price_match
-FROM {{zone_name}}.delta_demos.products p
-JOIN {{zone_name}}.delta_demos.products VERSION AS OF 1 old ON p.id = old.id
+FROM {{zone_name}}.delta_demos.crud_products p
+JOIN {{zone_name}}.delta_demos.crud_products VERSION AS OF 1 old ON p.id = old.id
 WHERE old.category = 'Electronics'
   AND ROUND(p.price, 2) = ROUND(old.price * 1.10, 2);
 
 -- Verify non-electronics prices unchanged
 ASSERT VALUE price_drift_count = 0
 SELECT COUNT(*) AS price_drift_count
-FROM {{zone_name}}.delta_demos.products p
-JOIN {{zone_name}}.delta_demos.products VERSION AS OF 1 old ON p.id = old.id
+FROM {{zone_name}}.delta_demos.crud_products p
+JOIN {{zone_name}}.delta_demos.crud_products VERSION AS OF 1 old ON p.id = old.id
 WHERE old.category != 'Electronics'
   AND p.price != old.price;
 
 -- Verify new products count
 ASSERT VALUE new_products_count = 5
-SELECT COUNT(*) AS new_products_count FROM {{zone_name}}.delta_demos.products WHERE id BETWEEN 21 AND 25;
+SELECT COUNT(*) AS new_products_count FROM {{zone_name}}.delta_demos.crud_products WHERE id BETWEEN 21 AND 25;
 
 -- Verify webcam price
 ASSERT VALUE price = 69.99
-SELECT price FROM {{zone_name}}.delta_demos.products WHERE id = 21;
+SELECT price FROM {{zone_name}}.delta_demos.crud_products WHERE id = 21;
 
 -- Verify electronics count
 ASSERT VALUE electronics_count = 6
-SELECT COUNT(*) AS electronics_count FROM {{zone_name}}.delta_demos.products WHERE category = 'Electronics';
+SELECT COUNT(*) AS electronics_count FROM {{zone_name}}.delta_demos.crud_products WHERE category = 'Electronics';
 
 -- Verify furniture count
 ASSERT VALUE furniture_count = 6
-SELECT COUNT(*) AS furniture_count FROM {{zone_name}}.delta_demos.products WHERE category = 'Furniture';
+SELECT COUNT(*) AS furniture_count FROM {{zone_name}}.delta_demos.crud_products WHERE category = 'Furniture';
 
 -- Verify category count
 ASSERT VALUE category_count = 4
-SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.crud_products;
 
 -- Verify total stock
 ASSERT VALUE total_stock = 4025
-SELECT SUM(stock) AS total_stock FROM {{zone_name}}.delta_demos.products;
+SELECT SUM(stock) AS total_stock FROM {{zone_name}}.delta_demos.crud_products;

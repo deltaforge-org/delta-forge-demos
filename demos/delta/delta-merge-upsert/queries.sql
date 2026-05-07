@@ -22,7 +22,7 @@
 
 ASSERT ROW_COUNT = 15
 SELECT id, sku, name, category, price, in_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.upsert_products
 ORDER BY id;
 
 ASSERT ROW_COUNT = 12
@@ -49,7 +49,7 @@ ORDER BY id;
 --       → 3 discontinued products deleted
 
 ASSERT ROW_COUNT = 15
-MERGE INTO {{zone_name}}.delta_demos.products AS target
+MERGE INTO {{zone_name}}.delta_demos.upsert_products AS target
 USING {{zone_name}}.delta_demos.product_feed AS source
 ON target.id = source.id
 WHEN MATCHED THEN
@@ -76,7 +76,7 @@ WHEN NOT MATCHED BY SOURCE AND target.in_stock <= 5 THEN
 
 ASSERT ROW_COUNT = 16
 SELECT id, sku, name, category, price, in_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.upsert_products
 ORDER BY id;
 
 
@@ -91,7 +91,7 @@ ASSERT VALUE price = 24.99 WHERE id = 1
 ASSERT VALUE price = 69.99 WHERE id = 4
 ASSERT VALUE in_stock = 50 WHERE id = 8
 SELECT id, sku, name, price, in_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.upsert_products
 WHERE id BETWEEN 1 AND 8
 ORDER BY id;
 
@@ -111,7 +111,7 @@ ASSERT ROW_COUNT = 4
 ASSERT VALUE in_stock = 300 WHERE id = 9
 ASSERT VALUE in_stock = 25 WHERE id = 11
 SELECT id, sku, name, in_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.upsert_products
 WHERE id BETWEEN 9 AND 15
 ORDER BY id;
 
@@ -126,7 +126,7 @@ ASSERT ROW_COUNT = 4
 ASSERT VALUE name = 'Thunderbolt Dock' WHERE id = 19
 ASSERT VALUE price = 19.99 WHERE id = 16
 SELECT id, sku, name, category, price, in_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.upsert_products
 WHERE id BETWEEN 16 AND 19
 ORDER BY id;
 
@@ -142,7 +142,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(AVG(price), 2) AS avg_price,
        SUM(in_stock) AS total_stock
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.upsert_products
 GROUP BY category
 ORDER BY product_count DESC;
 
@@ -153,32 +153,32 @@ ORDER BY product_count DESC;
 
 -- Verify final_row_count: 15 - 3 deleted + 4 inserted = 16
 ASSERT ROW_COUNT = 16
-SELECT * FROM {{zone_name}}.delta_demos.products;
+SELECT * FROM {{zone_name}}.delta_demos.upsert_products;
 
 -- Verify discontinued_removed: 3 low-stock products removed by BY SOURCE
 ASSERT VALUE cnt = 0
-SELECT COUNT(*) FILTER (WHERE id IN (13, 14, 15)) AS cnt FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE id IN (13, 14, 15)) AS cnt FROM {{zone_name}}.delta_demos.upsert_products;
 
 -- Verify new_products_inserted: 4 new products (ids 16-19) inserted
 ASSERT VALUE cnt = 4
-SELECT COUNT(*) FILTER (WHERE id BETWEEN 16 AND 19) AS cnt FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE id BETWEEN 16 AND 19) AS cnt FROM {{zone_name}}.delta_demos.upsert_products;
 
 -- Verify well_stocked_survived: Products 9-12 not deleted (had stock > 5)
 ASSERT VALUE cnt = 4
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.products WHERE id BETWEEN 9 AND 12;
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.upsert_products WHERE id BETWEEN 9 AND 12;
 
 -- Verify mouse_price_updated: Wireless Mouse price dropped to 24.99
 ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.products WHERE id = 1 AND price = 24.99;
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.upsert_products WHERE id = 1 AND price = 24.99;
 
 -- Verify headset_stock_updated: Headset Pro restocked to 50
 ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.products WHERE id = 8 AND in_stock = 50;
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.upsert_products WHERE id = 8 AND in_stock = 50;
 
 -- Verify thunderbolt_inserted: Thunderbolt Dock exists with correct price
 ASSERT VALUE cnt = 1
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.products WHERE id = 19 AND price = 229.99;
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.upsert_products WHERE id = 19 AND price = 229.99;
 
 -- Verify electronics_count: 8 electronics products after merge
 ASSERT VALUE cnt = 8
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.products WHERE category = 'electronics';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.upsert_products WHERE category = 'electronics';

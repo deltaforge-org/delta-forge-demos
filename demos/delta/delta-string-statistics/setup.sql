@@ -25,7 +25,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: product_catalog — IT products with varied string column lengths
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.stats_product_catalog (
     id          INT,
     sku         VARCHAR,
     name        VARCHAR,
@@ -33,14 +33,14 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     category    VARCHAR,
     price       DOUBLE,
     url         VARCHAR
-) LOCATION 'delta-string-statistics/product_catalog';
+) LOCATION 'delta-string-statistics/stats_product_catalog';
 
 
 -- ============================================================================
 -- STEP 2: Insert 20 products — SKUs (8 chars), names (8-24), descriptions
 -- (43-77 chars), URLs (71-83 chars, all share 35-char common prefix)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
+INSERT INTO {{zone_name}}.delta_demos.stats_product_catalog VALUES
     (1,  'SKU-A001', 'Wireless Mouse',          'Ergonomic wireless mouse with adjustable DPI settings',                              'peripherals', 29.99, 'https://store.example.com/products/peripherals/wireless-mouse-ergonomic-a001'),
     (2,  'SKU-A002', 'USB-C Hub',               'Multi-port USB-C hub with HDMI and ethernet',                                        'peripherals', 49.99, 'https://store.example.com/products/peripherals/usb-c-hub-multiport-a002'),
     (3,  'SKU-A003', 'Webcam HD',               'High-definition webcam with built-in microphone and auto-focus',                     'peripherals', 69.99, 'https://store.example.com/products/peripherals/webcam-hd-autofocus-a003'),

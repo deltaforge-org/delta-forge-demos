@@ -22,7 +22,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- TABLE: product_catalog — Retail product inventory (40 baseline products)
 -- ============================================================================
 -- 4 categories × 10 products: electronics, clothing, home, food
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.dv_product_catalog (
     sku             VARCHAR,
     name            VARCHAR,
     category        VARCHAR,
@@ -30,10 +30,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     stock           INT,
     supplier        VARCHAR,
     last_updated    VARCHAR
-) LOCATION 'delta-merge-dv-lifecycle/product_catalog';
+) LOCATION 'delta-merge-dv-lifecycle/dv_product_catalog';
 
 
-INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
+INSERT INTO {{zone_name}}.delta_demos.dv_product_catalog VALUES
     ('ELEC-1001', 'Wireless Bluetooth Earbuds', 'electronics', 49.99, 120, 'AudioWave', '2025-03-01'),
     ('ELEC-1002', '27-Inch 4K Monitor', 'electronics', 349.99, 35, 'DisplayPro', '2025-03-01'),
     ('ELEC-1003', 'Mechanical Gaming Keyboard', 'electronics', 89.99, 75, 'KeyTech', '2025-03-01'),
@@ -82,7 +82,7 @@ INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
 -- 10 rows: existing SKUs with updated price/stock (MERGE → UPDATE)
 -- 5 rows:  existing SKUs with stock=0 (MERGE → DELETE, discontinued)
 -- 5 rows:  new SKUs not in catalog (MERGE → INSERT)
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.supplier_feed (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.dv_supplier_feed (
     sku             VARCHAR,
     name            VARCHAR,
     category        VARCHAR,
@@ -90,10 +90,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.supplier_feed (
     stock           INT,
     supplier        VARCHAR,
     last_updated    VARCHAR
-) LOCATION 'delta-merge-dv-lifecycle/supplier_feed';
+) LOCATION 'delta-merge-dv-lifecycle/dv_supplier_feed';
 
 
-INSERT INTO {{zone_name}}.delta_demos.supplier_feed VALUES
+INSERT INTO {{zone_name}}.delta_demos.dv_supplier_feed VALUES
     -- Updates: existing SKUs with new price/stock (stock > 0 → UPDATE)
     ('ELEC-1001', 'Wireless Bluetooth Earbuds', 'electronics', 44.99, 140, 'AudioWave', '2025-03-15'),
     ('ELEC-1005', 'Portable Power Bank 20000mAh', 'electronics', 34.99, 250, 'ChargePlus', '2025-03-15'),

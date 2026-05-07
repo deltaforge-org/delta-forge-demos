@@ -30,7 +30,7 @@ SELECT region,
        COUNT(*) FILTER (WHERE plan = 'professional') AS professional,
        COUNT(*) FILTER (WHERE plan = 'enterprise') AS enterprise,
        ROUND(AVG(monthly_fee), 2) AS avg_fee
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 GROUP BY region
 ORDER BY region;
 
@@ -45,7 +45,7 @@ SELECT plan,
        ROUND(AVG(monthly_fee), 2) AS avg_fee,
        MIN(monthly_fee) AS min_fee,
        MAX(monthly_fee) AS max_fee
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 GROUP BY plan
 ORDER BY avg_fee;
 
@@ -63,7 +63,7 @@ ORDER BY avg_fee;
 -- data files are written with the updated monthly_fee.
 
 ASSERT ROW_COUNT = 21
-UPDATE {{zone_name}}.delta_demos.subscriptions
+UPDATE {{zone_name}}.delta_demos.crosspart_subscriptions
 SET monthly_fee = ROUND(monthly_fee * 1.10, 2)
 WHERE plan = 'professional';
 
@@ -86,18 +86,18 @@ SELECT region,
        ROUND(AVG(monthly_fee), 2) AS avg_new_fee,
        MIN(monthly_fee) AS min_new_fee,
        MAX(monthly_fee) AS max_new_fee
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 WHERE plan = 'professional'
 GROUP BY region
 ORDER BY region;
 
 -- Spot-check: id=8 (HyperScale Labs) was 149.99, now 164.99
 ASSERT VALUE monthly_fee = 164.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 8;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 8;
 
 -- Spot-check: id=42 (BangkokCloud) was 99.99, now 109.99
 ASSERT VALUE monthly_fee = 109.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 42;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 42;
 
 
 -- ============================================================================
@@ -108,7 +108,7 @@ SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 42;
 -- usage_gb > 100) cuts across all regions, creating DVs in every partition.
 
 ASSERT ROW_COUNT = 6
-UPDATE {{zone_name}}.delta_demos.subscriptions
+UPDATE {{zone_name}}.delta_demos.crosspart_subscriptions
 SET status = 'suspended'
 WHERE status = 'trial' AND usage_gb > 100;
 
@@ -133,14 +133,14 @@ SELECT region,
        COUNT(*) FILTER (WHERE status = 'suspended') AS suspended_count,
        COUNT(*) FILTER (WHERE status = 'trial') AS remaining_trials,
        COUNT(*) FILTER (WHERE status = 'active') AS active_count
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 GROUP BY region
 ORDER BY region;
 
 -- Show the 6 newly suspended accounts
 ASSERT ROW_COUNT = 6
 SELECT id, customer, region, usage_gb
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 WHERE status = 'suspended' AND plan = 'starter'
 ORDER BY region, id;
 
@@ -154,7 +154,7 @@ ORDER BY region, id;
 -- americas and europe partitions are completely untouched.
 
 ASSERT ROW_COUNT = 5
-UPDATE {{zone_name}}.delta_demos.subscriptions
+UPDATE {{zone_name}}.delta_demos.crosspart_subscriptions
 SET monthly_fee = ROUND(monthly_fee * 0.95, 2)
 WHERE plan = 'enterprise' AND region = 'asia-pacific';
 
@@ -174,17 +174,17 @@ ASSERT VALUE enterprise_count = 5 WHERE region = 'asia-pacific'
 SELECT region,
        ROUND(AVG(monthly_fee) FILTER (WHERE plan = 'enterprise'), 2) AS avg_ent_fee,
        COUNT(*) FILTER (WHERE plan = 'enterprise') AS enterprise_count
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 GROUP BY region
 ORDER BY region;
 
 -- Spot-check: id=43 (ChennaiByte) was 299.99, now 284.99
 ASSERT VALUE monthly_fee = 284.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 43;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 43;
 
 -- Spot-check: id=3 (Cloud Nine, americas) is UNCHANGED at 299.99
 ASSERT VALUE monthly_fee = 299.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 3;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 3;
 
 
 -- ============================================================================
@@ -195,7 +195,7 @@ SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 3;
 -- rows marked as deleted by the DVs. After this, readers no longer need
 -- to apply DV filters, improving scan performance.
 
-OPTIMIZE {{zone_name}}.delta_demos.subscriptions;
+OPTIMIZE {{zone_name}}.delta_demos.crosspart_subscriptions;
 
 
 -- ============================================================================
@@ -221,7 +221,7 @@ SELECT region,
        COUNT(*) FILTER (WHERE status = 'active') AS active,
        COUNT(*) FILTER (WHERE status = 'suspended') AS suspended,
        COUNT(*) FILTER (WHERE status = 'trial') AS trial
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.crosspart_subscriptions
 GROUP BY region
 ORDER BY region;
 
@@ -232,58 +232,58 @@ ORDER BY region;
 
 -- Verify total_row_count: 60 rows (no inserts or deletes, only updates)
 ASSERT ROW_COUNT = 60
-SELECT * FROM {{zone_name}}.delta_demos.subscriptions;
+SELECT * FROM {{zone_name}}.delta_demos.crosspart_subscriptions;
 
 -- Verify region_counts: 20 per region (unchanged by updates)
 ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE region = 'americas';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE region = 'americas';
 
 ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE region = 'europe';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE region = 'europe';
 
 ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE region = 'asia-pacific';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE region = 'asia-pacific';
 
 -- Verify professional_fee_increase: id=5 was 129.99, now 142.99 (+10%)
 ASSERT VALUE monthly_fee = 142.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 5;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 5;
 
 -- Verify professional_fee_increase: id=25 was 139.99, now 153.99 (+10%)
 ASSERT VALUE monthly_fee = 153.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 25;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 25;
 
 -- Verify professional_fee_increase: id=50 was 139.99, now 153.99 (+10%)
 ASSERT VALUE monthly_fee = 153.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 50;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 50;
 
 -- Verify trial_suspension: 6 trials suspended (usage > 100gb)
 ASSERT VALUE cnt = 9
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE status = 'suspended';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE status = 'suspended';
 
 -- Verify remaining_trials: 5 trials remain (usage <= 100gb)
 ASSERT VALUE cnt = 5
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE status = 'trial';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE status = 'trial';
 
 -- Verify active_count: 46 active subscriptions
 ASSERT VALUE cnt = 46
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE status = 'active';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE status = 'active';
 
 -- Verify asia_pacific_discount: id=47 was 449.99, now 427.49 (-5%)
 ASSERT VALUE monthly_fee = 427.49
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 47;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 47;
 
 -- Verify americas_enterprise_unchanged: id=7 still 399.99
 ASSERT VALUE monthly_fee = 399.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 7;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 7;
 
 -- Verify europe_enterprise_unchanged: id=27 still 399.99
 ASSERT VALUE monthly_fee = 399.99
-SELECT monthly_fee FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 27;
+SELECT monthly_fee FROM {{zone_name}}.delta_demos.crosspart_subscriptions WHERE id = 27;
 
 -- Verify grand_total_revenue: sum of all monthly fees
 ASSERT VALUE total = 9495.40
-SELECT SUM(monthly_fee) AS total FROM {{zone_name}}.delta_demos.subscriptions;
+SELECT SUM(monthly_fee) AS total FROM {{zone_name}}.delta_demos.crosspart_subscriptions;
 
 -- Verify distinct_regions: still 3
 ASSERT VALUE cnt = 3
-SELECT COUNT(DISTINCT region) AS cnt FROM {{zone_name}}.delta_demos.subscriptions;
+SELECT COUNT(DISTINCT region) AS cnt FROM {{zone_name}}.delta_demos.crosspart_subscriptions;

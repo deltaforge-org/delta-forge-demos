@@ -42,7 +42,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(AVG(price), 2) AS avg_price,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -62,7 +62,7 @@ SELECT sku, name, category, price, stock,
            WHEN stock = 0 THEN 'DELETE (discontinued)'
            ELSE 'UPDATE or INSERT'
        END AS feed_action
-FROM {{zone_name}}.delta_demos.supplier_feed
+FROM {{zone_name}}.delta_demos.dv_supplier_feed
 ORDER BY stock, sku;
 
 
@@ -74,8 +74,8 @@ ORDER BY stock, sku;
 
 ASSERT ROW_COUNT = 5
 SELECT sf.sku, sf.name, sf.category, pc.stock AS current_stock
-FROM {{zone_name}}.delta_demos.supplier_feed sf
-JOIN {{zone_name}}.delta_demos.product_catalog pc ON sf.sku = pc.sku
+FROM {{zone_name}}.delta_demos.dv_supplier_feed sf
+JOIN {{zone_name}}.delta_demos.dv_product_catalog pc ON sf.sku = pc.sku
 WHERE sf.stock = 0
 ORDER BY sf.sku;
 
@@ -93,8 +93,8 @@ ORDER BY sf.sku;
 -- INSERT writes new rows to fresh data files. All in one atomic commit.
 
 ASSERT ROW_COUNT = 20
-MERGE INTO {{zone_name}}.delta_demos.product_catalog AS target
-USING {{zone_name}}.delta_demos.supplier_feed AS source
+MERGE INTO {{zone_name}}.delta_demos.dv_product_catalog AS target
+USING {{zone_name}}.delta_demos.dv_supplier_feed AS source
 ON target.sku = source.sku
 WHEN MATCHED AND source.stock > 0 THEN
     UPDATE SET price = source.price,
@@ -124,7 +124,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(AVG(price), 2) AS avg_price,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -140,7 +140,7 @@ ORDER BY category;
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 0
 SELECT sku, name
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 WHERE sku IN ('ELEC-1009', 'CLTH-2008', 'HOME-3009', 'FOOD-4003', 'FOOD-4008');
 
 
@@ -152,7 +152,7 @@ WHERE sku IN ('ELEC-1009', 'CLTH-2008', 'HOME-3009', 'FOOD-4003', 'FOOD-4008');
 
 ASSERT ROW_COUNT = 5
 SELECT sku, name, category, price, stock, supplier
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 WHERE sku IN ('ELEC-1011', 'CLTH-2011', 'HOME-3011', 'FOOD-4011', 'FOOD-4012')
 ORDER BY sku;
 
@@ -170,7 +170,7 @@ ASSERT VALUE price = 99.99 WHERE sku = 'CLTH-2005'
 ASSERT VALUE price = 27.99 WHERE sku = 'FOOD-4001'
 ASSERT VALUE stock = 180 WHERE sku = 'HOME-3003'
 SELECT sku, name, price, stock, last_updated
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 WHERE sku IN ('ELEC-1001', 'CLTH-2005', 'FOOD-4001', 'HOME-3003')
 ORDER BY sku;
 
@@ -190,7 +190,7 @@ SELECT CASE
            ELSE 'Unchanged (2025-03-01)'
        END AS merge_status,
        COUNT(*) AS product_count
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 GROUP BY CASE
            WHEN last_updated = '2025-03-15' THEN 'Updated or New (2025-03-15)'
            ELSE 'Unchanged (2025-03-01)'
@@ -207,7 +207,7 @@ ORDER BY merge_status;
 -- as deleted (10 old versions from UPDATE + 5 from DELETE).
 
 ASSERT ROW_COUNT >= 2
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_catalog;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.dv_product_catalog;
 
 
 -- ============================================================================
@@ -220,7 +220,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.product_catalog;
 --   - Same logical data, better read performance
 -- This is the weekly maintenance step that keeps the Delta table healthy.
 
-OPTIMIZE {{zone_name}}.delta_demos.product_catalog;
+OPTIMIZE {{zone_name}}.delta_demos.dv_product_catalog;
 
 
 -- ============================================================================
@@ -231,7 +231,7 @@ OPTIMIZE {{zone_name}}.delta_demos.product_catalog;
 -- physical storage layout changed.
 
 ASSERT ROW_COUNT >= 1
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_catalog;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.dv_product_catalog;
 
 
 -- ============================================================================
@@ -249,7 +249,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(AVG(price), 2) AS avg_price,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.dv_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -264,7 +264,7 @@ ORDER BY category;
 --   v3: OPTIMIZE (DVs materialized into compacted files)
 
 ASSERT ROW_COUNT = 4
-DESCRIBE HISTORY {{zone_name}}.delta_demos.product_catalog;
+DESCRIBE HISTORY {{zone_name}}.delta_demos.dv_product_catalog;
 
 
 -- ============================================================================
@@ -276,7 +276,7 @@ DESCRIBE HISTORY {{zone_name}}.delta_demos.product_catalog;
 
 ASSERT VALUE original_count = 40
 SELECT COUNT(*) AS original_count
-FROM {{zone_name}}.delta_demos.product_catalog VERSION AS OF 1;
+FROM {{zone_name}}.delta_demos.dv_product_catalog VERSION AS OF 1;
 
 
 -- ============================================================================
@@ -287,7 +287,7 @@ FROM {{zone_name}}.delta_demos.product_catalog VERSION AS OF 1;
 -- reclaiming storage. This completes the full lifecycle:
 --   MERGE (create DVs) → OPTIMIZE (materialize DVs) → VACUUM (purge orphans)
 
-VACUUM {{zone_name}}.delta_demos.product_catalog RETAIN 0 HOURS;
+VACUUM {{zone_name}}.delta_demos.dv_product_catalog RETAIN 0 HOURS;
 
 
 -- ============================================================================
@@ -296,54 +296,54 @@ VACUUM {{zone_name}}.delta_demos.product_catalog RETAIN 0 HOURS;
 
 -- Verify total_row_count: 40 - 5 deleted + 5 inserted = 40
 ASSERT ROW_COUNT = 40
-SELECT * FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT * FROM {{zone_name}}.delta_demos.dv_product_catalog;
 
 -- Verify deleted_skus_gone: all 5 discontinued SKUs were removed
 ASSERT VALUE cnt = 0
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog
 WHERE sku IN ('ELEC-1009', 'CLTH-2008', 'HOME-3009', 'FOOD-4003', 'FOOD-4008');
 
 -- Verify new_skus_present: all 5 new SKUs were inserted
 ASSERT VALUE cnt = 5
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog
 WHERE sku IN ('ELEC-1011', 'CLTH-2011', 'HOME-3011', 'FOOD-4011', 'FOOD-4012');
 
 -- Verify earbuds_price_updated: ELEC-1001 price dropped from 49.99 to 44.99
 ASSERT VALUE price = 44.99
-SELECT price FROM {{zone_name}}.delta_demos.product_catalog WHERE sku = 'ELEC-1001';
+SELECT price FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE sku = 'ELEC-1001';
 
 -- Verify coffee_price_updated: FOOD-4001 price rose from 24.99 to 27.99
 ASSERT VALUE price = 27.99
-SELECT price FROM {{zone_name}}.delta_demos.product_catalog WHERE sku = 'FOOD-4001';
+SELECT price FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE sku = 'FOOD-4001';
 
 -- Verify shoes_price_updated: CLTH-2005 price dropped from 109.99 to 99.99
 ASSERT VALUE price = 99.99
-SELECT price FROM {{zone_name}}.delta_demos.product_catalog WHERE sku = 'CLTH-2005';
+SELECT price FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE sku = 'CLTH-2005';
 
 -- Verify pillow_stock_updated: HOME-3003 stock increased from 150 to 180
 ASSERT VALUE stock = 180
-SELECT stock FROM {{zone_name}}.delta_demos.product_catalog WHERE sku = 'HOME-3003';
+SELECT stock FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE sku = 'HOME-3003';
 
 -- Verify electronics_count: 10 electronics products after MERGE
 ASSERT VALUE cnt = 10
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'electronics';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE category = 'electronics';
 
 -- Verify clothing_count: 10 clothing products after MERGE
 ASSERT VALUE cnt = 10
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'clothing';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE category = 'clothing';
 
 -- Verify home_count: 10 home products after MERGE
 ASSERT VALUE cnt = 10
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'home';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE category = 'home';
 
 -- Verify food_count: 10 food products after MERGE
 ASSERT VALUE cnt = 10
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'food';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE category = 'food';
 
 -- Verify updated_timestamp_count: 15 rows with 2025-03-15 (10 updated + 5 inserted)
 ASSERT VALUE cnt = 15
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE last_updated = '2025-03-15';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog WHERE last_updated = '2025-03-15';
 
 -- Verify sku_uniqueness: all 40 SKUs are unique
 ASSERT VALUE cnt = 40
-SELECT COUNT(DISTINCT sku) AS cnt FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT COUNT(DISTINCT sku) AS cnt FROM {{zone_name}}.delta_demos.dv_product_catalog;

@@ -24,19 +24,19 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: orders — 80 orders across 4 regions
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.orders (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.partitioned_orders (
     id         INT,
     customer   VARCHAR,
     product    VARCHAR,
     amount     DOUBLE,
     order_date VARCHAR,
     region     VARCHAR
-) LOCATION 'delta-partitioning/orders'
+) LOCATION 'delta-partitioning/partitioned_orders'
 PARTITIONED BY (region);
 
 
 -- North region: ids 1-20
-INSERT INTO {{zone_name}}.delta_demos.orders VALUES
+INSERT INTO {{zone_name}}.delta_demos.partitioned_orders VALUES
     (1,  'Customer_01', 'Widget A',    120.00, '2024-01-05', 'North'),
     (2,  'Customer_02', 'Widget B',    250.00, '2024-01-06', 'North'),
     (3,  'Customer_03', 'Gadget X',    75.50,  '2024-01-07', 'North'),
@@ -59,7 +59,7 @@ INSERT INTO {{zone_name}}.delta_demos.orders VALUES
     (20, 'Customer_20', 'Tool Z',      25.00,  '2024-01-24', 'North');
 
 -- South region: ids 21-40
-INSERT INTO {{zone_name}}.delta_demos.orders VALUES
+INSERT INTO {{zone_name}}.delta_demos.partitioned_orders VALUES
     (21, 'Customer_21', 'Widget A',    130.00, '2024-02-01', 'South'),
     (22, 'Customer_22', 'Widget B',    260.00, '2024-02-02', 'South'),
     (23, 'Customer_23', 'Gadget X',    80.00,  '2024-02-03', 'South'),
@@ -82,7 +82,7 @@ INSERT INTO {{zone_name}}.delta_demos.orders VALUES
     (40, 'Customer_40', 'Tool Z',      22.00,  '2024-02-20', 'South');
 
 -- East region: ids 41-60
-INSERT INTO {{zone_name}}.delta_demos.orders VALUES
+INSERT INTO {{zone_name}}.delta_demos.partitioned_orders VALUES
     (41, 'Customer_41', 'Widget A',    115.00, '2024-03-01', 'East'),
     (42, 'Customer_42', 'Widget B',    240.00, '2024-03-02', 'East'),
     (43, 'Customer_43', 'Gadget X',    72.00,  '2024-03-03', 'East'),
@@ -105,7 +105,7 @@ INSERT INTO {{zone_name}}.delta_demos.orders VALUES
     (60, 'Customer_60', 'Tool Z',      27.00,  '2024-03-20', 'East');
 
 -- West region: ids 61-80
-INSERT INTO {{zone_name}}.delta_demos.orders VALUES
+INSERT INTO {{zone_name}}.delta_demos.partitioned_orders VALUES
     (61, 'Customer_61', 'Widget A',    110.00, '2024-04-01', 'West'),
     (62, 'Customer_62', 'Widget B',    230.00, '2024-04-02', 'West'),
     (63, 'Customer_63', 'Gadget X',    68.00,  '2024-04-03', 'West'),

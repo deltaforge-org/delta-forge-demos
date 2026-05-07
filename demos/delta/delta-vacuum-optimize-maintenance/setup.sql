@@ -32,7 +32,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: order_pipeline — e-commerce order pipeline
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vacuum_order_pipeline (
     id              INT,
     order_ref       VARCHAR,
     category        VARCHAR,
@@ -40,13 +40,13 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
     price           DOUBLE,
     status          VARCHAR,
     order_date      VARCHAR
-) LOCATION 'delta-vacuum-optimize-maintenance/order_pipeline';
+) LOCATION 'delta-vacuum-optimize-maintenance/vacuum_order_pipeline';
 
 
 -- ============================================================================
 -- STEP 2: Monday batch — 8 orders (version 1)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_order_pipeline VALUES
     (1,  'ORD-1001', 'Electronics', 'Wireless Headphones',   79.99, 'pending', '2025-03-03'),
     (2,  'ORD-1002', 'Electronics', 'USB-C Hub',             34.99, 'pending', '2025-03-03'),
     (3,  'ORD-1003', 'Clothing',    'Running Shoes',        129.99, 'pending', '2025-03-03'),
@@ -60,7 +60,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
 -- ============================================================================
 -- STEP 3: Tuesday batch — 8 orders (version 2)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_order_pipeline VALUES
     (9,  'ORD-2001', 'Electronics', 'Monitor Stand',         39.99, 'pending', '2025-03-04'),
     (10, 'ORD-2002', 'Clothing',    'Hiking Boots',         159.99, 'pending', '2025-03-04'),
     (11, 'ORD-2003', 'Home',        'Air Purifier',         189.00, 'pending', '2025-03-04'),
@@ -74,7 +74,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
 -- ============================================================================
 -- STEP 4: Wednesday batch — 8 orders (version 3)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_order_pipeline VALUES
     (17, 'ORD-3001', 'Electronics', 'Tablet Stand',          24.99, 'pending', '2025-03-05'),
     (18, 'ORD-3002', 'Clothing',    'Denim Jeans',           79.99, 'pending', '2025-03-05'),
     (19, 'ORD-3003', 'Home',        'Bookshelf',            125.00, 'pending', '2025-03-05'),
@@ -88,7 +88,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
 -- ============================================================================
 -- STEP 5: Thursday batch — 8 orders (version 4)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_order_pipeline VALUES
     (25, 'ORD-4001', 'Electronics', 'Mouse Pad',             19.99, 'pending', '2025-03-06'),
     (26, 'ORD-4002', 'Clothing',    'Windbreaker',           85.00, 'pending', '2025-03-06'),
     (27, 'ORD-4003', 'Home',        'Kitchen Scale',         32.00, 'pending', '2025-03-06'),
@@ -102,7 +102,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
 -- ============================================================================
 -- STEP 6: Friday batch — 8 orders (version 5)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_order_pipeline VALUES
     (33, 'ORD-5001', 'Electronics', 'Phone Case',            15.99, 'pending', '2025-03-07'),
     (34, 'ORD-5002', 'Clothing',    'Baseball Cap',          22.00, 'pending', '2025-03-07'),
     (35, 'ORD-5003', 'Home',        'Candle Set',            27.00, 'pending', '2025-03-07'),
@@ -119,7 +119,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
 -- Monday's 8 orders have been packed and shipped. Status changes from
 -- 'pending' to 'shipped'. Delta rewrites the file(s) containing these rows,
 -- orphaning the old versions with 'pending' status.
-UPDATE {{zone_name}}.delta_demos.order_pipeline
+UPDATE {{zone_name}}.delta_demos.vacuum_order_pipeline
 SET status = 'shipped'
 WHERE id BETWEEN 1 AND 8;
 
@@ -130,7 +130,7 @@ WHERE id BETWEEN 1 AND 8;
 -- Orders 11 (Air Purifier), 22 (Sneakers), and 37 (Screen Protector) were
 -- cancelled by customers. Delta rewrites the affected files without these
 -- rows, orphaning the old versions.
-DELETE FROM {{zone_name}}.delta_demos.order_pipeline
+DELETE FROM {{zone_name}}.delta_demos.vacuum_order_pipeline
 WHERE id IN (11, 22, 37);
 
 
@@ -139,6 +139,6 @@ WHERE id IN (11, 22, 37);
 -- ============================================================================
 -- A $5.00 shipping surcharge was missed on 4 orders. Each price fix rewrites
 -- the file containing that row, creating more orphaned versions.
-UPDATE {{zone_name}}.delta_demos.order_pipeline
+UPDATE {{zone_name}}.delta_demos.vacuum_order_pipeline
 SET price = ROUND(price + 5.00, 2)
 WHERE id IN (9, 17, 25, 33);

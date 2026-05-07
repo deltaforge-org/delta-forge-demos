@@ -22,7 +22,7 @@
 
 ASSERT ROW_COUNT = 10
 SELECT id, name, category, price, stock, discount
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.lifecycle_products
 ORDER BY id
 LIMIT 10;
 
@@ -43,7 +43,7 @@ SELECT
     COUNT(*) FILTER (WHERE price <= 0) AS price_violations,
     COUNT(*) FILTER (WHERE stock < 0) AS stock_violations,
     COUNT(*) FILTER (WHERE discount < 0) AS discount_violations
-FROM {{zone_name}}.delta_demos.products;
+FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 
 -- ============================================================================
@@ -62,7 +62,7 @@ SELECT category,
        ROUND(AVG(price), 2) AS avg_price,
        ROUND(MIN(price), 2) AS min_price,
        ROUND(MAX(price), 2) AS max_price
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.lifecycle_products
 GROUP BY category
 ORDER BY total_price DESC;
 
@@ -75,7 +75,7 @@ ORDER BY total_price DESC;
 -- safe for multiplicative increases on positive values.
 
 ASSERT ROW_COUNT = 20
-UPDATE {{zone_name}}.delta_demos.products
+UPDATE {{zone_name}}.delta_demos.lifecycle_products
 SET price = ROUND(price * 1.10, 2);
 
 
@@ -96,7 +96,7 @@ SELECT
     COUNT(*) FILTER (WHERE price <= 0) AS price_violations,
     COUNT(*) FILTER (WHERE stock < 0) AS stock_violations,
     COUNT(*) FILTER (WHERE discount < 0) AS discount_violations
-FROM {{zone_name}}.delta_demos.products;
+FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 
 -- ============================================================================
@@ -107,7 +107,7 @@ FROM {{zone_name}}.delta_demos.products;
 -- negative stock would be an inventory error.
 
 ASSERT ROW_COUNT = 3
-UPDATE {{zone_name}}.delta_demos.products
+UPDATE {{zone_name}}.delta_demos.lifecycle_products
 SET stock = 0
 WHERE id IN (2, 8, 14);
 
@@ -122,7 +122,7 @@ WHERE id IN (2, 8, 14);
 ASSERT VALUE zero_stock_items = 3
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS zero_stock_items
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.lifecycle_products
 WHERE stock = 0;
 
 
@@ -133,7 +133,7 @@ WHERE stock = 0;
 -- rows is unaffected by removing rows.
 
 ASSERT ROW_COUNT = 3
-DELETE FROM {{zone_name}}.delta_demos.products
+DELETE FROM {{zone_name}}.delta_demos.lifecycle_products
 WHERE stock = 0;
 
 
@@ -154,7 +154,7 @@ SELECT
     COUNT(*) FILTER (WHERE price <= 0) AS price_violations,
     COUNT(*) FILTER (WHERE stock < 0) AS stock_violations,
     COUNT(*) FILTER (WHERE discount < 0) AS discount_violations
-FROM {{zone_name}}.delta_demos.products;
+FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 
 -- ============================================================================
@@ -173,7 +173,7 @@ SELECT category,
        COUNT(*) AS item_count,
        ROUND(SUM(price), 2) AS total_price,
        ROUND(AVG(price), 2) AS avg_price
-FROM {{zone_name}}.delta_demos.products
+FROM {{zone_name}}.delta_demos.lifecycle_products
 GROUP BY category
 ORDER BY total_price DESC;
 
@@ -184,32 +184,32 @@ ORDER BY total_price DESC;
 
 -- Verify final row count
 ASSERT ROW_COUNT = 17
-SELECT * FROM {{zone_name}}.delta_demos.products;
+SELECT * FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 -- Verify price constraint holds (all positive)
 ASSERT VALUE price_violations = 0
-SELECT COUNT(*) FILTER (WHERE price <= 0) AS price_violations FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE price <= 0) AS price_violations FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 -- Verify stock constraint holds (all non-negative, and no zeros remain)
 ASSERT VALUE stock_violations = 0
-SELECT COUNT(*) FILTER (WHERE stock < 0) AS stock_violations FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE stock < 0) AS stock_violations FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 -- Verify discount constraint holds
 ASSERT VALUE discount_violations = 0
-SELECT COUNT(*) FILTER (WHERE discount < 0) AS discount_violations FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(*) FILTER (WHERE discount < 0) AS discount_violations FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 -- Verify specific price after 10% increase (Widget A: 25.00 → 27.50)
 ASSERT VALUE price = 27.5 WHERE id = 1
-SELECT id, name, price FROM {{zone_name}}.delta_demos.products WHERE id IN (1, 3);
+SELECT id, name, price FROM {{zone_name}}.delta_demos.lifecycle_products WHERE id IN (1, 3);
 
 -- Verify deleted items are gone
 ASSERT ROW_COUNT = 0
-SELECT * FROM {{zone_name}}.delta_demos.products WHERE id IN (2, 8, 14);
+SELECT * FROM {{zone_name}}.delta_demos.lifecycle_products WHERE id IN (2, 8, 14);
 
 -- Verify all 6 categories survived the deletions
 ASSERT VALUE category_count = 6
-SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.products;
+SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.lifecycle_products;
 
 -- Verify discounted items count
 ASSERT VALUE discounted_count = 8
-SELECT COUNT(*) AS discounted_count FROM {{zone_name}}.delta_demos.products WHERE discount > 0;
+SELECT COUNT(*) AS discounted_count FROM {{zone_name}}.delta_demos.lifecycle_products WHERE discount > 0;

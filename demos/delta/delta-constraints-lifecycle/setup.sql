@@ -26,14 +26,14 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: products — catalog with CHECK constraints
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.products (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.lifecycle_products (
     id        INT,
     name      VARCHAR,
     category  VARCHAR,
     price     DOUBLE,
     stock     INT,
     discount  DOUBLE
-) LOCATION 'delta-constraints-lifecycle/products'
+) LOCATION 'delta-constraints-lifecycle/lifecycle_products'
 TBLPROPERTIES (
     'delta.enableDeletionVectors' = 'true',
     'delta.constraints.price_positive' = 'price > 0',
@@ -43,7 +43,7 @@ TBLPROPERTIES (
 
 
 -- Insert 20 products (all satisfy constraints)
-INSERT INTO {{zone_name}}.delta_demos.products VALUES
+INSERT INTO {{zone_name}}.delta_demos.lifecycle_products VALUES
     (1,  'Widget A',     'Tools',       25.00,  100, 0.00),
     (2,  'Widget B',     'Tools',       30.00,  80,  5.00),
     (3,  'Gadget X',     'Electronics', 150.00, 50,  10.00),

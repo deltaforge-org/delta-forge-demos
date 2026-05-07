@@ -22,7 +22,7 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.sensor_readings"
+name = "{{zone_name}}.delta_demos.idempotent_sensor_readings"
 
 [[demo.target_objects]]
 type = "delta_table"

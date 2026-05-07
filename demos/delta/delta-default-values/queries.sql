@@ -22,7 +22,7 @@
 
 ASSERT ROW_COUNT = 10
 SELECT id, action, user_name, severity, retry_count, notes
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 ORDER BY id
 LIMIT 10;
 
@@ -35,7 +35,7 @@ LIMIT 10;
 -- Without COALESCE, NULLs flow directly into the Delta table.
 
 ASSERT ROW_COUNT = 5
-INSERT INTO {{zone_name}}.delta_demos.audit_log
+INSERT INTO {{zone_name}}.delta_demos.defaults_audit_log
 SELECT * FROM (VALUES
     (100, 'test.ping',   NULL,    NULL,      NULL, 0, '2024-01-10 01:00:00', NULL),
     (101, 'test.health', 'admin', NULL,      NULL, 0, '2024-01-10 02:00:00', NULL),
@@ -62,14 +62,14 @@ SELECT
     COUNT(user_name)   AS users_counted,
     COUNT(severity)    AS severities_counted,
     COUNT(retry_count) AS retries_counted
-FROM {{zone_name}}.delta_demos.audit_log;
+FROM {{zone_name}}.delta_demos.defaults_audit_log;
 
 -- GROUP BY creates a phantom NULL bucket that breaks category reports.
 -- We had 4 severity levels; now there are 5 groups — the 5th is NULL.
 ASSERT ROW_COUNT = 5
 SELECT severity,
        COUNT(*) AS entry_count
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 GROUP BY severity
 ORDER BY entry_count DESC;
 
@@ -82,11 +82,11 @@ ORDER BY entry_count DESC;
 -- Prevention (applying defaults at insert time) is far cheaper than cure.
 
 ASSERT ROW_COUNT = 5
-DELETE FROM {{zone_name}}.delta_demos.audit_log WHERE id >= 100;
+DELETE FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE id >= 100;
 
 -- Confirm baseline restored — 25 clean rows remain
 ASSERT VALUE clean_count = 25
-SELECT COUNT(*) AS clean_count FROM {{zone_name}}.delta_demos.audit_log;
+SELECT COUNT(*) AS clean_count FROM {{zone_name}}.delta_demos.defaults_audit_log;
 
 
 -- ============================================================================
@@ -107,7 +107,7 @@ SELECT COUNT(*) AS clean_count FROM {{zone_name}}.delta_demos.audit_log;
 --   notes       NULL -> 'N/A'     (all 10 rows)
 -- ============================================================================
 ASSERT ROW_COUNT = 10
-INSERT INTO {{zone_name}}.delta_demos.audit_log
+INSERT INTO {{zone_name}}.delta_demos.defaults_audit_log
 WITH raw_entries AS (
     SELECT * FROM (VALUES
         (26, 'auto.sync',       NULL,     NULL,      NULL, 0, '2024-01-06 01:00:00', NULL),
@@ -149,14 +149,14 @@ ASSERT ROW_COUNT = 10
 SELECT id, action, user_name, severity, retry_count, notes,
        CASE WHEN user_name = 'system' THEN 'defaulted' ELSE 'explicit' END AS user_source,
        CASE WHEN notes = 'N/A' THEN 'defaulted' ELSE 'explicit' END AS notes_source
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 WHERE id BETWEEN 26 AND 35
 ORDER BY id;
 
 -- Verify: no NULLs leaked through COALESCE in batch 2
 ASSERT VALUE null_leak_count = 0
 SELECT COUNT(*) AS null_leak_count
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 WHERE id BETWEEN 26 AND 35
   AND (user_name IS NULL OR severity IS NULL OR retry_count IS NULL OR notes IS NULL);
 
@@ -175,7 +175,7 @@ WHERE id BETWEEN 26 AND 35
 --   notes       NULL -> 'N/A'    (ids 36,38,40,42,44 -> 5 rows)
 -- ============================================================================
 ASSERT ROW_COUNT = 10
-INSERT INTO {{zone_name}}.delta_demos.audit_log
+INSERT INTO {{zone_name}}.delta_demos.defaults_audit_log
 WITH raw_entries AS (
     SELECT * FROM (VALUES
         (36, 'auto.deploy',     NULL,     NULL,      NULL, 0, '2024-01-08 01:00:00', NULL),
@@ -218,25 +218,25 @@ SELECT
     'user_name' AS column_name,
     SUM(CASE WHEN user_name = 'system' THEN 1 ELSE 0 END) AS default_count,
     SUM(CASE WHEN user_name != 'system' THEN 1 ELSE 0 END) AS explicit_count
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 UNION ALL
 SELECT
     'severity',
     SUM(CASE WHEN severity = 'info' THEN 1 ELSE 0 END),
     SUM(CASE WHEN severity != 'info' THEN 1 ELSE 0 END)
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 UNION ALL
 SELECT
     'retry_count',
     SUM(CASE WHEN retry_count = 0 THEN 1 ELSE 0 END),
     SUM(CASE WHEN retry_count != 0 THEN 1 ELSE 0 END)
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 UNION ALL
 SELECT
     'notes',
     SUM(CASE WHEN notes = 'N/A' THEN 1 ELSE 0 END),
     SUM(CASE WHEN notes != 'N/A' THEN 1 ELSE 0 END)
-FROM {{zone_name}}.delta_demos.audit_log;
+FROM {{zone_name}}.delta_demos.defaults_audit_log;
 
 
 -- ============================================================================
@@ -248,7 +248,7 @@ FROM {{zone_name}}.delta_demos.audit_log;
 -- value and are later modified based on business logic.
 
 ASSERT ROW_COUNT = 10
-UPDATE {{zone_name}}.delta_demos.audit_log
+UPDATE {{zone_name}}.delta_demos.defaults_audit_log
 SET is_archived = 1
 WHERE id <= 10;
 
@@ -268,7 +268,7 @@ SELECT
     COUNT(*) AS entry_count,
     MIN(id) AS min_id,
     MAX(id) AS max_id
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 GROUP BY is_archived
 ORDER BY is_archived;
 
@@ -285,7 +285,7 @@ ASSERT ROW_COUNT = 4
 SELECT severity,
        COUNT(*) AS entry_count,
        ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 1) AS pct_of_total
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.defaults_audit_log
 GROUP BY severity
 ORDER BY entry_count DESC;
 
@@ -296,37 +296,37 @@ ORDER BY entry_count DESC;
 
 -- Verify total row count
 ASSERT ROW_COUNT = 45
-SELECT * FROM {{zone_name}}.delta_demos.audit_log;
+SELECT * FROM {{zone_name}}.delta_demos.defaults_audit_log;
 
 -- Verify system user count (defaulted user_name)
 ASSERT VALUE system_user_count = 15
-SELECT COUNT(*) AS system_user_count FROM {{zone_name}}.delta_demos.audit_log WHERE user_name = 'system';
+SELECT COUNT(*) AS system_user_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE user_name = 'system';
 
 -- Verify info severity count (defaulted severity)
 ASSERT VALUE info_severity_count = 18
-SELECT COUNT(*) AS info_severity_count FROM {{zone_name}}.delta_demos.audit_log WHERE severity = 'info';
+SELECT COUNT(*) AS info_severity_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE severity = 'info';
 
 -- Verify zero retry count (defaulted retry_count)
 ASSERT VALUE zero_retry_count = 26
-SELECT COUNT(*) AS zero_retry_count FROM {{zone_name}}.delta_demos.audit_log WHERE retry_count = 0;
+SELECT COUNT(*) AS zero_retry_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE retry_count = 0;
 
 -- Verify archived count
 ASSERT VALUE archived_count = 10
-SELECT COUNT(*) AS archived_count FROM {{zone_name}}.delta_demos.audit_log WHERE is_archived = 1;
+SELECT COUNT(*) AS archived_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE is_archived = 1;
 
 -- Verify explicit user count
 ASSERT VALUE explicit_user_count = 30
-SELECT COUNT(*) AS explicit_user_count FROM {{zone_name}}.delta_demos.audit_log WHERE user_name != 'system';
+SELECT COUNT(*) AS explicit_user_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE user_name != 'system';
 
 -- Verify warning severity count
 ASSERT VALUE warning_count = 9
-SELECT COUNT(*) AS warning_count FROM {{zone_name}}.delta_demos.audit_log WHERE severity = 'warning';
+SELECT COUNT(*) AS warning_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE severity = 'warning';
 
 -- Verify notes default count
 ASSERT VALUE notes_default_count = 20
-SELECT COUNT(*) AS notes_default_count FROM {{zone_name}}.delta_demos.audit_log WHERE notes = 'N/A';
+SELECT COUNT(*) AS notes_default_count FROM {{zone_name}}.delta_demos.defaults_audit_log WHERE notes = 'N/A';
 
 -- Verify no NULLs in any defaultable column (the COALESCE guarantee)
 ASSERT VALUE null_count = 0
-SELECT COUNT(*) AS null_count FROM {{zone_name}}.delta_demos.audit_log
+SELECT COUNT(*) AS null_count FROM {{zone_name}}.delta_demos.defaults_audit_log
 WHERE user_name IS NULL OR severity IS NULL OR retry_count IS NULL OR notes IS NULL;

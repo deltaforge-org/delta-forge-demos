@@ -20,7 +20,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: customer_accounts — 30 bank accounts with PII columns
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.gdpr_customer_accounts (
     id               INT,
     account_holder   VARCHAR,
     email            VARCHAR,
@@ -32,11 +32,11 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customer_accounts (
     country          VARCHAR,
     opened_date      VARCHAR,
     balance          DECIMAL(12,2)
-) LOCATION 'delta-gdpr-data-erasure/customer_accounts';
+) LOCATION 'delta-gdpr-data-erasure/gdpr_customer_accounts';
 
 
 -- STEP 2: Insert 30 customer accounts with full PII
-INSERT INTO {{zone_name}}.delta_demos.customer_accounts VALUES
+INSERT INTO {{zone_name}}.delta_demos.gdpr_customer_accounts VALUES
     (1,  'Alice Monroe',   'alice@bankmail.com',   '123-45-6789', '+1-555-0201', '100 Wall St, NY',       'checking',   'New York',      'US', '2022-01-10', 15420.50),
     (2,  'Bob Chen',       'bob@bankmail.com',     '234-56-7890', '+1-555-0202', '200 State St, Chicago', 'savings',    'Chicago',       'US', '2022-02-15', 82300.00),
     (3,  'Carol Dupont',   'carol@bankmail.com',   '345-67-8901', '+33-1-0303',  '15 Rue Rivoli, Paris',  'investment', 'Paris',         'FR', '2022-03-20', 250000.75),
@@ -53,7 +53,7 @@ INSERT INTO {{zone_name}}.delta_demos.customer_accounts VALUES
     (14, 'Nick Petrov',    'nick@bankmail.com',    '444-55-6666', '+7-495-1414', '18 Tverskaya, Moscow',  'investment', 'Moscow',        'RU', '2023-03-15', 310000.00),
     (15, 'Olivia Berg',    'olivia@bankmail.com',  '555-66-7777', '+46-8-1515',  '6 Drottninggatan',      'checking',   'Stockholm',     'SE', '2023-04-01', 48900.00);
 
-INSERT INTO {{zone_name}}.delta_demos.customer_accounts
+INSERT INTO {{zone_name}}.delta_demos.gdpr_customer_accounts
 SELECT * FROM (VALUES
     (16, 'Paul Singh',     'paul@bankmail.com',    '666-77-8888', '+91-22-1616', '14 MG Road, Mumbai',    'savings',    'Mumbai',        'IN', '2023-05-10', 95200.00),
     (17, 'Quinn O''Brien', 'quinn@bankmail.com',   '777-88-9999', '+353-1-1717', '8 Temple Bar, Dublin',  'checking',   'Dublin',        'IE', '2023-06-22', 31600.00),

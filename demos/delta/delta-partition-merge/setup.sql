@@ -24,7 +24,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: product_catalog — 60 products across 4 categories
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.partitioned_product_catalog (
     id         INT,
     sku        VARCHAR,
     name       VARCHAR,
@@ -32,12 +32,12 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
     stock      INT,
     supplier   VARCHAR,
     category   VARCHAR
-) LOCATION 'delta-partition-merge/product_catalog'
+) LOCATION 'delta-partition-merge/partitioned_product_catalog'
 PARTITIONED BY (category);
 
 
 -- Electronics: ids 1-15
-INSERT INTO {{zone_name}}.delta_demos.product_catalog
+INSERT INTO {{zone_name}}.delta_demos.partitioned_product_catalog
 SELECT * FROM (VALUES
     (1,  'SKU-E001', 'Wireless Mouse',       29.99,  150, 'TechCorp',   'Electronics'),
     (2,  'SKU-E002', 'USB-C Hub',            49.99,  80,  'TechCorp',   'Electronics'),
@@ -57,7 +57,7 @@ SELECT * FROM (VALUES
 ) AS t(id, sku, name, price, stock, supplier, category);
 
 -- Clothing: ids 16-30
-INSERT INTO {{zone_name}}.delta_demos.product_catalog
+INSERT INTO {{zone_name}}.delta_demos.partitioned_product_catalog
 SELECT * FROM (VALUES
     (16, 'SKU-C001', 'Cotton T-Shirt',      19.99,  300, 'ThreadCo',    'Clothing'),
     (17, 'SKU-C002', 'Denim Jeans Slim',    59.99,  120, 'DenimHouse',  'Clothing'),
@@ -77,7 +77,7 @@ SELECT * FROM (VALUES
 ) AS t(id, sku, name, price, stock, supplier, category);
 
 -- Home: ids 31-45
-INSERT INTO {{zone_name}}.delta_demos.product_catalog
+INSERT INTO {{zone_name}}.delta_demos.partitioned_product_catalog
 SELECT * FROM (VALUES
     (31, 'SKU-H001', 'Scented Candle Set',  24.99,  200, 'HomeGlow',   'Home'),
     (32, 'SKU-H002', 'Throw Pillow 18in',   19.99,  150, 'CozyNest',   'Home'),
@@ -97,7 +97,7 @@ SELECT * FROM (VALUES
 ) AS t(id, sku, name, price, stock, supplier, category);
 
 -- Sports: ids 46-60
-INSERT INTO {{zone_name}}.delta_demos.product_catalog
+INSERT INTO {{zone_name}}.delta_demos.partitioned_product_catalog
 SELECT * FROM (VALUES
     (46, 'SKU-S001', 'Yoga Mat Premium',     34.99,  100, 'FlexFit',    'Sports'),
     (47, 'SKU-S002', 'Resistance Bands Set', 24.99,  200, 'FlexFit',    'Sports'),
@@ -126,7 +126,7 @@ SELECT * FROM (VALUES
 --   Home:        3 price reductions + restocks, 0 new products
 --   Sports:      nothing (no rows in feed → partition untouched)
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.supplier_feed (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.partitioned_supplier_feed (
     id         INT,
     sku        VARCHAR,
     name       VARCHAR,
@@ -134,10 +134,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.supplier_feed (
     stock      INT,
     supplier   VARCHAR,
     category   VARCHAR
-) LOCATION 'delta-partition-merge/supplier_feed';
+) LOCATION 'delta-partition-merge/partitioned_supplier_feed';
 
 
-INSERT INTO {{zone_name}}.delta_demos.supplier_feed VALUES
+INSERT INTO {{zone_name}}.delta_demos.partitioned_supplier_feed VALUES
     -- Electronics updates (5 existing products: price down, stock up)
     (1,  'SKU-E001', 'Wireless Mouse',       24.99,  180, 'TechCorp',   'Electronics'),
     (3,  'SKU-E003', 'Bluetooth Speaker',    69.99,  60,  'SoundMax',   'Electronics'),

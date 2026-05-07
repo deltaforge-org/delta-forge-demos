@@ -26,7 +26,7 @@ from pyspark.sql.functions import col
 def verify_products(spark, data_root, verbose=False):
     print_section("products -- Final State")
 
-    table_path = os.path.join(data_root, "products")
+    table_path = os.path.join(data_root, "upsert_products")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -72,7 +72,7 @@ def main():
     print_header("Delta Merge Upsert -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    for tbl_name in ("products", "product_feed"):
+    for tbl_name in ("upsert_products", "product_feed"):
         tbl_dir = os.path.join(data_root, tbl_name)
         if not os.path.isdir(tbl_dir):
             print(f"\nError: {tbl_dir} not found")

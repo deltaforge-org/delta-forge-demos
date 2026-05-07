@@ -16,7 +16,7 @@ from verify_lib.spark_session import get_spark, resolve_data_root
 def verify_sensor_telemetry(spark, data_root, verbose=False):
     print_section("sensor_telemetry -- Final State")
 
-    table_path = os.path.join(data_root, "sensor_telemetry")
+    table_path = os.path.join(data_root, "flex_sensor_telemetry")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -51,7 +51,7 @@ def main():
     print_header("Delta Schema Flexible Ingestion -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "sensor_telemetry")
+    tbl_dir = os.path.join(data_root, "flex_sensor_telemetry")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

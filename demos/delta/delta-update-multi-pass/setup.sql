@@ -27,7 +27,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: order_pipeline — E-commerce orders for ETL processing
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.multipass_order_pipeline (
     id                INT,
     customer_name     VARCHAR,
     status            VARCHAR,
@@ -41,7 +41,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
     estimated_profit  DECIMAL(10,2),
     region            VARCHAR,
     processed_at      VARCHAR
-) LOCATION 'delta-update-multi-pass/order_pipeline';
+) LOCATION 'delta-update-multi-pass/multipass_order_pipeline';
 
 
 -- ============================================================================
@@ -51,7 +51,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_pipeline (
 -- whitespace. Derived fields (total_with_tax, estimated_profit, priority,
 -- shipping_method, processed_at) are empty/zero — they will be populated
 -- by subsequent UPDATE passes.
-INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
+INSERT INTO {{zone_name}}.delta_demos.multipass_order_pipeline VALUES
     (1,  'Alice Johnson',   'pending',      3,  29.99,   89.97,  0.0800, 0.00, '', '', 0.00, 'WEST',    ''),
     (2,  'Bob Smith',       'PENDING',      1,  549.00,  549.00, 0.1000, 0.00, '', '', 0.00, 'EAST',    ''),
     (3,  'Carol Williams',  ' confirmed',   5,  12.50,   62.50,  0.0725, 0.00, '', '', 0.00, 'CENTRAL', ''),
@@ -90,7 +90,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_pipeline VALUES
 -- Standardize all status values: trim whitespace and convert to uppercase.
 -- Before: 'pending', 'PENDING', ' confirmed', 'shipped ', 'Delivered'
 -- After:  'PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED'
-UPDATE {{zone_name}}.delta_demos.order_pipeline
+UPDATE {{zone_name}}.delta_demos.multipass_order_pipeline
 SET status = UPPER(TRIM(status));
 
 
@@ -101,7 +101,7 @@ SET status = UPPER(TRIM(status));
 --   subtotal > 500  → HIGH priority, EXPRESS shipping
 --   subtotal > 100  → MEDIUM priority, STANDARD shipping
 --   subtotal <= 100 → LOW priority, ECONOMY shipping
-UPDATE {{zone_name}}.delta_demos.order_pipeline
+UPDATE {{zone_name}}.delta_demos.multipass_order_pipeline
 SET priority = CASE
         WHEN subtotal > 500 THEN 'HIGH'
         WHEN subtotal > 100 THEN 'MEDIUM'
@@ -119,7 +119,7 @@ SET priority = CASE
 -- ============================================================================
 -- Calculate total_with_tax and estimated_profit from existing columns.
 -- Mark all rows as processed with a timestamp.
-UPDATE {{zone_name}}.delta_demos.order_pipeline
+UPDATE {{zone_name}}.delta_demos.multipass_order_pipeline
 SET total_with_tax = ROUND(subtotal * (1 + tax_rate), 2),
     estimated_profit = ROUND(subtotal * 0.15, 2),
     processed_at = '2024-06-15 14:30:00';

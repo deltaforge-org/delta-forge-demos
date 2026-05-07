@@ -20,18 +20,18 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: products — 20 products across 4 categories
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.products (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.crud_products (
     id         INT,
     name       VARCHAR,
     category   VARCHAR,
     price      DOUBLE,
     stock      INT,
     is_active  BOOLEAN
-) LOCATION 'delta-basics-crud/products';
+) LOCATION 'delta-basics-crud/crud_products';
 
 
 -- Insert 20 known products as baseline data
-INSERT INTO {{zone_name}}.delta_demos.products VALUES
+INSERT INTO {{zone_name}}.delta_demos.crud_products VALUES
     (1,  'Laptop',            'Electronics', 999.99,  50,  true),
     (2,  'Wireless Mouse',    'Electronics', 29.99,   200, true),
     (3,  'USB-C Hub',         'Electronics', 49.99,   150, true),

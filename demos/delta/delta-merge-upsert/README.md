@@ -8,10 +8,10 @@ A product catalog receives a daily supplier feed. The feed contains updated pric
 
 ## Tables
 
-| Object | Type | Rows | Purpose |
-|--------|------|------|---------|
-| products | Delta | 15 | Current product catalog (target) |
-| product_feed | Delta | 12 | Daily supplier feed (source) |
+| Object          | Type  | Rows | Purpose                          |
+|-----------------|-------|------|----------------------------------|
+| upsert_products | Delta | 15   | Current product catalog (target) |
+| product_feed    | Delta | 12   | Daily supplier feed (source)     |
 
 ## Operations Demonstrated
 

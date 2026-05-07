@@ -16,7 +16,7 @@ from verify_lib.spark_session import get_spark, resolve_data_root
 def verify_product_catalog(spark, data_root, verbose=False):
     print_section("product_catalog -- Final State")
 
-    table_path = os.path.join(data_root, "product_catalog")
+    table_path = os.path.join(data_root, "evolving_product_catalog")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -43,7 +43,7 @@ def main():
     print_header("Delta Schema Evolution Advanced -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "product_catalog")
+    tbl_dir = os.path.join(data_root, "evolving_product_catalog")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

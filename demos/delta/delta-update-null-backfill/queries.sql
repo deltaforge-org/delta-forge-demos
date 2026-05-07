@@ -22,7 +22,7 @@
 ASSERT ROW_COUNT = 10
 SELECT id, patient_name, age, blood_type, emergency_contact,
        insurance_code, temperature, notes
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 ORDER BY id
 LIMIT 10;
 
@@ -42,7 +42,7 @@ SELECT COUNT(age) + COUNT(blood_type) + COUNT(emergency_contact)
        (25 * 6) - (COUNT(age) + COUNT(blood_type) + COUNT(emergency_contact)
        + COUNT(insurance_code) + COUNT(temperature) + COUNT(notes))
        AS null_cells
-FROM {{zone_name}}.delta_demos.patient_records;
+FROM {{zone_name}}.delta_demos.backfill_patient_records;
 
 
 -- ============================================================================
@@ -61,7 +61,7 @@ SELECT SUM(CASE WHEN age = -999 THEN 1 ELSE 0 END) AS age_sentinels,
        SUM(CASE WHEN emergency_contact = 'N/A' THEN 1 ELSE 0 END) AS ec_sentinels,
        SUM(CASE WHEN insurance_code = '' THEN 1 ELSE 0 END) AS ic_sentinels,
        SUM(CASE WHEN notes = 'N/A' THEN 1 ELSE 0 END) AS notes_sentinels
-FROM {{zone_name}}.delta_demos.patient_records;
+FROM {{zone_name}}.delta_demos.backfill_patient_records;
 
 
 -- ============================================================================
@@ -83,7 +83,7 @@ SELECT COUNT(age) AS age_populated,
        COUNT(insurance_code) AS insurance_code_populated,
        COUNT(temperature) AS temperature_populated,
        COUNT(notes) AS notes_populated
-FROM {{zone_name}}.delta_demos.patient_records;
+FROM {{zone_name}}.delta_demos.backfill_patient_records;
 
 
 -- ============================================================================
@@ -103,7 +103,7 @@ SELECT SUM(CASE WHEN blood_type = 'PENDING' THEN 1 ELSE 0 END)
        AS unknown_contacts,
        SUM(CASE WHEN age = 0 THEN 1 ELSE 0 END)
        AS zero_ages
-FROM {{zone_name}}.delta_demos.patient_records;
+FROM {{zone_name}}.delta_demos.backfill_patient_records;
 
 
 -- ============================================================================
@@ -123,7 +123,7 @@ SELECT id, patient_name,
        + (CASE WHEN temperature IS NULL THEN 1 ELSE 0 END)
        + (CASE WHEN notes IS NULL THEN 1 ELSE 0 END)
        AS issue_count
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE (CASE WHEN age = 0 THEN 1 ELSE 0 END)
       + (CASE WHEN blood_type = 'PENDING' THEN 1 ELSE 0 END)
       + (CASE WHEN emergency_contact = 'UNKNOWN' THEN 1 ELSE 0 END)
@@ -141,70 +141,70 @@ ORDER BY issue_count DESC;
 -- Check 1: Total row count unchanged
 ASSERT VALUE cnt = 25
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records;
+FROM {{zone_name}}.delta_demos.backfill_patient_records;
 
 -- Check 2: No age sentinels remain
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE age = -999;
 
 -- Check 3: No temperature sentinels remain
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE temperature = -999.00;
 
 -- Check 4: No 'N/A' emergency contacts remain
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE emergency_contact = 'N/A';
 
 -- Check 5: No empty-string insurance codes remain
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE insurance_code = '';
 
 -- Check 6: No 'N/A' notes remain
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE notes = 'N/A';
 
 -- Check 7: All blood types populated (no NULLs)
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE blood_type IS NULL;
 
 -- Check 8: All emergency contacts populated (no NULLs)
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE emergency_contact IS NULL;
 
 -- Check 9: All ages populated (no NULLs)
 ASSERT VALUE cnt = 0
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE age IS NULL;
 
 -- Check 10: insurance_code NULLs = 8 (converted from empty strings)
 ASSERT VALUE cnt = 8
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE insurance_code IS NULL;
 
 -- Check 11: temperature NULLs = 6 (converted from -999.00 sentinels)
 ASSERT VALUE cnt = 6
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE temperature IS NULL;
 
 -- Check 12: notes NULLs = 9 (4 original NULLs + 5 converted from 'N/A')
 ASSERT VALUE cnt = 9
 SELECT COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.patient_records
+FROM {{zone_name}}.delta_demos.backfill_patient_records
 WHERE notes IS NULL;

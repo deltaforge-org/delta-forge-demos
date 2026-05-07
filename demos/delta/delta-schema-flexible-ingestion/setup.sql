@@ -29,7 +29,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- The metadata column stores a JSON string with location, firmware, batch,
 -- and optional alert flag — fields that vary between sensor types.
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.flex_sensor_telemetry (
     id             INT,
     sensor_id      VARCHAR,
     reading_type   VARCHAR,
@@ -37,11 +37,11 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     unit           VARCHAR,
     metadata       VARCHAR,
     recorded_at    VARCHAR
-) LOCATION 'delta-schema-flexible-ingestion/sensor_telemetry';
+) LOCATION 'delta-schema-flexible-ingestion/flex_sensor_telemetry';
 
 
 -- STEP 2: Insert batch B001 — 08:00 and 09:00 readings (10 rows)
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
+INSERT INTO {{zone_name}}.delta_demos.flex_sensor_telemetry VALUES
     (1,  'TEMP-01',  'temperature', 24.4, 'celsius', '{"location":"floor_1_east","firmware":"v2.1","batch":"B001"}',                '2024-09-10 08:00:00'),
     (2,  'TEMP-02',  'temperature', 18.3, 'celsius', '{"location":"floor_1_west","firmware":"v2.1","batch":"B001"}',                '2024-09-10 08:00:00'),
     (3,  'PRESS-01', 'pressure',    35.5, 'psi',     '{"location":"boiler_room","firmware":"v3.0","batch":"B001"}',                 '2024-09-10 08:00:00'),
@@ -57,7 +57,7 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
 -- ============================================================================
 -- STEP 3: Insert batch B002 — 10:00 and 11:00 readings (10 rows)
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry
+INSERT INTO {{zone_name}}.delta_demos.flex_sensor_telemetry
 SELECT * FROM (VALUES
     (11, 'TEMP-01',  'temperature', 20.2, 'celsius', '{"location":"floor_1_east","firmware":"v2.1","batch":"B002"}',                '2024-09-10 10:00:00'),
     (12, 'TEMP-02',  'temperature', 23.1, 'celsius', '{"location":"floor_1_west","firmware":"v2.1","batch":"B002"}',                '2024-09-10 10:00:00'),

@@ -30,7 +30,7 @@ SELECT category,
        ROUND(SUM(price), 2) AS total_value,
        ROUND(AVG(price), 2) AS avg_price,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -45,7 +45,7 @@ ORDER BY category;
 ASSERT ROW_COUNT = 3
 SELECT category,
        COUNT(*) AS feed_rows
-FROM {{zone_name}}.delta_demos.supplier_feed
+FROM {{zone_name}}.delta_demos.partitioned_supplier_feed
 GROUP BY category
 ORDER BY category;
 
@@ -66,8 +66,8 @@ ORDER BY category;
 -- no source rows have category = 'Sports'.
 
 ASSERT ROW_COUNT = 18
-MERGE INTO {{zone_name}}.delta_demos.product_catalog AS target
-USING {{zone_name}}.delta_demos.supplier_feed AS source
+MERGE INTO {{zone_name}}.delta_demos.partitioned_product_catalog AS target
+USING {{zone_name}}.delta_demos.partitioned_supplier_feed AS source
 ON target.id = source.id
 WHEN MATCHED THEN UPDATE SET
     price = source.price,
@@ -88,7 +88,7 @@ ASSERT VALUE price = 24.99 WHERE id = 1
 ASSERT VALUE price = 69.99 WHERE id = 3
 ASSERT VALUE price = 119.99 WHERE id = 5
 SELECT id, sku, name, price, stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 WHERE category = 'Electronics'
 ORDER BY id;
 
@@ -103,7 +103,7 @@ ASSERT ROW_COUNT = 17
 ASSERT VALUE price = 54.99 WHERE id = 17
 ASSERT VALUE price = 129.99 WHERE id = 19
 SELECT id, sku, name, price, stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 WHERE category = 'Clothing'
 ORDER BY id;
 
@@ -118,7 +118,7 @@ ASSERT VALUE price = 12.99 WHERE id = 33
 ASSERT VALUE price = 49.99 WHERE id = 38
 ASSERT VALUE price = 9.99 WHERE id = 40
 SELECT id, sku, name, price, stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 WHERE category = 'Home'
 ORDER BY id;
 
@@ -136,7 +136,7 @@ ASSERT VALUE total_stock = 2495
 SELECT COUNT(*) AS product_count,
        ROUND(SUM(price), 2) AS total_value,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 WHERE category = 'Sports';
 
 
@@ -155,7 +155,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(SUM(price), 2) AS total_value,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -170,7 +170,7 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE name = 'Webcam 4K Pro' WHERE id = 61
 ASSERT VALUE name = 'Thermal Leggings' WHERE id = 65
 SELECT id, sku, name, price, stock, category
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 WHERE id >= 61
 ORDER BY id;
 
@@ -187,7 +187,7 @@ SELECT supplier,
        COUNT(*) AS product_count,
        ROUND(SUM(price), 2) AS total_value,
        SUM(stock) AS total_stock
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.partitioned_product_catalog
 GROUP BY supplier
 ORDER BY product_count DESC, supplier
 LIMIT 10;
@@ -199,32 +199,32 @@ LIMIT 10;
 
 -- Verify total_rows: 60 original + 5 new = 65
 ASSERT VALUE cnt = 65
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_product_catalog;
 
 -- Verify electronics_count: 15 + 3 new = 18
 ASSERT VALUE cnt = 18
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'Electronics';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE category = 'Electronics';
 
 -- Verify clothing_count: 15 + 2 new = 17
 ASSERT VALUE cnt = 17
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'Clothing';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE category = 'Clothing';
 
 -- Verify home_count: unchanged at 15
 ASSERT VALUE cnt = 15
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'Home';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE category = 'Home';
 
 -- Verify sports_count: unchanged at 15
 ASSERT VALUE cnt = 15
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'Sports';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE category = 'Sports';
 
 -- Verify updated_price: id=1 Wireless Mouse 29.99 → 24.99
 ASSERT VALUE price = 24.99
-SELECT price FROM {{zone_name}}.delta_demos.product_catalog WHERE id = 1;
+SELECT price FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE id = 1;
 
 -- Verify sports_unchanged: Sports total value identical to baseline
 ASSERT VALUE total_value = 413.85
-SELECT ROUND(SUM(price), 2) AS total_value FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'Sports';
+SELECT ROUND(SUM(price), 2) AS total_value FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE category = 'Sports';
 
 -- Verify new_products_exist: all 5 new IDs present
 ASSERT VALUE cnt = 5
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.product_catalog WHERE id IN (61, 62, 63, 64, 65);
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_product_catalog WHERE id IN (61, 62, 63, 64, 65);

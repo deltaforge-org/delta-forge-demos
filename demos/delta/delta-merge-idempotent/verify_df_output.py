@@ -25,7 +25,7 @@ from verify_lib.spark_session import get_spark, resolve_data_root
 def verify_sensor_readings(spark, data_root, verbose=False):
     print_section("sensor_readings -- Final State")
 
-    table_path = os.path.join(data_root, "sensor_readings")
+    table_path = os.path.join(data_root, "idempotent_sensor_readings")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -71,7 +71,7 @@ def main():
     print_header("Delta Merge Idempotent -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    for tbl_name in ("sensor_readings", "sensor_batch"):
+    for tbl_name in ("idempotent_sensor_readings", "sensor_batch"):
         tbl_dir = os.path.join(data_root, tbl_name)
         if not os.path.isdir(tbl_dir):
             print(f"\nError: {tbl_dir} not found")

@@ -26,7 +26,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: patient_records — healthcare records with optional fields
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.patient_records (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.nullstats_patient_records (
     id                    INT,
     patient_id            VARCHAR,
     name                  VARCHAR,
@@ -35,14 +35,14 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.patient_records (
     discharge_date        VARCHAR,
     secondary_insurance   VARCHAR,
     ward                  VARCHAR
-) LOCATION 'delta-null-statistics/patient_records';
+) LOCATION 'delta-null-statistics/nullstats_patient_records';
 
 
 -- ============================================================================
 -- STEP 2: Batch 1 — Newly admitted patients (many NULLs)
 -- diagnosis_code: 10 NULL, 5 set | discharge_date: 15 NULL | insurance: 12 NULL, 3 set
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.patient_records VALUES
+INSERT INTO {{zone_name}}.delta_demos.nullstats_patient_records VALUES
     (1,  'PAT-100', 'Alice Chen',      '2025-01-02', NULL,    NULL,         NULL,              'cardiac'),
     (2,  'PAT-101', 'Bob Martinez',     '2025-01-03', NULL,    NULL,         NULL,              'cardiac'),
     (3,  'PAT-102', 'Carol White',      '2025-01-04', 'J06.9', NULL,         NULL,              'general'),
@@ -64,7 +64,7 @@ INSERT INTO {{zone_name}}.delta_demos.patient_records VALUES
 -- STEP 3: Batch 2 — Partially completed (all diagnosed, some discharged)
 -- diagnosis_code: 0 NULL | discharge_date: 7 NULL, 8 set | insurance: 12 NULL, 3 set
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.patient_records
+INSERT INTO {{zone_name}}.delta_demos.nullstats_patient_records
 SELECT * FROM (VALUES
     (16, 'PAT-115', 'Peter Zhang',      '2025-01-17', 'I25.1', '2025-01-22', NULL,              'cardiac'),
     (17, 'PAT-116', 'Quinn Roberts',    '2025-01-18', 'J18.9', '2025-01-24', NULL,              'general'),
@@ -88,7 +88,7 @@ SELECT * FROM (VALUES
 -- STEP 4: Batch 3 — Fully completed records (zero NULLs)
 -- diagnosis_code: 0 NULL | discharge_date: 0 NULL | insurance: 0 NULL
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.patient_records
+INSERT INTO {{zone_name}}.delta_demos.nullstats_patient_records
 SELECT * FROM (VALUES
     (31, 'PAT-130', 'Elena Rivera',     '2025-02-01', 'I10',   '2025-02-08', 'Humana-PPO',      'cardiac'),
     (32, 'PAT-131', 'Finn Murphy',      '2025-02-02', 'J45.2', '2025-02-07', 'BlueCross-PPO',   'general'),

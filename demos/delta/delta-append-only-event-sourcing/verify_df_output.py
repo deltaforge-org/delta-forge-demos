@@ -24,7 +24,7 @@ from verify_lib.spark_session import get_spark, resolve_data_root
 def verify_order_events(spark, data_root, verbose=False):
     print_section("order_events -- Final State")
 
-    table_path = os.path.join(data_root, "order_events")
+    table_path = os.path.join(data_root, "appendonly_order_events")
     df = spark.read.format("delta").load(table_path)
 
     row_count = df.count()
@@ -61,7 +61,7 @@ def main():
     print_header("Delta Append-Only Event Sourcing -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "order_events")
+    tbl_dir = os.path.join(data_root, "appendonly_order_events")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

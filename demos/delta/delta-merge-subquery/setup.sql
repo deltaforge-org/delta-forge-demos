@@ -73,7 +73,7 @@ INSERT INTO {{zone_name}}.delta_demos.daily_revenue VALUES
 --     simulating at-least-once delivery from event streaming
 --
 -- Duplicates: ORD-301, ORD-306, ORD-410, ORD-415, ORD-421
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_events (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.mergesub_order_events (
     event_id        VARCHAR,
     product_id      VARCHAR,
     product_name    VARCHAR,
@@ -83,10 +83,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_events (
     event_timestamp VARCHAR,
     channel         VARCHAR,
     region          VARCHAR
-) LOCATION 'delta-merge-subquery/order_events';
+) LOCATION 'delta-merge-subquery/mergesub_order_events';
 
 
-INSERT INTO {{zone_name}}.delta_demos.order_events VALUES
+INSERT INTO {{zone_name}}.delta_demos.mergesub_order_events VALUES
     -- =====================================================================
     -- 2024-03-03 events (additional orders for existing summary dates)
     -- 10 unique orders, 2 per product

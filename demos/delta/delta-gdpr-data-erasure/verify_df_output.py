@@ -25,7 +25,7 @@ from pyspark.sql.functions import col
 def verify_customer_accounts(spark, data_root, verbose=False):
     print_section("customer_accounts -- Final State")
 
-    table_path = os.path.join(data_root, "customer_accounts")
+    table_path = os.path.join(data_root, "gdpr_customer_accounts")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -60,7 +60,7 @@ def main():
     print_header("Delta GDPR Data Erasure -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "customer_accounts")
+    tbl_dir = os.path.join(data_root, "gdpr_customer_accounts")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

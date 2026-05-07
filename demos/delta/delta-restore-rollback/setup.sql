@@ -20,17 +20,17 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- V0: CREATE + INSERT 30 products
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_inventory (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.rollback_product_inventory (
     id              INT,
     name            VARCHAR,
     category        VARCHAR,
     price           DOUBLE,
     qty             INT,
     status          VARCHAR
-) LOCATION 'delta-restore-rollback/product_inventory';
+) LOCATION 'delta-restore-rollback/rollback_product_inventory';
 
 
-INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES
+INSERT INTO {{zone_name}}.delta_demos.rollback_product_inventory VALUES
     (1,  'Laptop Pro 15',       'Electronics', 1299.99, 50,  'active'),
     (2,  'Wireless Mouse',      'Electronics', 29.99,   200, 'active'),
     (3,  'USB-C Hub',           'Electronics', 49.99,   150, 'active'),

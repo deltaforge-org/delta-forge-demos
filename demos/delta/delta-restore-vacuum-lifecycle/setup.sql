@@ -28,7 +28,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: sensor_readings — Cold-storage facility IoT monitoring
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_readings (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.restore_sensor_readings (
     id              INT,
     sensor_id       VARCHAR,
     room            VARCHAR,
@@ -36,7 +36,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_readings (
     humidity        DOUBLE,
     reading_time    VARCHAR,
     status          VARCHAR
-) LOCATION 'delta-restore-vacuum-lifecycle/sensor_readings';
+) LOCATION 'delta-restore-vacuum-lifecycle/restore_sensor_readings';
 
 
 -- ============================================================================
@@ -45,7 +45,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_readings (
 -- Room A: Cold Storage (target: -18°C), sensors S01, S02
 -- Room B: Chilled Storage (target: 4°C), sensors S03, S04
 -- Room C: Ambient Storage (target: 22°C), sensors S05, S06
-INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
+INSERT INTO {{zone_name}}.delta_demos.restore_sensor_readings VALUES
     (1,  'S01', 'room_a', -18.2, 45.0, '2025-06-01 08:00', 'normal'),
     (2,  'S01', 'room_a', -17.8, 44.5, '2025-06-01 08:15', 'normal'),
     (3,  'S01', 'room_a', -18.5, 45.2, '2025-06-01 08:30', 'normal'),

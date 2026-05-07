@@ -23,8 +23,8 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.product_catalog"
+name = "{{zone_name}}.delta_demos.partitioned_product_catalog"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.supplier_feed"
+name = "{{zone_name}}.delta_demos.partitioned_supplier_feed"

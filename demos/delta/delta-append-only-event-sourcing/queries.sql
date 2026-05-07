@@ -15,13 +15,13 @@
 -- ============================================================================
 -- EXPLORE: Browse the Event Log
 -- ============================================================================
--- The order_events table was created with TBLPROPERTIES ('delta.appendOnly' = 'true').
+-- The appendonly_order_events table was created with TBLPROPERTIES ('delta.appendOnly' = 'true').
 -- It contains 60 events across 14 orders, with 7 distinct event types tracing
 -- orders from creation through delivery (or cancellation).
 
 ASSERT ROW_COUNT = 10
 SELECT id, order_id, event_type, amount, actor, created_at
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 ORDER BY id
 LIMIT 10;
 
@@ -40,7 +40,7 @@ ASSERT VALUE event_count = 9 WHERE event_type = 'order.shipped'
 ASSERT VALUE event_count = 7 WHERE event_type = 'order.delivered'
 SELECT event_type,
        COUNT(*) AS event_count
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 GROUP BY event_type
 ORDER BY event_count DESC;
 
@@ -57,7 +57,7 @@ ASSERT VALUE event_type = 'order.created' WHERE id = 1
 ASSERT VALUE event_type = 'order.delivered' WHERE id = 5
 ASSERT VALUE actor = 'bob' WHERE id = 4
 SELECT id, event_type, actor, created_at
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 WHERE order_id = 1001
 ORDER BY created_at;
 
@@ -75,7 +75,7 @@ SELECT id,
        created_at,
        LAG(created_at) OVER (PARTITION BY order_id ORDER BY created_at) AS prev_event_at,
        LAG(event_type) OVER (PARTITION BY order_id ORDER BY created_at) AS prev_event
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 WHERE order_id = 1001
 ORDER BY created_at;
 
@@ -100,7 +100,7 @@ FROM (
            actor AS latest_actor,
            created_at AS latest_time,
            ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY id DESC) AS rn
-    FROM {{zone_name}}.delta_demos.order_events
+    FROM {{zone_name}}.delta_demos.appendonly_order_events
 ) sub
 WHERE rn = 1
 ORDER BY order_id;
@@ -124,7 +124,7 @@ FROM (
            amount,
            event_type AS current_status,
            ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY id DESC) AS rn
-    FROM {{zone_name}}.delta_demos.order_events
+    FROM {{zone_name}}.delta_demos.appendonly_order_events
 ) sub
 WHERE rn = 1
 GROUP BY current_status
@@ -143,7 +143,7 @@ ASSERT VALUE event_count = 13 WHERE actor = 'system'
 ASSERT VALUE event_count = 9 WHERE actor = 'bob'
 SELECT actor,
        COUNT(*) AS event_count
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 GROUP BY actor
 ORDER BY event_count DESC
 LIMIT 5;
@@ -157,7 +157,7 @@ LIMIT 5;
 -- ship 1007, and accept payment for 1014.
 
 ASSERT ROW_COUNT = 5
-INSERT INTO {{zone_name}}.delta_demos.order_events VALUES
+INSERT INTO {{zone_name}}.delta_demos.appendonly_order_events VALUES
     (61, 1005, 'order.delivered',   120.00, 'courier','2024-06-02 09:00:00'),
     (62, 1007, 'order.shipped',     55.00,  'bob',    '2024-06-02 10:00:00'),
     (63, 1014, 'payment.received',  125.00, 'stripe', '2024-06-02 10:30:00'),
@@ -180,7 +180,7 @@ SELECT
     COUNT(*) AS total_events,
     COUNT(*) FILTER (WHERE event_type = 'order.delivered') AS delivered_count,
     COUNT(DISTINCT order_id) AS distinct_orders
-FROM {{zone_name}}.delta_demos.order_events;
+FROM {{zone_name}}.delta_demos.appendonly_order_events;
 
 
 -- ============================================================================
@@ -189,11 +189,11 @@ FROM {{zone_name}}.delta_demos.order_events;
 
 -- Verify total event count after append
 ASSERT ROW_COUNT = 65
-SELECT * FROM {{zone_name}}.delta_demos.order_events;
+SELECT * FROM {{zone_name}}.delta_demos.appendonly_order_events;
 
 -- Verify all 14 orders are present
 ASSERT VALUE order_count = 14
-SELECT COUNT(DISTINCT order_id) AS order_count FROM {{zone_name}}.delta_demos.order_events;
+SELECT COUNT(DISTINCT order_id) AS order_count FROM {{zone_name}}.delta_demos.appendonly_order_events;
 
 -- Verify event type counts after append
 ASSERT VALUE created_count = 14
@@ -203,12 +203,12 @@ SELECT
     COUNT(*) FILTER (WHERE event_type = 'order.created') AS created_count,
     COUNT(*) FILTER (WHERE event_type = 'order.delivered') AS delivered_count,
     COUNT(*) FILTER (WHERE event_type = 'order.shipped') AS shipped_count
-FROM {{zone_name}}.delta_demos.order_events;
+FROM {{zone_name}}.delta_demos.appendonly_order_events;
 
 -- Verify order 1001 is fully delivered (lifecycle complete)
 ASSERT VALUE event_count = 5
 SELECT COUNT(*) AS event_count
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 WHERE order_id = 1001;
 
 -- Verify new deliveries (orders advanced by the batch append)
@@ -221,7 +221,7 @@ FROM (
     SELECT order_id,
            event_type,
            ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY id DESC) AS rn
-    FROM {{zone_name}}.delta_demos.order_events
+    FROM {{zone_name}}.delta_demos.appendonly_order_events
     WHERE order_id IN (1005, 1007, 1011)
 ) sub
 WHERE rn = 1
@@ -230,5 +230,5 @@ ORDER BY order_id;
 -- Verify cancelled orders remain unchanged (immutable history)
 ASSERT VALUE event_count = 5
 SELECT COUNT(*) AS event_count
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.appendonly_order_events
 WHERE order_id = 1003;

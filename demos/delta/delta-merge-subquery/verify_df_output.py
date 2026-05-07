@@ -50,7 +50,7 @@ def verify_daily_revenue(spark, data_root, verbose=False):
 def verify_order_events(spark, data_root, verbose=False):
     print_section("order_events -- Source (read-only)")
 
-    table_path = os.path.join(data_root, "order_events")
+    table_path = os.path.join(data_root, "mergesub_order_events")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -71,7 +71,7 @@ def main():
     print_header("Delta Merge Subquery -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    for tbl_name in ("daily_revenue", "order_events"):
+    for tbl_name in ("daily_revenue", "mergesub_order_events"):
         tbl_dir = os.path.join(data_root, tbl_name)
         if not os.path.isdir(tbl_dir):
             print(f"\nError: {tbl_dir} not found")

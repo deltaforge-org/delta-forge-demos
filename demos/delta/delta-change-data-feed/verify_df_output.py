@@ -24,7 +24,7 @@ from verify_lib.spark_session import get_spark, resolve_data_root
 def verify_customer_accounts(spark, data_root, verbose=False):
     print_section("customer_accounts -- Final State")
 
-    table_path = os.path.join(data_root, "customer_accounts")
+    table_path = os.path.join(data_root, "cdf_customer_accounts")
     df = spark.read.format("delta").load(table_path)
 
     row_count = df.count()
@@ -55,7 +55,7 @@ def main():
     print_header("Delta Change Data Feed -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "customer_accounts")
+    tbl_dir = os.path.join(data_root, "cdf_customer_accounts")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

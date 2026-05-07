@@ -23,7 +23,7 @@ from verify_lib.spark_session import get_spark, resolve_data_root
 def verify_order_pipeline(spark, data_root, verbose=False):
     print_section("order_pipeline -- Final State")
 
-    table_path = os.path.join(data_root, "order_pipeline")
+    table_path = os.path.join(data_root, "multipass_order_pipeline")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -43,7 +43,7 @@ def main():
     print_header("Delta Update Multi Pass -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "order_pipeline")
+    tbl_dir = os.path.join(data_root, "multipass_order_pipeline")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

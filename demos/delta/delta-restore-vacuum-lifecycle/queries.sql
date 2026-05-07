@@ -31,7 +31,7 @@ SELECT room,
        ROUND(AVG(humidity), 2) AS avg_humidity,
        ROUND(MIN(temperature), 2) AS min_temp,
        ROUND(MAX(temperature), 2) AS max_temp
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 GROUP BY room
 ORDER BY room;
 
@@ -43,7 +43,7 @@ ORDER BY room;
 -- get a +0.3°C temperature correction and +1.0% humidity correction.
 -- This is a legitimate operation we want to preserve through the incident.
 
-UPDATE {{zone_name}}.delta_demos.sensor_readings
+UPDATE {{zone_name}}.delta_demos.restore_sensor_readings
 SET temperature = temperature + 0.3, humidity = humidity + 1.0
 WHERE room = 'room_a';
 
@@ -63,7 +63,7 @@ SELECT room,
        ROUND(AVG(humidity), 2) AS avg_humidity,
        ROUND(MIN(temperature), 2) AS min_temp,
        ROUND(MAX(temperature), 2) AS max_temp
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 GROUP BY room
 ORDER BY room;
 
@@ -77,7 +77,7 @@ ASSERT VALUE temperature = -17.9 WHERE id = 1
 ASSERT VALUE temperature = -18.0 WHERE id = 6
 ASSERT ROW_COUNT = 10
 SELECT id, sensor_id, temperature, humidity, reading_time
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 WHERE room = 'room_a'
 ORDER BY id;
 
@@ -90,7 +90,7 @@ ORDER BY id;
 -- automated monitoring flags them. In reality, the sensors were faulty —
 -- the rooms never actually reached these temperatures.
 
-INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
+INSERT INTO {{zone_name}}.delta_demos.restore_sensor_readings VALUES
     (31, 'S01', 'room_a', 25.0,  95.0, '2025-06-01 09:15', 'alert'),
     (32, 'S02', 'room_a', 28.0,  92.0, '2025-06-01 09:15', 'alert'),
     (33, 'S03', 'room_b', 35.0,  88.0, '2025-06-01 09:15', 'alert'),
@@ -114,12 +114,12 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
 ASSERT VALUE total_rows = 40
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
-FROM {{zone_name}}.delta_demos.sensor_readings;
+FROM {{zone_name}}.delta_demos.restore_sensor_readings;
 
 ASSERT VALUE alert_count = 10
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS alert_count
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 WHERE status = 'alert';
 
 ASSERT VALUE avg_temp = 35.3
@@ -127,7 +127,7 @@ ASSERT VALUE avg_humidity = 89.4
 ASSERT ROW_COUNT = 1
 SELECT ROUND(AVG(temperature), 2) AS avg_temp,
        ROUND(AVG(humidity), 2) AS avg_humidity
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 WHERE status = 'alert';
 
 
@@ -147,7 +147,7 @@ SELECT room,
        COUNT(*) AS total_count,
        SUM(CASE WHEN status = 'alert' THEN 1 ELSE 0 END) AS alert_count,
        ROUND(AVG(temperature), 2) AS avg_temp
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 GROUP BY room
 ORDER BY room;
 
@@ -162,12 +162,12 @@ ORDER BY room;
 ASSERT VALUE row_count = 30
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS row_count
-FROM {{zone_name}}.delta_demos.sensor_readings VERSION AS OF 2;
+FROM {{zone_name}}.delta_demos.restore_sensor_readings VERSION AS OF 2;
 
 ASSERT VALUE alert_count = 0
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS alert_count
-FROM {{zone_name}}.delta_demos.sensor_readings VERSION AS OF 2
+FROM {{zone_name}}.delta_demos.restore_sensor_readings VERSION AS OF 2
 WHERE status = 'alert';
 
 ASSERT VALUE avg_temp = -17.77 WHERE room = 'room_a'
@@ -175,7 +175,7 @@ ASSERT ROW_COUNT = 3
 SELECT room,
        ROUND(AVG(temperature), 2) AS avg_temp,
        ROUND(AVG(humidity), 2) AS avg_humidity
-FROM {{zone_name}}.delta_demos.sensor_readings VERSION AS OF 2
+FROM {{zone_name}}.delta_demos.restore_sensor_readings VERSION AS OF 2
 GROUP BY room
 ORDER BY room;
 
@@ -188,7 +188,7 @@ ORDER BY room;
 -- This is a metadata-only operation — it writes a new log entry pointing to
 -- the V2 file set. No data files are copied or moved.
 
-RESTORE {{zone_name}}.delta_demos.sensor_readings TO VERSION 2;
+RESTORE {{zone_name}}.delta_demos.restore_sensor_readings TO VERSION 2;
 
 
 -- ============================================================================
@@ -201,12 +201,12 @@ RESTORE {{zone_name}}.delta_demos.sensor_readings TO VERSION 2;
 ASSERT VALUE total_rows = 30
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
-FROM {{zone_name}}.delta_demos.sensor_readings;
+FROM {{zone_name}}.delta_demos.restore_sensor_readings;
 
 ASSERT VALUE alert_count = 0
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS alert_count
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 WHERE status = 'alert';
 
 ASSERT VALUE avg_temp = -17.77 WHERE room = 'room_a'
@@ -218,7 +218,7 @@ SELECT room,
        COUNT(*) AS reading_count,
        ROUND(AVG(temperature), 2) AS avg_temp,
        ROUND(AVG(humidity), 2) AS avg_humidity
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 GROUP BY room
 ORDER BY room;
 
@@ -234,7 +234,7 @@ ASSERT VALUE temperature = -17.9 WHERE id = 1
 ASSERT VALUE temperature = -18.0 WHERE id = 6
 ASSERT ROW_COUNT = 10
 SELECT id, sensor_id, temperature, humidity
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 WHERE room = 'room_a'
 ORDER BY id;
 
@@ -247,7 +247,7 @@ ORDER BY id;
 -- files, reclaiming storage and — importantly — preventing anyone from using
 -- time travel to access the corrupted V3 data.
 
-VACUUM {{zone_name}}.delta_demos.sensor_readings;
+VACUUM {{zone_name}}.delta_demos.restore_sensor_readings;
 
 
 -- ============================================================================
@@ -261,7 +261,7 @@ VACUUM {{zone_name}}.delta_demos.sensor_readings;
 ASSERT VALUE total_rows = 30
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
-FROM {{zone_name}}.delta_demos.sensor_readings;
+FROM {{zone_name}}.delta_demos.restore_sensor_readings;
 
 ASSERT VALUE avg_temp = -17.77 WHERE room = 'room_a'
 ASSERT VALUE avg_humidity = 46.0 WHERE room = 'room_a'
@@ -270,7 +270,7 @@ SELECT room,
        COUNT(*) AS reading_count,
        ROUND(AVG(temperature), 2) AS avg_temp,
        ROUND(AVG(humidity), 2) AS avg_humidity
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 GROUP BY room
 ORDER BY room;
 
@@ -282,7 +282,7 @@ ORDER BY room;
 -- resumes collecting sensor data. These 5 readings are from the next time
 -- slot and all show normal values within expected ranges.
 
-INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
+INSERT INTO {{zone_name}}.delta_demos.restore_sensor_readings VALUES
     (31, 'S01', 'room_a', -17.8, 46.2, '2025-06-01 09:15', 'normal'),
     (32, 'S03', 'room_b',   4.1, 60.0, '2025-06-01 09:15', 'normal'),
     (33, 'S05', 'room_c',  22.0, 35.1, '2025-06-01 09:15', 'normal'),
@@ -301,12 +301,12 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
 ASSERT VALUE total_rows = 35
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows
-FROM {{zone_name}}.delta_demos.sensor_readings;
+FROM {{zone_name}}.delta_demos.restore_sensor_readings;
 
 ASSERT VALUE alert_count = 0
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS alert_count
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 WHERE status = 'alert';
 
 ASSERT VALUE reading_count = 12 WHERE room = 'room_a'
@@ -322,7 +322,7 @@ SELECT room,
        ROUND(AVG(humidity), 2) AS avg_humidity,
        ROUND(MIN(temperature), 2) AS min_temp,
        ROUND(MAX(temperature), 2) AS max_temp
-FROM {{zone_name}}.delta_demos.sensor_readings
+FROM {{zone_name}}.delta_demos.restore_sensor_readings
 GROUP BY room
 ORDER BY room;
 
@@ -340,4 +340,4 @@ ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS total_rows,
        COUNT(DISTINCT sensor_id) AS distinct_sensors,
        SUM(CASE WHEN status = 'normal' THEN 1 ELSE 0 END) AS all_normal
-FROM {{zone_name}}.delta_demos.sensor_readings;
+FROM {{zone_name}}.delta_demos.restore_sensor_readings;

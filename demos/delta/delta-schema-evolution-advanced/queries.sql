@@ -22,13 +22,13 @@ ASSERT ROW_COUNT = 5
 SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_schema = 'delta_demos'
-  AND table_name = 'product_catalog'
+  AND table_name = 'evolving_product_catalog'
 ORDER BY ordinal_position;
 
 ASSERT VALUE baseline_row_count = 30
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS baseline_row_count
-FROM {{zone_name}}.delta_demos.product_catalog;
+FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 
 -- ============================================================================
@@ -39,21 +39,21 @@ FROM {{zone_name}}.delta_demos.product_catalog;
 -- metadata-only operation — existing Parquet files are never rewritten.
 -- All 30 existing rows will return NULL for these new columns.
 
-ALTER TABLE {{zone_name}}.delta_demos.product_catalog ADD COLUMN weight_kg DOUBLE;
-ALTER TABLE {{zone_name}}.delta_demos.product_catalog ADD COLUMN discount_pct DOUBLE;
+ALTER TABLE {{zone_name}}.delta_demos.evolving_product_catalog ADD COLUMN weight_kg DOUBLE;
+ALTER TABLE {{zone_name}}.delta_demos.evolving_product_catalog ADD COLUMN discount_pct DOUBLE;
 
 -- Confirm the schema now has 7 columns:
 ASSERT ROW_COUNT = 7
 SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_schema = 'delta_demos'
-  AND table_name = 'product_catalog'
+  AND table_name = 'evolving_product_catalog'
 ORDER BY ordinal_position;
 
 -- All original rows show NULL for the new columns:
 ASSERT ROW_COUNT = 5
 SELECT id, name, weight_kg, discount_pct
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id <= 5
 ORDER BY id;
 
@@ -66,7 +66,7 @@ ORDER BY id;
 -- NULLs, new rows have values.
 
 ASSERT ROW_COUNT = 15
-INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
+INSERT INTO {{zone_name}}.delta_demos.evolving_product_catalog VALUES
     (31, 'Wireless Earbuds',      'Electronics',   39.99,  130, 0.15,  0.10),
     (32, 'Docking Station',       'Electronics',   119.99, 55,  0.85,  0.05),
     (33, 'Smart Power Adapter',   'Electronics',   27.99,  170, 0.12,  0.08),
@@ -92,7 +92,7 @@ ASSERT VALUE weight_kg = 0.15 WHERE id = 31
 ASSERT VALUE weight_kg = 2.80 WHERE id = 45
 ASSERT VALUE discount_pct = 0.10 WHERE id = 31
 SELECT id, name, weight_kg, discount_pct
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id IN (1, 15, 31, 45)
 ORDER BY id;
 
@@ -106,21 +106,21 @@ ORDER BY id;
 -- historical data is partially available.
 
 ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 0.08  WHERE id = 1;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 0.95  WHERE id = 2;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 0.12  WHERE id = 3;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 2.50  WHERE id = 4;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 0.20  WHERE id = 5;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 15.00 WHERE id = 6;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 25.00 WHERE id = 7;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 18.00 WHERE id = 8;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 1.20  WHERE id = 9;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET weight_kg = 22.00 WHERE id = 10;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 0.08  WHERE id = 1;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 0.95  WHERE id = 2;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 0.12  WHERE id = 3;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 2.50  WHERE id = 4;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 0.20  WHERE id = 5;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 15.00 WHERE id = 6;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 25.00 WHERE id = 7;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 18.00 WHERE id = 8;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 1.20  WHERE id = 9;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET weight_kg = 22.00 WHERE id = 10;
 
 -- Verify the backfill: ids 1-10 now have weight, ids 11-30 still NULL:
 ASSERT ROW_COUNT = 5
 SELECT id, name, weight_kg
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id IN (1, 5, 10, 11, 20)
 ORDER BY id;
 
@@ -132,16 +132,16 @@ ORDER BY id;
 -- products. This demonstrates category-based UPDATEs on evolved columns.
 
 ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.product_catalog SET discount_pct = 0.15 WHERE id = 1;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET discount_pct = 0.15 WHERE id = 2;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET discount_pct = 0.15 WHERE id = 3;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET discount_pct = 0.15 WHERE id = 4;
-UPDATE {{zone_name}}.delta_demos.product_catalog SET discount_pct = 0.15 WHERE id = 5;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET discount_pct = 0.15 WHERE id = 1;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET discount_pct = 0.15 WHERE id = 2;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET discount_pct = 0.15 WHERE id = 3;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET discount_pct = 0.15 WHERE id = 4;
+UPDATE {{zone_name}}.delta_demos.evolving_product_catalog SET discount_pct = 0.15 WHERE id = 5;
 
 -- Confirm discounts are set for ids 1-5 but not for ids 6-10:
 ASSERT ROW_COUNT = 10
 SELECT id, name, category, discount_pct
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id BETWEEN 1 AND 10
 ORDER BY id;
 
@@ -152,14 +152,14 @@ ORDER BY id;
 -- Procurement needs supplier tracking. A third ADD COLUMN extends the schema
 -- to 8 columns. Again, this is metadata-only and instantaneous.
 
-ALTER TABLE {{zone_name}}.delta_demos.product_catalog ADD COLUMN supplier VARCHAR;
+ALTER TABLE {{zone_name}}.delta_demos.evolving_product_catalog ADD COLUMN supplier VARCHAR;
 
 -- Confirm the schema now has 8 columns:
 ASSERT ROW_COUNT = 8
 SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_schema = 'delta_demos'
-  AND table_name = 'product_catalog'
+  AND table_name = 'evolving_product_catalog'
 ORDER BY ordinal_position;
 
 
@@ -170,7 +170,7 @@ ORDER BY ordinal_position;
 -- complete, so every column is populated — including supplier.
 
 ASSERT ROW_COUNT = 5
-INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
+INSERT INTO {{zone_name}}.delta_demos.evolving_product_catalog VALUES
     (46, 'Smart Desk Lamp',       'Electronics',   64.99,  95,  0.55,  0.10, 'TechGlow Inc'),
     (47, 'Bamboo Desk Shelf',     'Furniture',     39.99,  50,  3.00,  0.05, 'EcoOffice Co'),
     (48, 'Calligraphy Set',       'Stationery',    42.99,  75,  0.60,  0.00, 'ArtWrite Ltd'),
@@ -208,7 +208,7 @@ SELECT
     COUNT(weight_kg) AS has_weight,
     COUNT(discount_pct) AS has_discount,
     COUNT(supplier) AS has_supplier
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 GROUP BY CASE
     WHEN id BETWEEN 1 AND 5  THEN 'Phase 1: backfill weight + discount'
     WHEN id BETWEEN 6 AND 10 THEN 'Phase 1: backfill weight only'
@@ -237,7 +237,7 @@ SELECT id, name, category,
        CASE WHEN weight_kg IS NULL THEN '(NULL)' ELSE CAST(weight_kg AS VARCHAR) END AS weight_kg,
        CASE WHEN discount_pct IS NULL THEN '(NULL)' ELSE CAST(discount_pct AS VARCHAR) END AS discount_pct,
        CASE WHEN supplier IS NULL THEN '(NULL)' ELSE supplier END AS supplier
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id IN (1, 6, 15, 35, 50)
 ORDER BY id;
 
@@ -263,7 +263,7 @@ SELECT COUNT(*) FILTER (WHERE weight_kg IS NULL) AS null_weight,
        COUNT(*) FILTER (WHERE discount_pct IS NULL) AS null_discount,
        COUNT(*) FILTER (WHERE supplier IS NULL) AS null_supplier,
        COUNT(*) AS total
-FROM {{zone_name}}.delta_demos.product_catalog;
+FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 
 -- ============================================================================
@@ -283,7 +283,7 @@ SELECT category,
        SUM(stock) AS total_stock,
        COUNT(weight_kg) AS with_weight,
        COUNT(supplier) AS with_supplier
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -296,7 +296,7 @@ ORDER BY category;
 
 ASSERT ROW_COUNT = 5
 SELECT id, name, category, price, stock, weight_kg, discount_pct, supplier
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id >= 46
 ORDER BY id;
 
@@ -307,36 +307,36 @@ ORDER BY id;
 
 -- Verify total row count is 50
 ASSERT ROW_COUNT = 50
-SELECT * FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT * FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 -- Verify 20 rows still have NULL weight (ids 11-30 never backfilled)
 ASSERT VALUE null_weight_count = 20
-SELECT COUNT(*) FILTER (WHERE weight_kg IS NULL) AS null_weight_count FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT COUNT(*) FILTER (WHERE weight_kg IS NULL) AS null_weight_count FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 -- Verify 30 rows have weight populated
 ASSERT VALUE with_weight_count = 30
-SELECT COUNT(*) FILTER (WHERE weight_kg IS NOT NULL) AS with_weight_count FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT COUNT(*) FILTER (WHERE weight_kg IS NOT NULL) AS with_weight_count FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 -- Verify 5 products have discount_pct = 0.15 (Electronics promotion)
 ASSERT VALUE electronics_discount = 5
-SELECT COUNT(*) FILTER (WHERE discount_pct = 0.15) AS electronics_discount FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT COUNT(*) FILTER (WHERE discount_pct = 0.15) AS electronics_discount FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 -- Verify 45 rows have NULL supplier (only ids 46-50 have supplier)
 ASSERT VALUE supplier_null_count = 45
-SELECT COUNT(*) FILTER (WHERE supplier IS NULL) AS supplier_null_count FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT COUNT(*) FILTER (WHERE supplier IS NULL) AS supplier_null_count FROM {{zone_name}}.delta_demos.evolving_product_catalog;
 
 -- Verify schema has 8 columns after all ADD COLUMN operations
 ASSERT VALUE column_count = 8
 SELECT COUNT(*) AS column_count FROM information_schema.columns
-WHERE table_schema = 'delta_demos' AND table_name = 'product_catalog';
+WHERE table_schema = 'delta_demos' AND table_name = 'evolving_product_catalog';
 
 -- Verify original product price is unchanged
 ASSERT VALUE price = 29.99
-SELECT price FROM {{zone_name}}.delta_demos.product_catalog WHERE id = 1;
+SELECT price FROM {{zone_name}}.delta_demos.evolving_product_catalog WHERE id = 1;
 
 -- Verify newest product (id=50) has all columns populated
 ASSERT VALUE newest_product_complete = 1
-SELECT COUNT(*) AS newest_product_complete FROM {{zone_name}}.delta_demos.product_catalog
+SELECT COUNT(*) AS newest_product_complete FROM {{zone_name}}.delta_demos.evolving_product_catalog
 WHERE id = 50
   AND name IS NOT NULL AND category IS NOT NULL
   AND price IS NOT NULL AND stock IS NOT NULL

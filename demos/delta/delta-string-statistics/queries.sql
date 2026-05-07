@@ -29,25 +29,25 @@ SELECT 'sku' AS col_name,
        MIN(LENGTH(sku)) AS min_len,
        MAX(LENGTH(sku)) AS max_len,
        COUNT(*) FILTER (WHERE LENGTH(sku) > 32) AS over_32
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 UNION ALL
 SELECT 'name',
        MIN(LENGTH(name)),
        MAX(LENGTH(name)),
        COUNT(*) FILTER (WHERE LENGTH(name) > 32)
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 UNION ALL
 SELECT 'description',
        MIN(LENGTH(description)),
        MAX(LENGTH(description)),
        COUNT(*) FILTER (WHERE LENGTH(description) > 32)
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 UNION ALL
 SELECT 'url',
        MIN(LENGTH(url)),
        MAX(LENGTH(url)),
        COUNT(*) FILTER (WHERE LENGTH(url) > 32)
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 ORDER BY col_name;
 
 
@@ -62,7 +62,7 @@ ORDER BY col_name;
 ASSERT VALUE sku_count = 3
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS sku_count
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 WHERE sku LIKE 'SKU-A%';
 
 
@@ -85,7 +85,7 @@ ASSERT VALUE common_prefix_length = 35
 ASSERT ROW_COUNT = 1
 SELECT COUNT(DISTINCT SUBSTRING(url, 1, 32)) AS distinct_url_prefixes,
        LENGTH('https://store.example.com/products/') AS common_prefix_length
-FROM {{zone_name}}.delta_demos.product_catalog;
+FROM {{zone_name}}.delta_demos.stats_product_catalog;
 
 
 -- ============================================================================
@@ -104,7 +104,7 @@ SELECT category,
        ROUND(AVG(price), 2) AS avg_price,
        MIN(price) AS min_price,
        MAX(price) AS max_price
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 GROUP BY category
 ORDER BY category;
 
@@ -121,7 +121,7 @@ ASSERT VALUE found_id = 10
 ASSERT VALUE found_sku = 'SKU-D001'
 ASSERT ROW_COUNT = 1
 SELECT id AS found_id, sku AS found_sku, name
-FROM {{zone_name}}.delta_demos.product_catalog
+FROM {{zone_name}}.delta_demos.stats_product_catalog
 WHERE url = 'https://store.example.com/products/peripherals/docking-station-thunderbolt4-d001';
 
 
@@ -131,24 +131,24 @@ WHERE url = 'https://store.example.com/products/peripherals/docking-station-thun
 
 -- Verify total row count is 20
 ASSERT ROW_COUNT = 20
-SELECT * FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT * FROM {{zone_name}}.delta_demos.stats_product_catalog;
 
 -- Verify all SKUs are exactly 8 characters
 ASSERT VALUE all_8_chars = 20
-SELECT COUNT(*) AS all_8_chars FROM {{zone_name}}.delta_demos.product_catalog WHERE LENGTH(sku) = 8;
+SELECT COUNT(*) AS all_8_chars FROM {{zone_name}}.delta_demos.stats_product_catalog WHERE LENGTH(sku) = 8;
 
 -- Verify all URLs exceed 32 characters
 ASSERT VALUE all_over_32 = 20
-SELECT COUNT(*) AS all_over_32 FROM {{zone_name}}.delta_demos.product_catalog WHERE LENGTH(url) > 32;
+SELECT COUNT(*) AS all_over_32 FROM {{zone_name}}.delta_demos.stats_product_catalog WHERE LENGTH(url) > 32;
 
 -- Verify all descriptions exceed 32 characters
 ASSERT VALUE desc_over_32 = 20
-SELECT COUNT(*) AS desc_over_32 FROM {{zone_name}}.delta_demos.product_catalog WHERE LENGTH(description) > 32;
+SELECT COUNT(*) AS desc_over_32 FROM {{zone_name}}.delta_demos.stats_product_catalog WHERE LENGTH(description) > 32;
 
 -- Verify total catalog value
 ASSERT VALUE total_value = 2315.8
-SELECT ROUND(SUM(price), 2) AS total_value FROM {{zone_name}}.delta_demos.product_catalog;
+SELECT ROUND(SUM(price), 2) AS total_value FROM {{zone_name}}.delta_demos.stats_product_catalog;
 
 -- Verify peripherals count
 ASSERT VALUE periph_count = 5
-SELECT COUNT(*) AS periph_count FROM {{zone_name}}.delta_demos.product_catalog WHERE category = 'peripherals';
+SELECT COUNT(*) AS periph_count FROM {{zone_name}}.delta_demos.stats_product_catalog WHERE category = 'peripherals';

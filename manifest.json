@@ -915,7 +915,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.order_events"
+          "name": "{{zone_name}}.delta_demos.appendonly_order_events"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -1018,7 +1018,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.products"
+          "name": "{{zone_name}}.delta_demos.crud_products"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -1103,7 +1103,7 @@
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.audit_log"
+          "name": "{{zone_name}}.delta_demos.geo_audit_log"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -1204,7 +1204,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.customer_accounts"
+          "name": "{{zone_name}}.delta_demos.cdf_customer_accounts"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -1408,7 +1408,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.products"
+          "name": "{{zone_name}}.delta_demos.lifecycle_products"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -1615,7 +1615,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.audit_log"
+          "name": "{{zone_name}}.delta_demos.defaults_audit_log"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -1971,7 +1971,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.customer_accounts"
+          "name": "{{zone_name}}.delta_demos.gdpr_customer_accounts"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -2219,7 +2219,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.subscriptions"
+          "name": "{{zone_name}}.delta_demos.computed_subscriptions"
         },
         {
           "objectType": "delta_table",
@@ -2296,11 +2296,11 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.product_catalog"
+          "name": "{{zone_name}}.delta_demos.dv_product_catalog"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.supplier_feed"
+          "name": "{{zone_name}}.delta_demos.dv_supplier_feed"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -2336,7 +2336,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.sensor_readings"
+          "name": "{{zone_name}}.delta_demos.idempotent_sensor_readings"
         },
         {
           "objectType": "delta_table",
@@ -2507,7 +2507,7 @@
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.order_events"
+          "name": "{{zone_name}}.delta_demos.mergesub_order_events"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -2542,7 +2542,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.products"
+          "name": "{{zone_name}}.delta_demos.upsert_products"
         },
         {
           "objectType": "delta_table",
@@ -2656,7 +2656,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.null_demos.patient_records"
+          "name": "{{zone_name}}.delta_demos.nullstats_patient_records"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -2923,11 +2923,11 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.product_catalog"
+          "name": "{{zone_name}}.delta_demos.partitioned_product_catalog"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.supplier_feed"
+          "name": "{{zone_name}}.delta_demos.partitioned_supplier_feed"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3135,7 +3135,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.orders"
+          "name": "{{zone_name}}.delta_demos.partitioned_orders"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3392,7 +3392,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.product_inventory"
+          "name": "{{zone_name}}.delta_demos.rollback_product_inventory"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3497,7 +3497,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.sensor_readings"
+          "name": "{{zone_name}}.delta_demos.restore_sensor_readings"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3593,7 +3593,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.sensor_telemetry"
+          "name": "{{zone_name}}.delta_demos.iot_sensor_telemetry"
         }
       ]
     },
@@ -3758,7 +3758,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.product_catalog"
+          "name": "{{zone_name}}.delta_demos.evolving_product_catalog"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3793,7 +3793,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.sensor_telemetry"
+          "name": "{{zone_name}}.delta_demos.flex_sensor_telemetry"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3862,7 +3862,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.skipping_demos.orders"
+          "name": "{{zone_name}}.delta_demos.stats_orders"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -3896,7 +3896,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.string_demos.product_catalog"
+          "name": "{{zone_name}}.delta_demos.stats_product_catalog"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -4309,7 +4309,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.subscriptions"
+          "name": "{{zone_name}}.delta_demos.crosspart_subscriptions"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -4381,7 +4381,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.pipeline_demos.order_pipeline"
+          "name": "{{zone_name}}.delta_demos.multipass_order_pipeline"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -4417,7 +4417,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.backfill_demos.patient_records"
+          "name": "{{zone_name}}.delta_demos.backfill_patient_records"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -4556,7 +4556,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.order_pipeline"
+          "name": "{{zone_name}}.delta_demos.vacuum_order_pipeline"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -4625,7 +4625,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.product_inventory"
+          "name": "{{zone_name}}.delta_demos.vacuum_product_inventory"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -4765,7 +4765,7 @@
       "targetObjects": [
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.sensor_telemetry"
+          "name": "{{zone_name}}.delta_demos.zorder_sensor_telemetry"
         }
       ],
       "verifyScript": "verify_df_output.py"

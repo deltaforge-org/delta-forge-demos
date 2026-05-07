@@ -17,7 +17,7 @@ from pyspark.sql.functions import col
 def verify_sensor_readings(spark, data_root, verbose=False):
     print_section("sensor_readings -- Final State")
 
-    table_path = os.path.join(data_root, "sensor_readings")
+    table_path = os.path.join(data_root, "restore_sensor_readings")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -52,7 +52,7 @@ def main():
     print_header("Delta Restore Vacuum Lifecycle -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "sensor_readings")
+    tbl_dir = os.path.join(data_root, "restore_sensor_readings")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

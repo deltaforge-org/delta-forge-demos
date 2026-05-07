@@ -30,4 +30,4 @@ name = "{{zone_name}}.delta_demos.locations"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.audit_log"
+name = "{{zone_name}}.delta_demos.geo_audit_log"

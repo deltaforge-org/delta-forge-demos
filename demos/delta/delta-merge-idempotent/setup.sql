@@ -33,17 +33,17 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- This is a "current state" table: one row per sensor_id+metric (the latest
 -- reading). All recorded_at timestamps are '2024-01-01 12:00:00' (the most
 -- recent hourly reading). All ingested at '2024-01-01 13:00:00'.
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_readings (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.idempotent_sensor_readings (
     sensor_id   VARCHAR,
     location    VARCHAR,
     metric      VARCHAR,
     value       DOUBLE,
     recorded_at VARCHAR,
     ingested_at VARCHAR
-) LOCATION 'delta-merge-idempotent/sensor_readings';
+) LOCATION 'delta-merge-idempotent/idempotent_sensor_readings';
 
 
-INSERT INTO {{zone_name}}.delta_demos.sensor_readings VALUES
+INSERT INTO {{zone_name}}.delta_demos.idempotent_sensor_readings VALUES
     -- TEMP-01: Server Room A (5 metrics)
     ('TEMP-01', 'Server Room A', 'temperature',   22.4,    '2024-01-01 12:00:00', '2024-01-01 13:00:00'),
     ('TEMP-01', 'Server Room A', 'humidity',       43.0,    '2024-01-01 12:00:00', '2024-01-01 13:00:00'),

@@ -25,7 +25,7 @@
 -- Non-deterministic: num_files and size_in_bytes depend on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
 ASSERT VALUE value = 'delta' WHERE property = 'format'
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -43,7 +43,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(SUM(price), 2) AS total_value,
        ROUND(AVG(price), 2) AS avg_price
-FROM {{zone_name}}.delta_demos.product_inventory
+FROM {{zone_name}}.delta_demos.vacuum_product_inventory
 GROUP BY category
 ORDER BY category;
 
@@ -56,7 +56,7 @@ ORDER BY category;
 -- sit on disk but are no longer referenced by the current table version.
 
 ASSERT ROW_COUNT = 6
-UPDATE {{zone_name}}.delta_demos.product_inventory
+UPDATE {{zone_name}}.delta_demos.vacuum_product_inventory
 SET price = ROUND(price * 1.10, 2)
 WHERE category = 'Electronics';
 
@@ -72,7 +72,7 @@ WHERE category = 'Electronics';
 -- Non-deterministic: file metrics depend on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
 ASSERT VALUE value = 'delta' WHERE property = 'format'
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -85,7 +85,7 @@ ASSERT VALUE price = 87.99 WHERE id = 1
 ASSERT VALUE price = 219.99 WHERE id = 6
 ASSERT VALUE price = 329.99 WHERE id = 4
 SELECT id, sku, product_name, price
-FROM {{zone_name}}.delta_demos.product_inventory
+FROM {{zone_name}}.delta_demos.vacuum_product_inventory
 WHERE category = 'Electronics'
 ORDER BY id;
 
@@ -98,7 +98,7 @@ ORDER BY id;
 -- orphaning the previous versions.
 
 ASSERT ROW_COUNT = 4
-DELETE FROM {{zone_name}}.delta_demos.product_inventory
+DELETE FROM {{zone_name}}.delta_demos.vacuum_product_inventory
 WHERE id BETWEEN 27 AND 30;
 
 
@@ -112,7 +112,7 @@ WHERE id BETWEEN 27 AND 30;
 -- Non-deterministic: file metrics depend on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
 ASSERT VALUE value = 'delta' WHERE property = 'format'
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -123,7 +123,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
 -- been superseded are candidates for cleanup.
 
 ASSERT ROW_COUNT = 5
-INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_product_inventory VALUES
     (31, 'SKU-P001', 'Premium Headphones',  'Electronics', 349.99,  40, 'active'),
     (32, 'SKU-P002', 'Cashmere Sweater',    'Clothing',    249.99,  30, 'active'),
     (33, 'SKU-P003', 'Espresso Machine',    'Home',        499.99,  25, 'active'),
@@ -142,7 +142,7 @@ INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES
 -- Non-deterministic: file metrics depend on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
 ASSERT VALUE value = 'delta' WHERE property = 'format'
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -155,7 +155,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
 
 -- Non-deterministic: DESCRIBE HISTORY may include extra internal versions
 ASSERT WARNING ROW_COUNT >= 4
-DESCRIBE HISTORY {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE HISTORY {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -169,7 +169,7 @@ DESCRIBE HISTORY {{zone_name}}.delta_demos.product_inventory;
 --   - The transaction log is untouched (DESCRIBE HISTORY still works)
 --   - All current data is bit-for-bit identical
 
-VACUUM {{zone_name}}.delta_demos.product_inventory;
+VACUUM {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -183,7 +183,7 @@ VACUUM {{zone_name}}.delta_demos.product_inventory;
 -- Non-deterministic: file metrics depend on engine write strategy
 ASSERT WARNING ROW_COUNT >= 10
 ASSERT VALUE value = 'delta' WHERE property = 'format'
-DESCRIBE DETAIL {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -204,7 +204,7 @@ SELECT category,
        COUNT(*) AS product_count,
        ROUND(SUM(price), 2) AS total_value,
        ROUND(AVG(price), 2) AS avg_price
-FROM {{zone_name}}.delta_demos.product_inventory
+FROM {{zone_name}}.delta_demos.vacuum_product_inventory
 GROUP BY category
 ORDER BY category;
 
@@ -221,7 +221,7 @@ ASSERT VALUE price = 87.99 WHERE id = 1
 ASSERT VALUE price = 219.99 WHERE id = 6
 ASSERT VALUE price = 349.99 WHERE id = 31
 SELECT id, sku, product_name, price, stock_qty
-FROM {{zone_name}}.delta_demos.product_inventory
+FROM {{zone_name}}.delta_demos.vacuum_product_inventory
 WHERE category = 'Electronics'
 ORDER BY id;
 
@@ -236,9 +236,9 @@ ORDER BY id;
 ASSERT VALUE remaining_food = 3
 ASSERT VALUE deleted_products = 0
 ASSERT ROW_COUNT = 1
-SELECT (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.product_inventory
+SELECT (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.vacuum_product_inventory
         WHERE category = 'Food') AS remaining_food,
-       (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.product_inventory
+       (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.vacuum_product_inventory
         WHERE id BETWEEN 27 AND 30) AS deleted_products;
 
 
@@ -252,7 +252,7 @@ SELECT (SELECT COUNT(*) FROM {{zone_name}}.delta_demos.product_inventory
 
 -- Non-deterministic: DESCRIBE HISTORY may include extra internal versions
 ASSERT WARNING ROW_COUNT >= 4
-DESCRIBE HISTORY {{zone_name}}.delta_demos.product_inventory;
+DESCRIBE HISTORY {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 
 -- ============================================================================
@@ -261,28 +261,28 @@ DESCRIBE HISTORY {{zone_name}}.delta_demos.product_inventory;
 
 -- Verify total product count is 31 (30 - 4 + 5)
 ASSERT VALUE total_products = 31
-SELECT COUNT(*) AS total_products FROM {{zone_name}}.delta_demos.product_inventory;
+SELECT COUNT(*) AS total_products FROM {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 -- Verify total inventory value
 ASSERT VALUE total_value = 4139.19
-SELECT ROUND(SUM(price), 2) AS total_value FROM {{zone_name}}.delta_demos.product_inventory;
+SELECT ROUND(SUM(price), 2) AS total_value FROM {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 -- Verify 5 distinct categories
 ASSERT VALUE category_count = 5
-SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.product_inventory;
+SELECT COUNT(DISTINCT category) AS category_count FROM {{zone_name}}.delta_demos.vacuum_product_inventory;
 
 -- Verify Electronics price increase applied (id=1: 79.99 * 1.10 = 87.99)
 ASSERT VALUE price = 87.99
-SELECT price FROM {{zone_name}}.delta_demos.product_inventory WHERE id = 1;
+SELECT price FROM {{zone_name}}.delta_demos.vacuum_product_inventory WHERE id = 1;
 
 -- Verify discontinued products are gone
 ASSERT VALUE discontinued_count = 0
-SELECT COUNT(*) AS discontinued_count FROM {{zone_name}}.delta_demos.product_inventory WHERE id BETWEEN 27 AND 30;
+SELECT COUNT(*) AS discontinued_count FROM {{zone_name}}.delta_demos.vacuum_product_inventory WHERE id BETWEEN 27 AND 30;
 
 -- Verify new premium products present
 ASSERT VALUE premium_count = 5
-SELECT COUNT(*) AS premium_count FROM {{zone_name}}.delta_demos.product_inventory WHERE id BETWEEN 31 AND 35;
+SELECT COUNT(*) AS premium_count FROM {{zone_name}}.delta_demos.vacuum_product_inventory WHERE id BETWEEN 31 AND 35;
 
 -- Verify total stock quantity
 ASSERT VALUE total_stock = 6990
-SELECT SUM(stock_qty) AS total_stock FROM {{zone_name}}.delta_demos.product_inventory;
+SELECT SUM(stock_qty) AS total_stock FROM {{zone_name}}.delta_demos.vacuum_product_inventory;

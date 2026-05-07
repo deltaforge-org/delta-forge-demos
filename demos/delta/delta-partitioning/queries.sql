@@ -29,7 +29,7 @@ SELECT region,
        ROUND(AVG(amount), 2) AS avg_order,
        ROUND(MIN(amount), 2) AS min_order,
        ROUND(MAX(amount), 2) AS max_order
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.partitioned_orders
 GROUP BY region
 ORDER BY region;
 
@@ -46,7 +46,7 @@ ORDER BY region;
 -- After 15% discount: each amount * 0.85, rounded to 2 decimals
 
 ASSERT ROW_COUNT = 20
-UPDATE {{zone_name}}.delta_demos.orders
+UPDATE {{zone_name}}.delta_demos.partitioned_orders
 SET amount = ROUND(amount * 0.85, 2)
 WHERE region = 'South';
 
@@ -62,7 +62,7 @@ ASSERT VALUE discounted_amount = 110.50 WHERE id = 21
 SELECT id, customer, product,
        amount AS discounted_amount,
        ROUND(amount / 0.85, 2) AS original_amount
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.partitioned_orders
 WHERE region = 'South' AND id IN (21, 34, 37)
 ORDER BY id;
 
@@ -81,7 +81,7 @@ SELECT region,
        COUNT(*) AS order_count,
        ROUND(AVG(amount), 2) AS avg_order,
        ROUND(SUM(amount), 2) AS total_revenue
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.partitioned_orders
 WHERE region IN ('North', 'South', 'East')
 GROUP BY region
 ORDER BY region;
@@ -98,7 +98,7 @@ ORDER BY region;
 -- West remaining: 20 - 4 = 16
 
 ASSERT ROW_COUNT = 4
-DELETE FROM {{zone_name}}.delta_demos.orders
+DELETE FROM {{zone_name}}.delta_demos.partitioned_orders
 WHERE region = 'West' AND amount < 50;
 
 
@@ -110,7 +110,7 @@ WHERE region = 'West' AND amount < 50;
 
 ASSERT ROW_COUNT = 16
 SELECT id, customer, product, amount
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.partitioned_orders
 WHERE region = 'West'
 ORDER BY amount;
 
@@ -132,7 +132,7 @@ SELECT product,
        COUNT(*) FILTER (WHERE region = 'East') AS east,
        COUNT(*) FILTER (WHERE region = 'West') AS west,
        ROUND(SUM(amount), 2) AS total_revenue
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.partitioned_orders
 GROUP BY product
 ORDER BY total_revenue DESC;
 
@@ -154,7 +154,7 @@ SELECT region,
        ROUND(AVG(amount), 2) AS avg_order,
        ROUND(MIN(amount), 2) AS min_order,
        ROUND(MAX(amount), 2) AS max_order
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.partitioned_orders
 GROUP BY region
 ORDER BY region;
 
@@ -165,28 +165,28 @@ ORDER BY region;
 
 -- Verify total_rows: 80 - 4 deleted from West = 76
 ASSERT ROW_COUNT = 76
-SELECT * FROM {{zone_name}}.delta_demos.orders;
+SELECT * FROM {{zone_name}}.delta_demos.partitioned_orders;
 
 -- Verify north_count: North partition untouched at 20 rows
 ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.orders WHERE region = 'North';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_orders WHERE region = 'North';
 
 -- Verify south_count: South partition has 20 rows (discounted, not deleted)
 ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.orders WHERE region = 'South';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_orders WHERE region = 'South';
 
 -- Verify east_count: East partition untouched at 20 rows
 ASSERT VALUE cnt = 20
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.orders WHERE region = 'East';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_orders WHERE region = 'East';
 
 -- Verify west_count: West partition has 16 rows after deleting 4 under $50
 ASSERT VALUE cnt = 16
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.orders WHERE region = 'West';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_orders WHERE region = 'West';
 
 -- Verify south_discount_check: id=21 South order discounted 15% to 110.50
 ASSERT VALUE amount = 110.50
-SELECT amount FROM {{zone_name}}.delta_demos.orders WHERE id = 21;
+SELECT amount FROM {{zone_name}}.delta_demos.partitioned_orders WHERE id = 21;
 
 -- Verify west_deleted_gone: 4 small West orders removed
 ASSERT VALUE cnt = 0
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.orders WHERE id IN (65, 70, 75, 80);
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.partitioned_orders WHERE id IN (65, 70, 75, 80);

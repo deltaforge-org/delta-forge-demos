@@ -11,13 +11,13 @@ and small orders under $50 in the West region are cancelled.
 
 ## Table
 
-| Object | Type | Rows | Partitions | Purpose |
-|--------|------|------|------------|---------|
-| `orders` | Delta Table | 76 (final) | North, South, East, West | Partitioned order data |
+| Object               | Type        | Rows       | Partitions               | Purpose                |
+|----------------------|-------------|------------|--------------------------|------------------------|
+| `partitioned_orders` | Delta Table | 76 (final) | North, South, East, West | Partitioned order data |
 
 ## Schema
 
-**orders:** `id INT, customer VARCHAR, product VARCHAR, amount DOUBLE, order_date VARCHAR, region VARCHAR`
+**partitioned_orders:** `id INT, customer VARCHAR, product VARCHAR, amount DOUBLE, order_date VARCHAR, region VARCHAR`
 
 Partitioned by: `region`
 

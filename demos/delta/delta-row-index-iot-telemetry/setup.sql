@@ -25,7 +25,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
     COMMENT 'Delta table management tutorial demos';
 
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.iot_sensor_telemetry (
     sensor_id     VARCHAR,
     reading_time  VARCHAR,
     sensor_kind   VARCHAR,
@@ -33,11 +33,11 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     value         DOUBLE,
     unit          VARCHAR,
     quality       VARCHAR
-) LOCATION 'delta-row-index-iot-telemetry/sensor_telemetry';
+) LOCATION 'delta-row-index-iot-telemetry/iot_sensor_telemetry';
 
 
 -- Batch 1 — 40 morning readings (08:00..12:30)
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
+INSERT INTO {{zone_name}}.delta_demos.iot_sensor_telemetry VALUES
     ('VIB-A01','2026-04-15T08:00:00','vibration','line_a',  0.42,'mm_s','good'),
     ('VIB-A01','2026-04-15T08:30:00','vibration','line_a',  0.45,'mm_s','good'),
     ('VIB-A01','2026-04-15T09:00:00','vibration','line_a',  0.51,'mm_s','good'),
@@ -81,7 +81,7 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
 
 
 -- Batch 2 — 40 afternoon readings (12:30..17:00)
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
+INSERT INTO {{zone_name}}.delta_demos.iot_sensor_telemetry VALUES
     ('VIB-A01','2026-04-15T12:30:00','vibration','line_a',  0.55,'mm_s','warn'),
     ('VIB-A01','2026-04-15T13:30:00','vibration','line_a',  0.52,'mm_s','warn'),
     ('VIB-A01','2026-04-15T14:30:00','vibration','line_a',  0.48,'mm_s','good'),

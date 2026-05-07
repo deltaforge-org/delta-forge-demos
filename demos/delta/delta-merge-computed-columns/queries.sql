@@ -21,7 +21,7 @@
 ASSERT ROW_COUNT = 12
 SELECT id, customer_name, plan, monthly_amount, months_active,
        tier, discount_pct, priority_score
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 ORDER BY id;
 
 ASSERT ROW_COUNT = 10
@@ -54,7 +54,7 @@ ORDER BY id;
 -- rows_affected: 7 updates + 3 inserts = 10
 
 ASSERT ROW_COUNT = 10
-MERGE INTO {{zone_name}}.delta_demos.subscriptions AS target
+MERGE INTO {{zone_name}}.delta_demos.computed_subscriptions AS target
 USING {{zone_name}}.delta_demos.subscription_changes AS source
 ON target.id = source.id
 WHEN MATCHED THEN
@@ -104,7 +104,7 @@ WHEN NOT MATCHED THEN
 ASSERT ROW_COUNT = 15
 SELECT id, customer_name, plan, monthly_amount, months_active,
        tier, discount_pct, priority_score
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 ORDER BY id;
 
 
@@ -123,7 +123,7 @@ ASSERT VALUE tier = 'silver' WHERE id = 2
 ASSERT VALUE tier = 'gold' WHERE id = 5
 ASSERT VALUE tier = 'gold' WHERE id = 9
 SELECT id, customer_name, plan, monthly_amount, tier
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 WHERE id IN (1, 2, 5, 9)
 ORDER BY monthly_amount DESC;
 
@@ -145,7 +145,7 @@ ASSERT VALUE discount_pct = 10.0 WHERE id = 9
 ASSERT VALUE discount_pct = 5.0 WHERE id = 5
 ASSERT VALUE discount_pct = 0.0 WHERE id = 2
 SELECT id, customer_name, months_active, discount_pct
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 WHERE id IN (1, 2, 3, 5, 9)
 ORDER BY months_active DESC;
 
@@ -164,7 +164,7 @@ ASSERT VALUE priority_score = 2350.0 WHERE id = 3
 ASSERT VALUE priority_score = 1750.0 WHERE id = 1
 ASSERT VALUE priority_score = 1100.0 WHERE id = 4
 SELECT id, customer_name, monthly_amount, months_active, priority_score
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 WHERE id IN (1, 3, 4)
 ORDER BY priority_score DESC;
 
@@ -185,7 +185,7 @@ ASSERT VALUE tier = 'platinum' WHERE id = 15
 ASSERT VALUE priority_score = 550.0 WHERE id = 15
 SELECT id, customer_name, plan, monthly_amount,
        tier, discount_pct, priority_score
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 WHERE id BETWEEN 13 AND 15
 ORDER BY id;
 
@@ -201,7 +201,7 @@ SELECT tier,
        COUNT(*) AS sub_count,
        ROUND(SUM(monthly_amount), 2) AS total_revenue,
        ROUND(AVG(priority_score), 2) AS avg_priority
-FROM {{zone_name}}.delta_demos.subscriptions
+FROM {{zone_name}}.delta_demos.computed_subscriptions
 GROUP BY tier
 ORDER BY total_revenue DESC;
 
@@ -212,32 +212,32 @@ ORDER BY total_revenue DESC;
 
 -- Verify total_count: 12 + 3 new = 15
 ASSERT ROW_COUNT = 15
-SELECT * FROM {{zone_name}}.delta_demos.subscriptions;
+SELECT * FROM {{zone_name}}.delta_demos.computed_subscriptions;
 
 -- Verify acme_tier: Acme upgraded to platinum
 ASSERT VALUE tier = 'platinum' WHERE id = 1
-SELECT id, tier FROM {{zone_name}}.delta_demos.subscriptions WHERE id IN (1, 2, 3, 13);
+SELECT id, tier FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE id IN (1, 2, 3, 13);
 
 -- Verify acme_discount: Acme gets 15% loyalty discount (25 months)
 ASSERT VALUE discount_pct = 15.0 WHERE id = 1
-SELECT id, discount_pct FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 1;
+SELECT id, discount_pct FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE id = 1;
 
 -- Verify bolt_tier: Bolt upgraded to silver (professional $89)
 ASSERT VALUE tier = 'silver' WHERE id = 2
-SELECT id, tier FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 2;
+SELECT id, tier FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE id = 2;
 
 -- Verify cascade_score: Cascade Labs priority = 500 * (1 + 37/10) = 2350
 ASSERT VALUE priority_score = 2350.0
-SELECT priority_score FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 3;
+SELECT priority_score FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE id = 3;
 
 -- Verify novastar_tier: NovaStar inserted as bronze
 ASSERT VALUE tier = 'bronze' WHERE id = 13
-SELECT id, tier FROM {{zone_name}}.delta_demos.subscriptions WHERE id = 13;
+SELECT id, tier FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE id = 13;
 
 -- Verify platinum_count: 5 platinum subscriptions
 ASSERT VALUE cnt = 5
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE tier = 'platinum';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE tier = 'platinum';
 
 -- Verify unchanged_subs: Unmatched targets preserved (ids 6,8,10,11,12)
 ASSERT VALUE cnt = 5
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.subscriptions WHERE id IN (6, 8, 10, 11, 12);
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.computed_subscriptions WHERE id IN (6, 8, 10, 11, 12);

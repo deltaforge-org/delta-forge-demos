@@ -26,7 +26,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- The tier, discount_pct, and priority_score columns are derived —
 -- they are computed by the MERGE, not stored independently.
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscriptions (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.computed_subscriptions (
     id              INT,
     customer_name   VARCHAR,
     plan            VARCHAR,
@@ -35,10 +35,10 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.subscriptions (
     tier            VARCHAR,
     discount_pct    DOUBLE,
     priority_score  DOUBLE
-) LOCATION 'delta-merge-computed-columns/subscriptions';
+) LOCATION 'delta-merge-computed-columns/computed_subscriptions';
 
 
-INSERT INTO {{zone_name}}.delta_demos.subscriptions VALUES
+INSERT INTO {{zone_name}}.delta_demos.computed_subscriptions VALUES
     (1,  'Acme Corp',       'business',   150.00, 24, 'gold',     10.0, 360.0),
     (2,  'Bolt Industries', 'starter',     29.00,  3, 'bronze',    0.0,  29.0),
     (3,  'Cascade Labs',    'enterprise', 500.00, 36, 'platinum', 15.0, 1800.0),

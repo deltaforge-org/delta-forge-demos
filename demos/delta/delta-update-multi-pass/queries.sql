@@ -24,7 +24,7 @@ ASSERT VALUE priority = 'HIGH' WHERE id = 2
 ASSERT VALUE total_with_tax = 1340.63 WHERE id = 9
 SELECT id, customer_name, status, subtotal, total_with_tax,
        priority, shipping_method, estimated_profit, region
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline
 ORDER BY id
 LIMIT 10;
 
@@ -44,7 +44,7 @@ ASSERT VALUE status = 'shipped ' WHERE id = 4
 ASSERT VALUE status = 'Delivered' WHERE id = 5
 SELECT id, customer_name, status, subtotal, priority, shipping_method,
        total_with_tax, estimated_profit
-FROM {{zone_name}}.delta_demos.order_pipeline VERSION AS OF 1
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline VERSION AS OF 1
 ORDER BY id
 LIMIT 10;
 
@@ -62,7 +62,7 @@ ASSERT VALUE cnt = 6 WHERE status = 'CONFIRMED'
 ASSERT VALUE cnt = 6 WHERE status = 'SHIPPED'
 ASSERT VALUE cnt = 6 WHERE status = 'DELIVERED'
 SELECT status, COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.order_pipeline VERSION AS OF 2
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline VERSION AS OF 2
 GROUP BY status
 ORDER BY cnt DESC;
 
@@ -79,7 +79,7 @@ ASSERT VALUE cnt = 9 WHERE priority = 'HIGH'
 ASSERT VALUE cnt = 14 WHERE priority = 'MEDIUM'
 ASSERT VALUE cnt = 7 WHERE priority = 'LOW'
 SELECT priority, COUNT(*) AS cnt
-FROM {{zone_name}}.delta_demos.order_pipeline VERSION AS OF 3
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline VERSION AS OF 3
 GROUP BY priority
 ORDER BY cnt DESC;
 
@@ -102,7 +102,7 @@ SELECT priority,
        COUNT(*) AS order_count,
        SUM(total_with_tax) AS total_revenue,
        SUM(estimated_profit) AS total_profit
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline
 GROUP BY priority
 ORDER BY total_revenue DESC;
 
@@ -122,7 +122,7 @@ SELECT region,
        COUNT(*) AS order_count,
        SUM(total_with_tax) AS total_revenue,
        SUM(estimated_profit) AS total_profit
-FROM {{zone_name}}.delta_demos.order_pipeline
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline
 GROUP BY region
 ORDER BY total_revenue DESC;
 
@@ -145,8 +145,8 @@ SELECT curr.id,
        curr.priority AS final_priority,
        raw.total_with_tax AS raw_total_with_tax,
        curr.total_with_tax AS final_total_with_tax
-FROM {{zone_name}}.delta_demos.order_pipeline AS curr
-JOIN {{zone_name}}.delta_demos.order_pipeline VERSION AS OF 1 AS raw
+FROM {{zone_name}}.delta_demos.multipass_order_pipeline AS curr
+JOIN {{zone_name}}.delta_demos.multipass_order_pipeline VERSION AS OF 1 AS raw
     ON curr.id = raw.id
 WHERE curr.id IN (1, 2, 9)
 ORDER BY curr.id;
@@ -164,7 +164,7 @@ ORDER BY curr.id;
 
 -- Non-deterministic: commit timestamps set at write time
 ASSERT WARNING ROW_COUNT >= 5
-DESCRIBE HISTORY {{zone_name}}.delta_demos.order_pipeline;
+DESCRIBE HISTORY {{zone_name}}.delta_demos.multipass_order_pipeline;
 
 
 -- ============================================================================
@@ -173,44 +173,44 @@ DESCRIBE HISTORY {{zone_name}}.delta_demos.order_pipeline;
 
 -- Verify total rows: 30 orders (no inserts or deletes during pipeline)
 ASSERT VALUE cnt = 30
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline;
 
 -- Verify distinct statuses after normalization: exactly 4 clean values
 ASSERT VALUE cnt = 4
-SELECT COUNT(DISTINCT status) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT COUNT(DISTINCT status) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline;
 
 -- Verify total revenue (sum of total_with_tax) after enrichment
 ASSERT VALUE total = 14448.52
-SELECT SUM(total_with_tax) AS total FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT SUM(total_with_tax) AS total FROM {{zone_name}}.delta_demos.multipass_order_pipeline;
 
 -- Verify total estimated profit
 ASSERT VALUE total = 2002.77
-SELECT SUM(estimated_profit) AS total FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT SUM(estimated_profit) AS total FROM {{zone_name}}.delta_demos.multipass_order_pipeline;
 
 -- Verify all rows processed (processed_at is set)
 ASSERT VALUE cnt = 30
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline WHERE processed_at = '2024-06-15 14:30:00';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline WHERE processed_at = '2024-06-15 14:30:00';
 
 -- Verify HIGH priority count
 ASSERT VALUE cnt = 9
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline WHERE priority = 'HIGH';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline WHERE priority = 'HIGH';
 
 -- Verify MEDIUM priority count
 ASSERT VALUE cnt = 14
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline WHERE priority = 'MEDIUM';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline WHERE priority = 'MEDIUM';
 
 -- Verify LOW priority count
 ASSERT VALUE cnt = 7
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline WHERE priority = 'LOW';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline WHERE priority = 'LOW';
 
 -- Verify EXPRESS and HIGH are the same set (subtotal > 500)
 ASSERT VALUE cnt = 9
-SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline WHERE shipping_method = 'EXPRESS';
+SELECT COUNT(*) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline WHERE shipping_method = 'EXPRESS';
 
 -- Verify total subtotal unchanged through pipeline
 ASSERT VALUE total = 13351.56
-SELECT SUM(subtotal) AS total FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT SUM(subtotal) AS total FROM {{zone_name}}.delta_demos.multipass_order_pipeline;
 
 -- Verify 4 distinct regions
 ASSERT VALUE cnt = 4
-SELECT COUNT(DISTINCT region) AS cnt FROM {{zone_name}}.delta_demos.order_pipeline;
+SELECT COUNT(DISTINCT region) AS cnt FROM {{zone_name}}.delta_demos.multipass_order_pipeline;

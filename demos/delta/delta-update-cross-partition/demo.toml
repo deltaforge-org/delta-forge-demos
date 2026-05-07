@@ -22,4 +22,4 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.delta_demos.subscriptions"
+name = "{{zone_name}}.delta_demos.crosspart_subscriptions"

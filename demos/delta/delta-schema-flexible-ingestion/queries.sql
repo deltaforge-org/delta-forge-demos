@@ -21,7 +21,7 @@
 
 ASSERT ROW_COUNT = 20
 SELECT id, sensor_id, reading_type, value, unit, metadata, recorded_at
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 ORDER BY id;
 
 
@@ -35,7 +35,7 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE reading_count = 4 WHERE sensor_id = 'TEMP-01'
 ASSERT VALUE reading_count = 4 WHERE sensor_id = 'HUM-01'
 SELECT sensor_id, reading_type, COUNT(*) AS reading_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 GROUP BY sensor_id, reading_type
 ORDER BY sensor_id;
 
@@ -49,14 +49,14 @@ ORDER BY sensor_id;
 
 ASSERT ROW_COUNT = 8
 SELECT id, sensor_id, value, metadata
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE metadata LIKE '%"location":"floor_1_%'
 ORDER BY id;
 
 -- Find the 2 alert readings buried in the JSON
 ASSERT ROW_COUNT = 2
 SELECT id, sensor_id, value, metadata
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE metadata LIKE '%"alert":true%'
 ORDER BY id;
 
@@ -67,21 +67,21 @@ ORDER BY id;
 -- ALTER TABLE ADD COLUMN adds a new typed column. Existing rows get NULL.
 -- This is a metadata-only operation — no data files are rewritten.
 
-ALTER TABLE {{zone_name}}.delta_demos.sensor_telemetry ADD COLUMN location VARCHAR;
+ALTER TABLE {{zone_name}}.delta_demos.flex_sensor_telemetry ADD COLUMN location VARCHAR;
 
 -- Backfill: extract location from JSON metadata into the typed column.
 -- Each UPDATE targets rows matching a specific location pattern in the JSON.
 -- This is the standard backfill pattern — one UPDATE per known value.
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET location = 'floor_1_east' WHERE metadata LIKE '%"location":"floor_1_east"%';
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET location = 'floor_1_west' WHERE metadata LIKE '%"location":"floor_1_west"%';
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET location = 'boiler_room' WHERE metadata LIKE '%"location":"boiler_room"%';
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET location = 'compressor' WHERE metadata LIKE '%"location":"compressor"%';
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET location = 'clean_room' WHERE metadata LIKE '%"location":"clean_room"%';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET location = 'floor_1_east' WHERE metadata LIKE '%"location":"floor_1_east"%';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET location = 'floor_1_west' WHERE metadata LIKE '%"location":"floor_1_west"%';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET location = 'boiler_room' WHERE metadata LIKE '%"location":"boiler_room"%';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET location = 'compressor' WHERE metadata LIKE '%"location":"compressor"%';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET location = 'clean_room' WHERE metadata LIKE '%"location":"clean_room"%';
 
 -- Verify all 20 rows now have a non-null location
 ASSERT VALUE backfilled = 20
 SELECT COUNT(*) AS backfilled
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE location IS NOT NULL;
 
 
@@ -91,21 +91,21 @@ WHERE location IS NOT NULL;
 -- The alert field only exists in 2 of 20 JSON payloads. Promoting it to a
 -- typed column with a default of 'false' normalizes the sparse data.
 
-ALTER TABLE {{zone_name}}.delta_demos.sensor_telemetry ADD COLUMN alert_flag VARCHAR;
+ALTER TABLE {{zone_name}}.delta_demos.flex_sensor_telemetry ADD COLUMN alert_flag VARCHAR;
 
 -- First set all rows to 'false' (the common case), then override the alerts.
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET alert_flag = 'false';
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry SET alert_flag = 'true' WHERE metadata LIKE '%"alert":true%';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET alert_flag = 'false';
+UPDATE {{zone_name}}.delta_demos.flex_sensor_telemetry SET alert_flag = 'true' WHERE metadata LIKE '%"alert":true%';
 
 -- Verify: 2 alerts, 18 non-alerts
 ASSERT VALUE alert_count = 2
 SELECT COUNT(*) AS alert_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE alert_flag = 'true';
 
 ASSERT VALUE normal_count = 18
 SELECT COUNT(*) AS normal_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE alert_flag = 'false';
 
 
@@ -118,7 +118,7 @@ WHERE alert_flag = 'false';
 
 ASSERT ROW_COUNT = 4
 SELECT id, sensor_id, value, location
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE location = 'boiler_room'
 ORDER BY id;
 
@@ -133,7 +133,7 @@ ASSERT ROW_COUNT = 5
 ASSERT VALUE reading_count = 4 WHERE location = 'boiler_room'
 ASSERT VALUE reading_count = 4 WHERE location = 'floor_1_east'
 SELECT location, COUNT(*) AS reading_count
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 GROUP BY location
 ORDER BY location;
 
@@ -155,7 +155,7 @@ WITH firmware_extract AS (
                WHEN metadata LIKE '%"firmware":"v3.0"%' THEN 'v3.0'
                WHEN metadata LIKE '%"firmware":"v1.8"%' THEN 'v1.8'
            END AS firmware
-    FROM {{zone_name}}.delta_demos.sensor_telemetry
+    FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 )
 SELECT firmware, COUNT(*) AS sensor_count
 FROM firmware_extract
@@ -173,7 +173,7 @@ ORDER BY firmware;
 ASSERT ROW_COUNT = 8
 SELECT sensor_id, location, recorded_at, value,
        LAG(value) OVER (PARTITION BY sensor_id ORDER BY id) AS prev_value
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.flex_sensor_telemetry
 WHERE reading_type = 'temperature'
 ORDER BY sensor_id, id;
 
@@ -184,24 +184,24 @@ ORDER BY sensor_id, id;
 
 -- Verify total row count
 ASSERT ROW_COUNT = 20
-SELECT * FROM {{zone_name}}.delta_demos.sensor_telemetry;
+SELECT * FROM {{zone_name}}.delta_demos.flex_sensor_telemetry;
 
 -- Verify 5 distinct sensors
 ASSERT VALUE sensor_count = 5
-SELECT COUNT(DISTINCT sensor_id) AS sensor_count FROM {{zone_name}}.delta_demos.sensor_telemetry;
+SELECT COUNT(DISTINCT sensor_id) AS sensor_count FROM {{zone_name}}.delta_demos.flex_sensor_telemetry;
 
 -- Verify 5 distinct locations (from promoted column)
 ASSERT VALUE location_count = 5
-SELECT COUNT(DISTINCT location) AS location_count FROM {{zone_name}}.delta_demos.sensor_telemetry;
+SELECT COUNT(DISTINCT location) AS location_count FROM {{zone_name}}.delta_demos.flex_sensor_telemetry;
 
 -- Verify 8 temperature readings
 ASSERT VALUE temp_count = 8
-SELECT COUNT(*) AS temp_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE reading_type = 'temperature';
+SELECT COUNT(*) AS temp_count FROM {{zone_name}}.delta_demos.flex_sensor_telemetry WHERE reading_type = 'temperature';
 
 -- Verify 8 pressure readings
 ASSERT VALUE press_count = 8
-SELECT COUNT(*) AS press_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE reading_type = 'pressure';
+SELECT COUNT(*) AS press_count FROM {{zone_name}}.delta_demos.flex_sensor_telemetry WHERE reading_type = 'pressure';
 
 -- Verify 4 humidity readings
 ASSERT VALUE hum_count = 4
-SELECT COUNT(*) AS hum_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE reading_type = 'humidity';
+SELECT COUNT(*) AS hum_count FROM {{zone_name}}.delta_demos.flex_sensor_telemetry WHERE reading_type = 'humidity';

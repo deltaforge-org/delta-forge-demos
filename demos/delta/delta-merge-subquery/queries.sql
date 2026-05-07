@@ -37,7 +37,7 @@ ORDER BY product_id, sale_date;
 ASSERT ROW_COUNT = 40
 SELECT event_id, product_id, order_id, quantity, unit_price,
        quantity * unit_price AS line_total, event_timestamp, channel, region
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.mergesub_order_events
 ORDER BY event_timestamp, event_id;
 
 
@@ -52,7 +52,7 @@ ASSERT ROW_COUNT = 5
 SELECT order_id, COUNT(*) AS event_count,
        MIN(event_timestamp) AS first_seen,
        MAX(event_timestamp) AS last_seen
-FROM {{zone_name}}.delta_demos.order_events
+FROM {{zone_name}}.delta_demos.mergesub_order_events
 GROUP BY order_id
 HAVING COUNT(*) > 1
 ORDER BY order_id;
@@ -78,7 +78,7 @@ ASSERT ROW_COUNT = 10
 WITH deduped AS (
     SELECT order_id, product_id, product_name, quantity, unit_price,
            MAX(event_timestamp) AS event_timestamp
-    FROM {{zone_name}}.delta_demos.order_events
+    FROM {{zone_name}}.delta_demos.mergesub_order_events
     GROUP BY order_id, product_id, product_name, quantity, unit_price
 ),
 daily_agg AS (
@@ -116,7 +116,7 @@ USING (
     WITH deduped AS (
         SELECT order_id, product_id, product_name, quantity, unit_price,
                MAX(event_timestamp) AS event_timestamp
-        FROM {{zone_name}}.delta_demos.order_events
+        FROM {{zone_name}}.delta_demos.mergesub_order_events
         GROUP BY order_id, product_id, product_name, quantity, unit_price
     ),
     daily_agg AS (

@@ -62,9 +62,9 @@ def verify_locations(spark, data_root, verbose=False):
         fail(f"ROW_COUNT = {row_count}, expected 25")
 
 def verify_audit_log(spark, data_root, verbose=False):
-    print_section("audit_log -- Final State")
+    print_section("geo_audit_log -- Final State")
 
-    table_path = os.path.join(data_root, "audit_log")
+    table_path = os.path.join(data_root, "geo_audit_log")
     df = spark.read.format("delta").load(table_path)
 
     row_count = df.count()
@@ -86,7 +86,7 @@ def main():
     print_header("Delta Binary Geometry Advanced -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    for tbl_name in ("documents", "locations", "audit_log"):
+    for tbl_name in ("documents", "locations", "geo_audit_log"):
         tbl_dir = os.path.join(data_root, tbl_name)
         if not os.path.isdir(tbl_dir):
             print(f"\nError: {tbl_dir} not found")

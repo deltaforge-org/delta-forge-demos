@@ -24,7 +24,7 @@ SELECT tier,
        ROUND(AVG(balance), 2) AS avg_balance,
        ROUND(MIN(balance), 2) AS min_balance,
        ROUND(MAX(balance), 2) AS max_balance
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 GROUP BY tier
 ORDER BY tier;
 
@@ -40,14 +40,14 @@ ORDER BY tier;
 -- ids: 31(8500), 8(8100), 23(7800), 12(7200), 33(7100), 39(6800),
 --      6(6700), 29(6500), 17(6300), 27(5900)
 
-UPDATE {{zone_name}}.delta_demos.customer_accounts
+UPDATE {{zone_name}}.delta_demos.cdf_customer_accounts
 SET tier = 'gold'
 WHERE id IN (31, 8, 23, 12, 33, 39, 6, 29, 17, 27);
 
 -- Confirm: the 10 gold tier customers after the upgrade
 ASSERT ROW_COUNT = 10
 SELECT id, name, tier, balance
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 WHERE tier = 'gold'
 ORDER BY balance DESC;
 
@@ -59,7 +59,7 @@ ORDER BY balance DESC;
 -- exactly once in the change feed. This is the simplest change type —
 -- no preimage/postimage pair, just the new data.
 
-INSERT INTO {{zone_name}}.delta_demos.customer_accounts
+INSERT INTO {{zone_name}}.delta_demos.cdf_customer_accounts
 SELECT * FROM (VALUES
     (41, 'Oscar Fernandez', 'oscar.fernandez@mail.com',  'bronze', 2500.00, 'active', '2024-03-01'),
     (42, 'Priya Sharma',    'priya.sharma@mail.com',     'silver', 4800.00, 'active', '2024-03-05'),
@@ -74,7 +74,7 @@ SELECT * FROM (VALUES
 -- Confirm: the 8 newly inserted customers
 ASSERT ROW_COUNT = 8
 SELECT id, name, email, tier, balance, created_date
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 WHERE id BETWEEN 41 AND 48
 ORDER BY id;
 
@@ -87,18 +87,18 @@ ORDER BY id;
 -- query only the changes since the last processed version.
 --
 -- For example, to process only the V2 inserts, a consumer would read:
---   table_changes('customer_accounts', 2, 2)
+--   table_changes('cdf_customer_accounts', 2, 2)
 -- and see exactly 8 rows with _change_type = 'insert'.
 --
 -- Current state: 48 rows (40 original + 8 new), 10 gold, rest silver/bronze.
 
 -- Verify total is now 48 after inserting 8 new customers
 ASSERT VALUE total_count = 48
-SELECT COUNT(*) AS total_count FROM {{zone_name}}.delta_demos.customer_accounts;
+SELECT COUNT(*) AS total_count FROM {{zone_name}}.delta_demos.cdf_customer_accounts;
 
 ASSERT ROW_COUNT = 3
 SELECT tier, COUNT(*) AS customer_count
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 GROUP BY tier
 ORDER BY tier;
 
@@ -116,18 +116,18 @@ ORDER BY tier;
 --      45 (Tariq, balance 900)
 
 ASSERT ROW_COUNT = 3
-UPDATE {{zone_name}}.delta_demos.customer_accounts
+UPDATE {{zone_name}}.delta_demos.cdf_customer_accounts
 SET status = 'closed'
 WHERE id IN (16, 28, 45);
 
 ASSERT ROW_COUNT = 3
-DELETE FROM {{zone_name}}.delta_demos.customer_accounts
+DELETE FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 WHERE status = 'closed';
 
 -- Confirm: the 3 deleted accounts are truly gone
 ASSERT ROW_COUNT = 0
 SELECT id, name
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 WHERE id IN (16, 28, 45)
 ORDER BY id;
 
@@ -140,14 +140,14 @@ ORDER BY id;
 -- ids: 31(8500->10200), 8(8100->9720), 23(7800->9360),
 --      12(7200->8640), 33(7100->8520)
 
-UPDATE {{zone_name}}.delta_demos.customer_accounts
+UPDATE {{zone_name}}.delta_demos.cdf_customer_accounts
 SET balance = ROUND(balance * 1.20, 2)
 WHERE id IN (31, 8, 23, 12, 33);
 
 -- Confirm: gold tier customers with their adjusted balances
 -- Verify id=31 balance increased from 8500 to 10200 (+20%)
 ASSERT VALUE balance = 10200.0
-SELECT balance FROM {{zone_name}}.delta_demos.customer_accounts WHERE id = 31;
+SELECT balance FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE id = 31;
 
 ASSERT ROW_COUNT = 10
 SELECT id, name, tier, balance,
@@ -157,7 +157,7 @@ SELECT id, name, tier, balance,
        CASE WHEN id IN (31, 8, 23, 12, 33)
             THEN '+20% applied'
             ELSE 'unchanged' END AS adjustment
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 WHERE tier = 'gold'
 ORDER BY balance DESC;
 
@@ -168,7 +168,7 @@ ORDER BY balance DESC;
 
 ASSERT ROW_COUNT = 45
 SELECT id, name, email, tier, balance, status, created_date
-FROM {{zone_name}}.delta_demos.customer_accounts
+FROM {{zone_name}}.delta_demos.cdf_customer_accounts
 ORDER BY tier, name;
 
 
@@ -179,32 +179,32 @@ ORDER BY tier, name;
 
 -- Verify total row count
 ASSERT ROW_COUNT = 45
-SELECT * FROM {{zone_name}}.delta_demos.customer_accounts;
+SELECT * FROM {{zone_name}}.delta_demos.cdf_customer_accounts;
 
 -- Verify gold tier count
 ASSERT VALUE gold_tier_count = 10
-SELECT COUNT(*) AS gold_tier_count FROM {{zone_name}}.delta_demos.customer_accounts WHERE tier = 'gold';
+SELECT COUNT(*) AS gold_tier_count FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE tier = 'gold';
 
 -- Verify closed accounts are gone
 ASSERT VALUE closed_count = 0
-SELECT COUNT(*) AS closed_count FROM {{zone_name}}.delta_demos.customer_accounts WHERE id IN (16, 28, 45);
+SELECT COUNT(*) AS closed_count FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE id IN (16, 28, 45);
 
 -- Verify new customers count (excluding deleted id 45)
 ASSERT VALUE new_customers_count = 7
-SELECT COUNT(*) AS new_customers_count FROM {{zone_name}}.delta_demos.customer_accounts WHERE id BETWEEN 41 AND 48;
+SELECT COUNT(*) AS new_customers_count FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE id BETWEEN 41 AND 48;
 
 -- Verify Erik's balance after 20% increase
 ASSERT VALUE balance = 10200.0
-SELECT balance FROM {{zone_name}}.delta_demos.customer_accounts WHERE id = 31;
+SELECT balance FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE id = 31;
 
 -- Verify silver tier count
 ASSERT VALUE silver_tier_count = 15
-SELECT COUNT(*) AS silver_tier_count FROM {{zone_name}}.delta_demos.customer_accounts WHERE tier = 'silver';
+SELECT COUNT(*) AS silver_tier_count FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE tier = 'silver';
 
 -- Verify all accounts are active
 ASSERT VALUE inactive_count = 0
-SELECT COUNT(*) AS inactive_count FROM {{zone_name}}.delta_demos.customer_accounts WHERE status != 'active';
+SELECT COUNT(*) AS inactive_count FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE status != 'active';
 
 -- Verify Alice's balance unchanged
 ASSERT VALUE balance = 5200.0
-SELECT balance FROM {{zone_name}}.delta_demos.customer_accounts WHERE id = 1;
+SELECT balance FROM {{zone_name}}.delta_demos.cdf_customer_accounts WHERE id = 1;

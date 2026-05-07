@@ -20,7 +20,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: product_inventory — E-commerce product catalog
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_inventory (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.vacuum_product_inventory (
     id              INT,
     sku             VARCHAR,
     product_name    VARCHAR,
@@ -28,11 +28,11 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_inventory (
     price           DOUBLE,
     stock_qty       INT,
     status          VARCHAR
-) LOCATION 'delta-vacuum-storage-diagnostics/product_inventory';
+) LOCATION 'delta-vacuum-storage-diagnostics/vacuum_product_inventory';
 
 
 -- V1: Insert 30 products across 5 categories
-INSERT INTO {{zone_name}}.delta_demos.product_inventory VALUES
+INSERT INTO {{zone_name}}.delta_demos.vacuum_product_inventory VALUES
     -- Electronics (ids 1-6)
     (1,  'SKU-E001', 'Wireless Headphones',   'Electronics',  79.99,  150, 'active'),
     (2,  'SKU-E002', 'Bluetooth Speaker',      'Electronics', 149.99,   85, 'active'),

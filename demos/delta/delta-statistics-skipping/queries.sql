@@ -41,7 +41,7 @@ SELECT
     MIN(unit_price) AS min_price,
     MAX(unit_price) AS max_price,
     COUNT(*) AS order_count
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.stats_orders
 GROUP BY CASE
     WHEN id BETWEEN 1 AND 15 THEN 'Jan'
     WHEN id BETWEEN 16 AND 30 THEN 'Feb'
@@ -68,7 +68,7 @@ ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS high_value_count,
        MIN(unit_price) AS min_high,
        MAX(unit_price) AS max_high
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.stats_orders
 WHERE unit_price >= 500.0;
 
 
@@ -82,7 +82,7 @@ WHERE unit_price >= 500.0;
 ASSERT VALUE cross_batch_overlap = 0
 ASSERT ROW_COUNT = 1
 SELECT COUNT(*) AS cross_batch_overlap
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.stats_orders
 WHERE id > 15 AND unit_price < 100.0;
 
 
@@ -100,7 +100,7 @@ ASSERT ROW_COUNT = 4
 SELECT category,
        COUNT(*) AS order_count,
        ROUND(AVG(unit_price), 2) AS avg_price
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.stats_orders
 WHERE unit_price <= 95.0
 GROUP BY category
 ORDER BY category;
@@ -124,7 +124,7 @@ SELECT
     END AS batch,
     ROUND(SUM(line_total), 2) AS revenue,
     COUNT(*) AS orders
-FROM {{zone_name}}.delta_demos.orders
+FROM {{zone_name}}.delta_demos.stats_orders
 GROUP BY CASE
     WHEN id BETWEEN 1 AND 15 THEN 'Jan (ids 1-15)'
     WHEN id BETWEEN 16 AND 30 THEN 'Feb (ids 16-30)'
@@ -139,28 +139,28 @@ ORDER BY batch;
 
 -- Verify total row count is 45
 ASSERT ROW_COUNT = 45
-SELECT * FROM {{zone_name}}.delta_demos.orders;
+SELECT * FROM {{zone_name}}.delta_demos.stats_orders;
 
 -- Verify Batch 1 min price is 10.99
 ASSERT VALUE batch1_min = 10.99
-SELECT MIN(unit_price) AS batch1_min FROM {{zone_name}}.delta_demos.orders WHERE id BETWEEN 1 AND 15;
+SELECT MIN(unit_price) AS batch1_min FROM {{zone_name}}.delta_demos.stats_orders WHERE id BETWEEN 1 AND 15;
 
 -- Verify Batch 2 max price is 475.0
 ASSERT VALUE batch2_max = 475.0
-SELECT MAX(unit_price) AS batch2_max FROM {{zone_name}}.delta_demos.orders WHERE id BETWEEN 16 AND 30;
+SELECT MAX(unit_price) AS batch2_max FROM {{zone_name}}.delta_demos.stats_orders WHERE id BETWEEN 16 AND 30;
 
 -- Verify Batch 3 max price is 2000.0
 ASSERT VALUE batch3_max = 2000.0
-SELECT MAX(unit_price) AS batch3_max FROM {{zone_name}}.delta_demos.orders WHERE id BETWEEN 31 AND 45;
+SELECT MAX(unit_price) AS batch3_max FROM {{zone_name}}.delta_demos.stats_orders WHERE id BETWEEN 31 AND 45;
 
 -- Verify 15 high-value orders (>= 500.0)
 ASSERT VALUE high_count = 15
-SELECT COUNT(*) AS high_count FROM {{zone_name}}.delta_demos.orders WHERE unit_price >= 500.0;
+SELECT COUNT(*) AS high_count FROM {{zone_name}}.delta_demos.stats_orders WHERE unit_price >= 500.0;
 
 -- Verify no range overlap between batches
 ASSERT VALUE overlap = 0
-SELECT COUNT(*) AS overlap FROM {{zone_name}}.delta_demos.orders WHERE id > 15 AND unit_price < 100.0;
+SELECT COUNT(*) AS overlap FROM {{zone_name}}.delta_demos.stats_orders WHERE id > 15 AND unit_price < 100.0;
 
 -- Verify electronics revenue
 ASSERT VALUE electronics_revenue = 10526.9
-SELECT ROUND(SUM(line_total), 2) AS electronics_revenue FROM {{zone_name}}.delta_demos.orders WHERE category = 'electronics';
+SELECT ROUND(SUM(line_total), 2) AS electronics_revenue FROM {{zone_name}}.delta_demos.stats_orders WHERE category = 'electronics';

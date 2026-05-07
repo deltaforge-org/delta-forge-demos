@@ -28,7 +28,7 @@ ASSERT RESULT SET INCLUDES ('eu-west', 'humidity', 10, 66.64)
 ASSERT RESULT SET INCLUDES ('ap-south', 'pressure', 7, 1012.97)
 SELECT region, sensor_type, COUNT(*) AS reading_count,
        ROUND(AVG(reading), 2) AS avg_reading
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry
 GROUP BY region, sensor_type
 ORDER BY region, sensor_type;
 
@@ -43,7 +43,7 @@ ORDER BY region, sensor_type;
 
 ASSERT ROW_COUNT = 4
 SELECT id, device_id, reading, unit, quality_score, recorded_date
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry
 WHERE region = 'eu-west'
   AND sensor_type = 'temperature'
   AND recorded_date BETWEEN '2025-03-01' AND '2025-03-05'
@@ -58,7 +58,7 @@ ORDER BY recorded_date;
 -- queries must scan all of them because data is in insertion order.
 
 ASSERT NO_FAIL IN result
-DESCRIBE DETAIL {{zone_name}}.delta_demos.sensor_telemetry;
+DESCRIBE DETAIL {{zone_name}}.delta_demos.zorder_sensor_telemetry;
 
 
 -- ============================================================================
@@ -78,7 +78,7 @@ DESCRIBE DETAIL {{zone_name}}.delta_demos.sensor_telemetry;
 -- After this command, Parquet file-level min/max statistics become much
 -- tighter, enabling the engine to skip entire files for filtered queries.
 
-OPTIMIZE {{zone_name}}.delta_demos.sensor_telemetry
+OPTIMIZE {{zone_name}}.delta_demos.zorder_sensor_telemetry
 ZORDER BY (region, sensor_type, recorded_date);
 
 
@@ -89,7 +89,7 @@ ZORDER BY (region, sensor_type, recorded_date);
 -- DESCRIBE HISTORY shows how many files were compacted and the new version.
 
 ASSERT NO_FAIL IN result
-DESCRIBE HISTORY {{zone_name}}.delta_demos.sensor_telemetry;
+DESCRIBE HISTORY {{zone_name}}.delta_demos.zorder_sensor_telemetry;
 
 
 -- ============================================================================
@@ -103,7 +103,7 @@ DESCRIBE HISTORY {{zone_name}}.delta_demos.sensor_telemetry;
 
 ASSERT ROW_COUNT = 4
 SELECT id, device_id, reading, unit, quality_score, recorded_date
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry
 WHERE region = 'eu-west'
   AND sensor_type = 'temperature'
   AND recorded_date BETWEEN '2025-03-01' AND '2025-03-05'
@@ -121,7 +121,7 @@ ORDER BY recorded_date;
 ASSERT ROW_COUNT = 23
 SELECT id, device_id, sensor_type, reading, unit,
        quality_score, recorded_date
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry
 WHERE region = 'us-east'
 ORDER BY sensor_type, recorded_date;
 
@@ -140,7 +140,7 @@ SELECT region, sensor_type, recorded_date,
        COUNT(*) AS readings,
        ROUND(MIN(reading), 2) AS min_reading,
        ROUND(MAX(reading), 2) AS max_reading
-FROM {{zone_name}}.delta_demos.sensor_telemetry
+FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry
 GROUP BY region, sensor_type, recorded_date
 ORDER BY region, sensor_type, recorded_date;
 
@@ -151,32 +151,32 @@ ORDER BY region, sensor_type, recorded_date;
 
 -- Verify total row count is 80
 ASSERT ROW_COUNT = 80
-SELECT * FROM {{zone_name}}.delta_demos.sensor_telemetry;
+SELECT * FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry;
 
 -- Verify 4 distinct regions
 ASSERT VALUE region_count = 4
-SELECT COUNT(DISTINCT region) AS region_count FROM {{zone_name}}.delta_demos.sensor_telemetry;
+SELECT COUNT(DISTINCT region) AS region_count FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry;
 
 -- Verify 4 distinct sensor types
 ASSERT VALUE sensor_type_count = 4
-SELECT COUNT(DISTINCT sensor_type) AS sensor_type_count FROM {{zone_name}}.delta_demos.sensor_telemetry;
+SELECT COUNT(DISTINCT sensor_type) AS sensor_type_count FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry;
 
 -- Verify us-east has 23 readings
 ASSERT VALUE us_east_count = 23
-SELECT COUNT(*) AS us_east_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE region = 'us-east';
+SELECT COUNT(*) AS us_east_count FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry WHERE region = 'us-east';
 
 -- Verify temperature sensor type has 22 readings
 ASSERT VALUE temperature_count = 22
-SELECT COUNT(*) AS temperature_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE sensor_type = 'temperature';
+SELECT COUNT(*) AS temperature_count FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry WHERE sensor_type = 'temperature';
 
 -- Verify 8 low-quality readings flagged (quality_score = 0)
 ASSERT VALUE low_quality_count = 8
-SELECT COUNT(*) AS low_quality_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE quality_score = 0;
+SELECT COUNT(*) AS low_quality_count FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry WHERE quality_score = 0;
 
 -- Verify average temperature reading is 21.8
 ASSERT VALUE avg_temp_reading = 21.8
-SELECT ROUND(AVG(reading), 1) AS avg_temp_reading FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE sensor_type = 'temperature';
+SELECT ROUND(AVG(reading), 1) AS avg_temp_reading FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry WHERE sensor_type = 'temperature';
 
 -- Verify 24 readings in date range 2025-03-01 to 2025-03-03
 ASSERT VALUE date_range_count = 24
-SELECT COUNT(*) AS date_range_count FROM {{zone_name}}.delta_demos.sensor_telemetry WHERE recorded_date >= '2025-03-01' AND recorded_date <= '2025-03-03';
+SELECT COUNT(*) AS date_range_count FROM {{zone_name}}.delta_demos.zorder_sensor_telemetry WHERE recorded_date >= '2025-03-01' AND recorded_date <= '2025-03-03';

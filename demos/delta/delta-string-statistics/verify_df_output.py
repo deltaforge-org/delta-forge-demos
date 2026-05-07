@@ -17,7 +17,7 @@ from pyspark.sql.functions import col
 def verify_product_catalog(spark, data_root, verbose=False):
     print_section("product_catalog -- Final State")
 
-    table_path = os.path.join(data_root, "product_catalog")
+    table_path = os.path.join(data_root, "stats_product_catalog")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -53,7 +53,7 @@ def main():
     print_header("Delta String Statistics -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "product_catalog")
+    tbl_dir = os.path.join(data_root, "stats_product_catalog")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

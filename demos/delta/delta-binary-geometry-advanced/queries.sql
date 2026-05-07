@@ -104,7 +104,7 @@ ASSERT VALUE access_count = 5 WHERE doc_name = 'annual_report_2024.pdf'
 ASSERT VALUE location_name = 'Empire State Building' WHERE doc_name = 'annual_report_2024.pdf'
 WITH access_counts AS (
     SELECT doc_id, COUNT(*) AS access_count
-    FROM {{zone_name}}.delta_demos.audit_log
+    FROM {{zone_name}}.delta_demos.geo_audit_log
     GROUP BY doc_id
 )
 SELECT ac.doc_id,
@@ -207,7 +207,7 @@ SELECT user_name,
        COUNT(*) FILTER (WHERE action = 'download') AS downloads,
        COUNT(*) FILTER (WHERE action = 'edit') AS edits,
        COUNT(*) AS total_actions
-FROM {{zone_name}}.delta_demos.audit_log
+FROM {{zone_name}}.delta_demos.geo_audit_log
 GROUP BY user_name
 ORDER BY total_actions DESC, user_name;
 
@@ -228,7 +228,7 @@ SELECT * FROM {{zone_name}}.delta_demos.locations;
 
 -- Verify audit log count
 ASSERT ROW_COUNT = 40
-SELECT * FROM {{zone_name}}.delta_demos.audit_log;
+SELECT * FROM {{zone_name}}.delta_demos.geo_audit_log;
 
 -- Verify all hashes are 64 characters (SHA-256 hex)
 ASSERT VALUE valid_hash_count = 27
@@ -255,4 +255,4 @@ SELECT COUNT(*) AS poly_line_count FROM {{zone_name}}.delta_demos.locations WHER
 
 -- Verify audit log action types
 ASSERT VALUE action_types = 3
-SELECT COUNT(DISTINCT action) AS action_types FROM {{zone_name}}.delta_demos.audit_log;
+SELECT COUNT(DISTINCT action) AS action_types FROM {{zone_name}}.delta_demos.geo_audit_log;

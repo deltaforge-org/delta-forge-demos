@@ -4,8 +4,8 @@
 -- Removes all objects created by setup.sql.
 -- ============================================================================
 
-DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.supplier_feed WITH FILES;
-DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.product_catalog WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.dv_supplier_feed WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.dv_product_catalog WITH FILES;
 
 -- Shared resources (safe — will warn if other demos still use them)
 DROP SCHEMA IF EXISTS {{zone_name}}.delta_demos;

@@ -15,17 +15,17 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 
 
 -- STEP 2: Create table with the initial 5-column schema
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.product_catalog (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.evolving_product_catalog (
     id       INT,
     name     VARCHAR,
     category VARCHAR,
     price    DOUBLE,
     stock    INT
-) LOCATION 'delta-schema-evolution-advanced/product_catalog';
+) LOCATION 'delta-schema-evolution-advanced/evolving_product_catalog';
 
 
 -- STEP 3: Insert 30 baseline products
-INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES
+INSERT INTO {{zone_name}}.delta_demos.evolving_product_catalog VALUES
     (1,  'Wireless Mouse',        'Electronics',   29.99,  150),
     (2,  'Mechanical Keyboard',   'Electronics',   89.99,  75),
     (3,  'USB-C Hub',             'Electronics',   45.99,  200),

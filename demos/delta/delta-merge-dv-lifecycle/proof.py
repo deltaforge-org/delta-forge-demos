@@ -332,18 +332,18 @@ print(f"  food count:        {post_agg['food']['count']}")
 # GENERATE SQL INSERT STATEMENTS
 # ===========================================================================
 print("\n" + "=" * 80)
-print("SQL INSERT — product_catalog")
+print("SQL INSERT — dv_product_catalog")
 print("=" * 80)
-print("INSERT INTO {{zone_name}}.delta_demos.product_catalog VALUES")
+print("INSERT INTO {{zone_name}}.delta_demos.dv_product_catalog VALUES")
 lines = []
 for r in product_catalog:
     lines.append(sql_row(r))
 print(",\n".join(lines) + ";")
 
 print("\n" + "=" * 80)
-print("SQL INSERT — supplier_feed")
+print("SQL INSERT — dv_supplier_feed")
 print("=" * 80)
-print("INSERT INTO {{zone_name}}.delta_demos.supplier_feed VALUES")
+print("INSERT INTO {{zone_name}}.delta_demos.dv_supplier_feed VALUES")
 lines = []
 for r in supplier_feed:
     lines.append(sql_row(r))

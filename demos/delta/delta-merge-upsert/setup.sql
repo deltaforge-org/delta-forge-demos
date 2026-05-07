@@ -25,17 +25,17 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE 1: products — 15 current products (target)
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.products (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.upsert_products (
     id          INT,
     sku         VARCHAR,
     name        VARCHAR,
     category    VARCHAR,
     price       DOUBLE,
     in_stock    INT
-) LOCATION 'delta-merge-upsert/products';
+) LOCATION 'delta-merge-upsert/upsert_products';
 
 
-INSERT INTO {{zone_name}}.delta_demos.products VALUES
+INSERT INTO {{zone_name}}.delta_demos.upsert_products VALUES
     (1,  'SKU-001', 'Wireless Mouse',       'electronics', 29.99,  150),
     (2,  'SKU-002', 'USB-C Hub',            'electronics', 49.99,  80),
     (3,  'SKU-003', 'Laptop Stand',         'accessories', 39.99,  200),

@@ -25,14 +25,14 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: order_events — immutable event log
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.order_events (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.appendonly_order_events (
     id         BIGINT,
     order_id   INT,
     event_type VARCHAR,
     amount     DOUBLE,
     actor      VARCHAR,
     created_at VARCHAR
-) LOCATION 'delta-append-only-event-sourcing/order_events'
+) LOCATION 'delta-append-only-event-sourcing/appendonly_order_events'
 TBLPROPERTIES (
     'delta.appendOnly' = 'true'
 );
@@ -48,7 +48,7 @@ TBLPROPERTIES (
 --   1014: created → confirmed (just started)
 
 -- Batch 1: 35 events (orders 1001-1007)
-INSERT INTO {{zone_name}}.delta_demos.order_events VALUES
+INSERT INTO {{zone_name}}.delta_demos.appendonly_order_events VALUES
     (1,  1001, 'order.created',     150.00, 'alice',  '2024-06-01 08:00:00'),
     (2,  1001, 'order.confirmed',   150.00, 'system', '2024-06-01 08:05:00'),
     (3,  1001, 'payment.received',  150.00, 'stripe', '2024-06-01 08:12:00'),
@@ -86,7 +86,7 @@ INSERT INTO {{zone_name}}.delta_demos.order_events VALUES
     (35, 1009, 'order.created',     175.50, 'jack',   '2024-06-01 12:00:00');
 
 -- Batch 2: 25 events (orders 1009-1014)
-INSERT INTO {{zone_name}}.delta_demos.order_events VALUES
+INSERT INTO {{zone_name}}.delta_demos.appendonly_order_events VALUES
     (36, 1009, 'order.confirmed',   175.50, 'system', '2024-06-01 12:05:00'),
     (37, 1009, 'payment.received',  175.50, 'stripe', '2024-06-01 12:10:00'),
     (38, 1009, 'order.shipped',     175.50, 'bob',    '2024-06-01 15:00:00'),

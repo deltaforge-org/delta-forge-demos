@@ -26,7 +26,7 @@ from pyspark.sql.functions import col
 def verify_subscriptions(spark, data_root, verbose=False):
     print_section("subscriptions -- Final State")
 
-    table_path = os.path.join(data_root, "subscriptions")
+    table_path = os.path.join(data_root, "computed_subscriptions")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -72,7 +72,7 @@ def main():
     print_header("Delta Merge Computed Columns -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    for tbl_name in ("subscriptions", "subscription_changes"):
+    for tbl_name in ("computed_subscriptions", "subscription_changes"):
         tbl_dir = os.path.join(data_root, tbl_name)
         if not os.path.isdir(tbl_dir):
             print(f"\nError: {tbl_dir} not found")

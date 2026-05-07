@@ -24,7 +24,7 @@ from pyspark.sql.functions import col
 def verify_patient_records(spark, data_root, verbose=False):
     print_section("patient_records -- Final State")
 
-    table_path = os.path.join(data_root, "patient_records")
+    table_path = os.path.join(data_root, "backfill_patient_records")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -56,7 +56,7 @@ def main():
     print_header("Delta Update Null Backfill -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "patient_records")
+    tbl_dir = os.path.join(data_root, "backfill_patient_records")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

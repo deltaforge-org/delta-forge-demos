@@ -28,7 +28,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: sensor_telemetry — IoT sensor readings with multi-dimensional access
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.zorder_sensor_telemetry (
     id              INT,
     device_id       VARCHAR,
     sensor_type     VARCHAR,
@@ -39,13 +39,13 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.sensor_telemetry (
     region          VARCHAR,
     quality_score   INT,
     recorded_date   VARCHAR
-) LOCATION 'delta-zorder-deep/sensor_telemetry';
+) LOCATION 'delta-zorder-deep/zorder_sensor_telemetry';
 
 
 -- ============================================================================
 -- STEP 2: Batch 1 — 30 rows: temperature & humidity from us-east, eu-west
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
+INSERT INTO {{zone_name}}.delta_demos.zorder_sensor_telemetry VALUES
     (1,  'DEV-001', 'temperature', 22.5,  'celsius', 40.7128, -74.0060, 'us-east', 95, '2025-03-01'),
     (2,  'DEV-002', 'temperature', 18.3,  'celsius', 42.3601, -71.0589, 'us-east', 88, '2025-03-01'),
     (3,  'DEV-003', 'temperature', 25.1,  'celsius', 33.7490, -84.3880, 'us-east', 92, '2025-03-02'),
@@ -81,7 +81,7 @@ INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry VALUES
 -- ============================================================================
 -- STEP 3: Batch 2 — 25 rows: pressure & wind from us-west, ap-south
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry
+INSERT INTO {{zone_name}}.delta_demos.zorder_sensor_telemetry
 SELECT * FROM (VALUES
     (31, 'DEV-031', 'pressure',  1013.2, 'hPa',  37.7749, -122.4194, 'us-west',  92, '2025-03-01'),
     (32, 'DEV-032', 'pressure',  1010.5, 'hPa',  34.0522, -118.2437, 'us-west',  88, '2025-03-01'),
@@ -114,7 +114,7 @@ SELECT * FROM (VALUES
 -- ============================================================================
 -- STEP 4: Batch 3 — 25 rows: mixed sensor types from all regions
 -- ============================================================================
-INSERT INTO {{zone_name}}.delta_demos.sensor_telemetry
+INSERT INTO {{zone_name}}.delta_demos.zorder_sensor_telemetry
 SELECT * FROM (VALUES
     (56, 'DEV-056', 'temperature', 27.2,   'celsius', 40.7128, -74.0060, 'us-east',  98, '2025-03-08'),
     (57, 'DEV-057', 'temperature', 14.5,   'celsius', 51.5074, -0.1278,  'eu-west',  83, '2025-03-08'),
@@ -152,6 +152,6 @@ SELECT * FROM (VALUES
 -- Affected rows (quality_score < 50):
 --   id=6(30), id=11(25), id=19(35), id=25(20),
 --   id=30(10), id=39(45), id=52(15), id=80(38) = 8 rows
-UPDATE {{zone_name}}.delta_demos.sensor_telemetry
+UPDATE {{zone_name}}.delta_demos.zorder_sensor_telemetry
 SET quality_score = 0
 WHERE quality_score < 50;

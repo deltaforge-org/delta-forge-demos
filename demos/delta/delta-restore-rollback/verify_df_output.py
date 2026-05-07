@@ -17,7 +17,7 @@ from pyspark.sql.functions import col
 def verify_product_inventory(spark, data_root, verbose=False):
     print_section("product_inventory -- Final State")
 
-    table_path = os.path.join(data_root, "product_inventory")
+    table_path = os.path.join(data_root, "rollback_product_inventory")
     df = spark.read.format("delta").load(table_path)
     row_count = df.count()
     col_count = len(df.columns)
@@ -45,7 +45,7 @@ def main():
     print_header("Delta Restore Rollback -- Data Verification")
     print(f"  Data root: {data_root}")
 
-    tbl_dir = os.path.join(data_root, "product_inventory")
+    tbl_dir = os.path.join(data_root, "rollback_product_inventory")
     if not os.path.isdir(tbl_dir):
         print(f"\nError: {tbl_dir} not found")
         sys.exit(1)

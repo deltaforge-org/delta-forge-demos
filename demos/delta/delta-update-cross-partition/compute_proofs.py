@@ -349,7 +349,7 @@ print("=" * 80)
 for region in ['americas', 'europe', 'asia-pacific']:
     region_rows = [r for r in rows if r[REGION] == region]
     print(f"\n-- Region: {region} ({len(region_rows)} rows)")
-    print(f"INSERT INTO {{{{zone_name}}}}.delta_demos.subscriptions VALUES")
+    print(f"INSERT INTO {{{{zone_name}}}}.delta_demos.crosspart_subscriptions VALUES")
     for i, row in enumerate(region_rows):
         comma = ',' if i < len(region_rows) - 1 else ';'
         id_, cust, reg, plan, fee, usage, signup, status = row

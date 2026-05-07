@@ -4,7 +4,7 @@
 -- Removes all objects created by setup.sql.
 -- ============================================================================
 
-DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.audit_log WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.geo_audit_log WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.documents WITH FILES;
 DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.locations WITH FILES;
 
