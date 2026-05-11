@@ -79,7 +79,7 @@
 -- predicates on the leading column (or leading + trailing) hit the
 -- index; predicates on the trailing column alone do not.
 
-CREATE INDEX idx_sensor_time
+CREATE INDEX IF NOT EXISTS idx_sensor_time
     ON TABLE {{zone_name}}.delta_demos.iot_sensor_telemetry (sensor_id, reading_time)
     WITH (auto_update = true);
 

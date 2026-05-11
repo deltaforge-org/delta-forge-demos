@@ -25,7 +25,11 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
     COMMENT 'Delta table management tutorial demos';
 
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.iot_sensor_telemetry (
+DROP INDEX IF EXISTS idx_sensor_time ON TABLE {{zone_name}}.delta_demos.iot_sensor_telemetry;
+
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.iot_sensor_telemetry WITH FILES;
+
+CREATE DELTA TABLE {{zone_name}}.delta_demos.iot_sensor_telemetry (
     sensor_id     VARCHAR,
     reading_time  VARCHAR,
     sensor_kind   VARCHAR,

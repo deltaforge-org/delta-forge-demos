@@ -63,7 +63,7 @@
 -- UPDATE / DELETE / MERGE has to scan every file just to find the row
 -- before rewriting it. The index makes the locate step a targeted read.
 
-CREATE INDEX idx_tracking
+CREATE INDEX IF NOT EXISTS idx_tracking
     ON TABLE {{zone_name}}.delta_demos.shipment_orders (tracking_number)
     WITH (auto_update = true);
 

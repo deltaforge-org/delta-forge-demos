@@ -30,7 +30,11 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- ============================================================================
 -- TABLE: customers — high-cardinality customer_id, ideal for row-level index
 -- ============================================================================
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.customers (
+DROP INDEX IF EXISTS idx_customer_id ON TABLE {{zone_name}}.delta_demos.customers;
+
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.customers WITH FILES;
+
+CREATE DELTA TABLE {{zone_name}}.delta_demos.customers (
     customer_id   BIGINT,
     email         VARCHAR,
     full_name     VARCHAR,

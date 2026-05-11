@@ -20,7 +20,13 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
     COMMENT 'Delta table management tutorial demos';
 
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.marketplace_listings (
+DROP INDEX IF EXISTS idx_sku            ON TABLE {{zone_name}}.delta_demos.marketplace_listings;
+DROP INDEX IF EXISTS idx_brand          ON TABLE {{zone_name}}.delta_demos.marketplace_listings;
+DROP INDEX IF EXISTS idx_category_price ON TABLE {{zone_name}}.delta_demos.marketplace_listings;
+
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.marketplace_listings WITH FILES;
+
+CREATE DELTA TABLE {{zone_name}}.delta_demos.marketplace_listings (
     listing_id    BIGINT,
     sku           VARCHAR,
     brand         VARCHAR,

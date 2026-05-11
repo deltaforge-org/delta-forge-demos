@@ -70,7 +70,7 @@
 -- `auto_update = true` keeps the index in sync as new customers are
 -- added — no manual REBUILD step required.
 
-CREATE INDEX idx_customer_id
+CREATE INDEX IF NOT EXISTS idx_customer_id
     ON TABLE {{zone_name}}.delta_demos.customers (customer_id)
     WITH (auto_update = true);
 

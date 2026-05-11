@@ -17,7 +17,11 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
     COMMENT 'Delta table management tutorial demos';
 
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.library_catalog (
+DROP INDEX IF EXISTS idx_isbn ON TABLE {{zone_name}}.delta_demos.library_catalog;
+
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.library_catalog WITH FILES;
+
+CREATE DELTA TABLE {{zone_name}}.delta_demos.library_catalog (
     isbn         VARCHAR,
     title        VARCHAR,
     author       VARCHAR,

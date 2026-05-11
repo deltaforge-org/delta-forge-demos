@@ -85,7 +85,7 @@
 -- per night after the load finishes. This is the configuration that
 -- exposes the staleness lifecycle the rest of this demo walks through.
 
-CREATE INDEX idx_isbn
+CREATE INDEX IF NOT EXISTS idx_isbn
     ON TABLE {{zone_name}}.delta_demos.library_catalog (isbn)
     WITH (auto_update = false);
 

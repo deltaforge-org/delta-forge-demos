@@ -73,15 +73,15 @@
 -- 3. idx_category_price : faceted browse, leading-column equality
 --                         plus a trailing range on price
 
-CREATE INDEX idx_sku
+CREATE INDEX IF NOT EXISTS idx_sku
     ON TABLE {{zone_name}}.delta_demos.marketplace_listings (sku)
     WITH (auto_update = true);
 
-CREATE INDEX idx_brand
+CREATE INDEX IF NOT EXISTS idx_brand
     ON TABLE {{zone_name}}.delta_demos.marketplace_listings (brand)
     WITH (auto_update = true);
 
-CREATE INDEX idx_category_price
+CREATE INDEX IF NOT EXISTS idx_category_price
     ON TABLE {{zone_name}}.delta_demos.marketplace_listings (category, price)
     WITH (auto_update = true);
 
