@@ -94,7 +94,9 @@ ORDER BY id;
 -- only 3 distinct values). This produces 3 partition directories with 20
 -- rows each, giving the engine large, efficient Parquet files to read.
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.events_by_month (
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.events_by_month WITH FILES;
+
+CREATE DELTA TABLE {{zone_name}}.delta_demos.events_by_month (
     id           INT,
     customer_id  VARCHAR,
     event_type   VARCHAR,
