@@ -993,7 +993,7 @@ FROM df_generate_table(200000000, '[
 ]') g;
 
 -- ==========================================================================
--- Schema Detection & Permissions
+-- Schema Detection
 -- ==========================================================================
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.retail.dim_date;
@@ -1003,11 +1003,3 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.retail.dim_customer;
 DETECT SCHEMA FOR TABLE {{zone_name}}.retail.fact_sales;
 DETECT SCHEMA FOR TABLE {{zone_name}}.retail.fact_inventory_snapshot;
 DETECT SCHEMA FOR TABLE {{zone_name}}.retail.fact_web_events;
-
-GRANT ADMIN ON TABLE {{zone_name}}.retail.dim_date                  TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.dim_store                 TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.dim_product               TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.dim_customer              TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.fact_sales                TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.fact_inventory_snapshot   TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.retail.fact_web_events           TO USER {{current_user}};

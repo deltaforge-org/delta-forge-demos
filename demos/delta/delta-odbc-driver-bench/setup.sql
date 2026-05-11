@@ -583,7 +583,7 @@ FROM (
 ) t;
 
 -- --------------------------------------------------------------------------
--- Schema Detection & Permissions
+-- Schema Detection
 -- --------------------------------------------------------------------------
 
 DETECT SCHEMA FOR TABLE {{zone_name}}.acme.market_ticks;
@@ -596,14 +596,3 @@ DETECT SCHEMA FOR TABLE {{zone_name}}.acme.banking_transactions;
 DETECT SCHEMA FOR TABLE {{zone_name}}.acme.shipment_orders;
 DETECT SCHEMA FOR TABLE {{zone_name}}.acme.patient_records;
 DETECT SCHEMA FOR TABLE {{zone_name}}.acme.forum_posts;
-
-GRANT ADMIN ON TABLE {{zone_name}}.acme.market_ticks          TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.manufacturing_runs    TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.support_tickets       TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.product_catalog       TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.knowledge_articles    TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.document_archive      TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.banking_transactions  TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.shipment_orders       TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.patient_records       TO USER {{current_user}};
-GRANT ADMIN ON TABLE {{zone_name}}.acme.forum_posts           TO USER {{current_user}};
