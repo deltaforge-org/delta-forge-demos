@@ -91,3 +91,33 @@ INSERT INTO {{zone_name}}.delta_demos.employee_directory VALUES
     (39, 'Monica Dunn',        'Finance',     'Auditor',                'monica.dunn@acme.com',        '2024-04-15', 88000.00,  1),
     (40, 'Nolan Perry',        'Operations',  'Logistics Coordinator',  'nolan.perry@acme.com',        '2024-02-28', 75000.00,  1);
 
+
+-- ============================================================================
+-- STEP 3: ALTER TABLE ADD COLUMN — instant schema evolution via column mapping
+-- ============================================================================
+-- Adding a new column to a column-mapped table only updates the transaction log
+-- metadata. No existing Parquet files are rewritten, so all pre-existing rows
+-- read NULL for the new column until they are individually updated.
+
+ALTER TABLE {{zone_name}}.delta_demos.employee_directory ADD COLUMN location VARCHAR;
+
+
+-- ============================================================================
+-- STEP 4: UPDATE — promote 5 employees (Senior/Lead titles)
+-- ============================================================================
+
+UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior Software Engineer' WHERE id = 1;
+UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior DevOps Engineer'   WHERE id = 3;
+UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Lead Marketing Analyst'   WHERE id = 11;
+UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior Financial Analyst' WHERE id = 21;
+UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior Operations Analyst' WHERE id = 26;
+
+
+-- ============================================================================
+-- STEP 5: UPDATE — deactivate 3 employees
+-- ============================================================================
+
+UPDATE {{zone_name}}.delta_demos.employee_directory SET is_active = 0 WHERE id = 10;
+UPDATE {{zone_name}}.delta_demos.employee_directory SET is_active = 0 WHERE id = 19;
+UPDATE {{zone_name}}.delta_demos.employee_directory SET is_active = 0 WHERE id = 29;
+

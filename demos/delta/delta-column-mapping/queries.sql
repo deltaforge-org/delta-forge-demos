@@ -9,15 +9,21 @@
 --       metadata. TBLPROPERTIES 'delta.columnMapping.mode' = 'name' enables
 --       this, requiring minReaderVersion=2 and minWriterVersion=5. ALTER TABLE
 --       ADD/RENAME/DROP COLUMN only updates the transaction log, not data files.
+--
+-- Setup applied:
+--   1. Created employee_directory with column mapping mode 'name' (8 columns)
+--   2. Inserted 40 employees across 6 departments
+--   3. ALTER TABLE ADD COLUMN location VARCHAR (zero data-file rewrites)
+--   4. Updated 5 employees to Senior/Lead titles
+--   5. Deactivated 3 employees (is_active = 0)
 -- ============================================================================
 
 
 -- ============================================================================
--- EXPLORE: Baseline State — 40 employees, 8 columns
+-- Query 1: Department breakdown across 40 employees
 -- ============================================================================
--- Before any modifications, let's see the department breakdown. The table
--- currently has 8 columns (id through is_active) and all 40 employees are
--- active.
+-- The table has 6 departments. Engineering has the most headcount.
+-- Average salaries reflect seniority mix per department.
 
 ASSERT ROW_COUNT = 6
 ASSERT VALUE headcount = 8 WHERE department = 'Engineering'
@@ -33,25 +39,12 @@ ORDER BY headcount DESC;
 
 
 -- ============================================================================
--- STEP 1: ALTER TABLE ADD COLUMN — schema evolution via column mapping
+-- Query 2: New column exists but is NULL for rows inserted before ADD COLUMN
 -- ============================================================================
--- This is the key operation that column mapping enables. Adding a new column
--- to a column-mapped table:
---   1. Adds the new column definition to the schema in the transaction log
---   2. Assigns it a unique column ID and physical name
---   3. Does NOT rewrite any existing Parquet files
--- Existing data files simply lack this column, so reads return NULL for it.
--- Without column mapping mode 'name', this operation would be more restrictive.
-
-ALTER TABLE {{zone_name}}.delta_demos.employee_directory ADD COLUMN location VARCHAR;
-
-
--- ============================================================================
--- OBSERVE: The new column exists but is NULL for all existing rows
--- ============================================================================
--- Since no Parquet files were rewritten, every pre-existing row has NULL for
--- 'location'. This is a major advantage of column mapping — instant schema
--- evolution with zero I/O cost on data files.
+-- The ADD COLUMN location VARCHAR operation in setup wrote zero Parquet bytes.
+-- Every row inserted before the schema change reads NULL for location.
+-- This is the core benefit of column mapping: instant schema evolution with
+-- zero I/O cost on existing data files.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 10
@@ -65,30 +58,11 @@ LIMIT 10;
 
 
 -- ============================================================================
--- STEP 2: UPDATE — promote 5 employees (Senior/Lead titles)
+-- Query 3: Promoted employees — 5 rows with Senior/Lead titles
 -- ============================================================================
--- In a column-mapped table, UPDATEs create new data files with the modified
--- rows. The column mapping ensures columns are referenced by their physical
--- IDs rather than names, so the UPDATE works correctly even though the schema
--- has evolved (location column added above).
-
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior Software Engineer' WHERE id = 1;
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior DevOps Engineer'   WHERE id = 3;
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Lead Marketing Analyst'   WHERE id = 11;
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior Financial Analyst' WHERE id = 21;
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET title = 'Senior Operations Analyst' WHERE id = 26;
-
-
--- ============================================================================
--- OBSERVE: Promoted employees after UPDATE
--- ============================================================================
--- Let's confirm the promotions took effect. Note that the 'location' column
--- is still NULL for these rows — the UPDATE changed only 'title'.
+-- Setup promoted 5 employees via UPDATE. The column mapping ensures columns
+-- are referenced by their physical IDs rather than names, so the UPDATE worked
+-- correctly even after the schema evolution that added the location column.
 
 ASSERT ROW_COUNT = 5
 SELECT id, full_name, department, title, salary, location
@@ -98,23 +72,10 @@ ORDER BY department, full_name;
 
 
 -- ============================================================================
--- STEP 3: UPDATE — deactivate 3 employees (is_active = 0)
+-- Query 4: Deactivated employees (is_active = 0)
 -- ============================================================================
--- Another DML operation on the column-mapped table. The physical column IDs
--- ensure that is_active is correctly identified regardless of any schema
--- evolution that has occurred.
-
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET is_active = 0 WHERE id = 10;
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET is_active = 0 WHERE id = 19;
-ASSERT ROW_COUNT = 1
-UPDATE {{zone_name}}.delta_demos.employee_directory SET is_active = 0 WHERE id = 29;
-
-
--- ============================================================================
--- OBSERVE: Deactivated employees (ids 10, 19, 29)
--- ============================================================================
+-- Setup deactivated employees 10, 19, and 29 via UPDATE. The physical column
+-- ID for is_active is preserved by column mapping regardless of schema changes.
 
 ASSERT NO_FAIL IN result
 ASSERT ROW_COUNT = 3
@@ -125,21 +86,15 @@ ORDER BY id;
 
 
 -- ============================================================================
--- LEARN: Column Mapping vs Non-Mapped Tables
+-- Query 5: Salary distribution across departments — active employees only
 -- ============================================================================
--- In a non-mapped Delta table, column identity is determined by name and
--- position in the Parquet schema. This means:
---   - Renaming a column requires rewriting all data files
---   - Dropping a column requires rewriting all data files
---   - Adding a column at a specific position is complex
+-- In a column-mapped table, column identity is determined by ID, not by name
+-- and position in the Parquet schema. This means:
+--   - Renaming a column requires updating metadata only
+--   - Dropping a column requires updating metadata only
+--   - Adding a column at a specific position is supported without rewriting data
 --
--- With column mapping mode 'name':
---   - Each column has a unique ID (delta.columnMapping.id)
---   - Physical Parquet names can differ from logical names
---   - Rename = update metadata only
---   - Drop = update metadata only (data remains but is ignored)
---
--- Let's look at salary distribution across departments for active employees.
+-- Here we query salary stats for the 37 active employees across all departments.
 
 ASSERT ROW_COUNT = 6
 ASSERT VALUE avg_salary = 110000 WHERE department = 'Engineering'
@@ -159,7 +114,7 @@ ORDER BY avg_salary DESC;
 
 
 -- ============================================================================
--- EXPLORE: Full Employee Directory
+-- Query 6: Full Employee Directory with location column
 -- ============================================================================
 
 ASSERT ROW_COUNT = 40
@@ -200,7 +155,7 @@ SELECT COUNT(*) FILTER (WHERE is_active = 1) AS active_count FROM {{zone_name}}.
 ASSERT VALUE engineering_count = 8
 SELECT COUNT(*) AS engineering_count FROM {{zone_name}}.delta_demos.employee_directory WHERE department = 'Engineering';
 
--- Verify all locations are NULL (added via column mapping)
+-- Verify all locations are NULL (added via column mapping, never populated)
 ASSERT VALUE location_null_count = 40
 SELECT COUNT(*) AS location_null_count FROM {{zone_name}}.delta_demos.employee_directory WHERE location IS NULL;
 
