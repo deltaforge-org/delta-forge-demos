@@ -44,7 +44,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.backfill_patient_reco
     last_visit        VARCHAR,
     temperature       DECIMAL(5,2),
     notes             VARCHAR
-) LOCATION 'delta-update-null-backfill/backfill_patient_records';
+) LOCATION 'delta-update-null-backfill/backfill_patient_records'
+TBLPROPERTIES ('delta.enableDeletionVectors' = 'false');
 
 
 -- ============================================================================
