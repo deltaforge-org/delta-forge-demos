@@ -33,8 +33,6 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.delta_demos
 -- bitmap marking which rows are logically removed. The index identifies
 -- the row to mark; the DV avoids the full-file rewrite.
 
-DROP INDEX IF EXISTS idx_tracking ON TABLE {{zone_name}}.delta_demos.shipment_orders;
-
 DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.shipment_orders WITH FILES;
 
 CREATE DELTA TABLE {{zone_name}}.delta_demos.shipment_orders (
