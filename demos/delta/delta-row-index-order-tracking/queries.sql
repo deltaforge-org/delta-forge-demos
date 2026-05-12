@@ -153,11 +153,11 @@ FROM {{zone_name}}.delta_demos.shipment_orders;
 
 MERGE INTO {{zone_name}}.delta_demos.shipment_orders AS t
 USING (
-    SELECT '1Z9X7K0011L' AS tracking_number, 'out_for_delivery' AS new_status, NULL AS new_order
+    SELECT '1Z9X7K0011L' AS tracking_number, 'out_for_delivery' AS new_status
     UNION ALL
-    SELECT '1Z9X7K0023Y',                    'delivered',                       NULL
+    SELECT '1Z9X7K0023Y',                    'delivered'
     UNION ALL
-    SELECT '1Z9X7K0051C',                    'preparing',                       1
+    SELECT '1Z9X7K0051C',                    'preparing'
 ) AS s
 ON t.tracking_number = s.tracking_number
 WHEN MATCHED THEN
