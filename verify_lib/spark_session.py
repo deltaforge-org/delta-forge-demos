@@ -111,6 +111,7 @@ def get_spark():
                 .config("spark.driver.memory", "4g")
                 .config("spark.ui.showConsoleProgress", "false")
                 .config("spark.log.level", "WARN")
+                .config("spark.sql.session.timeZone", "UTC")
         )
         _session = builder.getOrCreate()
     except ImportError:
@@ -124,6 +125,7 @@ def get_spark():
             .config("spark.driver.memory", "4g") \
             .config("spark.ui.showConsoleProgress", "false") \
             .config("spark.log.level", "WARN") \
+            .config("spark.sql.session.timeZone", "UTC") \
             .getOrCreate()
     return _session
 
