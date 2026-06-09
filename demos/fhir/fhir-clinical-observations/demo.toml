@@ -1,0 +1,121 @@
+[demo]
+id = "fhir-clinical-observations"
+name = "FHIR Clinical Observations — Vital Signs & Lab Results"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates FHIR R5 Observation resource ingestion across two data sources: \
+a bulk NDJSON export of 100 heart rate observations and 14 individual clinical \
+observation files covering vital signs (body weight, height, BMI, blood \
+pressure, temperature, respiratory rate, SpO2), lab results (glucose, CO2, \
+hemoglobin, erythrocyte), and clinical assessments (Glasgow Coma Scale). Two \
+tables show bulk vs individual resource patterns. Covers deep nested JSON \
+flattening (CodeableConcept, Quantity, Reference), column_mappings for FHIR \
+paths, schema evolution across observation types, and multi-file reading.
+"""
+categories = ["healthcare", "json"]
+tags = ["fhir", "healthcare", "json", "intermediate", "observation", "vital-signs", "lab-results", "ndjson", "nested-json"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the directory containing FHIR Observation JSON and NDJSON files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/Observation.ndjson"
+format = "ndjson"
+description = "FHIR Bulk Data export — 100 heart rate observations, one JSON object per line"
+size_bytes = 33000
+
+[[demo.data_files]]
+path = "data/observation-example.json"
+format = "json"
+description = "Body Weight observation — 185 lbs with LOINC and SNOMED coding"
+size_bytes = 4200
+
+[[demo.data_files]]
+path = "data/observation-example-heart-rate.json"
+format = "json"
+description = "Heart rate observation — 44 bpm with LOINC coding"
+size_bytes = 2800
+
+[[demo.data_files]]
+path = "data/observation-example-bloodpressure.json"
+format = "json"
+description = "Blood pressure panel — systolic 107/60 with component observations"
+size_bytes = 6500
+
+[[demo.data_files]]
+path = "data/observation-example-bmi.json"
+format = "json"
+description = "BMI observation — 16.2 kg/m2"
+size_bytes = 2400
+
+[[demo.data_files]]
+path = "data/observation-example-body-height.json"
+format = "json"
+description = "Body height observation — 66.89 inches"
+size_bytes = 2600
+
+[[demo.data_files]]
+path = "data/observation-example-body-temperature.json"
+format = "json"
+description = "Body temperature observation — 36.5 Celsius"
+size_bytes = 2200
+
+[[demo.data_files]]
+path = "data/observation-example-respiratory-rate.json"
+format = "json"
+description = "Respiratory rate observation — 26 breaths/minute"
+size_bytes = 2500
+
+[[demo.data_files]]
+path = "data/observation-example-f001-glucose.json"
+format = "json"
+description = "Lab result — blood glucose 6.3 mmol/l with reference range"
+size_bytes = 4800
+
+[[demo.data_files]]
+path = "data/observation-example-f002-excess.json"
+format = "json"
+description = "Lab result — base excess -3.7 mEq/L"
+size_bytes = 4500
+
+[[demo.data_files]]
+path = "data/observation-example-f003-co2.json"
+format = "json"
+description = "Lab result — CO2 partial pressure 6.2 kPa"
+size_bytes = 4600
+
+[[demo.data_files]]
+path = "data/observation-example-f004-erythrocyte.json"
+format = "json"
+description = "Lab result — erythrocyte count 4.12 10^12/L"
+size_bytes = 4400
+
+[[demo.data_files]]
+path = "data/observation-example-f005-hemoglobin.json"
+format = "json"
+description = "Lab result — hemoglobin 7.2 g/dl"
+size_bytes = 4300
+
+[[demo.data_files]]
+path = "data/observation-example-satO2.json"
+format = "json"
+description = "Oxygen saturation observation — 95% via pulse oximetry"
+size_bytes = 3000
+
+[[demo.data_files]]
+path = "data/observation-example-glasgow.json"
+format = "json"
+description = "Glasgow Coma Scale — multi-component clinical assessment score"
+size_bytes = 5500
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.observations_bulk"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.observations_clinical"

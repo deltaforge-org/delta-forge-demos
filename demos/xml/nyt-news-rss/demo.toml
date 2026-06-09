@@ -1,0 +1,73 @@
+[demo]
+id = "nyt-news-rss"
+name = "XML NYT News — RSS Feed Analysis"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates XML namespace handling, repeating element modes, and multi-file \
+reading using real NYT World News RSS feeds. Seven regional XML files \
+(Africa, Americas, Asia-Pacific, Europe, Middle East, World, and a global \
+news snapshot) contain 231 news items with 4 XML namespaces (dc:, media:, \
+atom:, nyt:), repeating <category> elements (0–27 per item), self-closing \
+<media:content/> elements with attributes, and optional media descriptions. \
+Two tables show the same data: one with categories joined as comma strings, \
+another exploded to one row per category for keyword analytics.
+"""
+categories = ["xml"]
+tags = ["xml", "intermediate", "namespaces", "repeating-elements", "explode", "column-mappings", "rss", "news"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo XML data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/Africa.xml"
+format = "xml"
+description = "NYT Africa feed — 20 news items (Mar 2025)"
+size_bytes = 42248
+
+[[demo.data_files]]
+path = "data/Americas.xml"
+format = "xml"
+description = "NYT Americas feed — 31 news items (Mar 2025)"
+size_bytes = 71887
+
+[[demo.data_files]]
+path = "data/AsiaPacific.xml"
+format = "xml"
+description = "NYT Asia-Pacific feed — 20 news items (Mar 2025)"
+size_bytes = 38154
+
+[[demo.data_files]]
+path = "data/Europe.xml"
+format = "xml"
+description = "NYT Europe feed — 20 news items (Mar 2025)"
+size_bytes = 44327
+
+[[demo.data_files]]
+path = "data/MiddleEast.xml"
+format = "xml"
+description = "NYT Middle East feed — 26 news items (Mar 2025)"
+size_bytes = 57341
+
+[[demo.data_files]]
+path = "data/World.xml"
+format = "xml"
+description = "NYT World feed — 57 news items (Mar 2025)"
+size_bytes = 121399
+
+[[demo.data_files]]
+path = "data/news.xml"
+format = "xml"
+description = "NYT World News snapshot — 57 news items (Feb 2025)"
+size_bytes = 116702
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.xml.news_articles"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.xml.news_categories"

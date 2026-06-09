@@ -1,0 +1,28 @@
+[demo]
+id = "iceberg-uniform-basics"
+name = "Iceberg UniForm — Enable Dual-Format Metadata"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates the core Iceberg UniForm feature: enabling automatic Iceberg \
+metadata generation on a Delta table by setting \
+`delta.universalFormat.enabledFormats = 'iceberg'`. After enabling, every \
+Delta commit produces Iceberg-compatible metadata (metadata.json, manifest \
+lists, manifest files) alongside the Delta transaction log — making the \
+table readable by any Iceberg engine (Spark, Trino, DuckDB) without \
+conversion. Uses a product catalog dataset to show property configuration, \
+DML operations with dual metadata, and DESCRIBE commands to inspect the \
+resulting table state.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "tblproperties", "dual-format", "metadata"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.product_catalog"

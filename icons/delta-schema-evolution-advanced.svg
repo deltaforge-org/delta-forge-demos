@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="se" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c084fc"/>
+      <stop offset="1" stop-color="#9333ea"/>
+    </linearGradient>
+  </defs>
+  <!-- Original schema (3 columns) -->
+  <rect x="8" y="10" width="12" height="30" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <rect x="22" y="10" width="12" height="30" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <rect x="36" y="10" width="12" height="30" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <!-- Evolution arrow -->
+  <path d="M52 25L58 25" stroke="url(#se)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M55 21L59 25L55 29" stroke="url(#se)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Evolved schema (5 columns, wider) -->
+  <rect x="8" y="46" width="10" height="24" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <rect x="20" y="46" width="10" height="24" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <rect x="32" y="46" width="10" height="24" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <!-- New columns highlighted -->
+  <rect x="44" y="46" width="10" height="24" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".35"/>
+  <rect x="56" y="46" width="10" height="24" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".35"/>
+  <!-- Plus indicators on new columns -->
+  <text x="49" y="55" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#se)" opacity=".8">+</text>
+  <text x="61" y="55" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#se)" opacity=".8">+</text>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#se)" opacity=".6">EVOLVE</text>
+</svg>

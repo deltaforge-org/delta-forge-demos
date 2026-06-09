@@ -1,0 +1,28 @@
+[demo]
+id = "delta-restore-partitioned"
+name = "Delta Recovery Strategy — RESTORE vs Partition Replace"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Full RESTORE rewinds an entire table to a prior version — but when only one \
+partition is corrupted, it also destroys good changes in other partitions. This \
+demo follows a retail chain tracking quarterly revenue. A bad data import applies \
+wrong tax rates to Q1 figures, but Q2 already has a price correction and Q3 has \
+late-arriving transactions. RESTORE would undo all of that. Instead, we use a \
+partition-scoped replacement pattern: DELETE the corrupted Q1 partition, then \
+INSERT the clean Q1 data from a historical version using VERSION AS OF. The \
+result: Q1 is surgically repaired while Q2 corrections and Q3 inserts are \
+completely preserved.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "restore", "partitioning", "recovery", "partition-replace", "retail", "revenue"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.quarterly_revenue"

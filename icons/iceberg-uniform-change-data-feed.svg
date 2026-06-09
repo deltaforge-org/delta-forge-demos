@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ucdf" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e11d48"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+  </defs>
+  <!-- Shopping bag body -->
+  <rect x="18" y="30" width="44" height="38" rx="4" fill="url(#ucdf)" opacity=".2" stroke="url(#ucdf)" stroke-width="1.5"/>
+  <!-- Bag handles -->
+  <path d="M30 30V22a10 10 0 0 1 20 0v8" stroke="url(#ucdf)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Delta/change arrow (right) -->
+  <path d="M48 44l8 5-8 5" stroke="url(#ucdf)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Delta/change arrow (left) -->
+  <path d="M32 54l-8-5 8-5" stroke="url(#ucdf)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Center data dots -->
+  <circle cx="40" cy="42" r="2" fill="url(#ucdf)" opacity=".6"/>
+  <circle cx="40" cy="49" r="2" fill="url(#ucdf)" opacity=".6"/>
+  <circle cx="40" cy="56" r="2" fill="url(#ucdf)" opacity=".6"/>
+</svg>

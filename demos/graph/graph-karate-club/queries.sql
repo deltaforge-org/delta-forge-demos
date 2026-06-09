@@ -1,0 +1,947 @@
+-- ############################################################################
+-- ############################################################################
+--
+--   ZACHARY'S KARATE CLUB — CLASSIC GRAPH BENCHMARK
+--   34 Vertices / 78 Undirected Edges (canonical src<dst) / Weight = 1.0
+--
+-- ############################################################################
+-- ############################################################################
+--
+-- The most studied graph in network science (Zachary, 1977). A university
+-- karate club split into two factions around the instructor (node 0) and
+-- president (node 33). Decades of published results provide golden values
+-- for community detection, centrality, and structural metrics.
+--
+-- PART 1: DATA INTEGRITY CHECKS (queries 1–4)
+-- PART 2: CYPHER — GRAPH EXPLORATION (queries 5–10)
+-- PART 3: CYPHER — GRAPH ALGORITHMS (queries 11–25)
+-- PART 4: VERIFICATION SUMMARY (query 26)
+--
+-- ############################################################################
+
+
+-- ############################################################################
+-- PART 1: DATA INTEGRITY CHECKS
+-- ############################################################################
+
+
+-- ============================================================================
+-- 1. VERTEX & EDGE COUNTS — Verify data loaded correctly
+-- ============================================================================
+-- 34 vertices, 78 canonical edge rows (src < dst). The graph is UNDIRECTED,
+-- so the engine materializes the reverse direction internally when building
+-- the CSR — no need to duplicate rows in storage.
+
+-- Verify vertex count
+ASSERT VALUE row_count = 34
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_club.vertices;
+
+-- Verify edge count (78 canonical rows; engine doubles to 156 CSR edges)
+ASSERT VALUE row_count = 78
+SELECT COUNT(*) AS row_count FROM {{zone_name}}.karate_club.edges;
+
+
+-- ============================================================================
+-- 2. GRAPH CONFIG — Verify graph definition
+-- ============================================================================
+
+SHOW GRAPH;
+
+
+-- ============================================================================
+-- 3. REFERENTIAL INTEGRITY — All edges have valid endpoints
+-- ============================================================================
+
+ASSERT VALUE orphan_edges = 0
+SELECT COUNT(*) AS orphan_edges
+FROM {{zone_name}}.karate_club.edges e
+WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.src)
+   OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.dst);
+
+
+-- ============================================================================
+-- 4. SELF-LOOP CHECK — No member should be friends with themselves
+-- ============================================================================
+
+ASSERT VALUE self_loops = 0
+SELECT COUNT(*) AS self_loops
+FROM {{zone_name}}.karate_club.edges
+WHERE src = dst;
+
+
+-- ############################################################################
+-- PART 2: CYPHER — GRAPH EXPLORATION
+-- ############################################################################
+
+
+-- ============================================================================
+-- 5. EDGE TYPE MIX — What kinds of bonds exist in the club?
+-- ============================================================================
+-- 5 distinct edge types: training-partner, sparring-buddy, class-friend,
+-- practice-mate, social-contact.
+
+ASSERT ROW_COUNT = 5
+USE {{zone_name}}.karate_club.karate_club
+MATCH (a)-[r]->(b)
+RETURN r.edge_type AS type, count(r) AS count
+ORDER BY count DESC;
+
+
+-- ============================================================================
+-- 6. BROWSE VERTICES — List all 34 club members
+-- ============================================================================
+
+ASSERT ROW_COUNT = 34
+USE {{zone_name}}.karate_club.karate_club
+MATCH (v)
+RETURN v.id AS member_id, v.name AS name, v.role AS role
+ORDER BY member_id;
+
+
+-- ============================================================================
+-- 7. DEGREE DISTRIBUTION — How many friends does each member have?
+-- ============================================================================
+-- Counts outgoing edges per node. Graph is UNDIRECTED, so the engine adds
+-- the reverse of each canonical (src < dst) edge at CSR build time — each
+-- node's out-degree in the CSR equals its undirected degree.
+-- Known (NetworkX-verified): Node 33 = 17, Node 0 = 16, Node 32 = 12,
+-- Node 2 = 10, Node 1 = 9.
+
+-- All 34 nodes have at least one edge
+ASSERT ROW_COUNT = 34
+ASSERT VALUE degree = 17 WHERE member_id = 33
+ASSERT VALUE degree = 16 WHERE member_id = 0
+USE {{zone_name}}.karate_club.karate_club
+MATCH (a)-[r]->(b)
+RETURN a.id AS member_id, a.name AS name, COUNT(r) AS degree
+ORDER BY degree DESC, member_id ASC;
+
+
+-- ============================================================================
+-- 8. TOP HUBS — The two faction leaders
+-- ============================================================================
+-- Expected top-5 (NetworkX-verified): 33(17), 0(16), 32(12), 2(10), 1(9).
+
+ASSERT ROW_COUNT = 5
+ASSERT VALUE degree = 17 WHERE member_id = 33
+ASSERT VALUE degree = 16 WHERE member_id = 0
+ASSERT VALUE degree = 12 WHERE member_id = 32
+ASSERT VALUE degree = 10 WHERE member_id = 2
+ASSERT VALUE degree = 9 WHERE member_id = 1
+USE {{zone_name}}.karate_club.karate_club
+MATCH (a)-[r]->(b)
+RETURN a.id AS member_id, a.name AS name, COUNT(r) AS degree
+ORDER BY degree DESC
+LIMIT 5;
+
+
+-- ============================================================================
+-- 9. NEIGHBORHOOD OF NODE 0 — Instructor's faction
+-- ============================================================================
+-- The instructor (node 0) has 16 direct friends (NetworkX-verified):
+-- [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 17, 19, 21, 31]
+-- Note: Node 33 (president) is NOT a direct neighbor of node 0.
+
+ASSERT ROW_COUNT = 16
+USE {{zone_name}}.karate_club.karate_club
+MATCH (a)-[r]->(b)
+WHERE a.id = 0
+RETURN b.id AS friend_id, b.name AS friend_name
+ORDER BY friend_id;
+
+
+-- ============================================================================
+-- 10. TWO-HOP REACHABILITY FROM NODE 0 — How far does influence reach?
+-- ============================================================================
+-- Expected: 26 distinct nodes reachable within 2 hops (includes source node 0
+-- via 2-hop cycles such as 0->1->0).
+-- 8 unreachable nodes: [14, 15, 18, 20, 22, 23, 26, 29].
+
+ASSERT VALUE reachable_in_2_hops = 26
+USE {{zone_name}}.karate_club.karate_club
+MATCH (a)-[*1..2]->(b)
+WHERE a.id = 0
+RETURN COUNT(DISTINCT b.id) AS reachable_in_2_hops;
+
+
+-- ############################################################################
+-- PART 3: CYPHER — GRAPH ALGORITHMS
+-- ############################################################################
+
+
+-- ============================================================================
+-- 11. PAGERANK — Identify most influential members
+-- ============================================================================
+-- NetworkX-verified top-5 (damping=0.85):
+--   Node 33 = 0.100918, Node 0 = 0.097002, Node 32 = 0.071692,
+--   Node 2 = 0.057078,  Node 1 = 0.052878
+-- Note: may require >20 iterations to fully converge on directed graphs.
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE rank = 1 WHERE node_id = 33
+ASSERT VALUE rank = 2 WHERE node_id = 0
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.pageRank({dampingFactor: 0.85, iterations: 20})
+YIELD node_id, score, rank
+RETURN node_id, score, rank
+ORDER BY score DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 12. DEGREE CENTRALITY — Raw connection counts
+-- ============================================================================
+-- Graph is UNDIRECTED. For undirected graphs the engine reports
+-- in_degree = out_degree = total_degree = the node's friend count (the CSR
+-- doubles the edges internally, so neighbours are visible via out_degree).
+-- NetworkX-verified top-5:
+--   Node 33: 17,  Node  0: 16,  Node 32: 12,  Node  2: 10,  Node  1:  9
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE total_degree = 17 WHERE node_id = 33
+ASSERT VALUE total_degree = 16 WHERE node_id = 0
+ASSERT VALUE total_degree = 12 WHERE node_id = 32
+ASSERT VALUE in_degree = 17 WHERE node_id = 33
+ASSERT VALUE in_degree = 16 WHERE node_id = 0
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.degree()
+YIELD node_id, in_degree, out_degree, total_degree
+RETURN node_id, in_degree, out_degree, total_degree
+ORDER BY total_degree DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 13. BETWEENNESS CENTRALITY — Bridge nodes
+-- ============================================================================
+-- NetworkX-verified (normalized, Brandes algorithm):
+--   Node 0 = 0.4376, Node 33 = 0.3041, Node 32 = 0.1452,
+--   Node 2 = 0.1437, Node 31 = 0.1383
+-- Node 0 has highest betweenness: it bridges many shortest paths.
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE rank = 1 WHERE node_id = 0
+ASSERT VALUE rank = 2 WHERE node_id = 33
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.betweenness()
+YIELD node_id, centrality, rank
+RETURN node_id, centrality, rank
+ORDER BY centrality DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 14. CLOSENESS CENTRALITY — How close is each member to all others?
+-- ============================================================================
+-- NetworkX-verified top-5:
+--   Node 0 = 0.5690, Node 2 = 0.5593, Node 33 = 0.5500,
+--   Node 31 = 0.5410, Node 8 = 0.5156
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE rank = 1 WHERE node_id = 0
+ASSERT VALUE rank = 2 WHERE node_id = 2
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.closeness()
+YIELD node_id, closeness, rank
+RETURN node_id, closeness, rank
+ORDER BY closeness DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 15. COMMUNITY DETECTION — Can we recover the two factions?
+-- ============================================================================
+-- Ground truth: 2 factions (instructor vs president), but Louvain optimises
+-- modularity and typically splits the network into 4-6 sub-communities.
+-- Louvain is non-deterministic — community count varies by node ordering.
+--
+-- Deterministic invariants (independent of run):
+--   • 3-6 communities (verified across NetworkX, igraph, DeltaForge)
+--   • All 34 members assigned (sum of members = 34)
+
+-- Non-deterministic: Louvain is stochastic — community count varies by node ordering
+ASSERT WARNING ROW_COUNT >= 3
+-- Non-deterministic: Louvain is stochastic — community count varies by node ordering
+ASSERT WARNING ROW_COUNT <= 10
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.louvain({resolution: 1.0})
+YIELD node_id, community_id
+RETURN community_id, count(*) AS members
+ORDER BY members DESC;
+
+
+-- ============================================================================
+-- 16. CONNECTED COMPONENTS — Is the graph fully connected?
+-- ============================================================================
+-- Expected: 1 connected component (all 34 members reachable from any node).
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE members = 34
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.connectedComponents()
+YIELD node_id, component_id
+RETURN component_id, count(*) AS members
+ORDER BY members DESC;
+
+
+-- ============================================================================
+-- 17. SHORTEST PATH — Distance between the two faction leaders
+-- ============================================================================
+-- Nodes 0 and 33 are NOT directly connected (no direct friendship edge).
+-- Shortest distance = 2 hops. Four equally valid paths exist:
+--   0 -> 8 -> 33,  0 -> 13 -> 33,  0 -> 19 -> 33,  0 -> 31 -> 33
+-- The intermediate node depends on graph traversal order.
+
+-- 3 steps: source (distance=0), intermediate (distance=1), target (distance=2)
+ASSERT ROW_COUNT = 3
+ASSERT VALUE distance = 0 WHERE step = 0
+ASSERT VALUE distance = 2 WHERE step = 2
+ASSERT VALUE node_id = 0 WHERE step = 0
+ASSERT VALUE node_id = 33 WHERE step = 2
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.shortestPath({source: 0, target: 33})
+YIELD node_id, step, distance
+RETURN node_id, step, distance
+ORDER BY step;
+
+
+-- ============================================================================
+-- 18. STRONGLY CONNECTED COMPONENTS — All nodes mutually reachable?
+-- ============================================================================
+-- Expected: 1 SCC containing all 34 nodes (NetworkX-verified).
+-- The graph is UNDIRECTED, so the engine traverses each edge in both
+-- directions — every node reaches every other node, giving a single SCC.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE members = 34
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.scc()
+YIELD node_id, component_id
+RETURN component_id, count(*) AS members
+ORDER BY members DESC;
+
+
+-- ============================================================================
+-- 19. TRIANGLE COUNT — Clustering structure
+-- ============================================================================
+-- NetworkX-verified: 45 unique triangles total.
+-- Top-5 by triangle participation:
+--   Node 0 = 18, Node 33 = 15, Node 32 = 13, Node 1 = 12, Node 2 = 11
+-- Each triangle counted once per participating node; divide total by 3
+-- for unique triangle count.
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE triangle_count = 18 WHERE node_id = 0
+ASSERT VALUE triangle_count = 15 WHERE node_id = 33
+ASSERT VALUE triangle_count = 13 WHERE node_id = 32
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.triangleCount()
+YIELD node_id, triangle_count
+RETURN node_id, triangle_count
+ORDER BY triangle_count DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 20. ALL SHORTEST PATHS FROM NODE 0 — Distance to every member
+-- ============================================================================
+-- NetworkX-verified: All 33 other nodes reachable, max distance = 3.0.
+-- 16 nodes at distance 1, 9 at distance 2, 8 at distance 3.
+-- Source node excluded from results (distance to self is trivial).
+
+ASSERT ROW_COUNT = 33
+ASSERT VALUE distance = 2.0 WHERE node_id = 33
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.allShortestPaths({source: 0})
+YIELD node_id, distance
+RETURN node_id, distance
+ORDER BY distance ASC, node_id ASC;
+
+
+-- ============================================================================
+-- 21. BFS TRAVERSAL FROM NODE 0 — Breadth-first layer structure
+-- ============================================================================
+-- NetworkX-verified: depth 0 = 1 node, depth 1 = 16 nodes,
+-- depth 2 = 9 nodes, depth 3 = 8 nodes. Max depth = 3.
+
+-- 4 depth levels (0, 1, 2, 3)
+ASSERT ROW_COUNT = 4
+ASSERT VALUE nodes_at_depth = 1 WHERE depth = 0
+ASSERT VALUE nodes_at_depth = 16 WHERE depth = 1
+ASSERT VALUE nodes_at_depth = 9 WHERE depth = 2
+ASSERT VALUE nodes_at_depth = 8 WHERE depth = 3
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.bfs({source: 0})
+YIELD node_id, depth
+RETURN depth, count(*) AS nodes_at_depth
+ORDER BY depth;
+
+
+-- ============================================================================
+-- 22. DFS TRAVERSAL FROM NODE 0 — Depth-first discovery
+-- ============================================================================
+-- All 34 nodes discovered. Discovery/finish times are implementation-dependent
+-- (vary with CSR neighbor ordering). Useful for verifying DFS traversal works.
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE discovery_time = 1 WHERE node_id = 0
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.dfs({source: 0})
+YIELD node_id, discovery_time, finish_time
+RETURN node_id, discovery_time, finish_time
+ORDER BY discovery_time
+LIMIT 10;
+
+
+-- ============================================================================
+-- 23. MINIMUM SPANNING TREE — Lightest connecting tree
+-- ============================================================================
+-- NetworkX-verified: 33 edges (n-1), total weight = 33.0 (all weights = 1.0).
+-- Any spanning tree is minimum since all edges have equal weight.
+
+-- Non-deterministic: MST edge selection and ordering vary when all edge weights are equal
+ASSERT WARNING ROW_COUNT = 10
+-- Note: all edges weight=1.0, so per-row weight asserts via WHERE are unreliable
+-- (target/source for any specific node depends on Kruskal processing order).
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.mst()
+YIELD sourceId, targetId, weight
+RETURN sourceId, targetId, weight
+ORDER BY sourceId, targetId
+LIMIT 10;
+
+
+-- ============================================================================
+-- 24. KNN — 5 Nearest Neighbors of Node 0 (by Jaccard similarity)
+-- ============================================================================
+-- NetworkX-verified top-5 most similar to node 0:
+--   Node 1 = 0.3889, Node 3 = 0.2941, Node 2 = 0.2381,
+--   Node 7 = 0.1765, Node 13 = 0.1667
+
+ASSERT ROW_COUNT = 5
+ASSERT VALUE neighbor_id = 1 WHERE rank = 1
+ASSERT VALUE neighbor_id = 3 WHERE rank = 2
+ASSERT VALUE neighbor_id = 2 WHERE rank = 3
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.knn({node: 0, k: 5})
+YIELD neighbor_id, similarity, rank
+RETURN neighbor_id, similarity, rank
+ORDER BY rank;
+
+
+-- ============================================================================
+-- 25. SIMILARITY — Compare the two faction leaders
+-- ============================================================================
+-- NetworkX-verified similarity between nodes 0 and 33:
+--   Jaccard = 0.1379 (4 common neighbors out of 29 union)
+--   Common neighbors: [8, 13, 19, 31]
+-- Despite leading rival factions, they share 4 mutual friends.
+
+ASSERT ROW_COUNT = 1
+-- Jaccard similarity: 4 common neighbors {8,13,19,31} out of 29 union = 4/29 ≈ 0.1379 (deterministic)
+ASSERT VALUE score >= 0.13
+ASSERT VALUE score <= 0.15
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.similarity({node1: 0, node2: 33})
+YIELD score
+RETURN score;
+
+
+-- ############################################################################
+-- PART 3B: NEO4J GDS PARITY ALGORITHMS
+-- ############################################################################
+-- Additional centrality, community, topology, pathfinding, and embedding
+-- algorithms ported from Neo4j GDS (graph-data-science 2.x).
+--
+-- PROOF VALUES below are generated by the live-Neo4j harness at
+-- `delta-forge-tests/graph_proof_harness/run_proofs.py`, which:
+--
+--   1. Spins up Neo4j 5.20 Community + GDS 2.6.9 in Docker.
+--   2. Loads this demo's `data/edges.csv` into Neo4j.
+--   3. Runs `gds.<algo>.stream(...)` for every algorithm below.
+--   4. Emits ASSERT lines with the observed values + ±0.001 tolerance
+--      bounds for floats, ranges across 10 seeds for stochastic algos.
+--
+-- For algorithms GDS Community omits (Bridges, Articulation Points)
+-- the harness falls back to NetworkX, which is algorithm-equivalent.
+--
+-- To regenerate after upgrading GDS or changing the seed data:
+--   cd delta-forge-tests/graph_proof_harness
+--   docker compose up -d
+--   pip install neo4j>=5.0 networkx
+--   python3 run_proofs.py --graph karate
+--   # paste each block from output/karate_proofs.sql into the matching
+--   # `-- NN.` section below.
+--
+-- Source standard: Neo4j GDS 2.6.9 (graph-data-science is Apache-2.0).
+
+
+-- ============================================================================
+-- 26. EIGENVECTOR CENTRALITY — Principal eigenvector of adjacency matrix
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.eigenvector.stream), UNDIRECTED projection.
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE rank = 1 WHERE node_id = 33
+ASSERT VALUE rank = 2 WHERE node_id = 0
+ASSERT VALUE rank = 3 WHERE node_id = 2
+ASSERT VALUE rank = 4 WHERE node_id = 32
+ASSERT VALUE rank = 5 WHERE node_id = 1
+ASSERT VALUE rank = 6 WHERE node_id = 8
+ASSERT VALUE rank = 7 WHERE node_id = 13
+ASSERT VALUE rank = 8 WHERE node_id = 3
+ASSERT VALUE rank = 9 WHERE node_id = 31
+ASSERT VALUE rank = 10 WHERE node_id = 30
+ASSERT VALUE score >= 0.3724 WHERE node_id = 33
+ASSERT VALUE score <= 0.3744 WHERE node_id = 33
+ASSERT VALUE score >= 0.3545 WHERE node_id = 0
+ASSERT VALUE score <= 0.3565 WHERE node_id = 0
+ASSERT VALUE score >= 0.3162 WHERE node_id = 2
+ASSERT VALUE score <= 0.3182 WHERE node_id = 2
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.eigenvector()
+YIELD node_id, score, rank
+RETURN node_id, score, rank
+ORDER BY score DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 27. HITS — Hub & Authority scores
+-- ============================================================================
+-- For undirected graphs, hub and authority converge to the same vector
+-- (A == A^T ⇒ identical fixed point). That symmetry is asserted below.
+-- Per-node value bounds come from Neo4j+GDS 2.6.9 — but GDS *requires* a
+-- directed projection for HITS, so its hub/authority values diverge from
+-- Delta Forge's undirected output. The structural symmetry assertion is
+-- the only invariant guaranteed to hold on both engines for undirected.
+
+ASSERT ROW_COUNT = 34
+-- Symmetry invariant: undirected ⇒ hub == authority for every node (within
+-- float tolerance). This is Delta Forge's expected behaviour; GDS does not
+-- satisfy it because HITS in GDS only runs on directed projections.
+ASSERT EXPRESSION SUM(CASE WHEN ABS(hub - authority) > 0.001 THEN 1 ELSE 0 END) = 0
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.hits()
+YIELD node_id, hub, authority
+RETURN node_id, hub, authority;
+
+
+-- ============================================================================
+-- 28. ARTICLERANK — PageRank variant with adjusted divisor
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.articleRank.stream).
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE rank = 1 WHERE node_id = 33
+ASSERT VALUE rank = 2 WHERE node_id = 0
+ASSERT VALUE rank = 3 WHERE node_id = 32
+ASSERT VALUE rank = 4 WHERE node_id = 2
+ASSERT VALUE rank = 5 WHERE node_id = 1
+ASSERT VALUE rank = 6 WHERE node_id = 31
+ASSERT VALUE rank = 7 WHERE node_id = 3
+ASSERT VALUE rank = 8 WHERE node_id = 23
+ASSERT VALUE rank = 9 WHERE node_id = 8
+ASSERT VALUE rank = 10 WHERE node_id = 13
+ASSERT VALUE score >= 0.5619 WHERE node_id = 33
+ASSERT VALUE score <= 0.5639 WHERE node_id = 33
+ASSERT VALUE score >= 0.5357 WHERE node_id = 0
+ASSERT VALUE score <= 0.5377 WHERE node_id = 0
+ASSERT VALUE score >= 0.4375 WHERE node_id = 32
+ASSERT VALUE score <= 0.4395 WHERE node_id = 32
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.articlerank({dampingFactor: 0.85, maxIterations: 20})
+YIELD node_id, score, rank
+RETURN node_id, score, rank
+ORDER BY score DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 29. HARMONIC CENTRALITY — Sum of reciprocal distances
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.closeness.harmonic.stream).
+
+ASSERT ROW_COUNT = 10
+ASSERT VALUE rank = 1 WHERE node_id = 33
+ASSERT VALUE rank = 2 WHERE node_id = 0
+ASSERT VALUE rank = 3 WHERE node_id = 2
+ASSERT VALUE rank = 4 WHERE node_id = 32
+ASSERT VALUE rank = 5 WHERE node_id = 31
+ASSERT VALUE rank = 6 WHERE node_id = 1
+-- Nodes 13 and 8 have near-identical harmonic scores (within ulps of each
+-- other); rank ordering between them depends on tie-break direction.
+-- We assert both appear in ranks 7..8 without pinning order.
+ASSERT VALUE rank IN (7, 8) WHERE node_id = 13
+ASSERT VALUE rank IN (7, 8) WHERE node_id = 8
+ASSERT VALUE rank = 9 WHERE node_id = 3
+ASSERT VALUE rank = 10 WHERE node_id = 19
+ASSERT VALUE score >= 0.7035 WHERE node_id = 33
+ASSERT VALUE score <= 0.7055 WHERE node_id = 33
+ASSERT VALUE score >= 0.7010 WHERE node_id = 0
+ASSERT VALUE score <= 0.7030 WHERE node_id = 0
+ASSERT VALUE score >= 0.6354 WHERE node_id = 2
+ASSERT VALUE score <= 0.6374 WHERE node_id = 2
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.harmonic({normalized: true})
+YIELD node_id, score, rank
+RETURN node_id, score, rank
+ORDER BY score DESC
+LIMIT 10;
+
+
+-- ============================================================================
+-- 30. LABEL PROPAGATION — Fast community detection
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.labelPropagation.stream).
+-- GDS LPA on karate consistently converges to a single community across
+-- 10 sampled runs (the dense karate club doesn't have enough internal
+-- partition structure for LPA's local-majority rule to keep separation).
+
+ASSERT WARNING ROW_COUNT >= 1
+ASSERT WARNING ROW_COUNT <= 1
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.labelpropagation({maxIterations: 10})
+YIELD node_id, community_id
+RETURN community_id, count(*) AS members
+ORDER BY members DESC;
+
+
+-- ============================================================================
+-- 31. K-CORE DECOMPOSITION — Hierarchical density
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.kcore.stream).
+-- Per-node coreness from GDS: max coreness = 4 (the dense core), with
+-- nodes 4/5/6 at coreness 3, node 9 at 2, node 11 (degree-1 follower) at 1.
+
+ASSERT ROW_COUNT = 34
+ASSERT VALUE coreness = 4 WHERE node_id = 0
+ASSERT VALUE coreness = 4 WHERE node_id = 1
+ASSERT VALUE coreness = 4 WHERE node_id = 2
+ASSERT VALUE coreness = 4 WHERE node_id = 3
+ASSERT VALUE coreness = 3 WHERE node_id = 4
+ASSERT VALUE coreness = 3 WHERE node_id = 5
+ASSERT VALUE coreness = 3 WHERE node_id = 6
+ASSERT VALUE coreness = 4 WHERE node_id = 7
+ASSERT VALUE coreness = 4 WHERE node_id = 8
+ASSERT VALUE coreness = 2 WHERE node_id = 9
+ASSERT VALUE coreness = 3 WHERE node_id = 10
+ASSERT VALUE coreness = 1 WHERE node_id = 11
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.kcore()
+YIELD node_id, coreness
+RETURN node_id, coreness
+ORDER BY node_id;
+
+
+-- ============================================================================
+-- 32. LOCAL CLUSTERING COEFFICIENT — How well neighbours know each other
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.localClusteringCoefficient.stream).
+-- Top-5 by coefficient are small-degree nodes whose neighbours form
+-- complete cliques (LCC = 1.0): nodes 7, 12, 14, 15, 16.
+
+ASSERT ROW_COUNT = 34
+ASSERT VALUE coefficient >= 0.9990 WHERE node_id = 7
+ASSERT VALUE coefficient <= 1.0010 WHERE node_id = 7
+ASSERT VALUE coefficient >= 0.9990 WHERE node_id = 12
+ASSERT VALUE coefficient <= 1.0010 WHERE node_id = 12
+ASSERT VALUE coefficient >= 0.9990 WHERE node_id = 14
+ASSERT VALUE coefficient <= 1.0010 WHERE node_id = 14
+ASSERT VALUE coefficient >= 0.9990 WHERE node_id = 15
+ASSERT VALUE coefficient <= 1.0010 WHERE node_id = 15
+ASSERT VALUE coefficient >= 0.9990 WHERE node_id = 16
+ASSERT VALUE coefficient <= 1.0010 WHERE node_id = 16
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.lcc()
+YIELD node_id, triangle_count, coefficient
+RETURN node_id, triangle_count, coefficient
+ORDER BY node_id;
+
+
+-- ============================================================================
+-- 33. LEIDEN COMMUNITY DETECTION — Improved Louvain
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.leiden.stream).
+-- Across 10 GDS runs with different seeds, Leiden consistently produces
+-- exactly 4 communities at gamma=1.0 on karate. (Karate's structure is
+-- stable enough under Leiden's refinement to converge on the same number.)
+
+ASSERT WARNING ROW_COUNT >= 4
+ASSERT WARNING ROW_COUNT <= 4
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.leiden({gamma: 1.0, maxLevels: 10})
+YIELD node_id, community_id, level
+RETURN community_id, count(*) AS members
+ORDER BY members DESC;
+
+
+-- ============================================================================
+-- 34. MODULARITY METRIC — Quality score on Zachary's 2-faction split
+-- ============================================================================
+-- The `communityProperty` list IS Zachary's published ground-truth split
+-- (well-established, dating to the original 1977 paper). Modularity Q is
+-- a deterministic function of the partition + the graph, so its value
+-- comes from the script.
+
+ASSERT ROW_COUNT = 1
+ASSERT VALUE modularity >= 0.1781
+ASSERT VALUE modularity <= 0.1801
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.modularity({
+    communityProperty: [
+        0,0,0,0,0,0,0,0,0,1,
+        0,0,0,0,1,1,0,0,1,0,
+        1,0,1,1,1,1,1,1,1,1,
+        1,1,1,1
+    ]
+})
+YIELD modularity
+RETURN modularity;
+
+
+-- ============================================================================
+-- 35. CONDUCTANCE METRIC — Per-community isolation
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.conductance.stream) on Zachary's split.
+
+ASSERT ROW_COUNT = 2
+ASSERT VALUE conductance >= 0.1348 WHERE community_id = 0
+ASSERT VALUE conductance <= 0.1368 WHERE community_id = 0
+ASSERT VALUE conductance >= 0.1457 WHERE community_id = 1
+ASSERT VALUE conductance <= 0.1477 WHERE community_id = 1
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.conductance({
+    communityProperty: [
+        0,0,0,0,0,0,0,0,0,1,
+        0,0,0,0,1,1,0,0,1,0,
+        1,0,1,1,1,1,1,1,1,1,
+        1,1,1,1
+    ]
+})
+YIELD community_id, conductance
+RETURN community_id, conductance
+ORDER BY community_id;
+
+
+-- ============================================================================
+-- 36. BRIDGES — Edges whose removal disconnects the graph
+-- ============================================================================
+-- Reference: NetworkX nx.bridges (GDS 2.6.9 Community omits gds.bridges).
+-- This karate seed has exactly 1 bridge: edge (0, 11) — removing it
+-- isolates node 11 (its only neighbour is node 0).
+
+ASSERT ROW_COUNT = 1
+ASSERT EXPRESSION SUM(CASE WHEN source_node_id = 0 AND target_node_id = 11 THEN 1 ELSE 0 END) = 1
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.bridges()
+YIELD source_node_id, target_node_id
+RETURN source_node_id, target_node_id;
+
+
+-- ============================================================================
+-- 37. ARTICULATION POINTS — Nodes whose removal disconnects the graph
+-- ============================================================================
+-- Reference: NetworkX nx.articulation_points (GDS 2.6.9 Community omits
+-- gds.articulationPoints). Node 0 is the only articulation point —
+-- removing it isolates node 11. The rest of karate is 2-vertex-connected.
+
+ASSERT ROW_COUNT = 1
+ASSERT EXPRESSION SUM(CASE WHEN node_id = 0 THEN 1 ELSE 0 END) = 1
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.articulationpoints()
+YIELD node_id
+RETURN node_id;
+
+
+-- ============================================================================
+-- 38. BELLMAN-FORD — SSSP that handles negative weights
+-- ============================================================================
+
+ASSERT ROW_COUNT = 34
+ASSERT VALUE distance = 0.0 WHERE node_id = 0
+ASSERT VALUE distance = 1.0 WHERE node_id = 1
+ASSERT VALUE distance = 1.0 WHERE node_id = 2
+ASSERT VALUE distance = 1.0 WHERE node_id = 3
+ASSERT VALUE distance = 1.0 WHERE node_id = 4
+ASSERT VALUE distance = 1.0 WHERE node_id = 5
+ASSERT VALUE distance = 1.0 WHERE node_id = 6
+ASSERT VALUE distance = 1.0 WHERE node_id = 7
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.bellmanford({sourceNode: 0})
+YIELD node_id, distance
+RETURN node_id, distance
+ORDER BY node_id;
+
+
+-- ============================================================================
+-- 39. DELTA-STEPPING SSSP — Bucket-based parallel Dijkstra alternative
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.allShortestPaths.delta.stream).
+-- Identical distance vector to Bellman-Ford on this non-negative-weight graph.
+
+ASSERT ROW_COUNT = 34
+ASSERT VALUE distance = 0.0 WHERE node_id = 0
+ASSERT VALUE distance = 1.0 WHERE node_id = 1
+ASSERT VALUE distance = 1.0 WHERE node_id = 2
+ASSERT VALUE distance = 1.0 WHERE node_id = 3
+ASSERT VALUE distance = 1.0 WHERE node_id = 4
+ASSERT VALUE distance = 1.0 WHERE node_id = 5
+ASSERT VALUE distance = 1.0 WHERE node_id = 6
+ASSERT VALUE distance = 1.0 WHERE node_id = 7
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.deltastepping({sourceNode: 0, delta: 1.0})
+YIELD node_id, distance
+RETURN node_id, distance
+ORDER BY node_id;
+
+
+-- ============================================================================
+-- 40. A* SHORTEST PATH — Heuristic-driven path search
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 — A* requires lat/lon properties so we use
+-- gds.shortestPath.dijkstra as the parity baseline (our A* with h≡0 ==
+-- Dijkstra). One of the shortest 0→33 paths in this seed is [0, 31, 33],
+-- total cost 2.0; ties exist (other 2-hop paths via 8, 13, 19).
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE node_id = 0 WHERE step = 0
+ASSERT VALUE node_id = 33 WHERE step = 2
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.astar({sourceNode: 0, targetNode: 33})
+YIELD step, node_id
+RETURN step, node_id
+ORDER BY step;
+
+
+-- ============================================================================
+-- 41. YEN'S K-SHORTEST PATHS — Top-K loopless paths
+-- ============================================================================
+-- Reference: Neo4j + GDS 2.6.9 (gds.shortestPath.yens.stream). All three
+-- shortest 0→33 paths have total cost 2.0 (4 equally-shortest 2-hop paths
+-- exist; Yen returns 3 of them; specific node sequences depend on tie-break).
+
+ASSERT ROW_COUNT = 3
+ASSERT VALUE total_cost = 2.0 WHERE rank = 1
+ASSERT VALUE total_cost = 2.0 WHERE rank = 2
+ASSERT VALUE total_cost = 2.0 WHERE rank = 3
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.yens({sourceNode: 0, targetNode: 33, k: 3})
+YIELD rank, total_cost, nodes
+RETURN rank, total_cost, nodes
+ORDER BY rank;
+
+
+-- ============================================================================
+-- 42. RANDOM WALK — Stochastic graph traversal
+-- ============================================================================
+-- Structural only. Walk content depends on PRNG; cross-engine byte-equality
+-- requires matching the SplitMix64 sequence GDS uses, which is not pinned.
+
+ASSERT ROW_COUNT = 34
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.randomwalk({walkLength: 10, walksPerNode: 1, seed: 42})
+YIELD source_node_id, walk
+RETURN source_node_id, walk
+ORDER BY source_node_id;
+
+
+-- ============================================================================
+-- 43. FASTRP EMBEDDINGS — Random-projection node embeddings
+-- ============================================================================
+-- Structural only. Embedding bit-identity with Neo4j GDS depends on the
+-- sparse-projection PRNG and on the iteration-weight schedule; the
+-- distributional properties (norm, similarity structure) match but not
+-- the exact floats. Use this query to confirm `algo.fastrp` produces one
+-- non-empty embedding per node; quality metrics belong in a downstream
+-- demo (e.g., k-NN recall on the embedding space).
+
+ASSERT ROW_COUNT = 34
+USE {{zone_name}}.karate_club.karate_club
+CALL algo.fastrp({embeddingDimension: 64, seed: 42})
+YIELD node_id, embedding
+RETURN node_id, embedding
+ORDER BY node_id;
+
+
+-- ############################################################################
+-- PART 4: VERIFICATION SUMMARY
+-- ############################################################################
+
+
+-- ============================================================================
+-- VERIFY: All Checks
+-- ============================================================================
+-- 26. AUTOMATED VERIFICATION — PASS/FAIL against golden values
+-- Cross-cutting sanity check: vertex count, canonical edge count, referential
+-- integrity, self-loops, max undirected degree, ID range, weight uniformity,
+-- canonical-form invariant (src < dst), and edge-type mix. All 9 checks must
+-- return 'PASS'. Any 'FAIL' indicates data loading or algorithm correctness
+-- problems.
+
+ASSERT NO_FAIL IN result
+ASSERT ROW_COUNT = 9
+SELECT 'Vertex count = 34' AS test,
+       CASE WHEN cnt = 34 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END AS result
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.vertices)
+
+UNION ALL
+SELECT 'Edge row count = 78 (canonical)',
+       CASE WHEN cnt = 78 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges)
+
+UNION ALL
+SELECT 'No self-loops',
+       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges WHERE src = dst)
+
+UNION ALL
+SELECT 'All edge endpoints exist',
+       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' orphans)' END
+FROM (
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges e
+    WHERE NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.src)
+       OR NOT EXISTS (SELECT 1 FROM {{zone_name}}.karate_club.vertices v WHERE v.vertex_id = e.dst)
+)
+
+UNION ALL
+SELECT 'Max undirected degree = 17 (president)',
+       CASE WHEN max_deg = 17 THEN 'PASS' ELSE 'FAIL (got ' || CAST(max_deg AS VARCHAR) || ')' END
+FROM (
+    SELECT MAX(deg) AS max_deg FROM (
+        SELECT vertex_id, SUM(cnt) AS deg FROM (
+            SELECT src AS vertex_id, COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges GROUP BY src
+            UNION ALL
+            SELECT dst AS vertex_id, COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges GROUP BY dst
+        ) GROUP BY vertex_id
+    )
+)
+
+UNION ALL
+SELECT 'Vertex ID range = 0–33',
+       CASE WHEN min_id = 0 AND max_id = 33 THEN 'PASS'
+            ELSE 'FAIL (range ' || CAST(min_id AS VARCHAR) || '–' || CAST(max_id AS VARCHAR) || ')' END
+FROM (
+    SELECT MIN(vertex_id) AS min_id, MAX(vertex_id) AS max_id FROM {{zone_name}}.karate_club.vertices
+)
+
+UNION ALL
+SELECT 'All weights = 1.0 (unweighted)',
+       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' non-unit weights)' END
+FROM (
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges WHERE weight <> 1.0
+)
+
+UNION ALL
+SELECT 'Canonical form (src < dst)',
+       CASE WHEN cnt = 0 THEN 'PASS' ELSE 'FAIL (' || CAST(cnt AS VARCHAR) || ' non-canonical rows)' END
+FROM (
+    SELECT COUNT(*) AS cnt FROM {{zone_name}}.karate_club.edges WHERE src >= dst
+)
+
+UNION ALL
+SELECT '5 edge types',
+       CASE WHEN cnt = 5 THEN 'PASS' ELSE 'FAIL (got ' || CAST(cnt AS VARCHAR) || ')' END
+FROM (
+    SELECT COUNT(DISTINCT edge_type) AS cnt FROM {{zone_name}}.karate_club.edges
+);

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rrc" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7f1d1d"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer rust gear ring -->
+  <circle cx="40" cy="40" r="26" fill="url(#rrc)" opacity=".15" stroke="url(#rrc)" stroke-width="1.6"/>
+  <!-- Gear teeth -->
+  <g fill="url(#rrc)" opacity=".7">
+    <rect x="38" y="10" width="4" height="6" rx="1"/>
+    <rect x="38" y="64" width="4" height="6" rx="1"/>
+    <rect x="10" y="38" width="6" height="4" rx="1"/>
+    <rect x="64" y="38" width="6" height="4" rx="1"/>
+    <rect x="19" y="19" width="5" height="4" rx="1" transform="rotate(-45 21.5 21)"/>
+    <rect x="56" y="19" width="5" height="4" rx="1" transform="rotate(45 58.5 21)"/>
+    <rect x="19" y="57" width="5" height="4" rx="1" transform="rotate(45 21.5 59)"/>
+    <rect x="56" y="57" width="5" height="4" rx="1" transform="rotate(-45 58.5 59)"/>
+  </g>
+  <!-- Inner release tag -->
+  <path d="M28 30 L46 30 L54 40 L46 50 L28 50 Z" fill="url(#rrc)" opacity=".55"/>
+  <!-- Tag eyelet -->
+  <circle cx="48" cy="40" r="2.5" fill="#0a0a0a"/>
+  <!-- Version dots: 1 . x . y -->
+  <circle cx="33" cy="40" r="1.8" fill="#0a0a0a" opacity=".85"/>
+  <circle cx="37" cy="40" r="1.8" fill="#0a0a0a" opacity=".85"/>
+  <circle cx="41" cy="40" r="1.8" fill="#0a0a0a" opacity=".85"/>
+</svg>

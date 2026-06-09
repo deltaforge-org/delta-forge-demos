@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="us" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+  <!-- Ruler / measuring tool -->
+  <rect x="8" y="12" width="64" height="14" rx="2" stroke="url(#us)" stroke-width="1.5" fill="url(#us)" fill-opacity=".08"/>
+  <line x1="20" y1="12" x2="20" y2="19" stroke="url(#us)" stroke-width="1" opacity=".4"/>
+  <line x1="32" y1="12" x2="32" y2="19" stroke="url(#us)" stroke-width="1" opacity=".4"/>
+  <line x1="44" y1="12" x2="44" y2="19" stroke="url(#us)" stroke-width="1" opacity=".4"/>
+  <line x1="56" y1="12" x2="56" y2="19" stroke="url(#us)" stroke-width="1" opacity=".4"/>
+  <!-- Multi-byte chars being measured -->
+  <text x="14" y="23" font-size="6" font-family="serif" fill="url(#us)" opacity=".9">김</text>
+  <text x="26" y="23" font-size="6" font-family="serif" fill="url(#us)" opacity=".9">서</text>
+  <text x="38" y="23" font-size="6" font-family="serif" fill="url(#us)" opacity=".9">연</text>
+  <text x="52" y="22" font-size="5" font-family="monospace" fill="url(#us)" opacity=".5">= 3</text>
+  <!-- Function labels -->
+  <text x="12" y="38" font-size="5.5" font-family="monospace" fill="url(#us)" opacity=".7">LENGTH()</text>
+  <text x="12" y="48" font-size="5.5" font-family="monospace" fill="url(#us)" opacity=".7">UPPER(ü→Ü)</text>
+  <text x="12" y="58" font-size="5.5" font-family="monospace" fill="url(#us)" opacity=".7">SUBSTR()</text>
+  <text x="12" y="68" font-size="5.5" font-family="monospace" fill="url(#us)" opacity=".7">LIKE '%質問%'</text>
+  <!-- Checkmarks -->
+  <path d="M62 35L64 37L68 33" stroke="url(#us)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <path d="M62 45L64 47L68 43" stroke="url(#us)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <path d="M62 55L64 57L68 53" stroke="url(#us)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <path d="M62 65L64 67L68 63" stroke="url(#us)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+</svg>

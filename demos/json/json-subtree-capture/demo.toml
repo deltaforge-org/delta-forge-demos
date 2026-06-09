@@ -1,0 +1,33 @@
+[demo]
+id = "json-subtree-capture"
+name = "JSON Subtree Capture — json_paths"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates json_paths for capturing complex JSON subtrees as serialized \
+string columns instead of flattening. Two tables show the same property \
+listing data: one with location and pricing subtrees captured as JSON blobs \
+(json_paths), one with those subtrees fully flattened into individual columns \
+for comparison. Top-level fields are flattened normally alongside the captured \
+subtrees.
+"""
+categories = ["json"]
+tags = ["json", "intermediate", "json-paths", "subtree-capture", "column-mappings", "nested-json"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo JSON data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_listings_residential.json"
+format = "json"
+description = "Property listings batch 1 — 3 residential listings with location and pricing subtrees"
+size_bytes = 3052
+
+[[demo.data_files]]
+path = "data/02_listings_commercial.json"
+format = "json"
+description = "Property listings batch 2 — 2 listings (commercial + historic house) with location and pricing subtrees"
+size_bytes = 2060

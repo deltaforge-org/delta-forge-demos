@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cvc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#84cc16"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <!-- Paw pad (large center) -->
+  <ellipse cx="40" cy="52" rx="12" ry="10" stroke="url(#cvc)" stroke-width="2" fill="url(#cvc)" fill-opacity=".15"/>
+  <!-- Toe pads (4 small circles) -->
+  <circle cx="22" cy="32" r="6" stroke="url(#cvc)" stroke-width="2" fill="url(#cvc)" fill-opacity=".15"/>
+  <circle cx="34" cy="24" r="6" stroke="url(#cvc)" stroke-width="2" fill="url(#cvc)" fill-opacity=".15"/>
+  <circle cx="46" cy="24" r="6" stroke="url(#cvc)" stroke-width="2" fill="url(#cvc)" fill-opacity=".15"/>
+  <circle cx="58" cy="32" r="6" stroke="url(#cvc)" stroke-width="2" fill="url(#cvc)" fill-opacity=".15"/>
+</svg>

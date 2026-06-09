@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ck" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Grid representing composite key matrix -->
+  <rect x="10" y="8" width="60" height="36" rx="3" stroke="url(#ck)" stroke-width="1.5" fill="url(#ck)" fill-opacity=".08"/>
+  <!-- Column headers -->
+  <text x="26" y="16" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#ck)" opacity=".6">vehicle</text>
+  <text x="56" y="16" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#ck)" opacity=".6">date</text>
+  <line x1="10" y1="18" x2="70" y2="18" stroke="url(#ck)" stroke-width="1" opacity=".3"/>
+  <line x1="40" y1="8" x2="40" y2="44" stroke="url(#ck)" stroke-width="1" opacity=".3"/>
+  <!-- Key cells highlighted -->
+  <rect x="11" y="19" width="28" height="6" rx="1" fill="url(#ck)" fill-opacity=".2"/>
+  <rect x="41" y="19" width="28" height="6" rx="1" fill="url(#ck)" fill-opacity=".2"/>
+  <rect x="11" y="26" width="28" height="6" rx="1" fill="url(#ck)" fill-opacity=".15"/>
+  <rect x="41" y="26" width="28" height="6" rx="1" fill="url(#ck)" fill-opacity=".15"/>
+  <rect x="11" y="33" width="28" height="6" rx="1" fill="url(#ck)" fill-opacity=".1"/>
+  <rect x="41" y="33" width="28" height="6" rx="1" fill="url(#ck)" fill-opacity=".1"/>
+  <!-- Key icon (two interlocked keys) -->
+  <circle cx="28" cy="56" r="6" stroke="url(#ck)" stroke-width="1.5" fill="url(#ck)" fill-opacity=".15"/>
+  <line x1="34" y1="56" x2="44" y2="56" stroke="url(#ck)" stroke-width="1.5"/>
+  <line x1="40" y1="56" x2="40" y2="52" stroke="url(#ck)" stroke-width="1.5"/>
+  <line x1="43" y1="56" x2="43" y2="53" stroke="url(#ck)" stroke-width="1"/>
+  <circle cx="52" cy="56" r="6" stroke="url(#ck)" stroke-width="1.5" fill="url(#ck)" fill-opacity=".15"/>
+  <!-- AND connector -->
+  <text x="40" y="68" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ck)" opacity=".7">ON a AND b</text>
+  <!-- Merge arrow -->
+  <path d="M40 72L40 78" stroke="url(#ck)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M37 76L40 79L43 76" stroke="url(#ck)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

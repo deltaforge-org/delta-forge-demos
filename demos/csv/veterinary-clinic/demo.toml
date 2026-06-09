@@ -1,0 +1,49 @@
+[demo]
+id = "veterinary-clinic"
+name = "Veterinary Clinic Patient Records"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A multi-branch veterinary clinic tracks pet visits across 3 branches \
+(North, South, East). Tests recursive directory scanning, file_filter \
+with wildcard patterns, and max_rows options for CSV format. Includes \
+analytical queries for species breakdown, treatment costs, and NULL handling.
+"""
+categories = ["csv"]
+tags = ["csv", "intermediate", "recursive", "file_filter", "veterinary"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/branch-north/visits.csv"
+format = "csv"
+description = "North branch veterinary visit records (25 rows)"
+size_bytes = 2117
+
+[[demo.data_files]]
+path = "data/branch-south/visits.csv"
+format = "csv"
+description = "South branch veterinary visit records (25 rows)"
+size_bytes = 2170
+
+[[demo.data_files]]
+path = "data/branch-east/visits.csv"
+format = "csv"
+description = "East branch veterinary visit records (25 rows)"
+size_bytes = 2208
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv_vet.all_visits"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv_vet.north_only"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv_vet.sampled_visits"

@@ -1,0 +1,27 @@
+[demo]
+id = "delta-gdpr-data-erasure"
+name = "Delta GDPR Data Erasure — Right to Erasure Lifecycle"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+GDPR Article 17 ("right to erasure") requires organizations to permanently \
+delete personal data on request. In Delta Lake, erasure is atomic and \
+auditable — but old versions still contain PII until VACUUM physically \
+purges orphaned files. This demo walks through a bank's compliance workflow: \
+NULL out SSN, phone, and mailing address for a batch of customers, audit \
+the change via DESCRIBE HISTORY, prove that time travel still exposes PII \
+in prior versions, then VACUUM to complete the physical deletion. The result \
+is a verifiable, end-to-end GDPR erasure lifecycle.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "gdpr", "privacy", "erasure", "vacuum", "time-travel", "compliance", "audit"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.gdpr_customer_accounts"

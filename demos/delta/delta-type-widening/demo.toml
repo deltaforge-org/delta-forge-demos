@@ -1,0 +1,27 @@
+[demo]
+id = "delta-type-widening"
+name = "Delta Type Widening — IoT Fleet Counter Overflow"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+Type widening is a Delta protocol feature that allows a column's data type to \
+be safely promoted to a wider type (e.g., INT to BIGINT, FLOAT to DOUBLE) \
+without rewriting existing Parquet data files. This solves a real-world problem \
+in IoT fleet monitoring: device telemetry counters start as INT but accumulate \
+beyond the 2.1 billion INT limit as fleets scale. This demo creates a device \
+telemetry table with INT counters, enables type widening, promotes columns to \
+BIGINT via ALTER TABLE ALTER COLUMN TYPE, then continues operations with \
+values that exceed INT range — all while old Parquet files remain untouched.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "type-widening", "alter-column", "bigint", "schema-evolution", "iot"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.device_telemetry"

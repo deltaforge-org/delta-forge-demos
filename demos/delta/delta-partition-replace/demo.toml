@@ -1,0 +1,27 @@
+[demo]
+id = "delta-partition-replace"
+name = "Delta Partition Replace — Monthly Sales Pipeline"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Production ETL pipelines frequently need to replace an entire partition's \
+data when corrections arrive — for example, re-stating a month's revenue \
+after late adjustments. This demo shows the partition-replace pattern: \
+DELETE all rows in one partition then INSERT the corrected dataset, while \
+leaving every other partition untouched. It also demonstrates incremental \
+append of a brand-new partition (adding a new month). The sales table is \
+partitioned by sale_month, reflecting the most common real-world time-based \
+partition strategy for transactional data.
+"""
+categories = ["delta-table", "delta-fundamentals"]
+tags = ["delta-table", "intermediate", "partitioning", "etl", "replace", "pipeline", "time-series", "incremental"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.monthly_sales"

@@ -1,0 +1,29 @@
+[demo]
+id = "customers-basics"
+name = "JSON Customers — Basics"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates JSON fundamentals: creating an external table from a JSON array \
+file, applying column mappings for clean names, and using type inference for \
+proper timestamp handling. A CRM customer export with 200 records shows \
+include_paths, column_mappings, and file_metadata features.
+"""
+categories = ["json"]
+tags = ["json", "basic", "column-mappings", "type-inference", "basics"]
+difficulty = "basic"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the directory containing customers.json", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/customers.json"
+format = "json"
+description = "CRM customer export — 200 flat records with id, email, name, company, signup date, and country"
+size_bytes = 43694
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.json.customers"

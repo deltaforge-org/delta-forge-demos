@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sr" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#sr)" fill-opacity=".2" stroke="url(#sr)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#sr)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Old name -->
+  <rect x="12" y="36" width="24" height="10" rx="2" fill="url(#sr)" fill-opacity=".15" stroke="url(#sr)" stroke-width="1.2" stroke-dasharray="2 1"/>
+  <text x="24" y="43" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#sr)" opacity=".5">old_col</text>
+  <!-- Arrow -->
+  <path d="M38 41L46 41" stroke="url(#sr)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M44 38L47 41L44 44" stroke="url(#sr)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- New name -->
+  <rect x="48" y="36" width="24" height="10" rx="2" fill="url(#sr)" fill-opacity=".25" stroke="url(#sr)" stroke-width="1.2"/>
+  <text x="60" y="43" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#sr)" opacity=".8">new_col</text>
+  <!-- Field ID stable -->
+  <text x="40" y="58" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sr)" opacity=".5">field-id: 3</text>
+  <circle cx="40" cy="64" r="3" fill="url(#sr)" fill-opacity=".2" stroke="url(#sr)" stroke-width="1" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#sr)" opacity=".6">SCHEMA RENAME</text>
+</svg>

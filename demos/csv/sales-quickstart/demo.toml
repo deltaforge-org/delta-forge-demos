@@ -1,0 +1,54 @@
+[demo]
+id = "sales-quickstart"
+name = "Sales Schema Evolution"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+See how DeltaForge handles CSV files whose columns change over time. \
+Five quarterly sales files span 2024-Q1 to 2025-Q1 — columns are added \
+(sales_rep, discount_pct, territory, channel) and retired (region, discount_pct) \
+across the series. A single external table unifies them all; missing columns \
+from older files surface as NULL.
+"""
+categories = ["getting-started", "csv"]
+tags = ["csv", "basic", "quickstart", "sales", "schema-evolution"]
+difficulty = "basic"
+estimated_time_minutes = 3
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/sales_2024_q1.csv"
+format = "csv"
+description = "Q1 2024 — base schema: id, product_name, quantity, unit_price, sale_date, region (3 records)"
+size_bytes = 140
+
+[[demo.data_files]]
+path = "data/sales_2024_q2.csv"
+format = "csv"
+description = "Q2 2024 — adds sales_rep (3 records)"
+size_bytes = 165
+
+[[demo.data_files]]
+path = "data/sales_2024_q3.csv"
+format = "csv"
+description = "Q3 2024 — adds discount_pct (3 records)"
+size_bytes = 185
+
+[[demo.data_files]]
+path = "data/sales_2024_q4.csv"
+format = "csv"
+description = "Q4 2024 — retires region, adds territory (3 records)"
+size_bytes = 185
+
+[[demo.data_files]]
+path = "data/sales_2025_q1.csv"
+format = "csv"
+description = "Q1 2025 — retires discount_pct, adds channel (3 records)"
+size_bytes = 175
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.sales"

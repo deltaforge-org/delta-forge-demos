@@ -1,0 +1,37 @@
+[demo]
+id = "delta-merge-multi-source"
+name = "Delta MERGE — Multi-Source Sequential Updates"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Order fulfillment pipelines receive updates from multiple independent systems \
+— shipping, payments, and returns — each arriving on its own schedule. Each \
+source MERGEs into the same order_status table, updating only its own columns \
+while preserving data written by other sources. This demo shows three \
+sequential MERGE operations building up a complete order picture, which is the \
+standard pattern for event-driven architectures and microservice data integration.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "advanced", "merge", "multi-source", "sequential", "order-fulfillment", "ecommerce", "microservices", "event-driven"]
+difficulty = "advanced"
+estimated_time_minutes = 15
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.order_status"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.shipping_updates"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.payment_updates"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.return_updates"

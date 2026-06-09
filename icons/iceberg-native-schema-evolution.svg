@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ne" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V2 marker) -->
+  <path d="M40 4L52 20H28Z" fill="url(#ne)" fill-opacity=".15" stroke="url(#ne)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="16" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#ne)" opacity=".9">V2</text>
+  <path d="M6 22H74" stroke="url(#ne)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Schema versions stacked -->
+  <rect x="14" y="30" width="52" height="8" rx="2" fill="url(#ne)" fill-opacity=".12" stroke="url(#ne)" stroke-width="1"/>
+  <rect x="14" y="40" width="52" height="8" rx="2" fill="url(#ne)" fill-opacity=".2" stroke="url(#ne)" stroke-width="1"/>
+  <rect x="14" y="50" width="52" height="8" rx="2" fill="url(#ne)" fill-opacity=".3" stroke="url(#ne)" stroke-width="1.2"/>
+  <!-- + column indicators -->
+  <text x="60" y="37" font-size="6" font-family="monospace" fill="#22c55e" opacity=".7">+</text>
+  <text x="60" y="47" font-size="6" font-family="monospace" fill="#22c55e" opacity=".7">+</text>
+  <!-- Field IDs -->
+  <text x="20" y="36" font-size="4" font-family="monospace" fill="url(#ne)" opacity=".5">id:1</text>
+  <text x="36" y="36" font-size="4" font-family="monospace" fill="url(#ne)" opacity=".5">id:2</text>
+  <text x="20" y="56" font-size="4" font-family="monospace" fill="url(#ne)" opacity=".6">id:1</text>
+  <text x="36" y="56" font-size="4" font-family="monospace" fill="url(#ne)" opacity=".6">id:2</text>
+  <text x="50" y="56" font-size="4" font-family="monospace" fill="url(#ne)" opacity=".6">id:4</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#ne)" opacity=".6">NATIVE EVOLUTION</text>
+</svg>

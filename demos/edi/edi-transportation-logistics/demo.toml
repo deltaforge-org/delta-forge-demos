@@ -1,0 +1,103 @@
+[demo]
+id = "edi-transportation-logistics"
+name = "EDI Transportation & Logistics — X12 Freight Lifecycle"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates how DeltaForge ingests X12 EDI transactions spanning the \
+full freight lifecycle: load tendering (204/990), freight invoicing (210), \
+shipment tracking (214), rail transport (404), warehouse operations (945), \
+payment remittance (820), and price catalogs (832). Twelve real-world \
+transactions from multiple trading partners and X12 versions (00204 through \
+005010) are unified into queryable tables — showing how a single external \
+table handles motor carrier, rail, warehouse, and financial documents \
+without any format-specific configuration.
+"""
+categories = ["edi", "transportation", "logistics"]
+tags = ["edi", "x12", "transportation", "logistics", "freight", "shipment", "204", "210", "214", "404", "820", "832", "945", "990", "multi-version"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to the directory containing X12 EDI transaction files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/x12_204_motor_carrier_load_tender.edi"
+format = "edi"
+description = "X12 204 — Motor Carrier Load Tender: SCAC carrier, 2 stops (collect/unload), weight/charges (v00401, GS=SM)"
+size_bytes = 1243
+
+[[demo.data_files]]
+path = "data/x12_210_freight_invoice.edi"
+format = "edi"
+description = "X12 210 — Freight Invoice: shipper/consignee/bill-to, 4 line items with fuel surcharge and discount (v00401, GS=IM)"
+size_bytes = 825
+
+[[demo.data_files]]
+path = "data/x12_210_freight_invoice_edifabric.edi"
+format = "edi"
+description = "X12 210 — Freight Invoice: international Mexico-to-Canada route, 5 trading partners, customs refs (v00204, GS=IN)"
+size_bytes = 1052
+
+[[demo.data_files]]
+path = "data/x12_214_shipment_status.edi"
+format = "edi"
+description = "X12 214 — Shipment Status: delivered notification with city/state location and carrier mile (v00403, GS=QM)"
+size_bytes = 517
+
+[[demo.data_files]]
+path = "data/x12_214_shipment_status_edifabric.edi"
+format = "edi"
+description = "X12 214 — Shipment Status: departed with GPS coordinates, equipment and route tracking (v00204, GS=IN)"
+size_bytes = 423
+
+[[demo.data_files]]
+path = "data/x12_214_transportation_status.edi"
+format = "edi"
+description = "X12 214 — Transportation Status: delivered with shipper/consignee/bill-to party details (v00403, GS=QM)"
+size_bytes = 520
+
+[[demo.data_files]]
+path = "data/x12_404_rail_carrier_shipment.edi"
+format = "edi"
+description = "X12 404 — Rail Carrier Shipment: auto parts via NS/BNSF railroads, multi-party with seal numbers (v00204, GS=IN)"
+size_bytes = 807
+
+[[demo.data_files]]
+path = "data/x12_820_payment_order.edi"
+format = "edi"
+description = "X12 820 — Payment Order/Remittance: $21,298.97 check payment with 7 invoice remittance details (v00501, GS=RA)"
+size_bytes = 1441
+
+[[demo.data_files]]
+path = "data/x12_832_price_catalog_edifabric.edi"
+format = "edi"
+description = "X12 832 — Price/Sales Catalog: BISG book catalog with ISBN, descriptions, and pricing (v00204, GS=IN)"
+size_bytes = 653
+
+[[demo.data_files]]
+path = "data/x12_832_price_sales_catalog.edi"
+format = "edi"
+description = "X12 832 — Price/Sales Catalog: multi-line publisher catalog with 2 ISBN items (v00401, GS=SC)"
+size_bytes = 788
+
+[[demo.data_files]]
+path = "data/x12_940_warehouse_shipping_advice.edi"
+format = "edi"
+description = "X12 945 — Warehouse Shipping Advice: 2 line items with UPC/EAN codes, seal numbers, and weight totals (v00204, GS=IN)"
+size_bytes = 800
+
+[[demo.data_files]]
+path = "data/x12_990_load_tender_response.edi"
+format = "edi"
+description = "X12 990 — Load Tender Response: acceptance of load tender 75027674 by carrier SCAC (v00400, GS=GF)"
+size_bytes = 230
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.logistics_messages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.logistics_materialized"

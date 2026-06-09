@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="zo" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#zo)" fill-opacity=".2" stroke="url(#zo)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#zo)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Z-order curve -->
+  <path d="M18 36L34 36L18 56L34 56" stroke="url(#zo)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <!-- Grid cells -->
+  <rect x="42" y="34" width="10" height="10" rx="1" fill="url(#zo)" fill-opacity=".15" stroke="url(#zo)" stroke-width="1"/>
+  <rect x="54" y="34" width="10" height="10" rx="1" fill="url(#zo)" fill-opacity=".3" stroke="url(#zo)" stroke-width="1"/>
+  <rect x="42" y="46" width="10" height="10" rx="1" fill="url(#zo)" fill-opacity=".25" stroke="url(#zo)" stroke-width="1"/>
+  <rect x="54" y="46" width="10" height="10" rx="1" fill="url(#zo)" fill-opacity=".15" stroke="url(#zo)" stroke-width="1"/>
+  <!-- Lat/Lon labels -->
+  <text x="47" y="64" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#zo)" opacity=".5">lat</text>
+  <text x="59" y="64" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#zo)" opacity=".5">lon</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#zo)" opacity=".6">Z-ORDER</text>
+</svg>

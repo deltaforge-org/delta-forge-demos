@@ -1,0 +1,25 @@
+[demo]
+id = "delta-constraint-enforcement"
+name = "Delta Constraint Enforcement — NOT NULL & CHECK"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta Lake CHECK constraints enforce data quality invariants at the protocol \
+level, rejecting any commit whose rows violate the declared expressions. \
+Without constraints, bad data silently enters the table and corrupts \
+downstream analytics. This demo applies business rules (valid age range, \
+positive salary, bounded rating) and then performs UPDATE and DELETE \
+operations that preserve all constraint invariants throughout.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "constraints", "check", "not-null", "validation", "data-quality"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.validated_employees"

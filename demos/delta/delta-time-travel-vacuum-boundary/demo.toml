@@ -1,0 +1,27 @@
+[demo]
+id = "delta-time-travel-vacuum-boundary"
+name = "Delta Time Travel — VACUUM Retention Boundary"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+VACUUM permanently removes old Parquet files that are no longer referenced \
+by the latest table version. While this reclaims storage, it also destroys \
+time travel capability for older versions — the #1 production surprise \
+with Delta Lake. This demo builds a multi-version activity log, proves \
+time travel works, runs VACUUM RETAIN 0 HOURS, and then shows that \
+historical queries still work on the latest version while DESCRIBE HISTORY \
+reveals the ghost entries left behind. The lesson: set VACUUM retention \
+to match your longest audit window.
+"""
+categories = ["delta-table", "delta-versioning", "delta-maintenance"]
+tags = ["delta-table", "advanced", "time-travel", "vacuum", "retention", "data-lifecycle"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.activity_log"

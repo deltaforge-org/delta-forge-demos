@@ -1,0 +1,26 @@
+[demo]
+id = "delta-row-index-catalog-rebuild"
+name = "Library Catalog — Index Lifecycle, Staleness, and Rebuild"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Public library catalog. The catalog gets nightly bulk loads from a vendor \
+plus ad-hoc additions during the day. With auto_update disabled the index \
+falls behind after every bulk load — readers silently fall back to the \
+standard pruning path until REBUILD INDEX brings it back. This demo walks \
+through the full lifecycle: build → use → write → stale → rebuild → use, \
+showing both the status transitions and the absence of wrong answers in \
+the stale window.
+"""
+categories = ["index"]
+tags = ["delta-table", "advanced", "row-level-index", "rebuild", "stale", "lifecycle", "auto-update"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.library_catalog"

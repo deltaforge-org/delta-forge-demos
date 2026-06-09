@@ -1,0 +1,25 @@
+[demo]
+id = "delta-decimal-precision"
+name = "Delta Decimal Precision & Arithmetic"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta Lake stores DECIMAL types as fixed-point numbers in Parquet, preserving \
+exact precision without the rounding errors inherent in DOUBLE/FLOAT types. \
+This matters for financial data where even 0.01 of drift can compound into \
+significant discrepancies. This demo uses DECIMAL(15,4) for amounts, \
+DECIMAL(18,6) for balances, and DECIMAL(10,8) for exchange rates to show \
+roundtrip fidelity, cross-currency conversions, and refund negation.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "decimal", "precision", "arithmetic", "finance"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.financial_ledger"

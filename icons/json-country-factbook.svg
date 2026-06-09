@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="jf" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <!-- Globe outline -->
+  <circle cx="40" cy="40" r="32" stroke="url(#jf)" stroke-width="1.5" fill="url(#jf)" fill-opacity=".06"/>
+  <!-- Latitude lines -->
+  <ellipse cx="40" cy="26" rx="28" ry="5" stroke="url(#jf)" stroke-width=".8" opacity=".25" fill="none"/>
+  <ellipse cx="40" cy="40" rx="32" ry="7" stroke="url(#jf)" stroke-width=".8" opacity=".18" fill="none"/>
+  <ellipse cx="40" cy="54" rx="28" ry="5" stroke="url(#jf)" stroke-width=".8" opacity=".25" fill="none"/>
+  <!-- Meridians -->
+  <ellipse cx="40" cy="40" rx="12" ry="32" stroke="url(#jf)" stroke-width=".8" opacity=".2" fill="none"/>
+  <ellipse cx="40" cy="40" rx="24" ry="32" stroke="url(#jf)" stroke-width=".8" opacity=".15" fill="none"/>
+  <!-- Data points -->
+  <circle cx="28" cy="30" r="3" fill="url(#jf)" opacity=".8"/>
+  <circle cx="52" cy="44" r="2.5" fill="url(#jf)" opacity=".6"/>
+  <circle cx="36" cy="56" r="3" fill="url(#jf)" opacity=".7"/>
+  <circle cx="48" cy="28" r="2" fill="url(#jf)" opacity=".5"/>
+  <!-- Connection arcs -->
+  <path d="M28 30Q40 20 48 28" stroke="url(#jf)" stroke-width="1" opacity=".3" fill="none" stroke-dasharray="2 2"/>
+  <path d="M52 44Q44 52 36 56" stroke="url(#jf)" stroke-width="1" opacity=".25" fill="none" stroke-dasharray="2 2"/>
+</svg>

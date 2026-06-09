@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pkfg" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer capsule (Poké Ball-inspired) -->
+  <circle cx="40" cy="40" r="28" fill="url(#pkfg)" opacity=".15" stroke="url(#pkfg)" stroke-width="1.6"/>
+  <!-- Top half emphasis -->
+  <path d="M12 40 A28 28 0 0 1 68 40 Z" fill="url(#pkfg)" opacity=".65"/>
+  <!-- Equator line -->
+  <line x1="12" y1="40" x2="68" y2="40" stroke="url(#pkfg)" stroke-width="2.3"/>
+  <!-- Center release button (outer) -->
+  <circle cx="40" cy="40" r="8" fill="#0b1220" opacity=".92"/>
+  <!-- Center release button (inner) -->
+  <circle cx="40" cy="40" r="4" fill="#ffffff"/>
+  <!-- Offset markers — 5 dots across top half (pagination ticks) -->
+  <circle cx="20" cy="28" r="1.6" fill="#ffffff" opacity=".9"/>
+  <circle cx="30" cy="22" r="1.6" fill="#ffffff" opacity=".9"/>
+  <circle cx="40" cy="20" r="1.6" fill="#ffffff" opacity=".9"/>
+  <circle cx="50" cy="22" r="1.6" fill="#ffffff" opacity=".9"/>
+  <circle cx="60" cy="28" r="1.6" fill="#ffffff" opacity=".9"/>
+</svg>

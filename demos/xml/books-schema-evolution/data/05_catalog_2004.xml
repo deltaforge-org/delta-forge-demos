@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+   <book id="bk113" format="hardcover">
+      <author>Corets, Eva</author>
+      <title>Dragon's Keep</title>
+      <genre>Fantasy</genre>
+      <price>6.95</price>
+      <publish_date>2004-03-20</publish_date>
+      <isbn>978-0-7653-0868-2</isbn>
+      <language>en</language>
+      <publisher>Tor</publisher>
+      <rating>4.7</rating>
+      <edition>1st</edition>
+      <pages>352</pages>
+      <series>Maeve Saga</series>
+   </book>
+   <book id="bk114" format="paperback">
+      <author>Galos, Mike</author>
+      <title>Visual Studio 7: A Comprehensive Guide</title>
+      <genre>Computer</genre>
+      <price>49.95</price>
+      <publish_date>2004-07-16</publish_date>
+      <isbn>978-0-7356-1900-5</isbn>
+      <language>en</language>
+      <publisher>Microsoft Press</publisher>
+      <rating>4.3</rating>
+      <edition>1st</edition>
+      <pages>640</pages>
+      <series>VS Series</series>
+   </book>
+   <book id="bk115" format="paperback">
+      <author>Knorr, Stefan</author>
+      <title>Night Terrors</title>
+      <genre>Horror</genre>
+      <price>5.95</price>
+      <publish_date>2004-10-31</publish_date>
+      <isbn>978-0-7653-1099-9</isbn>
+      <language>en</language>
+      <publisher>Dark Horse</publisher>
+      <rating>3.9</rating>
+      <edition>1st</edition>
+      <pages>256</pages>
+      <series>Crawlies Series</series>
+   </book>
+</catalog>

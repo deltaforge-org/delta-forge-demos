@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fa" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Funnel shape — wide top narrowing to bottom -->
+  <path d="M12 14H68L52 36H28L12 14Z" fill="url(#fa)" fill-opacity=".15" stroke="url(#fa)" stroke-width="1.5"/>
+  <path d="M28 36H52L46 50H34L28 36Z" fill="url(#fa)" fill-opacity=".25" stroke="url(#fa)" stroke-width="1.5"/>
+  <path d="M34 50H46L42 62H38L34 50Z" fill="url(#fa)" fill-opacity=".35" stroke="url(#fa)" stroke-width="1.5"/>
+  <!-- Drop arrow at bottom -->
+  <line x1="40" y1="62" x2="40" y2="70" stroke="url(#fa)" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="40,74 36,69 44,69" fill="url(#fa)" opacity=".8"/>
+  <!-- Stage labels -->
+  <text x="40" y="28" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#fa)" opacity=".7">trial</text>
+  <text x="40" y="45" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#fa)" opacity=".8">paid</text>
+  <text x="40" y="59" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#fa)" opacity=".9">renew</text>
+</svg>

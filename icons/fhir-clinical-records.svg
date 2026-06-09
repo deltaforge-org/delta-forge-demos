@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fcr" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <!-- Three stacked clinical folders -->
+  <!-- Folder 1 (back — Conditions) -->
+  <path d="M8 28H14L18 24H52L52 62H8Z" fill="url(#fcr)" fill-opacity=".1" stroke="url(#fcr)" stroke-width="1"/>
+  <!-- Folder 2 (middle — Procedures) -->
+  <path d="M14 34H20L24 30H58L58 66H14Z" fill="url(#fcr)" fill-opacity=".15" stroke="url(#fcr)" stroke-width="1"/>
+  <!-- Folder 3 (front — Allergies) -->
+  <path d="M20 40H26L30 36H64L64 70H20Z" fill="url(#fcr)" fill-opacity=".22" stroke="url(#fcr)" stroke-width="1.2"/>
+  <!-- Medical cross on front folder -->
+  <rect x="38" y="50" width="10" height="2.5" rx="1.25" fill="url(#fcr)" opacity=".55"/>
+  <rect x="41.75" y="46.25" width="2.5" height="10" rx="1.25" fill="url(#fcr)" opacity=".55"/>
+  <!-- Condition dot (red accent) -->
+  <circle cx="16" cy="46" r="3" fill="url(#fcr)" opacity=".4"/>
+  <!-- Procedure dot (purple accent) -->
+  <circle cx="22" cy="52" r="3" fill="url(#fcr)" opacity=".5"/>
+  <!-- Allergy warning triangle -->
+  <path d="M68 14L72 22H64Z" stroke="url(#fcr)" stroke-width="1.5" fill="url(#fcr)" fill-opacity=".3"/>
+  <line x1="68" y1="16.5" x2="68" y2="19" stroke="url(#fcr)" stroke-width="1.2" opacity=".6"/>
+  <circle cx="68" cy="20.5" r="0.8" fill="url(#fcr)" opacity=".6"/>
+  <!-- Document lines on front folder -->
+  <rect x="28" y="58" width="14" height="1.5" rx="0.75" fill="url(#fcr)" opacity=".2"/>
+  <rect x="28" y="62" width="10" height="1.5" rx="0.75" fill="url(#fcr)" opacity=".15"/>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gms" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <!-- Ocean waves -->
+  <path d="M8 58 Q20 52 32 58 Q44 64 56 58 Q68 52 72 58" stroke="url(#gms)" stroke-width="1.5" opacity=".3"/>
+  <path d="M8 64 Q20 58 32 64 Q44 70 56 64 Q68 58 72 64" stroke="url(#gms)" stroke-width="1.5" opacity=".2"/>
+  <!-- Ship hull -->
+  <path d="M20 52 L24 38 H56 L60 52 Z" fill="url(#gms)" opacity=".2" stroke="url(#gms)" stroke-width="1.5"/>
+  <!-- Bridge/superstructure -->
+  <rect x="32" y="26" width="16" height="12" rx="2" fill="url(#gms)" opacity=".4" stroke="url(#gms)" stroke-width="1.5"/>
+  <!-- Smokestack -->
+  <rect x="38" y="18" width="6" height="8" rx="1" fill="url(#gms)" opacity=".5"/>
+  <!-- Mast -->
+  <line x1="40" y1="12" x2="40" y2="18" stroke="url(#gms)" stroke-width="1.5" opacity=".6"/>
+  <!-- Navigation pin (compass point) -->
+  <circle cx="40" cy="12" r="2.5" fill="url(#gms)" opacity=".7"/>
+  <!-- Cargo containers -->
+  <rect x="27" y="38" width="8" height="6" rx="1" fill="url(#gms)" opacity=".35"/>
+  <rect x="36" y="38" width="8" height="6" rx="1" fill="url(#gms)" opacity=".35"/>
+  <rect x="45" y="38" width="8" height="6" rx="1" fill="url(#gms)" opacity=".35"/>
+  <!-- Port marker dots -->
+  <circle cx="14" cy="44" r="2" fill="url(#gms)" opacity=".5"/>
+  <circle cx="66" cy="44" r="2" fill="url(#gms)" opacity=".5"/>
+  <!-- Route line (dashed) -->
+  <path d="M14 44 Q28 30 40 30 Q52 30 66 44" stroke="url(#gms)" stroke-width="1" stroke-dasharray="3 2" opacity=".4"/>
+</svg>

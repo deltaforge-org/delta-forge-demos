@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vrg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield (governance/compliance) -->
+  <path d="M40 8L56 16V34C56 46 40 56 40 56C40 56 24 46 24 34V16L40 8Z"
+        stroke="url(#vrg)" stroke-width="1.5" fill="url(#vrg)" fill-opacity=".12"/>
+  <!-- Clock inside shield (retention period) -->
+  <circle cx="40" cy="28" r="9" stroke="url(#vrg)" stroke-width="1.2" fill="url(#vrg)" fill-opacity=".1"/>
+  <line x1="40" y1="28" x2="40" y2="22" stroke="url(#vrg)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="40" y1="28" x2="45" y2="30" stroke="url(#vrg)" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Dot markers on clock -->
+  <circle cx="40" cy="20" r="1" fill="url(#vrg)" opacity=".5"/>
+  <circle cx="48" cy="28" r="1" fill="url(#vrg)" opacity=".5"/>
+  <circle cx="40" cy="36" r="1" fill="url(#vrg)" opacity=".5"/>
+  <circle cx="32" cy="28" r="1" fill="url(#vrg)" opacity=".5"/>
+  <!-- Timeline with versions (below shield) -->
+  <line x1="10" y1="64" x2="70" y2="64" stroke="url(#vrg)" stroke-width="1" opacity=".4"/>
+  <!-- Version dots -->
+  <circle cx="16" cy="64" r="2.5" fill="url(#vrg)" opacity=".25"/>
+  <circle cx="28" cy="64" r="2.5" fill="url(#vrg)" opacity=".25"/>
+  <circle cx="40" cy="64" r="2.5" fill="url(#vrg)" opacity=".4"/>
+  <circle cx="52" cy="64" r="2.5" fill="url(#vrg)" opacity=".6"/>
+  <circle cx="64" cy="64" r="2.5" fill="url(#vrg)" opacity=".9"/>
+  <!-- Retention boundary marker -->
+  <line x1="34" y1="58" x2="34" y2="70" stroke="url(#vrg)" stroke-width="1" stroke-dasharray="2 1.5" opacity=".6"/>
+  <text x="34" y="57" text-anchor="middle" font-size="3" font-family="monospace" fill="url(#vrg)" opacity=".5">RETAIN</text>
+  <!-- X marks on expired versions -->
+  <path d="M14 62L18 66M18 62L14 66" stroke="url(#vrg)" stroke-width="0.8" opacity=".35"/>
+  <path d="M26 62L30 66M30 62L26 66" stroke="url(#vrg)" stroke-width="0.8" opacity=".35"/>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#vrg)" opacity=".6">GOVERNANCE</text>
+</svg>

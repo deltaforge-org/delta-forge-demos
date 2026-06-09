@@ -1,0 +1,35 @@
+[demo]
+id = "gis-emergency-response"
+name = "GIS Emergency Response Network — Multi-Step Spatial Analytics"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates complex multi-step GIS analytics using an NYC emergency dispatch \
+scenario. 8 hospitals, 12 incidents, and 4 response zones exercise nearest-neighbor \
+ranking (ROW_NUMBER + st_distance), multi-algorithm distance comparison (haversine \
+vs sphere vs Vincenty), navigation bearings (st_bearing, st_azimuth), geofencing \
+(st_contains/st_within with zone polygons), coordinate round-trips \
+(st_make_point/st_x/st_y), and geodesic area calculations. Unlike the maritime \
+demo which tests each function individually, this demo combines multiple GIS \
+functions in layered analytical queries for real-world dispatch optimization.
+"""
+categories = ["geospatial", "analytics"]
+tags = ["spatial", "gis", "postgis", "distance", "bearing", "geofencing", "nearest-neighbor", "delta-table", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.emergency.hospitals"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.emergency.incidents"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.emergency.response_zones"

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ft" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V2 marker) -->
+  <path d="M40 6L50 20H30Z" fill="url(#ft)" fill-opacity=".2" stroke="url(#ft)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="17" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#ft)" opacity=".9">V2</text>
+  <!-- Waterline -->
+  <path d="M8 22H72" stroke="url(#ft)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Truck body -->
+  <rect x="14" y="36" width="34" height="18" rx="2" fill="url(#ft)" fill-opacity=".1" stroke="url(#ft)" stroke-width="1.5"/>
+  <!-- Truck cab -->
+  <path d="M48 42H60C62 42 64 44 64 46V54H48V42Z" fill="url(#ft)" fill-opacity=".15" stroke="url(#ft)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Windshield -->
+  <path d="M52 44H58C59 44 60 45 60 46V50H52V44Z" fill="url(#ft)" fill-opacity=".1" stroke="url(#ft)" stroke-width="1" opacity=".6"/>
+  <!-- Wheels -->
+  <circle cx="26" cy="56" r="4" fill="url(#ft)" fill-opacity=".2" stroke="url(#ft)" stroke-width="1.5"/>
+  <circle cx="26" cy="56" r="1.5" fill="url(#ft)" fill-opacity=".4"/>
+  <circle cx="56" cy="56" r="4" fill="url(#ft)" fill-opacity=".2" stroke="url(#ft)" stroke-width="1.5"/>
+  <circle cx="56" cy="56" r="1.5" fill="url(#ft)" fill-opacity=".4"/>
+  <!-- GPS signal waves from truck -->
+  <path d="M34 32C34 30 36 28 40 28" stroke="url(#ft)" stroke-width="1" fill="none" opacity=".4" stroke-linecap="round"/>
+  <path d="M36 34C36 32 37 30 40 30" stroke="url(#ft)" stroke-width="1" fill="none" opacity=".55" stroke-linecap="round"/>
+  <!-- GPS pin -->
+  <circle cx="40" cy="27" r="2" fill="url(#ft)" fill-opacity=".6" stroke="url(#ft)" stroke-width="1"/>
+  <circle cx="40" cy="27" r=".8" fill="url(#ft)" fill-opacity=".9"/>
+  <!-- Road line -->
+  <path d="M10 62H70" stroke="url(#ft)" stroke-width="1" opacity=".3"/>
+  <path d="M20 62L24 62" stroke="url(#ft)" stroke-width="2" opacity=".2"/>
+  <path d="M36 62L44 62" stroke="url(#ft)" stroke-width="2" opacity=".2"/>
+  <path d="M56 62L62 62" stroke="url(#ft)" stroke-width="2" opacity=".2"/>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ft)" opacity=".6">ICEBERG V2</text>
+</svg>

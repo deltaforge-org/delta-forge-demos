@@ -1,0 +1,26 @@
+[demo]
+id = "delta-optimize-compaction"
+name = "Delta OPTIMIZE — Manual File Compaction & TARGET SIZE"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+OPTIMIZE is a Delta Lake maintenance command that compacts small Parquet files \
+into larger, optimally-sized ones. Frequent small INSERTs — such as daily batch \
+loads or streaming micro-batches — create a "small files problem" that degrades \
+read performance due to excessive file-open overhead. \
+This demo simulates an e-commerce platform where daily order batches create \
+fragmented files, then uses OPTIMIZE with TARGET SIZE to compact them. \
+Pre- and post-compaction queries verify that all data is preserved intact.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "optimize", "compaction", "maintenance", "performance", "small-files", "target-size"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.daily_orders"

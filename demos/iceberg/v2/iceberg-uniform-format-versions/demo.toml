@@ -1,0 +1,34 @@
+[demo]
+id = "iceberg-uniform-format-versions"
+name = "Iceberg UniForm — V1, V2, V3 Format Comparison"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Compares Iceberg format versions V1, V2, and V3 side by side. Creates three \
+identical Delta tables with the same seed data, each configured with a \
+different `delta.universalFormat.icebergVersion` property. Demonstrates that \
+all three versions produce correct metadata, handle DML operations, and \
+support time travel — while V3 adds nanosecond timestamp types, deletion \
+vectors, and named references. Dataset: sensor readings (12 per table) \
+with temperature, humidity, and timestamp columns.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "format-version", "v1", "v2", "v3", "comparison"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.sensors_v1"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.sensors_v2"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.sensors_v3"

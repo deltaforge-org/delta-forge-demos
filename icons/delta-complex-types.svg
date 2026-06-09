@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ct" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Struct container -->
+  <rect x="10" y="8" width="60" height="64" rx="6" stroke="url(#ct)" stroke-width="2" fill="url(#ct)" fill-opacity=".08"/>
+  <!-- Nested struct box -->
+  <rect x="18" y="14" width="44" height="18" rx="3" stroke="url(#ct)" stroke-width="1.5" fill="url(#ct)" fill-opacity=".15"/>
+  <text x="40" y="26" text-anchor="middle" font-size="8" font-family="monospace" fill="url(#ct)" opacity=".9">{struct}</text>
+  <!-- Array bracket -->
+  <rect x="18" y="36" width="20" height="14" rx="3" stroke="url(#ct)" stroke-width="1.5" fill="url(#ct)" fill-opacity=".2"/>
+  <text x="28" y="46" text-anchor="middle" font-size="8" font-family="monospace" fill="url(#ct)" opacity=".9">[arr]</text>
+  <!-- Map bracket -->
+  <rect x="42" y="36" width="20" height="14" rx="3" stroke="url(#ct)" stroke-width="1.5" fill="url(#ct)" fill-opacity=".2"/>
+  <text x="52" y="46" text-anchor="middle" font-size="8" font-family="monospace" fill="url(#ct)" opacity=".9">k:v</text>
+  <!-- Connection dots -->
+  <circle cx="28" cy="54" r="2" fill="url(#ct)" opacity=".6"/>
+  <circle cx="40" cy="54" r="2" fill="url(#ct)" opacity=".6"/>
+  <circle cx="52" cy="54" r="2" fill="url(#ct)" opacity=".6"/>
+  <!-- Connection lines -->
+  <line x1="28" y1="56" x2="28" y2="62" stroke="url(#ct)" stroke-width="1" opacity=".4"/>
+  <line x1="40" y1="56" x2="40" y2="62" stroke="url(#ct)" stroke-width="1" opacity=".4"/>
+  <line x1="52" y1="56" x2="52" y2="62" stroke="url(#ct)" stroke-width="1" opacity=".4"/>
+  <line x1="20" y1="62" x2="60" y2="62" stroke="url(#ct)" stroke-width="1" opacity=".3"/>
+  <!-- Type label -->
+  <text x="40" y="72" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#ct)" opacity=".7">COMPLEX</text>
+</svg>

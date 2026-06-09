@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog last_updated="2025-06-15">
+  <product id="PRD-001" status="active">
+    <name>Industrial Sensor Module</name>
+    <category>Electronics</category>
+    <price currency="USD">249.99</price>
+    <specifications>
+      <weight unit="kg">0.85</weight>
+      <dimensions>
+        <length unit="mm">120</length>
+        <width unit="mm">80</width>
+        <height unit="mm">35</height>
+      </dimensions>
+      <operating_temp min="-20" max="85" unit="C"/>
+      <voltage>3.3V DC</voltage>
+      <certifications>CE, FCC, UL</certifications>
+    </specifications>
+    <supplier>
+      <company>TechParts Inc.</company>
+      <contact>
+        <name>James Lee</name>
+        <email>james@techparts.example.com</email>
+        <phone>+1-555-0101</phone>
+      </contact>
+      <address>
+        <street>100 Industrial Blvd</street>
+        <city>San Jose</city>
+        <state>CA</state>
+        <zip>95110</zip>
+        <country>US</country>
+      </address>
+      <lead_time_days>14</lead_time_days>
+    </supplier>
+    <tags>sensor,IoT,industrial,temperature</tags>
+  </product>
+  <product id="PRD-002" status="active">
+    <name>Wireless Gateway</name>
+    <category>Networking</category>
+    <price currency="USD">599.00</price>
+    <specifications>
+      <weight unit="kg">1.20</weight>
+      <dimensions>
+        <length unit="mm">200</length>
+        <width unit="mm">150</width>
+        <height unit="mm">40</height>
+      </dimensions>
+      <operating_temp min="-10" max="60" unit="C"/>
+      <voltage>12V DC</voltage>
+      <certifications>CE, FCC</certifications>
+    </specifications>
+    <supplier>
+      <company>NetCore Systems</company>
+      <contact>
+        <name>Sarah Kim</name>
+        <email>sarah@netcore.example.com</email>
+        <phone>+1-555-0202</phone>
+      </contact>
+      <address>
+        <street>500 Network Drive</street>
+        <city>Austin</city>
+        <state>TX</state>
+        <zip>73301</zip>
+        <country>US</country>
+      </address>
+      <lead_time_days>21</lead_time_days>
+    </supplier>
+    <tags>gateway,wireless,networking,mesh</tags>
+  </product>
+  <product id="PRD-003" status="discontinued">
+    <name>Legacy Controller Board</name>
+    <category>Electronics</category>
+    <price currency="USD">89.50</price>
+    <specifications>
+      <weight unit="kg">0.35</weight>
+      <dimensions>
+        <length unit="mm">100</length>
+        <width unit="mm">70</width>
+        <height unit="mm">15</height>
+      </dimensions>
+      <operating_temp min="0" max="70" unit="C"/>
+      <voltage>5V DC</voltage>
+      <certifications>CE</certifications>
+    </specifications>
+    <supplier>
+      <company>TechParts Inc.</company>
+      <contact>
+        <name>James Lee</name>
+        <email>james@techparts.example.com</email>
+        <phone>+1-555-0101</phone>
+      </contact>
+      <address>
+        <street>100 Industrial Blvd</street>
+        <city>San Jose</city>
+        <state>CA</state>
+        <zip>95110</zip>
+        <country>US</country>
+      </address>
+      <lead_time_days>7</lead_time_days>
+    </supplier>
+    <tags>controller,legacy,board</tags>
+  </product>
+</catalog>

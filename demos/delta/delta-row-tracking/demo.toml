@@ -1,0 +1,25 @@
+[demo]
+id = "delta-row-tracking"
+name = "Delta Row Tracking — Stable Row IDs & Audit Trail"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Row tracking is a Delta Lake protocol feature that assigns stable, unique \
+identifiers to each row so that changes can be traced across versions. It \
+enables fine-grained change detection for CDC pipelines, merge operations, \
+and regulatory compliance. This demo builds a financial audit trail that \
+mirrors row-tracking patterns, recording every create, update, delete, and \
+review action with before/after values and version tags.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "row-tracking", "audit", "compliance", "versioning", "lineage"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.compliance_audit"

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cr" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#cr)" fill-opacity=".2" stroke="url(#cr)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#cr)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Columns being reordered -->
+  <rect x="16" y="34" width="12" height="24" rx="2" fill="url(#cr)" fill-opacity=".15" stroke="url(#cr)" stroke-width="1.2"/>
+  <rect x="34" y="34" width="12" height="24" rx="2" fill="url(#cr)" fill-opacity=".25" stroke="url(#cr)" stroke-width="1.2"/>
+  <rect x="52" y="34" width="12" height="24" rx="2" fill="url(#cr)" fill-opacity=".15" stroke="url(#cr)" stroke-width="1.2"/>
+  <!-- Reorder arrows -->
+  <path d="M30 40L32 38L34 40" stroke="url(#cr)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M48 52L50 54L52 52" stroke="url(#cr)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <text x="22" y="48" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cr)" opacity=".6">B</text>
+  <text x="40" y="48" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cr)" opacity=".8">A</text>
+  <text x="58" y="48" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cr)" opacity=".6">C</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#cr)" opacity=".6">COL REORDER</text>
+</svg>

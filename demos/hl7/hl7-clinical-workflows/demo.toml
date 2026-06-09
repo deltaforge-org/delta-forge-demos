@@ -1,0 +1,54 @@
+[demo]
+id = "hl7-clinical-workflows"
+name = "HL7 Clinical Workflows — Documents, Scheduling & Edge Cases"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates how DeltaForge handles HL7 v2 clinical workflow messages \
+beyond the core ADT/ORM/ORU types. Includes MDM (Medical Document \
+Management) with a full History & Physical narrative, SIU (Scheduling) \
+with appointment booking from two different systems, and a comprehensive \
+edge-case file testing HL7 escape sequences, empty fields, and special \
+characters. Four messages cover v2.3 through v2.5.1 and showcase text \
+observation handling, appointment resource modeling, and parser robustness.
+"""
+categories = ["hl7", "healthcare"]
+tags = ["hl7", "mdm", "siu", "scheduling", "clinical-documents", "edge-cases", "escape-sequences", "healthcare"]
+difficulty = "intermediate"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Path to the directory containing HL7 MDM/SIU/edge-case files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/mdm_t02_document.hl7"
+format = "hl7"
+description = "MDM^T02 — Authenticated History & Physical (v2.5.1): 7 OBX sections (CC, HPI, PMH, meds, exam, assessment, plan)"
+size_bytes = 1638
+
+[[demo.data_files]]
+path = "data/siu_s12_schedule.hl7"
+format = "hl7"
+description = "SIU^S12 — Cardiology follow-up (v2.5.1): 30-min appointment with provider, location, and service"
+size_bytes = 692
+
+[[demo.data_files]]
+path = "data/hl7v2.3_siu_s12_scheduling.hl7"
+format = "hl7"
+description = "SIU^S12 — Office visit (v2.3): 60-min appointment with multiple providers and location"
+size_bytes = 718
+
+[[demo.data_files]]
+path = "data/edge_cases.hl7"
+format = "hl7"
+description = "ADT^A01 — Edge cases (v2.5.1): escape sequences (\\F\\, \\T\\, \\S\\, \\R\\, \\E\\, \\X0D\\), empty fields, special chars"
+size_bytes = 512
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7.clinical_messages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7.clinical_materialized"

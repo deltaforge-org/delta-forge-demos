@@ -1,0 +1,26 @@
+[demo]
+id = "delta-timestamp-ntz"
+name = "Delta Timestamp NTZ — Hospital Shift Handover"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+Timestamp NTZ (No TimeZone) stores literal wall-clock times without embedded \
+timezone metadata. In healthcare, shift times must display exactly as entered — \
+"07:00" means 7 AM at THAT hospital regardless of the reader's timezone. \
+This demo uses a multi-hospital shift handover system to demonstrate why NTZ \
+matters: identical local times map to different UTC instants depending on the \
+hospital's timezone, and sorting by UTC reveals the true chronological sequence \
+while local times remain human-readable for clinical staff.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "timestamp", "ntz", "timezone", "healthcare", "varchar"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.shift_handover"

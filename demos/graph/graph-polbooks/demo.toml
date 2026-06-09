@@ -1,0 +1,49 @@
+[demo]
+id = "graph-polbooks"
+name = "Political Books — Co-Purchasing Network with Ground-Truth Communities"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Political Books Network (Krebs, compiled by Newman): 105 books about US \
+politics sold on Amazon, with 441 undirected edges representing frequent \
+co-purchasing. Each book belongs to one of three ground-truth communities \
+(liberal, neutral, conservative), making this a classic benchmark for \
+community detection with known labels. \
+\
+Verifies community detection, centrality, connected components, and degree \
+distribution against published reference values. \
+\
+Data source: V. Krebs, unpublished; compiled by M. E. J. Newman.
+"""
+categories = ["graph"]
+tags = ["graph", "polbooks", "political", "community-detection", "co-purchasing", "ground-truth", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/edges.csv"
+format = "csv"
+description = "Edge list: 882 rows (441 undirected edges, both directions) with weight=1.0"
+size_bytes = 8663
+
+[[demo.data_files]]
+path = "data/vertices.csv"
+format = "csv"
+description = "Vertex list: 105 political books with title and political leaning (Liberal/Neutral/Conservative)"
+size_bytes = 3363
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.political_books.political_books"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.political_books.vertices"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.political_books.edges"

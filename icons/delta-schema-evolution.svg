@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="se" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Column bars growing -->
+  <rect x="14" y="38" width="10" height="30" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".15"/>
+  <rect x="28" y="28" width="10" height="40" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".2"/>
+  <rect x="42" y="18" width="10" height="50" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".25"/>
+  <rect x="56" y="8" width="10" height="60" rx="2" stroke="url(#se)" stroke-width="1.5" fill="url(#se)" fill-opacity=".3"/>
+  <!-- Plus sign on new column -->
+  <circle cx="61" cy="14" r="4" fill="url(#se)" opacity=".7"/>
+  <line x1="61" y1="12" x2="61" y2="16" stroke="#0f172a" stroke-width="1.2"/>
+  <line x1="59" y1="14" x2="63" y2="14" stroke="#0f172a" stroke-width="1.2"/>
+  <!-- Arrow showing evolution -->
+  <path d="M18 34L58 6" stroke="url(#se)" stroke-width="1" stroke-dasharray="3 2" opacity=".4"/>
+</svg>

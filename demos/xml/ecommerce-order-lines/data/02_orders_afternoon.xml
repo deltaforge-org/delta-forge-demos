@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders batch_id="B2025-002" export_date="2025-06-15">
+  <order id="ORD-1004" status="shipped">
+    <customer>
+      <name>David Lee</name>
+      <email>david@example.com</email>
+      <tier>bronze</tier>
+    </customer>
+    <order_date>2025-06-15</order_date>
+    <items>
+      <item sku="WDG-100">
+        <product>Premium Widget</product>
+        <description><![CDATA[<b>Premium</b> stainless-steel widget with <em>lifetime warranty</em>]]></description>
+        <quantity>1</quantity>
+        <unit_price>29.99</unit_price>
+        <variant>
+          <size>Small</size>
+          <color>Black</color>
+        </variant>
+      </item>
+      <item sku="WDG-101">
+        <product>Widget Mini</product>
+        <description>Compact widget for tight spaces</description>
+        <quantity>2</quantity>
+        <unit_price>14.99</unit_price>
+        <variant>
+          <size>Small</size>
+          <color>Blue</color>
+        </variant>
+      </item>
+    </items>
+    <gift_wrap/>
+    <express/>
+    <shipping_total>8.99</shipping_total>
+    <internal_audit>
+      <cost_center>CC-4403</cost_center>
+      <margin_pct>0.40</margin_pct>
+    </internal_audit>
+  </order>
+  <order id="ORD-1005" status="processing">
+    <customer>
+      <name>Emma Wilson</name>
+      <email>emma@example.com</email>
+      <tier>gold</tier>
+    </customer>
+    <order_date>2025-06-15</order_date>
+    <items>
+      <item sku="GDG-200">
+        <product>Gadget Pro</product>
+        <description><![CDATA[Next-gen gadget with <b>USB-C</b> charging]]></description>
+        <quantity>2</quantity>
+        <unit_price>79.99</unit_price>
+        <variant>
+          <size>Standard</size>
+          <color>Rose Gold</color>
+        </variant>
+      </item>
+      <item sku="CBL-050">
+        <product>USB-C Cable</product>
+        <description>Standard charging cable, 2 meter length</description>
+        <quantity>3</quantity>
+        <unit_price>9.99</unit_price>
+        <variant>
+          <size>2m</size>
+          <color>Black</color>
+        </variant>
+      </item>
+    </items>
+    <shipping_total>5.99</shipping_total>
+    <internal_audit>
+      <cost_center>CC-4404</cost_center>
+      <margin_pct>0.44</margin_pct>
+    </internal_audit>
+  </order>
+</orders>

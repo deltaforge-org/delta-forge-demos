@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ms" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10b981"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <!-- Three stacked sheets -->
+  <rect x="16" y="6" width="50" height="58" rx="3" stroke="url(#ms)" stroke-width="1" fill="url(#ms)" fill-opacity=".04"/>
+  <rect x="12" y="12" width="50" height="58" rx="3" stroke="url(#ms)" stroke-width="1" fill="url(#ms)" fill-opacity=".06"/>
+  <rect x="8" y="18" width="50" height="58" rx="3" stroke="url(#ms)" stroke-width="1.5" fill="url(#ms)" fill-opacity=".08"/>
+  <!-- Sheet tabs at bottom -->
+  <rect x="8" y="68" width="16" height="8" rx="2" fill="url(#ms)" opacity=".7"/>
+  <rect x="26" y="68" width="16" height="8" rx="2" fill="url(#ms)" opacity=".4"/>
+  <rect x="44" y="68" width="14" height="8" rx="2" fill="url(#ms)" opacity=".2"/>
+  <!-- Grid lines on front sheet -->
+  <line x1="8" y1="30" x2="58" y2="30" stroke="url(#ms)" stroke-width=".5" opacity=".2"/>
+  <line x1="8" y1="42" x2="58" y2="42" stroke="url(#ms)" stroke-width=".5" opacity=".15"/>
+  <line x1="8" y1="54" x2="58" y2="54" stroke="url(#ms)" stroke-width=".5" opacity=".15"/>
+  <line x1="28" y1="18" x2="28" y2="68" stroke="url(#ms)" stroke-width=".5" opacity=".15"/>
+  <!-- Join arrow between sheets -->
+  <path d="M62 36 L72 36 L72 50 L62 50" stroke="url(#ms)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <circle cx="67" cy="43" r="3" fill="url(#ms)" opacity=".6"/>
+</svg>

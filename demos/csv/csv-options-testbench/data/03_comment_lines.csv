@@ -1,0 +1,9 @@
+# Sensor readings export
+# Generated: 2024-06-15
+# Source: IoT Gateway v2.1
+id,sensor,temperature,humidity
+1,TMP-001,22.5,45.2
+# Calibration note: sensor TMP-002 was recalibrated on 2024-06-10
+2,TMP-002,23.1,43.8
+3,TMP-003,21.9,47.0
+# End of batch

@@ -1,0 +1,438 @@
+[demo]
+id = "iceberg-native-partition-transforms"
+name = "Iceberg Native — Partition Transforms (Bucket + Day)"
+version = "1.0.0"
+author = "DeltaForge Team"
+icon = "bucket-partition"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading with \
+Iceberg-native partition transforms: bucket(8, source_ip) and days(capture_time). \
+These transforms are Iceberg-specific and cannot be produced by Delta Lake. \
+The dataset contains 480 network traffic packet records across 3 regions \
+(north-america, europe, asia-pacific), 4 protocols (TCP, UDP, ICMP, DNS), \
+and 4 threat levels (low, medium, high, critical). Data is spread across 10 days \
+of capture times and 78 partitioned Parquet files. Exercises Iceberg partition \
+pruning, bucket-based data layout, and day-based temporal partitioning.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v2", "partition-transforms", "bucket", "day", "network", "security"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "network_traffic/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg format v2 metadata with bucket(8, source_ip) + days(capture_time) partition spec"
+size_bytes = 2411
+
+[[demo.data_files]]
+path = "network_traffic/metadata/snap-8454214707379975733-1-f160c1e0-ef5d-48f8-a24b-f71b95467660.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — pointers to data manifests"
+size_bytes = 4496
+
+[[demo.data_files]]
+path = "network_traffic/metadata/f160c1e0-ef5d-48f8-a24b-f71b95467660-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to 78 partitioned Parquet data files"
+size_bytes = 14079
+
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-02-28/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00077.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-02-28"
+size_bytes = 2699
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00061.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-01"
+size_bytes = 2821
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00073.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-02"
+size_bytes = 2678
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00076.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-03"
+size_bytes = 2714
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00030.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-04"
+size_bytes = 3034
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00070.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-05"
+size_bytes = 2644
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00041.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-06"
+size_bytes = 2902
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00072.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-07"
+size_bytes = 2673
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=0/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00033.parquet"
+format = "parquet"
+description = "Partition: bucket=0, day=2025-03-10"
+size_bytes = 2984
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00008.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-01"
+size_bytes = 3148
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00035.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-02"
+size_bytes = 3163
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00034.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-03"
+size_bytes = 3231
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00032.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-04"
+size_bytes = 3104
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00048.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-05"
+size_bytes = 3218
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00017.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-06"
+size_bytes = 3186
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00066.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-07"
+size_bytes = 3180
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-08/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00037.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-08"
+size_bytes = 3210
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00001.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-09"
+size_bytes = 3255
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=1/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00029.parquet"
+format = "parquet"
+description = "Partition: bucket=1, day=2025-03-10"
+size_bytes = 3302
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00068.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-01"
+size_bytes = 2879
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00016.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-02"
+size_bytes = 3204
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00062.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-03"
+size_bytes = 2992
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00020.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-04"
+size_bytes = 3040
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00031.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-05"
+size_bytes = 2889
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00071.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-06"
+size_bytes = 3096
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00026.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-07"
+size_bytes = 3217
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-08/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00056.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-08"
+size_bytes = 3163
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00003.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-09"
+size_bytes = 2983
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=2/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00039.parquet"
+format = "parquet"
+description = "Partition: bucket=2, day=2025-03-10"
+size_bytes = 3292
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00002.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-01"
+size_bytes = 3324
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00027.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-02"
+size_bytes = 3001
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00045.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-03"
+size_bytes = 3142
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00004.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-04"
+size_bytes = 3152
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00010.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-05"
+size_bytes = 3095
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00006.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-06"
+size_bytes = 3142
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00007.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-07"
+size_bytes = 3283
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-08/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00043.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-08"
+size_bytes = 3136
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00057.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-09"
+size_bytes = 2963
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=3/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00069.parquet"
+format = "parquet"
+description = "Partition: bucket=3, day=2025-03-10"
+size_bytes = 2834
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00021.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-01"
+size_bytes = 3100
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00023.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-02"
+size_bytes = 2952
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00019.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-03"
+size_bytes = 2978
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00050.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-04"
+size_bytes = 3048
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00013.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-05"
+size_bytes = 2974
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00046.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-06"
+size_bytes = 3172
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00067.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-07"
+size_bytes = 3241
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-08/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00058.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-08"
+size_bytes = 3061
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00011.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-09"
+size_bytes = 3214
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=4/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00060.parquet"
+format = "parquet"
+description = "Partition: bucket=4, day=2025-03-10"
+size_bytes = 3012
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00059.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-01"
+size_bytes = 2704
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00065.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-02"
+size_bytes = 2940
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00038.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-03"
+size_bytes = 2665
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00022.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-04"
+size_bytes = 2931
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00075.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-05"
+size_bytes = 2727
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00055.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-06"
+size_bytes = 2898
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00078.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-09"
+size_bytes = 2679
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=5/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00074.parquet"
+format = "parquet"
+description = "Partition: bucket=5, day=2025-03-10"
+size_bytes = 2665
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-02-28/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00044.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-02-28"
+size_bytes = 2728
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00005.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-01"
+size_bytes = 2994
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00018.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-02"
+size_bytes = 3083
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00064.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-03"
+size_bytes = 2938
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00049.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-04"
+size_bytes = 3232
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00012.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-05"
+size_bytes = 3080
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00054.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-06"
+size_bytes = 2883
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00028.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-07"
+size_bytes = 3028
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-08/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00052.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-08"
+size_bytes = 3158
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00025.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-09"
+size_bytes = 3016
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=6/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00053.parquet"
+format = "parquet"
+description = "Partition: bucket=6, day=2025-03-10"
+size_bytes = 3183
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-01/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00051.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-01"
+size_bytes = 3073
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-02/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00009.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-02"
+size_bytes = 3324
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-03/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00015.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-03"
+size_bytes = 3252
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-04/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00047.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-04"
+size_bytes = 2923
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-05/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00014.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-05"
+size_bytes = 3098
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-06/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00024.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-06"
+size_bytes = 3264
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-07/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00040.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-07"
+size_bytes = 3298
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-08/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00042.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-08"
+size_bytes = 3222
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-09/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00036.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-09"
+size_bytes = 3278
+[[demo.data_files]]
+path = "network_traffic/data/source_ip_bucket=7/capture_time_day=2025-03-10/00000-3-714a994f-67fd-48e5-9da6-909eae909362-0-00063.parquet"
+format = "parquet"
+description = "Partition: bucket=7, day=2025-03-10"
+size_bytes = 3015
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg_demos.network_traffic"
+

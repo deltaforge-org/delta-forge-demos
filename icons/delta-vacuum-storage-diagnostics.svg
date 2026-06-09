@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vsd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <!-- Storage bar chart (before) — tall bars = bloated -->
+  <rect x="8"  y="18" width="7" height="32" rx="1.5" fill="url(#vsd)" opacity=".35"/>
+  <rect x="17" y="24" width="7" height="26" rx="1.5" fill="url(#vsd)" opacity=".35"/>
+  <rect x="26" y="14" width="7" height="36" rx="1.5" fill="url(#vsd)" opacity=".35"/>
+  <!-- Arrow down (VACUUM) -->
+  <path d="M40 22L40 38" stroke="url(#vsd)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M37 35L40 39L43 35" stroke="url(#vsd)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Storage bar chart (after) — short bars = cleaned -->
+  <rect x="47" y="36" width="7" height="14" rx="1.5" fill="url(#vsd)" opacity=".6"/>
+  <rect x="56" y="38" width="7" height="12" rx="1.5" fill="url(#vsd)" opacity=".6"/>
+  <rect x="65" y="34" width="7" height="16" rx="1.5" fill="url(#vsd)" opacity=".6"/>
+  <!-- Baseline axis -->
+  <line x1="6" y1="50" x2="74" y2="50" stroke="url(#vsd)" stroke-width="1" opacity=".3"/>
+  <!-- Magnifying glass (diagnostics) -->
+  <circle cx="22" cy="62" r="7" stroke="url(#vsd)" stroke-width="1.5" fill="url(#vsd)" fill-opacity=".1"/>
+  <line x1="27" y1="67" x2="32" y2="72" stroke="url(#vsd)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Checkmark inside magnifier -->
+  <path d="M18 62L21 65L26 59" stroke="url(#vsd)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Metrics text -->
+  <text x="56" y="62" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#vsd)" opacity=".6">num_files</text>
+  <text x="56" y="68" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#vsd)" opacity=".6">size_bytes</text>
+  <text x="40" y="78" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#vsd)" opacity=".6">DIAGNOSTICS</text>
+</svg>

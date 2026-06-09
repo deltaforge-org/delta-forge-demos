@@ -1,0 +1,86 @@
+[
+  {
+    "id": "LST-004",
+    "title": "Class A Office Space",
+    "type": "commercial",
+    "bedrooms": 0,
+    "bathrooms": 4,
+    "sqft": 8500,
+    "year_built": 2015,
+    "status": "active",
+    "location": {
+      "address": {
+        "street": "500 Congress Avenue",
+        "unit": "Suite 300",
+        "city": "Austin",
+        "state": "TX",
+        "zip": "73301"
+      },
+      "geo": {
+        "lat": 30.2672,
+        "lng": -97.7431
+      },
+      "neighborhood": "Downtown",
+      "walk_score": 90,
+      "transit_score": 65
+    },
+    "pricing": {
+      "list_price": 3200000,
+      "price_per_sqft": 376,
+      "hoa_monthly": 2800,
+      "tax_annual": 64000,
+      "tax_history": [
+        {"year": 2023, "amount": 64000},
+        {"year": 2022, "amount": 58000}
+      ],
+      "mortgage_estimate": {
+        "monthly_payment": 18680,
+        "down_payment_pct": 25,
+        "rate_pct": 7.25
+      }
+    },
+    "tags": ["elevator", "fiber-internet", "conference-rooms"]
+  },
+  {
+    "id": "LST-005",
+    "title": "Historic Townhouse",
+    "type": "house",
+    "bedrooms": 5,
+    "bathrooms": 4,
+    "sqft": 4200,
+    "year_built": 1892,
+    "status": "active",
+    "location": {
+      "address": {
+        "street": "118 Beacon Street",
+        "unit": null,
+        "city": "Boston",
+        "state": "MA",
+        "zip": "02116"
+      },
+      "geo": {
+        "lat": 42.3601,
+        "lng": -71.0589
+      },
+      "neighborhood": "Back Bay",
+      "walk_score": 97,
+      "transit_score": 90
+    },
+    "pricing": {
+      "list_price": 4750000,
+      "price_per_sqft": 1131,
+      "hoa_monthly": null,
+      "tax_annual": 47500,
+      "tax_history": [
+        {"year": 2023, "amount": 47500},
+        {"year": 2022, "amount": 44000}
+      ],
+      "mortgage_estimate": {
+        "monthly_payment": 27730,
+        "down_payment_pct": 20,
+        "rate_pct": 6.75
+      }
+    },
+    "tags": ["brownstone", "garden", "historic-landmark", "fireplace"]
+  }
+]

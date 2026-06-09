@@ -1,0 +1,117 @@
+[demo]
+id = "delta-odbc-driver-bench"
+name = "ACME Corporation Production Warehouse (ODBC Driver Wire Benchmark)"
+version = "2.2.0"
+author = "DeltaForge Team"
+description = """
+Ten realistic operational tables that double as a deterministic ODBC \
+wire-benchmark suite. Each table represents a recognisable real-world \
+workload while still isolating one ODBC wire dimension at a time so a \
+regression on byte counts or throughput points at one code path. Every \
+cell is row_number-derived: two runs are bit-identical and any drift is \
+real, not noise.
+
+Tables (~120.65M rows total (XL tier), scaled to stay under Arrow's 2GB \
+i32 string-offset limit):
+- acme.market_ticks (100M rows): equity tick stream, 8 INT64/DOUBLE cols, \
+  speed-of-light memcpy baseline.
+- acme.manufacturing_runs (2M rows): plant run snapshots, 60 fixed-width \
+  primitive sensor cols, per-cell overhead and column slab cache.
+- acme.support_tickets (5M rows): customer-support tickets, 5 text cols at \
+  30% NULL, UTF-8 hot path and indicator-array.
+- acme.product_catalog (1M rows): i18n product catalogue, 40 locale \
+  display-name cols at 5% NULL, indicator-array under high cell-presence.
+- acme.knowledge_articles (100K rows): wiki/KB articles, 4 cols of 6.4KB \
+  cells, SQLGetData chunked-read path.
+- acme.document_archive (50K rows): document image / PDF / attachment \
+  payloads, BINARY 32B-32KB, SQL_C_BINARY chunked truncation.
+- acme.banking_transactions (5M rows): bank transactions, DECIMAL(38,9) \
+  with multi-stage temporal cols (DATE / TIMESTAMP / TIME), decimal cast \
+  and temporal formatting.
+- acme.shipment_orders (500K rows): e-commerce orders with nested STRUCT, \
+  ARRAY, and MAP, format-bound nested-type wire path.
+- acme.patient_records (5M rows): EHR with 30 sparse extension cols at \
+  95% NULL, indicator-only fast path.
+- acme.forum_posts (2M rows): discussion-forum posts, 99.5% short comments \
+  + 0.5% 100KB essays, chunked-read offset machinery under realistic skew.
+
+Every table sets delta.targetFileSize = 134217728 (128 MB) per the \
+Databricks recommendation, producing predictable Parquet file sizes that \
+align with Power Query / Power BI partition refresh behaviour.
+
+A separate 200M-row stress-test script lives at \
+extras/huge_fixed_narrow_200m.sql for throughput experiments at memcpy \
+speed-of-light scale.
+"""
+categories = ["delta-table", "benchmark", "odbc"]
+tags = [
+    "delta-table",
+    "advanced",
+    "benchmark",
+    "odbc",
+    "wire-format",
+    "regression-suite",
+    "deterministic",
+    "real-world-scenarios",
+    "power-bi",
+    "power-query",
+    "fixed-width",
+    "string-decode",
+    "binary-blobs",
+    "decimal",
+    "temporal",
+    "nested-types",
+    "null-density",
+    "skewed-data",
+    "i18n",
+    "ehr",
+    "banking",
+    "ecommerce",
+    "forum"
+]
+difficulty = "advanced"
+estimated_time_minutes = 35
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.market_ticks"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.manufacturing_runs"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.support_tickets"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.product_catalog"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.knowledge_articles"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.document_archive"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.banking_transactions"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.shipment_orders"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.patient_records"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.acme.forum_posts"

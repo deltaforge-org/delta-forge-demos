@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dv" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Table grid -->
+  <rect x="10" y="12" width="60" height="44" rx="4" stroke="url(#dv)" stroke-width="1.5" fill="url(#dv)" fill-opacity=".08"/>
+  <!-- Header row -->
+  <rect x="10" y="12" width="60" height="10" rx="4" fill="url(#dv)" fill-opacity=".2"/>
+  <text x="25" y="20" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".8">col</text>
+  <text x="55" y="20" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".8">val</text>
+  <!-- Data rows with defaults -->
+  <text x="25" y="31" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".6">user</text>
+  <text x="55" y="31" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".7">system</text>
+  <text x="25" y="40" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".6">level</text>
+  <text x="55" y="40" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".7">info</text>
+  <text x="25" y="49" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".6">retry</text>
+  <text x="55" y="49" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#dv)" opacity=".7">0</text>
+  <!-- Default badge -->
+  <rect x="22" y="62" width="36" height="10" rx="5" fill="url(#dv)" fill-opacity=".25" stroke="url(#dv)" stroke-width="1"/>
+  <text x="40" y="69" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#dv)" opacity=".8">DEFAULT</text>
+</svg>

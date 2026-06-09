@@ -1,0 +1,25 @@
+[demo]
+id = "delta-collations"
+name = "Delta Collations — Language-Aware Sorting & Comparison"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Collation defines how strings are compared, sorted, and matched — critical for \
+multilingual data where naive byte-order sorting produces incorrect results \
+(e.g., placing umlauts after 'z'). Delta tables store collation-aware data by \
+using normalized sort keys alongside original Unicode text. This demo builds a \
+global contact directory with German umlauts, French accents, Spanish tildes, \
+CJK names, and Arabic transliterations to explore language-aware sorting patterns.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "collation", "unicode", "multilingual", "sorting"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.global_contacts"

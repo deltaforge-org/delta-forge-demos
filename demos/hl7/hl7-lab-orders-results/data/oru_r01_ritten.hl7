@@ -1,0 +1,4 @@
+MSH|^~\&|LAB|XYZHosp|EKG|ABCImgCtr|202208221340||ORU^R01|67890|P|2.5
+PID|||1234||Doe^John||19611015|M|||123 Main St.^Apt 101^Benbrook^TX^76107||555-555-5555|||M||1234567890||||||||||^XYZHosp
+OBR|||1234567890||Test^T123^Test description
+OBX|||Test^T123^Test description||Positive||||||||202208221340

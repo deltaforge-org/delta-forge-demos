@@ -1,0 +1,58 @@
+[demo]
+id = "public-holiday-calendar-sync"
+name = "Public Holiday Calendar Sync — Script-Parameter Incremental Enrichment"
+version = "2.0.0"
+description = """
+Target-table-driven REST API ingest using a distinct public source —
+Nager.Date (https://date.nager.at), a no-auth public-holiday service
+used by HR and scheduling platforms worldwide.
+
+Scenario: a multinational HR platform syncs public-holiday calendars
+per (country, year) so its time-off tracker and billable-day calculator
+stay accurate. Launch seed = Norway 2024 + Sweden 2024 (8 rows, hand-
+picked highest-signal holidays). This demo runs one wave — the next
+missing Norway year — with NO hardcoded literals propagated through
+the ingest definition. The pattern is:
+
+  1. Read the silver target to compute the next (country, year) gap:
+         SELECT 'NO', COALESCE(MAX(holiday_year), 2024) + 1
+         FROM silver WHERE country_code = 'NO'
+         INTO $next_country, $next_year;
+  2. INVOKE with per-call overrides referencing those script params:
+         INVOKE API ENDPOINT ... USING (
+             'path_param.year'         = $next_year,
+             'path_param.country_code' = $next_country
+         );
+  3. The engine substitutes $params at INVOKE time, assembles the URL
+     /api/v3/PublicHolidays/<year>/<country>, fetches, and writes the
+     JSON response to the per-run landing folder.
+  4. NOT EXISTS merge on (country_code, holiday_year, holiday_date)
+     keeps replays idempotent.
+
+Demonstrates: CREATE CREDENTIAL (OS keychain), CREATE CONNECTION
+TYPE = rest_api, CREATE API ENDPOINT with a URL template but NO
+stored path_params (the caller supplies them per-invoke), SELECT ...
+INTO $params for target-table-driven gap lookup, INVOKE API ENDPOINT
+... USING (...) for per-call parameter overrides, CREATE EXTERNAL
+TABLE USING JSON with json_flatten_config on a bare top-level array
+response, and the composite-key anti-join INSERT pattern.
+
+NOTE: requires internet. INVOKE issues a real GET against
+https://date.nager.at/api/v3/PublicHolidays/<year>/<country>.
+"""
+categories = ["api", "rest-ingest", "incremental"]
+tags = ["api", "rest", "ingest", "incremental", "parameters", "script-params", "invoke-using", "into-capture", "target-driven", "nager-date", "holidays", "hr", "credentials", "keychain", "json", "flatten", "delta-table", "anti-join", "idempotent", "composite-key"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE rather than reading shipped files. LOCATIONs resolve relative to the bronze zone's storage root.", required = false }
+zone_name = { description = "Target zone for the bronze landing path and the silver catalog. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.holiday_calendar.country_holidays"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.holiday_calendar.public_holidays_bronze"

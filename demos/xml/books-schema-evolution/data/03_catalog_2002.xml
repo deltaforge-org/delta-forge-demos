@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+   <book id="bk107">
+      <author>Knorr, Stefan</author>
+      <title>Creepy Crawlies</title>
+      <genre>Horror</genre>
+      <price>4.95</price>
+      <publish_date>2002-03-06</publish_date>
+      <description>An anthology of horror stories about insects and arachnids.</description>
+      <isbn>978-0-7432-7356-5</isbn>
+      <language>en</language>
+      <publisher>Dark Horse</publisher>
+      <rating>4.2</rating>
+   </book>
+   <book id="bk108">
+      <author>O'Brien, Tim</author>
+      <title>The .NET Programming Bible</title>
+      <genre>Computer</genre>
+      <price>36.95</price>
+      <publish_date>2002-06-09</publish_date>
+      <description>Microsoft's .NET initiative explored in detail for programmers.</description>
+      <isbn>978-0-596-00712-6</isbn>
+      <language>en</language>
+      <publisher>O'Reilly</publisher>
+      <rating>4.8</rating>
+   </book>
+   <book id="bk109">
+      <author>Randall, Cynthia</author>
+      <title>Lover Birds</title>
+      <genre>Romance</genre>
+      <price>4.95</price>
+      <publish_date>2002-09-02</publish_date>
+      <description>When Carla meets Paul at an ornithology conference, tempers fly.</description>
+      <isbn>978-0-316-76948-0</isbn>
+      <language>en</language>
+      <publisher>Harlequin</publisher>
+      <rating>3.5</rating>
+   </book>
+</catalog>

@@ -1,0 +1,25 @@
+[demo]
+id = "delta-schema-evolution"
+name = "Delta Schema Evolution — Add Columns & NULL Filling"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Schema evolution lets you add new columns to a Delta table without \
+rewriting existing data files. This solves the real-world problem of \
+evolving requirements: as your data model grows, old rows automatically \
+get NULL for new columns while new inserts populate them fully. This \
+demo shows a contacts table evolving from 4 to 7 columns, with \
+selective backfill UPDATEs to fill in missing values.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "schema-evolution", "alter-table", "add-column", "null-filling"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.contacts"

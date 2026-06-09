@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-uniform-crud-lifecycle"
+name = "Iceberg UniForm — CRUD & Snapshot Lifecycle"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Walks through the complete lifecycle of a UniForm-enabled Delta table: \
+INSERT, UPDATE, DELETE, and MERGE operations, each producing a new Iceberg \
+snapshot alongside the Delta version. Uses time travel to inspect data at \
+each snapshot boundary. Demonstrates that Iceberg metadata stays in sync \
+with the Delta log across all mutation types — a critical trust signal for \
+dual-format interoperability. Dataset: employee directory (20 employees \
+across 4 departments).
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "crud", "time-travel", "snapshots", "lifecycle"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.employees"

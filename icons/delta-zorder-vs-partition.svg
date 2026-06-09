@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="zp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Divider line -->
+  <line x1="40" y1="10" x2="40" y2="62" stroke="url(#zp)" stroke-width="1" stroke-dasharray="3,2" opacity=".4"/>
+  <!-- Left side: partition grid (3 rows = partition directories) -->
+  <rect x="6" y="12" width="28" height="10" rx="2" fill="url(#zp)" fill-opacity=".12" stroke="url(#zp)" stroke-width="1"/>
+  <rect x="6" y="26" width="28" height="10" rx="2" fill="url(#zp)" fill-opacity=".18" stroke="url(#zp)" stroke-width="1"/>
+  <rect x="6" y="40" width="28" height="10" rx="2" fill="url(#zp)" fill-opacity=".12" stroke="url(#zp)" stroke-width="1"/>
+  <!-- Partition dots -->
+  <circle cx="12" cy="17" r="2" fill="url(#zp)" opacity=".6"/>
+  <circle cx="20" cy="17" r="2" fill="url(#zp)" opacity=".5"/>
+  <circle cx="28" cy="17" r="2" fill="url(#zp)" opacity=".6"/>
+  <circle cx="12" cy="31" r="2" fill="url(#zp)" opacity=".7"/>
+  <circle cx="20" cy="31" r="2" fill="url(#zp)" opacity=".5"/>
+  <circle cx="12" cy="45" r="2" fill="url(#zp)" opacity=".6"/>
+  <circle cx="20" cy="45" r="2" fill="url(#zp)" opacity=".7"/>
+  <circle cx="28" cy="45" r="2" fill="url(#zp)" opacity=".5"/>
+  <!-- Right side: Z-curve path -->
+  <path d="M48 14L68 14L48 36L68 36L48 50" stroke="url(#zp)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+  <!-- Z-curve data points -->
+  <circle cx="48" cy="14" r="2.5" fill="url(#zp)" opacity=".7"/>
+  <circle cx="58" cy="14" r="2.5" fill="url(#zp)" opacity=".6"/>
+  <circle cx="68" cy="14" r="2.5" fill="url(#zp)" opacity=".7"/>
+  <circle cx="58" cy="25" r="2.5" fill="url(#zp)" opacity=".5"/>
+  <circle cx="48" cy="36" r="2.5" fill="url(#zp)" opacity=".7"/>
+  <circle cx="68" cy="36" r="2.5" fill="url(#zp)" opacity=".6"/>
+  <circle cx="48" cy="50" r="2.5" fill="url(#zp)" opacity=".7"/>
+  <!-- Labels -->
+  <text x="20" y="58" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#zp)" opacity=".6">PART</text>
+  <text x="58" y="58" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#zp)" opacity=".6">ZORD</text>
+  <!-- VS label -->
+  <text x="40" y="72" text-anchor="middle" font-size="5.5" font-family="monospace" fill="url(#zp)" opacity=".7" font-weight="bold">vs</text>
+</svg>

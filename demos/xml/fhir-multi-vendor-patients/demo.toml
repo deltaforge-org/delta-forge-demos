@@ -1,0 +1,64 @@
+[demo]
+id = "fhir-multi-vendor-patients"
+name = "FHIR Multi-Vendor Patients (XML) — URI-Based Namespace Resolution"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+A regional Health Information Exchange (HIE) ingests FHIR Patient \
+resources from three EHR vendors that each pick a different namespace \
+prefix for the same FHIR namespace (http://hl7.org/fhir): Vendor A uses \
+`fhir:`, Vendor B uses `fh:`, Vendor C uses the default xmlns with bare \
+element names. Demonstrates the XML flattener's URI-based namespace \
+resolution: ONE external table with `namespaces: {"f": "http://hl7.org/fhir"}` \
+and paths like `/f:Bundle/.../f:Patient/...` matches all three prefix \
+conventions because the matcher resolves prefixes to URIs before comparing. \
+9 patients across 3 vendor files; 8 queries with 30+ assertions cover \
+per-file row counts, vendor-specific lookups, gender breakdown, identifier \
+system distribution, bronze->silver Delta promotion, and a cross-cutting \
+VERIFY block.
+"""
+categories = ["xml", "healthcare"]
+tags = [
+    "xml",
+    "intermediate",
+    "xpath",
+    "namespace",
+    "uri-resolution",
+    "fhir",
+    "interoperability",
+    "multi-vendor",
+    "flatten",
+    "bronze-silver"
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Root path where the three vendor FHIR XML files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/vendor_a_fhir_prefix.xml"
+format = "xml"
+description = "Vendor A (Northstar Medical Group) — FHIR Bundle using `fhir:` prefix on every element. 3 patients."
+size_bytes = 1836
+
+[[demo.data_files]]
+path = "data/vendor_b_fh_prefix.xml"
+format = "xml"
+description = "Vendor B (BlueRidge Health) — FHIR Bundle using `fh:` prefix on every element. 3 patients."
+size_bytes = 1739
+
+[[demo.data_files]]
+path = "data/vendor_c_default_namespace.xml"
+format = "xml"
+description = "Vendor C (Coastal Family Clinic) — FHIR Bundle using default xmlns with bare element names. 3 patients."
+size_bytes = 1549
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hie.patients"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.hie.patients_silver"

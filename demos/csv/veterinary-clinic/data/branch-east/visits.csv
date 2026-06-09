@@ -1,0 +1,26 @@
+visit_id,pet_name,species,breed,owner_name,visit_date,diagnosis,treatment_cost,weight_kg,vaccinated
+E-1,Maggie,Hamster,Dwarf,Maria Garcia,2025-01-14,Digestive issues,250.00,0.04,true
+E-2,Leo,Rabbit,Holland Lop,Christopher Moore,2025-01-01,,100.00,2.61,true
+E-3,Max,Rabbit,Mini Lop,Maria Garcia,2025-01-20,Sprain,235.00,1.25,false
+E-4,Sadie,Hamster,,Christopher Moore,2025-01-11,,90.00,0.07,true
+E-5,Rosie,Cat,British Shorthair,Jennifer White,2025-01-22,Arthritis,190.00,5.46,false
+E-6,Lily,Bird,,Sarah Johnson,2025-01-10,Vaccination update,35.00,1.20,false
+E-7,Jack,Bird,Cockatiel,Amanda Wilson,2025-01-17,Parasite treatment,110.00,1.44,true
+E-8,Oliver,Dog,Poodle,Kevin Young,2025-01-11,Ear infection,135.00,35.05,false
+E-9,Willow,Cat,,Amanda Wilson,2025-01-05,Annual checkup,50.00,6.94,true
+E-10,Ginger,Bird,Cockatiel,Michelle Hall,2025-01-07,Arthritis,170.00,0.79,true
+E-11,Ginger,Cat,Persian,David Kim,2025-01-25,Upper respiratory infection,100.00,6.22,false
+E-12,Molly,Dog,Golden Retriever,David Kim,2025-01-15,Skin allergy,220.00,31.70,false
+E-13,Oscar,Bird,Canary,Rachel Lewis,2025-01-14,Eye infection,120.00,0.32,false
+E-14,Finn,Bird,Cockatiel,James Brown,2025-01-27,Fracture,320.00,1.19,false
+E-15,Jack,Cat,Maine Coon,Emily Rodriguez,2025-01-23,Vaccination update,35.00,4.34,true
+E-16,Molly,Cat,Siamese,Jennifer White,2025-01-23,Skin allergy,205.00,3.26,false
+E-17,Sophie,Rabbit,Mini Lop,Michael Chen,2025-01-07,Upper respiratory infection,125.00,2.54,true
+E-18,Chloe,Hamster,Dwarf,Sarah Johnson,2025-01-12,Vaccination update,65.00,0.13,false
+E-19,Chloe,Hamster,Syrian,James Brown,2025-01-09,Upper respiratory infection,135.00,0.08,false
+E-20,Simba,Cat,British Shorthair,Jessica Martinez,2025-01-20,Eye infection,80.00,4.58,true
+E-21,Sophie,Dog,German Shepherd,Jessica Martinez,2025-01-28,Parasite treatment,65.00,15.41,false
+E-22,Bear,Cat,British Shorthair,Maria Garcia,2025-01-25,Upper respiratory infection,110.00,6.80,false
+E-23,Chloe,Rabbit,Holland Lop,Sarah Johnson,2025-01-24,Eye infection,80.00,2.90,true
+E-24,Milo,Dog,Dachshund,Michael Chen,2025-01-25,Annual checkup,95.00,12.97,true
+E-25,Molly,Hamster,Syrian,Jessica Martinez,2025-01-16,Fracture,280.00,0.14,false

@@ -1,0 +1,30 @@
+[demo]
+id = "delta-partition-merge"
+name = "Delta Partition MERGE — Catalog Sync by Category"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+MERGE into a partitioned Delta table demonstrates how upsert operations \
+target only the partition directories that contain matching rows. When a \
+supplier feed updates Electronics and Clothing but not Sports, only those \
+two partition directories are rewritten — Sports files are never opened. \
+This demo uses a product catalog partitioned by category to show partition-\
+scoped MERGE with WHEN MATCHED UPDATE and WHEN NOT MATCHED INSERT, then \
+verifies that untouched partitions remain byte-identical.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "merge", "partitioning", "upsert", "catalog", "etl", "partition-scoped"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.partitioned_product_catalog"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.partitioned_supplier_feed"

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ovp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Version blocks (V1..V4) stacked left side -->
+  <rect x="8" y="10" width="18" height="8" rx="2" fill="url(#ovp)" opacity=".2"/>
+  <text x="17" y="17" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".5">V1</text>
+  <rect x="8" y="21" width="18" height="8" rx="2" fill="url(#ovp)" opacity=".25"/>
+  <text x="17" y="28" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".5">V2</text>
+  <rect x="8" y="32" width="18" height="8" rx="2" fill="url(#ovp)" opacity=".3"/>
+  <text x="17" y="39" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".5">V3</text>
+  <rect x="8" y="43" width="18" height="8" rx="2" fill="url(#ovp)" opacity=".35"/>
+  <text x="17" y="50" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".5">V4</text>
+  <!-- Arrow from versions to OPTIMIZE -->
+  <path d="M30 30L38 30L36 26L42 30L36 34L38 30" fill="url(#ovp)" opacity=".4"/>
+  <!-- Shield with checkmark (integrity proof) -->
+  <path d="M56 14C56 14 48 18 48 30C48 46 56 54 56 54C56 54 64 46 64 30C64 18 56 14 56 14Z"
+        stroke="url(#ovp)" stroke-width="2" fill="url(#ovp)" fill-opacity=".15"/>
+  <path d="M51 32L54 36L61 28" stroke="url(#ovp)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- = sign between V4 and V5 -->
+  <line x1="48" y1="58" x2="64" y2="58" stroke="url(#ovp)" stroke-width="1.5" opacity=".5"/>
+  <line x1="48" y1="62" x2="64" y2="62" stroke="url(#ovp)" stroke-width="1.5" opacity=".5"/>
+  <text x="43" y="61" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".4">V4</text>
+  <text x="66" y="61" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".4">V5</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ovp)" opacity=".6">INTEGRITY</text>
+</svg>

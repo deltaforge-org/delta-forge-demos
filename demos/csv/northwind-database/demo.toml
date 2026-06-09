@@ -1,0 +1,131 @@
+[demo]
+id = "northwind-database"
+name = "Northwind Trading Company"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+The Northwind database is a classic sample dataset representing a fictional specialty \
+food trading company. It includes 11 interconnected tables covering customers, orders, \
+products, employees, suppliers, and shipping.
+
+This demo focuses on cross-table queries — joins, aggregations, and business analytics \
+across multiple CSV files. See queries.sql for ready-to-run demo queries.
+"""
+categories = ["retail", "csv"]
+tags = ["csv", "relational", "joins", "analytics", "northwind", "orders", "products", "rbac", "cross-table"]
+difficulty = "basic"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/customers.csv"
+format = "csv"
+description = "Customer companies with contact details (91 records)"
+size_bytes = 12800
+
+[[demo.data_files]]
+path = "data/employees.csv"
+format = "csv"
+description = "Sales employees with reporting hierarchy (9 records)"
+size_bytes = 8200
+
+[[demo.data_files]]
+path = "data/orders.csv"
+format = "csv"
+description = "Customer orders with shipping details (830 records)"
+size_bytes = 102400
+
+[[demo.data_files]]
+path = "data/order_details.csv"
+format = "csv"
+description = "Order line items linking orders to products (2,155 records)"
+size_bytes = 65500
+
+[[demo.data_files]]
+path = "data/products.csv"
+format = "csv"
+description = "Product catalog with pricing and stock (77 records)"
+size_bytes = 7500
+
+[[demo.data_files]]
+path = "data/categories.csv"
+format = "csv"
+description = "Product categories (8 records)"
+size_bytes = 4100
+
+[[demo.data_files]]
+path = "data/suppliers.csv"
+format = "csv"
+description = "Product suppliers with contact info (29 records)"
+size_bytes = 5600
+
+[[demo.data_files]]
+path = "data/shippers.csv"
+format = "csv"
+description = "Shipping companies (3 records)"
+size_bytes = 300
+
+[[demo.data_files]]
+path = "data/regions.csv"
+format = "csv"
+description = "Geographic sales regions (4 records)"
+size_bytes = 150
+
+[[demo.data_files]]
+path = "data/territories.csv"
+format = "csv"
+description = "Sales territories (53 records)"
+size_bytes = 2400
+
+[[demo.data_files]]
+path = "data/employee_territories.csv"
+format = "csv"
+description = "Employee-to-territory assignments (49 records)"
+size_bytes = 800
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_employee_territories"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_territories"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_regions"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_shippers"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_suppliers"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_categories"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_products"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_order_details"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_orders"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_employees"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.nw_customers"

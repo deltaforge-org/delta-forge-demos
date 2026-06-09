@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="oic" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield / insurance icon -->
+  <path d="M40 10 L60 20 L60 42 C60 56 40 68 40 68 C40 68 20 56 20 42 L20 20 Z" fill="url(#oic)" opacity=".12" stroke="url(#oic)" stroke-width="1.5"/>
+  <!-- Checkmark inside shield -->
+  <path d="M30 40 L37 47 L52 30" stroke="url(#oic)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>
+  <!-- Document overlay -->
+  <rect x="48" y="46" width="20" height="24" rx="2" fill="url(#oic)" opacity=".15" stroke="url(#oic)" stroke-width="1.2"/>
+  <line x1="52" y1="53" x2="64" y2="53" stroke="url(#oic)" stroke-width="1" opacity=".4"/>
+  <line x1="52" y1="58" x2="64" y2="58" stroke="url(#oic)" stroke-width="1" opacity=".4"/>
+  <line x1="52" y1="63" x2="60" y2="63" stroke="url(#oic)" stroke-width="1" opacity=".4"/>
+</svg>

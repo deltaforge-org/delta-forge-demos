@@ -1,0 +1,27 @@
+[demo]
+id = "delta-deletion-vectors"
+name = "Delta Deletion Vectors — Efficient Soft Deletes"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Deletion vectors (DVs) are a Delta Lake protocol feature that marks individual \
+rows as deleted using lightweight bitmap files, avoiding the costly rewrite of \
+entire Parquet data files. Without DVs, deleting even one row from a 1GB file \
+requires rewriting the full 1GB. This demo covers the full DV lifecycle: DELETE \
+and UPDATE create DVs, DESCRIBE DETAIL inspects the accumulated DV state, \
+OPTIMIZE materializes DVs into compacted files, DESCRIBE HISTORY shows every \
+DV operation in the transaction log, VERSION AS OF enables time travel to \
+pre-DELETE data, and VACUUM purges the orphaned files left behind.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "deletion-vectors", "optimize", "soft-deletes", "compaction"]
+difficulty = "advanced"
+estimated_time_minutes = 15
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.web_sessions"

@@ -1,0 +1,372 @@
+[demo]
+id = "graph-ldbc-snb"
+name = "LDBC Social Network Benchmark — Full Model Graph Verification"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Full LDBC Social Network Benchmark (SF0.1) with 8 entity types, 23 \
+relationship types, and ~1.2 million rows. Verifies DeltaForge graph \
+algorithms and Cypher queries against official golden values from the \
+LDBC reference implementation validation parameters. \
+\
+Entities: Person (1,528), Comment (151K), Post (136K), Forum (14K), \
+Place (1,460), Organisation (7,955), Tag (16K), TagClass (71). \
+Relationships: KNOWS, HAS_CREATOR, IS_LOCATED_IN, REPLY_OF, HAS_TAG, \
+CONTAINER_OF, HAS_MEMBER, HAS_MODERATOR, LIKES, STUDY_AT, WORK_AT, \
+HAS_INTEREST, IS_PART_OF, HAS_TYPE, IS_SUBCLASS_OF, and more. \
+\
+Data source: https://ldbcouncil.org/benchmarks/snb/ (Scale Factor 0.1). \
+CSV headers with dots and duplicates have been renamed for compatibility.
+"""
+categories = ["graph"]
+tags = ["graph", "ldbc", "benchmark", "verification", "cypher", "pagerank", "shortest-path", "community-detection", "centrality", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 15
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+# === Static Entity Files ===
+
+[[demo.data_files]]
+path = "data/place.csv"
+format = "csv"
+description = "Places: cities, countries, continents (1,460 rows)"
+size_bytes = 81920
+
+[[demo.data_files]]
+path = "data/organisation.csv"
+format = "csv"
+description = "Companies and universities (7,955 rows)"
+size_bytes = 823296
+
+[[demo.data_files]]
+path = "data/tag.csv"
+format = "csv"
+description = "Content tags: people, places, topics (16,080 rows)"
+size_bytes = 1126400
+
+[[demo.data_files]]
+path = "data/tagclass.csv"
+format = "csv"
+description = "Tag class hierarchy (71 rows)"
+size_bytes = 4096
+
+# === Static Edge Files ===
+
+[[demo.data_files]]
+path = "data/organisation_is_located_in_place.csv"
+format = "csv"
+description = "Organisation → Place location edges (7,955 rows)"
+size_bytes = 73728
+
+[[demo.data_files]]
+path = "data/place_is_part_of_place.csv"
+format = "csv"
+description = "Place hierarchy: city → country → continent (1,454 rows)"
+size_bytes = 12288
+
+[[demo.data_files]]
+path = "data/tag_has_type_tagclass.csv"
+format = "csv"
+description = "Tag → TagClass type edges (16,080 rows)"
+size_bytes = 147456
+
+[[demo.data_files]]
+path = "data/tagclass_is_subclass_of_tagclass.csv"
+format = "csv"
+description = "TagClass hierarchy (70 rows)"
+size_bytes = 1024
+
+# === Dynamic Entity Files ===
+
+[[demo.data_files]]
+path = "data/person.csv"
+format = "csv"
+description = "Person vertices with name, gender, birthday, location (1,528 rows)"
+size_bytes = 128884
+
+[[demo.data_files]]
+path = "data/comment.csv"
+format = "csv"
+description = "Comment messages with content (151,043 rows)"
+size_bytes = 13631488
+
+[[demo.data_files]]
+path = "data/post.csv"
+format = "csv"
+description = "Post messages with content and language (135,701 rows)"
+size_bytes = 12582912
+
+[[demo.data_files]]
+path = "data/forum.csv"
+format = "csv"
+description = "Forums: walls, groups, albums (13,750 rows)"
+size_bytes = 716800
+
+# === Dynamic Edge Files ===
+
+[[demo.data_files]]
+path = "data/person_knows_person.csv"
+format = "csv"
+description = "KNOWS friendship edges (14,073 rows)"
+size_bytes = 592535
+
+[[demo.data_files]]
+path = "data/comment_has_creator_person.csv"
+format = "csv"
+description = "Comment → Person creator edges (151,043 rows)"
+size_bytes = 3932160
+
+[[demo.data_files]]
+path = "data/comment_has_tag_tag.csv"
+format = "csv"
+description = "Comment → Tag edges (191,303 rows)"
+size_bytes = 3538944
+
+[[demo.data_files]]
+path = "data/comment_is_located_in_place.csv"
+format = "csv"
+description = "Comment → Place location edges (151,043 rows)"
+size_bytes = 2359296
+
+[[demo.data_files]]
+path = "data/comment_reply_of_comment.csv"
+format = "csv"
+description = "Comment → Comment reply edges (76,787 rows)"
+size_bytes = 2097152
+
+[[demo.data_files]]
+path = "data/comment_reply_of_post.csv"
+format = "csv"
+description = "Comment → Post reply edges (74,256 rows)"
+size_bytes = 1966080
+
+[[demo.data_files]]
+path = "data/forum_container_of_post.csv"
+format = "csv"
+description = "Forum → Post containment edges (135,701 rows)"
+size_bytes = 3538944
+
+[[demo.data_files]]
+path = "data/forum_has_member_person.csv"
+format = "csv"
+description = "Forum → Person membership edges with join date (123,268 rows)"
+size_bytes = 5013504
+
+[[demo.data_files]]
+path = "data/forum_has_moderator_person.csv"
+format = "csv"
+description = "Forum → Person moderator edges (13,750 rows)"
+size_bytes = 364544
+
+[[demo.data_files]]
+path = "data/forum_has_tag_tag.csv"
+format = "csv"
+description = "Forum → Tag edges (47,697 rows)"
+size_bytes = 839680
+
+[[demo.data_files]]
+path = "data/person_email_emailaddress.csv"
+format = "csv"
+description = "Person email addresses (3,310 rows)"
+size_bytes = 147456
+
+[[demo.data_files]]
+path = "data/person_has_interest_tag.csv"
+format = "csv"
+description = "Person → Tag interest edges (35,475 rows)"
+size_bytes = 679936
+
+[[demo.data_files]]
+path = "data/person_is_located_in_place.csv"
+format = "csv"
+description = "Person → Place location edges (1,528 rows)"
+size_bytes = 28672
+
+[[demo.data_files]]
+path = "data/person_likes_comment.csv"
+format = "csv"
+description = "Person → Comment like edges (62,225 rows)"
+size_bytes = 2555904
+
+[[demo.data_files]]
+path = "data/person_likes_post.csv"
+format = "csv"
+description = "Person → Post like edges (47,215 rows)"
+size_bytes = 1966080
+
+[[demo.data_files]]
+path = "data/person_speaks_language.csv"
+format = "csv"
+description = "Person spoken languages (3,385 rows)"
+size_bytes = 61440
+
+[[demo.data_files]]
+path = "data/person_study_at_organisation.csv"
+format = "csv"
+description = "Person → Organisation study edges with classYear (1,209 rows)"
+size_bytes = 32768
+
+[[demo.data_files]]
+path = "data/person_work_at_organisation.csv"
+format = "csv"
+description = "Person → Organisation work edges with workFrom year (3,313 rows)"
+size_bytes = 77824
+
+[[demo.data_files]]
+path = "data/post_has_creator_person.csv"
+format = "csv"
+description = "Post → Person creator edges (135,701 rows)"
+size_bytes = 3604480
+
+[[demo.data_files]]
+path = "data/post_has_tag_tag.csv"
+format = "csv"
+description = "Post → Tag edges (51,118 rows)"
+size_bytes = 913408
+
+[[demo.data_files]]
+path = "data/post_is_located_in_place.csv"
+format = "csv"
+description = "Post → Place location edges (135,701 rows)"
+size_bytes = 2162688
+
+# === Target Objects ===
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.ldbc_social_network.ldbc_social_network"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.comment"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.post"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.forum"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.place"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.organisation"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.tag"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.tagclass"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_knows_person"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.comment_has_creator_person"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.comment_has_tag_tag"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.comment_is_located_in_place"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.comment_reply_of_comment"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.comment_reply_of_post"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.forum_container_of_post"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.forum_has_member_person"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.forum_has_moderator_person"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.forum_has_tag_tag"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_email"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_has_interest_tag"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_is_located_in_place"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_likes_comment"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_likes_post"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_speaks_language"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_study_at_organisation"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.person_work_at_organisation"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.post_has_creator_person"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.post_has_tag_tag"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.post_is_located_in_place"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.organisation_is_located_in_place"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.place_is_part_of_place"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.tag_has_type_tagclass"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.ldbc_social_network.tagclass_is_subclass_of_tagclass"

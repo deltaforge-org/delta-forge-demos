@@ -1,0 +1,26 @@
+[demo]
+id = "delta-optimize-version-proof"
+name = "Delta OPTIMIZE — Cross-Version Data Integrity Proof"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A logistics company tracks shipment manifests across three carriers. Daily \
+uploads from merchant integrations fragment the table into many small Parquet \
+files. A weekly OPTIMIZE compacts them — but compliance requires proving that \
+OPTIMIZE changed zero rows. This demo builds a 4-version history through \
+INSERTs, UPDATEs, and DELETEs, then runs OPTIMIZE and uses cross-version \
+comparison to prove data integrity: carrier breakdowns, weight sums, and row \
+counts are identical before and after compaction.
+"""
+categories = ["delta-table", "delta-performance"]
+tags = ["delta-table", "intermediate", "optimize", "versioning", "integrity", "compliance", "logistics"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.shipments"

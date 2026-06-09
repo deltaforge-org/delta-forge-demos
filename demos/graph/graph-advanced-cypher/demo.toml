@@ -1,0 +1,34 @@
+[demo]
+id = "graph-advanced-cypher"
+name = "Graph Advanced Cypher — University Research Collaboration Network"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+University research collaboration network with 40 researchers across 5 \
+departments. Tests advanced Cypher patterns: negative patterns (WHERE NOT), \
+Cypher aggregation functions (collect, min, max, sum, avg), WITH clause for \
+query composition, multiple relationship types, and complex filtering. \
+Includes directed co-authorship, advisor hierarchies, committee work, and \
+peer review connections — providing realistic community structure for \
+advanced graph analytics.
+"""
+categories = ["graph"]
+tags = ["graph", "cypher", "negative-pattern", "aggregation", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.research_network.research_network"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.research_network.collaborations"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.research_network.researchers"

@@ -1,0 +1,4 @@
+id,product_name,quantity,unit_price,sale_date,sales_rep,discount_pct,territory
+10,Widget A,18,29.99,2024-10-07,Charlie,0.05,Northeast
+11,Gadget Y,9,22.00,2024-11-21,Bob,0.15,Southeast
+12,Widget C,6,89.99,2024-12-15,Alice,0.10,Midwest

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gw" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0284c7"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <!-- Route lines connecting ports -->
+  <line x1="14" y1="22" x2="40" y2="14" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="40" y1="14" x2="66" y2="22" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="14" y1="22" x2="22" y2="48" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="66" y1="22" x2="58" y2="48" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="22" y1="48" x2="40" y2="38" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="58" y1="48" x2="40" y2="38" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="22" y1="48" x2="40" y2="66" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="58" y1="48" x2="40" y2="66" stroke="url(#gw)" stroke-width="1" opacity=".25"/>
+  <line x1="14" y1="22" x2="66" y2="22" stroke="url(#gw)" stroke-width="1" opacity=".15"/>
+  <line x1="22" y1="48" x2="58" y2="48" stroke="url(#gw)" stroke-width="1" opacity=".15"/>
+  <!-- Weighted path highlight (Shanghai -> Singapore -> Colombo -> Dubai) -->
+  <polyline points="14,22 40,38 40,66 58,48" stroke="url(#gw)" stroke-width="2" opacity=".5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Port nodes -->
+  <circle cx="40" cy="14" r="4.5" fill="url(#gw)" fill-opacity=".2" stroke="url(#gw)" stroke-width="1.5"/>
+  <circle cx="14" cy="22" r="4.5" fill="url(#gw)" fill-opacity=".2" stroke="url(#gw)" stroke-width="1.5"/>
+  <circle cx="66" cy="22" r="4.5" fill="url(#gw)" fill-opacity=".2" stroke="url(#gw)" stroke-width="1.5"/>
+  <circle cx="22" cy="48" r="4.5" fill="url(#gw)" fill-opacity=".2" stroke="url(#gw)" stroke-width="1.5"/>
+  <circle cx="58" cy="48" r="4.5" fill="url(#gw)" fill-opacity=".2" stroke="url(#gw)" stroke-width="1.5"/>
+  <circle cx="40" cy="66" r="4.5" fill="url(#gw)" fill-opacity=".2" stroke="url(#gw)" stroke-width="1.5"/>
+  <!-- Central hub (larger, represents Singapore/Shanghai) -->
+  <circle cx="40" cy="38" r="7" fill="url(#gw)" fill-opacity=".3" stroke="url(#gw)" stroke-width="2"/>
+  <!-- Anchor symbol on hub -->
+  <line x1="40" y1="34" x2="40" y2="42" stroke="url(#gw)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="37" y1="40" x2="43" y2="40" stroke="url(#gw)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M37 37 A3 3 0 0 1 43 37" stroke="url(#gw)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

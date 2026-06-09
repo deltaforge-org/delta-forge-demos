@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mdl" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Source table (supplier feed) -->
+  <rect x="6" y="10" width="24" height="20" rx="3" stroke="url(#mdl)" stroke-width="1.5" fill="url(#mdl)" fill-opacity=".15"/>
+  <line x1="6" y1="17" x2="30" y2="17" stroke="url(#mdl)" stroke-width=".8" opacity=".4"/>
+  <line x1="6" y1="23" x2="30" y2="23" stroke="url(#mdl)" stroke-width=".8" opacity=".3"/>
+  <text x="18" y="15" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#mdl)" opacity=".6">FEED</text>
+  <!-- Target table (catalog) -->
+  <rect x="50" y="10" width="24" height="20" rx="3" stroke="url(#mdl)" stroke-width="1.5" fill="url(#mdl)" fill-opacity=".15"/>
+  <line x1="50" y1="17" x2="74" y2="17" stroke="url(#mdl)" stroke-width=".8" opacity=".4"/>
+  <line x1="50" y1="23" x2="74" y2="23" stroke="url(#mdl)" stroke-width=".8" opacity=".3"/>
+  <text x="62" y="15" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#mdl)" opacity=".6">CATALOG</text>
+  <!-- Merge arrows converging -->
+  <path d="M24 32L40 40" stroke="url(#mdl)" stroke-width="1.5" opacity=".6"/>
+  <path d="M56 32L40 40" stroke="url(#mdl)" stroke-width="1.5" opacity=".6"/>
+  <!-- Merge circle -->
+  <circle cx="40" cy="40" r="4" fill="url(#mdl)" opacity=".7"/>
+  <text x="40" y="42" text-anchor="middle" font-size="5" font-family="monospace" fill="#fff" opacity=".9">M</text>
+  <!-- DV bitmap generated -->
+  <rect x="28" y="48" width="12" height="14" rx="2" stroke="url(#mdl)" stroke-width="1" fill="url(#mdl)" fill-opacity=".2"/>
+  <text x="34" y="55" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#mdl)" opacity=".7">01</text>
+  <text x="34" y="60" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#mdl)" opacity=".7">10</text>
+  <!-- Arrow to compacted result -->
+  <path d="M44 55L48 55" stroke="url(#mdl)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Compacted result -->
+  <rect x="50" y="48" width="16" height="14" rx="2" fill="url(#mdl)" opacity=".35"/>
+  <path d="M54 56L57 59L63 53" stroke="#fff" stroke-width="1.5" fill="none" opacity=".8"/>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#mdl)" opacity=".6">MERGE + DV</text>
+</svg>

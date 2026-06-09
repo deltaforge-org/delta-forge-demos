@@ -1,0 +1,32 @@
+[demo]
+id = "h3-gis-delivery-optimization"
+name = "H3+GIS Delivery Optimization — Cross-Function Spatial Analytics"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates combined H3 hexagonal indexing and GIS geospatial functions in a \
+US regional delivery logistics scenario. 3 warehouses serve 15 stores across \
+the Midwest and South. Queries exercise H3 cell assignment, multi-resolution \
+hierarchy (parent/children), grid topology (ring/disk/grid_distance), cell \
+properties (area, validation), and string conversion alongside GIS distance \
+(haversine/Vincenty), st_bearing for dispatch direction, and st_make_point \
+for coordinate construction. The key differentiator from existing demos is \
+cross-function queries that combine H3 zone indexing with GIS distance \
+calculations for delivery route optimization and suboptimal assignment detection.
+"""
+categories = ["geospatial", "logistics"]
+tags = ["h3", "spatial", "gis", "combined", "distance", "grid-distance", "delivery", "delta-table", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.logistics.warehouses"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.logistics.stores"

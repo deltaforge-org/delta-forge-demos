@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ma" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <!-- Two source branches merging -->
+  <path d="M18 16L18 34L40 50" stroke="url(#ma)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M62 16L62 34L40 50" stroke="url(#ma)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Merge point -->
+  <circle cx="40" cy="50" r="5" fill="url(#ma)" fill-opacity=".3" stroke="url(#ma)" stroke-width="1.5"/>
+  <!-- Output line -->
+  <path d="M40 55L40 66" stroke="url(#ma)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Source labels -->
+  <rect x="10" y="10" width="16" height="8" rx="2" fill="url(#ma)" fill-opacity=".2" stroke="url(#ma)" stroke-width="1"/>
+  <rect x="54" y="10" width="16" height="8" rx="2" fill="url(#ma)" fill-opacity=".2" stroke="url(#ma)" stroke-width="1"/>
+  <!-- Conditional markers -->
+  <text x="28" y="38" font-size="6" font-family="monospace" fill="url(#ma)" opacity=".6">U</text>
+  <text x="40" y="42" font-size="6" font-family="monospace" fill="url(#ma)" opacity=".6">D</text>
+  <text x="50" y="38" font-size="6" font-family="monospace" fill="url(#ma)" opacity=".6">I</text>
+  <text x="40" y="78" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ma)" opacity=".6">MERGE</text>
+</svg>

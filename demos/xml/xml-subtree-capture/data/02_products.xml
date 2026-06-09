@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog last_updated="2025-06-16">
+  <product id="PRD-004" status="active">
+    <name>Power Supply Unit</name>
+    <category>Electronics</category>
+    <price currency="EUR">175.00</price>
+    <specifications>
+      <weight unit="kg">2.10</weight>
+      <dimensions>
+        <length unit="mm">160</length>
+        <width unit="mm">140</width>
+        <height unit="mm">85</height>
+      </dimensions>
+      <operating_temp min="-10" max="50" unit="C"/>
+      <voltage>100-240V AC input, 24V DC output</voltage>
+      <certifications>CE, UL, TUV</certifications>
+    </specifications>
+    <supplier>
+      <company>EuroPower GmbH</company>
+      <contact>
+        <name>Hans Mueller</name>
+        <email>hans@europower.example.de</email>
+        <phone>+49-30-555-0303</phone>
+      </contact>
+      <address>
+        <street>Industriestr. 42</street>
+        <city>Munich</city>
+        <state>Bavaria</state>
+        <zip>80331</zip>
+        <country>DE</country>
+      </address>
+      <lead_time_days>28</lead_time_days>
+    </supplier>
+    <tags>power,supply,industrial,24V</tags>
+  </product>
+  <product id="PRD-005" status="active">
+    <name>Fiber Optic Transceiver</name>
+    <category>Networking</category>
+    <price currency="USD">320.00</price>
+    <specifications>
+      <weight unit="kg">0.05</weight>
+      <dimensions>
+        <length unit="mm">57</length>
+        <width unit="mm">14</width>
+        <height unit="mm">12</height>
+      </dimensions>
+      <operating_temp min="0" max="70" unit="C"/>
+      <voltage>3.3V DC</voltage>
+      <certifications>CE, FCC, RoHS</certifications>
+    </specifications>
+    <supplier>
+      <company>NetCore Systems</company>
+      <contact>
+        <name>Sarah Kim</name>
+        <email>sarah@netcore.example.com</email>
+        <phone>+1-555-0202</phone>
+      </contact>
+      <address>
+        <street>500 Network Drive</street>
+        <city>Austin</city>
+        <state>TX</state>
+        <zip>73301</zip>
+        <country>US</country>
+      </address>
+      <lead_time_days>10</lead_time_days>
+    </supplier>
+    <tags>fiber,optic,transceiver,SFP</tags>
+  </product>
+</catalog>

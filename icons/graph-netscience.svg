@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="nsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nsEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6ee7b7;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#5eead4;stop-opacity:0.6" />
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#nsBg)"/>
+  <!-- Multiple disconnected clusters (research groups) -->
+  <!-- Cluster 1 (main, center) -->
+  <line x1="50" y1="34" x2="70" y2="34" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="50" y1="34" x2="44" y2="50" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="70" y1="34" x2="76" y2="50" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="44" y1="50" x2="76" y2="50" stroke="url(#nsEdge)" stroke-width="1"/>
+  <line x1="50" y1="34" x2="76" y2="50" stroke="url(#nsEdge)" stroke-width="1"/>
+  <line x1="70" y1="34" x2="44" y2="50" stroke="url(#nsEdge)" stroke-width="1"/>
+  <line x1="44" y1="50" x2="60" y2="60" stroke="url(#nsEdge)" stroke-width="1"/>
+  <line x1="76" y1="50" x2="60" y2="60" stroke="url(#nsEdge)" stroke-width="1"/>
+  <!-- Cluster 2 (top-left) -->
+  <line x1="22" y1="24" x2="32" y2="20" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="22" y1="24" x2="18" y2="36" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="32" y1="20" x2="18" y2="36" stroke="url(#nsEdge)" stroke-width="1"/>
+  <!-- Cluster 3 (top-right) -->
+  <line x1="96" y1="22" x2="102" y2="34" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="96" y1="22" x2="88" y2="30" stroke="url(#nsEdge)" stroke-width="1"/>
+  <!-- Cluster 4 (bottom-left) -->
+  <line x1="24" y1="62" x2="34" y2="68" stroke="url(#nsEdge)" stroke-width="1.5"/>
+  <line x1="24" y1="62" x2="20" y2="72" stroke="url(#nsEdge)" stroke-width="1"/>
+  <!-- Isolated nodes (scattered) -->
+  <circle cx="14" cy="52" r="2.5" fill="#ffffff" opacity="0.4"/>
+  <circle cx="106" cy="56" r="2.5" fill="#ffffff" opacity="0.4"/>
+  <circle cx="90" cy="68" r="2.5" fill="#ffffff" opacity="0.4"/>
+  <!-- Main cluster nodes -->
+  <circle cx="50" cy="34" r="6" fill="#ffffff" opacity="0.95"/>
+  <circle cx="70" cy="34" r="6" fill="#ffffff" opacity="0.95"/>
+  <circle cx="44" cy="50" r="5" fill="#ffffff" opacity="0.85"/>
+  <circle cx="76" cy="50" r="5" fill="#ffffff" opacity="0.85"/>
+  <circle cx="60" cy="60" r="4" fill="#ffffff" opacity="0.75"/>
+  <!-- Cluster 2 nodes -->
+  <circle cx="22" cy="24" r="5" fill="#ffffff" opacity="0.8"/>
+  <circle cx="32" cy="20" r="4" fill="#ffffff" opacity="0.75"/>
+  <circle cx="18" cy="36" r="4" fill="#ffffff" opacity="0.75"/>
+  <!-- Cluster 3 nodes -->
+  <circle cx="96" cy="22" r="4" fill="#ffffff" opacity="0.75"/>
+  <circle cx="102" cy="34" r="3.5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="88" cy="30" r="3.5" fill="#ffffff" opacity="0.7"/>
+  <!-- Cluster 4 nodes -->
+  <circle cx="24" cy="62" r="4" fill="#ffffff" opacity="0.75"/>
+  <circle cx="34" cy="68" r="3.5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="20" cy="72" r="3.5" fill="#ffffff" opacity="0.7"/>
+  <!-- Label -->
+  <text x="60" y="86" font-family="sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle" font-weight="bold" letter-spacing="1">NETSCIENCE</text>
+  <text x="60" y="99" font-family="monospace" font-size="7" fill="#d1fae5" text-anchor="middle" opacity="0.8">1,461 scientists</text>
+  <text x="60" y="108" font-family="monospace" font-size="7" fill="#d1fae5" text-anchor="middle" opacity="0.6">2,742 edges</text>
+</svg>

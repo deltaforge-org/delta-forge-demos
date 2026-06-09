@@ -1,0 +1,5 @@
+id;name;description;price
+1;"Widget A";"A standard widget; nothing fancy";29.99
+2;"Gadget B";"Contains a ; semicolon in description";49.99
+3;"Tool C";"Multi-purpose tool";19.99
+4;"Part D";"Replacement; for model X; or Y";34.50

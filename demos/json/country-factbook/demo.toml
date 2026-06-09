@@ -1,0 +1,90 @@
+[demo]
+id = "country-factbook"
+name = "JSON Country Factbook — Deep Nesting & Schema Evolution"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates deep JSON nesting (3+ levels), schema evolution, and selective \
+path extraction using CIA World Factbook data for 10 African countries. Each \
+country is a single deeply nested JSON document with optional sections \
+(Terrorism, Space) that produce NULL filling. Two tables: a flattened country \
+overview and an economy-focused extraction. Covers root_path, include_paths, \
+exclude_paths, column_mappings, preserve_original, max_depth, and multi-file \
+reading with schema variation.
+"""
+categories = ["json"]
+tags = ["json", "advanced", "deep-nesting", "schema-evolution", "column-mappings", "exclude-paths", "multi-file"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to the directory containing country JSON files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/cg.json"
+format = "json"
+description = "Congo — CIA World Factbook country profile"
+size_bytes = 58166
+
+[[demo.data_files]]
+path = "data/dj.json"
+format = "json"
+description = "Djibouti — CIA World Factbook country profile"
+size_bytes = 44204
+
+[[demo.data_files]]
+path = "data/eg.json"
+format = "json"
+description = "Egypt — CIA World Factbook country profile"
+size_bytes = 64551
+
+[[demo.data_files]]
+path = "data/et.json"
+format = "json"
+description = "Ethiopia — CIA World Factbook country profile"
+size_bytes = 57150
+
+[[demo.data_files]]
+path = "data/gh.json"
+format = "json"
+description = "Ghana — CIA World Factbook country profile"
+size_bytes = 50329
+
+[[demo.data_files]]
+path = "data/ke.json"
+format = "json"
+description = "Kenya — CIA World Factbook country profile"
+size_bytes = 57107
+
+[[demo.data_files]]
+path = "data/mo.json"
+format = "json"
+description = "Morocco — CIA World Factbook country profile"
+size_bytes = 58273
+
+[[demo.data_files]]
+path = "data/ni.json"
+format = "json"
+description = "Nigeria — CIA World Factbook country profile"
+size_bytes = 57000
+
+[[demo.data_files]]
+path = "data/rw.json"
+format = "json"
+description = "Rwanda — CIA World Factbook country profile"
+size_bytes = 50747
+
+[[demo.data_files]]
+path = "data/sf.json"
+format = "json"
+description = "South Africa — CIA World Factbook country profile"
+size_bytes = 62584
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.json.countries"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.json.country_economy"

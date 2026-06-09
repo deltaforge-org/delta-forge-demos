@@ -1,0 +1,26 @@
+[demo]
+id = "pseudonymisation-lifecycle"
+name = "Pseudonymisation Lifecycle — Insurance Claims"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+An insurance company manages pseudonymisation rules across the claims \
+processing lifecycle. Rules are created for routine analytics, temporarily \
+disabled for fraud investigation audits, re-enabled after review, and \
+selectively dropped when no longer needed. This demo teaches rule lifecycle \
+management: SHOW filtered views, DROP individual rules, and how rule count \
+changes propagate through the catalog.
+"""
+categories = ["pseudonymisation", "insurance"]
+tags = ["pseudonymisation", "intermediate", "insurance", "claims", "lifecycle", "drop-rule", "show-rules"]
+difficulty = "intermediate"
+estimated_time_minutes = 4
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+current_user = { description = "Username of the current logged-in user", required = true }
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation.insurance_claims"

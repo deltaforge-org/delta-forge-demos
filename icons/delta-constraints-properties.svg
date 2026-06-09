@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#db2777"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield shape -->
+  <path d="M40 6L62 18V42C62 56 52 66 40 72C28 66 18 56 18 42V18L40 6Z" stroke="url(#cp)" stroke-width="2" fill="url(#cp)" fill-opacity=".12"/>
+  <!-- Checkmark inside shield -->
+  <path d="M30 38L37 46L52 28" stroke="url(#cp)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Constraint lines -->
+  <line x1="28" y1="54" x2="52" y2="54" stroke="url(#cp)" stroke-width="1" opacity=".4"/>
+  <line x1="30" y1="58" x2="50" y2="58" stroke="url(#cp)" stroke-width="1" opacity=".3"/>
+  <line x1="32" y1="62" x2="48" y2="62" stroke="url(#cp)" stroke-width="1" opacity=".2"/>
+</svg>

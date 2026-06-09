@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cm" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <!-- Logical names (left) -->
+  <rect x="6" y="14" width="28" height="10" rx="3" stroke="url(#cm)" stroke-width="1.5" fill="url(#cm)" fill-opacity=".2"/>
+  <text x="20" y="21" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".8">name</text>
+  <rect x="6" y="28" width="28" height="10" rx="3" stroke="url(#cm)" stroke-width="1.5" fill="url(#cm)" fill-opacity=".2"/>
+  <text x="20" y="35" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".8">email</text>
+  <rect x="6" y="42" width="28" height="10" rx="3" stroke="url(#cm)" stroke-width="1.5" fill="url(#cm)" fill-opacity=".2"/>
+  <text x="20" y="49" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".8">dept</text>
+  <!-- Physical names (right) -->
+  <rect x="46" y="14" width="28" height="10" rx="3" stroke="url(#cm)" stroke-width="1" fill="url(#cm)" fill-opacity=".1" stroke-dasharray="3"/>
+  <text x="60" y="21" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".5">col_1</text>
+  <rect x="46" y="28" width="28" height="10" rx="3" stroke="url(#cm)" stroke-width="1" fill="url(#cm)" fill-opacity=".1" stroke-dasharray="3"/>
+  <text x="60" y="35" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".5">col_2</text>
+  <rect x="46" y="42" width="28" height="10" rx="3" stroke="url(#cm)" stroke-width="1" fill="url(#cm)" fill-opacity=".1" stroke-dasharray="3"/>
+  <text x="60" y="49" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".5">col_3</text>
+  <!-- Mapping arrows -->
+  <path d="M34 19L46 19" stroke="url(#cm)" stroke-width="1" stroke-dasharray="2" opacity=".6"/>
+  <path d="M34 33L46 33" stroke="url(#cm)" stroke-width="1" stroke-dasharray="2" opacity=".6"/>
+  <path d="M34 47L46 47" stroke="url(#cm)" stroke-width="1" stroke-dasharray="2" opacity=".6"/>
+  <!-- Labels -->
+  <text x="20" y="64" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".6">logical</text>
+  <text x="60" y="64" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cm)" opacity=".6">physical</text>
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cm)" opacity=".7">MAPPING</text>
+</svg>

@@ -1,0 +1,16 @@
+-- ============================================================================
+-- Delta MERGE — Generating & Materializing Deletion Vectors — Cleanup Script
+-- ============================================================================
+-- Removes all objects created by setup.sql.
+-- ============================================================================
+
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.dv_supplier_feed WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.delta_demos.dv_product_catalog WITH FILES;
+
+-- Shared resources (safe — will warn if other demos still use them)
+
+-- Remove the per-demo wrapper folder(s) (now empty after table drops)
+DROP FOLDER 'delta-merge-dv-lifecycle' IF EXISTS IN ZONE {{zone_name}};
+
+DROP SCHEMA IF EXISTS {{zone_name}}.delta_demos;
+DROP ZONE IF EXISTS {{zone_name}};

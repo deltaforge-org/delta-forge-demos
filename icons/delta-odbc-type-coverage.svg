@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="otc" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fde047"/>
+      <stop offset="1" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <!-- Shipping container body -->
+  <rect x="10" y="26" width="60" height="34" rx="2" fill="url(#otc)" opacity=".22" stroke="url(#otc)" stroke-width="1.6"/>
+  <!-- Container ridges (vertical) -->
+  <line x1="20" y1="30" x2="20" y2="56" stroke="url(#otc)" stroke-width="1" opacity=".55"/>
+  <line x1="28" y1="30" x2="28" y2="56" stroke="url(#otc)" stroke-width="1" opacity=".55"/>
+  <line x1="36" y1="30" x2="36" y2="56" stroke="url(#otc)" stroke-width="1" opacity=".55"/>
+  <line x1="44" y1="30" x2="44" y2="56" stroke="url(#otc)" stroke-width="1" opacity=".55"/>
+  <line x1="52" y1="30" x2="52" y2="56" stroke="url(#otc)" stroke-width="1" opacity=".55"/>
+  <line x1="60" y1="30" x2="60" y2="56" stroke="url(#otc)" stroke-width="1" opacity=".55"/>
+  <!-- Container doors / hinges (right edge accent) -->
+  <rect x="64" y="28" width="4" height="30" rx="1" fill="url(#otc)" opacity=".4"/>
+  <!-- Top frame band -->
+  <rect x="10" y="26" width="60" height="4" rx="1" fill="url(#otc)" opacity=".35"/>
+  <!-- Bottom frame band -->
+  <rect x="10" y="56" width="60" height="4" rx="1" fill="url(#otc)" opacity=".35"/>
+  <!-- Type-tag chip on top (ID plate) -->
+  <rect x="30" y="14" width="20" height="10" rx="2" fill="url(#otc)" opacity=".5" stroke="url(#otc)" stroke-width="1.2"/>
+  <line x1="34" y1="19" x2="46" y2="19" stroke="url(#otc)" stroke-width="1.4" opacity=".85"/>
+  <!-- Wheels / loading deck -->
+  <circle cx="22" cy="66" r="4" fill="url(#otc)" opacity=".55"/>
+  <circle cx="58" cy="66" r="4" fill="url(#otc)" opacity=".55"/>
+  <line x1="14" y1="68" x2="66" y2="68" stroke="url(#otc)" stroke-width="1.2" opacity=".4"/>
+</svg>

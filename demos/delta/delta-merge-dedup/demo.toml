@@ -1,0 +1,30 @@
+[demo]
+id = "delta-merge-dedup"
+name = "Delta MERGE — Deduplication (Keep Latest)"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Duplicate records are inevitable in event-driven pipelines: at-least-once \
+delivery, replay after failures, or overlapping batch windows all produce \
+duplicates. This demo uses MERGE to deduplicate a table by merging it \
+against a deduplicated version of itself — keeping only the latest \
+version of each business key. The pattern works as a self-merge: the \
+source is a subquery that selects the winning row per key using \
+ROW_NUMBER, and the MERGE replaces older duplicates with the newest one.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "merge", "dedup", "deduplication", "row-number", "self-merge", "at-least-once"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.events"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.events_deduped"

@@ -1,0 +1,62 @@
+syntax = "proto3";
+package freight;
+
+import "google/protobuf/timestamp.proto";
+
+enum ShipmentStatus {
+  SHIPMENT_STATUS_UNSPECIFIED = 0;
+  CREATED = 1;
+  PICKED_UP = 2;
+  IN_TRANSIT = 3;
+  DELIVERED = 4;
+  RETURNED = 5;
+}
+
+enum PackageClass {
+  PACKAGE_CLASS_UNSPECIFIED = 0;
+  STANDARD = 1;
+  FRAGILE = 2;
+  HAZMAT = 3;
+  PERISHABLE = 4;
+}
+
+message Dimensions {
+  float length_cm = 1;
+  float width_cm = 2;
+  float height_cm = 3;
+}
+
+message Package {
+  string package_id = 1;
+  string description = 2;
+  float weight_kg = 3;
+  Dimensions dimensions = 4;
+  PackageClass package_class = 5;
+  bool requires_signature = 6;
+  int64 declared_value_cents = 7;
+}
+
+message TrackingEvent {
+  google.protobuf.Timestamp event_time = 1;
+  string location = 2;
+  string description = 3;
+}
+
+message Shipment {
+  string shipment_id = 1;
+  string origin = 2;
+  string destination = 3;
+  ShipmentStatus status = 4;
+  bool is_express = 5;
+  bool is_insured = 6;
+  int64 total_cost_cents = 7;
+  repeated Package packages = 8;
+  repeated TrackingEvent tracking = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message ShippingManifest {
+  repeated Shipment shipments = 1;
+  string carrier_name = 2;
+  string manifest_date = 3;
+}

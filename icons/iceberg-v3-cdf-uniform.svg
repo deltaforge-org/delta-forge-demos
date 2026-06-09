@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="icu" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ea580c"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Credit card shape -->
+  <rect x="12" y="22" width="56" height="36" rx="4" fill="url(#icu)" opacity=".2" stroke="url(#icu)" stroke-width="1.5"/>
+  <!-- Card stripe -->
+  <rect x="12" y="32" width="56" height="8" fill="url(#icu)" opacity=".3"/>
+  <!-- Card chip -->
+  <rect x="20" y="24" width="10" height="8" rx="2" fill="url(#icu)" opacity=".5"/>
+  <!-- Delta arrows (change data feed) -->
+  <path d="M24 64 L32 56 L24 56 Z" fill="url(#icu)" opacity=".6"/>
+  <path d="M40 64 L48 56 L40 56 Z" fill="url(#icu)" opacity=".5"/>
+  <path d="M56 64 L64 56 L56 56 Z" fill="url(#icu)" opacity=".4"/>
+  <!-- Sync arrows (dual-format) -->
+  <path d="M48 46 Q56 44 56 48" fill="none" stroke="url(#icu)" stroke-width="1.5" opacity=".6"/>
+  <path d="M55 46 L56 48 L58 47" fill="none" stroke="url(#icu)" stroke-width="1.5" opacity=".6"/>
+</svg>

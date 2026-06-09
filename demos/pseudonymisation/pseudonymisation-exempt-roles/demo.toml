@@ -1,0 +1,29 @@
+[demo]
+id = "pseudonymisation-exempt-roles"
+name = "Pseudonymisation Exempt Roles & Users"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Per-principal column-level security via the EXEMPT clause on \
+CREATE PSEUDONYMISATION RULE. The default behaviour stays universal: a rule \
+with no exempt list applies to every principal. Adding EXEMPT ROLES (..) \
+or EXEMPT USERS (..) carves the listed principals out so they read raw \
+values for the matched column. This demo creates a customers table, \
+attaches one rule per protection style (redact, mask, keyed_hash) with \
+representative exempt lists, then exercises ALTER PSEUDONYMISATION RULE \
+ADD/REMOVE EXEMPT to mutate the lists in place. Use SHOW PSEUDONYMISATION \
+RULES to inspect the persisted exempt principals.
+"""
+categories = ["pseudonymisation", "security"]
+tags = ["pseudonymisation", "exempt", "roles", "users", "rbac", "column-masking", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 4
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+current_user = { description = "Username of the current logged-in user", required = true }
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation_exempt.customers"

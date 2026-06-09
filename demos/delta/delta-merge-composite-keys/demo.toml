@@ -1,0 +1,28 @@
+[demo]
+id = "delta-merge-composite-keys"
+name = "Delta MERGE — Composite Keys & Subquery Source"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Real-world tables rarely have single-column primary keys. Fleet management, \
+IoT telemetry, and multi-tenant systems use composite keys (vehicle + date, \
+device + timestamp, tenant + entity). This demo shows MERGE with a multi-column \
+ON condition and a pre-aggregated subquery as the source — the standard pattern \
+for deduplicating and upserting telemetry data from message queues.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "advanced", "merge", "composite-key", "multi-column", "subquery", "iot", "telemetry", "dedup", "fleet"]
+difficulty = "advanced"
+estimated_time_minutes = 15
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.fleet_daily_summary"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.telemetry_batch"

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <!-- 4 partition boxes in a grid -->
+  <rect x="8" y="8" width="28" height="28" rx="4" stroke="url(#dp)" stroke-width="1.5" fill="url(#dp)" fill-opacity=".2"/>
+  <rect x="44" y="8" width="28" height="28" rx="4" stroke="url(#dp)" stroke-width="1.5" fill="url(#dp)" fill-opacity=".15"/>
+  <rect x="8" y="44" width="28" height="28" rx="4" stroke="url(#dp)" stroke-width="1.5" fill="url(#dp)" fill-opacity=".1"/>
+  <rect x="44" y="44" width="28" height="28" rx="4" stroke="url(#dp)" stroke-width="1.5" fill="url(#dp)" fill-opacity=".25"/>
+  <!-- Partition labels -->
+  <text x="22" y="26" text-anchor="middle" font-size="9" font-family="monospace" fill="url(#dp)" opacity=".8">N</text>
+  <text x="58" y="26" text-anchor="middle" font-size="9" font-family="monospace" fill="url(#dp)" opacity=".8">S</text>
+  <text x="22" y="62" text-anchor="middle" font-size="9" font-family="monospace" fill="url(#dp)" opacity=".8">E</text>
+  <text x="58" y="62" text-anchor="middle" font-size="9" font-family="monospace" fill="url(#dp)" opacity=".8">W</text>
+  <!-- Table rows in each partition -->
+  <line x1="13" y1="18" x2="31" y2="18" stroke="url(#dp)" stroke-width="0.8" opacity=".3"/>
+  <line x1="13" y1="21" x2="31" y2="21" stroke="url(#dp)" stroke-width="0.8" opacity=".3"/>
+  <line x1="49" y1="18" x2="67" y2="18" stroke="url(#dp)" stroke-width="0.8" opacity=".3"/>
+  <line x1="49" y1="21" x2="67" y2="21" stroke="url(#dp)" stroke-width="0.8" opacity=".3"/>
+</svg>

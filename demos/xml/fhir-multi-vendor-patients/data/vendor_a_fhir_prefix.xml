@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fhir:Bundle xmlns:fhir="http://hl7.org/fhir">
+  <fhir:type value="collection"/>
+    <fhir:entry>
+      <fhir:resource>
+        <fhir:Patient>
+          <fhir:id value="vA-pat-001"/>
+          <fhir:identifier>
+            <fhir:system value="urn:oid:2.16.840.1.113883.4.1"/>
+            <fhir:value value="555-12-3456"/>
+          </fhir:identifier>
+          <fhir:name>
+            <fhir:family value="Aalborg"/>
+            <fhir:given value="Mikkel"/>
+          </fhir:name>
+          <fhir:birthDate value="1978-04-12"/>
+          <fhir:gender value="male"/>
+        </fhir:Patient>
+      </fhir:resource>
+    </fhir:entry>
+    <fhir:entry>
+      <fhir:resource>
+        <fhir:Patient>
+          <fhir:id value="vA-pat-002"/>
+          <fhir:identifier>
+            <fhir:system value="urn:oid:2.16.840.1.113883.4.1"/>
+            <fhir:value value="555-12-3457"/>
+          </fhir:identifier>
+          <fhir:name>
+            <fhir:family value="Andersen"/>
+            <fhir:given value="Sofia"/>
+          </fhir:name>
+          <fhir:birthDate value="1985-09-30"/>
+          <fhir:gender value="female"/>
+        </fhir:Patient>
+      </fhir:resource>
+    </fhir:entry>
+    <fhir:entry>
+      <fhir:resource>
+        <fhir:Patient>
+          <fhir:id value="vA-pat-003"/>
+          <fhir:identifier>
+            <fhir:system value="urn:oid:2.16.840.1.113883.4.1"/>
+            <fhir:value value="555-12-3458"/>
+          </fhir:identifier>
+          <fhir:name>
+            <fhir:family value="Aune"/>
+            <fhir:given value="Tobias"/>
+          </fhir:name>
+          <fhir:birthDate value="1992-01-18"/>
+          <fhir:gender value="male"/>
+        </fhir:Patient>
+      </fhir:resource>
+    </fhir:entry>
+</fhir:Bundle>

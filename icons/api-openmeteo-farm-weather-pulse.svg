@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="omfw" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Sun -->
+  <circle cx="26" cy="26" r="9" fill="url(#omfw)" opacity=".85"/>
+  <!-- Sun rays -->
+  <g stroke="url(#omfw)" stroke-width="1.6" stroke-linecap="round" opacity=".75">
+    <line x1="26" y1="10" x2="26" y2="14"/>
+    <line x1="26" y1="38" x2="26" y2="42"/>
+    <line x1="10" y1="26" x2="14" y2="26"/>
+    <line x1="42" y1="26" x2="38" y2="26"/>
+    <line x1="14" y1="14" x2="16" y2="16"/>
+    <line x1="36" y1="36" x2="38" y2="38"/>
+    <line x1="38" y1="14" x2="36" y2="16"/>
+    <line x1="14" y1="38" x2="16" y2="36"/>
+  </g>
+  <!-- Cloud -->
+  <path d="M38 46 Q44 38 52 42 Q60 38 64 46 Q72 48 70 56 L34 56 Q32 48 38 46 Z"
+        fill="url(#omfw)" opacity=".55" stroke="url(#omfw)" stroke-width="1.4"/>
+  <!-- Map pins for 3 farms -->
+  <path d="M16 70 L18 64 L20 70 Z" fill="url(#omfw)" opacity=".9"/>
+  <circle cx="18" cy="64" r="2.5" fill="url(#omfw)"/>
+  <path d="M38 70 L40 64 L42 70 Z" fill="url(#omfw)" opacity=".9"/>
+  <circle cx="40" cy="64" r="2.5" fill="url(#omfw)"/>
+  <path d="M60 70 L62 64 L64 70 Z" fill="url(#omfw)" opacity=".9"/>
+  <circle cx="62" cy="64" r="2.5" fill="url(#omfw)"/>
+</svg>

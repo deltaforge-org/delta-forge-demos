@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="hbas" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6b7280"/>
+      <stop offset="1" stop-color="#78716c"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outer -->
+  <path d="M40 8 L62 18 L62 40 Q62 58 40 70 Q18 58 18 40 L18 18 Z"
+        fill="url(#hbas)" opacity=".22" stroke="url(#hbas)" stroke-width="1.8"/>
+  <!-- Shield inner -->
+  <path d="M40 16 L56 23 L56 40 Q56 54 40 63 Q24 54 24 40 L24 23 Z"
+        fill="url(#hbas)" opacity=".4"/>
+  <!-- Key -->
+  <circle cx="34" cy="38" r="6" fill="none" stroke="#fafafa" stroke-width="2"/>
+  <line x1="38" y1="40" x2="50" y2="40" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+  <line x1="46" y1="40" x2="46" y2="44" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+  <line x1="50" y1="40" x2="50" y2="44" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+  <!-- Checkmark below key -->
+  <path d="M32 52 L38 57 L48 48" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

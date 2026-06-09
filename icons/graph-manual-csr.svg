@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mcsr" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Disk/cylinder base -->
+  <ellipse cx="40" cy="58" rx="22" ry="7" fill="url(#mcsr)" opacity=".15" stroke="url(#mcsr)" stroke-width="1.5"/>
+  <rect x="18" y="42" width="44" height="16" fill="url(#mcsr)" opacity=".15"/>
+  <ellipse cx="40" cy="42" rx="22" ry="7" fill="url(#mcsr)" opacity=".25" stroke="url(#mcsr)" stroke-width="1.5"/>
+  <!-- Graph nodes on top of disk -->
+  <circle cx="40" cy="22" r="5" fill="url(#mcsr)" opacity=".5" stroke="url(#mcsr)" stroke-width="1.5"/>
+  <circle cx="26" cy="34" r="4" fill="url(#mcsr)" opacity=".4" stroke="url(#mcsr)" stroke-width="1.5"/>
+  <circle cx="54" cy="34" r="4" fill="url(#mcsr)" opacity=".4" stroke="url(#mcsr)" stroke-width="1.5"/>
+  <!-- Graph edges -->
+  <line x1="36" y1="25" x2="29" y2="31" stroke="url(#mcsr)" stroke-width="1.5" opacity=".6"/>
+  <line x1="44" y1="25" x2="51" y2="31" stroke="url(#mcsr)" stroke-width="1.5" opacity=".6"/>
+  <line x1="30" y1="34" x2="50" y2="34" stroke="url(#mcsr)" stroke-width="1.5" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Cache arrow (down into disk) -->
+  <line x1="40" y1="30" x2="40" y2="48" stroke="url(#mcsr)" stroke-width="2" opacity=".7"/>
+  <polygon points="36,45 40,52 44,45" fill="url(#mcsr)" opacity=".7"/>
+</svg>

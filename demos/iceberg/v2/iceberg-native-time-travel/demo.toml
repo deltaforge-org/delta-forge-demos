@@ -1,0 +1,149 @@
+[demo]
+id = "iceberg-native-time-travel"
+name = "Iceberg Native — Time Travel (Stock Prices)"
+version = "1.0.0"
+author = "DeltaForge Team"
+icon = "time-travel"
+description = """\
+Demonstrates native Apache Iceberg format-version 2 table reading after \
+multiple snapshot-producing mutations. A stock price dataset starts with \
+120 records (20 tickers x 6 trading days), then undergoes a tech-sector \
+price correction (UPDATE +5%), IPO insertions (30 new rows), and delisted \
+ticker removals (DELETE 12 rows). The final snapshot contains 138 rows \
+reflecting all four mutations. Queries verify the current state — correct \
+row counts, sector breakdowns, presence of IPO tickers, and absence of \
+delisted tickers — exercising Iceberg V2 merge-on-read with position \
+delete files.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v2", "time-travel", "merge-on-read", "position-deletes", "stocks"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "stock_prices/data/00000-0-1752b09e-560a-4a63-bf45-a389cd057a36-0-00001.parquet"
+format = "parquet"
+description = "Snapshot 1: initial 120 stock price records (20 tickers x 6 days)"
+size_bytes = 4769
+
+[[demo.data_files]]
+path = "stock_prices/data/00000-4-b4735b53-d586-48c7-821e-b5574e499cb4-00001.parquet"
+format = "parquet"
+description = "Snapshot 2: rewritten tech-sector rows with +5% price correction"
+size_bytes = 3359
+
+[[demo.data_files]]
+path = "stock_prices/data/00000-4-b4735b53-d586-48c7-821e-b5574e499cb4-00001-deletes.parquet"
+format = "parquet"
+description = "Snapshot 2: position delete file marking original tech rows for removal"
+size_bytes = 1659
+
+[[demo.data_files]]
+path = "stock_prices/data/00000-7-906a1593-adef-4edd-9729-56eadb53676e-0-00001.parquet"
+format = "parquet"
+description = "Snapshot 3: 30 new IPO records (5 tickers x 6 days)"
+size_bytes = 3008
+
+[[demo.data_files]]
+path = "stock_prices/data/00000-11-505ceaa9-a7ac-4a5e-9dcb-f323c725b4ec-00001-deletes.parquet"
+format = "parquet"
+description = "Snapshot 4: position delete file for 12 delisted ticker rows (COP, SLB)"
+size_bytes = 1672
+
+[[demo.data_files]]
+path = "stock_prices/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — snapshot 1 (initial append)"
+size_bytes = 1169
+
+[[demo.data_files]]
+path = "stock_prices/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — snapshot 2 (tech price overwrite)"
+size_bytes = 2181
+
+[[demo.data_files]]
+path = "stock_prices/metadata/v3.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — snapshot 3 (IPO append)"
+size_bytes = 3254
+
+[[demo.data_files]]
+path = "stock_prices/metadata/v4.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — snapshot 4 (delisted delete)"
+size_bytes = 4236
+
+[[demo.data_files]]
+path = "stock_prices/metadata/v5.metadata.json"
+format = "json"
+description = "Iceberg V2 metadata — final state with 4 snapshots (append, overwrite, append, delete)"
+size_bytes = 5386
+
+[[demo.data_files]]
+path = "stock_prices/metadata/snap-1057082806025485206-1-e0ed092a-7153-4df0-bf3b-4ae676a92f71.avro"
+format = "avro"
+description = "Manifest list for snapshot 1 (initial append)"
+size_bytes = 4464
+
+[[demo.data_files]]
+path = "stock_prices/metadata/snap-2551862055056534144-1-3d799e1a-11b3-4d3f-9e3f-b9a12ef61adf.avro"
+format = "avro"
+description = "Manifest list for snapshot 2 (tech price overwrite)"
+size_bytes = 4551
+
+[[demo.data_files]]
+path = "stock_prices/metadata/snap-6059378377342539763-1-16ab6993-4c68-4806-a418-75c51ec4c428.avro"
+format = "avro"
+description = "Manifest list for snapshot 3 (IPO append)"
+size_bytes = 4605
+
+[[demo.data_files]]
+path = "stock_prices/metadata/snap-8001152758154155358-1-2048d568-f7f9-4a8f-a1f0-970eeadd3b2e.avro"
+format = "avro"
+description = "Manifest list for snapshot 4 (current) — pointers to data manifests"
+size_bytes = 4657
+
+[[demo.data_files]]
+path = "stock_prices/metadata/e0ed092a-7153-4df0-bf3b-4ae676a92f71-m0.avro"
+format = "avro"
+description = "Data manifest for snapshot 1 — initial data file"
+size_bytes = 7507
+
+[[demo.data_files]]
+path = "stock_prices/metadata/3d799e1a-11b3-4d3f-9e3f-b9a12ef61adf-m0.avro"
+format = "avro"
+description = "Data manifest for snapshot 2 — overwrite data + delete files"
+size_bytes = 7487
+
+[[demo.data_files]]
+path = "stock_prices/metadata/3d799e1a-11b3-4d3f-9e3f-b9a12ef61adf-m1.avro"
+format = "avro"
+description = "Data manifest for snapshot 2 — inherited from snapshot 1"
+size_bytes = 7394
+
+[[demo.data_files]]
+path = "stock_prices/metadata/16ab6993-4c68-4806-a418-75c51ec4c428-m0.avro"
+format = "avro"
+description = "Data manifest for snapshot 3 — IPO data file"
+size_bytes = 7506
+
+[[demo.data_files]]
+path = "stock_prices/metadata/2048d568-f7f9-4a8f-a1f0-970eeadd3b2e-m0.avro"
+format = "avro"
+description = "Data manifest for snapshot 4 — delete file for delisted tickers"
+size_bytes = 7395
+
+[[demo.data_files]]
+path = "stock_prices/metadata/2048d568-f7f9-4a8f-a1f0-970eeadd3b2e-m1.avro"
+format = "avro"
+description = "Data manifest for snapshot 4 — inherited from snapshot 3"
+size_bytes = 7395
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg_demos.stock_prices"

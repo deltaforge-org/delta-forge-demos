@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="eq" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ea580c"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V3) -->
+  <path d="M40 4L52 20H28Z" fill="url(#eq)" fill-opacity=".15" stroke="url(#eq)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="16" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#eq)" opacity=".9">V3</text>
+  <path d="M6 22H74" stroke="url(#eq)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Patient data block -->
+  <rect x="12" y="30" width="34" height="26" rx="3" fill="url(#eq)" fill-opacity=".08" stroke="url(#eq)" stroke-width="1.5"/>
+  <line x1="16" y1="37" x2="42" y2="37" stroke="url(#eq)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="41" x2="42" y2="41" stroke="#ef4444" stroke-width="1.5" opacity=".5"/>
+  <line x1="16" y1="45" x2="42" y2="45" stroke="url(#eq)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="49" x2="42" y2="49" stroke="#ef4444" stroke-width="1.5" opacity=".5"/>
+  <!-- Equality delete file -->
+  <rect x="50" y="32" width="20" height="22" rx="2" fill="url(#eq)" fill-opacity=".12" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="2 1.5"/>
+  <text x="60" y="42" text-anchor="middle" font-size="7" font-family="monospace" font-weight="bold" fill="#ef4444" opacity=".7">=</text>
+  <text x="60" y="50" text-anchor="middle" font-size="4" font-family="monospace" fill="#ef4444" opacity=".5">GDPR</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#eq)" opacity=".6">EQUALITY DELETES</text>
+</svg>

@@ -1,0 +1,1462 @@
+vertex_id|name|category
+0|Carlos Chung|Postdoc
+1|Elena Maslov|Researcher
+2|Anna Karlsson|Researcher
+3|Zhao Fortunato|Researcher
+4|Robert Lund|Researcher
+5|Daniel Lund|Researcher
+6|Oliver Onnela|Researcher
+7|Helena Krapivsky|Researcher
+8|Lorenzo Berg|Postdoc
+9|Hiroshi Leicht|Senior-Researcher
+10|Albert Stanley|Researcher
+11|Javier Lancichinetti|Researcher
+12|Julia Hansen|Senior-Researcher
+13|Emilio Stanley|Researcher
+14|Christoph Lai|Researcher
+15|Diana Radicchi|Researcher
+16|Elena Kim|Postdoc
+17|Eva Wang|Postdoc
+18|Luca Bollobas|Postdoc
+20|Zhao Barrat|Postdoc
+21|Petra Mendes|Postdoc
+22|Laura Liu|Postdoc
+23|Lei Riordan|Postdoc
+24|Nadia Park|Senior-Researcher
+25|Katya Radicchi|Senior-Researcher
+27|Thomas Jensen|Postdoc
+28|Robert Aiello|Postdoc
+29|Erik Poulsen|Postdoc
+30|Oscar Zhou|Principal-Investigator
+31|Wei Motter|Postdoc
+32|Emilio Arenas|Postdoc
+33|Eva Bianconi|Principal-Investigator
+34|Peter Strogatz|Principal-Investigator
+35|Andrea Wang|Senior-Researcher
+36|Gregor Song|Senior-Researcher
+37|Elena Mendes|Senior-Researcher
+38|Nina Wang|Senior-Researcher
+39|Raj Bianconi|Senior-Researcher
+40|Beth Sole|Senior-Researcher
+42|Thomas Fortunato|Postdoc
+43|Giulia Newman|Postdoc
+44|Mikhail Motter|Postdoc
+45|Stefan Barthelemy|Senior-Researcher
+46|Olga Kaski|Principal-Investigator
+47|Olga Amaral|Researcher
+48|Giovanni Krioukov|Senior-Researcher
+49|Emilio Kaski|Researcher
+50|Anna Redner|Researcher
+51|Yasmin Porter|Senior-Researcher
+52|Hiroshi Dahl|Researcher
+53|Lucia Havlin|Principal-Investigator
+54|Oscar Moore|Principal-Investigator
+55|Marco Farkas|Senior-Researcher
+56|Raj Serrano|Senior-Researcher
+57|Michael Poulsen|Researcher
+58|Christoph Guimera|Postdoc
+59|Karl Kim|Postdoc
+60|Mei Muller|Postdoc
+61|Anna Yan|Postdoc
+62|Javier Lu|Principal-Investigator
+63|Anna Kertesz|Senior-Researcher
+64|Oscar Krioukov|Senior-Researcher
+65|Sergei Jeong|Researcher
+66|Emilio Li|Postdoc
+67|Maria Thomsen|Postdoc
+68|Umberto Holme|Postdoc
+69|Takeshi Onnela|Principal-Investigator
+70|Maria Serrano|Researcher
+71|Sergei Poulsen|Principal-Investigator
+72|Giovanni Fortunato|Principal-Investigator
+73|Jean Dorogovtsev|Researcher
+74|Carlos Berg|Researcher
+75|Barbara Dahl|Researcher
+76|Zoltan Holme|Senior-Researcher
+77|Nina Song|Researcher
+78|Eva Guimera|Principal-Investigator
+79|Petra Strogatz|Researcher
+80|Wolfgang Lu|Researcher
+81|Peter Lai|Postdoc
+82|Clara Chung|Researcher
+83|Luca Onnela|Postdoc
+84|Xin Aiello|Postdoc
+85|Maria Holme|Postdoc
+86|Boris Guimera|Postdoc
+87|Ingrid Arenas|Postdoc
+88|Christoph Liu|Researcher
+90|Yuri Stanley|Postdoc
+91|Michael Vespignani|Postdoc
+92|Mikhail Liu|Postdoc
+93|Anna Sole|Postdoc
+94|Beth Faloutsos|Senior-Researcher
+95|Albert Park|Researcher
+96|Carlos Jensen|Principal-Investigator
+97|Yasmin Mendes|Principal-Investigator
+98|Vera Wang|Researcher
+99|Zhao Havlin|Senior-Researcher
+100|Julia Bollobas|Researcher
+102|Hans Dahl|Postdoc
+103|Marco Muller|Postdoc
+104|Oscar Fortunato|Postdoc
+105|Wei Lund|Postdoc
+106|Zoltan Berg|Researcher
+107|Oscar Girvan|Postdoc
+108|Diana Faloutsos|Postdoc
+109|Boris Porter|Postdoc
+111|Mei Watts|Postdoc
+112|Clara Palla|Postdoc
+113|Fei Sole|Postdoc
+114|Gregor Jensen|Researcher
+116|Helena Eriksson|Postdoc
+117|Giulia Karlsson|Senior-Researcher
+118|Vera Redner|Researcher
+119|Diana Jensen|Postdoc
+120|Zoltan Krioukov|Postdoc
+121|Fatima Karlsson|Senior-Researcher
+122|Victor Barthelemy|Postdoc
+123|Fatima Albert|Postdoc
+124|Luca Riordan|Postdoc
+126|Sara Kaski|Senior-Researcher
+127|Clara Hansen|Principal-Investigator
+128|Clara Palla 2|Senior-Researcher
+129|Victor Redner|Postdoc
+130|Ingrid Muller|Postdoc
+131|Elena Girvan|Researcher
+132|Martin Berg|Principal-Investigator
+133|Tatiana Maslov|Senior-Researcher
+134|Sergei Stanley|Senior-Researcher
+135|Adrian Poulsen|Postdoc
+136|Dmitri Liu|Senior-Researcher
+137|Lorenzo Leicht|Postdoc
+138|Giulia Clauset|Postdoc
+139|Giulia Boguna|Senior-Researcher
+140|Michael Song|Senior-Researcher
+141|Diana Aiello|Senior-Researcher
+142|Gregor Li|Senior-Researcher
+143|Umberto Barrat|Senior-Researcher
+144|Diana Caldarelli|Senior-Researcher
+145|Yasmin Vicsek|Senior-Researcher
+146|Eva Redner|Senior-Researcher
+147|Victor Leicht|Senior-Researcher
+148|Niklas Palla|Senior-Researcher
+149|Maria Chen|Researcher
+150|Carlos Watts|Principal-Investigator
+151|Wei Radicchi|Principal-Investigator
+152|Stefan Leicht|Postdoc
+153|Umberto Song|Researcher
+154|Olga Jeong|Researcher
+155|Wei Holm|Researcher
+156|Adrian Redner|Researcher
+157|Oscar Caldarelli|Postdoc
+158|Mikhail Newman|Postdoc
+160|Helena Berg|Postdoc
+161|Javier Mendes|Postdoc
+162|Pierre Lai|Senior-Researcher
+163|Nadia Bollobas|Postdoc
+164|Zoltan Valverde|Postdoc
+165|Julia Leicht|Postdoc
+166|Giovanni Zhang|Postdoc
+167|Xin Redner|Postdoc
+169|Umberto Riordan|Postdoc
+170|Victor Chung|Postdoc
+171|Takeshi Kaski|Researcher
+172|Nina Watts|Postdoc
+173|Olga Onnela|Postdoc
+174|Oliver Vespignani|Postdoc
+175|Beth Farkas|Postdoc
+176|Victor Radicchi|Postdoc
+177|Martin Bollobas|Researcher
+179|Henrik Mendes|Postdoc
+180|Clara Yan|Postdoc
+181|Carlos Radicchi|Postdoc
+182|Zoltan Chung|Postdoc
+183|Daniel Jensen|Postdoc
+184|Yasmin Vicsek 2|Researcher
+185|Giovanni Danon|Postdoc
+186|Takeshi Mendes|Senior-Researcher
+187|Elena Palla|Postdoc
+188|Pierre Guimera|Postdoc
+189|Ingrid Eriksson|Senior-Researcher
+190|Clara Kim|Researcher
+191|Clara Lu|Researcher
+192|Eva Watts|Researcher
+193|Yuri Thomsen|Researcher
+194|Oliver Li|Principal-Investigator
+195|Daniel Dorogovtsev|Researcher
+196|Yuri Kaski|Researcher
+197|Marco Holm|Researcher
+198|Tatiana Fischer|Researcher
+199|Barbara Havlin|Researcher
+200|Christoph Valverde|Postdoc
+201|Daniel Arenas|Researcher
+202|Stefan Berg|Researcher
+203|Anna Albert|Senior-Researcher
+205|Giovanni Bollobas|Postdoc
+206|Ingrid Kim|Postdoc
+207|Laura Pedersen|Researcher
+208|Jean Poulsen|Postdoc
+209|Lei Serrano|Postdoc
+210|James Stanley|Postdoc
+211|Marco Girvan|Postdoc
+212|Boris Jeong|Postdoc
+213|Pierre Riordan|Postdoc
+214|Zoltan Holme 2|Postdoc
+215|Cesar Lund|Postdoc
+216|Raj Pedersen|Principal-Investigator
+217|Hiroshi Vicsek|Senior-Researcher
+218|Lucia Zhang|Senior-Researcher
+219|Oliver Vicsek|Principal-Investigator
+220|Javier Lund|Senior-Researcher
+221|Christoph Strogatz|Senior-Researcher
+222|James Krioukov|Senior-Researcher
+223|Mei Sole|Postdoc
+224|Jean Mendes|Senior-Researcher
+225|Ingrid Fortunato|Senior-Researcher
+226|Klaus Motter|Postdoc
+227|Fei Lund|Postdoc
+228|Boris Riordan|Researcher
+229|Umberto Newman|Researcher
+230|James Guimera|Researcher
+231|Victor Barthelemy 2|Researcher
+233|Robert Barabasi|Postdoc
+234|Tatiana Poulsen|Postdoc
+235|Vera Lu|Researcher
+237|Michael Guimera|Postdoc
+238|Xin Park|Postdoc
+239|Zhao Vespignani|Senior-Researcher
+240|Lei Jensen|Postdoc
+241|Ivan Krapivsky|Postdoc
+242|Gregor Jensen 2|Postdoc
+243|Takeshi Barthelemy|Senior-Researcher
+244|Michael Holme|Senior-Researcher
+245|Emilio Valverde|Researcher
+246|Albert Maslov|Postdoc
+247|Nina Song 2|Researcher
+248|Franz Girvan|Postdoc
+249|Zhao Madsen|Postdoc
+250|Mei Sneppen|Postdoc
+251|Katya Park|Researcher
+252|Clara Sole|Senior-Researcher
+254|Igor Chavez|Researcher
+255|Erik Zhang|Researcher
+256|Katya Valverde|Postdoc
+258|Boris Chung|Researcher
+259|Katya Lai|Researcher
+260|Vera Barabasi|Postdoc
+261|Mei Lund|Postdoc
+262|Tatiana Newman|Senior-Researcher
+263|Wolfgang Boguna|Senior-Researcher
+264|Wolfgang Albert|Senior-Researcher
+265|Petra Danon|Principal-Investigator
+266|Henrik Boccaletti|Principal-Investigator
+267|Andrea Castellano|Senior-Researcher
+268|Erik Leicht|Principal-Investigator
+269|Mikhail Wang|Senior-Researcher
+270|Karl Radicchi|Postdoc
+271|Luca Radicchi|Postdoc
+273|Igor Fischer|Postdoc
+274|Hiroshi Palla|Postdoc
+275|Nina Aiello|Senior-Researcher
+276|Gregor Moore|Postdoc
+277|Mikhail Lu|Senior-Researcher
+278|Hans Radicchi|Senior-Researcher
+279|Franz Newman|Senior-Researcher
+280|Elena Dorogovtsev|Senior-Researcher
+281|Dmitri Krioukov|Principal-Investigator
+282|Marco Hansen|Senior-Researcher
+283|Yasmin Vicsek 3|Senior-Researcher
+284|Andrea Zhang|Senior-Researcher
+285|Boris Lund|Senior-Researcher
+286|Wolfgang Motter|Researcher
+287|Dmitri Radicchi|Postdoc
+288|Adrian Kertesz|Researcher
+289|Clara Poulsen|Postdoc
+290|Laura Dahl|Postdoc
+291|Luca Maslov|Postdoc
+292|Yuri Li|Postdoc
+293|Yasmin Aiello|Senior-Researcher
+294|Lorenzo Porter|Principal-Investigator
+296|Niklas Holm|Researcher
+297|Alex Girvan|Postdoc
+298|Ralf Aiello|Researcher
+299|Ivan Vicsek|Researcher
+300|Igor Aiello|Senior-Researcher
+301|Stefan Aiello|Principal-Investigator
+302|Elena Riordan|Senior-Researcher
+303|Raj Porter|Senior-Researcher
+304|Oscar Holme|Postdoc
+305|Wolfgang Fortunato|Senior-Researcher
+306|Joanna Song|Researcher
+307|Raj Arenas|Senior-Researcher
+308|Adrian Girvan|Senior-Researcher
+309|Jean Holm|Senior-Researcher
+310|Michael Amaral|Postdoc
+311|Marco Caldarelli|Postdoc
+312|Javier Faloutsos|Postdoc
+313|Fatima Barabasi|Postdoc
+314|Maria Albert|Researcher
+315|Mikhail Lu 2|Postdoc
+316|Igor Barthelemy|Senior-Researcher
+317|Stefan Krapivsky|Researcher
+318|Klaus Caldarelli|Postdoc
+319|Nina Girvan|Postdoc
+320|Luca Farkas|Senior-Researcher
+321|Laura Newman|Researcher
+322|Xin Yan|Researcher
+323|Ivan Fischer|Senior-Researcher
+324|Beth Porter|Researcher
+325|Olga Aiello|Researcher
+326|Victor Farkas|Researcher
+327|Sergei Maslov|Principal-Investigator
+328|Lorenzo Zhou|Senior-Researcher
+329|Yasmin Eriksson|Senior-Researcher
+330|Niklas Serrano|Senior-Researcher
+331|James Valverde|Postdoc
+332|Christoph Barthelemy|Researcher
+333|Eva Karlsson|Researcher
+334|Niklas Berg|Researcher
+335|James Redner|Researcher
+336|Hiroshi Girvan|Postdoc
+337|James Arenas|Senior-Researcher
+338|Yuri Leicht|Researcher
+339|Xin Dahl|Researcher
+340|Tatiana Sole|Researcher
+341|Martin Porter|Researcher
+342|Thomas Song|Researcher
+343|Julia Muller|Principal-Investigator
+344|Emilio Moore|Postdoc
+345|Olga Krapivsky|Researcher
+346|Lorenzo Poulsen|Senior-Researcher
+347|Yasmin Latora|Researcher
+348|Alex Poulsen|Senior-Researcher
+349|Stefan Albert|Senior-Researcher
+350|Oscar Li|Senior-Researcher
+351|James Motter|Senior-Researcher
+352|Eva Palla|Senior-Researcher
+353|Robert Guimera|Senior-Researcher
+354|Martin Stanley|Postdoc
+355|Wei Watts|Postdoc
+356|Xin Dorogovtsev|Postdoc
+357|Karl Vicsek|Researcher
+358|Diana Liu|Researcher
+359|Beth Moreno|Postdoc
+360|Fei Vicsek|Researcher
+361|Anna Albert 2|Researcher
+362|Victor Caldarelli|Principal-Investigator
+363|Lei Boccaletti|Postdoc
+364|Vera Fortunato|Postdoc
+365|Adrian Park|Postdoc
+366|Jean Bollobas|Postdoc
+367|Ralf Holme|Postdoc
+368|Oscar Maslov|Postdoc
+369|Albert Poulsen|Postdoc
+370|Beth Moreno 2|Postdoc
+371|Wei Pedersen|Senior-Researcher
+372|Helena Leicht|Postdoc
+373|Daniel Liu|Postdoc
+374|Victor Holme|Postdoc
+375|Clara Boguna|Senior-Researcher
+376|Eva Thomsen|Senior-Researcher
+377|Petra Hansen|Senior-Researcher
+378|Emilio Radicchi|Researcher
+379|Beth Jensen|Postdoc
+380|Thomas Hansen|Postdoc
+381|Wei Song|Postdoc
+382|Albert Caldarelli|Postdoc
+383|Paolo Holm|Postdoc
+384|Henrik Yan|Postdoc
+385|Javier Dahl|Senior-Researcher
+386|Petra Jensen|Senior-Researcher
+387|Wolfgang Barthelemy|Senior-Researcher
+388|Zhao Havlin 2|Senior-Researcher
+389|Stefan Barthelemy 2|Senior-Researcher
+390|Franz Moreno|Senior-Researcher
+391|Robert Onnela|Senior-Researcher
+392|Gregor Dahl|Senior-Researcher
+393|David Newman|Researcher
+394|Igor Bianconi|Researcher
+395|Clara Guimera|Researcher
+396|Umberto Sneppen|Researcher
+397|Thomas Boguna|Researcher
+398|Mikhail Song|Researcher
+399|Boris Caldarelli|Researcher
+400|Christoph Muller|Researcher
+401|Nina Strogatz|Senior-Researcher
+402|James Motter 2|Principal-Investigator
+403|Christoph Motter|Senior-Researcher
+404|Pierre Kim|Senior-Researcher
+405|Daniel Madsen|Senior-Researcher
+406|Robert Albert|Postdoc
+408|Tatiana Moreno|Senior-Researcher
+409|Sara Serrano|Researcher
+410|Vera Chen|Senior-Researcher
+411|Oliver Serrano|Researcher
+412|Henrik Jensen|Senior-Researcher
+413|Daniel Havlin|Researcher
+414|Oliver Pedersen|Postdoc
+415|Wolfgang Albert 2|Senior-Researcher
+416|Franz Redner|Senior-Researcher
+417|Pierre Dorogovtsev|Postdoc
+418|Franz Sole|Postdoc
+419|Petra Faloutsos|Postdoc
+421|Stefan Aiello 2|Postdoc
+422|Fatima Strogatz|Postdoc
+423|Robert Havlin|Postdoc
+424|Zoltan Stanley|Postdoc
+425|Marco Holme|Postdoc
+426|Christoph Sneppen|Postdoc
+427|Javier Serrano|Postdoc
+428|Daniel Girvan|Researcher
+429|Hans Jensen|Postdoc
+430|Vera Serrano|Postdoc
+431|Helena Latora|Postdoc
+432|Dmitri Holme|Postdoc
+433|Javier Latora|Postdoc
+434|Franz Mendes|Postdoc
+435|Javier Fischer|Postdoc
+436|Julia Lu|Postdoc
+437|Emilio Karlsson|Postdoc
+438|Fei Vicsek 2|Postdoc
+439|Barbara Kaski|Researcher
+440|Fei Holme|Postdoc
+441|Barbara Albert|Postdoc
+442|Fei Poulsen|Postdoc
+443|Sergei Arenas|Senior-Researcher
+444|Tatiana Strogatz|Postdoc
+445|Yuri Yan|Postdoc
+446|James Sneppen|Researcher
+447|Sara Krioukov|Researcher
+448|James Sole|Researcher
+449|Zhao Newman|Researcher
+450|Ingrid Poulsen|Postdoc
+452|Yasmin Vicsek 4|Senior-Researcher
+453|Adrian Mendes|Senior-Researcher
+454|Clara Boccaletti|Senior-Researcher
+455|Sara Thomsen|Senior-Researcher
+456|Lei Sole|Senior-Researcher
+457|Tatiana Motter|Senior-Researcher
+458|Stefan Bollobas|Senior-Researcher
+459|Franz Sneppen|Senior-Researcher
+460|Hiroshi Sole|Researcher
+461|Luca Girvan|Researcher
+462|Lei Lai|Researcher
+463|Michael Kertesz|Senior-Researcher
+464|Gregor Barabasi|Researcher
+465|Daniel Porter|Postdoc
+466|Anna Zhang|Postdoc
+467|Wei Stanley|Researcher
+468|Fei Porter|Researcher
+469|Boris Krapivsky|Researcher
+470|Franz Muller|Researcher
+471|Giulia Jeong|Researcher
+472|Martin Muller|Researcher
+473|Vera Vicsek|Senior-Researcher
+474|Franz Albert|Postdoc
+475|Vera Moore|Researcher
+476|Franz Havlin|Postdoc
+477|Franz Krapivsky|Postdoc
+478|Victor Bollobas|Researcher
+479|Oliver Porter|Researcher
+480|Klaus Serrano|Researcher
+481|Zoltan Newman|Senior-Researcher
+482|Fatima Kim|Senior-Researcher
+483|Beth Sneppen|Postdoc
+484|Julia Caldarelli|Postdoc
+485|Christoph Li|Postdoc
+486|Sergei Porter|Postdoc
+487|Zoltan Porter|Postdoc
+488|Paolo Fischer|Researcher
+489|Alex Havlin|Researcher
+490|Hans Barthelemy|Senior-Researcher
+491|Klaus Newman|Postdoc
+492|Gregor Lund|Postdoc
+493|Takeshi Aiello|Postdoc
+494|Giovanni Park|Postdoc
+495|Daniel Fischer|Postdoc
+496|Tatiana Liu|Senior-Researcher
+497|Yuri Krioukov|Postdoc
+498|Maria Thomsen 2|Postdoc
+499|Clara Pedersen|Postdoc
+500|Oscar Leicht|Senior-Researcher
+501|Paolo Kaski|Postdoc
+502|Laura Poulsen|Researcher
+503|Michael Latora|Postdoc
+505|Petra Hansen 2|Postdoc
+506|Dmitri Amaral|Postdoc
+507|Hans Karlsson|Researcher
+508|Beth Song|Researcher
+509|Wei Vicsek|Researcher
+511|Mei Bollobas|Postdoc
+512|Cesar Dahl|Postdoc
+513|Christoph Poulsen|Postdoc
+514|Fatima Bollobas|Researcher
+515|Albert Leicht|Researcher
+516|Paolo Clauset|Principal-Investigator
+517|Dmitri Poulsen|Principal-Investigator
+518|Emilio Boguna|Postdoc
+519|Fatima Watts|Postdoc
+520|Wei Kertesz|Postdoc
+521|Yuri Lu|Postdoc
+522|Raj Sneppen|Senior-Researcher
+523|Stefan Wang|Senior-Researcher
+524|Niklas Serrano 2|Senior-Researcher
+525|Beth Lu|Researcher
+526|Beth Riordan|Researcher
+527|Alex Faloutsos|Postdoc
+528|Nina Poulsen|Postdoc
+529|Eva Lu|Postdoc
+530|Wei Krioukov|Senior-Researcher
+531|David Watts|Senior-Researcher
+532|Beth Guimera|Senior-Researcher
+533|Javier Clauset|Researcher
+534|Michael Maslov|Postdoc
+535|Tatiana Valverde|Postdoc
+537|Katya Faloutsos|Senior-Researcher
+538|Emilio Song|Postdoc
+539|Ivan Hansen|Researcher
+540|Giovanni Porter|Researcher
+541|Sergei Lund|Researcher
+542|Thomas Fischer|Researcher
+544|Daniel Maslov|Postdoc
+545|Sergei Park|Postdoc
+546|Zhao Boccaletti|Postdoc
+547|Ivan Holme|Senior-Researcher
+548|Lorenzo Mendes|Researcher
+549|Andrea Holme|Researcher
+550|Zhao Pedersen|Researcher
+552|Giulia Poulsen|Postdoc
+553|Victor Radicchi 2|Postdoc
+554|Fei Krioukov|Postdoc
+556|Barbara Muller|Postdoc
+557|Zhao Madsen 2|Postdoc
+558|Raj Farkas|Postdoc
+559|Emilio Girvan|Postdoc
+560|Helena Caldarelli|Postdoc
+561|Cesar Stanley|Senior-Researcher
+562|Olga Holm|Senior-Researcher
+563|Pierre Kim 2|Researcher
+564|Niklas Watts|Researcher
+565|Peter Yan|Researcher
+566|Martin Bianconi|Researcher
+567|Helena Strogatz|Researcher
+568|David Clauset|Postdoc
+569|Eva Li|Postdoc
+570|Wolfgang Sneppen|Postdoc
+571|Sergei Pedersen|Postdoc
+572|Julia Serrano|Postdoc
+573|Wolfgang Arenas|Postdoc
+574|Ingrid Aiello|Researcher
+575|Martin Porter 2|Postdoc
+576|David Poulsen|Postdoc
+577|Maria Lancichinetti|Postdoc
+578|Takeshi Arenas|Postdoc
+580|Peter Dorogovtsev|Postdoc
+581|Diana Moreno|Postdoc
+582|Giovanni Thomsen|Postdoc
+583|Ingrid Liu|Postdoc
+584|Jean Palla|Postdoc
+585|Christoph Leicht|Researcher
+586|Julia Fortunato|Researcher
+587|Wei Muller|Researcher
+589|Nadia Chavez|Senior-Researcher
+590|Diana Barrat|Senior-Researcher
+591|Hiroshi Chung|Senior-Researcher
+592|Wolfgang Barthelemy 2|Researcher
+593|Sergei Aiello|Postdoc
+594|Mei Leicht|Postdoc
+595|Hans Stanley|Researcher
+596|Adrian Dorogovtsev|Researcher
+597|Takeshi Porter|Researcher
+598|Julia Sole|Postdoc
+599|Barbara Motter|Postdoc
+600|Carlos Havlin|Postdoc
+602|Joanna Krapivsky|Postdoc
+603|Lei Lu|Postdoc
+606|Fei Zhang|Researcher
+607|Peter Watts|Researcher
+608|Mei Wang|Researcher
+609|Hans Clauset|Researcher
+610|Raj Moreno|Postdoc
+611|Lei Liu|Researcher
+612|Clara Barrat|Researcher
+614|Julia Wang|Postdoc
+615|Helena Aiello|Postdoc
+616|Igor Clauset|Postdoc
+617|Thomas Faloutsos|Postdoc
+618|Wolfgang Boccaletti|Postdoc
+619|Paolo Guimera|Postdoc
+620|Umberto Danon|Postdoc
+621|Boris Poulsen|Postdoc
+622|Gregor Motter|Postdoc
+623|Hiroshi Latora|Postdoc
+624|Nadia Bollobas 2|Postdoc
+625|Javier Onnela|Researcher
+626|Anna Kaski|Researcher
+627|Victor Park|Researcher
+628|Mei Arenas|Researcher
+629|Victor Caldarelli 2|Postdoc
+630|Umberto Thomsen|Researcher
+631|Tatiana Lancichinetti|Principal-Investigator
+632|Boris Clauset|Postdoc
+633|Christoph Pedersen|Postdoc
+635|Eva Farkas|Postdoc
+636|Boris Jensen|Postdoc
+637|Nadia Moreno|Postdoc
+638|Anna Park|Senior-Researcher
+639|Marco Fischer|Researcher
+640|Lorenzo Moore|Postdoc
+641|Petra Riordan|Postdoc
+642|Raj Vicsek|Researcher
+643|Mei Jensen|Postdoc
+645|Adrian Wang|Principal-Investigator
+646|Lucia Bollobas|Postdoc
+647|Adrian Yan|Postdoc
+648|James Bianconi|Postdoc
+650|Elena Mendes 2|Researcher
+651|Vera Lancichinetti|Researcher
+652|Vera Moore 2|Senior-Researcher
+653|Anna Krioukov|Researcher
+654|Klaus Palla|Principal-Investigator
+655|Albert Strogatz|Senior-Researcher
+656|Erik Moore|Researcher
+657|Gregor Zhang|Senior-Researcher
+658|Pierre Hansen|Researcher
+659|Hans Vespignani|Researcher
+660|Martin Muller 2|Researcher
+661|Franz Boguna|Researcher
+662|Petra Albert|Senior-Researcher
+663|Erik Fischer|Senior-Researcher
+664|Albert Faloutsos|Researcher
+665|Karl Wang|Researcher
+666|Mei Bollobas 2|Researcher
+667|Julia Holm|Postdoc
+668|Clara Strogatz|Postdoc
+669|Nina Farkas|Postdoc
+670|Lei Albert|Postdoc
+671|Yuri Moore|Postdoc
+672|Christoph Newman|Postdoc
+673|Sergei Serrano|Postdoc
+674|Christoph Barabasi|Postdoc
+675|Michael Eriksson|Postdoc
+676|Elena Chung|Senior-Researcher
+677|Boris Albert|Postdoc
+678|Karl Eriksson|Postdoc
+679|Peter Chung|Postdoc
+680|Nadia Berg|Postdoc
+681|Martin Havlin|Researcher
+682|Thomas Porter|Researcher
+683|Raj Barthelemy|Researcher
+684|Peter Lancichinetti|Researcher
+685|Giovanni Hansen|Postdoc
+686|Giovanni Leicht|Postdoc
+689|Daniel Moreno|Researcher
+690|Robert Muller|Researcher
+692|Oliver Zhou|Postdoc
+693|Giulia Faloutsos|Senior-Researcher
+694|Julia Fischer|Senior-Researcher
+695|Beth Wang|Senior-Researcher
+696|Petra Fischer|Senior-Researcher
+697|Helena Vespignani|Principal-Investigator
+698|Takeshi Castellano|Senior-Researcher
+699|Nadia Latora|Postdoc
+700|Xin Guimera|Researcher
+701|Umberto Kertesz|Researcher
+702|Ivan Chung|Researcher
+704|Ingrid Yan|Researcher
+705|Laura Holme|Researcher
+706|Cesar Clauset|Researcher
+707|Nina Holme|Researcher
+708|Tatiana Wang|Researcher
+709|Stefan Leicht 2|Senior-Researcher
+710|Klaus Bianconi|Researcher
+711|Jean Watts|Postdoc
+712|Dmitri Danon|Postdoc
+713|Zhao Kim|Postdoc
+715|Beth Kertesz|Researcher
+716|Oliver Kaski|Researcher
+717|Ivan Kertesz|Researcher
+718|Elena Valverde|Researcher
+719|Zoltan Farkas|Researcher
+720|Thomas Yan|Postdoc
+721|Sara Serrano 2|Researcher
+723|Maria Bianconi|Researcher
+724|Boris Mendes|Researcher
+725|Alex Holm|Researcher
+726|Barbara Vespignani|Researcher
+729|Eva Lund|Postdoc
+730|Petra Barrat|Postdoc
+731|Maria Lancichinetti 2|Postdoc
+732|Takeshi Girvan|Postdoc
+733|Javier Serrano 2|Postdoc
+734|Nina Arenas|Postdoc
+736|Dmitri Redner|Postdoc
+737|Franz Kaski|Postdoc
+738|Emilio Pedersen|Postdoc
+739|Victor Caldarelli 3|Postdoc
+742|Mikhail Moreno|Principal-Investigator
+743|Mei Barthelemy|Senior-Researcher
+744|Henrik Poulsen|Senior-Researcher
+745|Oliver Maslov|Postdoc
+746|Tatiana Moreno 2|Senior-Researcher
+747|Alex Song|Postdoc
+748|Diana Onnela|Postdoc
+750|Clara Lai|Postdoc
+751|Luca Mendes|Postdoc
+752|Katya Leicht|Postdoc
+753|Franz Berg|Postdoc
+754|Fei Sole 2|Postdoc
+755|Alex Watts|Postdoc
+756|Giulia Albert|Principal-Investigator
+757|Victor Fischer|Senior-Researcher
+758|Pierre Eriksson|Senior-Researcher
+759|Oliver Song|Researcher
+760|Thomas Latora|Postdoc
+761|Henrik Bianconi|Principal-Investigator
+762|Maria Bianconi 2|Researcher
+763|Lei Vicsek|Researcher
+764|Yasmin Jeong|Senior-Researcher
+765|Olga Kertesz|Senior-Researcher
+766|Andrea Poulsen|Researcher
+767|Adrian Holm|Researcher
+768|Wei Muller 2|Researcher
+769|Emilio Holme|Researcher
+770|Helena Chen|Senior-Researcher
+771|Klaus Chung|Senior-Researcher
+772|Maria Jeong|Senior-Researcher
+773|Adrian Krioukov|Senior-Researcher
+774|Christoph Eriksson|Senior-Researcher
+775|Helena Yan|Senior-Researcher
+776|Yuri Chen|Researcher
+777|Giulia Radicchi|Postdoc
+778|Lorenzo Berg 2|Postdoc
+780|Petra Havlin|Postdoc
+781|James Thomsen|Postdoc
+783|Hans Palla|Researcher
+784|Stefan Farkas|Postdoc
+785|Franz Song|Postdoc
+786|Tatiana Newman 2|Postdoc
+787|Niklas Vicsek|Postdoc
+788|Carlos Boguna|Researcher
+789|Igor Chung|Postdoc
+790|Christoph Poulsen 2|Postdoc
+792|Peter Madsen|Researcher
+793|Diana Barabasi|Researcher
+794|Carlos Dorogovtsev|Researcher
+795|Nina Serrano|Researcher
+796|Wolfgang Albert 3|Researcher
+797|Helena Kaski|Researcher
+798|Umberto Castellano|Researcher
+799|Barbara Faloutsos|Senior-Researcher
+800|Anna Riordan|Senior-Researcher
+801|Javier Chavez|Senior-Researcher
+802|Yuri Lancichinetti|Senior-Researcher
+803|Beth Holme|Senior-Researcher
+804|Erik Havlin|Senior-Researcher
+805|Wolfgang Krioukov|Senior-Researcher
+806|Fatima Boguna|Principal-Investigator
+807|Joanna Clauset|Senior-Researcher
+808|Wei Zhou|Researcher
+809|Sara Li|Postdoc
+810|Niklas Boguna|Postdoc
+812|Olga Aiello 2|Postdoc
+813|Lorenzo Kertesz|Postdoc
+814|Klaus Vicsek|Postdoc
+815|Petra Havlin 2|Postdoc
+816|Thomas Havlin|Postdoc
+817|Laura Li|Postdoc
+818|Tatiana Moreno 3|Postdoc
+819|Adrian Maslov|Postdoc
+820|Michael Caldarelli|Postdoc
+821|Franz Radicchi|Researcher
+822|Henrik Watts|Researcher
+823|Wolfgang Vespignani|Researcher
+824|Hans Caldarelli|Researcher
+825|Gregor Lu|Senior-Researcher
+826|Giulia Amaral|Senior-Researcher
+827|Boris Sneppen|Senior-Researcher
+828|Niklas Jensen|Senior-Researcher
+829|Nina Kertesz|Senior-Researcher
+830|Giovanni Karlsson|Senior-Researcher
+831|Clara Arenas|Senior-Researcher
+832|Wei Newman|Senior-Researcher
+833|Umberto Watts|Senior-Researcher
+834|Takeshi Lancichinetti|Senior-Researcher
+835|Robert Chung|Postdoc
+836|Carlos Barthelemy|Postdoc
+837|Oscar Jensen|Postdoc
+839|Olga Thomsen|Researcher
+840|Marco Amaral|Senior-Researcher
+841|Takeshi Krioukov|Postdoc
+842|Barbara Lai|Postdoc
+843|Eva Li 2|Senior-Researcher
+844|Daniel Song|Researcher
+845|Vera Eriksson|Researcher
+846|Umberto Caldarelli|Researcher
+847|Helena Li|Researcher
+848|Emilio Amaral|Postdoc
+849|Dmitri Chavez|Postdoc
+850|Elena Li|Postdoc
+851|Maria Muller|Postdoc
+852|Tatiana Maslov 2|Postdoc
+853|Vera Eriksson 2|Postdoc
+855|Ingrid Caldarelli|Postdoc
+856|Hiroshi Latora 2|Postdoc
+857|Franz Li|Postdoc
+859|Emilio Newman|Postdoc
+860|Anna Chavez|Senior-Researcher
+861|Niklas Park|Postdoc
+862|Wolfgang Newman|Postdoc
+863|Jean Serrano|Postdoc
+864|Marco Arenas|Postdoc
+865|Elena Moreno|Postdoc
+866|Martin Valverde|Postdoc
+867|Hans Zhou|Postdoc
+870|Boris Barabasi|Researcher
+871|Stefan Dahl|Researcher
+872|Pierre Guimera 2|Senior-Researcher
+873|Umberto Danon 2|Researcher
+874|Nadia Kaski|Researcher
+877|Emilio Farkas|Researcher
+878|Lei Karlsson|Researcher
+879|Lucia Pedersen|Researcher
+880|Fei Castellano|Researcher
+881|Zoltan Kaski|Researcher
+882|Katya Dahl|Postdoc
+883|Robert Barabasi 2|Postdoc
+884|Yuri Karlsson|Postdoc
+885|Joanna Zhang|Postdoc
+886|Umberto Chung|Postdoc
+887|Hans Serrano|Postdoc
+888|Marco Lund|Postdoc
+889|Barbara Moore|Postdoc
+890|Albert Bianconi|Postdoc
+892|Nina Vicsek|Senior-Researcher
+893|Jean Kertesz|Senior-Researcher
+894|Robert Bollobas|Researcher
+895|Michael Holm|Researcher
+896|Igor Havlin|Researcher
+897|Alex Fischer|Researcher
+898|Christoph Fortunato|Researcher
+899|Ralf Hansen|Researcher
+900|Robert Zhang|Researcher
+901|Cesar Boguna|Postdoc
+902|Jean Karlsson|Postdoc
+903|Ralf Chen|Postdoc
+904|Alex Sneppen|Postdoc
+905|Mikhail Bollobas|Postdoc
+906|Fatima Bollobas 2|Postdoc
+907|Giulia Liu|Postdoc
+908|Javier Muller|Researcher
+909|Xin Latora|Postdoc
+910|Maria Valverde|Postdoc
+911|Boris Radicchi|Postdoc
+912|Takeshi Havlin|Senior-Researcher
+913|Lei Jeong|Principal-Investigator
+914|Sara Girvan|Senior-Researcher
+915|Lucia Yan|Senior-Researcher
+916|Daniel Maslov 2|Principal-Investigator
+917|Daniel Maslov 3|Senior-Researcher
+918|Gregor Palla|Postdoc
+920|Giovanni Holm|Postdoc
+921|Karl Zhang|Postdoc
+922|Nadia Madsen|Postdoc
+923|Nina Sneppen|Postdoc
+924|Nadia Amaral|Postdoc
+925|Fei Kertesz|Postdoc
+926|Wei Zhang|Postdoc
+927|Katya Yan|Researcher
+929|Erik Madsen|Postdoc
+930|Boris Newman|Postdoc
+931|Anna Zhang 2|Principal-Investigator
+932|Takeshi Girvan 2|Senior-Researcher
+933|Mikhail Krioukov|Postdoc
+934|Raj Serrano 2|Postdoc
+935|Thomas Zhang|Researcher
+936|Erik Watts|Researcher
+937|Lucia Berg|Researcher
+938|Xin Karlsson|Researcher
+940|Victor Caldarelli 4|Postdoc
+941|Gregor Zhang 2|Postdoc
+942|Karl Kim 2|Postdoc
+943|Maria Lu|Postdoc
+944|Karl Bianconi|Senior-Researcher
+945|Andrea Barthelemy|Senior-Researcher
+946|Marco Bollobas|Postdoc
+947|Nina Leicht|Researcher
+948|Robert Boguna|Postdoc
+949|Olga Dahl|Postdoc
+950|Yasmin Sneppen|Postdoc
+951|Marco Vicsek|Researcher
+952|Beth Lu 2|Researcher
+953|Hans Lund|Researcher
+954|Luca Bollobas 2|Researcher
+955|Boris Hansen|Postdoc
+956|Vera Sole|Senior-Researcher
+957|Adrian Bianconi|Postdoc
+958|Martin Vicsek|Postdoc
+959|Gregor Eriksson|Postdoc
+960|Mei Dahl|Postdoc
+961|Beth Fortunato|Postdoc
+962|Yasmin Motter|Postdoc
+963|Eva Porter|Researcher
+964|Nadia Li|Researcher
+965|Andrea Redner|Senior-Researcher
+966|Nadia Palla|Senior-Researcher
+967|Klaus Fortunato|Senior-Researcher
+968|Joanna Mendes|Senior-Researcher
+969|Petra Riordan 2|Senior-Researcher
+970|Olga Barthelemy|Senior-Researcher
+972|Nadia Barthelemy|Postdoc
+973|Fatima Leicht|Senior-Researcher
+974|Giovanni Dahl|Postdoc
+975|Zhao Fischer|Postdoc
+976|Maria Berg|Researcher
+977|Luca Holme|Researcher
+978|Lucia Sole|Postdoc
+979|Michael Strogatz|Postdoc
+980|Eva Karlsson 2|Postdoc
+981|Lorenzo Holme|Postdoc
+982|Fei Lu|Postdoc
+983|Beth Fortunato 2|Researcher
+984|Wolfgang Danon|Senior-Researcher
+985|Anna Riordan 2|Researcher
+986|Marco Amaral 2|Postdoc
+987|Jean Hansen|Postdoc
+988|Ivan Berg|Postdoc
+989|Yuri Havlin|Postdoc
+991|Paolo Palla|Postdoc
+992|Anna Strogatz|Postdoc
+993|Oliver Holm|Postdoc
+994|Beth Chavez|Researcher
+995|Mei Albert|Researcher
+996|Eva Caldarelli|Researcher
+997|Ingrid Castellano|Researcher
+998|Oscar Palla|Researcher
+999|Laura Lund|Postdoc
+1000|Dmitri Dorogovtsev|Principal-Investigator
+1002|Henrik Maslov|Researcher
+1003|Anna Clauset|Researcher
+1004|Yuri Eriksson|Researcher
+1005|Maria Kertesz|Postdoc
+1006|Fei Lancichinetti|Postdoc
+1007|Anna Chavez 2|Postdoc
+1008|Jean Boguna|Postdoc
+1009|Daniel Kaski|Postdoc
+1010|Adrian Onnela|Postdoc
+1011|Katya Madsen|Postdoc
+1012|Jean Radicchi|Postdoc
+1013|Beth Danon|Postdoc
+1014|Ralf Sneppen|Postdoc
+1016|Henrik Kim|Researcher
+1017|Luca Fortunato|Senior-Researcher
+1018|Yuri Guimera|Senior-Researcher
+1021|Oscar Lai|Researcher
+1022|Niklas Jensen 2|Researcher
+1023|James Albert|Researcher
+1024|Zoltan Zhang|Postdoc
+1025|Marco Bollobas 2|Postdoc
+1026|Helena Mendes|Researcher
+1027|Victor Poulsen|Postdoc
+1028|Igor Jeong|Researcher
+1029|Joanna Eriksson|Researcher
+1030|Michael Song 2|Postdoc
+1031|Gregor Chung|Postdoc
+1032|Victor Holme 2|Postdoc
+1033|Emilio Liu|Postdoc
+1034|Barbara Onnela|Postdoc
+1035|Mei Strogatz|Researcher
+1036|Niklas Kaski|Postdoc
+1037|Erik Yan|Postdoc
+1038|Petra Boccaletti|Postdoc
+1039|Wei Song 2|Postdoc
+1040|Takeshi Chavez|Postdoc
+1041|Javier Lu 2|Researcher
+1042|Yasmin Zhou|Postdoc
+1043|Raj Berg|Postdoc
+1044|Michael Farkas|Postdoc
+1045|Pierre Zhang|Postdoc
+1046|Sergei Porter 2|Postdoc
+1047|Zhao Chung|Researcher
+1048|Carlos Fischer|Researcher
+1049|Alex Maslov|Researcher
+1050|Robert Lai|Researcher
+1052|Laura Stanley|Postdoc
+1053|Diana Dahl|Postdoc
+1054|Erik Krioukov|Researcher
+1055|Lei Krioukov|Postdoc
+1056|Petra Holm|Researcher
+1057|Paolo Maslov|Researcher
+1058|Elena Albert|Researcher
+1060|Franz Maslov|Principal-Investigator
+1061|Ivan Albert|Senior-Researcher
+1062|Umberto Hansen|Senior-Researcher
+1063|Erik Arenas|Senior-Researcher
+1064|Marco Clauset|Senior-Researcher
+1065|Erik Redner|Senior-Researcher
+1066|Hans Lund 2|Senior-Researcher
+1067|Wolfgang Pedersen|Senior-Researcher
+1068|Ivan Chung 2|Senior-Researcher
+1069|Michael Valverde|Senior-Researcher
+1070|Helena Bianconi|Senior-Researcher
+1071|Dmitri Newman|Senior-Researcher
+1072|Erik Bianconi|Senior-Researcher
+1073|Takeshi Yan|Senior-Researcher
+1074|Hans Moore|Postdoc
+1078|Xin Madsen|Postdoc
+1079|David Palla|Postdoc
+1081|Erik Zhou|Postdoc
+1082|David Palla 2|Postdoc
+1083|Elena Poulsen|Postdoc
+1084|Wolfgang Fortunato 2|Postdoc
+1086|Carlos Motter|Postdoc
+1087|Umberto Riordan 2|Researcher
+1088|Raj Moore|Researcher
+1089|Nadia Holm|Postdoc
+1091|Yasmin Aiello 2|Researcher
+1092|Michael Valverde 2|Researcher
+1093|Alex Lund|Researcher
+1094|Fei Danon|Researcher
+1095|David Farkas|Researcher
+1096|Ivan Radicchi|Researcher
+1097|Klaus Boguna|Postdoc
+1098|Elena Maslov 2|Postdoc
+1099|Giovanni Chavez|Postdoc
+1101|Katya Fischer|Postdoc
+1102|Luca Song|Postdoc
+1103|Laura Caldarelli|Postdoc
+1105|Javier Newman|Senior-Researcher
+1106|Mei Fortunato|Senior-Researcher
+1107|Emilio Farkas 2|Principal-Investigator
+1108|Igor Leicht|Senior-Researcher
+1109|Adrian Boguna|Senior-Researcher
+1110|Andrea Danon|Senior-Researcher
+1111|David Muller|Senior-Researcher
+1112|Daniel Holme|Senior-Researcher
+1113|Elena Dahl|Senior-Researcher
+1114|Victor Barrat|Postdoc
+1115|Michael Kaski|Postdoc
+1116|Giovanni Eriksson|Researcher
+1117|Barbara Eriksson|Researcher
+1118|Eva Sole|Researcher
+1119|Javier Barthelemy|Researcher
+1120|Luca Berg|Senior-Researcher
+1121|Oliver Amaral|Postdoc
+1122|Giovanni Moore|Postdoc
+1123|Oscar Mendes|Postdoc
+1124|David Girvan|Researcher
+1125|Helena Krapivsky 2|Researcher
+1127|Anna Serrano|Postdoc
+1128|Beth Leicht|Postdoc
+1129|Eva Dahl|Postdoc
+1130|Marco Kertesz|Researcher
+1131|Marco Chen|Postdoc
+1132|Xin Muller|Postdoc
+1133|Oscar Holme 2|Postdoc
+1134|Carlos Song|Postdoc
+1135|David Kim|Senior-Researcher
+1136|Beth Porter 2|Researcher
+1137|Andrea Lu|Researcher
+1138|Clara Redner|Researcher
+1139|Gregor Lai|Postdoc
+1140|Sergei Sneppen|Postdoc
+1141|Sara Barthelemy|Postdoc
+1142|Ralf Boguna|Researcher
+1145|Robert Redner|Principal-Investigator
+1146|Takeshi Lu|Researcher
+1147|Victor Castellano|Researcher
+1148|Clara Leicht|Researcher
+1149|Fatima Palla|Researcher
+1150|Javier Thomsen|Researcher
+1152|Oliver Holm 2|Senior-Researcher
+1153|Daniel Sole|Senior-Researcher
+1154|Peter Wang|Senior-Researcher
+1155|Tatiana Lu|Senior-Researcher
+1156|Robert Sole|Senior-Researcher
+1157|Elena Faloutsos|Senior-Researcher
+1158|Carlos Riordan|Senior-Researcher
+1159|Igor Caldarelli|Senior-Researcher
+1160|Thomas Albert|Senior-Researcher
+1162|Fatima Barrat|Senior-Researcher
+1163|Giulia Chung|Postdoc
+1164|Albert Madsen|Postdoc
+1165|Fei Boccaletti|Postdoc
+1166|Diana Vespignani|Researcher
+1167|Yuri Radicchi|Researcher
+1168|David Castellano|Postdoc
+1169|Karl Guimera|Postdoc
+1170|Adrian Fortunato|Postdoc
+1172|Karl Jensen|Postdoc
+1175|Wolfgang Boguna 2|Postdoc
+1176|Luca Castellano|Postdoc
+1177|James Guimera 2|Postdoc
+1178|Takeshi Onnela 2|Researcher
+1180|Andrea Barrat|Researcher
+1181|Laura Arenas|Researcher
+1182|Cesar Boccaletti|Postdoc
+1184|Henrik Stanley|Postdoc
+1185|Sergei Clauset|Postdoc
+1186|Boris Chung 2|Postdoc
+1189|Yasmin Holme|Postdoc
+1190|Mei Newman|Senior-Researcher
+1191|Zhao Moreno|Senior-Researcher
+1193|Lorenzo Bianconi|Postdoc
+1194|Fatima Moore|Postdoc
+1195|Jean Barthelemy|Researcher
+1196|James Hansen|Researcher
+1197|Mikhail Motter 2|Researcher
+1198|Wei Clauset|Postdoc
+1199|Mikhail Chavez|Postdoc
+1200|Christoph Stanley|Postdoc
+1201|Helena Lund|Principal-Investigator
+1202|Wolfgang Barabasi|Senior-Researcher
+1203|Paolo Moreno|Senior-Researcher
+1204|Javier Song|Senior-Researcher
+1205|Javier Newman 2|Senior-Researcher
+1206|Wei Vespignani|Senior-Researcher
+1207|Sergei Riordan|Senior-Researcher
+1208|Petra Lund|Senior-Researcher
+1209|Sara Dahl|Researcher
+1210|Dmitri Thomsen|Researcher
+1211|Lei Onnela|Researcher
+1212|Thomas Holme|Researcher
+1214|Paolo Holme|Researcher
+1215|Zhao Madsen 3|Researcher
+1216|James Faloutsos|Researcher
+1217|Igor Kim|Researcher
+1218|Dmitri Albert|Postdoc
+1219|Carlos Barthelemy 2|Postdoc
+1221|Erik Newman|Postdoc
+1222|Alex Eriksson|Postdoc
+1223|Klaus Pedersen|Postdoc
+1224|Elena Caldarelli|Postdoc
+1225|Cesar Barrat|Researcher
+1226|Raj Albert|Postdoc
+1227|Anna Muller|Postdoc
+1228|Pierre Yan|Researcher
+1229|Lucia Madsen|Researcher
+1230|Ivan Zhou|Postdoc
+1231|Hans Barrat|Postdoc
+1232|Gregor Park|Postdoc
+1233|Diana Chung|Postdoc
+1234|Robert Jensen|Postdoc
+1235|Sara Barthelemy 2|Postdoc
+1236|Adrian Kertesz 2|Postdoc
+1237|Julia Strogatz|Postdoc
+1238|Yasmin Clauset|Postdoc
+1239|Raj Thomsen|Postdoc
+1240|Hiroshi Madsen|Postdoc
+1241|Daniel Sneppen|Postdoc
+1242|Hiroshi Danon|Postdoc
+1243|Daniel Bianconi|Postdoc
+1244|Oscar Clauset|Researcher
+1245|Zhao Guimera|Researcher
+1246|Lorenzo Kertesz 2|Researcher
+1247|Katya Palla|Researcher
+1248|Karl Barabasi|Postdoc
+1249|Boris Yan|Postdoc
+1250|Alex Sole|Postdoc
+1251|Christoph Chen|Postdoc
+1252|Yuri Redner|Postdoc
+1253|Adrian Dahl|Postdoc
+1254|Tatiana Barthelemy|Postdoc
+1255|Takeshi Amaral|Researcher
+1256|Henrik Faloutsos|Researcher
+1257|Albert Holm|Researcher
+1258|Fei Havlin|Postdoc
+1259|Barbara Danon|Postdoc
+1260|Wolfgang Vespignani 2|Postdoc
+1261|Yuri Newman|Postdoc
+1262|Marco Fortunato|Postdoc
+1263|Diana Castellano|Researcher
+1264|Boris Redner|Researcher
+1265|Diana Castellano 2|Researcher
+1266|Erik Wang|Researcher
+1267|Takeshi Serrano|Researcher
+1268|Hiroshi Sole 2|Postdoc
+1270|Oscar Li 2|Postdoc
+1271|Albert Madsen 2|Postdoc
+1272|Diana Farkas|Postdoc
+1273|Fei Valverde|Researcher
+1274|Carlos Krioukov|Researcher
+1275|Michael Serrano|Researcher
+1276|Beth Wang 2|Researcher
+1278|Oscar Sole|Senior-Researcher
+1279|Laura Mendes|Researcher
+1280|Yuri Caldarelli|Researcher
+1281|Sergei Castellano|Researcher
+1282|Albert Stanley 2|Researcher
+1283|Javier Chung|Researcher
+1286|Niklas Clauset|Senior-Researcher
+1287|Ivan Lund|Researcher
+1288|Zhao Poulsen|Researcher
+1289|Lorenzo Thomsen|Researcher
+1290|Wei Thomsen|Researcher
+1292|Ralf Fischer|Postdoc
+1293|Nina Karlsson|Postdoc
+1294|Niklas Stanley|Researcher
+1295|Paolo Karlsson|Researcher
+1298|Lorenzo Havlin|Postdoc
+1299|Christoph Lu|Postdoc
+1303|David Strogatz|Postdoc
+1304|Paolo Bollobas|Postdoc
+1305|Beth Holme 2|Postdoc
+1306|James Holme|Senior-Researcher
+1307|Zhao Chen|Senior-Researcher
+1308|Helena Radicchi|Senior-Researcher
+1309|Luca Sneppen|Senior-Researcher
+1310|Katya Chung|Postdoc
+1311|Paolo Park|Postdoc
+1312|Anna Boccaletti|Researcher
+1313|Pierre Hansen 2|Researcher
+1314|Beth Chung|Researcher
+1315|Giulia Fortunato|Senior-Researcher
+1316|Joanna Fischer|Researcher
+1318|Vera Jensen|Postdoc
+1320|Wei Havlin|Postdoc
+1321|Alex Dorogovtsev|Postdoc
+1322|Joanna Li|Postdoc
+1323|Erik Barrat|Postdoc
+1324|Klaus Arenas|Postdoc
+1325|Klaus Lund|Postdoc
+1326|Umberto Aiello|Postdoc
+1327|Albert Havlin|Postdoc
+1328|Wolfgang Castellano|Postdoc
+1329|Igor Sole|Postdoc
+1331|Dmitri Pedersen|Postdoc
+1332|Mei Lund 2|Postdoc
+1333|Ralf Arenas|Postdoc
+1335|Ingrid Lancichinetti|Researcher
+1336|Laura Kertesz|Researcher
+1337|Erik Barabasi|Researcher
+1338|James Zhou|Researcher
+1339|Thomas Dahl|Postdoc
+1341|Wolfgang Albert 4|Postdoc
+1342|Wei Zhou 2|Researcher
+1343|Diana Zhang|Postdoc
+1344|Victor Park 2|Postdoc
+1345|Nadia Moore|Postdoc
+1346|Daniel Girvan 2|Postdoc
+1347|Pierre Krapivsky|Postdoc
+1348|Giovanni Barrat|Postdoc
+1349|David Sneppen|Researcher
+1350|Fei Havlin 2|Researcher
+1351|Nadia Moore 2|Researcher
+1352|James Barabasi|Researcher
+1354|Peter Girvan|Postdoc
+1355|Clara Wang|Postdoc
+1356|Mei Barrat|Senior-Researcher
+1357|Ingrid Amaral|Researcher
+1358|Franz Leicht|Researcher
+1359|Michael Krioukov|Postdoc
+1360|Henrik Zhou|Postdoc
+1361|Wolfgang Aiello|Researcher
+1362|Emilio Jensen|Researcher
+1363|Ralf Zhang|Postdoc
+1364|Igor Yan|Researcher
+1365|Robert Lu|Researcher
+1366|Maria Hansen|Researcher
+1367|Raj Guimera|Researcher
+1368|David Havlin|Senior-Researcher
+1369|Xin Moore|Senior-Researcher
+1370|James Barabasi 2|Postdoc
+1371|Niklas Watts 2|Postdoc
+1372|Paolo Berg|Postdoc
+1373|Alex Barabasi|Postdoc
+1374|Xin Dorogovtsev 2|Postdoc
+1375|Karl Barabasi 2|Postdoc
+1376|Christoph Jensen|Postdoc
+1377|Victor Chen|Postdoc
+1378|Erik Li|Postdoc
+1381|Tatiana Zhang|Postdoc
+1384|Ivan Vespignani|Postdoc
+1385|Erik Latora|Postdoc
+1386|Anna Stanley|Postdoc
+1387|Anna Clauset 2|Postdoc
+1389|Julia Lund|Postdoc
+1390|Clara Chavez|Postdoc
+1391|Anna Barthelemy|Postdoc
+1392|Fatima Holm|Postdoc
+1394|Lucia Sole 2|Senior-Researcher
+1395|Henrik Moreno|Senior-Researcher
+1396|Henrik Berg|Senior-Researcher
+1397|Robert Newman|Senior-Researcher
+1398|Jean Chen|Postdoc
+1399|Mikhail Palla|Researcher
+1400|Takeshi Albert|Researcher
+1401|Alex Arenas|Researcher
+1402|Javier Radicchi|Researcher
+1403|Wolfgang Holme|Researcher
+1404|Wolfgang Barthelemy 3|Senior-Researcher
+1405|Oliver Zhou 2|Senior-Researcher
+1406|Lucia Zhang 2|Senior-Researcher
+1407|Zoltan Vicsek|Senior-Researcher
+1408|Luca Caldarelli|Senior-Researcher
+1409|Hiroshi Havlin|Postdoc
+1410|Pierre Lai 2|Postdoc
+1411|Eva Chung|Researcher
+1412|Lorenzo Porter 2|Postdoc
+1413|Fatima Krapivsky|Researcher
+1414|Emilio Dahl|Researcher
+1415|Takeshi Lancichinetti 2|Researcher
+1416|Oscar Poulsen|Researcher
+1417|Niklas Barabasi|Researcher
+1418|Martin Li|Postdoc
+1419|Joanna Eriksson 2|Postdoc
+1420|Mikhail Dorogovtsev|Researcher
+1421|Wei Park|Researcher
+1422|Martin Hansen|Researcher
+1423|Dmitri Lancichinetti|Researcher
+1424|Fei Barrat|Postdoc
+1425|Gregor Redner|Postdoc
+1426|Tatiana Chen|Postdoc
+1427|Marco Hansen 2|Postdoc
+1428|Peter Barrat|Postdoc
+1429|Lucia Watts|Principal-Investigator
+1430|Zoltan Madsen|Principal-Investigator
+1431|Emilio Amaral 2|Principal-Investigator
+1432|Nadia Clauset|Principal-Investigator
+1433|Beth Kertesz 2|Principal-Investigator
+1434|Robert Porter|Principal-Investigator
+1435|James Onnela|Principal-Investigator
+1436|Helena Kim|Principal-Investigator
+1437|Ingrid Barrat|Principal-Investigator
+1438|Wei Maslov|Principal-Investigator
+1439|Fei Wang|Principal-Investigator
+1440|Takeshi Yan 2|Principal-Investigator
+1441|Mikhail Leicht|Principal-Investigator
+1442|Christoph Jensen 2|Principal-Investigator
+1443|Martin Mendes|Principal-Investigator
+1444|Michael Vespignani 2|Principal-Investigator
+1445|Erik Song|Principal-Investigator
+1446|Martin Zhou|Principal-Investigator
+1447|Fatima Havlin|Principal-Investigator
+1448|Robert Dorogovtsev|Researcher
+1449|Adrian Strogatz|Postdoc
+1450|Ingrid Lund|Postdoc
+1451|Lei Holm|Postdoc
+1452|Zoltan Lund|Postdoc
+1453|Maria Boccaletti|Postdoc
+1454|Cesar Danon|Postdoc
+1455|Javier Krioukov|Postdoc
+1456|Martin Watts|Researcher
+1457|Julia Bollobas 2|Researcher
+1458|Albert Serrano|Researcher
+1459|Adrian Karlsson|Researcher
+1460|Igor Barthelemy 2|Researcher
+1461|Klaus Barabasi|Postdoc
+1464|Giulia Dorogovtsev|Senior-Researcher
+1465|Laura Lai|Senior-Researcher
+1466|Albert Eriksson|Senior-Researcher
+1467|Robert Porter 2|Senior-Researcher
+1468|Elena Aiello|Researcher
+1469|Erik Bianconi 2|Researcher
+1470|Sergei Dorogovtsev|Researcher
+1471|Barbara Radicchi|Postdoc
+1472|Lei Hansen|Postdoc
+1473|Martin Krioukov|Postdoc
+1474|Vera Vicsek 2|Postdoc
+1475|Christoph Onnela|Postdoc
+1476|Beth Moore|Postdoc
+1477|Giovanni Mendes|Postdoc
+1478|Erik Mendes|Postdoc
+1479|Thomas Vicsek|Postdoc
+1480|Daniel Serrano|Postdoc
+1481|Lucia Barrat|Postdoc
+1482|Oscar Albert|Postdoc
+1483|Fatima Chung|Postdoc
+1484|Alex Barrat|Postdoc
+1485|Mikhail Lancichinetti|Postdoc
+1486|Erik Holm|Postdoc
+1487|Hans Chen|Postdoc
+1488|Barbara Valverde|Postdoc
+1489|Ingrid Aiello 2|Postdoc
+1491|Giulia Hansen|Senior-Researcher
+1492|Hiroshi Chung 2|Postdoc
+1493|Julia Li|Senior-Researcher
+1494|Karl Arenas|Postdoc
+1495|Wei Danon|Postdoc
+1496|Anna Sole 2|Postdoc
+1497|Diana Barabasi 2|Postdoc
+1498|Wei Radicchi 2|Postdoc
+1500|Victor Fischer 2|Researcher
+1501|Clara Krioukov|Researcher
+1502|Ingrid Jensen|Researcher
+1503|Franz Holme|Researcher
+1504|Boris Latora|Senior-Researcher
+1505|Zhao Boguna|Senior-Researcher
+1506|Yuri Boguna|Senior-Researcher
+1507|Lei Wang|Senior-Researcher
+1508|Erik Fischer 2|Senior-Researcher
+1509|Anna Lai|Senior-Researcher
+1511|Mikhail Krapivsky|Postdoc
+1512|Klaus Kim|Postdoc
+1513|Joanna Song 2|Postdoc
+1514|Luca Sneppen 2|Postdoc
+1515|Olga Onnela 2|Researcher
+1516|Helena Kaski 2|Researcher
+1517|Dmitri Lund|Researcher
+1518|Umberto Farkas|Researcher
+1519|Joanna Madsen|Researcher
+1520|Mei Hansen|Researcher
+1522|Maria Onnela|Postdoc
+1523|Mei Moore|Postdoc
+1525|Igor Fischer 2|Postdoc
+1526|Victor Kim|Postdoc
+1529|Nadia Farkas|Postdoc
+1530|Carlos Barrat|Postdoc
+1531|Laura Kaski|Postdoc
+1532|Nadia Krioukov|Postdoc
+1533|Peter Guimera|Senior-Researcher
+1534|Nadia Barthelemy 2|Senior-Researcher
+1535|Stefan Boguna|Senior-Researcher
+1536|Ivan Kertesz 2|Postdoc
+1537|Beth Newman|Postdoc
+1538|Marco Lund 2|Postdoc
+1539|Anna Sole 3|Postdoc
+1540|Helena Holme|Researcher
+1541|Fei Dahl|Researcher
+1542|Katya Albert|Researcher
+1543|Yasmin Dorogovtsev|Postdoc
+1544|Petra Amaral|Postdoc
+1545|Niklas Song|Researcher
+1546|Thomas Boguna 2|Researcher
+1547|Franz Fortunato|Researcher
+1548|Peter Kertesz|Researcher
+1549|Gregor Lund 2|Postdoc
+1550|Stefan Vicsek|Researcher
+1551|Adrian Sole|Researcher
+1553|Fei Palla|Researcher
+1554|Barbara Watts|Researcher
+1555|Elena Albert 2|Researcher
+1556|Alex Krapivsky|Researcher
+1557|Lorenzo Karlsson|Researcher
+1558|Oscar Karlsson|Researcher
+1560|Victor Onnela|Researcher
+1561|Yuri Girvan|Researcher
+1562|Clara Boguna 2|Senior-Researcher
+1563|Fatima Danon|Senior-Researcher
+1564|Adrian Barabasi|Senior-Researcher
+1565|Petra Lu|Senior-Researcher
+1566|Alex Girvan 2|Senior-Researcher
+1567|Sara Lancichinetti|Senior-Researcher
+1568|Anna Thomsen|Postdoc
+1569|David Guimera|Postdoc
+1570|Jean Barthelemy 2|Senior-Researcher
+1571|Joanna Pedersen|Senior-Researcher
+1572|Boris Valverde|Senior-Researcher
+1573|Yasmin Watts|Senior-Researcher
+1574|Sergei Chavez|Postdoc
+1575|Diana Porter|Researcher
+1576|Christoph Latora|Researcher
+1577|Paolo Latora|Researcher
+1578|Mei Madsen|Researcher
+1579|Diana Palla|Postdoc
+1580|Wei Moore|Postdoc
+1581|Sergei Newman|Postdoc
+1583|Karl Moore|Postdoc
+1584|Jean Eriksson|Postdoc
+1585|Niklas Holme|Postdoc
+1586|Xin Caldarelli|Postdoc
+1587|Umberto Watts 2|Postdoc
+1588|Luca Chung|Postdoc

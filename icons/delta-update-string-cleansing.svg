@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Broom handle -->
+  <line x1="20" y1="12" x2="50" y2="58" stroke="url(#sc)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <!-- Broom bristles -->
+  <path d="M42 50 Q50 62 58 68" stroke="url(#sc)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <path d="M46 54 Q52 64 56 70" stroke="url(#sc)" stroke-width="1.5" fill="none" opacity=".4"/>
+  <path d="M38 48 Q48 60 60 66" stroke="url(#sc)" stroke-width="1.5" fill="none" opacity=".45"/>
+  <!-- Messy text → clean text -->
+  <rect x="8" y="16" width="28" height="10" rx="2" fill="url(#sc)" fill-opacity=".08" stroke="url(#sc)" stroke-width=".8" opacity=".5"/>
+  <text x="11" y="23" font-size="4" font-family="monospace" fill="url(#sc)" opacity=".4" text-decoration="line-through"> aLiCe </text>
+  <rect x="8" y="30" width="28" height="10" rx="2" fill="url(#sc)" fill-opacity=".15" stroke="url(#sc)" stroke-width="1"/>
+  <text x="13" y="37" font-size="4.5" font-family="monospace" fill="url(#sc)" opacity=".8">Alice</text>
+  <!-- Arrow down -->
+  <path d="M22 27L22 30" stroke="url(#sc)" stroke-width="1.2" marker-end="url(#a)" opacity=".6"/>
+  <!-- Sparkle -->
+  <circle cx="62" cy="18" r="2" fill="url(#sc)" opacity=".5"/>
+  <line x1="62" y1="14" x2="62" y2="22" stroke="url(#sc)" stroke-width=".8" opacity=".4"/>
+  <line x1="58" y1="18" x2="66" y2="18" stroke="url(#sc)" stroke-width=".8" opacity=".4"/>
+</svg>

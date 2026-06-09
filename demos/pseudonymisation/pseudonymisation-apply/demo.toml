@@ -1,0 +1,27 @@
+[demo]
+id = "pseudonymisation-apply"
+name = "Pseudonymisation Apply — Clinical Trial De-identification"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A pharmaceutical company must permanently de-identify clinical trial \
+participant data before sharing results with external researchers. Unlike \
+query-time rules (which protect data on read), APPLY PSEUDONYMISATION \
+modifies stored data irreversibly. This advanced demo shows the before/after \
+workflow: query raw data, apply permanent redaction to withdrawn participants, \
+then verify the transformation persisted. Demonstrates GDPR Article 17 \
+right-to-erasure compliance via pseudonymisation.
+"""
+categories = ["pseudonymisation", "clinical-trials"]
+tags = ["pseudonymisation", "advanced", "clinical-trials", "pharma", "gdpr", "apply", "permanent"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+current_user = { description = "Username of the current logged-in user", required = true }
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation.trial_participants"

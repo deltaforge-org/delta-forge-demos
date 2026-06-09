@@ -1,0 +1,29 @@
+[demo]
+id = "delta-constraints-properties"
+name = "Delta Constraints & Table Properties"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta TBLPROPERTIES store table-level configuration in the transaction log, \
+including CHECK constraints and behavioral flags like delta.appendOnly. \
+CHECK constraints (stored as delta.constraints.*) reject writes that violate \
+business rules, while appendOnly prevents UPDATE and DELETE entirely — ideal \
+for immutable audit logs. This demo combines both: an invoices table with \
+amount/tax/total constraints and an append-only event log.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "constraints", "check", "tblproperties", "append-only", "data-quality"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.invoices"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.event_log"

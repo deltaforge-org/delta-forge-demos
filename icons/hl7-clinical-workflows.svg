@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cw" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10b981"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <!-- Document page -->
+  <rect x="8" y="8" width="34" height="44" rx="3" fill="url(#cw)" opacity=".15"/>
+  <rect x="8" y="8" width="34" height="44" rx="3" stroke="url(#cw)" stroke-width="1.5" fill="none"/>
+  <!-- Document fold corner -->
+  <path d="M30 8L42 8L42 20L30 20Z" fill="url(#cw)" opacity=".1"/>
+  <path d="M30 8L30 20L42 8" stroke="url(#cw)" stroke-width="1" fill="none" opacity=".3"/>
+  <!-- Document lines (H&P text) -->
+  <line x1="14" y1="18" x2="26" y2="18" stroke="url(#cw)" stroke-width="1.5" opacity=".4"/>
+  <line x1="14" y1="24" x2="36" y2="24" stroke="url(#cw)" stroke-width="1" opacity=".3"/>
+  <line x1="14" y1="29" x2="36" y2="29" stroke="url(#cw)" stroke-width="1" opacity=".25"/>
+  <line x1="14" y1="34" x2="32" y2="34" stroke="url(#cw)" stroke-width="1" opacity=".25"/>
+  <line x1="14" y1="39" x2="36" y2="39" stroke="url(#cw)" stroke-width="1" opacity=".2"/>
+  <line x1="14" y1="44" x2="28" y2="44" stroke="url(#cw)" stroke-width="1" opacity=".2"/>
+  <!-- Calendar / schedule -->
+  <rect x="48" y="8" width="26" height="26" rx="3" fill="url(#cw)" opacity=".15"/>
+  <rect x="48" y="8" width="26" height="26" rx="3" stroke="url(#cw)" stroke-width="1.5" fill="none"/>
+  <!-- Calendar header -->
+  <line x1="48" y1="16" x2="74" y2="16" stroke="url(#cw)" stroke-width="1" opacity=".3"/>
+  <!-- Calendar pins -->
+  <line x1="55" y1="6" x2="55" y2="12" stroke="url(#cw)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <line x1="67" y1="6" x2="67" y2="12" stroke="url(#cw)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <!-- Calendar date dots -->
+  <circle cx="55" cy="22" r="2" fill="url(#cw)" opacity=".5"/>
+  <circle cx="61" cy="22" r="2" fill="url(#cw)" opacity=".3"/>
+  <circle cx="67" cy="22" r="2" fill="url(#cw)" opacity=".3"/>
+  <circle cx="55" cy="28" r="2" fill="url(#cw)" opacity=".3"/>
+  <circle cx="61" cy="28" r="2" fill="url(#cw)" opacity=".6"/>
+  <!-- Gear / edge cases -->
+  <circle cx="61" cy="58" r="12" stroke="url(#cw)" stroke-width="1.5" fill="url(#cw)" fill-opacity=".1"/>
+  <circle cx="61" cy="58" r="5" fill="url(#cw)" opacity=".35"/>
+  <!-- Gear teeth -->
+  <line x1="61" y1="44" x2="61" y2="48" stroke="url(#cw)" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+  <line x1="61" y1="68" x2="61" y2="72" stroke="url(#cw)" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+  <line x1="47" y1="58" x2="51" y2="58" stroke="url(#cw)" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+  <line x1="71" y1="58" x2="75" y2="58" stroke="url(#cw)" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+  <!-- Connecting workflow line -->
+  <path d="M25 56L25 66L47 66L47 58" stroke="url(#cw)" stroke-width="1.5" fill="none" stroke-dasharray="3,3" opacity=".3"/>
+</svg>

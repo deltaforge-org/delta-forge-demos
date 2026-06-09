@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pv" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ea580c"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V3) -->
+  <path d="M40 4L52 20H28Z" fill="url(#pv)" fill-opacity=".15" stroke="url(#pv)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="16" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#pv)" opacity=".9">V3</text>
+  <path d="M6 22H74" stroke="url(#pv)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Data block -->
+  <rect x="12" y="30" width="30" height="24" rx="3" fill="url(#pv)" fill-opacity=".08" stroke="url(#pv)" stroke-width="1.5"/>
+  <!-- Rows with DV marks -->
+  <line x1="16" y1="36" x2="38" y2="36" stroke="url(#pv)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="40" x2="38" y2="40" stroke="#ef4444" stroke-width="1.5" opacity=".5"/>
+  <line x1="16" y1="44" x2="38" y2="44" stroke="url(#pv)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="48" x2="38" y2="48" stroke="#ef4444" stroke-width="1.5" opacity=".5"/>
+  <!-- Puffin file -->
+  <rect x="48" y="32" width="22" height="20" rx="2" fill="url(#pv)" fill-opacity=".12" stroke="url(#pv)" stroke-width="1.2"/>
+  <text x="59" y="42" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pv)" opacity=".7">PUFFIN</text>
+  <text x="59" y="49" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pv)" opacity=".5">DV</text>
+  <!-- Bitmap dots -->
+  <circle cx="52" cy="58" r="1.5" fill="url(#pv)" opacity=".3"/>
+  <circle cx="56" cy="58" r="1.5" fill="url(#pv)" opacity=".6"/>
+  <circle cx="60" cy="58" r="1.5" fill="url(#pv)" opacity=".3"/>
+  <circle cx="64" cy="58" r="1.5" fill="url(#pv)" opacity=".6"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#pv)" opacity=".6">PUFFIN DV</text>
+</svg>

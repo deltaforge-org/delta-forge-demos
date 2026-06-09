@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ub" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#ub)" fill-opacity=".2" stroke="url(#ub)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Waterline -->
+  <path d="M8 28H72" stroke="url(#ub)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Iceberg underwater -->
+  <path d="M24 28L20 48L32 58L48 58L60 48L56 28Z" fill="url(#ub)" fill-opacity=".1" stroke="url(#ub)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Delta triangle (dual format) -->
+  <path d="M34 36L40 28L46 36Z" fill="url(#ub)" fill-opacity=".35" stroke="url(#ub)" stroke-width="1.2" stroke-linejoin="round"/>
+  <!-- Sync arrows (dual metadata) -->
+  <path d="M30 44L36 44L33 41Z" fill="url(#ub)" opacity=".6"/>
+  <path d="M50 44L44 44L47 47Z" fill="url(#ub)" opacity=".6"/>
+  <path d="M36 44H44" stroke="url(#ub)" stroke-width="1" opacity=".5"/>
+  <!-- Properties gear -->
+  <circle cx="40" cy="52" r="4" fill="none" stroke="url(#ub)" stroke-width="1.2" opacity=".5"/>
+  <circle cx="40" cy="52" r="1.5" fill="url(#ub)" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ub)" opacity=".6">UNIFORM</text>
+</svg>

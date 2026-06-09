@@ -1,0 +1,33 @@
+[demo]
+id = "h3-gps-fleet-tracker"
+name = "H3 GPS Fleet Tracker"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates H3 hexagonal spatial indexing with Delta tables for geographic \
+analysis. Creates GPS tracking points across 5 world cities, defines region \
+boundaries as WKT polygons, and performs O(1) spatial joins via H3 cell \
+matching. Queries verify known H3 values: cell conversions, grid topology \
+(ring/disk counts), cell hierarchy, area/edge metrics, polyfill counts, \
+and spatial join accuracy.
+"""
+categories = ["geospatial", "iot"]
+tags = ["h3", "spatial", "delta-table", "gps", "polyfill", "geospatial", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.spatial.gps_points"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.spatial.regions"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.spatial.landmarks"

@@ -1,0 +1,4 @@
+id,product_name,quantity,unit_price,sale_date,region,sales_rep,discount_pct
+7,Gadget X,15,15.50,2024-07-11,East,Charlie,0.05
+8,Widget B,7,49.99,2024-08-19,West,Bob,0.10
+9,Gadget Z,25,12.75,2024-09-03,North,Alice,0.00

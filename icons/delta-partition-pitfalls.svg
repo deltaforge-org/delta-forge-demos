@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <!-- Warning triangle -->
+  <path d="M40 6L72 58H8Z" stroke="url(#pp)" stroke-width="1.5" fill="url(#pp)" fill-opacity=".1" stroke-linejoin="round"/>
+  <!-- Exclamation mark -->
+  <line x1="40" y1="22" x2="40" y2="40" stroke="url(#pp)" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+  <circle cx="40" cy="47" r="1.5" fill="url(#pp)" opacity=".7"/>
+  <!-- Fragmented tiny files scattered inside triangle -->
+  <rect x="24" y="44" width="4" height="5" rx="1" fill="url(#pp)" opacity=".3"/>
+  <rect x="30" y="46" width="4" height="5" rx="1" fill="url(#pp)" opacity=".25"/>
+  <rect x="36" y="50" width="4" height="4" rx="1" fill="url(#pp)" opacity=".2"/>
+  <rect x="42" y="50" width="4" height="4" rx="1" fill="url(#pp)" opacity=".2"/>
+  <rect x="48" y="46" width="4" height="5" rx="1" fill="url(#pp)" opacity=".25"/>
+  <rect x="54" y="44" width="4" height="5" rx="1" fill="url(#pp)" opacity=".3"/>
+  <rect x="33" y="52" width="3" height="3" rx="1" fill="url(#pp)" opacity=".15"/>
+  <rect x="45" y="52" width="3" height="3" rx="1" fill="url(#pp)" opacity=".15"/>
+  <!-- Small broken partition lines -->
+  <line x1="27" y1="42" x2="27" y2="50" stroke="url(#pp)" stroke-width=".5" opacity=".3" stroke-dasharray="1.5"/>
+  <line x1="53" y1="42" x2="53" y2="50" stroke="url(#pp)" stroke-width=".5" opacity=".3" stroke-dasharray="1.5"/>
+  <!-- Label -->
+  <text x="40" y="70" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#pp)" opacity=".6">PITFALLS</text>
+</svg>

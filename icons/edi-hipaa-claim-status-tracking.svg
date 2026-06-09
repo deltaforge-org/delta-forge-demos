@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ecs" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Clipboard outline (tracking) -->
+  <rect x="16" y="14" width="48" height="56" rx="4" fill="url(#ecs)" opacity=".1"/>
+  <rect x="16" y="14" width="48" height="56" rx="4" stroke="url(#ecs)" stroke-width="1.5" fill="none"/>
+  <!-- Clipboard clip -->
+  <rect x="30" y="10" width="20" height="8" rx="3" fill="url(#ecs)" opacity=".3"/>
+  <!-- Status timeline dots + lines -->
+  <circle cx="28" cy="30" r="3.5" fill="url(#ecs)" opacity=".6"/>
+  <line x1="28" y1="34" x2="28" y2="42" stroke="url(#ecs)" stroke-width="1.5" opacity=".3"/>
+  <circle cx="28" cy="45" r="3.5" fill="url(#ecs)" opacity=".45"/>
+  <line x1="28" y1="49" x2="28" y2="57" stroke="url(#ecs)" stroke-width="1.5" opacity=".3"/>
+  <circle cx="28" cy="60" r="3.5" stroke="url(#ecs)" stroke-width="1.5" fill="none" opacity=".35"/>
+  <!-- Status labels -->
+  <line x1="36" y1="30" x2="56" y2="30" stroke="url(#ecs)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="36" y1="45" x2="52" y2="45" stroke="url(#ecs)" stroke-width="1.5" opacity=".35" stroke-linecap="round"/>
+  <line x1="36" y1="60" x2="48" y2="60" stroke="url(#ecs)" stroke-width="1" opacity=".25" stroke-linecap="round"/>
+  <!-- Checkmark on first status (completed) -->
+  <path d="M26 29L27.5 31L30.5 28" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+</svg>

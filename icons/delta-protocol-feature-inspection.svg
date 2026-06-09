@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pfi" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <!-- Delta triangle -->
+  <path d="M40 8L66 62H14L40 8Z" stroke="url(#pfi)" stroke-width="2" fill="url(#pfi)" fill-opacity=".10"/>
+  <!-- Magnifying glass (inspection) -->
+  <circle cx="36" cy="38" r="12" stroke="url(#pfi)" stroke-width="2" fill="none"/>
+  <line x1="44.5" y1="46.5" x2="54" y2="56" stroke="url(#pfi)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Protocol version badge inside lens -->
+  <text x="36" y="36" text-anchor="middle" font-size="7" font-weight="bold" fill="url(#pfi)" font-family="monospace">v2</text>
+  <text x="36" y="44" text-anchor="middle" font-size="5" fill="url(#pfi)" font-family="monospace" opacity=".7">proto</text>
+  <!-- Key-value lines (metadata) -->
+  <line x1="18" y1="64" x2="34" y2="64" stroke="url(#pfi)" stroke-width="1" opacity=".4"/>
+  <line x1="18" y1="68" x2="30" y2="68" stroke="url(#pfi)" stroke-width="1" opacity=".3"/>
+  <line x1="18" y1="72" x2="26" y2="72" stroke="url(#pfi)" stroke-width="1" opacity=".2"/>
+</svg>

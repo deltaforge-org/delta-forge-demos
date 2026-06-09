@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="xb" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="50" width="26" height="18" rx="2" fill="url(#xb)" opacity=".25" stroke="url(#xb)" stroke-width="1"/>
+  <rect x="16" y="32" width="30" height="18" rx="2" fill="url(#xb)" opacity=".4" stroke="url(#xb)" stroke-width="1"/>
+  <rect x="20" y="14" width="34" height="18" rx="2" fill="url(#xb)" opacity=".7" stroke="url(#xb)" stroke-width="1"/>
+  <line x1="16" y1="53" x2="16" y2="65" stroke="url(#xb)" stroke-width="1.5" opacity=".3"/>
+  <line x1="20" y1="35" x2="20" y2="47" stroke="url(#xb)" stroke-width="1.5" opacity=".4"/>
+  <line x1="24" y1="17" x2="24" y2="29" stroke="url(#xb)" stroke-width="1.5" opacity=".6"/>
+  <path d="M62 64V16" stroke="url(#xb)" stroke-width="1.5" stroke-dasharray="3 2" opacity=".5"/>
+  <path d="M58 20L62 12L66 20" stroke="url(#xb)" stroke-width="2" fill="none" opacity=".7"/>
+  <path d="M62 42L72 34" stroke="url(#xb)" stroke-width="1.5" opacity=".35"/>
+  <circle cx="73" cy="33" r="3" fill="url(#xb)" opacity=".4"/>
+  <path d="M62 54L72 60" stroke="url(#xb)" stroke-width="1.5" opacity=".25"/>
+  <circle cx="73" cy="61" r="2.5" fill="url(#xb)" opacity=".3"/>
+</svg>

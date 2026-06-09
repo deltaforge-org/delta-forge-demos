@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vb" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <!-- Timeline with version dots -->
+  <line x1="10" y1="30" x2="70" y2="30" stroke="url(#vb)" stroke-width="1.5" opacity=".3"/>
+  <!-- Old versions (crossed out / faded) -->
+  <circle cx="16" cy="30" r="4" stroke="url(#vb)" stroke-width="1" fill="url(#vb)" fill-opacity=".1" opacity=".4"/>
+  <line x1="13" y1="27" x2="19" y2="33" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <line x1="19" y1="27" x2="13" y2="33" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <circle cx="30" cy="30" r="4" stroke="url(#vb)" stroke-width="1" fill="url(#vb)" fill-opacity=".1" opacity=".4"/>
+  <line x1="27" y1="27" x2="33" y2="33" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <line x1="33" y1="27" x2="27" y2="33" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <circle cx="44" cy="30" r="4" stroke="url(#vb)" stroke-width="1" fill="url(#vb)" fill-opacity=".1" opacity=".4"/>
+  <line x1="41" y1="27" x2="47" y2="33" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <line x1="47" y1="27" x2="41" y2="33" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <!-- Retention boundary line -->
+  <line x1="54" y1="18" x2="54" y2="42" stroke="url(#vb)" stroke-width="2" stroke-dasharray="3 2" opacity=".8"/>
+  <text x="54" y="14" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#vb)" opacity=".7">RETAIN</text>
+  <!-- Latest version (preserved, bright) -->
+  <circle cx="64" cy="30" r="5" stroke="url(#vb)" stroke-width="2" fill="url(#vb)" fill-opacity=".2"/>
+  <path d="M61 30L63 32.5L67 27" stroke="url(#vb)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Version labels -->
+  <text x="16" y="42" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#vb)" opacity=".3">V1</text>
+  <text x="30" y="42" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#vb)" opacity=".3">V2</text>
+  <text x="44" y="42" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#vb)" opacity=".3">V3</text>
+  <text x="64" y="42" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#vb)" opacity=".9">V4</text>
+  <!-- VACUUM broom at bottom -->
+  <path d="M18 54L36 54" stroke="url(#vb)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M18 54L14 60L20 60L16 66" stroke="url(#vb)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Ghost files (faded rectangles) -->
+  <rect x="42" y="52" width="8" height="10" rx="1" stroke="url(#vb)" stroke-width="1" fill="none" opacity=".2" stroke-dasharray="2 1"/>
+  <rect x="54" y="52" width="8" height="10" rx="1" stroke="url(#vb)" stroke-width="1" fill="none" opacity=".2" stroke-dasharray="2 1"/>
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#vb)" opacity=".5">VACUUM</text>
+</svg>

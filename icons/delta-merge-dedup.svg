@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mdd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Stacked duplicate rows (before) -->
+  <rect x="10" y="8" width="28" height="10" rx="2" stroke="url(#mdd)" stroke-width="1" fill="url(#mdd)" fill-opacity=".15"/>
+  <rect x="12" y="11" width="28" height="10" rx="2" stroke="url(#mdd)" stroke-width="1" fill="url(#mdd)" fill-opacity=".12"/>
+  <rect x="14" y="14" width="28" height="10" rx="2" stroke="url(#mdd)" stroke-width="1.2" fill="url(#mdd)" fill-opacity=".1"/>
+  <text x="28" y="21" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#mdd)" opacity=".6">x3</text>
+  <!-- Second stack -->
+  <rect x="48" y="8" width="24" height="10" rx="2" stroke="url(#mdd)" stroke-width="1" fill="url(#mdd)" fill-opacity=".15"/>
+  <rect x="50" y="11" width="24" height="10" rx="2" stroke="url(#mdd)" stroke-width="1.2" fill="url(#mdd)" fill-opacity=".1"/>
+  <text x="62" y="18" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#mdd)" opacity=".6">x2</text>
+  <!-- Funnel/filter arrow -->
+  <path d="M28 26L40 38" stroke="url(#mdd)" stroke-width="1.5" opacity=".5"/>
+  <path d="M60 24L40 38" stroke="url(#mdd)" stroke-width="1.5" opacity=".5"/>
+  <!-- Filter symbol (hourglass) -->
+  <path d="M35 36L40 42L45 36Z" fill="url(#mdd)" fill-opacity=".3" stroke="url(#mdd)" stroke-width="1"/>
+  <!-- Clean deduplicated rows (after) -->
+  <rect x="16" y="48" width="48" height="8" rx="2" fill="url(#mdd)" fill-opacity=".25" stroke="url(#mdd)" stroke-width="1.5"/>
+  <rect x="16" y="58" width="48" height="8" rx="2" fill="url(#mdd)" fill-opacity=".25" stroke="url(#mdd)" stroke-width="1.5"/>
+  <!-- Checkmarks -->
+  <path d="M58 51L60 53L63 49" stroke="#10b981" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M58 61L60 63L63 59" stroke="#10b981" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#mdd)" opacity=".6">DEDUP</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ur" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9333ea"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <!-- Document/clipboard -->
+  <rect x="20" y="14" width="40" height="52" rx="4" fill="url(#ur)" opacity=".2" stroke="url(#ur)" stroke-width="1.5"/>
+  <!-- Clipboard clip -->
+  <rect x="30" y="10" width="20" height="10" rx="3" fill="url(#ur)" opacity=".4" stroke="url(#ur)" stroke-width="1.5"/>
+  <!-- Document lines -->
+  <line x1="28" y1="32" x2="52" y2="32" stroke="url(#ur)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="28" y1="38" x2="48" y2="38" stroke="url(#ur)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="28" y1="44" x2="44" y2="44" stroke="url(#ur)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <!-- Restore circular arrow -->
+  <path d="M46 52a10 10 0 1 1-2-12" stroke="url(#ur)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M44 38l2 4-4 1" stroke="url(#ur)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

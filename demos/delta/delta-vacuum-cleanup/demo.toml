@@ -1,0 +1,27 @@
+[demo]
+id = "delta-vacuum-cleanup"
+name = "Delta VACUUM — Cleanup Orphaned Files"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+VACUUM is a Delta Lake maintenance command that removes data files no longer \
+referenced by the current table version, reclaiming storage after UPDATEs, \
+DELETEs, and OPTIMIZE operations accumulate orphaned files. \
+Without VACUUM, storage costs grow unboundedly as every DML operation writes \
+new Parquet files while old ones linger on disk. \
+This demo uses an HR table with salary adjustments, department transfers, \
+terminations, and new hires to show how VACUUM cleans up while preserving \
+every current row perfectly intact.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "vacuum", "cleanup", "maintenance", "orphaned-files", "storage"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.hr_employees"

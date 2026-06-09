@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ict" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#d946ef"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V2 marker) -->
+  <path d="M40 4L50 18H30Z" fill="url(#ict)" fill-opacity=".2" stroke="url(#ict)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="15" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#ict)" opacity=".9">V2</text>
+  <!-- Waterline -->
+  <path d="M8 20H72" stroke="url(#ict)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Shopping cart body -->
+  <path d="M18 32L22 52H56L62 32Z" fill="url(#ict)" fill-opacity=".1" stroke="url(#ict)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Cart handle -->
+  <path d="M14 28H18L22 52" stroke="url(#ict)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Cart wheels -->
+  <circle cx="28" cy="56" r="3" fill="url(#ict)" fill-opacity=".2" stroke="url(#ict)" stroke-width="1.5"/>
+  <circle cx="28" cy="56" r="1" fill="url(#ict)" fill-opacity=".5"/>
+  <circle cx="50" cy="56" r="3" fill="url(#ict)" fill-opacity=".2" stroke="url(#ict)" stroke-width="1.5"/>
+  <circle cx="50" cy="56" r="1" fill="url(#ict)" fill-opacity=".5"/>
+  <!-- Package box 1 in cart -->
+  <rect x="26" y="36" width="10" height="10" rx="1" fill="url(#ict)" fill-opacity=".25" stroke="url(#ict)" stroke-width="1"/>
+  <line x1="31" y1="36" x2="31" y2="46" stroke="url(#ict)" stroke-width=".7" opacity=".5"/>
+  <line x1="26" y1="41" x2="36" y2="41" stroke="url(#ict)" stroke-width=".7" opacity=".5"/>
+  <!-- Package box 2 in cart -->
+  <rect x="38" y="38" width="12" height="8" rx="1" fill="url(#ict)" fill-opacity=".2" stroke="url(#ict)" stroke-width="1"/>
+  <line x1="44" y1="38" x2="44" y2="46" stroke="url(#ict)" stroke-width=".7" opacity=".5"/>
+  <line x1="38" y1="42" x2="50" y2="42" stroke="url(#ict)" stroke-width=".7" opacity=".5"/>
+  <!-- Nested struct dots (symbolize nesting) -->
+  <circle cx="30" cy="50" r="1" fill="url(#ict)" fill-opacity=".6"/>
+  <circle cx="35" cy="50" r="1" fill="url(#ict)" fill-opacity=".6"/>
+  <circle cx="40" cy="50" r="1" fill="url(#ict)" fill-opacity=".6"/>
+  <circle cx="45" cy="50" r="1" fill="url(#ict)" fill-opacity=".6"/>
+  <!-- Curly brace hint (struct symbol) -->
+  <path d="M58 30C60 30 61 31 61 33V36C61 38 63 38 63 38C63 38 61 38 61 40V43C61 45 60 46 58 46" stroke="url(#ict)" stroke-width="1" fill="none" opacity=".5" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="40" y="72" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ict)" opacity=".6">COMPLEX</text>
+</svg>

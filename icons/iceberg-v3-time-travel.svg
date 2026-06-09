@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="itt" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <!-- Clock face -->
+  <circle cx="40" cy="40" r="22" fill="url(#itt)" opacity=".12" stroke="url(#itt)" stroke-width="1.5"/>
+  <!-- Hour marks -->
+  <line x1="40" y1="20" x2="40" y2="24" stroke="url(#itt)" stroke-width="1.5" opacity=".5"/>
+  <line x1="40" y1="56" x2="40" y2="60" stroke="url(#itt)" stroke-width="1.5" opacity=".5"/>
+  <line x1="20" y1="40" x2="24" y2="40" stroke="url(#itt)" stroke-width="1.5" opacity=".5"/>
+  <line x1="56" y1="40" x2="60" y2="40" stroke="url(#itt)" stroke-width="1.5" opacity=".5"/>
+  <!-- Hour hand -->
+  <line x1="40" y1="40" x2="40" y2="28" stroke="url(#itt)" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+  <!-- Minute hand -->
+  <line x1="40" y1="40" x2="50" y2="34" stroke="url(#itt)" stroke-width="1.5" opacity=".7" stroke-linecap="round"/>
+  <!-- Center dot -->
+  <circle cx="40" cy="40" r="2" fill="url(#itt)" opacity=".8"/>
+  <!-- Rewind arrow (time travel) -->
+  <path d="M16 28 L10 34 L16 40" stroke="url(#itt)" stroke-width="1.5" fill="none" opacity=".6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 34 Q10 20 24 18" stroke="url(#itt)" stroke-width="1.5" fill="none" opacity=".6" stroke-linecap="round"/>
+  <!-- Dollar sign (finance) -->
+  <text x="66" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="url(#itt)" opacity=".5" text-anchor="middle">$</text>
+</svg>

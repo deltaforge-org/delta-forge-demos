@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pm" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Four partition boxes (2x2 grid) -->
+  <rect x="6" y="6" width="24" height="24" rx="3" stroke="url(#pm)" stroke-width="1.5" fill="url(#pm)" fill-opacity=".25"/>
+  <rect x="34" y="6" width="24" height="24" rx="3" stroke="url(#pm)" stroke-width="1.5" fill="url(#pm)" fill-opacity=".2"/>
+  <rect x="6" y="34" width="24" height="24" rx="3" stroke="url(#pm)" stroke-width="1.5" fill="url(#pm)" fill-opacity=".15"/>
+  <rect x="34" y="34" width="24" height="24" rx="3" stroke="url(#pm)" stroke-width="1.5" fill="url(#pm)" fill-opacity=".1"/>
+  <!-- Merge arrow from right side into grid -->
+  <line x1="72" y1="28" x2="62" y2="28" stroke="url(#pm)" stroke-width="2" opacity=".8"/>
+  <polyline points="64,24 60,28 64,32" stroke="url(#pm)" stroke-width="1.5" fill="none" opacity=".8"/>
+  <!-- Source rows (small bars on right) -->
+  <rect x="66" y="14" width="10" height="3" rx="1" fill="url(#pm)" opacity=".5"/>
+  <rect x="66" y="20" width="10" height="3" rx="1" fill="url(#pm)" opacity=".4"/>
+  <rect x="66" y="32" width="10" height="3" rx="1" fill="url(#pm)" opacity=".5"/>
+  <rect x="66" y="38" width="10" height="3" rx="1" fill="url(#pm)" opacity=".3"/>
+  <!-- Highlight on touched partitions (top two glow) -->
+  <rect x="6" y="6" width="24" height="24" rx="3" fill="url(#pm)" fill-opacity=".12"/>
+  <rect x="34" y="6" width="24" height="24" rx="3" fill="url(#pm)" fill-opacity=".08"/>
+  <!-- Category labels -->
+  <text x="18" y="21" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pm)" opacity=".7">ELEC</text>
+  <text x="46" y="21" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pm)" opacity=".7">CLTH</text>
+  <text x="18" y="49" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pm)" opacity=".5">HOME</text>
+  <text x="46" y="49" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pm)" opacity=".3">SPRT</text>
+  <!-- Label -->
+  <text x="30" y="72" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pm)" opacity=".6">MERGE</text>
+</svg>

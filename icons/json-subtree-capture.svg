@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="js" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- JSON root brace -->
+  <text x="14" y="18" font-family="monospace" font-size="14" fill="url(#js)" opacity=".8">{</text>
+  <!-- nested object nodes -->
+  <circle cx="20" cy="30" r="4" fill="url(#js)" opacity=".7"/>
+  <circle cx="20" cy="46" r="4" fill="url(#js)" opacity=".7"/>
+  <!-- branches to sub-objects -->
+  <line x1="24" y1="30" x2="34" y2="24" stroke="url(#js)" stroke-width="1.5" opacity=".5"/>
+  <line x1="24" y1="30" x2="34" y2="36" stroke="url(#js)" stroke-width="1.5" opacity=".5"/>
+  <line x1="24" y1="46" x2="34" y2="42" stroke="url(#js)" stroke-width="1.5" opacity=".5"/>
+  <line x1="24" y1="46" x2="34" y2="52" stroke="url(#js)" stroke-width="1.5" opacity=".5"/>
+  <!-- leaf nodes -->
+  <circle cx="36" cy="24" r="2.5" fill="url(#js)" opacity=".5"/>
+  <circle cx="36" cy="36" r="2.5" fill="url(#js)" opacity=".5"/>
+  <circle cx="36" cy="42" r="2.5" fill="url(#js)" opacity=".5"/>
+  <circle cx="36" cy="52" r="2.5" fill="url(#js)" opacity=".5"/>
+  <!-- JSON closing brace -->
+  <text x="14" y="66" font-family="monospace" font-size="14" fill="url(#js)" opacity=".8">}</text>
+  <!-- capture container (dashed rounded rect) -->
+  <rect x="48" y="14" width="26" height="54" rx="4" fill="url(#js)" opacity=".1"/>
+  <rect x="48" y="14" width="26" height="54" rx="4" stroke="url(#js)" stroke-width="1.5" stroke-dasharray="3 2" fill="none" opacity=".6"/>
+  <!-- arrow from subtree to container -->
+  <path d="M39 38L48 38" stroke="url(#js)" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+  <path d="M45 35L48 38L45 41" stroke="url(#js)" stroke-width="1.5" fill="none" opacity=".7" stroke-linecap="round"/>
+  <!-- captured data lines inside container -->
+  <line x1="53" y1="26" x2="69" y2="26" stroke="url(#js)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <line x1="53" y1="33" x2="66" y2="33" stroke="url(#js)" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+  <line x1="53" y1="40" x2="69" y2="40" stroke="url(#js)" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+  <line x1="53" y1="47" x2="64" y2="47" stroke="url(#js)" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+  <line x1="53" y1="54" x2="67" y2="54" stroke="url(#js)" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+  <!-- JSON string hint at top -->
+  <text x="61" y="21" font-family="monospace" font-size="7" fill="url(#js)" opacity=".7" text-anchor="middle">"{}"</text>
+</svg>

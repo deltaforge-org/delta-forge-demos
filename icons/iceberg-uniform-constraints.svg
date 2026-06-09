@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="uc" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16a34a"/>
+      <stop offset="1" stop-color="#86efac"/>
+    </linearGradient>
+  </defs>
+  <!-- Bank building base -->
+  <rect x="16" y="38" width="48" height="28" rx="2" fill="url(#uc)" opacity=".2" stroke="url(#uc)" stroke-width="1.5"/>
+  <!-- Pediment (triangle roof) -->
+  <path d="M14 38l26-18 26 18" stroke="url(#uc)" stroke-width="1.5" fill="url(#uc)" fill-opacity=".1" stroke-linejoin="round"/>
+  <!-- Columns -->
+  <rect x="24" y="38" width="4" height="24" rx="1" fill="url(#uc)" opacity=".35"/>
+  <rect x="34" y="38" width="4" height="24" rx="1" fill="url(#uc)" opacity=".35"/>
+  <rect x="44" y="38" width="4" height="24" rx="1" fill="url(#uc)" opacity=".35"/>
+  <rect x="54" y="38" width="4" height="24" rx="1" fill="url(#uc)" opacity=".35"/>
+  <!-- Shield/check badge -->
+  <path d="M40 48l-7 4v8c0 4 3.5 7 7 8 3.5-1 7-4 7-8v-8l-7-4z" fill="url(#uc)" opacity=".3" stroke="url(#uc)" stroke-width="1.5"/>
+  <!-- Checkmark -->
+  <path d="M36 56l3 3 6-6" stroke="url(#uc)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

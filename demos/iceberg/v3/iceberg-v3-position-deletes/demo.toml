@@ -1,0 +1,88 @@
+[demo]
+id = "iceberg-v3-position-deletes"
+name = "Iceberg V3 — Position Delete Files"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Apache Iceberg position delete file handling using an equity \
+trading desk dataset. Contains 480 stock trades across 4 exchanges (NYSE, \
+NASDAQ, LSE, TSE) where a malfunctioning trading algorithm (ALGO-X99) \
+placed 24 erroneous trades that were retracted via Parquet position delete \
+files, leaving 456 valid trades. The table was originally created as \
+Iceberg V2 and upgraded to V3 — a real-world upgrade scenario that \
+exercises V3 metadata parsing with V2-style position delete files. Tests \
+delete file application, post-delete aggregations, and cross-exchange \
+analytics.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v3", "position-deletes", "v2-upgrade", "trading", "finance"]
+difficulty = "advanced"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "equity_trades/data/00000-4-7de3f17d-d3af-47f2-b06f-22403fc23eaf-0-00001.parquet"
+format = "parquet"
+description = "All 480 equity trades (single Parquet data file)"
+size_bytes = 10000
+
+[[demo.data_files]]
+path = "equity_trades/data/00000-8-2f15980e-3bf0-42fb-8fa7-d4f499d2f034-00001-deletes.parquet"
+format = "parquet"
+description = "Position delete file — marks 24 erroneous ALGO-X99 trades for removal"
+size_bytes = 1654
+
+[[demo.data_files]]
+path = "equity_trades/metadata/v4.metadata.json"
+format = "json"
+description = "Iceberg V3 metadata (upgraded from V2) — schema, snapshots, partition specs"
+size_bytes = 3549
+
+[[demo.data_files]]
+path = "equity_trades/metadata/v3.metadata.json"
+format = "json"
+description = "Iceberg metadata v3 — format-version upgrade from V2 to V3"
+size_bytes = 3400
+
+[[demo.data_files]]
+path = "equity_trades/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg metadata v2 — position delete snapshot applied"
+size_bytes = 2367
+
+[[demo.data_files]]
+path = "equity_trades/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg metadata v1 — initial table creation with 480 trades"
+size_bytes = 1347
+
+[[demo.data_files]]
+path = "equity_trades/metadata/snap-1548118141319921233-1-c38d1596-f5f6-44ca-9812-d8a4b617bb6d.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — initial data snapshot"
+size_bytes = 4468
+
+[[demo.data_files]]
+path = "equity_trades/metadata/snap-6094895460904953702-1-58e1396d-d404-4a77-a17e-6298cb31e703.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — position delete snapshot"
+size_bytes = 4548
+
+[[demo.data_files]]
+path = "equity_trades/metadata/c38d1596-f5f6-44ca-9812-d8a4b617bb6d-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to Parquet data files"
+size_bytes = 7724
+
+[[demo.data_files]]
+path = "equity_trades/metadata/58e1396d-d404-4a77-a17e-6298cb31e703-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to data and delete files"
+size_bytes = 7573
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg_demos.equity_trades"

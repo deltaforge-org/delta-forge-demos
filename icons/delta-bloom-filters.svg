@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="bf" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c084fc"/>
+      <stop offset="1" stop-color="#7e22ce"/>
+    </linearGradient>
+  </defs>
+  <!-- Bloom filter bit array -->
+  <rect x="8" y="14" width="64" height="12" rx="3" stroke="url(#bf)" stroke-width="1.5" fill="url(#bf)" fill-opacity=".1"/>
+  <!-- Bit cells -->
+  <rect x="10" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".6"/>
+  <rect x="19" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".2"/>
+  <rect x="28" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".6"/>
+  <rect x="37" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".2"/>
+  <rect x="46" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".2"/>
+  <rect x="55" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".6"/>
+  <rect x="64" y="16" width="7" height="8" rx="1" fill="url(#bf)" opacity=".2"/>
+  <!-- Hash function arrows -->
+  <text x="24" y="40" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#bf)" opacity=".6">h1</text>
+  <text x="40" y="40" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#bf)" opacity=".6">h2</text>
+  <text x="56" y="40" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#bf)" opacity=".6">h3</text>
+  <path d="M24 34L13 26" stroke="url(#bf)" stroke-width="1" opacity=".4"/>
+  <path d="M40 34L31 26" stroke="url(#bf)" stroke-width="1" opacity=".4"/>
+  <path d="M56 34L58 26" stroke="url(#bf)" stroke-width="1" opacity=".4"/>
+  <!-- Input key -->
+  <rect x="20" y="48" width="40" height="10" rx="3" stroke="url(#bf)" stroke-width="1" fill="url(#bf)" fill-opacity=".15"/>
+  <text x="40" y="55" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#bf)" opacity=".7">key="usr_42"</text>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#bf)" opacity=".6">BLOOM</text>
+</svg>

@@ -1,0 +1,79 @@
+[demo]
+id = "hl7-lab-orders-results"
+name = "HL7 Lab Orders & Results — ORM/ORU Workflow"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Models the complete laboratory workflow using HL7 v2 ORM (Order) and ORU \
+(Observation Result) messages. Three ORM messages place lab orders — CBC, \
+metabolic panel, urine culture, glucose, and radiology — while five ORU \
+messages return results including a 14-analyte comprehensive metabolic panel, \
+immunization records, glucose readings, and radiology reports. Sources span \
+multiple EHR and LIS systems across HL7 v2.3 through v2.5.1, demonstrating \
+how DeltaForge unifies heterogeneous lab interfaces into queryable order and \
+result tables.
+"""
+categories = ["hl7", "healthcare"]
+tags = ["hl7", "orm", "oru", "lab", "orders", "results", "observations", "immunization", "radiology", "healthcare"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to the directory containing HL7 ORM/ORU message files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/orm_o01_order.hl7"
+format = "hl7"
+description = "ORM^O01 — Lab orders (v2.5.1): CBC, BMP, urine culture with STAT priority"
+size_bytes = 1122
+
+[[demo.data_files]]
+path = "data/orm_o01_ritten.hl7"
+format = "hl7"
+description = "ORM^O01 — Glucose order (Ritten, v2.5): single test order"
+size_bytes = 361
+
+[[demo.data_files]]
+path = "data/orm_o01_interfaceware.hl7"
+format = "hl7"
+description = "ORM^O01 — Radiology order (InterfaceWare, v2.3): X-ray ankle with diagnosis"
+size_bytes = 704
+
+[[demo.data_files]]
+path = "data/oru_r01_lab_result.hl7"
+format = "hl7"
+description = "ORU^R01 — Comprehensive metabolic panel (v2.5.1): 14 analytes with reference ranges"
+size_bytes = 1788
+
+[[demo.data_files]]
+path = "data/oru_r01_ritten.hl7"
+format = "hl7"
+description = "ORU^R01 — Simple test result (Ritten, v2.5): positive finding"
+size_bytes = 299
+
+[[demo.data_files]]
+path = "data/oru_r01_interfaceware.hl7"
+format = "hl7"
+description = "ORU^R01 — Radiology report (InterfaceWare, v2.4): chest X-ray with narrative and DICOM UID"
+size_bytes = 646
+
+[[demo.data_files]]
+path = "data/hl7v2.3_oru_r01_immunization.hl7"
+format = "hl7"
+description = "ORU^R01 — Immunization history (v2.3): 9 vaccine records (MMR, Hep B, HIB)"
+size_bytes = 885
+
+[[demo.data_files]]
+path = "data/hl7v2.4_oru_r01_glucose.hl7"
+format = "hl7"
+description = "ORU^R01 — Glucose post 12hr fasting (GHH LAB, v2.4): high result with flag"
+size_bytes = 504
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7.lab_orders"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7.lab_results"

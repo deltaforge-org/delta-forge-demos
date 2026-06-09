@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ue" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#0891b2"/>
+    </linearGradient>
+  </defs>
+  <!-- Table grid -->
+  <rect x="10" y="10" width="60" height="36" rx="3" fill="url(#ue)" fill-opacity=".08" stroke="url(#ue)" stroke-width="1"/>
+  <line x1="10" y1="19" x2="70" y2="19" stroke="url(#ue)" stroke-width=".8" opacity=".4"/>
+  <line x1="10" y1="28" x2="70" y2="28" stroke="url(#ue)" stroke-width=".8" opacity=".3"/>
+  <line x1="10" y1="37" x2="70" y2="37" stroke="url(#ue)" stroke-width=".8" opacity=".3"/>
+  <line x1="30" y1="10" x2="30" y2="46" stroke="url(#ue)" stroke-width=".8" opacity=".3"/>
+  <line x1="50" y1="10" x2="50" y2="46" stroke="url(#ue)" stroke-width=".8" opacity=".3"/>
+  <!-- Column headers -->
+  <text x="17" y="16" font-size="4" font-family="monospace" fill="url(#ue)" opacity=".7">val</text>
+  <text x="36" y="16" font-size="4" font-family="monospace" fill="url(#ue)" opacity=".7">×1.05</text>
+  <text x="55" y="16" font-size="4" font-family="monospace" fill="url(#ue)" opacity=".7">new</text>
+  <!-- Data rows with arrows showing transformation -->
+  <text x="15" y="25" font-size="3.5" font-family="monospace" fill="url(#ue)" opacity=".5">185</text>
+  <path d="M33 23L47 23" stroke="url(#ue)" stroke-width="1" opacity=".4" marker-end="url(#arrow)"/>
+  <text x="53" y="25" font-size="3.5" font-family="monospace" fill="url(#ue)" opacity=".7">194</text>
+  <text x="15" y="34" font-size="3.5" font-family="monospace" fill="url(#ue)" opacity=".5">378</text>
+  <path d="M33 32L47 32" stroke="url(#ue)" stroke-width="1" opacity=".4"/>
+  <text x="53" y="34" font-size="3.5" font-family="monospace" fill="url(#ue)" opacity=".7">397</text>
+  <text x="15" y="43" font-size="3.5" font-family="monospace" fill="url(#ue)" opacity=".5">620</text>
+  <path d="M33 41L47 41" stroke="url(#ue)" stroke-width="1" opacity=".4"/>
+  <text x="53" y="43" font-size="3.5" font-family="monospace" fill="url(#ue)" opacity=".7">651</text>
+  <!-- UPDATE expression -->
+  <rect x="10" y="54" width="60" height="12" rx="2" fill="url(#ue)" fill-opacity=".12" stroke="url(#ue)" stroke-width="1"/>
+  <text x="14" y="62" font-size="5" font-family="monospace" fill="url(#ue)" opacity=".8">SET x = f(x)</text>
+  <!-- CASE arrow -->
+  <path d="M40 68L40 75" stroke="url(#ue)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <text x="40" y="80" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ue)" opacity=".6">CASE WHEN</text>
+</svg>

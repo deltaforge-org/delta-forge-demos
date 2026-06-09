@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sk" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+  <!-- Three file blocks representing batches -->
+  <rect x="8" y="16" width="16" height="36" rx="2" fill="url(#sk)" fill-opacity=".15" stroke="url(#sk)" stroke-width="1.2"/>
+  <rect x="30" y="16" width="16" height="36" rx="2" fill="url(#sk)" fill-opacity=".15" stroke="url(#sk)" stroke-width="1.2"/>
+  <rect x="52" y="16" width="16" height="36" rx="2" fill="url(#sk)" fill-opacity=".15" stroke="url(#sk)" stroke-width="1.2"/>
+  <!-- Min/max range bars inside files (different heights = non-overlapping) -->
+  <rect x="11" y="38" width="10" height="11" rx="1" fill="url(#sk)" opacity=".5"/>
+  <rect x="33" y="28" width="10" height="11" rx="1" fill="url(#sk)" opacity=".6"/>
+  <rect x="55" y="18" width="10" height="11" rx="1" fill="url(#sk)" opacity=".7"/>
+  <!-- Skip arrows (first two files skipped) -->
+  <path d="M14 58L14 62L20 60Z" fill="url(#sk)" opacity=".4"/>
+  <text x="16" y="68" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sk)" opacity=".5">SKIP</text>
+  <path d="M36 58L36 62L42 60Z" fill="url(#sk)" opacity=".4"/>
+  <text x="38" y="68" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sk)" opacity=".5">SKIP</text>
+  <!-- Read indicator on third file -->
+  <circle cx="60" cy="60" r="4" fill="url(#sk)" opacity=".6"/>
+  <text x="60" y="62" text-anchor="middle" font-size="3.5" font-family="monospace" fill="white" font-weight="bold">R</text>
+  <text x="60" y="68" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sk)" opacity=".5">READ</text>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#sk)" opacity=".7">SKIP</text>
+</svg>

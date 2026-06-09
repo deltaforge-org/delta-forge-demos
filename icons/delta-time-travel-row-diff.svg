@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Two table snapshots side by side -->
+  <!-- Left table (old version) -->
+  <rect x="6" y="14" width="28" height="32" rx="3" stroke="url(#rd)" stroke-width="1.5" fill="url(#rd)" fill-opacity=".06"/>
+  <line x1="6" y1="22" x2="34" y2="22" stroke="url(#rd)" stroke-width="1" opacity=".4"/>
+  <line x1="6" y1="30" x2="34" y2="30" stroke="url(#rd)" stroke-width="1" opacity=".3"/>
+  <line x1="6" y1="38" x2="34" y2="38" stroke="url(#rd)" stroke-width="1" opacity=".3"/>
+  <text x="20" y="20" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#rd)" opacity=".7">V1</text>
+  <!-- Right table (new version) -->
+  <rect x="46" y="14" width="28" height="32" rx="3" stroke="url(#rd)" stroke-width="1.5" fill="url(#rd)" fill-opacity=".06"/>
+  <line x1="46" y1="22" x2="74" y2="22" stroke="url(#rd)" stroke-width="1" opacity=".4"/>
+  <line x1="46" y1="30" x2="74" y2="30" stroke="url(#rd)" stroke-width="1" opacity=".3"/>
+  <line x1="46" y1="38" x2="74" y2="38" stroke="url(#rd)" stroke-width="1" opacity=".3"/>
+  <text x="60" y="20" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#rd)" opacity=".7">V2</text>
+  <!-- Diff arrows between tables -->
+  <path d="M36 26L44 26" stroke="url(#rd)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <path d="M36 34L44 34" stroke="url(#rd)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M36 42L44 42" stroke="url(#rd)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Change indicators: modified row (orange circle), deleted (red x), added (green +) -->
+  <circle cx="40" cy="26" r="3" fill="url(#rd)" opacity=".8"/>
+  <text x="40" y="28" text-anchor="middle" font-size="4" font-family="monospace" fill="white">~</text>
+  <circle cx="40" cy="34" r="3" fill="#ef4444" opacity=".7"/>
+  <text x="40" y="36" text-anchor="middle" font-size="5" font-family="monospace" fill="white">-</text>
+  <circle cx="40" cy="42" r="3" fill="#3b82f6" opacity=".7"/>
+  <text x="40" y="44.5" text-anchor="middle" font-size="5" font-family="monospace" fill="white">+</text>
+  <!-- Labels -->
+  <text x="13" y="60" font-size="4.5" font-family="monospace" fill="url(#rd)" opacity=".6">modified</text>
+  <text x="30" y="68" font-size="4.5" font-family="monospace" fill="#ef4444" opacity=".6">deleted</text>
+  <text x="48" y="60" font-size="4.5" font-family="monospace" fill="#3b82f6" opacity=".6">inserted</text>
+  <!-- Bottom: DIFF label -->
+  <text x="40" y="76" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#rd)" opacity=".5">ROW DIFF</text>
+</svg>

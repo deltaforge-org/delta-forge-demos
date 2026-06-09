@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pb" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10b981"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <!-- Address book -->
+  <rect x="16" y="10" width="48" height="60" rx="4" fill="url(#pb)" opacity=".15" stroke="url(#pb)" stroke-width="1.5"/>
+  <!-- Spine rings -->
+  <rect x="12" y="20" width="8" height="3" rx="1.5" fill="url(#pb)" opacity=".5"/>
+  <rect x="12" y="34" width="8" height="3" rx="1.5" fill="url(#pb)" opacity=".5"/>
+  <rect x="12" y="48" width="8" height="3" rx="1.5" fill="url(#pb)" opacity=".5"/>
+  <!-- Person icon -->
+  <circle cx="40" cy="32" r="8" fill="url(#pb)" opacity=".35"/>
+  <path d="M26 56c0-8 6-14 14-14s14 6 14 14" fill="url(#pb)" opacity=".25"/>
+  <!-- Binary dots -->
+  <circle cx="56" cy="18" r="2" fill="url(#pb)" opacity=".6"/>
+  <circle cx="62" cy="18" r="2" fill="url(#pb)" opacity=".3"/>
+  <circle cx="56" cy="24" r="2" fill="url(#pb)" opacity=".3"/>
+  <circle cx="62" cy="24" r="2" fill="url(#pb)" opacity=".6"/>
+</svg>

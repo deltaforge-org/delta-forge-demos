@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rit" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- sensor body -->
+  <rect x="32" y="14" width="16" height="22" rx="3" fill="url(#rit)" opacity=".3" stroke="url(#rit)" stroke-width="1.5"/>
+  <circle cx="40" cy="22" r="3" fill="url(#rit)" opacity=".7"/>
+  <!-- waves emitting -->
+  <path d="M22 32 Q22 44 30 48" fill="none" stroke="url(#rit)" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  <path d="M16 32 Q16 48 28 54" fill="none" stroke="url(#rit)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <path d="M58 32 Q58 44 50 48" fill="none" stroke="url(#rit)" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  <path d="M64 32 Q64 48 52 54" fill="none" stroke="url(#rit)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <!-- waveform -->
+  <polyline points="14,68 22,68 26,60 30,72 34,64 38,68 44,62 48,70 52,66 58,68 66,68"
+            fill="none" stroke="url(#rit)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+</svg>

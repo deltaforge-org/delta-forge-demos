@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="hgd" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Delivery truck body -->
+  <rect x="10" y="38" width="34" height="22" rx="3" fill="url(#hgd)" opacity=".2" stroke="url(#hgd)" stroke-width="1.5"/>
+  <!-- Truck cab -->
+  <path d="M44 44 L56 44 L60 52 L60 60 L44 60 Z" fill="url(#hgd)" opacity=".3" stroke="url(#hgd)" stroke-width="1.5"/>
+  <!-- Wheels -->
+  <circle cx="22" cy="62" r="4" fill="url(#hgd)" opacity=".5" stroke="url(#hgd)" stroke-width="1"/>
+  <circle cx="52" cy="62" r="4" fill="url(#hgd)" opacity=".5" stroke="url(#hgd)" stroke-width="1"/>
+  <!-- Hexagon (H3) -->
+  <polygon points="40,10 48,14.5 48,23.5 40,28 32,23.5 32,14.5" fill="url(#hgd)" opacity=".25" stroke="url(#hgd)" stroke-width="1.5"/>
+  <!-- Hex center dot -->
+  <circle cx="40" cy="19" r="2" fill="url(#hgd)" opacity=".6"/>
+  <!-- Route line from hex to truck -->
+  <path d="M40 28 L27 38" stroke="url(#hgd)" stroke-width="1.5" stroke-dasharray="3 2" opacity=".4"/>
+  <!-- Small location pins -->
+  <circle cx="18" cy="16" r="2.5" fill="url(#hgd)" opacity=".35"/>
+  <circle cx="60" cy="22" r="2.5" fill="url(#hgd)" opacity=".35"/>
+</svg>

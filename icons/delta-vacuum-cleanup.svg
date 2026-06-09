@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f87171"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <!-- Vacuum/broom sweep lines -->
+  <path d="M20 20L40 50L60 20" stroke="url(#vc)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Trash/cleanup particles -->
+  <circle cx="18" cy="30" r="2.5" fill="url(#vc)" opacity=".3"/>
+  <circle cx="28" cy="25" r="2" fill="url(#vc)" opacity=".25"/>
+  <circle cx="52" cy="25" r="2" fill="url(#vc)" opacity=".25"/>
+  <circle cx="62" cy="30" r="2.5" fill="url(#vc)" opacity=".3"/>
+  <circle cx="24" cy="38" r="1.5" fill="url(#vc)" opacity=".2"/>
+  <circle cx="56" cy="38" r="1.5" fill="url(#vc)" opacity=".2"/>
+  <!-- Clean file icons at bottom -->
+  <rect x="14" y="56" width="12" height="14" rx="2" stroke="url(#vc)" stroke-width="1.5" fill="url(#vc)" fill-opacity=".15"/>
+  <rect x="34" y="56" width="12" height="14" rx="2" stroke="url(#vc)" stroke-width="1.5" fill="url(#vc)" fill-opacity=".25"/>
+  <rect x="54" y="56" width="12" height="14" rx="2" stroke="url(#vc)" stroke-width="1.5" fill="url(#vc)" fill-opacity=".15"/>
+  <!-- Checkmarks on clean files -->
+  <path d="M37 62L39 65L43 60" stroke="url(#vc)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <text x="40" y="78" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#vc)" opacity=".6">VACUUM</text>
+</svg>

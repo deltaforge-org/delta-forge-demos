@@ -1,0 +1,26 @@
+[demo]
+id = "delta-vacuum-cdc-interaction"
+name = "Delta VACUUM & CDC Interaction — Retention & Change Tracking"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Change Data Feed (CDF) records row-level changes (inserts, updates, deletes) in \
+special _change_data files alongside the main Delta data, enabling downstream \
+consumers to replay incremental changes. \
+When VACUUM runs, it removes orphaned data files but must not destroy CDF records \
+that consumers still need -- this interaction is governed by the retention period. \
+This demo walks through an order lifecycle with multiple status transitions, \
+then shows how data integrity is preserved after VACUUM on a CDF-enabled table.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "vacuum", "cdc", "change-data-feed", "retention", "lifecycle"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.order_lifecycle"

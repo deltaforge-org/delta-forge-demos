@@ -1,0 +1,135 @@
+[demo]
+id = "delta-powerbi-warehouse"
+name = "Pacific Retail Group: Power BI Star Warehouse Benchmark"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+A realistic Kimball star-schema retail warehouse sized for serious Power BI \
+benchmarking. Pacific Retail Group is a fictional multi-channel retailer \
+whose finance team builds Power BI dashboards over sales, inventory, and \
+clickstream data. The demo provisions four dimensions and three fact tables \
+totalling roughly 506 million rows of deterministic data whose distributions \
+look like the real world inside a report.
+
+Data realism is the point. Earlier revisions derived every value from a \
+low-period modular function of the row index, which made two artefacts \
+obvious in Power BI: columns whose periods shared a factor became perfectly \
+correlated (every customer in a city had the identical child count), and a \
+measure that is a sawtooth of the row index summed to the same total for \
+every group (every city showed the same SUM of total_amount). This revision \
+drives the columns that matter through seeded distribution kernels:
+- Geography is population-skewed and self-consistent: one seeded Zipf rank \
+  selects aligned (city, state, region) values, so the largest metros carry \
+  proportionally more customers and stores, the way real markets do.
+- number_of_children is sampled independently of geography (a separate seed), \
+  so it is no longer pinned to city and follows a realistic right-skewed \
+  household distribution.
+- Order quantities, prices, discounts, lifetime revenue, inventory levels, \
+  session durations, and the web funnel are drawn from skewed distributions, \
+  so per-dimension aggregates fluctuate instead of collapsing to one number.
+
+Tables are narrow and purposeful (~506.03M rows total):
+- retail.dim_date (7,305 rows, 16 cols): standard PBI date table covering \
+  2010-01-01 through 2029-12-31, with fiscal attributes and weekend / \
+  month-end / holiday flags and a season label.
+- retail.dim_store (25,000 rows, 14 cols): store master. Type, banner, \
+  population-skewed geography, square footage, employee count, lease.
+- retail.dim_product (1,000,000 rows, 14 cols): product master with three \
+  category levels, brand, color, right-skewed cost, list price, ABC class.
+- retail.dim_customer (5,000,000 rows, 17 cols): customer master with name, \
+  email, demographic band, geography, number_of_children, household size, \
+  loyalty tier, segment, right-skewed lifetime revenue.
+- retail.fact_sales (200,000,000 rows, 21 cols): order-line grain. Foreign \
+  keys to all four dims plus core money / quantity measures sampled from \
+  skewed distributions, with recency-skewed order dates.
+- retail.fact_inventory_snapshot (100,000,000 rows, 12 cols): daily \
+  store-and-product snapshots. On-hand, reorder point, available, valuation.
+- retail.fact_web_events (200,000,000 rows, 13 cols): clickstream event log \
+  with a realistic funnel skew, device and browser market-share skew, \
+  session duration, conversion value, and search.
+
+Every fact table sets delta.targetFileSize = 157286400 (150 MB) so the \
+writer produces predictable Parquet file sizes that align with Power BI \
+Import refresh, partition pruning, and DirectQuery scan behaviour.
+
+Determinism is preserved: every value is a pure function of (seed, row \
+index), so two runs are bit-identical and every assertion stays closed-form \
+(row counts, primary-key sums, distinct cardinalities, value ranges, and the \
+two deterministic flags). This demo intentionally takes hours to set up, not \
+minutes. For a smaller deterministic ODBC wire regression suite see the \
+sibling demo delta-odbc-driver-bench.
+
+What the queries exercise (mirrors what Power BI itself emits):
+- Time-intelligence aggregations (year, quarter, month, day-of-week)
+- Multi-dimension joins (fact_sales x dim_product)
+- Segment slicing (loyalty tier, region, channel)
+- DISTINCTCOUNT-style cardinality checks for slicer pickers
+- Realistic-distribution checks (geography skew, decorrelated children, \
+  recency and funnel skew)
+- Closed-form integrity checks on row counts and BIGINT key sums
+"""
+categories = ["delta-table", "benchmark", "odbc", "power-bi", "star-schema"]
+tags = [
+    "delta-table",
+    "advanced",
+    "benchmark",
+    "power-bi",
+    "powerbi",
+    "odbc",
+    "star-schema",
+    "realistic-distributions",
+    "data-quality",
+    "real-world-scenarios",
+    "retail",
+    "ecommerce",
+    "warehouse",
+    "dimensional-modelling",
+    "kimball",
+    "fact-table",
+    "dimension-table",
+    "time-intelligence",
+    "aggregation",
+    "directquery",
+    "import-mode",
+    "deterministic",
+    "150mb-files",
+    "parquet-tuning",
+    "bi",
+    "dashboard",
+    "clickstream",
+    "inventory",
+]
+difficulty = "advanced"
+estimated_time_minutes = 240
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.dim_date"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.dim_store"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.dim_product"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.dim_customer"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.fact_sales"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.fact_inventory_snapshot"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.fact_web_events"

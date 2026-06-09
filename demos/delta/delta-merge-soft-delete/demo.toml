@@ -1,0 +1,30 @@
+[demo]
+id = "delta-merge-soft-delete"
+name = "Delta MERGE — Soft Delete with BY SOURCE"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Production CDC pipelines rarely hard-delete records. Instead, rows that \
+disappear from the source are soft-deleted: marked inactive with a \
+deactivation timestamp, but kept for audit and historical queries. This \
+demo uses WHEN NOT MATCHED BY SOURCE with UPDATE (not DELETE) to flag \
+stale records as inactive. It also demonstrates multiple BY SOURCE \
+clauses with different predicates — high-value records get flagged for \
+review while low-value records are deactivated automatically.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "merge", "soft-delete", "cdc", "by-source", "audit", "deactivate"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.vendors"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.vendor_feed"

@@ -1,0 +1,59 @@
+[demo]
+id = "edi-edifact-customs-border"
+name = "EDIFACT Customs & Border Control"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Port authority customs system processing UN/EDIFACT messages for border \
+security and trade compliance. Parses cargo manifests (CUSCAR) with consignment \
+and goods item details, passenger lists (PAXLST) with travel document verification, \
+passenger name records (PNRGOV) for advance screening, and bayplan stowage \
+plans (BAPLIE) for vessel operations. Demonstrates materialized_paths for \
+extracting BGM, TDT, NAD, LOC, CNI, GID, EQD, and DOC segments as queryable \
+columns — message types unique to EDIFACT with no X12 equivalent."""
+categories = ["edi", "edifact", "international-trade"]
+tags = ["edi", "edifact", "customs", "border-control", "cargo", "passenger", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to directory containing EDIFACT .edi files", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/edifact_D95B_CUSCAR_customs_cargo.edi"
+format = "edi"
+description = "EDIFACT CUSCAR — Customs cargo report (D:95B:UN), BGM/NAD/TDT/CNI/GID"
+size_bytes = 2459
+
+[[demo.data_files]]
+path = "data/edifact_CUSCAR_cargo_report.edi"
+format = "edi"
+description = "EDIFACT CUSCAR — Customs cargo report (D:03B:UN), BGM/NAD/TDT/CNI/GID"
+size_bytes = 1199
+
+[[demo.data_files]]
+path = "data/edifact_PAXLST_passenger_list.edi"
+format = "edi"
+description = "EDIFACT PAXLST — Passenger list (D:03B:UN), BGM/TDT/NAD/DOC segments"
+size_bytes = 522
+
+[[demo.data_files]]
+path = "data/edifact_PNRGOV_passenger_data.edi"
+format = "edi"
+description = "EDIFACT PNRGOV — Passenger name record (11:1:IA), MSG/TVL/TIF/SSR segments"
+size_bytes = 1820
+
+[[demo.data_files]]
+path = "data/edifact_BAPLIE_bayplan_stowage.edi"
+format = "edi"
+description = "EDIFACT BAPLIE — Bayplan/stowage plan (D:13B:UN:SMDG31), BGM/TDT/LOC/EQD"
+size_bytes = 593
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.customs_messages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.customs_materialized"

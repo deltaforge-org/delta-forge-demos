@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sfi" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <!-- Sensor / thermometer -->
+  <rect x="10" y="12" width="8" height="30" rx="4" stroke="url(#sfi)" stroke-width="1.5" fill="url(#sfi)" fill-opacity=".15"/>
+  <rect x="12" y="24" width="4" height="14" rx="2" fill="url(#sfi)" opacity=".5"/>
+  <circle cx="14" cy="44" r="5" fill="url(#sfi)" opacity=".3" stroke="url(#sfi)" stroke-width="1"/>
+  <!-- JSON to typed column arrow -->
+  <text x="28" y="22" font-size="12" font-family="monospace" fill="url(#sfi)" opacity=".4">{}</text>
+  <path d="M44 20L56 20" stroke="url(#sfi)" stroke-width="2" opacity=".6"/>
+  <path d="M53 17L56 20L53 23" stroke="url(#sfi)" stroke-width="2" fill="none" opacity=".6"/>
+  <!-- Typed columns (table grid) -->
+  <rect x="58" y="12" width="16" height="20" rx="2" stroke="url(#sfi)" stroke-width="1.5" fill="url(#sfi)" fill-opacity=".1"/>
+  <line x1="58" y1="18" x2="74" y2="18" stroke="url(#sfi)" stroke-width="1" opacity=".5"/>
+  <line x1="58" y1="24" x2="74" y2="24" stroke="url(#sfi)" stroke-width="1" opacity=".4"/>
+  <line x1="66" y1="12" x2="66" y2="32" stroke="url(#sfi)" stroke-width="1" opacity=".3"/>
+  <!-- Schema evolution layers -->
+  <rect x="14" y="54" width="52" height="6" rx="3" fill="url(#sfi)" fill-opacity=".1" stroke="url(#sfi)" stroke-width="1"/>
+  <text x="40" y="59" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sfi)" opacity=".6">v1: 7 cols</text>
+  <rect x="14" y="63" width="52" height="6" rx="3" fill="url(#sfi)" fill-opacity=".2" stroke="url(#sfi)" stroke-width="1"/>
+  <text x="40" y="68" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sfi)" opacity=".7">v2: +location</text>
+  <rect x="14" y="72" width="52" height="6" rx="3" fill="url(#sfi)" fill-opacity=".3" stroke="url(#sfi)" stroke-width="1"/>
+  <text x="40" y="77" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#sfi)" opacity=".8">v3: +alert</text>
+</svg>

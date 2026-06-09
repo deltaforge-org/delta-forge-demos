@@ -1,0 +1,29 @@
+[demo]
+id = "h3-point-in-polygon"
+name = "H3 Point-in-Polygon — 1M Row Performance"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial \
+indexing. A ride-share company needs to determine which pricing zone each of \
+1,000,000 drivers falls into — airport surcharge, downtown premium, or suburban \
+standard. Traditional polygon intersection is O(n×m); with H3, every point maps \
+to one hexagonal cell ID, enabling O(1) spatial joins via simple integer equality. \
+Progressive queries build from "what is H3" to million-row analytics.
+"""
+categories = ["geospatial", "iot"]
+tags = ["h3", "spatial", "delta-table", "point-in-polygon", "performance", "geospatial", "advanced", "generate-series"]
+difficulty = "intermediate"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.spatial.driver_positions"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.spatial.zones"

@@ -1,0 +1,51 @@
+[demo]
+id = "sales-analytics"
+name = "Excel Sales Analytics — Superstore Orders"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates multi-file Excel analytics using 4 years of Superstore sales data \
+(2014–2017, 9,994 orders). Two tables exercise sheet_name, file_filter, \
+infer_schema_rows, multi-file reading, file_metadata, and automatic type \
+inference for dates, numbers, and strings.
+"""
+categories = ["excel", "retail"]
+tags = ["excel", "intermediate", "sheet-name", "multi-file", "file-filter", "type-inference", "file-metadata"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the directory containing the 4 Superstore XLSX files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/sales-data-2014.xlsx"
+format = "excel"
+description = "Superstore orders 2014 — 1,993 orders"
+size_bytes = 303318
+
+[[demo.data_files]]
+path = "data/sales-data-2015.xlsx"
+format = "excel"
+description = "Superstore orders 2015 — 2,102 orders"
+size_bytes = 317953
+
+[[demo.data_files]]
+path = "data/sales-data-2016.xlsx"
+format = "excel"
+description = "Superstore orders 2016 — 2,587 orders"
+size_bytes = 384561
+
+[[demo.data_files]]
+path = "data/sales-data-2017.xlsx"
+format = "excel"
+description = "Superstore orders 2017 — 3,312 orders"
+size_bytes = 587173
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel.all_orders"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.excel.orders_2017"

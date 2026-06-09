@@ -1,0 +1,83 @@
+-- ============================================================================
+-- Demo: Pokedex First-Generation Reference, Offset Pagination + CALL Preview
+-- Feature: pagination = 'offset' (offset_param, limit_param, limit, max_pages),
+--          JSON flatten with nested root_path = "$.results"
+-- ============================================================================
+--
+-- Real-world story: a mobile game studio maintains an internal Pokedex
+-- reference catalog to power battle-balance analytics and in-game
+-- creature search. The battle team pulls the first 100 National Dex
+-- entries (Kanto-gen, Bulbasaur #1 through Voltorb #100) from PokeAPI,
+-- lands them as JSON pages, projects them into a flat table, then
+-- promotes to a typed silver Delta table with the integer dex_id
+-- extracted from each entry's detail URL.
+--
+-- This file declares the connection, endpoint, and silver Delta table
+-- only. The bronze external table is created in queries.sql after the
+-- INVOKE has landed its files, because CREATE EXTERNAL TABLE validates
+-- and detects schema against the landed files, so the landing folder
+-- must exist first. The CALL preview, the INVOKE that drives the offset
+-- crawl, the run audit, the schema detection, and the bronze->silver
+-- promotion all live in queries.sql so the user can see in one place how
+-- an offset-paginated REST endpoint is driven from SQL.
+-- ============================================================================
+
+-- --------------------------------------------------------------------------
+-- 1. Zone + schema
+-- --------------------------------------------------------------------------
+
+CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
+    COMMENT 'Bronze landing zone for REST API ingests';
+
+CREATE SCHEMA IF NOT EXISTS {{zone_name}}.pokedex_api
+    COMMENT 'Game reference catalogs (Pokedex, moves, items)';
+
+-- --------------------------------------------------------------------------
+-- 2. REST API connection (public, no auth)
+-- --------------------------------------------------------------------------
+-- PokeAPI is a free community-maintained service. No auth required.
+
+CREATE CONNECTION IF NOT EXISTS pokedex_api
+    TYPE = rest_api
+    OPTIONS (
+        base_url     = 'https://pokeapi.co',
+        auth_mode    = 'none',
+        storage_zone = '{{zone_name}}',
+        base_path    = 'pokeapi-pokedex-first-generation/pokedex_api',
+        timeout_secs = '30'
+    );
+
+-- --------------------------------------------------------------------------
+-- 3. API endpoint, OFFSET pagination
+-- --------------------------------------------------------------------------
+-- Offset pagination pairs two query-string params: the engine increments
+-- the offset by `limit` each page until `max_pages` is reached. PokeAPI
+-- uses `?offset=N&limit=K` so offset_param/limit_param are plain
+-- `offset`/`limit`. rate_limit_rps = 4 is the polite throttle
+-- (community service, no enforced limit but don't be that noisy client).
+
+CREATE API ENDPOINT {{zone_name}}.pokedex_api.first_generation
+    URL '/api/v2/pokemon'
+    RESPONSE FORMAT JSON
+    OPTIONS (
+        pagination     = 'offset',
+        offset_param   = 'offset',
+        limit_param    = 'limit',
+        limit          = '20',
+        max_pages      = '5',
+        rate_limit_rps = '4'
+    );
+
+-- --------------------------------------------------------------------------
+-- 4. Silver Delta table, schema-only declaration
+-- --------------------------------------------------------------------------
+-- The bronze->silver INSERT in queries.sql parses dex_id out of the
+-- detail_url with REGEXP_REPLACE + CAST so the battle team can JOIN
+-- on dex_id without string parsing every query.
+
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.pokedex_api.pokedex_silver (
+    dex_id        BIGINT,
+    pokemon_name  STRING,
+    detail_url    STRING
+)
+LOCATION 'pokeapi-pokedex-first-generation/silver/pokedex_silver';

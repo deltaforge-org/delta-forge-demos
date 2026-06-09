@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pt" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L54 26H26Z" fill="url(#pt)" fill-opacity=".2" stroke="url(#pt)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Waterline -->
+  <path d="M8 28H72" stroke="url(#pt)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Iceberg underwater divided into partitions -->
+  <path d="M22 28L18 52L34 64L46 64L62 52L58 28Z" fill="url(#pt)" fill-opacity=".06" stroke="url(#pt)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Partition dividers (vertical lines) -->
+  <path d="M34 28L30 64" stroke="url(#pt)" stroke-width="1" opacity=".3" stroke-dasharray="2 2"/>
+  <path d="M46 28L50 64" stroke="url(#pt)" stroke-width="1" opacity=".3" stroke-dasharray="2 2"/>
+  <!-- Partition labels -->
+  <text x="24" y="44" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pt)" opacity=".5">P1</text>
+  <text x="40" y="44" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pt)" opacity=".5">P2</text>
+  <text x="56" y="44" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pt)" opacity=".5">P3</text>
+  <!-- Data blocks in partitions -->
+  <rect x="20" y="48" width="6" height="3" rx="1" fill="url(#pt)" opacity=".4"/>
+  <rect x="20" y="53" width="6" height="3" rx="1" fill="url(#pt)" opacity=".3"/>
+  <rect x="37" y="48" width="6" height="3" rx="1" fill="url(#pt)" opacity=".5"/>
+  <rect x="37" y="53" width="6" height="3" rx="1" fill="url(#pt)" opacity=".4"/>
+  <rect x="37" y="58" width="6" height="3" rx="1" fill="url(#pt)" opacity=".3"/>
+  <rect x="53" y="48" width="6" height="3" rx="1" fill="url(#pt)" opacity=".45"/>
+  <rect x="53" y="53" width="6" height="3" rx="1" fill="url(#pt)" opacity=".35"/>
+  <!-- Pruning indicator (scissors/skip on P1) -->
+  <path d="M15 36L19 40" stroke="url(#pt)" stroke-width="1.5" opacity=".6" stroke-linecap="round"/>
+  <path d="M19 36L15 40" stroke="url(#pt)" stroke-width="1.5" opacity=".6" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pt)" opacity=".6">PARTITIONS</text>
+</svg>

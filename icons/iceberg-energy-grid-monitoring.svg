@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="eg" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 8L54 32H26Z" fill="url(#eg)" fill-opacity=".25" stroke="url(#eg)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Waterline -->
+  <path d="M10 34H70" stroke="url(#eg)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Iceberg underwater mass -->
+  <path d="M22 34L18 56L34 68L46 68L62 56L58 34Z" fill="url(#eg)" fill-opacity=".12" stroke="url(#eg)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Grid/power lines on iceberg -->
+  <path d="M30 42L40 38L50 42" stroke="url(#eg)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <path d="M32 50L40 46L48 50" stroke="url(#eg)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+  <path d="M34 58L40 54L46 58" stroke="url(#eg)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
+  <!-- Lightning bolt (energy) -->
+  <path d="M38 14L36 22L40 20L38 28" stroke="url(#eg)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#eg)" opacity=".6">ICEBERG</text>
+</svg>

@@ -1,0 +1,27 @@
+[demo]
+id = "delta-row-index-order-tracking"
+name = "E-Commerce Order Tracking — Indexed UPDATE / DELETE / MERGE"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+E-commerce fulfillment workflow. Carriers stream status events keyed by \
+tracking number; the order management system applies UPDATEs and the \
+occasional DELETE for cancelled shipments. Without an index every event \
+forces a full-table scan to locate the row. With a row-level index on \
+tracking_number the locate step is targeted and the rewrite is the only \
+real cost — the headline ACID payoff. This demo seeds 50 orders, then \
+runs single-row UPDATE, batched UPDATE, DELETE, and a MERGE upsert, \
+asserting the post-mutation state at each step.
+"""
+categories = ["index"]
+tags = ["delta-table", "intermediate", "row-level-index", "index", "update", "delete", "merge", "acid"]
+difficulty = "intermediate"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.shipment_orders"

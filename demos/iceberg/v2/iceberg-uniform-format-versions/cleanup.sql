@@ -1,0 +1,21 @@
+-- ============================================================================
+-- Iceberg UniForm Format Versions — Cleanup
+-- ============================================================================
+
+-- STEP 1: Drop Iceberg read-back verification tables (catalog entries only,
+-- files are owned by the underlying Delta tables and dropped below).
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v1_iceberg WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v2_iceberg WITH FILES;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v3_iceberg WITH FILES;
+
+-- STEP 2: Drop all three Delta tables
+DROP DELTA TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v1 WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v2 WITH FILES;
+DROP DELTA TABLE IF EXISTS {{zone_name}}.iceberg_demos.sensors_v3 WITH FILES;
+
+-- STEP 3: Remove the per-demo wrapper folder (now empty)
+DROP FOLDER 'iceberg-uniform-format-versions' IF EXISTS IN ZONE {{zone_name}};
+
+-- STEP 4: Shared resources (used by other iceberg demos if present)
+DROP SCHEMA IF EXISTS {{zone_name}}.iceberg_demos;
+DROP ZONE IF EXISTS {{zone_name}};

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ao" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#15803d"/>
+    </linearGradient>
+  </defs>
+  <!-- Gear/auto symbol -->
+  <circle cx="40" cy="30" r="14" stroke="url(#ao)" stroke-width="2" fill="url(#ao)" fill-opacity=".08"/>
+  <circle cx="40" cy="30" r="6" stroke="url(#ao)" stroke-width="1.5" fill="url(#ao)" fill-opacity=".15"/>
+  <!-- Gear teeth -->
+  <rect x="38" y="14" width="4" height="6" rx="1" fill="url(#ao)" opacity=".5"/>
+  <rect x="38" y="40" width="4" height="6" rx="1" fill="url(#ao)" opacity=".5"/>
+  <rect x="24" y="28" width="6" height="4" rx="1" fill="url(#ao)" opacity=".5"/>
+  <rect x="50" y="28" width="6" height="4" rx="1" fill="url(#ao)" opacity=".5"/>
+  <!-- Auto lightning bolt -->
+  <path d="M38 26L42 26L40 30L44 30L36 38L38 32L34 32Z" fill="url(#ao)" opacity=".7"/>
+  <!-- Small files becoming big file -->
+  <rect x="10" y="54" width="8" height="12" rx="1" fill="url(#ao)" opacity=".3"/>
+  <rect x="20" y="54" width="8" height="12" rx="1" fill="url(#ao)" opacity=".3"/>
+  <rect x="30" y="54" width="8" height="12" rx="1" fill="url(#ao)" opacity=".3"/>
+  <text x="42" y="62" font-size="6" font-family="monospace" fill="url(#ao)" opacity=".5">→</text>
+  <rect x="48" y="52" width="22" height="16" rx="2" fill="url(#ao)" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#ao)" opacity=".6">AUTO-OPT</text>
+</svg>

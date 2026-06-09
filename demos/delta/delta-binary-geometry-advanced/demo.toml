@@ -1,0 +1,33 @@
+[demo]
+id = "delta-binary-geometry-advanced"
+name = "Delta Binary & Geometry Advanced"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Advanced analytics over binary hashes, spatial WKT geometry, and \
+cross-table document/location relationships in Delta tables. Covers \
+content-hash deduplication, bounding-box spatial filters, window-function \
+ranking and running totals, CTE-based multi-table joins, pairwise distance \
+computation, LAG gap analysis, and audit-log pivoting — patterns essential \
+for storage audits, geospatial dashboards, and compliance reporting.
+"""
+categories = ["delta-table", "delta-schema-types"]
+tags = ["delta-table", "advanced", "binary", "geometry", "spatial", "wkt", "hash", "deduplication", "window-functions", "cte", "joins", "analytics"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.documents"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.locations"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.geo_audit_log"

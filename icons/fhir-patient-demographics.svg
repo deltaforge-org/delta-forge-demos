@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fpd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <!-- Medical card background -->
+  <rect x="10" y="12" width="60" height="56" rx="6" stroke="url(#fpd)" stroke-width="1.5" fill="url(#fpd)" fill-opacity=".06"/>
+  <!-- FHIR flame mark (top-left corner) -->
+  <path d="M18 18C18 14 22 10 22 10S26 14 26 18C26 20.2 24.2 22 22 22S18 20.2 18 18Z" fill="url(#fpd)" opacity=".7"/>
+  <!-- Patient silhouette head -->
+  <circle cx="34" cy="30" r="7" fill="url(#fpd)" opacity=".55"/>
+  <!-- Patient silhouette body -->
+  <path d="M22 52C22 44 27 39 34 39C41 39 46 44 46 52" fill="url(#fpd)" opacity=".25"/>
+  <!-- ID badge lines (right side) -->
+  <rect x="52" y="26" width="12" height="2.5" rx="1.25" fill="url(#fpd)" opacity=".5"/>
+  <rect x="52" y="33" width="9" height="2.5" rx="1.25" fill="url(#fpd)" opacity=".35"/>
+  <rect x="52" y="40" width="11" height="2.5" rx="1.25" fill="url(#fpd)" opacity=".25"/>
+  <rect x="52" y="47" width="7" height="2.5" rx="1.25" fill="url(#fpd)" opacity=".2"/>
+  <!-- Cross accent -->
+  <rect x="56" y="56" width="8" height="2" rx="1" fill="url(#fpd)" opacity=".4"/>
+  <rect x="59" y="53" width="2" height="8" rx="1" fill="url(#fpd)" opacity=".4"/>
+</svg>

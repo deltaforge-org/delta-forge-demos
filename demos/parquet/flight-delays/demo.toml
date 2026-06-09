@@ -1,0 +1,46 @@
+[demo]
+id = "flight-delays"
+name = "Parquet Flight Delays — Airline Delay Analysis"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Parquet schema evolution using 3 quarterly flight-delay files \
+(120 rows). Q1 has base columns, Q2 adds delay_reason, Q3 adds carrier_code. \
+Two tables exercise multi-file reading with automatic NULL filling for \
+evolved columns, file_filter for single-quarter extraction, and file_metadata \
+for source traceability.
+"""
+categories = ["parquet", "aviation"]
+tags = ["parquet", "basic", "schema-evolution", "file-filter", "file-metadata", "multi-file", "null-filling"]
+difficulty = "basic"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory containing the 3 quarterly Parquet files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/flights_2025_q1.parquet"
+format = "parquet"
+description = "Q1 2025 (Jan–Mar) — 40 flights, base schema"
+size_bytes = 3040
+
+[[demo.data_files]]
+path = "data/flights_2025_q2.parquet"
+format = "parquet"
+description = "Q2 2025 (Apr–Jun) — 40 flights, adds delay_reason"
+size_bytes = 3295
+
+[[demo.data_files]]
+path = "data/flights_2025_q3.parquet"
+format = "parquet"
+description = "Q3 2025 (Jul–Sep) — 40 flights, adds carrier_code"
+size_bytes = 3547
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.parquet_flights.all_flights"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.parquet_flights.q1_flights"

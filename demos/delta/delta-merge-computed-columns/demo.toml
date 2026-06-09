@@ -1,0 +1,30 @@
+[demo]
+id = "delta-merge-computed-columns"
+name = "Delta MERGE — Computed Columns & CASE Logic"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Business logic often belongs inside the MERGE itself, not in a separate \
+transformation step. This demo shows how to use CASE expressions, \
+arithmetic, and conditional logic directly in MERGE UPDATE SET and \
+INSERT VALUES clauses — computing derived columns (tier, discount rate, \
+priority score) at merge time. The pattern ensures consistency: every \
+row that passes through the MERGE gets the same business rules applied, \
+whether it is an update or an insert.
+"""
+categories = ["delta-table", "delta-dml-merge"]
+tags = ["delta-table", "intermediate", "merge", "case", "computed", "derived-columns", "business-logic"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.computed_subscriptions"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.subscription_changes"

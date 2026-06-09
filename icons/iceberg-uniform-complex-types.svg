@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ct" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#ct)" fill-opacity=".2" stroke="url(#ct)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#ct)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Nested struct brackets -->
+  <text x="18" y="46" font-size="18" font-family="monospace" fill="url(#ct)" opacity=".5">{</text>
+  <text x="58" y="46" font-size="18" font-family="monospace" fill="url(#ct)" opacity=".5">}</text>
+  <!-- Array brackets inside -->
+  <text x="28" y="52" font-size="12" font-family="monospace" fill="url(#ct)" opacity=".7">[</text>
+  <text x="50" y="52" font-size="12" font-family="monospace" fill="url(#ct)" opacity=".7">]</text>
+  <!-- Map symbol -->
+  <circle cx="40" cy="48" r="4" fill="url(#ct)" fill-opacity=".3" stroke="url(#ct)" stroke-width="1.2"/>
+  <text x="40" y="50" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ct)" opacity=".8">K:V</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#ct)" opacity=".6">COMPLEX TYPES</text>
+</svg>

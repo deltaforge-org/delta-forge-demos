@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ic" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <!-- Commit blocks with timestamps -->
+  <rect x="8" y="12" width="64" height="12" rx="3" stroke="url(#ic)" stroke-width="1.5" fill="url(#ic)" fill-opacity=".15"/>
+  <text x="16" y="20" font-size="4" font-family="monospace" fill="url(#ic)" opacity=".7">v0</text>
+  <text x="48" y="20" font-size="3.5" font-family="monospace" fill="url(#ic)" opacity=".5">T=1001</text>
+  <rect x="8" y="26" width="64" height="12" rx="3" stroke="url(#ic)" stroke-width="1.5" fill="url(#ic)" fill-opacity=".2"/>
+  <text x="16" y="34" font-size="4" font-family="monospace" fill="url(#ic)" opacity=".7">v1</text>
+  <text x="48" y="34" font-size="3.5" font-family="monospace" fill="url(#ic)" opacity=".5">T=1002</text>
+  <rect x="8" y="40" width="64" height="12" rx="3" stroke="url(#ic)" stroke-width="1.5" fill="url(#ic)" fill-opacity=".25"/>
+  <text x="16" y="48" font-size="4" font-family="monospace" fill="url(#ic)" opacity=".7">v2</text>
+  <text x="48" y="48" font-size="3.5" font-family="monospace" fill="url(#ic)" opacity=".5">T=1003</text>
+  <!-- Monotonic arrow -->
+  <path d="M36 16L36 48" stroke="url(#ic)" stroke-width="1" opacity=".4"/>
+  <path d="M33 44L36 48L39 44" stroke="url(#ic)" stroke-width="1" fill="none" opacity=".4" stroke-linecap="round"/>
+  <!-- Clock symbol -->
+  <circle cx="40" cy="64" r="8" stroke="url(#ic)" stroke-width="1.5" fill="url(#ic)" fill-opacity=".1"/>
+  <line x1="40" y1="64" x2="40" y2="58" stroke="url(#ic)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="40" y1="64" x2="45" y2="62" stroke="url(#ic)" stroke-width="1" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="40" y="80" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#ic)" opacity=".6">ICT</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="oc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <!-- Many small files (fragmented) -->
+  <rect x="6" y="12" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="15" y="12" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="24" y="12" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="6" y="25" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="15" y="25" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="24" y="25" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="6" y="38" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <rect x="15" y="38" width="7" height="10" rx="1" fill="url(#oc)" opacity=".25"/>
+  <!-- Arrow -->
+  <path d="M36 30L44 30L42 25L50 30L42 35L44 30" fill="url(#oc)" opacity=".6"/>
+  <!-- Single large compacted file -->
+  <rect x="54" y="14" width="20" height="32" rx="3" fill="url(#oc)" opacity=".5"/>
+  <line x1="58" y1="22" x2="70" y2="22" stroke="url(#oc)" stroke-width="1" opacity=".3"/>
+  <line x1="58" y1="28" x2="70" y2="28" stroke="url(#oc)" stroke-width="1" opacity=".3"/>
+  <line x1="58" y1="34" x2="70" y2="34" stroke="url(#oc)" stroke-width="1" opacity=".3"/>
+  <!-- Checkmark on compacted file -->
+  <path d="M60 38L63 41L69 35" stroke="url(#oc)" stroke-width="1.5" fill="none" opacity=".7"/>
+  <!-- Target size indicator -->
+  <rect x="54" y="50" width="20" height="4" rx="1" fill="url(#oc)" opacity=".3"/>
+  <rect x="54" y="50" width="14" height="4" rx="1" fill="url(#oc)" opacity=".5"/>
+  <text x="55" y="62" font-size="4" font-family="monospace" fill="url(#oc)" opacity=".5">TARGET</text>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#oc)" opacity=".6">OPTIMIZE</text>
+</svg>

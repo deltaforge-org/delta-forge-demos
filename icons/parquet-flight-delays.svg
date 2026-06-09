@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pfd" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#d946ef"/>
+    </linearGradient>
+  </defs>
+  <!-- Airplane body -->
+  <path d="M14 52L38 40L62 28" stroke="url(#pfd)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Fuselage -->
+  <ellipse cx="38" cy="40" rx="18" ry="5" fill="url(#pfd)" opacity=".15"/>
+  <!-- Wings -->
+  <path d="M30 40L22 26L42 36Z" fill="url(#pfd)" opacity=".45"/>
+  <path d="M30 40L22 54L42 44Z" fill="url(#pfd)" opacity=".35"/>
+  <!-- Tail fin -->
+  <path d="M58 30L66 18L62 28Z" fill="url(#pfd)" opacity=".55"/>
+  <!-- Engine trails (delay lines) -->
+  <line x1="10" y1="54" x2="26" y2="46" stroke="url(#pfd)" stroke-width="1" stroke-dasharray="3 3" opacity=".3"/>
+  <line x1="8" y1="58" x2="24" y2="50" stroke="url(#pfd)" stroke-width="1" stroke-dasharray="3 3" opacity=".2"/>
+  <line x1="6" y1="62" x2="22" y2="54" stroke="url(#pfd)" stroke-width="1" stroke-dasharray="3 3" opacity=".15"/>
+  <!-- Clock (delay indicator) -->
+  <circle cx="62" cy="58" r="10" stroke="url(#pfd)" stroke-width="1.5" opacity=".4"/>
+  <circle cx="62" cy="58" r="10" fill="url(#pfd)" opacity=".08"/>
+  <line x1="62" y1="58" x2="62" y2="51" stroke="url(#pfd)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <line x1="62" y1="58" x2="67" y2="60" stroke="url(#pfd)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <!-- Nose dot -->
+  <circle cx="14" cy="52" r="2" fill="url(#pfd)" opacity=".7"/>
+</svg>

@@ -1,0 +1,25 @@
+[demo]
+id = "delta-schema-evolution-advanced"
+name = "Delta Advanced Schema Evolution — Add, Widen & Restructure"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Advanced schema evolution demonstrates multiple rounds of ALTER TABLE ADD \
+COLUMN on a single table, evolving from 5 to 8 columns across separate \
+phases. This mirrors real production systems where schemas grow incrementally \
+over months as new business requirements emerge. This demo shows how \
+backfill UPDATEs, category-targeted modifications, and staggered column \
+additions create layered NULL patterns that reveal each phase of evolution.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "schema-evolution", "alter-table", "add-column", "null-filling", "backfill", "update"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.evolving_product_catalog"

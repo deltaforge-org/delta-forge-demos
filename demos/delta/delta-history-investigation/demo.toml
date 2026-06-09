@@ -1,0 +1,26 @@
+[demo]
+id = "delta-history-investigation"
+name = "Delta DESCRIBE HISTORY — Root-Cause Investigation"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A SaaS platform's reporting dashboard suddenly shows inflated revenue for the \
+Americas region. A data engineer uses DESCRIBE HISTORY to list every version of \
+the product_metrics table, then time-travels through versions to find the exact \
+commit where someone ran a bad script that doubled Americas revenue. The demo \
+walks through the full diagnostic workflow: spot the anomaly, inspect the log, \
+narrow the window, isolate the damaged records, and quantify the impact — all \
+without modifying the table.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "intermediate", "describe-history", "investigation", "diagnostics", "time-travel", "saas"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.product_metrics"

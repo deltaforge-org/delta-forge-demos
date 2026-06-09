@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="imu" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b45309"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <!-- Warehouse building -->
+  <rect x="14" y="32" width="52" height="34" rx="2" fill="url(#imu)" opacity=".12" stroke="url(#imu)" stroke-width="1.5"/>
+  <!-- Roof -->
+  <polygon points="10,32 40,14 70,32" fill="url(#imu)" opacity=".2" stroke="url(#imu)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Door -->
+  <rect x="32" y="48" width="16" height="18" rx="2" fill="url(#imu)" opacity=".3" stroke="url(#imu)" stroke-width="1"/>
+  <!-- Merge arrows -->
+  <path d="M22 42 L30 42" stroke="url(#imu)" stroke-width="2" opacity=".6" stroke-linecap="round"/>
+  <path d="M50 42 L58 42" stroke="url(#imu)" stroke-width="2" opacity=".6" stroke-linecap="round"/>
+  <path d="M30 38 L40 42 L30 46" fill="url(#imu)" opacity=".5"/>
+  <path d="M50 38 L40 42 L50 46" fill="url(#imu)" opacity=".5"/>
+  <!-- Boxes (inventory) -->
+  <rect x="18" y="52" width="10" height="8" rx="1" fill="url(#imu)" opacity=".35" stroke="url(#imu)" stroke-width="1"/>
+  <rect x="52" y="52" width="10" height="8" rx="1" fill="url(#imu)" opacity=".35" stroke="url(#imu)" stroke-width="1"/>
+</svg>

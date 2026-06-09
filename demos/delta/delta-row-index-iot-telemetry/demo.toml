@@ -1,0 +1,27 @@
+[demo]
+id = "delta-row-index-iot-telemetry"
+name = "Industrial IoT Telemetry — Composite Row-Level Index"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Industrial sensor telemetry from a manufacturing plant. Each sensor emits \
+readings on its own cadence; downstream queries either pull a sensor's \
+recent history or reconcile a specific (sensor, timestamp) reading against \
+maintenance logs. A composite index on (sensor_id, reading_time) handles \
+both shapes — but only when the predicate respects the leftmost-prefix \
+rule. This demo seeds 80 readings across 8 sensors, builds the composite \
+index, and demonstrates the queries it accelerates and the ones it does \
+not.
+"""
+categories = ["index"]
+tags = ["delta-table", "intermediate", "row-level-index", "composite-index", "leftmost-prefix", "iot", "time-series"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.iot_sensor_telemetry"

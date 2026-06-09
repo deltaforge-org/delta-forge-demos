@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ub" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#0891b2"/>
+    </linearGradient>
+  </defs>
+  <!-- Receipt/bill -->
+  <path d="M20 10H60V64L56 60L52 64L48 60L44 64L40 60L36 64L32 60L28 64L24 60L20 64Z" fill="url(#ub)" opacity=".15" stroke="url(#ub)" stroke-width="1.5"/>
+  <!-- Bill lines -->
+  <line x1="28" y1="24" x2="52" y2="24" stroke="url(#ub)" stroke-width="1.2" opacity=".5"/>
+  <line x1="28" y1="32" x2="52" y2="32" stroke="url(#ub)" stroke-width="1.2" opacity=".5"/>
+  <line x1="28" y1="40" x2="44" y2="40" stroke="url(#ub)" stroke-width="1.2" opacity=".5"/>
+  <!-- Total line (bold) -->
+  <line x1="28" y1="50" x2="52" y2="50" stroke="url(#ub)" stroke-width="2" opacity=".8"/>
+  <!-- Lightning bolt (energy) -->
+  <path d="M62 20L54 38H62L54 56" stroke="url(#ub)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+</svg>

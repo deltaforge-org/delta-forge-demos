@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="nw" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <circle cx="40" cy="40" r="34" stroke="url(#nw)" stroke-width="1.5" opacity=".2"/>
+  <circle cx="40" cy="40" r="28" stroke="url(#nw)" stroke-width="1" opacity=".12"/>
+  <path d="M40 6L44 34H36Z" fill="url(#nw)"/>
+  <path d="M74 40L46 44V36Z" fill="url(#nw)" opacity=".7"/>
+  <path d="M40 74L36 46H44Z" fill="url(#nw)" opacity=".5"/>
+  <path d="M6 40L34 36V44Z" fill="url(#nw)" opacity=".7"/>
+  <path d="M62 14L45 35L47 37Z" fill="url(#nw)" opacity=".25"/>
+  <path d="M66 62L45 47L47 45Z" fill="url(#nw)" opacity=".2"/>
+  <path d="M18 66L35 45L33 47Z" fill="url(#nw)" opacity=".2"/>
+  <path d="M14 18L35 33L33 35Z" fill="url(#nw)" opacity=".25"/>
+  <circle cx="40" cy="40" r="5" fill="url(#nw)" opacity=".9"/>
+  <circle cx="40" cy="40" r="2" fill="#0f172a"/>
+</svg>

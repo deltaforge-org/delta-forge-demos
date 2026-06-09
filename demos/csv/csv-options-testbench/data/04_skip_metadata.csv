@@ -1,0 +1,9 @@
+Report: Quarterly Inventory Summary
+Generated: 2024-09-30 14:22:00
+Source: Warehouse Management System v4.1
+id,product,warehouse,quantity,unit_cost
+1,Widget A,West,150,12.50
+2,Widget B,East,230,18.75
+3,Gadget X,West,85,25.00
+4,Gadget Y,North,190,9.99
+5,Tool Z,East,64,45.50

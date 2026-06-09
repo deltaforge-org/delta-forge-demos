@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mu" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97316"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <!-- Two tables merging -->
+  <rect x="8" y="14" width="26" height="24" rx="3" stroke="url(#mu)" stroke-width="1.5" fill="url(#mu)" fill-opacity=".15"/>
+  <line x1="8" y1="22" x2="34" y2="22" stroke="url(#mu)" stroke-width="1" opacity=".5"/>
+  <line x1="8" y1="30" x2="34" y2="30" stroke="url(#mu)" stroke-width="1" opacity=".3"/>
+  <rect x="46" y="14" width="26" height="24" rx="3" stroke="url(#mu)" stroke-width="1.5" fill="url(#mu)" fill-opacity=".15"/>
+  <line x1="46" y1="22" x2="72" y2="22" stroke="url(#mu)" stroke-width="1" opacity=".5"/>
+  <line x1="46" y1="30" x2="72" y2="30" stroke="url(#mu)" stroke-width="1" opacity=".3"/>
+  <!-- Merge arrows down -->
+  <path d="M21 40L40 52" stroke="url(#mu)" stroke-width="2" opacity=".7"/>
+  <path d="M59 40L40 52" stroke="url(#mu)" stroke-width="2" opacity=".7"/>
+  <!-- Result table -->
+  <rect x="20" y="52" width="40" height="22" rx="3" stroke="url(#mu)" stroke-width="2" fill="url(#mu)" fill-opacity=".25"/>
+  <line x1="20" y1="60" x2="60" y2="60" stroke="url(#mu)" stroke-width="1" opacity=".5"/>
+  <line x1="20" y1="66" x2="60" y2="66" stroke="url(#mu)" stroke-width="1" opacity=".3"/>
+  <!-- Merge symbol -->
+  <circle cx="40" cy="48" r="4" fill="url(#mu)" opacity=".8"/>
+</svg>

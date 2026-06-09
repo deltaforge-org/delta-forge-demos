@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e11d48;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gmEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fda4af;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#fca5a5;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="80" height="80" rx="12" fill="url(#gm)"/>
+  <!-- Hospital cross (center) -->
+  <rect x="33" y="22" width="14" height="36" rx="2" fill="#ffffff" opacity="0.25"/>
+  <rect x="24" y="31" width="32" height="18" rx="2" fill="#ffffff" opacity="0.25"/>
+  <!-- Graph edges connecting nodes around the cross -->
+  <line x1="14" y1="18" x2="40" y2="14" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="40" y1="14" x2="66" y2="18" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="14" y1="18" x2="12" y2="48" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="66" y1="18" x2="68" y2="48" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="12" y1="48" x2="26" y2="66" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="68" y1="48" x2="54" y2="66" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="26" y1="66" x2="54" y2="66" stroke="url(#gmEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Arrow heads (directed edges) -->
+  <polygon points="38,14 34,11 34,17" fill="#fecdd3" opacity="0.9"/>
+  <polygon points="64,19 62,14 67,16" fill="#fecdd3" opacity="0.9"/>
+  <polygon points="52,66 49,62 55,63" fill="#fecdd3" opacity="0.9"/>
+  <!-- Graph nodes -->
+  <circle cx="14" cy="18" r="5" fill="#ffffff" opacity="0.95"/>
+  <circle cx="40" cy="14" r="5" fill="#ffffff" opacity="0.95"/>
+  <circle cx="66" cy="18" r="5" fill="#ffffff" opacity="0.95"/>
+  <circle cx="12" cy="48" r="5" fill="#ffffff" opacity="0.95"/>
+  <circle cx="68" cy="48" r="5" fill="#ffffff" opacity="0.95"/>
+  <circle cx="26" cy="66" r="5" fill="#ffffff" opacity="0.95"/>
+  <circle cx="54" cy="66" r="5" fill="#ffffff" opacity="0.95"/>
+  <!-- Mutation indicator: plus sign on top-right node (INSERT) -->
+  <line x1="63" y1="18" x2="69" y2="18" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+  <line x1="66" y1="15" x2="66" y2="21" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+  <!-- Mutation indicator: pencil mark on bottom-left node (UPDATE) -->
+  <line x1="23" y1="63" x2="29" y2="69" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="23" y1="69" x2="29" y2="63" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

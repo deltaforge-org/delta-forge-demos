@@ -1,0 +1,94 @@
+[demo]
+id = "concurrent-cdr-ingestion"
+name = "Concurrent CDR Ingestion"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A mobile carrier's ten regional Mobile Switching Centers each export a daily \
+Call Detail Record file with an identical schema (20,350 rows across ten CSVs). \
+The nightly mediation job loads all ten feeds concurrently into one central \
+Delta table using CONCURRENT BEGIN...END, then repeats the load with a \
+range-split PARALLEL INSERT into a second table. The demo proves optimistic \
+concurrency control lands every record exactly once: no lost writes, no \
+duplicates, one commit per writer, and identical results from both methods.
+"""
+categories = ["csv", "concurrency"]
+tags = ["csv", "advanced", "concurrency", "concurrent-insert", "parallel-insert", "delta-table", "optimistic-concurrency", "telecom", "cdr", "multi-file"]
+difficulty = "advanced"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/region_01.csv"
+format = "csv"
+description = "North-Coast MSC daily CDR export (2150 rows)"
+size_bytes = 215078
+
+[[demo.data_files]]
+path = "data/region_02.csv"
+format = "csv"
+description = "Capital-Metro MSC daily CDR export (1820 rows)"
+size_bytes = 185479
+
+[[demo.data_files]]
+path = "data/region_03.csv"
+format = "csv"
+description = "Lakeside MSC daily CDR export (2470 rows)"
+size_bytes = 239462
+
+[[demo.data_files]]
+path = "data/region_04.csv"
+format = "csv"
+description = "Highland MSC daily CDR export (1560 rows)"
+size_bytes = 151352
+
+[[demo.data_files]]
+path = "data/region_05.csv"
+format = "csv"
+description = "River-Valley MSC daily CDR export (2030 rows)"
+size_bytes = 205032
+
+[[demo.data_files]]
+path = "data/region_06.csv"
+format = "csv"
+description = "Eastport MSC daily CDR export (2310 rows)"
+size_bytes = 224230
+
+[[demo.data_files]]
+path = "data/region_07.csv"
+format = "csv"
+description = "Sunbelt MSC daily CDR export (1690 rows)"
+size_bytes = 162401
+
+[[demo.data_files]]
+path = "data/region_08.csv"
+format = "csv"
+description = "Pinewood MSC daily CDR export (2120 rows)"
+size_bytes = 205657
+
+[[demo.data_files]]
+path = "data/region_09.csv"
+format = "csv"
+description = "Goldfield MSC daily CDR export (1940 rows)"
+size_bytes = 190219
+
+[[demo.data_files]]
+path = "data/region_10.csv"
+format = "csv"
+description = "Bayshore MSC daily CDR export (2260 rows)"
+size_bytes = 221469
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.cdr.cdr_consolidated"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.cdr.cdr_parallel"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.cdr.all_cdr"

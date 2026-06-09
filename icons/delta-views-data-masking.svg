@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vm" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <!-- Three stacked view layers (cards) -->
+  <!-- Executive view (top, smallest) -->
+  <rect x="22" y="8" width="36" height="14" rx="3" stroke="url(#vm)" stroke-width="1.2" fill="url(#vm)" fill-opacity=".08"/>
+  <line x1="26" y1="13" x2="38" y2="13" stroke="url(#vm)" stroke-width="1" opacity=".3"/>
+  <line x1="26" y1="17" x2="34" y2="17" stroke="url(#vm)" stroke-width="1" opacity=".3"/>
+  <!-- Support view (middle, medium) -->
+  <rect x="16" y="28" width="48" height="14" rx="3" stroke="url(#vm)" stroke-width="1.2" fill="url(#vm)" fill-opacity=".12"/>
+  <line x1="20" y1="33" x2="36" y2="33" stroke="url(#vm)" stroke-width="1" opacity=".3"/>
+  <line x1="38" y1="33" x2="46" y2="33" stroke="url(#vm)" stroke-width="1" opacity=".25" stroke-dasharray="1.5,1.5"/>
+  <text x="52" y="35" font-size="5" font-family="monospace" fill="url(#vm)" opacity=".5">****</text>
+  <line x1="20" y1="37" x2="32" y2="37" stroke="url(#vm)" stroke-width="1" opacity=".3"/>
+  <!-- Analyst view (bottom, widest) -->
+  <rect x="10" y="48" width="60" height="14" rx="3" stroke="url(#vm)" stroke-width="1.2" fill="url(#vm)" fill-opacity=".18"/>
+  <line x1="14" y1="53" x2="28" y2="53" stroke="url(#vm)" stroke-width="1" opacity=".4"/>
+  <line x1="30" y1="53" x2="44" y2="53" stroke="url(#vm)" stroke-width="1" opacity=".4"/>
+  <line x1="46" y1="53" x2="58" y2="53" stroke="url(#vm)" stroke-width="1" opacity=".4"/>
+  <line x1="14" y1="57" x2="24" y2="57" stroke="url(#vm)" stroke-width="1" opacity=".4"/>
+  <line x1="26" y1="57" x2="40" y2="57" stroke="url(#vm)" stroke-width="1" opacity=".4"/>
+  <!-- Eye icon (visibility/masking) -->
+  <ellipse cx="40" cy="72" rx="8" ry="4" stroke="url(#vm)" stroke-width="1.2" fill="none" opacity=".6"/>
+  <circle cx="40" cy="72" r="1.8" fill="url(#vm)" opacity=".6"/>
+</svg>

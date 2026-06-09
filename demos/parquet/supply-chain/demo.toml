@@ -1,0 +1,120 @@
+[demo]
+id = "supply-chain"
+name = "Parquet Supply Chain — Order Analytics"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Parquet reading features using 14 quarterly order files (2012–2016, \
+73,089 rows) organized in year-based subdirectories. Four tables exercise \
+recursive directory scanning, file_filter for year/quarter extraction, max_rows \
+for sampling, row_group_filter for predicate pushdown, file_metadata for \
+traceability, and Parquet's self-describing schema with automatic type detection.
+"""
+categories = ["parquet", "retail"]
+tags = ["parquet", "intermediate", "recursive", "file-filter", "row-group-filter", "multi-file", "file-metadata"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the demo directory containing the orders/ subdirectory with Parquet files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/orders/2012/Orders_2012-12-25-2013-02-28.parquet"
+format = "parquet"
+description = "Q4 2012 — 2,784 orders"
+size_bytes = 46754
+
+[[demo.data_files]]
+path = "data/orders/2013/Orders_2013-03-01-2013-05-31.parquet"
+format = "parquet"
+description = "Q1 2013 — quarterly orders"
+size_bytes = 88874
+
+[[demo.data_files]]
+path = "data/orders/2013/Orders_2013-06-01-2013-08-31.parquet"
+format = "parquet"
+description = "Q2 2013 — quarterly orders"
+size_bytes = 88614
+
+[[demo.data_files]]
+path = "data/orders/2013/Orders_2013-09-01-2013-11-30.parquet"
+format = "parquet"
+description = "Q3 2013 — quarterly orders"
+size_bytes = 84050
+
+[[demo.data_files]]
+path = "data/orders/2013/Orders_2013-12-01-2014-02-28.parquet"
+format = "parquet"
+description = "Q4 2013 — quarterly orders"
+size_bytes = 86417
+
+[[demo.data_files]]
+path = "data/orders/2014/Orders_2014-03-01-2014-05-31.parquet"
+format = "parquet"
+description = "Q1 2014 — 5,210 orders"
+size_bytes = 92367
+
+[[demo.data_files]]
+path = "data/orders/2014/Orders_2014-06-01-2014-08-31.parquet"
+format = "parquet"
+description = "Q2 2014 — quarterly orders"
+size_bytes = 97009
+
+[[demo.data_files]]
+path = "data/orders/2014/Orders_2014-09-01-2014-11-30.parquet"
+format = "parquet"
+description = "Q3 2014 — quarterly orders"
+size_bytes = 91842
+
+[[demo.data_files]]
+path = "data/orders/2014/Orders_2014-12-01-2015-02-28.parquet"
+format = "parquet"
+description = "Q4 2014 — quarterly orders"
+size_bytes = 97281
+
+[[demo.data_files]]
+path = "data/orders/2015/Orders_2015-03-01-2015-05-31.parquet"
+format = "parquet"
+description = "Q1 2015 — quarterly orders"
+size_bytes = 104612
+
+[[demo.data_files]]
+path = "data/orders/2015/Orders_2015-06-01-2015-08-31.parquet"
+format = "parquet"
+description = "Q2 2015 — quarterly orders"
+size_bytes = 105188
+
+[[demo.data_files]]
+path = "data/orders/2015/Orders_2015-09-01-2015-11-30.parquet"
+format = "parquet"
+description = "Q3 2015 — quarterly orders"
+size_bytes = 104688
+
+[[demo.data_files]]
+path = "data/orders/2015/Orders_2015-12-01-2016-02-29.parquet"
+format = "parquet"
+description = "Q4 2015 — quarterly orders"
+size_bytes = 101374
+
+[[demo.data_files]]
+path = "data/orders/2016/Orders_2016-03-01-2016-05-24.parquet"
+format = "parquet"
+description = "Q1 2016 — 5,616 orders"
+size_bytes = 99358
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.parquet.all_orders"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.parquet.orders_2015"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.parquet.orders_sample"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.parquet.orders_q1_2014"

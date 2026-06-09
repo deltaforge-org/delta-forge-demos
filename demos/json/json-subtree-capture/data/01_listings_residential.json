@@ -1,0 +1,128 @@
+[
+  {
+    "id": "LST-001",
+    "title": "Modern Downtown Loft",
+    "type": "condo",
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 1200,
+    "year_built": 2019,
+    "status": "active",
+    "location": {
+      "address": {
+        "street": "450 Market Street",
+        "unit": "12B",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "94105"
+      },
+      "geo": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "neighborhood": "SoMa",
+      "walk_score": 95,
+      "transit_score": 100
+    },
+    "pricing": {
+      "list_price": 895000,
+      "price_per_sqft": 746,
+      "hoa_monthly": 650,
+      "tax_annual": 10740,
+      "tax_history": [
+        {"year": 2023, "amount": 10740},
+        {"year": 2022, "amount": 10200}
+      ],
+      "mortgage_estimate": {
+        "monthly_payment": 5230,
+        "down_payment_pct": 20,
+        "rate_pct": 6.75
+      }
+    },
+    "tags": ["city-view", "gym", "doorman", "parking"]
+  },
+  {
+    "id": "LST-002",
+    "title": "Craftsman Bungalow",
+    "type": "house",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 1850,
+    "year_built": 1925,
+    "status": "active",
+    "location": {
+      "address": {
+        "street": "2210 Oak Avenue",
+        "unit": null,
+        "city": "Portland",
+        "state": "OR",
+        "zip": "97214"
+      },
+      "geo": {
+        "lat": 45.5122,
+        "lng": -122.6587
+      },
+      "neighborhood": "Hawthorne",
+      "walk_score": 88,
+      "transit_score": 72
+    },
+    "pricing": {
+      "list_price": 625000,
+      "price_per_sqft": 338,
+      "hoa_monthly": null,
+      "tax_annual": 7500,
+      "tax_history": [
+        {"year": 2023, "amount": 7500},
+        {"year": 2022, "amount": 7100}
+      ],
+      "mortgage_estimate": {
+        "monthly_payment": 3650,
+        "down_payment_pct": 20,
+        "rate_pct": 6.75
+      }
+    },
+    "tags": ["garden", "hardwood-floors", "original-details"]
+  },
+  {
+    "id": "LST-003",
+    "title": "Waterfront Penthouse",
+    "type": "condo",
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "sqft": 3200,
+    "year_built": 2022,
+    "status": "pending",
+    "location": {
+      "address": {
+        "street": "1 Harbor Drive",
+        "unit": "PH-1",
+        "city": "Seattle",
+        "state": "WA",
+        "zip": "98101"
+      },
+      "geo": {
+        "lat": 47.6062,
+        "lng": -122.3321
+      },
+      "neighborhood": "Waterfront",
+      "walk_score": 92,
+      "transit_score": 85
+    },
+    "pricing": {
+      "list_price": 2450000,
+      "price_per_sqft": 766,
+      "hoa_monthly": 1200,
+      "tax_annual": 24500,
+      "tax_history": [
+        {"year": 2023, "amount": 24500},
+        {"year": 2022, "amount": 22000}
+      ],
+      "mortgage_estimate": {
+        "monthly_payment": 14310,
+        "down_payment_pct": 20,
+        "rate_pct": 6.75
+      }
+    },
+    "tags": ["water-view", "terrace", "concierge", "ev-charging"]
+  }
+]

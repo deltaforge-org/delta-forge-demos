@@ -1,0 +1,51 @@
+[demo]
+id = "pokeapi-pokedex-first-generation"
+name = "Pokédex First-Generation Reference — Offset Pagination + CALL Preview"
+version = "1.0.0"
+description = """
+A mobile game studio maintains a Pokédex reference catalog in its
+internal data platform to power battle-balance analytics and in-game
+search. The ingest pulls the first 100 National Dex entries (the
+original Kanto generation, Bulbasaur through Voltorb) from PokeAPI
+using offset-based pagination.
+
+PokeAPI responses wrap the paged rows inside a `{count, next, previous,
+results: [...]}` envelope. The downstream external table uses
+`"root_path": "$.results"` to flatten each envelope's results array
+into one row per Pokémon — demonstrating how to pull rows out of a
+wrapped response rather than a bare top-level array.
+
+Before the full INVOKE, the demo runs `CALL API ENDPOINT ... LIMIT 1
+PAGE` to capture the first response body raw — no flatten, no write,
+no run-log update. CALL is the "preview while authoring" affordance
+that lets you peek at the wire format before committing to an INVOKE
+that lands files on disk.
+
+Demonstrates: pagination = 'offset' (offset_param, limit_param, limit,
+max_pages), CALL API ENDPOINT with LIMIT N PAGE, JSON flatten with
+`root_path = "$.results"` for wrapped-array responses, and the
+deterministic first-generation Pokédex for stable integer-based
+assertions (Bulbasaur at offset 0, Voltorb at offset 99).
+
+NOTE: requires internet. INVOKE issues real GETs against
+https://pokeapi.co/api/v2/pokemon?offset=N&limit=20 for offsets 0, 20,
+40, 60, 80. PokeAPI is a community-maintained free service with no auth
+and no hard rate limits; the demo still sets rate_limit_rps = 4 to be
+a polite neighbor.
+"""
+categories = ["api", "rest-ingest", "pagination"]
+tags = ["api", "rest", "ingest", "pagination", "offset-pagination", "json", "pokeapi", "call-preview", "root-path-nested", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE rather than reading shipped files.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.pokedex_api.pokedex_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.pokedex_api.pokedex_silver"

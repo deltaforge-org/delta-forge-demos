@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#0891b2"/>
+    </linearGradient>
+  </defs>
+  <!-- Three partition columns -->
+  <rect x="8" y="14" width="18" height="46" rx="3" stroke="url(#pd)" stroke-width="1.5" fill="url(#pd)" fill-opacity=".15"/>
+  <rect x="31" y="14" width="18" height="46" rx="3" stroke="url(#pd)" stroke-width="1.5" fill="url(#pd)" fill-opacity=".2"/>
+  <rect x="54" y="14" width="18" height="46" rx="3" stroke="url(#pd)" stroke-width="1.5" fill="url(#pd)" fill-opacity=".15"/>
+  <!-- Data blocks within partitions -->
+  <rect x="11" y="18" width="12" height="5" rx="1" fill="url(#pd)" opacity=".5"/>
+  <rect x="11" y="26" width="12" height="5" rx="1" fill="url(#pd)" opacity=".4"/>
+  <rect x="11" y="34" width="12" height="5" rx="1" fill="url(#pd)" opacity=".3" stroke="url(#pd)" stroke-width=".5" stroke-dasharray="2"/>
+  <rect x="34" y="18" width="12" height="5" rx="1" fill="url(#pd)" opacity=".5"/>
+  <rect x="34" y="26" width="12" height="5" rx="1" fill="url(#pd)" opacity=".4"/>
+  <rect x="34" y="34" width="12" height="5" rx="1" fill="url(#pd)" opacity=".5"/>
+  <rect x="57" y="18" width="12" height="5" rx="1" fill="url(#pd)" opacity=".5"/>
+  <rect x="57" y="26" width="12" height="5" rx="1" fill="url(#pd)" opacity=".3" stroke="url(#pd)" stroke-width=".5" stroke-dasharray="2"/>
+  <rect x="57" y="34" width="12" height="5" rx="1" fill="url(#pd)" opacity=".4"/>
+  <!-- DV indicator (strikethrough on deleted blocks) -->
+  <line x1="10" y1="37" x2="24" y2="34" stroke="url(#pd)" stroke-width="1" opacity=".7"/>
+  <line x1="56" y1="31" x2="70" y2="28" stroke="url(#pd)" stroke-width="1" opacity=".7"/>
+  <!-- Region labels -->
+  <text x="17" y="54" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pd)" opacity=".7">east</text>
+  <text x="40" y="54" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pd)" opacity=".7">west</text>
+  <text x="63" y="54" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pd)" opacity=".7">eu</text>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pd)" opacity=".6">PARTITIONS</text>
+</svg>

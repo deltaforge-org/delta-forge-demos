@@ -1,0 +1,26 @@
+[demo]
+id = "delta-row-index-customer-lookup"
+name = "Online Retail Customer Lookup with Row-Level Index"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Online retailer customer service workflow. Support agents look up customers by \
+ID hundreds of times per hour: point lookups, ID-range scans for fraud reviews, \
+and small IN lists when reconciling tickets. A row-level index on customer_id \
+turns each of those from a full-table scan into a targeted read. This demo \
+seeds 60 customers across multiple insert batches, builds an index on \
+customer_id, and runs the four canonical lookup shapes a service desk \
+exercises every day.
+"""
+categories = ["index"]
+tags = ["delta-table", "basic", "row-level-index", "index", "point-lookup", "range-scan"]
+difficulty = "basic"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.customers"

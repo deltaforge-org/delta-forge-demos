@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cl" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#9d174d"/>
+    </linearGradient>
+  </defs>
+  <!-- Sorting arrows -->
+  <path d="M14 18L14 54" stroke="url(#cl)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M11 50L14 54L17 50" stroke="url(#cl)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Multilingual text items -->
+  <text x="26" y="22" font-size="6" font-family="monospace" fill="url(#cl)" opacity=".8">Ä</text>
+  <text x="36" y="22" font-size="6" font-family="monospace" fill="url(#cl)" opacity=".6">ア</text>
+  <text x="48" y="22" font-size="6" font-family="monospace" fill="url(#cl)" opacity=".7">Ñ</text>
+  <text x="60" y="22" font-size="6" font-family="monospace" fill="url(#cl)" opacity=".5">Ü</text>
+  <!-- Sorted result -->
+  <text x="26" y="38" font-size="5" font-family="monospace" fill="url(#cl)" opacity=".6">Ä → A</text>
+  <text x="26" y="48" font-size="5" font-family="monospace" fill="url(#cl)" opacity=".6">Ñ → N</text>
+  <text x="26" y="58" font-size="5" font-family="monospace" fill="url(#cl)" opacity=".6">Ü → U</text>
+  <!-- Label -->
+  <rect x="14" y="64" width="52" height="10" rx="5" fill="url(#cl)" fill-opacity=".15" stroke="url(#cl)" stroke-width="1"/>
+  <text x="40" y="71" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cl)" opacity=".7">COLLATION</text>
+</svg>

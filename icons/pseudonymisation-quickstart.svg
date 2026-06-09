@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pq" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Bank vault door -->
+  <circle cx="40" cy="40" r="28" stroke="url(#pq)" stroke-width="1.5" fill="url(#pq)" fill-opacity=".06"/>
+  <circle cx="40" cy="40" r="22" stroke="url(#pq)" stroke-width="1" fill="none" opacity=".3"/>
+  <!-- Vault handle -->
+  <circle cx="40" cy="40" r="10" stroke="url(#pq)" stroke-width="2" fill="none" opacity=".5"/>
+  <line x1="40" y1="30" x2="40" y2="50" stroke="url(#pq)" stroke-width="1.5" opacity=".4"/>
+  <line x1="30" y1="40" x2="50" y2="40" stroke="url(#pq)" stroke-width="1.5" opacity=".4"/>
+  <!-- Key icon (bottom-right) -->
+  <circle cx="58" cy="58" r="4" stroke="url(#pq)" stroke-width="1.5" fill="none" opacity=".6"/>
+  <line x1="54" y1="62" x2="46" y2="70" stroke="url(#pq)" stroke-width="1.5" opacity=".5"/>
+  <line x1="48" y1="68" x2="52" y2="66" stroke="url(#pq)" stroke-width="1" opacity=".4"/>
+  <!-- Dollar sign (top-left) -->
+  <text x="18" y="24" font-family="sans-serif" font-size="14" fill="url(#pq)" opacity=".35" font-weight="bold">$</text>
+</svg>

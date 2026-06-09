@@ -1,0 +1,30 @@
+[demo]
+id = "delta-dynamic-partition-pruning"
+name = "Delta Dynamic Partition Pruning — Smart Query Filtering"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Dynamic partition pruning is a query optimization where the engine skips \
+entire partitions of a fact table based on filter values derived from a \
+joined dimension table, dramatically reducing I/O for star-schema queries. \
+Without this optimization, a JOIN would scan all partitions even when the \
+dimension filter narrows results to a subset. This demo partitions a \
+sales_facts table by region, joins it with a region_targets dimension, \
+and shows how filtering on the dimension prunes irrelevant partitions.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "partitioning", "partition-pruning", "join", "analytics", "filtering"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sales_facts"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.region_targets"

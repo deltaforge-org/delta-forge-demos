@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="hf" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- Hex cluster (pointy-top, r=11) -->
+  <polygon points="49,63 40,68 31,63 31,53 40,48 49,53" stroke="url(#hf)" stroke-width="1.5" fill="url(#hf)" fill-opacity=".15"/>
+  <polygon points="40,47 31,52 22,47 22,37 31,32 40,37" stroke="url(#hf)" stroke-width="1.5" fill="url(#hf)" fill-opacity=".2"/>
+  <polygon points="58,47 49,52 40,47 40,37 49,32 58,37" stroke="url(#hf)" stroke-width="1.5" fill="url(#hf)" fill-opacity=".2"/>
+  <!-- Hex accents -->
+  <polygon points="31,31 22,36 13,31 13,21 22,16 31,21" stroke="url(#hf)" stroke-width="1" fill="none" opacity=".1"/>
+  <polygon points="67,31 58,36 49,31 49,21 58,16 67,21" stroke="url(#hf)" stroke-width="1" fill="none" opacity=".1"/>
+  <!-- Location pin -->
+  <path d="M40 4C35.5 4 32 7.5 32 12C32 18 40 26 40 26S48 18 48 12C48 7.5 44.5 4 40 4Z" fill="url(#hf)" opacity=".9"/>
+  <circle cx="40" cy="12" r="3" fill="#0f172a"/>
+</svg>

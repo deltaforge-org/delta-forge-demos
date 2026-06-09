@@ -1,0 +1,33 @@
+[demo]
+id = "xml-subtree-capture"
+name = "XML Subtree Capture — xml_paths & nested_output_format"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates xml_paths for capturing complex XML subtrees as serialized \
+string columns instead of flattening. Two tables show the same product \
+catalog data with subtrees (specifications, supplier) captured in two \
+formats: JSON objects (nested_output_format: "json") and raw XML fragments \
+(nested_output_format: "xml"). Top-level fields are flattened normally \
+alongside the captured subtrees.
+"""
+categories = ["xml"]
+tags = ["xml", "intermediate", "xml-paths", "subtree-capture", "nested-output-format", "json-output", "xml-output"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo XML data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_products.xml"
+format = "xml"
+description = "Product catalog batch 1 — 3 products with specifications and supplier subtrees"
+size_bytes = 3287
+
+[[demo.data_files]]
+path = "data/02_products.xml"
+format = "xml"
+description = "Product catalog batch 2 — 2 products with specifications and supplier subtrees"
+size_bytes = 2251

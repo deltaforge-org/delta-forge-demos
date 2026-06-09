@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mg" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#mg)" fill-opacity=".2" stroke="url(#mg)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#mg)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Source table -->
+  <rect x="12" y="34" width="22" height="18" rx="2" fill="url(#mg)" fill-opacity=".15" stroke="url(#mg)" stroke-width="1.2"/>
+  <text x="23" y="45" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#mg)" opacity=".6">SRC</text>
+  <!-- Target table -->
+  <rect x="46" y="34" width="22" height="18" rx="2" fill="url(#mg)" fill-opacity=".25" stroke="url(#mg)" stroke-width="1.2"/>
+  <text x="57" y="45" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#mg)" opacity=".8">TGT</text>
+  <!-- Merge arrow -->
+  <path d="M36 43L44 43" stroke="url(#mg)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M42 40L45 43L42 46" stroke="url(#mg)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- CDC dots -->
+  <circle cx="23" cy="60" r="2" fill="url(#mg)" opacity=".4"/>
+  <circle cx="33" cy="60" r="2" fill="#22c55e" opacity=".5"/>
+  <circle cx="43" cy="60" r="2" fill="#eab308" opacity=".5"/>
+  <circle cx="53" cy="60" r="2" fill="#ef4444" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#mg)" opacity=".6">MERGE</text>
+</svg>

@@ -1,0 +1,23 @@
+[demo]
+id = "iceberg-uniform-restore"
+name = "Regulatory Compliance Recovery — RESTORE with UniForm"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Tests RESTORE TO VERSION on a UniForm Iceberg table. 20 compliance records
+are seeded, updated (non_compliant to under_review), then accidentally deleted.
+RESTORE recovers the pre-delete state and Iceberg read-back verifies the
+shadow metadata is consistent after the restore operation.
+"""
+categories = ["iceberg", "restore"]
+tags = ["iceberg", "uniform", "restore", "time-travel", "intermediate", "compliance", "recovery"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.compliance_records"

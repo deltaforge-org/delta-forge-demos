@@ -1,0 +1,166 @@
+[demo]
+id = "edi-edifact-international-trade"
+name = "EDI EDIFACT International Trade"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates UN/EDIFACT and EANCOM message parsing across 22 files covering \
+international trade, logistics, customs, and passenger data. Message types \
+span the full trade lifecycle: purchase orders (ORDERS), invoices (INVOIC), \
+order responses (ORDRSP), freight forwarding (IFCSUM), customs cargo reports \
+(CUSCAR), bayplan stowage (BAPLIE), passenger lists (PAXLST/PNRGOV), despatch \
+advice (DESADV), transport status (IFTSTA), price catalogues (PRICAT), and \
+acknowledgments (APERAK/CONTRL). Covers multiple UN/EDIFACT directory versions \
+(D:96A, D:01B, D:03B, D:95B, D:10A, D:13B, D:00B) and six syntax identifiers \
+(UNOA, UNOB, UNOC, UNOL, IATB, IATA). Two tables: a compact header view and \
+a materialized extraction of key trade fields (BGM, NAD, DTM, LIN).
+"""
+categories = ["edi", "edifact", "international-trade"]
+tags = ["edi", "edifact", "eancom", "international-trade", "logistics", "customs", "advanced", "multi-file"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to the directory containing EDIFACT .edi files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+# --- EDIFACT files (16) ---
+
+[[demo.data_files]]
+path = "data/edifact_ORDERS_purchase_order.edi"
+format = "edi"
+description = "EDIFACT ORDERS — Purchase order (D:96A:UN), BGM/NAD/LIN segments"
+size_bytes = 833
+
+[[demo.data_files]]
+path = "data/edifact_ORDRSP_order_response.edi"
+format = "edi"
+description = "EDIFACT ORDRSP — Order response (D:10A:UN:1.1e), BGM/NAD/LIN segments"
+size_bytes = 703
+
+[[demo.data_files]]
+path = "data/edifact_INVOIC_invoice_edifabric.edi"
+format = "edi"
+description = "EDIFACT INVOIC — Invoice (D:96A:UN), BGM/NAD/LIN/TAX/MOA segments"
+size_bytes = 1092
+
+[[demo.data_files]]
+path = "data/edifact_D01B_INVOIC_invoice.edi"
+format = "edi"
+description = "EDIFACT INVOIC — Invoice (D:01B:UN:EAN010), BGM/TAX/MOA segments"
+size_bytes = 509
+
+[[demo.data_files]]
+path = "data/edifact_D01B_IFCSUM_forwarding.edi"
+format = "edi"
+description = "EDIFACT IFCSUM — Forwarding and consolidation (D:01B:UN:EAN003), BGM/NAD/TDT/CNI/GID"
+size_bytes = 745
+
+[[demo.data_files]]
+path = "data/edifact_D95B_CUSCAR_customs_cargo.edi"
+format = "edi"
+description = "EDIFACT CUSCAR — Customs cargo report (D:95B:UN), BGM/NAD/TDT/CNI/GID"
+size_bytes = 2459
+
+[[demo.data_files]]
+path = "data/edifact_CUSCAR_cargo_report.edi"
+format = "edi"
+description = "EDIFACT CUSCAR — Customs cargo report (D:03B:UN), BGM/NAD/TDT/CNI/GID"
+size_bytes = 1199
+
+[[demo.data_files]]
+path = "data/edifact_BAPLIE_bayplan_stowage.edi"
+format = "edi"
+description = "EDIFACT BAPLIE — Bayplan/stowage plan (D:13B:UN:SMDG31), BGM/TDT/LOC/EQD"
+size_bytes = 593
+
+[[demo.data_files]]
+path = "data/edifact_PAXLST_passenger_list.edi"
+format = "edi"
+description = "EDIFACT PAXLST — Passenger list (D:03B:UN), BGM/TDT/NAD/DOC segments"
+size_bytes = 522
+
+[[demo.data_files]]
+path = "data/edifact_PNRGOV_passenger_data.edi"
+format = "edi"
+description = "EDIFACT PNRGOV — Passenger name record (11:1:IA), MSG/TVL/TIF/SSR segments"
+size_bytes = 1820
+
+[[demo.data_files]]
+path = "data/edifact_APERAK_acknowledgment.edi"
+format = "edi"
+description = "EDIFACT APERAK — Application error/acknowledgment (D:96A:UN), BGM/RFF/NAD"
+size_bytes = 294
+
+[[demo.data_files]]
+path = "data/edifact_CONTRL_acknowledgment.edi"
+format = "edi"
+description = "EDIFACT CONTRL — Syntax acknowledgment (4:1:UN), UCI segment (2 messages in envelope)"
+size_bytes = 233
+
+[[demo.data_files]]
+path = "data/edifact_PAIEMENT_payment.edi"
+format = "edi"
+description = "EDIFACT INFENT — Payment information (D:00B:UN:PD1501), BGM/NAD/RFF segments"
+size_bytes = 624
+
+[[demo.data_files]]
+path = "data/edifact_basic.edi"
+format = "edi"
+description = "EDIFACT QUOTES — Quote message (D:96A:UN:EDIEL2), BGM/LIN/PRI segments"
+size_bytes = 741
+
+[[demo.data_files]]
+path = "data/edifact_multi_message.edi"
+format = "edi"
+description = "EDIFACT QUOTES — Two identical messages in one UNB envelope (D:96A:UN:EDIEL2)"
+size_bytes = 1366
+
+[[demo.data_files]]
+path = "data/edifact_wikipedia_example.edi"
+format = "edi"
+description = "EDIFACT PAORES — Travel reservation response (93:1:IA), TVL/PDI/APD segments"
+size_bytes = 339
+
+# --- EANCOM files (6) ---
+
+[[demo.data_files]]
+path = "data/eancom_DESADV_despatch_advice.edi"
+format = "edi"
+description = "EANCOM DESADV — Despatch advice (D:96A:UN:EAN007), BGM/NAD/CPS/LIN segments"
+size_bytes = 847
+
+[[demo.data_files]]
+path = "data/eancom_IFTSTA_transport_status.edi"
+format = "edi"
+description = "EANCOM IFTSTA — Transport status (D:96A:UN:EAN004), BGM/NAD/CNI/STS segments"
+size_bytes = 741
+
+[[demo.data_files]]
+path = "data/eancom_INVOIC_invoice.edi"
+format = "edi"
+description = "EANCOM INVOIC — Invoice (D:01B:UN:EAN011), BGM/NAD/LIN/TAX/MOA segments"
+size_bytes = 1031
+
+[[demo.data_files]]
+path = "data/eancom_ORDRSP_order_response.edi"
+format = "edi"
+description = "EANCOM ORDRSP — Order response (D:96A:UN:EAN009), BGM/NAD/LIN segments"
+size_bytes = 591
+
+[[demo.data_files]]
+path = "data/eancom_PRICAT_price_catalogue.edi"
+format = "edi"
+description = "EANCOM PRICAT — Price catalogue (D:96A:UN:EAN009), BGM/NAD/LIN/PRI segments"
+size_bytes = 1069
+
+[[demo.data_files]]
+path = "data/eancom_instruction.edi"
+format = "edi"
+description = "EANCOM IFTMIN — Transport instruction (D:96A:UN:EAN004), BGM/NAD/GID/TMP segments"
+size_bytes = 565
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.edifact_messages"
+

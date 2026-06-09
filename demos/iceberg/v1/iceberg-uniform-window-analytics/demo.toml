@@ -1,0 +1,24 @@
+[demo]
+id = "iceberg-uniform-window-analytics"
+name = "Regional Sales Performance — Window Analytics with UniForm"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Tests window functions (ROW_NUMBER, RANK, LAG, LEAD, running totals) on a
+UniForm Iceberg table. 40 sales records across 7 reps, 4 regions, and 3
+product categories exercise PARTITION BY, ORDER BY, and frame clauses.
+Iceberg read-back proves analytical query results are identical through
+both the Delta and Iceberg metadata chains.
+"""
+categories = ["iceberg", "window-functions"]
+tags = ["iceberg", "uniform", "window-functions", "analytics", "intermediate", "rank", "lag-lead", "running-total"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.windowed_sales"

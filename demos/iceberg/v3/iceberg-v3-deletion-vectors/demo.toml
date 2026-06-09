@@ -1,0 +1,81 @@
+[demo]
+id = "iceberg-v3-deletion-vectors"
+name = "Iceberg V3 — Deletion Vectors (Puffin)"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Apache Iceberg format-version 3 deletion vectors using a \
+supply-chain logistics dataset (540 shipment manifest records across 3 \
+regions: Americas, EMEA, APAC). A faulty barcode scanner (SCAN-ERR) \
+produced 36 corrupt records that were retracted via Puffin-encoded \
+deletion vectors — the V3-native row-level delete mechanism. After \
+applying the deletion vector, 504 valid shipments remain. Exercises \
+V3 DV discovery, Puffin file parsing, row-position bitmap application, \
+and post-delete aggregation — all without conversion to Delta format.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v3", "deletion-vectors", "puffin", "logistics", "supply-chain"]
+difficulty = "advanced"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "shipment_manifests/data/00000-4-403cadc7-3431-4633-acba-f5680ed2f7b1-0-00001.parquet"
+format = "parquet"
+description = "All 540 shipment manifest records (single Parquet data file, pre-delete)"
+size_bytes = 10093
+
+[[demo.data_files]]
+path = "shipment_manifests/data/00000-8-75f5aff2-39e5-40bd-a80e-a7b877213997-00001-deletes.puffin"
+format = "puffin"
+description = "Puffin deletion vector — bitmap of 36 row positions to retract (faulty scanner SCAN-ERR)"
+size_bytes = 468
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/v3.metadata.json"
+format = "json"
+description = "Iceberg format v3 metadata (schema, snapshots, partition specs, DV references)"
+size_bytes = 3507
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg format v3 metadata — snapshot after initial data load"
+size_bytes = 2460
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg format v3 metadata — initial table creation"
+size_bytes = 1406
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/snap-6199839554738276695-1-69494029-7451-413f-a277-ccf02337e8a7.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — snapshot after deletion vector applied"
+size_bytes = 4759
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/snap-1882130529557490605-1-fc35579e-793c-405b-8ae7-cfa85eb33804.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — initial data load snapshot"
+size_bytes = 4843
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/69494029-7451-413f-a277-ccf02337e8a7-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — references data file with deletion vector"
+size_bytes = 8597
+
+[[demo.data_files]]
+path = "shipment_manifests/metadata/fc35579e-793c-405b-8ae7-cfa85eb33804-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — references original data file"
+size_bytes = 8397
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg_demos.shipment_manifests"

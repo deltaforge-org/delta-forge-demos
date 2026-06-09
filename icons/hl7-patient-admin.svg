@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pa" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Patient silhouette (head) -->
+  <circle cx="40" cy="20" r="10" fill="url(#pa)" opacity=".35"/>
+  <!-- Patient silhouette (body) -->
+  <path d="M22 52C22 40 30 34 40 34C50 34 58 40 58 52" fill="url(#pa)" opacity=".2"/>
+  <path d="M22 52C22 40 30 34 40 34C50 34 58 40 58 52" stroke="url(#pa)" stroke-width="1.5" fill="none"/>
+  <!-- Medical cross -->
+  <rect x="35" y="42" width="10" height="22" rx="1.5" fill="url(#pa)" opacity=".7"/>
+  <rect x="29" y="48" width="22" height="10" rx="1.5" fill="url(#pa)" opacity=".7"/>
+  <!-- Heartbeat line -->
+  <polyline points="8,70 20,70 25,60 30,76 35,66 40,70 72,70" stroke="url(#pa)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Transfer arrows -->
+  <path d="M10 18L18 18M14 14L18 18L14 22" stroke="url(#pa)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".5"/>
+  <path d="M70 18L62 18M66 14L62 18L66 22" stroke="url(#pa)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".5"/>
+</svg>

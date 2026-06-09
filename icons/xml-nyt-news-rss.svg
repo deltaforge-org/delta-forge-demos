@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="xn" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <path d="M37 72H43L42 34H38Z" fill="url(#xn)" opacity=".7"/>
+  <line x1="34" y1="48" x2="46" y2="48" stroke="url(#xn)" stroke-width="1.5" opacity=".5"/>
+  <line x1="35" y1="58" x2="45" y2="58" stroke="url(#xn)" stroke-width="1.5" opacity=".4"/>
+  <circle cx="40" cy="30" r="3.5" fill="url(#xn)" opacity=".9"/>
+  <path d="M30 24C30 17.4 34.5 12 40 12C45.5 12 50 17.4 50 24" stroke="url(#xn)" stroke-width="2" fill="none" opacity=".7" stroke-linecap="round"/>
+  <path d="M24 20C24 11.2 31.2 4 40 4C48.8 4 56 11.2 56 20" stroke="url(#xn)" stroke-width="2" fill="none" opacity=".45" stroke-linecap="round"/>
+  <path d="M18 17C18 6.5 28 -1 40 -1C52 -1 62 6.5 62 17" stroke="url(#xn)" stroke-width="1.5" fill="none" opacity=".25" stroke-linecap="round"/>
+  <path d="M26 72H54" stroke="url(#xn)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M30 72L37 52" stroke="url(#xn)" stroke-width="1" opacity=".3"/>
+  <path d="M50 72L43 52" stroke="url(#xn)" stroke-width="1" opacity=".3"/>
+</svg>

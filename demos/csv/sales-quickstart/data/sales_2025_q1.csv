@@ -1,0 +1,4 @@
+id,product_name,quantity,unit_price,sale_date,sales_rep,territory,channel
+13,Widget A,22,32.99,2025-01-08,Charlie,Northeast,Online
+14,Gadget Z,14,14.00,2025-02-14,Bob,Southwest,Retail
+15,Widget B,11,54.99,2025-03-01,Alice,West,Online

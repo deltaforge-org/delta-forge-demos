@@ -1,0 +1,54 @@
+[demo]
+id = "graph-sql-cypher-mix"
+name = "Sales Territory Optimization — SQL + Cypher Interoperability"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+B2B sales territory optimization using mixed SQL and Cypher queries \
+against the same Delta tables. 40 enterprise customers connected by \
+96 referral/partnership edges form a directed graph. Graph algorithms \
+(PageRank, Louvain, Degree) identify influential customers and community \
+clusters via Cypher, then results are persisted into Delta tables and \
+JOINed with relational order data using standard SQL. \
+\
+Demonstrates DeltaForge's unique SQL/Cypher interoperability: \
+cypher() table function, INSERT INTO ... SELECT FROM cypher(), \
+SQL JOINs on Cypher-populated tables, and mixed CTEs combining \
+graph analytics with relational aggregation in a single query.
+"""
+categories = ["graph"]
+tags = ["graph", "cypher", "sql", "mixed-queries", "cypher-function", "interop", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where demo Delta tables are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.customer_network.customer_network"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.customer_network.customers"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.customer_network.referrals"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.customer_network.orders"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.customer_network.sales_reps"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.customer_network.influence_scores"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.customer_network.community_assignments"

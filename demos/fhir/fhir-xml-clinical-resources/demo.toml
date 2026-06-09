@@ -1,0 +1,129 @@
+[demo]
+id = "fhir-xml-clinical-resources"
+name = "FHIR XML — Clinical Patients & Observations"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates HL7 FHIR R4 clinical data in native XML format. FHIR XML is \
+unique: all primitive values are stored as @value attributes rather than \
+element text content. 8 Patient resources show demographics with repeating \
+<name>, <telecom>, and <identifier> elements. 8 Observation resources cover \
+vital signs and lab results with deep nesting: code/coding/code/@value \
+(4 levels). Showcases FHIR namespace handling, @value attribute extraction, \
+exclude_paths for narrative XHTML, xml_paths for complex subtrees (contact, \
+component, referenceRange), join_comma for repeating elements, column_mappings \
+from deep XPaths to friendly names, and schema evolution across resource \
+instances.
+"""
+categories = ["healthcare", "xml"]
+tags = ["fhir", "healthcare", "xml", "intermediate", "patient", "observation", "namespace", "attribute-extraction", "xpath", "schema-evolution"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the directory containing FHIR R4 Patient and Observation XML files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/patient-example(example).xml"
+format = "xml"
+description = "Patient — Peter James Chalmers with multiple names, telecom, address, and contacts"
+size_bytes = 4047
+
+[[demo.data_files]]
+path = "data/patient-example-a(pat1).xml"
+format = "xml"
+description = "Patient — Donald Duck with photo and managing organization reference"
+size_bytes = 2900
+
+[[demo.data_files]]
+path = "data/patient-example-b(pat2).xml"
+format = "xml"
+description = "Patient — Duck Donald with organization and photo"
+size_bytes = 2818
+
+[[demo.data_files]]
+path = "data/patient-example-c(pat3).xml"
+format = "xml"
+description = "Patient — Simon Notsowell with deceased and birth date"
+size_bytes = 1170
+
+[[demo.data_files]]
+path = "data/patient-example-d(pat4).xml"
+format = "xml"
+description = "Patient — Sandy Notsowell with minimal demographics"
+size_bytes = 1082
+
+[[demo.data_files]]
+path = "data/patient-example-f001-pieter(f001).xml"
+format = "xml"
+description = "Patient — Pieter van de Heuvel with marital status, contacts, communication, and managing org"
+size_bytes = 3827
+
+[[demo.data_files]]
+path = "data/patient-example-f201-roel(f201).xml"
+format = "xml"
+description = "Patient — Roel with multiple identifiers, multiple names, and rich demographics"
+size_bytes = 5277
+
+[[demo.data_files]]
+path = "data/patient-example-xcda(xcda).xml"
+format = "xml"
+description = "Patient — Henry Levin with identifier and basic demographics"
+size_bytes = 1057
+
+[[demo.data_files]]
+path = "data/observation-example(example).xml"
+format = "xml"
+description = "Observation — Body weight (185 lbs) with category and subject reference"
+size_bytes = 3729
+
+[[demo.data_files]]
+path = "data/observation-example-bloodpressure(blood-pressure).xml"
+format = "xml"
+description = "Observation — Blood pressure with systolic/diastolic component elements"
+size_bytes = 6899
+
+[[demo.data_files]]
+path = "data/observation-example-bmi(bmi).xml"
+format = "xml"
+description = "Observation — Body Mass Index (BMI) calculation"
+size_bytes = 1754
+
+[[demo.data_files]]
+path = "data/observation-example-body-height(body-height).xml"
+format = "xml"
+description = "Observation — Body height vital sign measurement"
+size_bytes = 1753
+
+[[demo.data_files]]
+path = "data/observation-example-body-temperature(body-temperature).xml"
+format = "xml"
+description = "Observation — Body temperature vital sign measurement"
+size_bytes = 1751
+
+[[demo.data_files]]
+path = "data/observation-example-f001-glucose(f001).xml"
+format = "xml"
+description = "Observation — Glucose lab result with reference range and interpretation"
+size_bytes = 2838
+
+[[demo.data_files]]
+path = "data/observation-example-f002-excess(f002).xml"
+format = "xml"
+description = "Observation — Base excess lab result with reference range"
+size_bytes = 2915
+
+[[demo.data_files]]
+path = "data/observation-example-f003-co2(f003).xml"
+format = "xml"
+description = "Observation — CO2 lab result with reference range"
+size_bytes = 2841
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir_xml.patients_xml"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir_xml.observations_xml"

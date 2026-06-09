@@ -1,0 +1,26 @@
+[demo]
+id = "delta-restore-time-travel"
+name = "Delta RESTORE + Time Travel — Inspect Before You Recover"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+In production, restoring blindly to "some earlier version" is risky — you \
+might undo wanted changes or pick the wrong snapshot. This demo teaches the \
+safe recovery workflow: use VERSION AS OF to browse every historical version \
+of a Delta table, compare them side by side, choose the right target, and \
+only then execute RESTORE. The scenario follows a university grading system \
+where a script accidentally zeros out all student grades and the registrar \
+must recover to the correct version that includes a legitimate grade curve.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "intermediate", "restore", "time-travel", "version-history", "recovery", "inspect", "version-as-of"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.course_grades"

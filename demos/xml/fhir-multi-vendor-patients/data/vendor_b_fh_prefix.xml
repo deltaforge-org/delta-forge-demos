@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fh:Bundle xmlns:fh="http://hl7.org/fhir">
+  <fh:type value="collection"/>
+    <fh:entry>
+      <fh:resource>
+        <fh:Patient>
+          <fh:id value="vB-pat-101"/>
+          <fh:identifier>
+            <fh:system value="https://blueridge.example/patient"/>
+            <fh:value value="BR-100101"/>
+          </fh:identifier>
+          <fh:name>
+            <fh:family value="Brennan"/>
+            <fh:given value="Padraig"/>
+          </fh:name>
+          <fh:birthDate value="1965-11-02"/>
+          <fh:gender value="male"/>
+        </fh:Patient>
+      </fh:resource>
+    </fh:entry>
+    <fh:entry>
+      <fh:resource>
+        <fh:Patient>
+          <fh:id value="vB-pat-102"/>
+          <fh:identifier>
+            <fh:system value="https://blueridge.example/patient"/>
+            <fh:value value="BR-100102"/>
+          </fh:identifier>
+          <fh:name>
+            <fh:family value="Bukhari"/>
+            <fh:given value="Aisha"/>
+          </fh:name>
+          <fh:birthDate value="1990-06-21"/>
+          <fh:gender value="female"/>
+        </fh:Patient>
+      </fh:resource>
+    </fh:entry>
+    <fh:entry>
+      <fh:resource>
+        <fh:Patient>
+          <fh:id value="vB-pat-103"/>
+          <fh:identifier>
+            <fh:system value="https://blueridge.example/patient"/>
+            <fh:value value="BR-100103"/>
+          </fh:identifier>
+          <fh:name>
+            <fh:family value="Beaumont"/>
+            <fh:given value="Camille"/>
+          </fh:name>
+          <fh:birthDate value="1972-12-08"/>
+          <fh:gender value="female"/>
+        </fh:Patient>
+      </fh:resource>
+    </fh:entry>
+</fh:Bundle>

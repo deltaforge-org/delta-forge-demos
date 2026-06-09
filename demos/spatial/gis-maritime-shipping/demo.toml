@@ -1,0 +1,33 @@
+[demo]
+id = "gis-maritime-shipping"
+name = "GIS Maritime Shipping — PostGIS-Compatible Geospatial Functions"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates all 18 PostGIS-compatible st_* functions using a global maritime \
+shipping scenario. Tracks 5 cargo vessels across 10 world ports, computing \
+great-circle distances (haversine, Vincenty, spherical), navigation bearings, \
+point-in-polygon harbor detection, coordinate construction/extraction, and \
+geodesic polygon area. Validates every function against independently computed \
+proof values.
+"""
+categories = ["geospatial", "analytics"]
+tags = ["spatial", "gis", "postgis", "distance", "bearing", "point-in-polygon", "delta-table", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.maritime.ports"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.maritime.vessels"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.maritime.positions"

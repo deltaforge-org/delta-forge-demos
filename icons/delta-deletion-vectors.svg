@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dv2" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#e11d48"/>
+    </linearGradient>
+  </defs>
+  <!-- Data file block -->
+  <rect x="10" y="10" width="36" height="50" rx="4" stroke="url(#dv2)" stroke-width="1.5" fill="url(#dv2)" fill-opacity=".1"/>
+  <!-- Data rows in file -->
+  <rect x="14" y="15" width="28" height="4" rx="1" fill="url(#dv2)" opacity=".4"/>
+  <rect x="14" y="22" width="28" height="4" rx="1" fill="url(#dv2)" opacity=".4"/>
+  <rect x="14" y="29" width="28" height="4" rx="1" fill="url(#dv2)" opacity=".4"/>
+  <rect x="14" y="36" width="28" height="4" rx="1" fill="url(#dv2)" opacity=".4"/>
+  <rect x="14" y="43" width="28" height="4" rx="1" fill="url(#dv2)" opacity=".4"/>
+  <rect x="14" y="50" width="28" height="4" rx="1" fill="url(#dv2)" opacity=".4"/>
+  <!-- DV bitmap overlay (X marks on deleted rows) -->
+  <line x1="15" y1="22" x2="41" y2="26" stroke="url(#dv2)" stroke-width="1" opacity=".8"/>
+  <line x1="15" y1="36" x2="41" y2="40" stroke="url(#dv2)" stroke-width="1" opacity=".8"/>
+  <line x1="15" y1="50" x2="41" y2="54" stroke="url(#dv2)" stroke-width="1" opacity=".8"/>
+  <!-- DV file (small bitmap) -->
+  <rect x="52" y="18" width="20" height="34" rx="3" stroke="url(#dv2)" stroke-width="1.5" fill="url(#dv2)" fill-opacity=".2"/>
+  <text x="62" y="29" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#dv2)" opacity=".7">0</text>
+  <text x="62" y="36" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#dv2)" opacity=".9">1</text>
+  <text x="62" y="43" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#dv2)" opacity=".7">0</text>
+  <text x="62" y="50" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#dv2)" opacity=".9">1</text>
+  <!-- Arrow connecting -->
+  <path d="M46 35L52 35" stroke="url(#dv2)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#dv2)" opacity=".6">DEL VECTORS</text>
+</svg>

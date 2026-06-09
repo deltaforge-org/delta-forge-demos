@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ns" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <!-- Three column blocks representing NULL density -->
+  <!-- Column 1: mostly NULL (empty cells) -->
+  <rect x="10" y="14" width="14" height="6" rx="1" stroke="url(#ns)" stroke-width="1" stroke-dasharray="2 1" fill="none" opacity=".5"/>
+  <rect x="10" y="22" width="14" height="6" rx="1" stroke="url(#ns)" stroke-width="1" stroke-dasharray="2 1" fill="none" opacity=".5"/>
+  <rect x="10" y="30" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".4" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="10" y="38" width="14" height="6" rx="1" stroke="url(#ns)" stroke-width="1" stroke-dasharray="2 1" fill="none" opacity=".5"/>
+  <rect x="10" y="46" width="14" height="6" rx="1" stroke="url(#ns)" stroke-width="1" stroke-dasharray="2 1" fill="none" opacity=".5"/>
+  <!-- Column 2: mixed NULL -->
+  <rect x="32" y="14" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".4" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="32" y="22" width="14" height="6" rx="1" stroke="url(#ns)" stroke-width="1" stroke-dasharray="2 1" fill="none" opacity=".5"/>
+  <rect x="32" y="30" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".4" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="32" y="38" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".4" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="32" y="46" width="14" height="6" rx="1" stroke="url(#ns)" stroke-width="1" stroke-dasharray="2 1" fill="none" opacity=".5"/>
+  <!-- Column 3: all filled (no NULL) -->
+  <rect x="54" y="14" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".5" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="54" y="22" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".5" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="54" y="30" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".5" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="54" y="38" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".5" stroke="url(#ns)" stroke-width="1"/>
+  <rect x="54" y="46" width="14" height="6" rx="1" fill="url(#ns)" fill-opacity=".5" stroke="url(#ns)" stroke-width="1"/>
+  <!-- NULL count badges -->
+  <text x="17" y="60" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ns)" opacity=".7">4/5</text>
+  <text x="39" y="60" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ns)" opacity=".7">2/5</text>
+  <text x="61" y="60" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ns)" opacity=".7">0/5</text>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ns)" opacity=".7">NULL</text>
+</svg>

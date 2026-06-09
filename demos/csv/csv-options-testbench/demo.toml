@@ -1,0 +1,101 @@
+[demo]
+id = "csv-options-testbench"
+name = "CSV Advanced Options Testbench"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Verifies that every CSV parsing option available in the DeltaForge GUI is \
+correctly wired through to the backend. Each table exercises a specific \
+option (delimiter, null_value, comment_char, skip_starting_rows, max_rows, \
+trim_whitespace, quote, escape) with data designed so that incorrect parsing \
+produces obviously wrong results. Includes a summary query that reports \
+PASS/FAIL for each option.
+"""
+categories = ["csv"]
+tags = ["csv", "intermediate", "options", "parsing", "testing", "validation"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_pipe_delimited.csv"
+format = "csv"
+description = "Pipe-delimited — tests delimiter='|' option (5 records)"
+size_bytes = 150
+
+[[demo.data_files]]
+path = "data/02_null_markers.csv"
+format = "csv"
+description = "Comma CSV with N/A markers — tests null_value='N/A' option (5 records)"
+size_bytes = 120
+
+[[demo.data_files]]
+path = "data/03_comment_lines.csv"
+format = "csv"
+description = "CSV with # comment lines — tests comment_char='#' option (3 data records)"
+size_bytes = 250
+
+[[demo.data_files]]
+path = "data/04_skip_metadata.csv"
+format = "csv"
+description = "CSV with 3 metadata lines before header — tests skip_starting_rows=3 (5 records)"
+size_bytes = 220
+
+[[demo.data_files]]
+path = "data/05_max_rows.csv"
+format = "csv"
+description = "10-row CSV — tests max_rows=5 option (10 records, only 5 should be read)"
+size_bytes = 160
+
+[[demo.data_files]]
+path = "data/06_whitespace.csv"
+format = "csv"
+description = "CSV with leading/trailing whitespace — tests trim_whitespace=true (5 records)"
+size_bytes = 180
+
+[[demo.data_files]]
+path = "data/07_semicolon_quoted.csv"
+format = "csv"
+description = "Semicolon-delimited with quoted fields containing semicolons — tests delimiter + quote (4 records)"
+size_bytes = 200
+
+[[demo.data_files]]
+path = "data/08_combined.csv"
+format = "csv"
+description = "Tests multiple options together: pipe delimiter, comments, null markers, whitespace (5 records)"
+size_bytes = 280
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_delimiter"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_null_value"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_comment"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_skip_rows"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_max_rows"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_trim"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_quoted"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.csv.opt_combined"

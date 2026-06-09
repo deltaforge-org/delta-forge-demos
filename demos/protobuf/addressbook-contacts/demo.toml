@@ -1,0 +1,61 @@
+[demo]
+id = "addressbook-contacts"
+name = "Protobuf Address Book — Contact Directory"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Protocol Buffers (proto3) reading features using the classic \
+Google addressbook example. Three binary files contain 13 contacts across \
+engineering, sales, and executive teams. Two tables exercise nested message \
+flattening (Person.PhoneNumber), repeated field handling (phones → explode \
+vs. comma-join), enum decoding (PhoneType → MOBILE/HOME/WORK), well-known \
+type support (google.protobuf.Timestamp), sparse data (missing email, empty \
+phone list), multi-file reading, file_metadata, and schema-driven column \
+discovery from .proto definitions.
+"""
+categories = ["protobuf"]
+tags = ["protobuf", "proto3", "intermediate", "nested-messages", "repeated-fields", "enums", "timestamps", "multi-file", "schema-evolution"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where demo protobuf data files (.pb) and schema (.proto) are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_engineering_team.pb"
+format = "protobuf"
+description = "Engineering team — 5 contacts, 9 phone numbers, mixed types (mobile/home/work)"
+size_bytes = 430
+
+[[demo.data_files]]
+path = "data/02_sales_team.pb"
+format = "protobuf"
+description = "Sales team — 5 contacts, 9 phone numbers, international numbers"
+size_bytes = 430
+
+[[demo.data_files]]
+path = "data/03_executives.pb"
+format = "protobuf"
+description = "Executives — 3 contacts, sparse data (missing email, empty phone list)"
+size_bytes = 212
+
+[[demo.data_files]]
+path = "schema/addressbook.proto"
+format = "protobuf"
+description = "Proto3 schema — AddressBook with nested Person and PhoneNumber"
+size_bytes = 1024
+
+[[demo.data_files]]
+path = "schema/timestamp.proto"
+format = "protobuf"
+description = "Google well-known Timestamp type (required import for addressbook.proto)"
+size_bytes = 231
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_demos.contacts"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.protobuf_demos.contact_phones"

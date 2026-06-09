@@ -1,0 +1,41 @@
+[demo]
+id = "graph-stress-test"
+name = "Graph Stress Test — 1M-Node Enterprise Organization Network"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+Realistic enterprise organization network with 1,000,000 employees and \
+~5,000,000 directed connections across 20 departments, 15 cities, and 200 \
+project teams. The graph has genuine community structure: departments form \
+tight clusters, project teams are nested sub-communities, cities create \
+cross-department communities, and bridge nodes (2% of employees) connect \
+the clusters. Features hierarchical mentorship trees and power-law degree \
+distribution (VPs have 150+ connections, Associates have 2-5). Queries \
+are framed as real-world HR and organizational analytics scenarios: \
+workforce planning, reorg impact analysis, influence mapping, community \
+detection, and progressive visualization stress tests.
+"""
+categories = ["graph"]
+tags = ["graph", "delta-table", "stress-test", "performance", "benchmark", "million-scale", "generate-series", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 30
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.stress_test_network.stress_test_network"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.stress_test_network.st_edges"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.stress_test_network.st_people"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.stress_test_network.st_departments"

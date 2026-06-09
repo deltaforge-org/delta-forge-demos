@@ -1,0 +1,51 @@
+[demo]
+id = "graph-auto-refresh-csr"
+name = "Fleet Dispatch Network — AUTO REFRESH CSR: Live vs Batched Graph Views"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Teaches the AUTO REFRESH CSR graph property by running identical Cypher \
+queries against two paired graphs defined over the same vertex/edge \
+tables: one declared AUTO REFRESH CSR (live rebuild on the first read \
+after any DML), one declared NO AUTO REFRESH CSR (default — serves the \
+last-built CSR until CREATE GRAPHCSR is issued). \
+\
+Scenario: a fleet dispatch provider runs 30 distribution hubs across \
+6 regions with 100 directed delivery routes. Live dashboards want \
+up-to-the-second pricing and routing; nightly planners want a stable \
+snapshot that refreshes at a known cadence. This demo exercises both \
+paths end to end — a single-row UPDATE and a multi-row DELETE — and \
+asserts the intentional staleness of the batched view before and after \
+each CREATE GRAPHCSR. \
+\
+The tradeoff surfaced here: AUTO REFRESH CSR gives freshness at the \
+cost of one full rebuild per active-query bursty write; NO AUTO \
+REFRESH CSR gives predictable latency at the cost of stale reads \
+between manual refreshes. INSERT always triggers a full rebuild \
+regardless (topology-changing operations can't be cheaply patched in). \
+See architecture doc arch_graph_csr_caching for the full design.
+"""
+categories = ["graph", "delta", "cypher"]
+tags = ["graph", "cypher", "auto-refresh", "csr", "cache", "update", "delete", "create-graphcsr", "live-vs-batch", "basic"]
+difficulty = "basic"
+estimated_time_minutes = 3
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.fleet_dispatch.hubs"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.fleet_dispatch.routes"
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.fleet_dispatch.dispatch_live"
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.fleet_dispatch.dispatch_batch"

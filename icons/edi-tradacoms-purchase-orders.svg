@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="po" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Clipboard body -->
+  <rect x="16" y="14" width="48" height="58" rx="4" fill="url(#po)" opacity=".15" stroke="url(#po)" stroke-width="1.5"/>
+  <!-- Clipboard clip -->
+  <rect x="30" y="8" width="20" height="12" rx="3" fill="url(#po)" opacity=".25" stroke="url(#po)" stroke-width="1.5"/>
+  <!-- Order lines -->
+  <line x1="24" y1="32" x2="56" y2="32" stroke="url(#po)" stroke-width="1.2" opacity=".5"/>
+  <line x1="24" y1="40" x2="56" y2="40" stroke="url(#po)" stroke-width="1.2" opacity=".5"/>
+  <line x1="24" y1="48" x2="56" y2="48" stroke="url(#po)" stroke-width="1.2" opacity=".5"/>
+  <!-- Checkmarks -->
+  <path d="M24 31L26 33L30 29" stroke="url(#po)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 39L26 41L30 37" stroke="url(#po)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 47L26 49L30 45" stroke="url(#po)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Barcode (EAN) -->
+  <rect x="28" y="56" width="2" height="10" fill="url(#po)" opacity=".7"/>
+  <rect x="32" y="56" width="1" height="10" fill="url(#po)" opacity=".7"/>
+  <rect x="35" y="56" width="3" height="10" fill="url(#po)" opacity=".7"/>
+  <rect x="40" y="56" width="1" height="10" fill="url(#po)" opacity=".7"/>
+  <rect x="43" y="56" width="2" height="10" fill="url(#po)" opacity=".7"/>
+  <rect x="47" y="56" width="1" height="10" fill="url(#po)" opacity=".7"/>
+  <rect x="50" y="56" width="2" height="10" fill="url(#po)" opacity=".7"/>
+</svg>

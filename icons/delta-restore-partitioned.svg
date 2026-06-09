@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <!-- Four partition columns (Q1-Q4) -->
+  <rect x="8"  y="20" width="14" height="40" rx="2" fill="url(#rp)" fill-opacity=".4" stroke="url(#rp)" stroke-width="1.5"/>
+  <rect x="26" y="20" width="14" height="40" rx="2" fill="url(#rp)" fill-opacity=".15" stroke="url(#rp)" stroke-width="1"/>
+  <rect x="44" y="20" width="14" height="40" rx="2" fill="url(#rp)" fill-opacity=".15" stroke="url(#rp)" stroke-width="1"/>
+  <rect x="62" y="20" width="14" height="40" rx="2" fill="url(#rp)" fill-opacity=".15" stroke="url(#rp)" stroke-width="1"/>
+  <!-- X on Q1 (bad) -->
+  <path d="M11 34L19 42M19 34L11 42" stroke="url(#rp)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Checkmarks on Q2-Q4 (good) -->
+  <path d="M30 36L32 39L36 34" stroke="url(#rp)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M48 36L50 39L54 34" stroke="url(#rp)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M66 36L68 39L72 34" stroke="url(#rp)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Swap arrow on Q1 only -->
+  <path d="M15 14L15 18" stroke="url(#rp)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <polygon points="15,20 12,16 18,16" fill="url(#rp)" opacity=".7"/>
+  <!-- Quarter labels -->
+  <text x="15" y="56" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#rp)" opacity=".8">Q1</text>
+  <text x="33" y="56" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#rp)" opacity=".5">Q2</text>
+  <text x="51" y="56" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#rp)" opacity=".5">Q3</text>
+  <text x="69" y="56" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#rp)" opacity=".5">Q4</text>
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#rp)" opacity=".6">PARTITION</text>
+</svg>

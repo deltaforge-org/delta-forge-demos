@@ -1,0 +1,42 @@
+[demo]
+id = "ecommerce-order-lines"
+name = "XML E-Commerce — Order Line Explosion"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates deep XML nesting (3+ levels), explode_paths for one-row-per-line-item, \
+CDATA sections with embedded HTML, exclude_paths, column_mappings, \
+and self-closing flag elements. Two daily order batch exports contain 5 orders \
+with 11 line items, each with nested variant (size/color), CDATA product \
+descriptions, optional <gift_wrap/> and <express/> flags, and an internal_audit \
+block that is excluded from analytics. Two tables show the same data: one \
+exploded to line items, one summarized per order.
+"""
+categories = ["xml", "retail"]
+tags = ["xml", "advanced", "explode", "cdata", "deep-nesting", "column-mappings", "exclude-paths", "ecommerce"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where demo XML data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_orders_morning.xml"
+format = "xml"
+description = "Morning batch — 3 orders, 7 line items (CDATA, gift_wrap, express flags)"
+size_bytes = 3728
+
+[[demo.data_files]]
+path = "data/02_orders_afternoon.xml"
+format = "xml"
+description = "Afternoon batch — 2 orders, 4 line items (CDATA, gift_wrap + express combo)"
+size_bytes = 2287
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.xml.order_lines"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.xml.order_summary"

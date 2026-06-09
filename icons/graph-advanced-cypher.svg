@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ga" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#84cc16;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gaEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#84cc16;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="80" height="80" rx="12" fill="#0f172a"/>
+  <!-- Graph edges -->
+  <line x1="25" y1="20" x2="55" y2="20" stroke="url(#gaEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="25" y1="20" x2="16" y2="45" stroke="url(#gaEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="55" y1="20" x2="64" y2="45" stroke="url(#gaEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="45" x2="40" y2="62" stroke="url(#gaEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="64" y1="45" x2="40" y2="62" stroke="url(#gaEdge)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="45" x2="64" y2="45" stroke="url(#gaEdge)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3,2"/>
+  <!-- Arrow heads -->
+  <polygon points="52,20 48,17.5 48,22.5" fill="#86efac" opacity="0.8"/>
+  <polygon points="42,61 37,57 36,63" fill="#86efac" opacity="0.8"/>
+  <!-- Graph nodes -->
+  <circle cx="25" cy="20" r="5" fill="url(#ga)" opacity="0.9"/>
+  <circle cx="55" cy="20" r="5" fill="url(#ga)" opacity="0.9"/>
+  <circle cx="16" cy="45" r="5" fill="url(#ga)" opacity="0.9"/>
+  <circle cx="64" cy="45" r="5" fill="url(#ga)" opacity="0.9"/>
+  <circle cx="40" cy="62" r="5" fill="url(#ga)" opacity="0.9"/>
+  <!-- Magnifying glass overlay on center-bottom node -->
+  <circle cx="44" cy="58" r="7" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <line x1="49" y1="63" x2="54" y2="68" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <!-- Small inner dots for node detail -->
+  <circle cx="25" cy="20" r="2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="55" cy="20" r="2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="16" cy="45" r="2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="64" cy="45" r="2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="40" cy="62" r="2" fill="#ffffff" opacity="0.7"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mt" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#mt)" fill-opacity=".2" stroke="url(#mt)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#mt)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Wrench -->
+  <path d="M28 42L36 50L34 52L26 44Z" fill="url(#mt)" fill-opacity=".4" stroke="url(#mt)" stroke-width="1.2"/>
+  <circle cx="24" cy="40" r="5" fill="none" stroke="url(#mt)" stroke-width="1.5" opacity=".5"/>
+  <!-- Gear -->
+  <circle cx="52" cy="46" r="7" fill="none" stroke="url(#mt)" stroke-width="1.5" opacity=".5"/>
+  <circle cx="52" cy="46" r="3" fill="url(#mt)" fill-opacity=".3"/>
+  <!-- Compact arrows -->
+  <path d="M36 62L44 62" stroke="url(#mt)" stroke-width="1.5" opacity=".5"/>
+  <path d="M42 60L44 62L42 64" stroke="url(#mt)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#mt)" opacity=".6">MAINTENANCE</text>
+</svg>

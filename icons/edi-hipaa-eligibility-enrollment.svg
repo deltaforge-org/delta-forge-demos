@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="eee" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- ID card outline (eligibility/enrollment) -->
+  <rect x="10" y="16" width="60" height="40" rx="5" fill="url(#eee)" opacity=".1"/>
+  <rect x="10" y="16" width="60" height="40" rx="5" stroke="url(#eee)" stroke-width="1.5" fill="none"/>
+  <!-- Person icon -->
+  <circle cx="29" cy="31" r="6" fill="url(#eee)" opacity=".5"/>
+  <path d="M20 46C20 41 24 38 29 38C34 38 38 41 38 46" stroke="url(#eee)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <!-- Card detail lines -->
+  <line x1="44" y1="28" x2="62" y2="28" stroke="url(#eee)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="44" y1="34" x2="58" y2="34" stroke="url(#eee)" stroke-width="1" opacity=".3" stroke-linecap="round"/>
+  <line x1="44" y1="40" x2="55" y2="40" stroke="url(#eee)" stroke-width="1" opacity=".3" stroke-linecap="round"/>
+  <!-- Checkmark badge (verified) -->
+  <circle cx="62" cy="58" r="10" fill="url(#eee)" opacity=".15"/>
+  <circle cx="62" cy="58" r="10" stroke="url(#eee)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <path d="M57 58L60.5 61.5L67 55" stroke="url(#eee)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>
+  <!-- Link arrow (request → response pairing) -->
+  <path d="M12 64L20 64M16 61L20 64L16 67" stroke="url(#eee)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".35"/>
+</svg>

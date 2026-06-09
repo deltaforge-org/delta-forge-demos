@@ -1,0 +1,29 @@
+[demo]
+id = "delta-binary-geometry"
+name = "Delta Binary & Spatial Data Types"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta tables store binary-like data (hashes, checksums) and spatial geometry \
+as VARCHAR columns using conventions like SHA-256 hex strings and WKT \
+(Well-Known Text) notation. This is essential for document fingerprinting, \
+geospatial analytics, and content-addressable storage patterns. This demo \
+creates a document store with content hashes and a geo-locations table with \
+POINT, POLYGON, and LINESTRING WKT geometries to explore these patterns.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "binary", "geometry", "spatial", "wkt", "hash"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.document_store"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.geo_locations"

@@ -1,0 +1,8 @@
+# Combined options test file
+# Format: pipe-delimited, with comments, null markers, and whitespace
+id|name|score|department|notes
+1|  Alice  |95|  Engineering  |Top performer
+2|  Bob  |N/A|  Marketing  |On probation
+3|  Charlie  |87|N/A|  Needs review
+4|  Diana  |N/A|N/A|Transferred
+5|  Eve  |100|  Engineering  |   Star employee

@@ -1,0 +1,59 @@
+[demo]
+id = "httpbin-auth-smoke-test"
+name = "Vendor Auth Smoke Test — api_key_header + Explicit CREDENTIAL STORAGE"
+version = "1.0.0"
+description = """
+A DevOps team smoke-tests their REST API ingest pipeline against
+httpbin.org before hooking up a new real vendor. httpbin's /headers,
+/uuid, and /anything endpoints are free, stable, and echo back exactly
+what they received — ideal for proving the credential, auth-mode, and
+endpoint surface are all configured correctly before a real vendor's
+credit card gets charged per call.
+
+This demo is the `auth_mode = 'api_key_header'` companion to the
+NASA APOD demo's `api_key_query`: the credential is sent via an
+`X-API-Key` HTTP header rather than as a URL query parameter.
+httpbin's /headers endpoint echoes every request header back in its
+response body, so the silver table can literally assert on the
+X-API-Key value that made it onto the wire — end-to-end proof that
+the vault secret travelled all the way to the request.
+
+Distinctly from the other API demos, this one **explicitly creates a
+CREDENTIAL STORAGE** with `TYPE = OS_KEYCHAIN` before the
+CREDENTIAL, then binds the credential to that backend via
+`IN CREDENTIAL STORAGE local_os_vault`. Every prior API demo relies on
+the default-keychain behavior; this one surfaces the declarative
+backend layer for audit contexts where `SHOW CREDENTIAL STORAGES` is
+part of the security review.
+
+The demo also demonstrates `DROP API ENDPOINT` as a standalone
+statement: a scratch endpoint is created to show the syntax, then
+dropped in the same script — the "clean up after a typo" pattern that
+DevOps teams reach for often while authoring ingest definitions.
+
+Demonstrates: CREATE CREDENTIAL STORAGE explicit (OS_KEYCHAIN),
+CREATE CREDENTIAL ... IN CREDENTIAL STORAGE, SHOW CREDENTIAL STORAGES,
+DESCRIBE CREDENTIAL STORAGE, auth_mode = 'api_key_header',
+X-API-Key echo round-trip proof, DROP API ENDPOINT standalone,
+multi-endpoint fan-out (/headers + /uuid).
+
+NOTE: requires internet. INVOKE issues real GETs against
+https://httpbin.org. httpbin is free and has no enforced rate limit;
+the endpoint options set a polite rate_limit_rps = '1'.
+"""
+categories = ["api", "rest-ingest", "auth", "devops"]
+tags = ["api", "rest", "ingest", "credential-storage", "os-keychain", "api-key-header", "httpbin", "multi-endpoint", "drop-endpoint", "smoke-test", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.httpbin_smoke.headers_bronze"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.httpbin_smoke.uuid_bronze"

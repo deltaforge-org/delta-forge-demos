@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#16a34a"/>
+    </linearGradient>
+  </defs>
+  <!-- Calculator/formula shape -->
+  <rect x="16" y="8" width="48" height="64" rx="6" stroke="url(#cc)" stroke-width="2" fill="url(#cc)" fill-opacity=".1"/>
+  <!-- Display area -->
+  <rect x="22" y="14" width="36" height="16" rx="3" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".15"/>
+  <!-- Formula text -->
+  <text x="40" y="26" text-anchor="middle" font-size="8" font-family="monospace" fill="url(#cc)" opacity=".9">f(x)=</text>
+  <!-- Grid buttons -->
+  <rect x="22" y="36" width="10" height="10" rx="2" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".15"/>
+  <rect x="35" y="36" width="10" height="10" rx="2" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".2"/>
+  <rect x="48" y="36" width="10" height="10" rx="2" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".15"/>
+  <rect x="22" y="50" width="10" height="10" rx="2" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".2"/>
+  <rect x="35" y="50" width="10" height="10" rx="2" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".15"/>
+  <rect x="48" y="50" width="10" height="10" rx="2" stroke="url(#cc)" stroke-width="1" fill="url(#cc)" fill-opacity=".25"/>
+  <!-- Operator symbols -->
+  <text x="27" y="44" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#cc)" opacity=".7">×</text>
+  <text x="40" y="44" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#cc)" opacity=".7">−</text>
+  <text x="53" y="44" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#cc)" opacity=".7">%</text>
+  <text x="27" y="58" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#cc)" opacity=".7">+</text>
+  <text x="40" y="58" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#cc)" opacity=".7">=</text>
+  <text x="53" y="58" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#cc)" opacity=".7">Σ</text>
+</svg>

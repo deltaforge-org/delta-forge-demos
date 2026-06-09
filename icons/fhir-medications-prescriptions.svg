@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fmp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Pill capsule (top left) -->
+  <rect x="10" y="12" width="24" height="12" rx="6" stroke="url(#fmp)" stroke-width="1.5" fill="url(#fmp)" fill-opacity=".1"/>
+  <rect x="22" y="12" width="12" height="12" rx="0" fill="url(#fmp)" opacity=".35"/>
+  <path d="M28 12A6 6 0 0 1 34 18A6 6 0 0 1 28 24L28 12Z" fill="url(#fmp)" opacity=".35"/>
+  <!-- Prescription document -->
+  <rect x="14" y="32" width="32" height="40" rx="3" stroke="url(#fmp)" stroke-width="1.5" fill="url(#fmp)" fill-opacity=".06"/>
+  <!-- Rx symbol -->
+  <text x="20" y="46" font-family="serif" font-size="12" font-weight="bold" fill="url(#fmp)" opacity=".6">Rx</text>
+  <!-- Prescription lines -->
+  <rect x="20" y="52" width="20" height="2" rx="1" fill="url(#fmp)" opacity=".3"/>
+  <rect x="20" y="58" width="16" height="2" rx="1" fill="url(#fmp)" opacity=".22"/>
+  <rect x="20" y="64" width="18" height="2" rx="1" fill="url(#fmp)" opacity=".16"/>
+  <!-- Insurance card (right side) -->
+  <rect x="50" y="14" width="24" height="18" rx="3" stroke="url(#fmp)" stroke-width="1.2" fill="url(#fmp)" fill-opacity=".08"/>
+  <rect x="54" y="18" width="8" height="2" rx="1" fill="url(#fmp)" opacity=".4"/>
+  <rect x="54" y="23" width="16" height="2" rx="1" fill="url(#fmp)" opacity=".25"/>
+  <rect x="54" y="27" width="12" height="2" rx="1" fill="url(#fmp)" opacity=".18"/>
+  <!-- Medicine bottle (right bottom) -->
+  <rect x="54" y="42" width="16" height="24" rx="3" stroke="url(#fmp)" stroke-width="1.2" fill="url(#fmp)" fill-opacity=".12"/>
+  <rect x="56" y="38" width="12" height="6" rx="1" fill="url(#fmp)" opacity=".3"/>
+  <!-- Cross on bottle -->
+  <rect x="60" y="50" width="6" height="1.5" rx="0.75" fill="url(#fmp)" opacity=".4"/>
+  <rect x="62.25" y="47.75" width="1.5" height="6" rx="0.75" fill="url(#fmp)" opacity=".4"/>
+</svg>

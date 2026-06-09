@@ -1,0 +1,120 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-enc-1002",
+  "type": "transaction",
+  "timestamp": "2026-04-15T11:40:00Z",
+  "total": 5,
+  "entry": [
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1002",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-1002",
+        "active": true,
+        "gender": "male",
+        "birthDate": "1985-11-21",
+        "name": [
+          {
+            "family": "Okafor",
+            "given": [
+              "Daniel"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Encounter/enc-1002",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-1002",
+        "status": "in-progress",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EMER",
+          "display": "emergency"
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1002"
+        },
+        "period": {
+          "start": "2026-04-15T10:55:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Observation/obs-1002-temp",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1002-temp",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8310-5",
+              "display": "Body temperature"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1002"
+        },
+        "effectiveDateTime": "2026-04-15T11:10:00Z",
+        "valueQuantity": {
+          "value": 39.1,
+          "unit": "Cel",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/Observation/obs-1002-spo2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1002-spo2",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "59408-5",
+              "display": "Oxygen saturation in Arterial blood by Pulse oximetry"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1002"
+        },
+        "effectiveDateTime": "2026-04-15T11:12:00Z",
+        "valueQuantity": {
+          "value": 94,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://gateway.stmichaels.example.org/fhir/MedicationRequest/mr-1002-cef",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "mr-1002-cef",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "https://gateway.stmichaels.example.org/fhir/Patient/pat-1002"
+        },
+        "authoredOn": "2026-04-15T11:30:00Z",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "309097",
+              "display": "Ceftriaxone 1 G Injection"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

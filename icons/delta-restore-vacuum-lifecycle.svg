@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rvl" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular lifecycle arrow -->
+  <path d="M40 10C22 10 10 22 10 40C10 58 22 70 40 70C58 70 70 58 70 40" stroke="url(#rvl)" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="4 2"/>
+  <polygon points="70,40 65,34 75,34" fill="url(#rvl)" opacity=".8"/>
+  <!-- RESTORE icon (left) -->
+  <path d="M22 32C22 28 26 28 26 32L26 48C26 52 22 52 22 48Z" fill="url(#rvl)" fill-opacity=".3" stroke="url(#rvl)" stroke-width="1"/>
+  <path d="M28 38L22 42L28 46" stroke="url(#rvl)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- VACUUM icon (right) — broom -->
+  <line x1="50" y1="28" x2="58" y2="52" stroke="url(#rvl)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M48 48L58 52L54 56" stroke="url(#rvl)" stroke-width="1.5" fill="url(#rvl)" fill-opacity=".2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dust particles being cleaned -->
+  <circle cx="46" cy="44" r="1.5" fill="url(#rvl)" opacity=".3"/>
+  <circle cx="62" cy="46" r="1.5" fill="url(#rvl)" opacity=".25"/>
+  <circle cx="52" cy="38" r="1" fill="url(#rvl)" opacity=".2"/>
+  <!-- Arrow connecting RESTORE → VACUUM -->
+  <path d="M32 40L44 40" stroke="url(#rvl)" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="2"/>
+  <polygon points="44,40 41,38 41,42" fill="url(#rvl)" opacity=".6"/>
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#rvl)" opacity=".6">LIFECYCLE</text>
+</svg>

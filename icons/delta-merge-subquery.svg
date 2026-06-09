@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mq" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- Raw data (scattered dots) -->
+  <circle cx="12" cy="14" r="2" fill="url(#mq)" opacity=".3"/>
+  <circle cx="22" cy="10" r="2" fill="url(#mq)" opacity=".3"/>
+  <circle cx="17" cy="20" r="2" fill="url(#mq)" opacity=".3"/>
+  <circle cx="27" cy="16" r="2" fill="url(#mq)" opacity=".3"/>
+  <circle cx="10" cy="24" r="2" fill="url(#mq)" opacity=".3"/>
+  <circle cx="24" cy="24" r="2" fill="url(#mq)" opacity=".3"/>
+  <!-- Funnel / CTE transform -->
+  <path d="M8 30L32 30L26 42L14 42Z" fill="url(#mq)" fill-opacity=".15" stroke="url(#mq)" stroke-width="1.2"/>
+  <text x="20" y="38" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#mq)" opacity=".6">CTE</text>
+  <!-- Arrow from CTE to merge point -->
+  <path d="M20 44L20 50L40 56" stroke="url(#mq)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Target table -->
+  <rect x="48" y="10" width="24" height="28" rx="3" stroke="url(#mq)" stroke-width="1.5" fill="url(#mq)" fill-opacity=".15"/>
+  <line x1="48" y1="18" x2="72" y2="18" stroke="url(#mq)" stroke-width="1" opacity=".4"/>
+  <line x1="48" y1="24" x2="72" y2="24" stroke="url(#mq)" stroke-width="1" opacity=".3"/>
+  <line x1="48" y1="30" x2="72" y2="30" stroke="url(#mq)" stroke-width="1" opacity=".2"/>
+  <text x="60" y="15" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#mq)" opacity=".5">TGT</text>
+  <!-- Arrow from target to merge point -->
+  <path d="M60 40L60 50L40 56" stroke="url(#mq)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Merge point -->
+  <circle cx="40" cy="56" r="4" fill="url(#mq)" fill-opacity=".4" stroke="url(#mq)" stroke-width="1.5"/>
+  <!-- Result -->
+  <path d="M40 60L40 68" stroke="url(#mq)" stroke-width="2" stroke-linecap="round"/>
+  <rect x="28" y="68" width="24" height="6" rx="2" fill="url(#mq)" fill-opacity=".2" stroke="url(#mq)" stroke-width="1"/>
+  <!-- Label -->
+  <text x="40" y="80" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#mq)" opacity=".6">SUBQUERY</text>
+</svg>

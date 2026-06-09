@@ -1,0 +1,128 @@
+[demo]
+id = "fhir-medications-prescriptions"
+name = "FHIR Medications — Prescriptions & Coverage"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates FHIR R5 MedicationRequest and Coverage resource ingestion. \
+12 MedicationRequest resources show prescriptions with contained Medication \
+resources, dosage instructions, dispense requests, and substitution rules. \
+4 Coverage resources model insurance plans with coverage classes and \
+beneficiary references. Two tables demonstrate deeply nested FHIR structures \
+including contained resources, CodeableConcept arrays, dosageInstruction \
+timing, and complex dispense/substitution objects. Covers json_paths for \
+preserving nested subtrees, column_mappings, and schema evolution across \
+prescription types.
+"""
+categories = ["healthcare", "json"]
+tags = ["fhir", "healthcare", "json", "intermediate", "medication", "prescription", "coverage", "insurance", "nested-json", "contained-resources"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the directory containing FHIR MedicationRequest and Coverage JSON files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/medicationrequestexample1.json"
+format = "json"
+description = "MedicationRequest — Chlorthalidone 50mg tablet prescription with dosage and dispense instructions"
+size_bytes = 8200
+
+[[demo.data_files]]
+path = "data/medicationrequestexample2.json"
+format = "json"
+description = "MedicationRequest — simple medication request example"
+size_bytes = 3500
+
+[[demo.data_files]]
+path = "data/medicationrequest0301.json"
+format = "json"
+description = "MedicationRequest — Oxycodone with contained Medication, substitution, and event history"
+size_bytes = 14500
+
+[[demo.data_files]]
+path = "data/medicationrequest0302.json"
+format = "json"
+description = "MedicationRequest — medication with specific dosage timing"
+size_bytes = 8000
+
+[[demo.data_files]]
+path = "data/medicationrequest0303.json"
+format = "json"
+description = "MedicationRequest — complex prescription with contained medication and dosage"
+size_bytes = 14925
+
+[[demo.data_files]]
+path = "data/medicationrequest0304.json"
+format = "json"
+description = "MedicationRequest — prescription with dispense request details"
+size_bytes = 6142
+
+[[demo.data_files]]
+path = "data/medicationrequest0305.json"
+format = "json"
+description = "MedicationRequest — medication with practitioner requester reference"
+size_bytes = 9904
+
+[[demo.data_files]]
+path = "data/medicationrequest0306.json"
+format = "json"
+description = "MedicationRequest — prescription with substitution rules"
+size_bytes = 5992
+
+[[demo.data_files]]
+path = "data/medicationrequest0307.json"
+format = "json"
+description = "MedicationRequest — medication request with encounter context"
+size_bytes = 9103
+
+[[demo.data_files]]
+path = "data/medicationrequest0308.json"
+format = "json"
+description = "MedicationRequest — prescription with specific dosage instructions"
+size_bytes = 8924
+
+[[demo.data_files]]
+path = "data/medicationrequest0310.json"
+format = "json"
+description = "MedicationRequest — medication with coded reason reference"
+size_bytes = 6280
+
+[[demo.data_files]]
+path = "data/medicationrequest0312.json"
+format = "json"
+description = "MedicationRequest — prescription with priority and category"
+size_bytes = 8256
+
+[[demo.data_files]]
+path = "data/coverage-example.json"
+format = "json"
+description = "Coverage — extended healthcare plan with 12 coverage classes (group, plan, rxid, rxbin, etc.)"
+size_bytes = 5800
+
+[[demo.data_files]]
+path = "data/coverage-example-2.json"
+format = "json"
+description = "Coverage — secondary insurance coverage example"
+size_bytes = 3200
+
+[[demo.data_files]]
+path = "data/coverage-example-ehic.json"
+format = "json"
+description = "Coverage — European Health Insurance Card (EHIC)"
+size_bytes = 2800
+
+[[demo.data_files]]
+path = "data/coverage-example-selfpay.json"
+format = "json"
+description = "Coverage — self-pay arrangement (no insurance)"
+size_bytes = 1800
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.prescriptions"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.coverage"

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="icw" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V2 marker) -->
+  <path d="M40 4L50 18H30Z" fill="url(#icw)" fill-opacity=".2" stroke="url(#icw)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="15" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#icw)" opacity=".9">V2</text>
+  <!-- Waterline -->
+  <path d="M8 20H72" stroke="url(#icw)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Truck body (cargo box) -->
+  <rect x="12" y="34" width="36" height="20" rx="2" fill="url(#icw)" fill-opacity=".1" stroke="url(#icw)" stroke-width="1.5"/>
+  <!-- Cargo lines inside truck -->
+  <path d="M18 40H42" stroke="url(#icw)" stroke-width="1" opacity=".25"/>
+  <path d="M18 44H42" stroke="url(#icw)" stroke-width="1" opacity=".25"/>
+  <path d="M18 48H42" stroke="url(#icw)" stroke-width="1" opacity=".25"/>
+  <!-- Truck cab -->
+  <path d="M48 40H62C64 40 66 42 66 44V54H48V40Z" fill="url(#icw)" fill-opacity=".15" stroke="url(#icw)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Windshield -->
+  <path d="M52 42H60C61 42 62 43 62 44V50H52V42Z" fill="url(#icw)" fill-opacity=".1" stroke="url(#icw)" stroke-width="1" opacity=".6"/>
+  <!-- Wheels -->
+  <circle cx="24" cy="56" r="4.5" fill="url(#icw)" fill-opacity=".2" stroke="url(#icw)" stroke-width="1.5"/>
+  <circle cx="24" cy="56" r="1.8" fill="url(#icw)" fill-opacity=".4"/>
+  <circle cx="56" cy="56" r="4.5" fill="url(#icw)" fill-opacity=".2" stroke="url(#icw)" stroke-width="1.5"/>
+  <circle cx="56" cy="56" r="1.8" fill="url(#icw)" fill-opacity=".4"/>
+  <!-- Copy-on-write indicator: circular arrows (rewrite symbol) -->
+  <path d="M34 26C32 24 32 21 34 19" stroke="url(#icw)" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M34 19L36 21" stroke="url(#icw)" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M34 19L32 21" stroke="url(#icw)" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M46 19C48 21 48 24 46 26" stroke="url(#icw)" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M46 26L44 24" stroke="url(#icw)" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M46 26L48 24" stroke="url(#icw)" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>
+  <!-- Road line -->
+  <path d="M8 62H72" stroke="url(#icw)" stroke-width="1" opacity=".3"/>
+  <path d="M18 62L24 62" stroke="url(#icw)" stroke-width="2" opacity=".2"/>
+  <path d="M36 62L44 62" stroke="url(#icw)" stroke-width="2" opacity=".2"/>
+  <path d="M56 62L64 62" stroke="url(#icw)" stroke-width="2" opacity=".2"/>
+  <!-- Label -->
+  <text x="40" y="74" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#icw)" opacity=".6">COW MODE</text>
+</svg>

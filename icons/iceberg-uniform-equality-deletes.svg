@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ed" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#ed)" fill-opacity=".2" stroke="url(#ed)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#ed)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Data block -->
+  <rect x="12" y="34" width="34" height="24" rx="3" fill="url(#ed)" fill-opacity=".08" stroke="url(#ed)" stroke-width="1.5"/>
+  <!-- Data rows -->
+  <line x1="16" y1="40" x2="42" y2="40" stroke="url(#ed)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="44" x2="42" y2="44" stroke="url(#ed)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="48" x2="42" y2="48" stroke="url(#ed)" stroke-width="1" opacity=".3"/>
+  <line x1="16" y1="52" x2="42" y2="52" stroke="url(#ed)" stroke-width="1" opacity=".3"/>
+  <!-- Equality delete strikethrough -->
+  <line x1="16" y1="44" x2="42" y2="44" stroke="#ef4444" stroke-width="1.5" opacity=".5"/>
+  <!-- Delete file with = sign -->
+  <rect x="52" y="36" width="18" height="20" rx="2" fill="url(#ed)" fill-opacity=".12" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="2 1.5"/>
+  <text x="61" y="46" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="#ef4444" opacity=".7">=</text>
+  <text x="61" y="53" text-anchor="middle" font-size="4" font-family="monospace" fill="#ef4444" opacity=".5">eq</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#ed)" opacity=".6">EQUALITY DELETES</text>
+</svg>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <type value="collection"/>
+    <entry>
+      <resource>
+        <Patient>
+          <id value="vC-pat-201"/>
+          <identifier>
+            <system value="https://coastal.example/mrn"/>
+            <value value="CST-7001"/>
+          </identifier>
+          <name>
+            <family value="Choudhury"/>
+            <given value="Rahul"/>
+          </name>
+          <birthDate value="1988-03-25"/>
+          <gender value="male"/>
+        </Patient>
+      </resource>
+    </entry>
+    <entry>
+      <resource>
+        <Patient>
+          <id value="vC-pat-202"/>
+          <identifier>
+            <system value="https://coastal.example/mrn"/>
+            <value value="CST-7002"/>
+          </identifier>
+          <name>
+            <family value="Corradi"/>
+            <given value="Lucia"/>
+          </name>
+          <birthDate value="1955-08-14"/>
+          <gender value="female"/>
+        </Patient>
+      </resource>
+    </entry>
+    <entry>
+      <resource>
+        <Patient>
+          <id value="vC-pat-203"/>
+          <identifier>
+            <system value="https://coastal.example/mrn"/>
+            <value value="CST-7003"/>
+          </identifier>
+          <name>
+            <family value="Cisneros"/>
+            <given value="Mateo"/>
+          </name>
+          <birthDate value="2001-02-09"/>
+          <gender value="male"/>
+        </Patient>
+      </resource>
+    </entry>
+</Bundle>

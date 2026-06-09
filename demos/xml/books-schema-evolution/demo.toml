@@ -1,0 +1,55 @@
+[demo]
+id = "books-schema-evolution"
+name = "XML Books — Schema Evolution"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Demonstrates XML schema evolution across 5 catalog export files spanning \
+2000–2004. Each year's export adds new elements (isbn, language, publisher, \
+rating, edition, pages, series) and one drops an old element (description). \
+The single external table reads all files, produces the union schema, and \
+fills missing columns with NULL — proving that the XML flatten config is \
+correctly saved, retrieved, and applied by the backend.
+"""
+categories = ["xml"]
+tags = ["xml", "intermediate", "schema-evolution", "flattening", "books"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo XML data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/01_catalog_2000.xml"
+format = "xml"
+description = "Year 2000 — base schema: @id, author, title, genre, price, publish_date, description (3 books)"
+size_bytes = 720
+
+[[demo.data_files]]
+path = "data/02_catalog_2001.xml"
+format = "xml"
+description = "Year 2001 — adds isbn, language (3 books)"
+size_bytes = 880
+
+[[demo.data_files]]
+path = "data/03_catalog_2002.xml"
+format = "xml"
+description = "Year 2002 — adds publisher, rating (3 books)"
+size_bytes = 960
+
+[[demo.data_files]]
+path = "data/04_catalog_2003.xml"
+format = "xml"
+description = "Year 2003 — adds edition, pages; drops description (3 books)"
+size_bytes = 820
+
+[[demo.data_files]]
+path = "data/05_catalog_2004.xml"
+format = "xml"
+description = "Year 2004 — adds @format attribute, series (3 books)"
+size_bytes = 920
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.xml.books_evolved"

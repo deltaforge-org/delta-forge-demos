@@ -1,0 +1,26 @@
+[demo]
+id = "delta-partitions-dv"
+name = "Delta Partitions & Deletion Vectors"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Deletion vectors (DVs) are a Delta protocol optimization that marks rows \
+as deleted in a lightweight sidecar file instead of rewriting entire \
+Parquet data files, making DELETE operations significantly faster. When \
+combined with partitioning, DVs operate within partition boundaries, \
+keeping modifications isolated. This demo deletes, updates, and inserts \
+events across partitioned regions, then runs OPTIMIZE to compact files \
+and merge deletion vectors back into the data.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "partitions", "deletion-vectors", "optimize", "compaction", "pruning"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.cloud_events"

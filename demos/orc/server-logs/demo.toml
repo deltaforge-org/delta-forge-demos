@@ -1,0 +1,59 @@
+[demo]
+id = "server-logs"
+name = "ORC Server Logs — HTTP Access Analytics"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates ORC reading features using 5 server access log files \
+(2,500 rows) with schema evolution and ORC's self-describing format. \
+Two tables exercise multi-file reading, schema evolution (v1→v2 adds \
+request_body_bytes and cache_hit), LOCATION glob for single-server \
+extraction, file_metadata for traceability, and ORC's automatic type \
+detection from file footers.
+"""
+categories = ["orc", "server-logs"]
+tags = ["orc", "intermediate", "schema-evolution", "glob-filter", "multi-file", "file-metadata"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Path to the demo directory containing the ORC server log files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/web-01_access.orc"
+format = "orc"
+description = "Web server 01 — 500 requests, schema v1 (11 fields)"
+size_bytes = 44083
+
+[[demo.data_files]]
+path = "data/web-02_access.orc"
+format = "orc"
+description = "Web server 02 — 500 requests, schema v1 (11 fields)"
+size_bytes = 44173
+
+[[demo.data_files]]
+path = "data/web-03_access.orc"
+format = "orc"
+description = "Web server 03 — 500 requests, schema v1 (11 fields)"
+size_bytes = 43904
+
+[[demo.data_files]]
+path = "data/api-01_access.orc"
+format = "orc"
+description = "API server 01 — 500 requests, schema v2 (13 fields)"
+size_bytes = 45344
+
+[[demo.data_files]]
+path = "data/api-02_access.orc"
+format = "orc"
+description = "API server 02 — 500 requests, schema v2 (13 fields)"
+size_bytes = 44978
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc.all_requests"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.orc.api01_only"

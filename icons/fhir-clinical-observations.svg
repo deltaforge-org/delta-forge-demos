@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fco" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97316"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Heartbeat monitor background -->
+  <rect x="8" y="10" width="64" height="48" rx="6" stroke="url(#fco)" stroke-width="1.5" fill="url(#fco)" fill-opacity=".05"/>
+  <!-- ECG waveform line -->
+  <polyline points="12,38 22,38 26,38 28,26 30,50 32,18 34,46 36,38 42,38 46,38 48,30 50,44 52,38 62,38 72,38"
+            stroke="url(#fco)" stroke-width="2" fill="none" opacity=".8" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Grid lines (monitor display) -->
+  <line x1="12" y1="22" x2="72" y2="22" stroke="url(#fco)" stroke-width="0.5" opacity=".1"/>
+  <line x1="12" y1="30" x2="72" y2="30" stroke="url(#fco)" stroke-width="0.5" opacity=".1"/>
+  <line x1="12" y1="46" x2="72" y2="46" stroke="url(#fco)" stroke-width="0.5" opacity=".1"/>
+  <!-- BPM readout (bottom) -->
+  <circle cx="22" cy="66" r="5" stroke="url(#fco)" stroke-width="1" fill="url(#fco)" fill-opacity=".15"/>
+  <circle cx="22" cy="66" r="2" fill="url(#fco)" opacity=".5"/>
+  <!-- Lab tube (bottom right) -->
+  <rect x="56" y="60" width="6" height="14" rx="3" stroke="url(#fco)" stroke-width="1" fill="url(#fco)" fill-opacity=".2"/>
+  <rect x="56" y="66" width="6" height="8" rx="3" fill="url(#fco)" opacity=".3"/>
+  <!-- Thermometer (bottom center) -->
+  <rect x="38" y="60" width="3" height="12" rx="1.5" stroke="url(#fco)" stroke-width="0.8" fill="url(#fco)" fill-opacity=".15"/>
+  <circle cx="39.5" cy="74" r="3" fill="url(#fco)" opacity=".35"/>
+</svg>

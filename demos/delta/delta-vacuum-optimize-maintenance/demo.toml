@@ -1,0 +1,27 @@
+[demo]
+id = "delta-vacuum-optimize-maintenance"
+name = "Delta Maintenance Playbook — OPTIMIZE Then VACUUM"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+The standard Delta Lake maintenance playbook is a two-step sequence: \
+OPTIMIZE first to compact fragmented small files into larger ones, then \
+VACUUM to purge the orphaned pre-compaction files from storage. \
+This demo uses an e-commerce order pipeline with daily micro-batch ingestion \
+to show the full cycle: fragmentation from frequent INSERTs, mutations \
+that add more file versions, OPTIMIZE to compact, and VACUUM RETAIN 0 HOURS \
+to clean up — with DESCRIBE DETAIL at each stage proving the physical \
+file state while data integrity stays perfect throughout.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "vacuum", "optimize", "maintenance", "compaction", "playbook", "describe-detail", "fragmentation"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.vacuum_order_pipeline"

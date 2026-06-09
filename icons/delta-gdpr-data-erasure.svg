@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ge" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield (GDPR compliance) -->
+  <path d="M40 8L60 18V38C60 54 52 64 40 70C28 64 20 54 20 38V18L40 8Z" stroke="url(#ge)" stroke-width="1.5" fill="url(#ge)" fill-opacity=".08"/>
+  <!-- Lock body inside shield -->
+  <rect x="33" y="34" width="14" height="12" rx="2" stroke="url(#ge)" stroke-width="1.5" fill="url(#ge)" fill-opacity=".15"/>
+  <!-- Lock shackle -->
+  <path d="M35 34V29C35 25.5 37.2 23 40 23C42.8 23 45 25.5 45 29V34" stroke="url(#ge)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Keyhole -->
+  <circle cx="40" cy="39" r="1.5" fill="url(#ge)" opacity=".7"/>
+  <line x1="40" y1="40.5" x2="40" y2="43" stroke="url(#ge)" stroke-width="1.2" opacity=".7"/>
+  <!-- Eraser sweep lines -->
+  <line x1="24" y1="52" x2="30" y2="48" stroke="url(#ge)" stroke-width="1" opacity=".4" stroke-dasharray="2,2"/>
+  <line x1="50" y1="48" x2="56" y2="52" stroke="url(#ge)" stroke-width="1" opacity=".4" stroke-dasharray="2,2"/>
+  <!-- NULL labels on either side -->
+  <text x="22" y="62" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ge)" opacity=".5">NULL</text>
+  <text x="58" y="62" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ge)" opacity=".5">NULL</text>
+</svg>

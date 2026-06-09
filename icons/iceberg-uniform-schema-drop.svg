@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sd" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#sd)" fill-opacity=".2" stroke="url(#sd)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#sd)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Column headers -->
+  <rect x="14" y="34" width="14" height="8" rx="1" fill="url(#sd)" fill-opacity=".3" stroke="url(#sd)" stroke-width="1"/>
+  <rect x="33" y="34" width="14" height="8" rx="1" fill="#ef4444" fill-opacity=".2" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 1"/>
+  <rect x="52" y="34" width="14" height="8" rx="1" fill="url(#sd)" fill-opacity=".3" stroke="url(#sd)" stroke-width="1"/>
+  <!-- X on dropped column -->
+  <line x1="36" y1="36" x2="44" y2="40" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <line x1="44" y1="36" x2="36" y2="40" stroke="#ef4444" stroke-width="1.5" opacity=".6"/>
+  <!-- GDPR shield -->
+  <path d="M36 52L40 48L44 52L44 58C44 62 40 64 40 64C40 64 36 62 36 58Z" fill="url(#sd)" fill-opacity=".15" stroke="url(#sd)" stroke-width="1.2"/>
+  <text x="40" y="58" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#sd)" opacity=".7">PII</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#sd)" opacity=".6">SCHEMA DROP</text>
+</svg>

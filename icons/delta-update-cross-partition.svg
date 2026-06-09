@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ucp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#db2777"/>
+    </linearGradient>
+  </defs>
+  <!-- Three partition columns -->
+  <rect x="6" y="12" width="20" height="36" rx="3" stroke="url(#ucp)" stroke-width="1.5" fill="url(#ucp)" fill-opacity=".12"/>
+  <rect x="30" y="12" width="20" height="36" rx="3" stroke="url(#ucp)" stroke-width="1.5" fill="url(#ucp)" fill-opacity=".12"/>
+  <rect x="54" y="12" width="20" height="36" rx="3" stroke="url(#ucp)" stroke-width="1.5" fill="url(#ucp)" fill-opacity=".12"/>
+  <!-- Highlighted rows in ALL three partitions (cross-partition hit) -->
+  <rect x="9" y="20" width="14" height="4" rx="1" fill="url(#ucp)" opacity=".6"/>
+  <rect x="9" y="32" width="14" height="4" rx="1" fill="url(#ucp)" opacity=".6"/>
+  <rect x="33" y="18" width="14" height="4" rx="1" fill="url(#ucp)" opacity=".6"/>
+  <rect x="33" y="28" width="14" height="4" rx="1" fill="url(#ucp)" opacity=".6"/>
+  <rect x="57" y="22" width="14" height="4" rx="1" fill="url(#ucp)" opacity=".6"/>
+  <rect x="57" y="36" width="14" height="4" rx="1" fill="url(#ucp)" opacity=".6"/>
+  <!-- Non-highlighted rows (unaffected) -->
+  <rect x="9" y="15" width="14" height="3" rx="1" fill="url(#ucp)" opacity=".15"/>
+  <rect x="9" y="26" width="14" height="3" rx="1" fill="url(#ucp)" opacity=".15"/>
+  <rect x="33" y="24" width="14" height="3" rx="1" fill="url(#ucp)" opacity=".15"/>
+  <rect x="33" y="34" width="14" height="3" rx="1" fill="url(#ucp)" opacity=".15"/>
+  <rect x="57" y="15" width="14" height="3" rx="1" fill="url(#ucp)" opacity=".15"/>
+  <rect x="57" y="30" width="14" height="3" rx="1" fill="url(#ucp)" opacity=".15"/>
+  <!-- Horizontal sweep line crossing all partitions -->
+  <line x1="4" y1="52" x2="76" y2="52" stroke="url(#ucp)" stroke-width="1.5" stroke-dasharray="3 2" opacity=".7"/>
+  <!-- Arrows from sweep to each partition -->
+  <path d="M16 52L16 49" stroke="url(#ucp)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+  <path d="M40 52L40 49" stroke="url(#ucp)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+  <path d="M64 52L64 49" stroke="url(#ucp)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+  <!-- Label -->
+  <text x="40" y="66" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ucp)" opacity=".6">CROSS-PART</text>
+  <text x="40" y="74" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ucp)" opacity=".6">UPDATE</text>
+</svg>

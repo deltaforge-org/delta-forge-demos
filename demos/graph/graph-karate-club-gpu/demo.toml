@@ -1,0 +1,59 @@
+[demo]
+id = "graph-karate-club-gpu"
+name = "Zachary's Karate Club — GPU Parity"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+GPU parity test for Zachary's Karate Club. Mirrors the canonical karate \
+demo (`graph-karate-club`) one-for-one but every `algo.*` Cypher CALL \
+carries a trailing `ON GPU` hint, forcing the registered GPU accelerator to \
+execute the algorithm (or fall back to CPU with a warning if not registered). \
+\
+Every ASSERT value is identical to the CPU demo: this is a strict parity \
+check. A passing run here proves the GPU implementation produces the \
+same numerical result as the CPU reference for all 12 GPU-enabled \
+algorithms (PageRank, Betweenness, Connected Components, Louvain, \
+Triangle Count, ArticleRank, Eigenvector, HITS, Harmonic, Label \
+Propagation, K-Core, LCC, Modularity, Conductance, Bellman-Ford, \
+Delta-Stepping, Random Walk, FastRP). \
+\
+Six algorithms (Closeness, SCC, Shortest Path, BFS, DFS, MST, KNN, \
+Similarity, Leiden, Bridges, Articulation Points, A*, Yen's) have no GPU \
+fast-path by design (sequential algorithms); they still run on CPU even \
+under `ON GPU`. \
+\
+Data source: W. W. Zachary, "An information flow model for conflict and \
+fission in small groups," Journal of Anthropological Research, 1977.
+"""
+categories = ["graph"]
+tags = ["graph", "karate", "gpu", "benchmark", "parity", "centrality", "community-detection"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/edges.csv"
+format = "csv"
+description = "Edge list: 78 canonical rows (src < dst); graph is UNDIRECTED, weight=1.0"
+size_bytes = 1912
+
+[[demo.data_files]]
+path = "data/vertices.csv"
+format = "csv"
+description = "Vertex list: 34 club members with name and category (Instructor/President/Senior-Member/Member)"
+size_bytes = 640
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.karate_club.karate_club"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.karate_club.vertices"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.karate_club.edges"

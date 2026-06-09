@@ -1,0 +1,78 @@
+[demo]
+id = "fhir-patient-demographics"
+name = "FHIR Patient Demographics — Basics"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates FHIR R5 Patient resource ingestion using DeltaForge's JSON \
+flattener. A bulk NDJSON export of 50 patient records is combined with 7 \
+detailed individual Patient resources. Two tables show the dual-view \
+pattern: patients_bulk (flat demographics from NDJSON) and patients_detailed \
+(rich HL7 FHIR R5 resources with nested name arrays, telecom, and address). \
+Covers NDJSON line-delimited format, nested array flattening, column_mappings, \
+and multi-file schema evolution.
+"""
+categories = ["healthcare", "json"]
+tags = ["fhir", "healthcare", "json", "basic", "patient", "demographics", "ndjson", "column-mappings"]
+difficulty = "basic"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the directory containing FHIR Patient JSON and NDJSON files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/Patient.ndjson"
+format = "ndjson"
+description = "FHIR Bulk Data export — 50 Patient resources, one JSON object per line (NDJSON format)"
+size_bytes = 8192
+
+[[demo.data_files]]
+path = "data/patient-example.json"
+format = "json"
+description = "FHIR R5 Patient — comprehensive example with identifiers, multiple names, telecom, address, contacts"
+size_bytes = 5200
+
+[[demo.data_files]]
+path = "data/patient-example-a.json"
+format = "json"
+description = "FHIR R5 Patient — minimal example (Donald Duck)"
+size_bytes = 1200
+
+[[demo.data_files]]
+path = "data/patient-example-b.json"
+format = "json"
+description = "FHIR R5 Patient — basic example with managing organization"
+size_bytes = 1300
+
+[[demo.data_files]]
+path = "data/patient-example-c.json"
+format = "json"
+description = "FHIR R5 Patient — deceased patient example"
+size_bytes = 1400
+
+[[demo.data_files]]
+path = "data/patient-example-d.json"
+format = "json"
+description = "FHIR R5 Patient — active patient example"
+size_bytes = 1100
+
+[[demo.data_files]]
+path = "data/patient-example-f001-pieter.json"
+format = "json"
+description = "FHIR R5 Patient — Dutch patient Pieter van de Heuvel with multiple telecoms"
+size_bytes = 3800
+
+[[demo.data_files]]
+path = "data/patient-example-f201-roel.json"
+format = "json"
+description = "FHIR R5 Patient — Dutch patient Roel Bor with detailed demographics"
+size_bytes = 5400
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.patients_bulk"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.patients_detailed"

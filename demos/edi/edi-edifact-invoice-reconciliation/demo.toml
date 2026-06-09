@@ -1,0 +1,54 @@
+[demo]
+id = "edi-edifact-invoice-reconciliation"
+name = "EDIFACT Invoice Reconciliation"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Accounts payable reconciliation matching EDIFACT purchase orders (ORDERS) with \
+order responses (ORDRSP) and invoices (INVOIC) across the procurement cycle. \
+Extracts BGM document codes (220=Order, 380/393=Invoice), NAD trading partner \
+identifiers (buyer/seller/delivery party), LIN product line items with EAN codes, \
+DTM date qualifiers, MOA monetary amounts, and TAX details. Two EDIFACT directory \
+versions (D:96A, D:01B) demonstrate cross-version reconciliation. Uses \
+materialized_paths to surface key commerce fields as first-class columns for \
+document matching, amount validation, and partner verification."""
+categories = ["edi", "edifact", "finance"]
+tags = ["edi", "edifact", "invoice", "reconciliation", "procurement", "accounts-payable", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Path to directory containing EDIFACT .edi files", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.data_files]]
+path = "data/edifact_ORDERS_purchase_order.edi"
+format = "edi"
+description = "EDIFACT ORDERS — Purchase order (D:96A:UN): BGM 220, NAD supplier/buyer, LIN with EAN, DTM delivery date, MOA amount, TAX VAT"
+size_bytes = 794
+
+[[demo.data_files]]
+path = "data/edifact_ORDRSP_order_response.edi"
+format = "edi"
+description = "EDIFACT ORDRSP — Order response (D:96A:UN): BGM Z12 confirmation, NAD delivery party, LIN with EAN, DTM reference date, MOA amount"
+size_bytes = 703
+
+[[demo.data_files]]
+path = "data/edifact_INVOIC_invoice_edifabric.edi"
+format = "edi"
+description = "EDIFACT INVOIC — Commercial invoice (D:96A:UN): BGM 380, NAD delivery party, LIN with EAN, DTM reference date, MOA amount, TAX VAT"
+size_bytes = 1036
+
+[[demo.data_files]]
+path = "data/edifact_D01B_INVOIC_invoice.edi"
+format = "edi"
+description = "EDIFACT INVOIC — Factored invoice (D:01B:UN): BGM 393, DTM document date, MOA amount, TAX VAT — no NAD or LIN segments"
+size_bytes = 509
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.commerce_messages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.commerce_materialized"

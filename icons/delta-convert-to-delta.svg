@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#94a3b8"/>
+      <stop offset="1" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+  <!-- Parquet file (left) -->
+  <rect x="8" y="14" width="24" height="32" rx="3" stroke="url(#cd)" stroke-width="1.5" fill="url(#cd)" fill-opacity=".1"/>
+  <path d="M24 14L32 22L24 22Z" fill="url(#cd)" opacity=".3"/>
+  <text x="20" y="36" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cd)" opacity=".6">.parq</text>
+  <!-- Arrow -->
+  <path d="M36 30L44 30" stroke="url(#cd)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M41 26L45 30L41 34" stroke="url(#cd)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Delta table (right) -->
+  <rect x="48" y="14" width="24" height="32" rx="3" stroke="url(#cd)" stroke-width="2" fill="url(#cd)" fill-opacity=".2"/>
+  <text x="60" y="28" text-anchor="middle" font-size="8" font-family="monospace" fill="url(#cd)" opacity=".7">Δ</text>
+  <text x="60" y="40" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#cd)" opacity=".6">delta</text>
+  <!-- Transaction log indicator -->
+  <rect x="52" y="48" width="16" height="4" rx="1" fill="url(#cd)" opacity=".3"/>
+  <text x="60" y="51" text-anchor="middle" font-size="3" font-family="monospace" fill="url(#cd)" opacity=".5">_log</text>
+  <!-- Label -->
+  <text x="40" y="70" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cd)" opacity=".6">CONVERT</text>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="napa" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4338ca"/>
+      <stop offset="1" stop-color="#1e40af"/>
+    </linearGradient>
+    <radialGradient id="napa-star" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Night-sky background circle -->
+  <circle cx="40" cy="40" r="30" fill="url(#napa)" opacity=".9"/>
+  <!-- Stars -->
+  <circle cx="22" cy="22" r="4" fill="url(#napa-star)"/>
+  <circle cx="56" cy="18" r="3" fill="url(#napa-star)"/>
+  <circle cx="62" cy="36" r="3.5" fill="url(#napa-star)"/>
+  <circle cx="18" cy="48" r="3" fill="url(#napa-star)"/>
+  <circle cx="52" cy="58" r="4" fill="url(#napa-star)"/>
+  <circle cx="32" cy="60" r="2" fill="url(#napa-star)"/>
+  <!-- Planet / moon -->
+  <circle cx="40" cy="44" r="10" fill="#fef3c7" opacity=".85"/>
+  <circle cx="36" cy="42" r="2" fill="#4338ca" opacity=".35"/>
+  <circle cx="43" cy="46" r="1.6" fill="#4338ca" opacity=".35"/>
+  <!-- Orbit ring -->
+  <ellipse cx="40" cy="44" rx="15" ry="4" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".7" transform="rotate(-18 40 44)"/>
+</svg>

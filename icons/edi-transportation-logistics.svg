@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="tl" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Truck cab -->
+  <rect x="48" y="28" width="20" height="22" rx="2.5" stroke="url(#tl)" stroke-width="1.8" fill="url(#tl)" fill-opacity=".15"/>
+  <!-- Windshield -->
+  <rect x="56" y="32" width="9" height="10" rx="1.5" fill="url(#tl)" opacity=".3"/>
+  <!-- Truck trailer -->
+  <rect x="8" y="24" width="42" height="26" rx="2" stroke="url(#tl)" stroke-width="1.8" fill="url(#tl)" fill-opacity=".1"/>
+  <!-- Trailer vertical lines (cargo doors) -->
+  <line x1="22" y1="28" x2="22" y2="46" stroke="url(#tl)" stroke-width="1" opacity=".3"/>
+  <line x1="36" y1="28" x2="36" y2="46" stroke="url(#tl)" stroke-width="1" opacity=".3"/>
+  <!-- Wheels -->
+  <circle cx="20" cy="52" r="5" stroke="url(#tl)" stroke-width="1.8" fill="url(#tl)" fill-opacity=".2"/>
+  <circle cx="20" cy="52" r="2" fill="url(#tl)" opacity=".5"/>
+  <circle cx="38" cy="52" r="5" stroke="url(#tl)" stroke-width="1.8" fill="url(#tl)" fill-opacity=".2"/>
+  <circle cx="38" cy="52" r="2" fill="url(#tl)" opacity=".5"/>
+  <circle cx="60" cy="52" r="5" stroke="url(#tl)" stroke-width="1.8" fill="url(#tl)" fill-opacity=".2"/>
+  <circle cx="60" cy="52" r="2" fill="url(#tl)" opacity=".5"/>
+  <!-- Road line -->
+  <line x1="4" y1="60" x2="76" y2="60" stroke="url(#tl)" stroke-width="1.5" opacity=".3"/>
+  <!-- EDI document icon (top-left, showing digital exchange) -->
+  <rect x="6" y="6" width="12" height="14" rx="1.5" fill="url(#tl)" opacity=".3"/>
+  <line x1="8.5" y1="10" x2="15.5" y2="10" stroke="url(#tl)" stroke-width=".8" opacity=".6"/>
+  <line x1="8.5" y1="13" x2="14" y2="13" stroke="url(#tl)" stroke-width=".8" opacity=".6"/>
+  <line x1="8.5" y1="16" x2="15.5" y2="16" stroke="url(#tl)" stroke-width=".8" opacity=".6"/>
+  <!-- Arrow from doc to truck (data flow) -->
+  <path d="M20 13L30 13" stroke="url(#tl)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <path d="M27 10L30 13L27 16" stroke="url(#tl)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".5"/>
+  <!-- Signal/tracking dots (top-right, showing status updates) -->
+  <circle cx="66" cy="10" r="2" fill="url(#tl)" opacity=".5"/>
+  <circle cx="72" cy="14" r="1.5" fill="url(#tl)" opacity=".35"/>
+  <circle cx="66" cy="18" r="1.5" fill="url(#tl)" opacity=".35"/>
+  <!-- Tracking arc lines -->
+  <path d="M60 8C63 5 69 5 72 8" stroke="url(#tl)" stroke-width="1" stroke-linecap="round" fill="none" opacity=".4"/>
+  <path d="M62 20C65 23 69 23 72 20" stroke="url(#tl)" stroke-width="1" stroke-linecap="round" fill="none" opacity=".4"/>
+  <!-- Rail track marks at bottom -->
+  <line x1="8" y1="66" x2="72" y2="66" stroke="url(#tl)" stroke-width="1" opacity=".2"/>
+  <line x1="16" y1="63" x2="16" y2="69" stroke="url(#tl)" stroke-width="1" opacity=".2"/>
+  <line x1="28" y1="63" x2="28" y2="69" stroke="url(#tl)" stroke-width="1" opacity=".2"/>
+  <line x1="40" y1="63" x2="40" y2="69" stroke="url(#tl)" stroke-width="1" opacity=".2"/>
+  <line x1="52" y1="63" x2="52" y2="69" stroke="url(#tl)" stroke-width="1" opacity=".2"/>
+  <line x1="64" y1="63" x2="64" y2="69" stroke="url(#tl)" stroke-width="1" opacity=".2"/>
+</svg>

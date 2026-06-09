@@ -1,0 +1,29 @@
+[demo]
+id = "chart"
+name = "Mira's Mercantile — Retail Analytics Chart Gallery"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+An end-to-end showcase of every CREATE CHART visualization type supported by \
+DeltaForge, grounded in a regional retail chain (Mira's Mercantile, 4 stores \
+x 4 product categories x 5 weekdays = 80 rows) plus 10 weeks of parent-company \
+stock OHLC. Renders BAR, HBAR, LINE, AREA (stacked), SCATTER, PIE, HISTOGRAM, \
+HEATMAP, RADAR, and CANDLESTICK charts. Every chart is preceded by a validated \
+SELECT with ASSERTs proving the underlying data is correct before visualization.
+"""
+categories = ["chart", "visualization"]
+tags = ["chart", "visualization", "bar", "line", "pie", "scatter", "heatmap", "radar", "candlestick", "histogram", "area", "gui"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.sales_daily"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.retail.stock_prices"

@@ -1,0 +1,53 @@
+[demo]
+id = "graph-email-eu-core"
+name = "Email-Eu-core — European Institution Email Network"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Email-Eu-core communication network (SNAP dataset, Leskovec et al.): a directed \
+email graph from a European research institution. 1,005 vertices represent \
+members, 25,571 directed edges capture email exchanges with uniform weight. \
+\
+Unlike the other graph demos, this dataset is DIRECTED (not symmetric) and \
+contains self-loops. It features 42 ground-truth department communities, a \
+diameter of 7, and 105,461 triangles. The largest weakly connected component \
+covers 98.1% of nodes (986 of 1,005). \
+\
+Verifies directed graph algorithms, self-loop handling, triangle counting, \
+and community detection against published SNAP reference values. \
+\
+Data source: J. Leskovec, J. Kleinberg, C. Faloutsos, "Graph evolution: \
+Densification and shrinking diameters," ACM TKDD, 2007. Stanford SNAP dataset.
+"""
+categories = ["graph"]
+tags = ["graph", "email", "directed", "SNAP", "community-detection", "triangles", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/edges.csv"
+format = "csv"
+description = "Edge list: 25,571 directed edge rows with weight=1.0"
+size_bytes = 294997
+
+[[demo.data_files]]
+path = "data/vertices.csv"
+format = "csv"
+description = "Vertex list: 1,005 members with name and department category"
+size_bytes = 35766
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.email_eu_core.email_eu_core"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.email_eu_core.vertices"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.email_eu_core.edges"

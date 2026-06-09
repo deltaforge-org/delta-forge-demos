@@ -1,0 +1,12 @@
+MSH|^~\&|DOCS|HOSPITAL|EHR|HOSPITAL|20230318143000||MDM^T02^MDM_T02|MSG00006|P|2.5.1|||AL|NE
+EVN|T02|20230318143000
+PID|1||123456789^^^HOSP^MR||SMITH^JOHN^DAVID||19800515|M|||123 MAIN ST^^CHICAGO^IL^60601^USA
+PV1|1|I|ICU^0101^01^HOSP|||1234567890^JOHNSON^MARY^A^DR^^^NPI
+TXA|1|HP^History and Physical^L|TX||20230318143000|||||1234567890^JOHNSON^MARY^A^DR^^^NPI||DOC00001||AU^Authenticated^HL70271|||||PA^Patient^HL70275
+OBX|1|TX|HP-CHIEF^Chief Complaint^L||Chest pain and shortness of breath||||||F
+OBX|2|TX|HP-HPI^History of Present Illness^L||52 year old male presents with acute onset chest pain radiating to left arm, associated with diaphoresis and dyspnea. Pain started 2 hours ago at rest. No prior history of similar symptoms.||||||F
+OBX|3|TX|HP-PMH^Past Medical History^L||Hypertension - diagnosed 2018, on Lisinopril 10mg daily\X0D\Hyperlipidemia - diagnosed 2019, on Atorvastatin 20mg daily\X0D\Type 2 Diabetes - diagnosed 2020, on Metformin 1000mg BID||||||F
+OBX|4|TX|HP-MEDS^Current Medications^L||Lisinopril 10mg daily\X0D\Atorvastatin 20mg daily\X0D\Metformin 1000mg BID\X0D\Aspirin 81mg daily||||||F
+OBX|5|TX|HP-EXAM^Physical Examination^L||VS: BP 158/95, HR 98, RR 22, T 98.6F, SpO2 94% on RA\X0D\General: Anxious appearing, diaphoretic\X0D\CV: Tachycardic, regular rhythm, no murmurs\X0D\Lungs: Bilateral basilar crackles\X0D\Ext: No edema||||||F
+OBX|6|TX|HP-ASSESS^Assessment^L||Acute coronary syndrome, rule out STEMI||||||F
+OBX|7|TX|HP-PLAN^Plan^L||1. STAT ECG\X0D\2. Troponin q6h x3\X0D\3. Aspirin 325mg chewed\X0D\4. Heparin drip per protocol\X0D\5. Cardiology consult\X0D\6. Consider cardiac catheterization||||||F

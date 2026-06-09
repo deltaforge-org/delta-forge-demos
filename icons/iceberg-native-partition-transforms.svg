@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="np" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V2 marker) -->
+  <path d="M40 4L52 20H28Z" fill="url(#np)" fill-opacity=".15" stroke="url(#np)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="16" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#np)" opacity=".9">V2</text>
+  <path d="M6 22H74" stroke="url(#np)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Bucket partition circles -->
+  <circle cx="22" cy="38" r="8" fill="url(#np)" fill-opacity=".15" stroke="url(#np)" stroke-width="1.2"/>
+  <circle cx="40" cy="38" r="8" fill="url(#np)" fill-opacity=".2" stroke="url(#np)" stroke-width="1.2"/>
+  <circle cx="58" cy="38" r="8" fill="url(#np)" fill-opacity=".15" stroke="url(#np)" stroke-width="1.2"/>
+  <text x="22" y="40" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#np)" opacity=".6">B0</text>
+  <text x="40" y="40" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#np)" opacity=".6">B1</text>
+  <text x="58" y="40" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#np)" opacity=".6">B2</text>
+  <!-- Transform label -->
+  <text x="40" y="58" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#np)" opacity=".6">bucket(8,ip)</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#np)" opacity=".6">NATIVE PARTITIONS</text>
+</svg>

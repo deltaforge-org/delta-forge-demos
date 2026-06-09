@@ -1,0 +1,58 @@
+[demo]
+id = "graph-storage-modes"
+name = "Graph Storage Modes — Flattened vs Hybrid vs JSON"
+version = "2.0.0"
+author = "DeltaForge Team"
+description = """
+Proves that DeltaForge's three graph property storage modes — FLATTENED \
+(all columns), HYBRID (columns + JSON extras), and JSON (single JSON blob) — \
+produce identical Cypher query results. Creates the same 50-employee startup \
+graph three times with different storage layouts, runs the same queries against \
+each, and asserts value-level equivalence. Includes the full algorithm suite: \
+PageRank, degree, betweenness, closeness, Louvain, SCC, triangle count, \
+shortest path, BFS, DFS, MST, KNN, and Jaccard similarity.
+"""
+categories = ["graph"]
+tags = ["graph", "delta-table", "flattened", "hybrid", "json", "storage-modes", "transparency", "generate-series", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.storage_modes.storage_flat"
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.storage_modes.storage_hybrid"
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.storage_modes.storage_json"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.storage_modes.persons_flat"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.storage_modes.edges_flat"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.storage_modes.persons_hybrid"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.storage_modes.edges_hybrid"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.storage_modes.persons_json"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.storage_modes.edges_json"

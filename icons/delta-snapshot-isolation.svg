@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="si" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outline -->
+  <path d="M40 8L16 20V42C16 56 40 72 40 72S64 56 64 42V20L40 8Z" stroke="url(#si)" stroke-width="2" fill="url(#si)" fill-opacity=".1"/>
+  <!-- Version layer lines inside shield -->
+  <line x1="26" y1="28" x2="54" y2="28" stroke="url(#si)" stroke-width="1.5" opacity=".5"/>
+  <line x1="26" y1="38" x2="54" y2="38" stroke="url(#si)" stroke-width="1.5" opacity=".7"/>
+  <line x1="26" y1="48" x2="54" y2="48" stroke="url(#si)" stroke-width="1.5" opacity=".9"/>
+  <!-- Version dots -->
+  <circle cx="22" cy="28" r="2.5" fill="url(#si)" opacity=".5"/>
+  <circle cx="22" cy="38" r="2.5" fill="url(#si)" opacity=".7"/>
+  <circle cx="22" cy="48" r="2.5" fill="url(#si)" opacity=".9"/>
+  <!-- V labels -->
+  <text x="57" y="30" font-size="5" font-family="monospace" fill="url(#si)" opacity=".5">v3</text>
+  <text x="57" y="40" font-size="5" font-family="monospace" fill="url(#si)" opacity=".7">v4</text>
+  <text x="57" y="50" font-size="5" font-family="monospace" fill="url(#si)" opacity=".9">v5</text>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rsr" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- Three portfolio rows -->
+  <rect x="12" y="16" width="56" height="12" rx="3" fill="url(#rsr)" fill-opacity=".15" stroke="url(#rsr)" stroke-width="1"/>
+  <rect x="12" y="34" width="56" height="12" rx="3" fill="url(#rsr)" fill-opacity=".3" stroke="url(#rsr)" stroke-width="1.5"/>
+  <rect x="12" y="52" width="56" height="12" rx="3" fill="url(#rsr)" fill-opacity=".15" stroke="url(#rsr)" stroke-width="1"/>
+  <!-- Checkmarks on good rows -->
+  <path d="M60 20L62 23L66 18" stroke="url(#rsr)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M60 56L62 59L66 54" stroke="url(#rsr)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Target/crosshair on middle row -->
+  <circle cx="63" cy="40" r="4" stroke="url(#rsr)" stroke-width="1.2" fill="none"/>
+  <line x1="63" y1="35" x2="63" y2="45" stroke="url(#rsr)" stroke-width="0.8"/>
+  <line x1="58" y1="40" x2="68" y2="40" stroke="url(#rsr)" stroke-width="0.8"/>
+  <!-- Version arrow -->
+  <path d="M8 40C4 40 4 8 12 8L40 8" stroke="url(#rsr)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-dasharray="3"/>
+  <text x="42" y="10" font-size="4" font-family="monospace" fill="url(#rsr)" opacity=".5">V1</text>
+  <!-- Row labels -->
+  <text x="18" y="24" font-size="4" font-family="monospace" fill="url(#rsr)" opacity=".6">OK</text>
+  <text x="18" y="42" font-size="4" font-family="monospace" fill="url(#rsr)" opacity=".9">FIX</text>
+  <text x="18" y="60" font-size="4" font-family="monospace" fill="url(#rsr)" opacity=".6">OK</text>
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#rsr)" opacity=".6">SELECTIVE</text>
+</svg>

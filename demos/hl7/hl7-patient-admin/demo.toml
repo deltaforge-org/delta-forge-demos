@@ -1,0 +1,78 @@
+[demo]
+id = "hl7-patient-admin"
+name = "HL7 Patient Administration — ADT Lifecycle"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates how DeltaForge ingests HL7 v2 ADT (Admit-Discharge-Transfer) \
+messages from multiple EHR systems and HL7 versions. Eight real-world messages \
+cover the full patient lifecycle: admission (A01), demographics update (A08), \
+and discharge (A03). Sources span EPIC, Folio3, Ritten, MegaReg, and Contoso \
+across HL7 v2.3 through v2.6 — showing how a single external table unifies \
+heterogeneous ADT feeds into queryable patient, visit, allergy, diagnosis, \
+and insurance data.
+"""
+categories = ["hl7", "healthcare"]
+tags = ["hl7", "adt", "patient", "admission", "discharge", "demographics", "multi-version", "healthcare"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Path to the directory containing HL7 ADT message files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/adt_a01_admission.hl7"
+format = "hl7"
+description = "ADT^A01 — Full admission (EPIC, v2.5.1): patient, allergies, diagnosis, insurance, guarantor"
+size_bytes = 1379
+
+[[demo.data_files]]
+path = "data/adt_a08_update.hl7"
+format = "hl7"
+description = "ADT^A08 — Demographics update (v2.5.1): address and contact change for existing patient"
+size_bytes = 547
+
+[[demo.data_files]]
+path = "data/adt_a03_discharge.hl7"
+format = "hl7"
+description = "ADT^A03 — Discharge (IRIS SANTER, v2.5): procedure code, multi-ID systems (PK, CF, SSN)"
+size_bytes = 503
+
+[[demo.data_files]]
+path = "data/adt_a01_folio3.hl7"
+format = "hl7"
+description = "ADT^A01 — Legacy admission (Folio3/MCM, v2.3.1): surgical ward, next of kin"
+size_bytes = 428
+
+[[demo.data_files]]
+path = "data/adt_a01_ritten.hl7"
+format = "hl7"
+description = "ADT^A01 — Simple outpatient registration (Ritten, v2.5): minimal segments"
+size_bytes = 289
+
+[[demo.data_files]]
+path = "data/hl7v2.3_adt_a01_aws.hl7"
+format = "hl7"
+description = "ADT^A01 — Outpatient admission (AWS, v2.3): compact format with next of kin"
+size_bytes = 337
+
+[[demo.data_files]]
+path = "data/hl7v2.5_adt_a01_megareg.hl7"
+format = "hl7"
+description = "ADT^A01 — Complex registration (MegaReg, v2.5): body measurements, allergies, dual address"
+size_bytes = 715
+
+[[demo.data_files]]
+path = "data/hl7v2.6_adt_a01_azure.hl7"
+format = "hl7"
+description = "ADT^A01 — Modern admission (Contoso/Azure, v2.6): Z-segments, multiple ID systems, guarantor"
+size_bytes = 937
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7.adt_messages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.hl7.adt_materialized"

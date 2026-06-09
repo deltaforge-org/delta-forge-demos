@@ -1,0 +1,26 @@
+[demo]
+id = "delta-convert-to-delta"
+name = "Delta Convert to Delta — Migrating from Raw Parquet"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Converting Parquet files to Delta Lake adds a transaction log (_delta_log) \
+on top of existing data files, unlocking ACID transactions, schema \
+enforcement, and time travel that raw Parquet cannot provide. This demo \
+simulates migrating legacy reporting data into a Delta table, then \
+leverages Delta-only capabilities — UPDATE to standardize payment codes \
+and DELETE to remove duplicates — that would be impossible with flat \
+Parquet files.
+"""
+categories = ["data-migration", "delta-table"]
+tags = ["delta-table", "intermediate", "migration", "convert", "parquet", "update", "delete", "optimize"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.legacy_data"

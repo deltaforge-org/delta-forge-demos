@@ -1,0 +1,26 @@
+[demo]
+id = "delta-bloom-filters"
+name = "Delta Bloom Filters — Probabilistic Index for Fast Lookups"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Bloom filters are probabilistic data structures stored alongside Delta \
+data files that enable data-skipping for point lookups on high-cardinality \
+columns like transaction IDs. When a query filters on a bloom-indexed \
+column, the engine checks the filter first and skips files that definitely \
+do not contain the value, dramatically reducing I/O. This demo configures \
+bloom-filter-friendly table properties and performs exact-match lookups \
+against a transaction log to illustrate the pattern.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "bloom-filter", "index", "point-lookup", "data-skipping", "performance"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.transaction_log"

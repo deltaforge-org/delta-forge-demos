@@ -1,0 +1,25 @@
+[demo]
+id = "delta-auto-optimize"
+name = "Delta Auto-Optimize — Automatic Compaction & Write Optimization"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta Auto-Optimize uses SET AUTO OPTIMIZE to enable automatic post-write \
+compaction. Without it, frequent small INSERTs create a "small files problem" \
+that degrades read performance. This demo creates a table with auto-optimize \
+OFF (the default), then explicitly enables it with a low compaction threshold \
+(3 files). As IoT sensor data is ingested across 7 batches, auto-optimize \
+transparently compacts small files after each write.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "auto-optimize", "compaction", "small-files", "iot", "performance"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.iot_readings"

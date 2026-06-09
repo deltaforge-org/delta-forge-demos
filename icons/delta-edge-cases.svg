@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ec" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#94a3b8"/>
+      <stop offset="1" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+  <!-- Single row (singleton) -->
+  <rect x="10" y="8" width="24" height="22" rx="3" stroke="url(#ec)" stroke-width="1.5" fill="url(#ec)" fill-opacity=".12"/>
+  <line x1="14" y1="16" x2="30" y2="16" stroke="url(#ec)" stroke-width="1" opacity=".5"/>
+  <text x="22" y="26" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#ec)" opacity=".7">1row</text>
+  <!-- Wide table (many columns) -->
+  <rect x="40" y="8" width="32" height="22" rx="3" stroke="url(#ec)" stroke-width="1.5" fill="url(#ec)" fill-opacity=".12"/>
+  <line x1="44" y1="14" x2="44" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <line x1="48" y1="14" x2="48" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <line x1="52" y1="14" x2="52" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <line x1="56" y1="14" x2="56" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <line x1="60" y1="14" x2="60" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <line x1="64" y1="14" x2="64" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <line x1="68" y1="14" x2="68" y2="26" stroke="url(#ec)" stroke-width="0.5" opacity=".3"/>
+  <text x="56" y="20" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ec)" opacity=".7">30col</text>
+  <!-- Empty table -->
+  <rect x="20" y="38" width="40" height="22" rx="3" stroke="url(#ec)" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+  <text x="40" y="52" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#ec)" opacity=".5">0 rows</text>
+  <!-- Question mark / edge case symbol -->
+  <text x="40" y="76" text-anchor="middle" font-size="10" font-family="monospace" fill="url(#ec)" opacity=".8">⚠ EDGE</text>
+</svg>

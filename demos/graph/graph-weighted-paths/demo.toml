@@ -1,0 +1,34 @@
+[demo]
+id = "graph-weighted-paths"
+name = "Graph Weighted Paths — Global Shipping Route Optimization"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Maritime logistics network with 25 major world ports connected by 55 \
+directed shipping routes. Each route carries distance (nautical miles) \
+and transit time as weights. Demonstrates weighted shortest-path \
+(Dijkstra), minimum spanning tree for minimum-cost infrastructure, \
+BFS depth analysis, hub detection via degree centrality and PageRank, \
+and regional route analytics across Asia, Europe, Americas, Middle East, \
+and South Asia trade corridors.
+"""
+categories = ["graph"]
+tags = ["graph", "weighted", "shortest-path", "mst", "shipping", "logistics"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.shipping_network.shipping_network"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.shipping_network.ports"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.shipping_network.routes"

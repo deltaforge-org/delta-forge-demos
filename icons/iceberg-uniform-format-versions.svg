@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fv" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <!-- Three iceberg tips (V1, V2, V3) -->
+  <!-- V1 (small, left) -->
+  <path d="M18 28L24 18L30 28Z" fill="url(#fv)" fill-opacity=".15" stroke="url(#fv)" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="24" y="24" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#fv)" opacity=".6">1</text>
+  <!-- V2 (medium, center) -->
+  <path d="M32 28L40 14L48 28Z" fill="url(#fv)" fill-opacity=".25" stroke="url(#fv)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="24" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#fv)" opacity=".7">2</text>
+  <!-- V3 (large, right) -->
+  <path d="M50 28L58 10L66 28Z" fill="url(#fv)" fill-opacity=".35" stroke="url(#fv)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="58" y="24" text-anchor="middle" font-size="6" font-family="monospace" fill="url(#fv)" opacity=".8">3</text>
+  <!-- Waterline -->
+  <path d="M8 30H72" stroke="url(#fv)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Shared underwater mass -->
+  <path d="M14 30L10 52L30 64L50 64L70 52L66 30Z" fill="url(#fv)" fill-opacity=".08" stroke="url(#fv)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Feature progression lines -->
+  <path d="M22 38H58" stroke="url(#fv)" stroke-width="1" opacity=".25"/>
+  <path d="M22 44H58" stroke="url(#fv)" stroke-width="1" opacity=".25"/>
+  <path d="M22 50H58" stroke="url(#fv)" stroke-width="1" opacity=".25"/>
+  <!-- V1 features (1 dot) -->
+  <circle cx="24" cy="38" r="2" fill="url(#fv)" opacity=".4"/>
+  <!-- V2 features (2 dots) -->
+  <circle cx="40" cy="38" r="2" fill="url(#fv)" opacity=".5"/>
+  <circle cx="40" cy="44" r="2" fill="url(#fv)" opacity=".5"/>
+  <!-- V3 features (3 dots) -->
+  <circle cx="56" cy="38" r="2" fill="url(#fv)" opacity=".7"/>
+  <circle cx="56" cy="44" r="2" fill="url(#fv)" opacity=".7"/>
+  <circle cx="56" cy="50" r="2" fill="url(#fv)" opacity=".7"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#fv)" opacity=".6">VERSIONS</text>
+</svg>

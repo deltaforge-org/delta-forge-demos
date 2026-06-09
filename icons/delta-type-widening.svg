@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="tw" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Small type box -->
+  <rect x="10" y="22" width="20" height="16" rx="3" stroke="url(#tw)" stroke-width="1.5" fill="url(#tw)" fill-opacity=".2"/>
+  <text x="20" y="33" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#tw)" opacity=".9">INT</text>
+  <!-- Arrow expanding -->
+  <path d="M32 30H38L42 24V36L38 30" stroke="url(#tw)" stroke-width="1.5" fill="url(#tw)" fill-opacity=".15"/>
+  <!-- Large type box -->
+  <rect x="44" y="18" width="28" height="24" rx="4" stroke="url(#tw)" stroke-width="2" fill="url(#tw)" fill-opacity=".15"/>
+  <text x="58" y="33" text-anchor="middle" font-size="8" font-family="monospace" fill="url(#tw)" opacity=".9">BIGINT</text>
+  <!-- Precision bars -->
+  <rect x="14" y="50" width="12" height="4" rx="1" fill="url(#tw)" opacity=".3"/>
+  <rect x="14" y="57" width="24" height="4" rx="1" fill="url(#tw)" opacity=".5"/>
+  <rect x="14" y="64" width="48" height="4" rx="1" fill="url(#tw)" opacity=".7"/>
+  <!-- Labels -->
+  <text x="68" y="54" text-anchor="end" font-size="5" font-family="monospace" fill="url(#tw)" opacity=".5">32-bit</text>
+  <text x="68" y="61" text-anchor="end" font-size="5" font-family="monospace" fill="url(#tw)" opacity=".5">64-bit</text>
+  <text x="68" y="68" text-anchor="end" font-size="5" font-family="monospace" fill="url(#tw)" opacity=".5">double</text>
+</svg>

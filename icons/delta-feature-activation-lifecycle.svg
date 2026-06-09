@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="fal" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Delta triangle -->
+  <path d="M40 8L66 62H14L40 8Z" stroke="url(#fal)" stroke-width="2" fill="url(#fal)" fill-opacity=".10"/>
+  <!-- Lifecycle stages: 3 circles with connecting arrows -->
+  <circle cx="24" cy="42" r="7" stroke="url(#fal)" stroke-width="1.5" fill="url(#fal)" fill-opacity=".15"/>
+  <circle cx="40" cy="32" r="7" stroke="url(#fal)" stroke-width="1.5" fill="url(#fal)" fill-opacity=".25"/>
+  <circle cx="56" cy="42" r="7" stroke="url(#fal)" stroke-width="1.5" fill="url(#fal)" fill-opacity=".35"/>
+  <!-- Stage labels -->
+  <text x="24" y="44" text-anchor="middle" font-size="6" fill="url(#fal)" font-family="monospace">v1</text>
+  <text x="40" y="34" text-anchor="middle" font-size="6" fill="url(#fal)" font-family="monospace">v2</text>
+  <text x="56" y="44" text-anchor="middle" font-size="6" fill="url(#fal)" font-family="monospace">v3</text>
+  <!-- Connecting arrows -->
+  <line x1="30" y1="38" x2="34" y2="35" stroke="url(#fal)" stroke-width="1.2"/>
+  <polyline points="33,33 35,35 33,37" stroke="url(#fal)" stroke-width="1" fill="none"/>
+  <line x1="46" y1="35" x2="50" y2="38" stroke="url(#fal)" stroke-width="1.2"/>
+  <polyline points="49,36 51,38 49,40" stroke="url(#fal)" stroke-width="1" fill="none"/>
+  <!-- Toggle switches (feature activation) -->
+  <rect x="20" y="54" width="12" height="5" rx="2.5" stroke="url(#fal)" stroke-width="1" fill="none" opacity=".4"/>
+  <circle cx="25" cy="56.5" r="2" fill="url(#fal)" opacity=".3"/>
+  <rect x="36" y="54" width="12" height="5" rx="2.5" stroke="url(#fal)" stroke-width="1" fill="none" opacity=".6"/>
+  <circle cx="44" cy="56.5" r="2" fill="url(#fal)" opacity=".6"/>
+  <rect x="52" y="54" width="12" height="5" rx="2.5" stroke="url(#fal)" stroke-width="1" fill="url(#fal)" fill-opacity=".15"/>
+  <circle cx="60" cy="56.5" r="2" fill="url(#fal)" opacity=".8"/>
+  <!-- Bottom detail lines -->
+  <line x1="20" y1="66" x2="60" y2="66" stroke="url(#fal)" stroke-width="1" opacity=".3"/>
+  <line x1="20" y1="70" x2="50" y2="70" stroke="url(#fal)" stroke-width="1" opacity=".2"/>
+</svg>

@@ -1,0 +1,25 @@
+[demo]
+id = "delta-complex-types"
+name = "Delta Complex Types — Structs, Arrays & Maps"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta Lake supports complex data modelling through struct-like multi-column \
+patterns, array-like delimited strings, and map-like key=value pairs — \
+reflecting how real-world data often has nested, repeated, or semi-structured \
+shapes. This demo models an employee directory with address structs (multiple \
+columns), skill arrays (comma-delimited), and metadata maps (key=value), then \
+queries them using LIKE patterns and column filters.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "structs", "arrays", "maps", "complex-types", "data-modelling"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.employees"

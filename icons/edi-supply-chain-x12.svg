@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Package box (center) -->
+  <rect x="25" y="22" width="30" height="26" rx="2" stroke="url(#sc)" stroke-width="1.8" fill="url(#sc)" fill-opacity=".15"/>
+  <line x1="40" y1="22" x2="40" y2="48" stroke="url(#sc)" stroke-width="1.2" opacity=".5"/>
+  <line x1="25" y1="33" x2="55" y2="33" stroke="url(#sc)" stroke-width="1.2" opacity=".5"/>
+  <!-- Box tape cross -->
+  <rect x="36" y="22" width="8" height="11" rx="0.5" fill="url(#sc)" opacity=".35"/>
+  <!-- Arrow: left to box (incoming order) -->
+  <path d="M8 35L22 35" stroke="url(#sc)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M18 31L22 35L18 39" stroke="url(#sc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Arrow: box to right (outgoing shipment) -->
+  <path d="M58 35L72 35" stroke="url(#sc)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M68 31L72 35L68 39" stroke="url(#sc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Arrow: top down to box (acknowledgment) -->
+  <path d="M40 6L40 19" stroke="url(#sc)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M36 15L40 19L44 15" stroke="url(#sc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Arrow: box down (delivery/receipt) -->
+  <path d="M40 51L40 64" stroke="url(#sc)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M36 60L40 64L44 60" stroke="url(#sc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Small document icons at arrow endpoints -->
+  <rect x="4" y="30" width="6" height="8" rx="1" fill="url(#sc)" opacity=".4"/>
+  <line x1="5.5" y1="33" x2="8.5" y2="33" stroke="url(#sc)" stroke-width=".6" opacity=".7"/>
+  <line x1="5.5" y1="35" x2="8.5" y2="35" stroke="url(#sc)" stroke-width=".6" opacity=".7"/>
+  <rect x="70" y="30" width="6" height="8" rx="1" fill="url(#sc)" opacity=".4"/>
+  <line x1="71.5" y1="33" x2="74.5" y2="33" stroke="url(#sc)" stroke-width=".6" opacity=".7"/>
+  <line x1="71.5" y1="35" x2="74.5" y2="35" stroke="url(#sc)" stroke-width=".6" opacity=".7"/>
+  <!-- Checkmark at bottom (receipt confirmed) -->
+  <path d="M35 68L39 72L46 65" stroke="url(#sc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".6"/>
+</svg>

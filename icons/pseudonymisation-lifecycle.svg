@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pl" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular lifecycle arrows -->
+  <path d="M40 12A28 28 0 0 1 66 32" stroke="url(#pl)" stroke-width="2" fill="none" opacity=".5"/>
+  <path d="M66 32L62 28M66 32L62 36" stroke="url(#pl)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <path d="M68 40A28 28 0 0 1 48 66" stroke="url(#pl)" stroke-width="2" fill="none" opacity=".4"/>
+  <path d="M48 66L52 62M48 66L44 62" stroke="url(#pl)" stroke-width="1.5" fill="none" opacity=".4"/>
+  <path d="M40 68A28 28 0 0 1 14 48" stroke="url(#pl)" stroke-width="2" fill="none" opacity=".3"/>
+  <path d="M14 48L18 52M14 48L18 44" stroke="url(#pl)" stroke-width="1.5" fill="none" opacity=".3"/>
+  <path d="M12 40A28 28 0 0 1 32 14" stroke="url(#pl)" stroke-width="2" fill="none" opacity=".35"/>
+  <path d="M32 14L28 18M32 14L36 18" stroke="url(#pl)" stroke-width="1.5" fill="none" opacity=".35"/>
+  <!-- Shield center -->
+  <path d="M40 28L30 33V41C30 48 34 53 40 55C46 53 50 48 50 41V33L40 28Z" stroke="url(#pl)" stroke-width="1.5" fill="url(#pl)" fill-opacity=".08"/>
+  <!-- Toggle switch -->
+  <rect x="35" y="38" width="10" height="6" rx="3" stroke="url(#pl)" stroke-width="1" fill="url(#pl)" fill-opacity=".3"/>
+  <circle cx="42" cy="41" r="2" fill="url(#pl)" opacity=".7"/>
+</svg>

@@ -1,0 +1,26 @@
+visit_id,pet_name,species,breed,owner_name,visit_date,diagnosis,treatment_cost,weight_kg,vaccinated
+N-1,Ruby,Cat,,David Kim,2025-01-22,Arthritis,190.00,3.35,false
+N-2,Max,Dog,Labrador,Amanda Wilson,2025-01-08,Eye infection,135.00,27.45,false
+N-3,Zeus,Cat,British Shorthair,Laura Davis,2025-01-26,Annual checkup,90.00,3.64,false
+N-4,Charlie,Rabbit,Flemish Giant,Amanda Wilson,2025-01-25,Sprain,120.00,1.76,false
+N-5,Willow,Rabbit,Flemish Giant,Michael Chen,2025-01-24,Parasite treatment,90.00,2.95,false
+N-6,Sadie,Dog,Golden Retriever,Kevin Young,2025-01-28,Sprain,215.00,33.18,true
+N-7,Max,Cat,Maine Coon,James Brown,2025-01-28,Ear infection,105.00,4.81,false
+N-8,Maggie,Cat,Maine Coon,Amanda Wilson,2025-01-22,,75.00,6.75,true
+N-9,Milo,Hamster,,Robert Taylor,2025-01-18,Arthritis,125.00,0.09,false
+N-10,Rosie,Hamster,Syrian,Maria Garcia,2025-01-27,Urinary infection,215.00,0.06,true
+N-11,Duke,Rabbit,Mini Lop,Emily Rodriguez,2025-01-07,Digestive issues,230.00,1.63,false
+N-12,Jack,Bird,Canary,Jessica Martinez,2025-01-09,Skin allergy,135.00,0.89,false
+N-13,Ginger,Hamster,Dwarf,Michelle Hall,2025-01-13,Sprain,145.00,0.15,false
+N-14,Luna,Dog,Dachshund,David Kim,2025-01-05,Fracture,290.00,32.22,true
+N-15,Penny,Bird,Cockatiel,Stephanie Clark,2025-01-17,Vaccination update,75.00,1.31,true
+N-16,Ginger,Dog,German Shepherd,Andrew Walker,2025-01-25,Vaccination update,65.00,18.61,false
+N-17,Jack,Bird,Budgerigar,Sarah Johnson,2025-01-24,Arthritis,125.00,0.80,true
+N-18,Coco,Hamster,Syrian,Thomas Anderson,2025-01-27,Fracture,375.00,0.05,false
+N-19,Finn,Cat,Ragdoll,Rachel Lewis,2025-01-01,Digestive issues,150.00,3.08,false
+N-20,Luna,Rabbit,Rex,James Brown,2025-01-19,Ear infection,80.00,1.97,true
+N-21,Charlie,Hamster,Syrian,Daniel Harris,2025-01-18,Skin allergy,140.00,0.13,false
+N-22,Finn,Cat,Ragdoll,Amanda Wilson,2025-01-23,Vaccination update,45.00,5.69,false
+N-23,Jack,Bird,Canary,David Kim,2025-01-08,Dental cleaning,165.00,0.13,true
+N-24,Molly,Hamster,,Sarah Johnson,2025-01-03,Arthritis,165.00,0.06,true
+N-25,Oliver,Rabbit,Holland Lop,James Brown,2025-01-09,Fracture,370.00,2.08,false

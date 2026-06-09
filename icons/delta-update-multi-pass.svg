@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <!-- Three stacked layers (pipeline stages) -->
+  <rect x="12" y="8" width="56" height="14" rx="3" fill="url(#mp)" fill-opacity=".1" stroke="url(#mp)" stroke-width="1" opacity=".6"/>
+  <text x="20" y="17" font-size="4.5" font-family="monospace" fill="url(#mp)" opacity=".5">1 Normalize</text>
+  <rect x="12" y="28" width="56" height="14" rx="3" fill="url(#mp)" fill-opacity=".15" stroke="url(#mp)" stroke-width="1" opacity=".75"/>
+  <text x="20" y="37" font-size="4.5" font-family="monospace" fill="url(#mp)" opacity=".65">2 Classify</text>
+  <rect x="12" y="48" width="56" height="14" rx="3" fill="url(#mp)" fill-opacity=".22" stroke="url(#mp)" stroke-width="1.2"/>
+  <text x="20" y="57" font-size="4.5" font-family="monospace" fill="url(#mp)" opacity=".8">3 Enrich</text>
+  <!-- Connecting arrows between layers -->
+  <path d="M40 22L40 28" stroke="url(#mp)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <path d="M37 26L40 29L43 26" stroke="url(#mp)" stroke-width="1" fill="none" opacity=".5"/>
+  <path d="M40 42L40 48" stroke="url(#mp)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <path d="M37 46L40 49L43 46" stroke="url(#mp)" stroke-width="1" fill="none" opacity=".5"/>
+  <!-- Version badges -->
+  <circle cx="66" cy="15" r="4" fill="url(#mp)" opacity=".3"/>
+  <text x="64.5" y="17" font-size="4" font-family="monospace" fill="#0f172a" opacity=".8">2</text>
+  <circle cx="66" cy="35" r="4" fill="url(#mp)" opacity=".4"/>
+  <text x="64.5" y="37" font-size="4" font-family="monospace" fill="#0f172a" opacity=".8">3</text>
+  <circle cx="66" cy="55" r="4" fill="url(#mp)" opacity=".55"/>
+  <text x="64.5" y="57" font-size="4" font-family="monospace" fill="#0f172a" opacity=".8">4</text>
+  <!-- Output arrow -->
+  <path d="M40 62L40 74" stroke="url(#mp)" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+  <path d="M37 71L40 75L43 71" stroke="url(#mp)" stroke-width="1.2" fill="none" opacity=".6"/>
+  <text x="40" y="80" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#mp)" opacity=".5">DONE</text>
+</svg>

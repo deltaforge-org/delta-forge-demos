@@ -1,0 +1,26 @@
+[demo]
+id = "delta-computed-columns"
+name = "Delta Computed Fields — Formulas, Defaults & Derived Values"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Computed columns are derived values calculated from other columns using \
+SQL expressions, ensuring consistency without storing redundant data. \
+Without a disciplined approach, formulas like subtotal, discount, and \
+commission can drift between INSERT and UPDATE statements. This demo \
+uses CTE-based formulas to compute subtotal, discount_amt, total, and \
+commission during insertion, then applies a targeted UPDATE to adjust \
+commission rates for a specific sales rep.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "computed-columns", "generated", "cte", "formulas", "defaults"]
+difficulty = "intermediate"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sales_invoices"

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="oem" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#facc15"/>
+      <stop offset="1" stop-color="#eab308"/>
+    </linearGradient>
+  </defs>
+  <!-- Meter body -->
+  <rect x="18" y="14" width="44" height="52" rx="5" fill="url(#oem)" opacity=".1" stroke="url(#oem)" stroke-width="1.5"/>
+  <!-- Display screen -->
+  <rect x="24" y="20" width="32" height="16" rx="2" fill="url(#oem)" opacity=".2" stroke="url(#oem)" stroke-width="1"/>
+  <!-- kWh reading -->
+  <text x="40" y="32" text-anchor="middle" font-family="monospace" font-size="8" fill="url(#oem)" opacity=".7">kWh</text>
+  <!-- Lightning bolt -->
+  <path d="M37 42 L42 42 L40 50 L46 50 L38 62 L40 54 L35 54 Z" fill="url(#oem)" opacity=".5"/>
+  <!-- Connection wires -->
+  <line x1="30" y1="66" x2="30" y2="74" stroke="url(#oem)" stroke-width="2" opacity=".4"/>
+  <line x1="50" y1="66" x2="50" y2="74" stroke="url(#oem)" stroke-width="2" opacity=".4"/>
+</svg>

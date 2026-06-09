@@ -1,0 +1,58 @@
+[demo]
+id = "frankfurter-fx-rate-catalog"
+name = "Frankfurter FX Rate Catalog — ALTER API ENDPOINT + Multi-Endpoint"
+version = "1.0.0"
+description = """
+A fintech risk desk maintains a small FX-rate catalog for two purposes:
+(1) a daily latest-rate snapshot against the euro (needed for every
+cross-border settlement that day) and (2) a historical benchmark rate
+from 1999-01-04 — the day the euro was introduced — used as the
+anchor for long-horizon currency basket comparisons. Both live under
+ONE connection to Frankfurter (ECB-sourced FX data, public, no auth).
+
+This is the ALTER API ENDPOINT walkthrough demo. An endpoint is first
+created as a `latest_from_usd` quick-lookup, and then successively
+modified:
+  • `SET URL '/v1/1999-01-04?...'` — repoint to a historical date
+  • `SET OPTIONS (rate_limit_rps = '1', retry_max_attempts = '3')`
+  • `RENAME TO euro_launch_day_rates` — change the leaf name
+All three modifications land in a single ALTER statement (actions
+chain left-to-right, later values win on field overlap). After the
+ALTER, `DESCRIBE API ENDPOINT` and a second `SHOW API ENDPOINTS IN
+CONNECTION` show the before/after surface.
+
+Multi-endpoint under one connection is the other pillar. Both the
+latest snapshot and the historical lookup use `frankfurter_fx` as the
+shared connection, so credentials, base_url, and rate-limit policy
+live in one place. Each endpoint writes to its own subfolder under
+the connection's base_path so the bronze external table can read
+both streams with one `recursive = 'true'` glob.
+
+Demonstrates: ALTER API ENDPOINT with SET URL / SET OPTIONS / RENAME TO
+in a single statement, DESCRIBE API ENDPOINT for verbose config
+inspection, SHOW API ENDPOINTS IN CONNECTION before/after ALTER,
+SHOW API ENDPOINT RUNS per-endpoint for per-stream audit, multiple
+endpoints under one connection, and bronze flatten reading multiple
+endpoint subfolders.
+
+NOTE: requires internet. INVOKE issues real GETs against
+https://api.frankfurter.dev. Frankfurter is a free ECB-backed FX
+service; anonymous use has no enforced rate limit but the endpoint
+options set a polite rate_limit_rps = '1'.
+"""
+categories = ["api", "rest-ingest", "alter", "finance"]
+tags = ["api", "rest", "ingest", "alter-api-endpoint", "rename", "multi-endpoint", "show-api-endpoints", "describe-api-endpoint", "show-runs", "frankfurter", "ecb", "fx", "finance", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.frankfurter_fx.fx_rates_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.frankfurter_fx.fx_rates_silver"

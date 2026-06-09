@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="lm" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip (V2 marker) -->
+  <path d="M40 4L52 20H28Z" fill="url(#lm)" fill-opacity=".15" stroke="url(#lm)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="40" y="16" text-anchor="middle" font-size="6" font-family="monospace" font-weight="bold" fill="url(#lm)" opacity=".9">V2</text>
+  <path d="M6 22H74" stroke="url(#lm)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <!-- Stacked manifest files -->
+  <rect x="22" y="28" width="36" height="8" rx="2" fill="url(#lm)" fill-opacity=".12" stroke="url(#lm)" stroke-width="1"/>
+  <rect x="20" y="32" width="40" height="8" rx="2" fill="url(#lm)" fill-opacity=".18" stroke="url(#lm)" stroke-width="1"/>
+  <rect x="18" y="36" width="44" height="8" rx="2" fill="url(#lm)" fill-opacity=".25" stroke="url(#lm)" stroke-width="1.2"/>
+  <!-- File count dots -->
+  <circle cx="24" cy="52" r="2" fill="url(#lm)" opacity=".3"/>
+  <circle cx="30" cy="52" r="2" fill="url(#lm)" opacity=".35"/>
+  <circle cx="36" cy="52" r="2" fill="url(#lm)" opacity=".4"/>
+  <circle cx="42" cy="52" r="2" fill="url(#lm)" opacity=".45"/>
+  <circle cx="48" cy="52" r="2" fill="url(#lm)" opacity=".5"/>
+  <circle cx="54" cy="52" r="2" fill="url(#lm)" opacity=".55"/>
+  <!-- Chain link -->
+  <path d="M24 58L54 58" stroke="url(#lm)" stroke-width="1" opacity=".4"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#lm)" opacity=".6">LARGE MANIFESTS</text>
+</svg>

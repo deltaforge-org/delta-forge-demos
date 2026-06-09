@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gs" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#84cc16"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <!-- Factory building -->
+  <rect x="12" y="30" width="56" height="36" rx="2" fill="url(#gs)" opacity=".15" stroke="url(#gs)" stroke-width="1.5"/>
+  <!-- Smokestack -->
+  <rect x="52" y="14" width="8" height="18" fill="url(#gs)" opacity=".3" stroke="url(#gs)" stroke-width="1.5"/>
+  <rect x="44" y="20" width="8" height="12" fill="url(#gs)" opacity=".25" stroke="url(#gs)" stroke-width="1.5"/>
+  <!-- Smoke puffs -->
+  <circle cx="56" cy="10" r="3" fill="url(#gs)" opacity=".2"/>
+  <circle cx="52" cy="6" r="2" fill="url(#gs)" opacity=".15"/>
+  <!-- Factory windows (production lines) -->
+  <rect x="18" y="36" width="10" height="8" rx="1" fill="url(#gs)" opacity=".4"/>
+  <rect x="32" y="36" width="10" height="8" rx="1" fill="url(#gs)" opacity=".4"/>
+  <rect x="46" y="36" width="10" height="8" rx="1" fill="url(#gs)" opacity=".4"/>
+  <!-- Door -->
+  <rect x="32" y="50" width="12" height="16" rx="1" fill="url(#gs)" opacity=".35"/>
+  <!-- Gear icon -->
+  <circle cx="22" cy="56" r="6" stroke="url(#gs)" stroke-width="1.5" fill="url(#gs)" opacity=".2"/>
+  <circle cx="22" cy="56" r="2.5" fill="url(#gs)" opacity=".5"/>
+  <!-- CUBE label -->
+  <text x="40" y="76" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#gs)" opacity=".6">CUBE</text>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rt" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <!-- Table rows with tracking IDs -->
+  <rect x="10" y="10" width="60" height="10" rx="2" fill="url(#rt)" fill-opacity=".2" stroke="url(#rt)" stroke-width="1"/>
+  <text x="18" y="17" font-size="4" font-family="monospace" fill="url(#rt)" opacity=".5">#1</text>
+  <rect x="10" y="22" width="60" height="10" rx="2" fill="url(#rt)" fill-opacity=".15" stroke="url(#rt)" stroke-width="1"/>
+  <text x="18" y="29" font-size="4" font-family="monospace" fill="url(#rt)" opacity=".5">#2</text>
+  <rect x="10" y="34" width="60" height="10" rx="2" fill="url(#rt)" fill-opacity=".2" stroke="url(#rt)" stroke-width="1"/>
+  <text x="18" y="41" font-size="4" font-family="monospace" fill="url(#rt)" opacity=".5">#3</text>
+  <rect x="10" y="46" width="60" height="10" rx="2" fill="url(#rt)" fill-opacity=".15" stroke="url(#rt)" stroke-width="1"/>
+  <text x="18" y="53" font-size="4" font-family="monospace" fill="url(#rt)" opacity=".5">#4</text>
+  <!-- Tracking line -->
+  <line x1="14" y1="10" x2="14" y2="56" stroke="url(#rt)" stroke-width="1.5" opacity=".6"/>
+  <!-- Version badges -->
+  <text x="58" y="17" font-size="3.5" font-family="monospace" fill="url(#rt)" opacity=".6">v0</text>
+  <text x="58" y="29" font-size="3.5" font-family="monospace" fill="url(#rt)" opacity=".6">v1</text>
+  <text x="58" y="41" font-size="3.5" font-family="monospace" fill="url(#rt)" opacity=".6">v0</text>
+  <text x="58" y="53" font-size="3.5" font-family="monospace" fill="url(#rt)" opacity=".6">v2</text>
+  <!-- Fingerprint icon -->
+  <circle cx="40" cy="66" r="6" stroke="url(#rt)" stroke-width="1.5" fill="url(#rt)" fill-opacity=".1"/>
+  <path d="M37 66C37 63 40 61 43 63" stroke="url(#rt)" stroke-width="1" fill="none" opacity=".6"/>
+  <path d="M36 68C36 64 41 62 44 65" stroke="url(#rt)" stroke-width="1" fill="none" opacity=".4"/>
+  <!-- Label -->
+  <text x="40" y="80" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#rt)" opacity=".6">TRACKING</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="co" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <line x1="12" y1="22" x2="68" y2="22" stroke="url(#co)" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+  <line x1="12" y1="40" x2="68" y2="40" stroke="url(#co)" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+  <line x1="12" y1="58" x2="68" y2="58" stroke="url(#co)" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+  <line x1="12" y1="22" x2="52" y2="22" stroke="url(#co)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <line x1="12" y1="40" x2="28" y2="40" stroke="url(#co)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <line x1="12" y1="58" x2="44" y2="58" stroke="url(#co)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <circle cx="52" cy="22" r="6" fill="url(#co)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="28" cy="40" r="6" fill="url(#co)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="44" cy="58" r="6" fill="url(#co)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="52" cy="22" r="2" fill="#c7d2fe" opacity=".6"/>
+  <circle cx="28" cy="40" r="2" fill="#c7d2fe" opacity=".6"/>
+  <circle cx="44" cy="58" r="2" fill="#c7d2fe" opacity=".6"/>
+</svg>

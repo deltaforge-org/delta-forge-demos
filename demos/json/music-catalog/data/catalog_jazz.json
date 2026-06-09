@@ -1,0 +1,4568 @@
+[
+  {
+    "id": 8,
+    "name": "Warner 25 Anos",
+    "vendor_id": 6,
+    "requires_shipping": false,
+    "sku": "ALBUM-8",
+    "taxable": true,
+    "status": "available",
+    "price": 1053,
+    "vendor": {
+      "id": 6,
+      "name": "Ant\u00f4nio Carlos Jobim"
+    },
+    "details": [
+      {
+        "track_id": 76,
+        "name": "Canta, Canta Mais",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 271856,
+        "bytes": 8719426,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 75,
+        "name": "O Boto (B\u00f4to)",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 366837,
+        "bytes": 12089673,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 74,
+        "name": "Outra Vez",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 126511,
+        "bytes": 4110053,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 73,
+        "name": "Corcovado (Quiet Nights Of Quiet Stars)",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 205662,
+        "bytes": 6687994,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 72,
+        "name": "Angela",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 169508,
+        "bytes": 5574957,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 71,
+        "name": "Falando De Amor",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 219663,
+        "bytes": 7121735,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 70,
+        "name": "Se Todos Fossem Iguais A Voc\u00ea (Instrumental)",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 134948,
+        "bytes": 4393377,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 69,
+        "name": "Dindi (Dindi)",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 253178,
+        "bytes": 8149148,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 68,
+        "name": "Fotografia",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 129227,
+        "bytes": 4198774,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 67,
+        "name": "Ligia",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 251977,
+        "bytes": 8226934,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 66,
+        "name": "Por Causa De Voc\u00ea",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 169900,
+        "bytes": 5536496,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 65,
+        "name": "Samba De Uma Nota S\u00f3 (One Note Samba)",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 137273,
+        "bytes": 4535401,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 64,
+        "name": "Garota De Ipanema",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 285048,
+        "bytes": 9348428,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 63,
+        "name": "Desafinado",
+        "album_id": 8,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 185338,
+        "bytes": 5990473,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "The Best Of Billy Cobham",
+    "vendor_id": 10,
+    "requires_shipping": false,
+    "sku": "ALBUM-13",
+    "taxable": true,
+    "status": "available",
+    "price": 1524,
+    "vendor": {
+      "id": 10,
+      "name": "Billy Cobham"
+    },
+    "details": [
+      {
+        "track_id": 130,
+        "name": "Do what cha wanna",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "George Duke",
+        "milliseconds": 274155,
+        "bytes": 9018565,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 129,
+        "name": "Solo-Panhandler",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 246151,
+        "bytes": 8230661,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 128,
+        "name": "The pleasant pheasant",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 318066,
+        "bytes": 10630578,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 127,
+        "name": "Stratus",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 582086,
+        "bytes": 19115680,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 126,
+        "name": "Moon germs",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 294060,
+        "bytes": 9714812,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 125,
+        "name": "Spanish moss-\"A sound portrait\"-Spanish moss",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 248084,
+        "bytes": 8217867,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 124,
+        "name": "Snoopy's search-Red baron",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 456071,
+        "bytes": 15075616,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 123,
+        "name": "Quadrant",
+        "album_id": 13,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Billy Cobham",
+        "milliseconds": 261851,
+        "bytes": 8538199,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "The Best Of Buddy Guy - The Millenium Collection",
+    "vendor_id": 15,
+    "requires_shipping": false,
+    "sku": "ALBUM-20",
+    "taxable": true,
+    "status": "available",
+    "price": 1430,
+    "vendor": {
+      "id": 15,
+      "name": "Buddy Guy"
+    },
+    "details": [
+      {
+        "track_id": 204,
+        "name": "Talkin' 'Bout Women Obviously",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Amos Blakemore/Buddy Guy",
+        "milliseconds": 589531,
+        "bytes": 19161377,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 203,
+        "name": "Too Many Ways (Alternate)",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Willie Dixon",
+        "milliseconds": 135053,
+        "bytes": 4459946,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 202,
+        "name": "My Time After Awhile",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Robert Geddins/Ron Badger/Sheldon Feinberg",
+        "milliseconds": 182491,
+        "bytes": 6022698,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 201,
+        "name": "Keep It To Myself (Aka Keep It To Yourself)",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Sonny Boy Williamson [I]",
+        "milliseconds": 166060,
+        "bytes": 5487056,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 200,
+        "name": "She Suits Me To A Tee",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Buddy Guy",
+        "milliseconds": 136803,
+        "bytes": 4456321,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 199,
+        "name": "Leave My Girl Alone",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Buddy Guy",
+        "milliseconds": 204721,
+        "bytes": 6859518,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 198,
+        "name": "When My Left Eye Jumps",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Al Perkins/Willie Dixon",
+        "milliseconds": 235311,
+        "bytes": 7685363,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 197,
+        "name": "Pretty Baby",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Willie Dixon",
+        "milliseconds": 237662,
+        "bytes": 7848282,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 196,
+        "name": "Stone Crazy",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Buddy Guy",
+        "milliseconds": 433397,
+        "bytes": 14184984,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 195,
+        "name": "Let Me Love You Baby",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Willie Dixon",
+        "milliseconds": 175386,
+        "bytes": 5716994,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 194,
+        "name": "First Time I Met The Blues",
+        "album_id": 20,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Eurreal Montgomery",
+        "milliseconds": 140434,
+        "bytes": 4604995,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Ac\u00fastico MTV [Live]",
+    "vendor_id": 19,
+    "requires_shipping": false,
+    "sku": "ALBUM-26",
+    "taxable": true,
+    "status": "available",
+    "price": 1433,
+    "vendor": {
+      "id": 19,
+      "name": "Cidade Negra"
+    },
+    "details": [
+      {
+        "track_id": 298,
+        "name": "A Cor Do Sol",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bernardo Vilhena/Da Gama/Laz\u00e3o",
+        "milliseconds": 231392,
+        "bytes": 7663348,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 297,
+        "name": "Mensagem",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Laz\u00e3o/R\u00e1s Bernardo",
+        "milliseconds": 225332,
+        "bytes": 7488852,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 296,
+        "name": "Realidade Virtual",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Laz\u00e3o/Toni Garrido",
+        "milliseconds": 195239,
+        "bytes": 6503533,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 295,
+        "name": "Concilia\u00e7\u00e3o",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Da Gama/Laz\u00e3o/R\u00e1s Bernardo",
+        "milliseconds": 257619,
+        "bytes": 8552474,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 294,
+        "name": "Pensamento",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gamma/Laz\u00e3o/R\u00e1s Bernard",
+        "milliseconds": 173008,
+        "bytes": 5748424,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 293,
+        "name": "Onde Voc\u00ea Mora?",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Marisa Monte/Nando Reis",
+        "milliseconds": 256026,
+        "bytes": 8502588,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 292,
+        "name": "J\u00e1 Foi",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Laz\u00e3o/Toni Garrido",
+        "milliseconds": 221544,
+        "bytes": 7388466,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 291,
+        "name": "Berlim",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Da Gama/Toni Garrido",
+        "milliseconds": 207542,
+        "bytes": 6920424,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 290,
+        "name": "A Estrada",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Laz\u00e3o/Toni Garrido",
+        "milliseconds": 248842,
+        "bytes": 8275673,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 289,
+        "name": "Podes Crer",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Laz\u00e3o/Toni Garrido",
+        "milliseconds": 232280,
+        "bytes": 7747747,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 288,
+        "name": "O Er\u00ea",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bernardo Vilhena/Bino Farias/Da Gama/Laz\u00e3o/Toni Garrido",
+        "milliseconds": 236382,
+        "bytes": 7866924,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 287,
+        "name": "Extra",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Gilberto Gil",
+        "milliseconds": 304352,
+        "bytes": 10078050,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 286,
+        "name": "Firmamento",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Henry Lawes/Laz\u00e3o/Toni Garrido/Winston Foser-Vers",
+        "milliseconds": 222145,
+        "bytes": 7402658,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 285,
+        "name": "Soldado Da Paz",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Herbert Vianna",
+        "milliseconds": 194220,
+        "bytes": 6455080,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 284,
+        "name": "Johnny B. Goode",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Chuck Berry",
+        "milliseconds": 254615,
+        "bytes": 8505985,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 283,
+        "name": "A Sombra Da Maldade",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Da Gama/Toni Garrido",
+        "milliseconds": 230922,
+        "bytes": 7697230,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 282,
+        "name": "Girassol",
+        "album_id": 26,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino Farias/Da Gama/Laz\u00e3o/Pedro Luis/Toni Garrido",
+        "milliseconds": 249808,
+        "bytes": 8327676,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Cidade Negra - Hits",
+    "vendor_id": 19,
+    "requires_shipping": false,
+    "sku": "ALBUM-27",
+    "taxable": true,
+    "status": "available",
+    "price": 829,
+    "vendor": {
+      "id": 19,
+      "name": "Cidade Negra"
+    },
+    "details": [
+      {
+        "track_id": 312,
+        "name": "Eu Tamb\u00e9m Quero Beijar",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Fausto Nilo/Moraes Moreira/Pepeu Gomes",
+        "milliseconds": 211147,
+        "bytes": 7029400,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 311,
+        "name": "A Cor Do Sol",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bernardo Vilhena/Da Gama/Lazao",
+        "milliseconds": 273031,
+        "bytes": 9142937,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 310,
+        "name": "S\u00e1bado A Noite",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Lulu Santos",
+        "milliseconds": 267363,
+        "bytes": 8895073,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 309,
+        "name": "Downtown",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Cidade Negra",
+        "milliseconds": 239725,
+        "bytes": 8024386,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 308,
+        "name": "Na Frente Da TV",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino/Da Gama/Lazao/Ras Bernardo",
+        "milliseconds": 289750,
+        "bytes": 9633659,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 307,
+        "name": "Doutor",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino/Da Gama/Toni Garrido",
+        "milliseconds": 178155,
+        "bytes": 5950952,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 306,
+        "name": "Realidade Virtual",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino/Da Gamma/Lazao/Toni Garrido",
+        "milliseconds": 240300,
+        "bytes": 8069934,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 305,
+        "name": "Pensamento",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino/Da Gama/Ras Bernardo",
+        "milliseconds": 192391,
+        "bytes": 6399761,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 304,
+        "name": "Firmamento",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Harry Lawes/Winston Foster-Vers",
+        "milliseconds": 225488,
+        "bytes": 7507866,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 303,
+        "name": "Falar A Verdade",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bino/Da Gama/Ras Bernardo",
+        "milliseconds": 244950,
+        "bytes": 8189093,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 302,
+        "name": "A Estrada",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Da Gama/Lazao/Toni Garrido",
+        "milliseconds": 282174,
+        "bytes": 9344477,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 301,
+        "name": "A Sombra Da Maldade",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Da Gama/Toni Garrido",
+        "milliseconds": 285231,
+        "bytes": 9544383,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 300,
+        "name": "O Er\u00ea",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Bernardo Vilhena/Bino/Da Gama/Lazao/Toni Garrido",
+        "milliseconds": 206942,
+        "bytes": 6950332,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 299,
+        "name": "Onde Voc\u00ea Mora?",
+        "album_id": 27,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": "Marisa Monte/Nando Reis",
+        "milliseconds": 298396,
+        "bytes": 10056970,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Heart of the Night",
+    "vendor_id": 53,
+    "requires_shipping": false,
+    "sku": "ALBUM-38",
+    "taxable": true,
+    "status": "available",
+    "price": 1558,
+    "vendor": {
+      "id": 53,
+      "name": "Spyro Gyra"
+    },
+    "details": [
+      {
+        "track_id": 467,
+        "name": "Best Thing",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 274259,
+        "bytes": 9069394,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 466,
+        "name": "J Squared",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 288757,
+        "bytes": 9480777,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 465,
+        "name": "When Evening Falls",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 298135,
+        "bytes": 9863942,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 464,
+        "name": "As We Sleep",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 316865,
+        "bytes": 10429398,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 463,
+        "name": "Believe",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 310778,
+        "bytes": 10317185,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 462,
+        "name": "Valentino's",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 296124,
+        "bytes": 9848545,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 461,
+        "name": "Surrender",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 287634,
+        "bytes": 9422926,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 460,
+        "name": "Playtime",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 273580,
+        "bytes": 9070880,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 459,
+        "name": "Midnight",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 266866,
+        "bytes": 8851060,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 458,
+        "name": "Westwood Moon",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 295627,
+        "bytes": 9765802,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 457,
+        "name": "De La Luz",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 315219,
+        "bytes": 10518284,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 456,
+        "name": "Heart of the Night",
+        "album_id": 38,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 273737,
+        "bytes": 9098263,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "name": "The Essential Miles Davis [Disc 1]",
+    "vendor_id": 68,
+    "requires_shipping": false,
+    "sku": "ALBUM-48",
+    "taxable": true,
+    "status": "available",
+    "price": 870,
+    "vendor": {
+      "id": 68,
+      "name": "Miles Davis"
+    },
+    "details": [
+      {
+        "track_id": 609,
+        "name": "Someday My Prince Will Come",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 544078,
+        "bytes": 17890773,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 608,
+        "name": "The Pan Piper",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 233769,
+        "bytes": 7593713,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 607,
+        "name": "So What",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 564009,
+        "bytes": 18360449,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 606,
+        "name": "Summertime",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 200437,
+        "bytes": 6461370,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 605,
+        "name": "Generique",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 168777,
+        "bytes": 5437017,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 604,
+        "name": "New Rhumba",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 277968,
+        "bytes": 9018024,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 603,
+        "name": "Bye Bye Blackbird",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 476003,
+        "bytes": 15549224,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 602,
+        "name": "'Round Midnight",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 357459,
+        "bytes": 11590284,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 601,
+        "name": "Walkin'",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 807392,
+        "bytes": 26411634,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 600,
+        "name": "Tempus Fugit",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 231784,
+        "bytes": 7548434,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 599,
+        "name": "Compulsion",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 345025,
+        "bytes": 11254474,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 598,
+        "name": "Jeru",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 193410,
+        "bytes": 6222536,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 597,
+        "name": "Now's The Time",
+        "album_id": 48,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 197459,
+        "bytes": 6358868,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "name": "The Essential Miles Davis [Disc 2]",
+    "vendor_id": 68,
+    "requires_shipping": false,
+    "sku": "ALBUM-49",
+    "taxable": true,
+    "status": "available",
+    "price": 1592,
+    "vendor": {
+      "id": 68,
+      "name": "Miles Davis"
+    },
+    "details": [
+      {
+        "track_id": 619,
+        "name": "Portia",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 378775,
+        "bytes": 12520126,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 618,
+        "name": "Time After Time",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 220734,
+        "bytes": 7292197,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 617,
+        "name": "Jean Pierre (Live)",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 243461,
+        "bytes": 7955114,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 616,
+        "name": "Black Satin",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 316682,
+        "bytes": 10529483,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 615,
+        "name": "Little Church (Live)",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 196101,
+        "bytes": 6273225,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 614,
+        "name": "Miles Runs The Voodoo Down",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 843964,
+        "bytes": 27967919,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 613,
+        "name": "Petits Machins (Little Stuff)",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 487392,
+        "bytes": 16131272,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 612,
+        "name": "Nefertiti",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 473495,
+        "bytes": 15478450,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 611,
+        "name": "E.S.P.",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 330684,
+        "bytes": 11079866,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 610,
+        "name": "My Funny Valentine (Live)",
+        "album_id": 49,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis",
+        "milliseconds": 907520,
+        "bytes": 29416781,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Up An' Atom",
+    "vendor_id": 69,
+    "requires_shipping": false,
+    "sku": "ALBUM-51",
+    "taxable": true,
+    "status": "available",
+    "price": 1500,
+    "vendor": {
+      "id": 69,
+      "name": "Gene Krupa"
+    },
+    "details": [
+      {
+        "track_id": 645,
+        "name": "Swedish Schnapps",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 191268,
+        "bytes": 6359750,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 644,
+        "name": "Showcase",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 201560,
+        "bytes": 6697510,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 643,
+        "name": "Jungle Drums",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 199627,
+        "bytes": 6546063,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 642,
+        "name": "Payin' Them Dues Blues",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 198556,
+        "bytes": 6536918,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 641,
+        "name": "I'm Coming Virginia",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 280163,
+        "bytes": 9209827,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 640,
+        "name": "Midget",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 217025,
+        "bytes": 7257663,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 639,
+        "name": "Don't Take Your Love From Me",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 282331,
+        "bytes": 9244238,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 638,
+        "name": "Imagination",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 289306,
+        "bytes": 9444385,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 637,
+        "name": "Overtime",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 163030,
+        "bytes": 5432236,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 636,
+        "name": "Coronation Drop",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 176222,
+        "bytes": 5899898,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 635,
+        "name": "Lemon Drop",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 194089,
+        "bytes": 6287531,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 634,
+        "name": "Bop Boogie",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 189596,
+        "bytes": 6093124,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 633,
+        "name": "Up An' Atom",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 179565,
+        "bytes": 5822645,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 632,
+        "name": "Disc Jockey Jump",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 193149,
+        "bytes": 6260820,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 631,
+        "name": "How High The Moon",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 201430,
+        "bytes": 6529487,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 630,
+        "name": "Boogie Blues",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 204199,
+        "bytes": 6603153,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 629,
+        "name": "Opus No.1",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 179800,
+        "bytes": 5846041,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 628,
+        "name": "Leave Us Leap",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 182726,
+        "bytes": 5898810,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 627,
+        "name": "Let Me Off Uptown",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 187637,
+        "bytes": 6034685,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 626,
+        "name": "Drum Boogie",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 191555,
+        "bytes": 6185636,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 625,
+        "name": "Blue Rythm Fantasy",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 348212,
+        "bytes": 11204006,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 624,
+        "name": "Jeepers Creepers",
+        "album_id": 51,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 185965,
+        "bytes": 5991903,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Vin\u00edcius De Moraes - Sem Limite",
+    "vendor_id": 70,
+    "requires_shipping": false,
+    "sku": "ALBUM-52",
+    "taxable": true,
+    "status": "available",
+    "price": 896,
+    "vendor": {
+      "id": 70,
+      "name": "Toquinho & Vin\u00edcius"
+    },
+    "details": [
+      {
+        "track_id": 660,
+        "name": "Carta Ao Tom 74",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 162560,
+        "bytes": 5382354,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 659,
+        "name": "Samba Em Prel\u00fadio",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 212636,
+        "bytes": 6923473,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 658,
+        "name": "Pot-Pourri N.\u00ba 2",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 211748,
+        "bytes": 6878359,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 657,
+        "name": "Deixa",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 179826,
+        "bytes": 5932799,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 656,
+        "name": "Berimbau",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 190667,
+        "bytes": 6335548,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 655,
+        "name": "Por Que Ser\u00e1",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 162142,
+        "bytes": 5371483,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 654,
+        "name": "Minha Namorada",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 244297,
+        "bytes": 7927967,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 653,
+        "name": "Como \u00c9 Duro Trabalhar",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 226168,
+        "bytes": 7541177,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 652,
+        "name": "Formosa",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 137482,
+        "bytes": 4560873,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 651,
+        "name": "Pot-Pourri N.\u00ba 5",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 219898,
+        "bytes": 7117769,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 650,
+        "name": "Canto De Ossanha",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 204956,
+        "bytes": 6771624,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 649,
+        "name": "Samba Da Volta",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 170631,
+        "bytes": 5676090,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 648,
+        "name": "Onde Anda Voc\u00ea",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 168437,
+        "bytes": 5550356,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 647,
+        "name": "Pot-Pourri N.\u00ba 4",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 392437,
+        "bytes": 13125975,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 646,
+        "name": "Samba Da B\u00ean\u00e7\u00e3o",
+        "album_id": 52,
+        "media_type_id": 1,
+        "genre_id": 11,
+        "composer": null,
+        "milliseconds": 409965,
+        "bytes": 13490008,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Outbreak",
+    "vendor_id": 79,
+    "requires_shipping": false,
+    "sku": "ALBUM-68",
+    "taxable": true,
+    "status": "available",
+    "price": 1007,
+    "vendor": {
+      "id": 79,
+      "name": "Dennis Chambers"
+    },
+    "details": [
+      {
+        "track_id": 850,
+        "name": "Talkin Loud and Saying Nothin",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "James Brown & Bobby Byrd",
+        "milliseconds": 360411,
+        "bytes": 11994859,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 849,
+        "name": "Baltimore, DC",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "John Scofield",
+        "milliseconds": 346932,
+        "bytes": 11394473,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 848,
+        "name": "Outbreak",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jim Beard & Jon Herington",
+        "milliseconds": 659226,
+        "bytes": 21685807,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 847,
+        "name": "Plan B",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Dean Brown, Dennis Chambers & Jim Beard",
+        "milliseconds": 272039,
+        "bytes": 9032315,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 846,
+        "name": "In Time",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Sylvester Stewart",
+        "milliseconds": 368953,
+        "bytes": 12287103,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 845,
+        "name": "Paris On Mine",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jon Herington",
+        "milliseconds": 368875,
+        "bytes": 12059507,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 844,
+        "name": "Groovus Interruptus",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jim Beard",
+        "milliseconds": 319373,
+        "bytes": 10602166,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 843,
+        "name": "Otay",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "John Scofield, Robert Aries, Milton Chambers and Gary Grainger",
+        "milliseconds": 423653,
+        "bytes": 14176083,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 842,
+        "name": "Roll Call",
+        "album_id": 68,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jim Beard",
+        "milliseconds": 321358,
+        "bytes": 10653494,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "name": "The Cream Of Clapton",
+    "vendor_id": 81,
+    "requires_shipping": false,
+    "sku": "ALBUM-72",
+    "taxable": true,
+    "status": "available",
+    "price": 1048,
+    "vendor": {
+      "id": 81,
+      "name": "Eric Clapton"
+    },
+    "details": [
+      {
+        "track_id": 908,
+        "name": "I Can't Stand It",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton",
+        "milliseconds": 249730,
+        "bytes": 8271980,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 907,
+        "name": "Promises",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/F.eldman/Linn",
+        "milliseconds": 180401,
+        "bytes": 6006154,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 906,
+        "name": "Let It Grow",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton",
+        "milliseconds": 297064,
+        "bytes": 9742568,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 905,
+        "name": "Wonderful Tonight",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton",
+        "milliseconds": 221387,
+        "bytes": 7326923,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 904,
+        "name": "Knockin On Heavens Door",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Dylan",
+        "milliseconds": 264411,
+        "bytes": 8758819,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 903,
+        "name": "Lay Down Sally",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Levy",
+        "milliseconds": 231732,
+        "bytes": 7774207,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 902,
+        "name": "Swing Low Sweet Chariot",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Trad. Arr. Clapton",
+        "milliseconds": 208143,
+        "bytes": 6896288,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 901,
+        "name": "After Midnight",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/J. J. Cale",
+        "milliseconds": 191320,
+        "bytes": 6460941,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 900,
+        "name": "I Shot The Sheriff",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Marley",
+        "milliseconds": 263862,
+        "bytes": 8738973,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 899,
+        "name": "Cocaine",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Cale/Clapton",
+        "milliseconds": 215928,
+        "bytes": 7138399,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 898,
+        "name": "Bell Bottom Blues",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton",
+        "milliseconds": 304744,
+        "bytes": 9946681,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 897,
+        "name": "White Room",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Bruce/Clapton",
+        "milliseconds": 301583,
+        "bytes": 9872606,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 896,
+        "name": "Strange Brew",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Collins/Pappalardi",
+        "milliseconds": 167810,
+        "bytes": 5489787,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 895,
+        "name": "Crossroads",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Robert Johnson Arr: Eric Clapton",
+        "milliseconds": 253335,
+        "bytes": 8273540,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 894,
+        "name": "Sunshine Of Your Love",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Bruce/Clapton",
+        "milliseconds": 252891,
+        "bytes": 8225889,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 893,
+        "name": "I Feel Free",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Bruce/Clapton",
+        "milliseconds": 174576,
+        "bytes": 5725684,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 892,
+        "name": "Badge",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Harrison",
+        "milliseconds": 163552,
+        "bytes": 5322942,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 891,
+        "name": "Layla",
+        "album_id": 72,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Clapton/Gordon",
+        "milliseconds": 430733,
+        "bytes": 14115792,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "name": "My Way: The Best Of Frank Sinatra [Disc 1]",
+    "vendor_id": 85,
+    "requires_shipping": false,
+    "sku": "ALBUM-83",
+    "taxable": true,
+    "status": "available",
+    "price": 1113,
+    "vendor": {
+      "id": 85,
+      "name": "Frank Sinatra"
+    },
+    "details": [
+      {
+        "track_id": 1056,
+        "name": "L.A. Is My Lady",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "alan bergman/marilyn bergman/peggy lipton jones/quincy jones",
+        "milliseconds": 193175,
+        "bytes": 6378511,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1055,
+        "name": "Loves Been Good To Me",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "rod mckuen",
+        "milliseconds": 203964,
+        "bytes": 6645365,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1054,
+        "name": "Mack The Knife",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "bert brecht/kurt weill/marc blitzstein",
+        "milliseconds": 292075,
+        "bytes": 9541052,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1053,
+        "name": "Bad, Bad Leroy Brown",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "jim croce",
+        "milliseconds": 169900,
+        "bytes": 5548581,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1052,
+        "name": "The Lady Is A Tramp",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "lorenz hart/richard rodgers",
+        "milliseconds": 184111,
+        "bytes": 5987372,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1051,
+        "name": "The Girl From Ipanema",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "antonio carlos jobim/norman gimbel/vinicius de moraes",
+        "milliseconds": 193750,
+        "bytes": 6410674,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1050,
+        "name": "That's Life",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "dean kay thompson/kelly gordon",
+        "milliseconds": 187010,
+        "bytes": 6095727,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1049,
+        "name": "Come Fly With Me",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "jimmy van heusen/sammy cahn",
+        "milliseconds": 190458,
+        "bytes": 6231029,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1048,
+        "name": "It Was A Very Good Year",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "ervin drake",
+        "milliseconds": 266605,
+        "bytes": 8554066,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1047,
+        "name": "The Best Is Yet To Come",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "carolyn leigh/cy coleman",
+        "milliseconds": 173583,
+        "bytes": 5633730,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1046,
+        "name": "I've Got You Under My Skin",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "cole porter",
+        "milliseconds": 210808,
+        "bytes": 6883787,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1045,
+        "name": "Fly Me To The Moon",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "bart howard",
+        "milliseconds": 149263,
+        "bytes": 4856954,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1044,
+        "name": "My Kind Of Town",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "jimmy van heusen/sammy cahn",
+        "milliseconds": 188499,
+        "bytes": 6119915,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1043,
+        "name": "They Can't Take That Away From Me",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "george gershwin/ira gershwin",
+        "milliseconds": 161227,
+        "bytes": 5240043,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1042,
+        "name": "Love And Marriage",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "jimmy van heusen/sammy cahn",
+        "milliseconds": 89730,
+        "bytes": 2930596,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1041,
+        "name": "For Once In My Life",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "orlando murden/ronald miller",
+        "milliseconds": 171154,
+        "bytes": 5557537,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1040,
+        "name": "Summer Love",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "hans bradtke/heinz meier/johnny mercer",
+        "milliseconds": 174994,
+        "bytes": 5693242,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1039,
+        "name": "What Now My Love",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "carl sigman/gilbert becaud/pierre leroyer",
+        "milliseconds": 149995,
+        "bytes": 4913383,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1038,
+        "name": "Moon River",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "henry mancini/johnny mercer",
+        "milliseconds": 198922,
+        "bytes": 6395808,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1037,
+        "name": "Something Stupid",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "carson c. parks",
+        "milliseconds": 158615,
+        "bytes": 5210643,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1036,
+        "name": "I Get A Kick Out Of You",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "cole porter",
+        "milliseconds": 194429,
+        "bytes": 6332441,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1035,
+        "name": "New York, New York",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "fred ebb/john kander",
+        "milliseconds": 206001,
+        "bytes": 6707993,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1034,
+        "name": "Strangers In The Night",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "berthold kaempfert/charles singleton/eddie snyder",
+        "milliseconds": 155794,
+        "bytes": 5055295,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1033,
+        "name": "My Way",
+        "album_id": 83,
+        "media_type_id": 1,
+        "genre_id": 12,
+        "composer": "claude fran\u00e7ois/gilles thibault/jacques revaux/paul anka",
+        "milliseconds": 275879,
+        "bytes": 8928684,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "name": "Quanta Gente Veio ver--B\u00f4nus De Carnaval",
+    "vendor_id": 27,
+    "requires_shipping": false,
+    "sku": "ALBUM-87",
+    "taxable": true,
+    "status": "available",
+    "price": 982,
+    "vendor": {
+      "id": 27,
+      "name": "Gilberto Gil"
+    },
+    "details": [
+      {
+        "track_id": 1104,
+        "name": "Pretinha",
+        "album_id": 87,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 265273,
+        "bytes": 8914579,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1103,
+        "name": "Lamento De Carnaval",
+        "album_id": 87,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 294530,
+        "bytes": 9819276,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1102,
+        "name": "Doce De Carnaval (Candy All)",
+        "album_id": 87,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": null,
+        "milliseconds": 356101,
+        "bytes": 11998470,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "name": "Blue Moods",
+    "vendor_id": 89,
+    "requires_shipping": false,
+    "sku": "ALBUM-93",
+    "taxable": true,
+    "status": "available",
+    "price": 1482,
+    "vendor": {
+      "id": 89,
+      "name": "Incognito"
+    },
+    "details": [
+      {
+        "track_id": 1200,
+        "name": "Dark Side Of The Cog",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jean Paul Maunick",
+        "milliseconds": 377155,
+        "bytes": 12491122,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1199,
+        "name": "She Wears Black",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "G Harvey/R Hope-Taylor",
+        "milliseconds": 528666,
+        "bytes": 17617944,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1198,
+        "name": "Jacob's Ladder",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Julian Crampton",
+        "milliseconds": 367647,
+        "bytes": 12201595,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1197,
+        "name": "Thinking 'Bout Tomorrow",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Fayyaz Virgi/Richard Bull",
+        "milliseconds": 355395,
+        "bytes": 11865384,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1196,
+        "name": "Millenium",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Maxton Gig Beesley Jnr.",
+        "milliseconds": 379167,
+        "bytes": 12511939,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1195,
+        "name": "Sunchild",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Graham Harvey",
+        "milliseconds": 259970,
+        "bytes": 8593143,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1194,
+        "name": "Journey Into Sunlight",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jean Paul Maunick",
+        "milliseconds": 249756,
+        "bytes": 8241177,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1193,
+        "name": "Gypsy",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Kevin Robinson",
+        "milliseconds": 330997,
+        "bytes": 11083374,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1192,
+        "name": "L'Arc En Ciel De Miles",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Kevin Robinson/Richard Bull",
+        "milliseconds": 242390,
+        "bytes": 8053997,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1191,
+        "name": "Deep Waters",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Richard Bull",
+        "milliseconds": 396460,
+        "bytes": 13075359,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1190,
+        "name": "Magnetic Ocean",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Patrick Claher/Richard Bull",
+        "milliseconds": 321123,
+        "bytes": 10720741,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1189,
+        "name": "Love Is The Colour",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "R. Carless",
+        "milliseconds": 251585,
+        "bytes": 8419165,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1188,
+        "name": "Colibri",
+        "album_id": 93,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Richard Bull",
+        "milliseconds": 361012,
+        "bytes": 12055329,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "name": "Iron Maiden",
+    "vendor_id": 90,
+    "requires_shipping": false,
+    "sku": "ALBUM-100",
+    "taxable": true,
+    "status": "available",
+    "price": 1016,
+    "vendor": {
+      "id": 90,
+      "name": "Iron Maiden"
+    },
+    "details": [
+      {
+        "track_id": 1276,
+        "name": "09 - Iron Maiden",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Steve Harris",
+        "milliseconds": 216058,
+        "bytes": 5189891,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1275,
+        "name": "08 - Charlotte the Harlot",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Murray  Dave",
+        "milliseconds": 252708,
+        "bytes": 6066304,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1274,
+        "name": "07 - Strange World",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Steve Harris",
+        "milliseconds": 332460,
+        "bytes": 7981184,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1273,
+        "name": "06 - Transylvania",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Steve Harris",
+        "milliseconds": 259343,
+        "bytes": 6226048,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1272,
+        "name": "05 - Phantom of the Opera",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Steve Harris",
+        "milliseconds": 428016,
+        "bytes": 10276872,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1271,
+        "name": "04 - Running Free",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Harris/Paul Di\u00b4Anno",
+        "milliseconds": 197276,
+        "bytes": 4739122,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1270,
+        "name": "03 - Remember Tomorrow",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Harris/Paul Di\u00b4Anno",
+        "milliseconds": 328620,
+        "bytes": 7889024,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1269,
+        "name": "02 - Sanctuary",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "David Murray/Paul Di'Anno/Steve Harris",
+        "milliseconds": 196284,
+        "bytes": 4712576,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1268,
+        "name": "01 - Prowler",
+        "album_id": 100,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Steve Harris",
+        "milliseconds": 236173,
+        "bytes": 5668992,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "name": "Sex Machine",
+    "vendor_id": 91,
+    "requires_shipping": false,
+    "sku": "ALBUM-115",
+    "taxable": true,
+    "status": "available",
+    "price": 920,
+    "vendor": {
+      "id": 91,
+      "name": "James Brown"
+    },
+    "details": [
+      {
+        "track_id": 1433,
+        "name": "Soul Power (Live)",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "James Brown",
+        "milliseconds": 260728,
+        "bytes": 8593206,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1432,
+        "name": "Hot Pants Pt.1",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Fred Wesley/James Brown",
+        "milliseconds": 188212,
+        "bytes": 6295110,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1431,
+        "name": "I'm Real",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Full Force/James Brown",
+        "milliseconds": 334236,
+        "bytes": 11183457,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1430,
+        "name": "Living In America",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Charlie Midnight/Dan Hartman",
+        "milliseconds": 282880,
+        "bytes": 9432346,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1429,
+        "name": "It's Too Funky In Here",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Brad Shapiro/George Jackson/Robert Miller/Walter Shaw",
+        "milliseconds": 239072,
+        "bytes": 7973979,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1428,
+        "name": "Get Up Offa That Thing",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Deanna Brown/Deidra Jenkins/Yamma Brown",
+        "milliseconds": 250723,
+        "bytes": 8355989,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1427,
+        "name": "Get On The Good Foot",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Fred Wesley/James Brown/Joseph Mims",
+        "milliseconds": 215902,
+        "bytes": 7182736,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1426,
+        "name": "I'm A Greedy Man Pt.1",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Charles Bobbitt/James Brown",
+        "milliseconds": 217730,
+        "bytes": 7251211,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1425,
+        "name": "Make It Funky Pt.1",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Charles Bobbitt/James Brown",
+        "milliseconds": 196231,
+        "bytes": 6507782,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1424,
+        "name": "Hey America",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Addie William Jones/Nat Jones",
+        "milliseconds": 218226,
+        "bytes": 7187857,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1423,
+        "name": "Get Up (I Feel Like Being A) Sex Machine",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Bobby Byrd/James Brown/Ron Lenhoff",
+        "milliseconds": 316551,
+        "bytes": 10498031,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1422,
+        "name": "Say It Loud, I'm Black And I'm Proud Pt.1",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Alfred Ellis/James Brown",
+        "milliseconds": 167392,
+        "bytes": 5478117,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1421,
+        "name": "Cold Sweat",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Alfred Ellis/James Brown",
+        "milliseconds": 172408,
+        "bytes": 5643213,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1420,
+        "name": "It's A Man's Man's Man's World",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Betty Newsome/James Brown",
+        "milliseconds": 168228,
+        "bytes": 5541611,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1419,
+        "name": "I Got You (I Feel Good)",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "James Brown",
+        "milliseconds": 167392,
+        "bytes": 5468472,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1418,
+        "name": "Papa's Got A Brand New Bag Pt.1",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "James Brown",
+        "milliseconds": 127399,
+        "bytes": 4174420,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1417,
+        "name": "Out Of Sight",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Ted Wright",
+        "milliseconds": 143725,
+        "bytes": 4711323,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1416,
+        "name": "Night Train",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jimmy Forrest/Lewis C. Simpkins/Oscar Washington",
+        "milliseconds": 212401,
+        "bytes": 7027377,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1415,
+        "name": "Think",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Lowman Pauling",
+        "milliseconds": 166739,
+        "bytes": 5513208,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1414,
+        "name": "Please Please Please",
+        "album_id": 115,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "James Brown/Johnny Terry",
+        "milliseconds": 165067,
+        "bytes": 5394585,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "name": "Synkronized",
+    "vendor_id": 92,
+    "requires_shipping": false,
+    "sku": "ALBUM-117",
+    "taxable": true,
+    "status": "available",
+    "price": 898,
+    "vendor": {
+      "id": 92,
+      "name": "Jamiroquai"
+    },
+    "details": [
+      {
+        "track_id": 1454,
+        "name": "Deeper Underground",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Toby Smith",
+        "milliseconds": 281808,
+        "bytes": 9351277,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1453,
+        "name": "King For A Day",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay/Toby Smith",
+        "milliseconds": 221544,
+        "bytes": 7335693,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1452,
+        "name": "Were Do We Go From Here",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay",
+        "milliseconds": 313626,
+        "bytes": 10504158,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1451,
+        "name": "Butterfly",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay/Toby Smith",
+        "milliseconds": 268852,
+        "bytes": 8947356,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1450,
+        "name": "Supersonic",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay",
+        "milliseconds": 315872,
+        "bytes": 10699265,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1449,
+        "name": "Destitute Illusions",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Derrick McKenzie/Jay Kay/Toby Smith",
+        "milliseconds": 340218,
+        "bytes": 11452651,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1448,
+        "name": "Failling",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay/Toby Smith",
+        "milliseconds": 225227,
+        "bytes": 7503999,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1447,
+        "name": "Soul Education",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay/Toby Smith",
+        "milliseconds": 255477,
+        "bytes": 8575435,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1446,
+        "name": "Black Capricorn Day",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay",
+        "milliseconds": 341629,
+        "bytes": 11477231,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1445,
+        "name": "Planet Home",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay/Toby Smith",
+        "milliseconds": 284447,
+        "bytes": 9566237,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1444,
+        "name": "Canned Heat",
+        "album_id": 117,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Jay Kay",
+        "milliseconds": 331964,
+        "bytes": 11042037,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 124,
+    "name": "Cafezinho",
+    "vendor_id": 97,
+    "requires_shipping": false,
+    "sku": "ALBUM-124",
+    "taxable": true,
+    "status": "available",
+    "price": 1275,
+    "vendor": {
+      "id": 97,
+      "name": "Jo\u00e3o Suplicy"
+    },
+    "details": [
+      {
+        "track_id": 1545,
+        "name": "Enquanto O Dia N\u00e3o Vem",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 220891,
+        "bytes": 7248336,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1544,
+        "name": "Cafezinho",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 180924,
+        "bytes": 6031174,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1543,
+        "name": "Borogodo",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 208457,
+        "bytes": 7104588,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1542,
+        "name": "Do Nosso Amor",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 203415,
+        "bytes": 6774566,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1541,
+        "name": "Cuando Eu For Pro Ceu",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 118804,
+        "bytes": 3948371,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1540,
+        "name": "Papel\u00e3o",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 213263,
+        "bytes": 7257390,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1539,
+        "name": "Equinocio",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 269008,
+        "bytes": 8871455,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1538,
+        "name": "Naquele Dia",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 251768,
+        "bytes": 8452654,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1537,
+        "name": "Cuando A Noite Vai Chegando",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 270628,
+        "bytes": 9081874,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1536,
+        "name": "Voce Inteira",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 241084,
+        "bytes": 8077282,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1535,
+        "name": "No Futuro",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 182308,
+        "bytes": 6056200,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1534,
+        "name": "Por Merecer",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 230582,
+        "bytes": 7764601,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1533,
+        "name": "Choramingando",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 190484,
+        "bytes": 6400532,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1532,
+        "name": "Pura Elegancia",
+        "album_id": 124,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "Jo\u00e3o Suplicy",
+        "milliseconds": 284107,
+        "bytes": 9632269,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 146,
+    "name": "Seek And Shall Find: More Of The Best (1963-1981)",
+    "vendor_id": 104,
+    "requires_shipping": false,
+    "sku": "ALBUM-146",
+    "taxable": true,
+    "status": "available",
+    "price": 1248,
+    "vendor": {
+      "id": 104,
+      "name": "Marvin Gaye"
+    },
+    "details": [
+      {
+        "track_id": 1790,
+        "name": "Heavy Love Affair",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Marvin Gaye",
+        "milliseconds": 227892,
+        "bytes": 7522232,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1789,
+        "name": "Praise",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Marvin Gaye",
+        "milliseconds": 235833,
+        "bytes": 7839179,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1788,
+        "name": "Ego Tripping Out",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Marvin Gaye",
+        "milliseconds": 314514,
+        "bytes": 10383887,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1787,
+        "name": "You Sure Love To Ball",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Marvin Gaye",
+        "milliseconds": 218540,
+        "bytes": 7217872,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1786,
+        "name": "Save The Children",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Al Cleveland/Marvin Gaye/Renaldo Benson",
+        "milliseconds": 194821,
+        "bytes": 6342021,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1785,
+        "name": "Abraham, Martin And John",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Dick Holler",
+        "milliseconds": 273057,
+        "bytes": 8888206,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1784,
+        "name": "I Wish It Would Rain",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Barrett Strong/Norman Whitfield/Roger Penzabene",
+        "milliseconds": 172486,
+        "bytes": 5647327,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1783,
+        "name": "Gonna Give Her All The Love I've Got",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Barrett Strong/Norman Whitfield",
+        "milliseconds": 210886,
+        "bytes": 6893603,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1782,
+        "name": "Gonna Keep On Tryin' Till I Win Your Love",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Barrett Strong/Norman Whitfield",
+        "milliseconds": 176404,
+        "bytes": 5789945,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1781,
+        "name": "Seek And You Shall Find",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Ivy Hunter/William \"Mickey\" Stevenson",
+        "milliseconds": 223451,
+        "bytes": 7306719,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1780,
+        "name": "It's A Bitter Pill To Swallow",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Smokey Robinson/Warren \"Pete\" Moore",
+        "milliseconds": 194821,
+        "bytes": 6477882,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1779,
+        "name": "Loving You Is Sweeter Than Ever",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Ivy Hunter/Stevie Wonder",
+        "milliseconds": 166295,
+        "bytes": 5377546,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1778,
+        "name": "You're What's Happening (In The World Today)",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Allen Story/George Gordy/Robert Gordy",
+        "milliseconds": 142027,
+        "bytes": 4631104,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1777,
+        "name": "When I Had Your Love",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Robert Rogers/Warren \"Pete\" Moore/William \"Mickey\" Stevenson",
+        "milliseconds": 152424,
+        "bytes": 4972815,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1776,
+        "name": "You've Been A Long Time Coming",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "Brian Holland/Eddie Holland/Lamont Dozier",
+        "milliseconds": 137221,
+        "bytes": 4437949,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1775,
+        "name": "No Good Without You",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": "William \"Mickey\" Stevenson",
+        "milliseconds": 161410,
+        "bytes": 5259218,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1774,
+        "name": "Get My Hands On Some Lovin'",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 149054,
+        "bytes": 4860380,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1773,
+        "name": "Wherever I Lay My Hat",
+        "album_id": 146,
+        "media_type_id": 1,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 136986,
+        "bytes": 4477321,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 157,
+    "name": "Miles Ahead",
+    "vendor_id": 68,
+    "requires_shipping": false,
+    "sku": "ALBUM-157",
+    "taxable": true,
+    "status": "available",
+    "price": 885,
+    "vendor": {
+      "id": 68,
+      "name": "Miles Davis"
+    },
+    "details": [
+      {
+        "track_id": 1915,
+        "name": "I Don't Wanna Be Kissed (By Anyone But You) (Alternate Take)",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "H. Spina, J. Elliott",
+        "milliseconds": 192078,
+        "bytes": 6254796,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1914,
+        "name": "The Meaning Of The Blues/Lament (Alternate Take)",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "J.J. Johnson/R. Troup, L. Worth",
+        "milliseconds": 309786,
+        "bytes": 9912387,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1913,
+        "name": "Blues For Pablo (Alternate Take)",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Gil Evans",
+        "milliseconds": 212558,
+        "bytes": 6900619,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1912,
+        "name": "Springsville (Alternate Take)",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "J. Carisi",
+        "milliseconds": 196388,
+        "bytes": 6382079,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1911,
+        "name": "I Don't Wanna Be Kissed (By Anyone But You)",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "H. Spina, J. Elliott",
+        "milliseconds": 191320,
+        "bytes": 6219487,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1910,
+        "name": "Lament",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "J.J. Johnson",
+        "milliseconds": 134191,
+        "bytes": 4293394,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1909,
+        "name": "The Meaning Of The Blues",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "R. Troup, L. Worth",
+        "milliseconds": 168594,
+        "bytes": 5395412,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1908,
+        "name": "New Rhumba",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "A. Jamal",
+        "milliseconds": 276871,
+        "bytes": 8980400,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1907,
+        "name": "Blues For Pablo",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Gil Evans",
+        "milliseconds": 318328,
+        "bytes": 10218398,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1906,
+        "name": "Miles Ahead",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Miles Davis, Gil Evans",
+        "milliseconds": 209893,
+        "bytes": 6807707,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1905,
+        "name": "My Ship",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Ira Gershwin, Kurt Weill",
+        "milliseconds": 268016,
+        "bytes": 8581144,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1904,
+        "name": "The Duke",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Dave Brubeck",
+        "milliseconds": 214961,
+        "bytes": 6977626,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1903,
+        "name": "The Maids Of Cadiz",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "L. Delibes",
+        "milliseconds": 233534,
+        "bytes": 7505275,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1902,
+        "name": "Springsville",
+        "album_id": 157,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "J. Carisi",
+        "milliseconds": 207725,
+        "bytes": 6776219,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 161,
+    "name": "Demorou...",
+    "vendor_id": 108,
+    "requires_shipping": false,
+    "sku": "ALBUM-161",
+    "taxable": true,
+    "status": "available",
+    "price": 1336,
+    "vendor": {
+      "id": 108,
+      "name": "M\u00f4nica Marianno"
+    },
+    "details": [
+      {
+        "track_id": 1968,
+        "name": "Demorou!",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 39131,
+        "bytes": 1287083,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1967,
+        "name": "A Mo\u00e7a e a Chuva",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 274625,
+        "bytes": 8929357,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1966,
+        "name": "No Clima",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 249495,
+        "bytes": 8362040,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1965,
+        "name": "S\u00f3 Se For Pelo Cabelo",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 238288,
+        "bytes": 8006345,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1964,
+        "name": "J\u00e1 Foi",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 245681,
+        "bytes": 8094872,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1963,
+        "name": "\u00c9 Fogo",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 194873,
+        "bytes": 6501520,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1962,
+        "name": "Beijo do Olhar",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 252682,
+        "bytes": 8369029,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1961,
+        "name": "Noite Negra",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 206811,
+        "bytes": 6819584,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1960,
+        "name": "Dois \u00cdndios",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 219271,
+        "bytes": 7213072,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1959,
+        "name": "Aos Le\u00f5es",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 234684,
+        "bytes": 7790574,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1958,
+        "name": "O Que Vai Em Meu Cora\u00e7\u00e3o",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 255373,
+        "bytes": 8366846,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 1957,
+        "name": "Kir Royal",
+        "album_id": 161,
+        "media_type_id": 1,
+        "genre_id": 16,
+        "composer": "M\u00f4nica Marianno",
+        "milliseconds": 234788,
+        "bytes": 7706552,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 204,
+    "name": "Morning Dance",
+    "vendor_id": 53,
+    "requires_shipping": false,
+    "sku": "ALBUM-204",
+    "taxable": true,
+    "status": "available",
+    "price": 935,
+    "vendor": {
+      "id": 53,
+      "name": "Spyro Gyra"
+    },
+    "details": [
+      {
+        "track_id": 2531,
+        "name": "End Of Romanticism",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Rick Strauss",
+        "milliseconds": 320078,
+        "bytes": 10553155,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2530,
+        "name": "Little Linda",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jeremy Wall",
+        "milliseconds": 264019,
+        "bytes": 8958743,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2529,
+        "name": "It Doesn't Matter",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Chet Catallo",
+        "milliseconds": 270027,
+        "bytes": 9034177,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2528,
+        "name": "Heliopolis",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jay Beckenstein",
+        "milliseconds": 338729,
+        "bytes": 11365655,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2527,
+        "name": "Starburst",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jeremy Wall",
+        "milliseconds": 291500,
+        "bytes": 9768399,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2526,
+        "name": "Song For Lorraine",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jay Beckenstein",
+        "milliseconds": 240091,
+        "bytes": 8101723,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2525,
+        "name": "Rasul",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jeremy Wall",
+        "milliseconds": 238315,
+        "bytes": 7854737,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2524,
+        "name": "Jubilee",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jeremy Wall",
+        "milliseconds": 275147,
+        "bytes": 9151846,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2523,
+        "name": "Morning Dance",
+        "album_id": 204,
+        "media_type_id": 1,
+        "genre_id": 2,
+        "composer": "Jay Beckenstein",
+        "milliseconds": 238759,
+        "bytes": 8101979,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 205,
+    "name": "In Step",
+    "vendor_id": 133,
+    "requires_shipping": false,
+    "sku": "ALBUM-205",
+    "taxable": true,
+    "status": "available",
+    "price": 1366,
+    "vendor": {
+      "id": 133,
+      "name": "Stevie Ray Vaughan & Double Trouble"
+    },
+    "details": [
+      {
+        "track_id": 2541,
+        "name": "Riviera Paradise",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Stevie Ray Vaughan",
+        "milliseconds": 528692,
+        "bytes": 17232776,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2540,
+        "name": "Love Me Darlin'",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "C. Burnett",
+        "milliseconds": 201586,
+        "bytes": 6650869,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2539,
+        "name": "Scratch-N-Sniff",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Doyle Bramhall/Stevie Ray Vaughan",
+        "milliseconds": 163422,
+        "bytes": 5353627,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2538,
+        "name": "Wall Of Denial",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Doyle Bramhall/Stevie Ray Vaughan",
+        "milliseconds": 336927,
+        "bytes": 11085915,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2537,
+        "name": "Travis Walk",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Stevie Ray Vaughan",
+        "milliseconds": 140826,
+        "bytes": 4650979,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2536,
+        "name": "Leave My Girl Alone",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "B. Guy",
+        "milliseconds": 256365,
+        "bytes": 8438021,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2535,
+        "name": "Let Me Love You Baby",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Willie Dixon",
+        "milliseconds": 164127,
+        "bytes": 5378455,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2534,
+        "name": "Tightrope",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Doyle Bramhall/Stevie Ray Vaughan",
+        "milliseconds": 281155,
+        "bytes": 9254906,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2533,
+        "name": "Crossfire",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "B. Carter/C. Layton/R. Ellsworth/R. Wynans/T. Shannon",
+        "milliseconds": 251219,
+        "bytes": 8238033,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2532,
+        "name": "The House Is Rockin'",
+        "album_id": 205,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Doyle Bramhall/Stevie Ray Vaughan",
+        "milliseconds": 144352,
+        "bytes": 4706253,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 209,
+    "name": "Live [Disc 1]",
+    "vendor_id": 137,
+    "requires_shipping": false,
+    "sku": "ALBUM-209",
+    "taxable": true,
+    "status": "available",
+    "price": 815,
+    "vendor": {
+      "id": 137,
+      "name": "The Black Crowes"
+    },
+    "details": [
+      {
+        "track_id": 2581,
+        "name": "Cosmic Fiend",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 308401,
+        "bytes": 10115556,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2580,
+        "name": "Girl From A Pawnshop",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 404688,
+        "bytes": 13250848,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2579,
+        "name": "Wiser Time",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 459990,
+        "bytes": 15161907,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2578,
+        "name": "Miracle To Me",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 372636,
+        "bytes": 12222116,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2577,
+        "name": "Cursed Diamonds",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 368300,
+        "bytes": 12047978,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2576,
+        "name": "Sometimes Salvation",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 389146,
+        "bytes": 12749424,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2575,
+        "name": "Greasy Grass River",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 218749,
+        "bytes": 7157045,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2574,
+        "name": "Thick & Thin",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 222720,
+        "bytes": 7284377,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2573,
+        "name": "Sting Me",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 268094,
+        "bytes": 8813561,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2572,
+        "name": "Midnight From The Inside Out",
+        "album_id": 209,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 286981,
+        "bytes": 9442157,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 210,
+    "name": "Live [Disc 2]",
+    "vendor_id": 137,
+    "requires_shipping": false,
+    "sku": "ALBUM-210",
+    "taxable": true,
+    "status": "available",
+    "price": 1404,
+    "vendor": {
+      "id": 137,
+      "name": "The Black Crowes"
+    },
+    "details": [
+      {
+        "track_id": 2590,
+        "name": "Remedy",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 337084,
+        "bytes": 11049098,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2589,
+        "name": "Hard To Handle",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "A.Isbell/A.Jones/O.Redding",
+        "milliseconds": 206994,
+        "bytes": 6786304,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2588,
+        "name": "Soul Singing",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 233639,
+        "bytes": 7672489,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2587,
+        "name": "Lickin'",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 314409,
+        "bytes": 10331216,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2586,
+        "name": "Twice As Hard",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 275565,
+        "bytes": 9008067,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2585,
+        "name": "She Talks To Angels",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 361978,
+        "bytes": 11837342,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2584,
+        "name": "Title Song",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 505521,
+        "bytes": 16501316,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2583,
+        "name": "High Head Blues",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 371879,
+        "bytes": 12227998,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 2582,
+        "name": "Black Moon Creeping",
+        "album_id": 210,
+        "media_type_id": 1,
+        "genre_id": 6,
+        "composer": "Chris Robinson/Rich Robinson",
+        "milliseconds": 359314,
+        "bytes": 11740886,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 241,
+    "name": "UB40 The Best Of - Volume Two [UK]",
+    "vendor_id": 151,
+    "requires_shipping": false,
+    "sku": "ALBUM-241",
+    "taxable": true,
+    "status": "available",
+    "price": 1484,
+    "vendor": {
+      "id": 151,
+      "name": "UB40"
+    },
+    "details": [
+      {
+        "track_id": 3051,
+        "name": "Until My Dying Day",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 235807,
+        "bytes": 7886195,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3050,
+        "name": "Superstition",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 319582,
+        "bytes": 10728099,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3049,
+        "name": "Reggae Music",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 245106,
+        "bytes": 8203931,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3048,
+        "name": "C'est La Vie",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 270053,
+        "bytes": 9031661,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3047,
+        "name": "Bring Me Your Cup",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 341498,
+        "bytes": 11346114,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3046,
+        "name": "Higher Ground",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 260179,
+        "bytes": 8665244,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3045,
+        "name": "(I Can't Help) Falling In Love With You",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 207568,
+        "bytes": 6905623,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3044,
+        "name": "Wear You To The Ball",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 213342,
+        "bytes": 7159527,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3043,
+        "name": "Kingston Town",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 226951,
+        "bytes": 7638236,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3042,
+        "name": "Here I Am (Come And Take Me)",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 242102,
+        "bytes": 8106249,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3041,
+        "name": "Homely Girl",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 203833,
+        "bytes": 6790788,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3040,
+        "name": "I Would Do For You",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 334524,
+        "bytes": 11193602,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3039,
+        "name": "Where Did I Go Wrong",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 226742,
+        "bytes": 7485054,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3038,
+        "name": "Breakfast In Bed",
+        "album_id": 241,
+        "media_type_id": 1,
+        "genre_id": 8,
+        "composer": null,
+        "milliseconds": 196179,
+        "bytes": 6513325,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 262,
+    "name": "Quiet Songs",
+    "vendor_id": 197,
+    "requires_shipping": false,
+    "sku": "ALBUM-262",
+    "taxable": true,
+    "status": "available",
+    "price": 1507,
+    "vendor": {
+      "id": 197,
+      "name": "Aisha Duo"
+    },
+    "details": [
+      {
+        "track_id": 3350,
+        "name": "Despertar",
+        "album_id": 262,
+        "media_type_id": 5,
+        "genre_id": 2,
+        "composer": "Andrea Dulbecco",
+        "milliseconds": 307385,
+        "bytes": 4821485,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3349,
+        "name": "Amanda",
+        "album_id": 262,
+        "media_type_id": 5,
+        "genre_id": 2,
+        "composer": "Luca Gusella",
+        "milliseconds": 246503,
+        "bytes": 4011615,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 263,
+    "name": "Muso Ko",
+    "vendor_id": 198,
+    "requires_shipping": false,
+    "sku": "ALBUM-263",
+    "taxable": true,
+    "status": "available",
+    "price": 1338,
+    "vendor": {
+      "id": 198,
+      "name": "Habib Koit\u00e9 and Bamada"
+    },
+    "details": [
+      {
+        "track_id": 3354,
+        "name": "I Ka Barra (Your Work)",
+        "album_id": 263,
+        "media_type_id": 5,
+        "genre_id": 16,
+        "composer": "Habib Koit\u00e9",
+        "milliseconds": 300605,
+        "bytes": 4855457,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3351,
+        "name": "Din Din Wo (Little Child)",
+        "album_id": 263,
+        "media_type_id": 5,
+        "genre_id": 16,
+        "composer": "Habib Koit\u00e9",
+        "milliseconds": 285837,
+        "bytes": 4615841,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 267,
+    "name": "Worlds",
+    "vendor_id": 202,
+    "requires_shipping": false,
+    "sku": "ALBUM-267",
+    "taxable": true,
+    "status": "available",
+    "price": 991,
+    "vendor": {
+      "id": 202,
+      "name": "Aaron Goldberg"
+    },
+    "details": [
+      {
+        "track_id": 3357,
+        "name": "OAM's Blues",
+        "album_id": 267,
+        "media_type_id": 5,
+        "genre_id": 2,
+        "composer": "Aaron Goldberg",
+        "milliseconds": 266936,
+        "bytes": 4292028,
+        "unit_price": 0.99
+      }
+    ]
+  },
+  {
+    "id": 321,
+    "name": "Back to Black",
+    "vendor_id": 252,
+    "requires_shipping": false,
+    "sku": "ALBUM-321",
+    "taxable": true,
+    "status": "available",
+    "price": 1513,
+    "vendor": {
+      "id": 252,
+      "name": "Amy Winehouse"
+    },
+    "details": [
+      {
+        "track_id": 3466,
+        "name": "Rehab (Hot Chip Remix)",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 418293,
+        "bytes": 6670600,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3465,
+        "name": "You Know I'm No Good (feat. Ghostface Killah)",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 202320,
+        "bytes": 3260658,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3464,
+        "name": "He Can Only Hold Her",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": "Richard Poindexter & Robert Poindexter",
+        "milliseconds": 166680,
+        "bytes": 2666531,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3463,
+        "name": "Some Unholy War",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 141520,
+        "bytes": 2304465,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3462,
+        "name": "Wake Up Alone",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": "Paul O'duffy",
+        "milliseconds": 221413,
+        "bytes": 3576773,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3461,
+        "name": "Tears Dry On Their Own",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": "Nickolas Ashford & Valerie Simpson",
+        "milliseconds": 185293,
+        "bytes": 2996598,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3460,
+        "name": "Love Is a Losing Game",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 154386,
+        "bytes": 2509409,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3459,
+        "name": "Back to Black",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": "Mark Ronson",
+        "milliseconds": 240320,
+        "bytes": 3852953,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3458,
+        "name": "Just Friends",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 191933,
+        "bytes": 3098906,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3457,
+        "name": "Me & Mr. Jones",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 151706,
+        "bytes": 2449438,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3456,
+        "name": "You Know I'm No Good",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 256946,
+        "bytes": 4133694,
+        "unit_price": 0.99
+      },
+      {
+        "track_id": 3455,
+        "name": "Rehab",
+        "album_id": 321,
+        "media_type_id": 2,
+        "genre_id": 14,
+        "composer": null,
+        "milliseconds": 213240,
+        "bytes": 3416878,
+        "unit_price": 0.99
+      }
+    ]
+  }
+]

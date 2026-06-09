@@ -1,0 +1,26 @@
+[demo]
+id = "iceberg-uniform-schema-evolution"
+name = "Iceberg UniForm — Schema Evolution Across Formats"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates schema evolution on a UniForm-enabled Delta table. When columns \
+are added via ALTER TABLE ADD COLUMN, both the Delta schema and the Iceberg \
+schema (tracked in metadata.json) evolve in lockstep. Older Iceberg snapshots \
+reference the original schema; newer snapshots reference the evolved schema. \
+This proves that Iceberg-compatible engines can read both old and new data \
+through the unified metadata chain. Dataset: customer orders (20 orders) \
+with progressive column additions for loyalty_tier, discount_pct, and notes.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "intermediate", "uniform", "schema-evolution", "add-column", "null-backfill"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.customer_orders"

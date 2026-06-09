@@ -1,0 +1,55 @@
+[demo]
+id = "nasa-apod-planetarium-archive"
+name = "Planetarium APOD Archive — api_key_query Auth + Header Overrides"
+version = "1.0.0"
+description = """
+A science-center planetarium builds a historical archive of NASA's
+Astronomy Picture of the Day (APOD) so its daily exhibit can pull the
+image, caption, and scientist-written explanation from a local catalog
+rather than hitting NASA's rate-limited API on every display refresh.
+This demo loads an 8-day window (Christmas week 2024) — 8 APOD entries
+with title, explanation, and HD image URLs.
+
+The auth-mode story is what makes this demo distinct. NASA's public
+APIs use **query-string API keys** (`?api_key=DEMO_KEY`), which maps
+to DeltaForge's `auth_mode = 'api_key_query'`. The engine pulls the
+secret from a `CREATE CREDENTIAL`-registered vault entry and splices
+it into every request's query string automatically — the endpoint
+URL does not (and must not) hardcode the key. The secret value here
+is the literal string `DEMO_KEY`, NASA's documented shared testing
+key with a public 30 req/hour budget.
+
+The second distinct feature: `INVOKE ... USING (header.X-Request-ID =
+'...')` carries a custom HTTP header override for this run. Custom
+header overrides are the third OverrideKind — between this demo
+(header.*), Farm Weather Pulse (query_param.*), and the existing
+Public Holiday Calendar Sync (path_param.*), the API USING clause
+covers all three kinds end-to-end.
+
+Demonstrates: auth_mode = 'api_key_query' with `CREATE CREDENTIAL`
+SECRET + CONNECTION `CREDENTIAL =`, INVOKE ... USING (header.*)
+overrides, INVOKE ... USING (query_param.*) for date-window parameters,
+and a bronze landing + typed silver Delta promotion for the exhibit
+catalog.
+
+NOTE: requires internet. INVOKE issues a real GET against
+https://api.nasa.gov/planetary/apod with ?api_key=DEMO_KEY appended.
+The DEMO_KEY has a public 30 req/hour limit; a single INVOKE fits in
+trivially.
+"""
+categories = ["api", "rest-ingest", "auth", "space"]
+tags = ["api", "rest", "ingest", "api-key-query", "credential", "invoke-using", "header-override", "query-param-override", "nasa", "apod", "space", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.nasa_api.apod_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.nasa_api.apod_silver"

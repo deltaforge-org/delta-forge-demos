@@ -1,0 +1,45 @@
+[demo]
+id = "jsonplaceholder-blog-moderation-corpus"
+name = "Blog Moderation Corpus — Page-Based Pagination Walkthrough"
+version = "1.0.0"
+description = """
+An NLP content-moderation team at a publisher uses JSONPlaceholder's
+/posts endpoint as a fixed-shape staging corpus: 100 fake blog posts,
+split 20 per page over 5 pages. The ingest engine walks the pages via
+`pagination = 'page'` with `page_param = '_page'`, `page_start = 1`,
+`max_pages = 5`, and a per-page size of 20.
+
+The demo also walks the catalog-inspection surface that's specific to
+API endpoints: SHOW API ENDPOINTS IN CONNECTION, DESCRIBE API ENDPOINT,
+and SHOW API ENDPOINT RUNS (which returns the single run row INVOKE
+wrote to `api_endpoint_runs`). All three are pure metadata reads — no
+HTTP, no writes — and form the smoke-test triad platform teams use to
+confirm an endpoint is configured and has been exercised at least once.
+
+Demonstrates: pagination = 'page' (page_param, page_start, max_pages),
+query_param.* options (as the `_limit` per-page size carried to every
+page request), SHOW API ENDPOINTS IN CONNECTION, DESCRIBE API ENDPOINT,
+SHOW API ENDPOINT RUNS, and a stable 100-row bronze landing whose exact
+row count asserts the pagination loop ran to completion.
+
+NOTE: requires internet. INVOKE issues real GETs against
+https://jsonplaceholder.typicode.com/posts?_page=N&_limit=20 for N in 1..=5.
+JSONPlaceholder is one of the most reliable public mocks on the web —
+no auth, no rate limits, deterministic 100-row corpus.
+"""
+categories = ["api", "rest-ingest", "pagination"]
+tags = ["api", "rest", "ingest", "pagination", "page-pagination", "json", "jsonplaceholder", "show-endpoints", "describe-endpoint", "show-runs", "basic", "catalog-inspection"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE rather than reading shipped files.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.blog_moderation.posts_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.blog_moderation.posts_silver"

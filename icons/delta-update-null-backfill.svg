@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="nb" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#db2777"/>
+    </linearGradient>
+  </defs>
+  <!-- Table grid with holes (NULLs) -->
+  <rect x="10" y="10" width="60" height="36" rx="3" fill="url(#nb)" fill-opacity=".08" stroke="url(#nb)" stroke-width="1"/>
+  <line x1="10" y1="19" x2="70" y2="19" stroke="url(#nb)" stroke-width=".8" opacity=".4"/>
+  <line x1="10" y1="28" x2="70" y2="28" stroke="url(#nb)" stroke-width=".8" opacity=".3"/>
+  <line x1="10" y1="37" x2="70" y2="37" stroke="url(#nb)" stroke-width=".8" opacity=".3"/>
+  <line x1="35" y1="10" x2="35" y2="46" stroke="url(#nb)" stroke-width=".8" opacity=".3"/>
+  <!-- NULL holes (dashed circles) -->
+  <circle cx="52" cy="24" r="4" stroke="url(#nb)" stroke-width="1" stroke-dasharray="2 1.5" fill="none" opacity=".5"/>
+  <text x="49" y="26" font-size="3.5" font-family="monospace" fill="url(#nb)" opacity=".4">∅</text>
+  <circle cx="22" cy="33" r="4" stroke="url(#nb)" stroke-width="1" stroke-dasharray="2 1.5" fill="none" opacity=".5"/>
+  <text x="19" y="35" font-size="3.5" font-family="monospace" fill="url(#nb)" opacity=".4">∅</text>
+  <!-- Bandaid / patch over NULL -->
+  <rect x="12" y="54" width="56" height="14" rx="7" fill="url(#nb)" fill-opacity=".12" stroke="url(#nb)" stroke-width="1.2"/>
+  <text x="16" y="63" font-size="5" font-family="monospace" fill="url(#nb)" opacity=".8">COALESCE(∅,✓)</text>
+  <!-- Arrow from patch to grid -->
+  <path d="M40 54L40 47" stroke="url(#nb)" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+  <path d="M37 49L40 46L43 49" stroke="url(#nb)" stroke-width="1" fill="none" opacity=".5"/>
+</svg>

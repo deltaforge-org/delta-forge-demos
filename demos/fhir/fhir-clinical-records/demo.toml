@@ -1,0 +1,168 @@
+[demo]
+id = "fhir-clinical-records"
+name = "FHIR Clinical Records — Conditions, Procedures & Allergies"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates advanced FHIR R5 resource ingestion across three clinical \
+resource types: Condition (8 diagnoses), Procedure (8 surgical/clinical \
+procedures), and AllergyIntolerance (6 allergy records). Three tables \
+showcase schema evolution across related but structurally different \
+resource types, deep nested arrays (reaction[], performer[], bodySite[]), \
+CodeableConcept hierarchies with multiple coding systems (SNOMED CT, ICD-10), \
+and cross-resource references. Covers json_paths for reaction arrays, \
+column_mappings, multi-resource-type directory scanning, and FHIR clinical \
+data model relationships.
+"""
+categories = ["healthcare", "json"]
+tags = ["fhir", "healthcare", "json", "advanced", "condition", "procedure", "allergy", "clinical", "snomed", "multi-resource", "deep-nesting"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to the directory containing FHIR Condition, Procedure, and AllergyIntolerance JSON files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/condition-example.json"
+format = "json"
+description = "Condition — Burn of ear (SNOMED 39065001), severe, active"
+size_bytes = 2400
+
+[[demo.data_files]]
+path = "data/condition-example-f001-heart.json"
+format = "json"
+description = "Condition — Heart valve disorder with abatement date"
+size_bytes = 3800
+
+[[demo.data_files]]
+path = "data/condition-example-f002-lung.json"
+format = "json"
+description = "Condition — NSCLC (lung cancer) with staging"
+size_bytes = 3600
+
+[[demo.data_files]]
+path = "data/condition-example-f201-fever.json"
+format = "json"
+description = "Condition — Fever (finding) with evidence"
+size_bytes = 4200
+
+[[demo.data_files]]
+path = "data/condition-example-f202-malignancy.json"
+format = "json"
+description = "Condition — Malignant neoplasm with body site"
+size_bytes = 4500
+
+[[demo.data_files]]
+path = "data/condition-example-f203-sepsis.json"
+format = "json"
+description = "Condition — Sepsis with severity"
+size_bytes = 4100
+
+[[demo.data_files]]
+path = "data/condition-example-f204-renal.json"
+format = "json"
+description = "Condition — Renal insufficiency with onset and abatement"
+size_bytes = 3900
+
+[[demo.data_files]]
+path = "data/condition-example-stroke.json"
+format = "json"
+description = "Condition — Stroke with onset date"
+size_bytes = 2800
+
+[[demo.data_files]]
+path = "data/procedure-example.json"
+format = "json"
+description = "Procedure — Appendectomy with performer and follow-up"
+size_bytes = 2200
+
+[[demo.data_files]]
+path = "data/procedure-example-biopsy.json"
+format = "json"
+description = "Procedure — Biopsy with body site and used reference"
+size_bytes = 2800
+
+[[demo.data_files]]
+path = "data/procedure-example-colonoscopy.json"
+format = "json"
+description = "Procedure — Colonoscopy with complication"
+size_bytes = 3200
+
+[[demo.data_files]]
+path = "data/procedure-example-f001-heart.json"
+format = "json"
+description = "Procedure — Heart valve replacement surgery"
+size_bytes = 4800
+
+[[demo.data_files]]
+path = "data/procedure-example-f002-lung.json"
+format = "json"
+description = "Procedure — Partial lobectomy (lung surgery)"
+size_bytes = 4500
+
+[[demo.data_files]]
+path = "data/procedure-example-f003-abscess.json"
+format = "json"
+description = "Procedure — Abscess incision and drainage"
+size_bytes = 4200
+
+[[demo.data_files]]
+path = "data/procedure-example-f004-tracheotomy.json"
+format = "json"
+description = "Procedure — Tracheotomy surgical procedure"
+size_bytes = 4600
+
+[[demo.data_files]]
+path = "data/procedure-example-implant.json"
+format = "json"
+description = "Procedure — Device implant with focal device"
+size_bytes = 3500
+
+[[demo.data_files]]
+path = "data/allergyintolerance-example.json"
+format = "json"
+description = "AllergyIntolerance — Cashew nut allergy with anaphylactic reaction history"
+size_bytes = 8500
+
+[[demo.data_files]]
+path = "data/allergyintolerance-fishallergy.json"
+format = "json"
+description = "AllergyIntolerance — Fish allergy"
+size_bytes = 3200
+
+[[demo.data_files]]
+path = "data/allergyintolerance-medication.json"
+format = "json"
+description = "AllergyIntolerance — Medication allergy"
+size_bytes = 2800
+
+[[demo.data_files]]
+path = "data/allergyintolerance-nka.json"
+format = "json"
+description = "AllergyIntolerance — No Known Allergies (NKA) assertion"
+size_bytes = 2200
+
+[[demo.data_files]]
+path = "data/allergyintolerance-nkda.json"
+format = "json"
+description = "AllergyIntolerance — No Known Drug Allergies (NKDA) assertion"
+size_bytes = 2100
+
+[[demo.data_files]]
+path = "data/allergyintolerance-nkla.json"
+format = "json"
+description = "AllergyIntolerance — No Known Latex Allergies (NKLA) assertion"
+size_bytes = 2100
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.conditions"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.procedures"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.fhir.allergies"

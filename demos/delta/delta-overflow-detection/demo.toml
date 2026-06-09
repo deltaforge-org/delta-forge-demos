@@ -1,0 +1,26 @@
+[demo]
+id = "delta-overflow-detection"
+name = "Delta Overflow Detection — Treasury Balance Monitoring"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Financial systems must detect when running balances approach the INT limit \
+(2,147,483,647) before silent overflow corrupts data. This demo models a \
+multi-tier treasury ledger where account balances range from small business \
+(millions) to sovereign funds (billions). Queries identify accounts at risk \
+of INT overflow, measure proximity as a percentage of the limit, and project \
+when growth will breach the boundary. Type widening via ALTER TABLE ALTER \
+COLUMN TYPE safely promotes columns to BIGINT before overflow occurs.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "overflow-detection", "type-widening", "bigint", "financial", "treasury"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.transaction_ledger"

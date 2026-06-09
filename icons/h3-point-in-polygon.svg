@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="hp" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <filter id="hpg">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer hexagon boundary -->
+  <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" stroke="url(#hp)" stroke-width="2" fill="url(#hp)" fill-opacity=".08"/>
+  <!-- Inner hex ring -->
+  <polygon points="40,16 60,28 60,52 40,64 20,52 20,28" stroke="url(#hp)" stroke-width="1" fill="none" opacity=".15"/>
+  <!-- Dashed inner structure -->
+  <polygon points="40,28 50,34 50,46 40,52 30,46 30,34" stroke="url(#hp)" stroke-width="1" stroke-dasharray="2 2" fill="none" opacity=".2"/>
+  <!-- Glowing center point -->
+  <circle cx="40" cy="40" r="8" fill="url(#hp)" opacity=".25" filter="url(#hpg)"/>
+  <circle cx="40" cy="40" r="5" fill="url(#hp)" opacity=".7"/>
+  <circle cx="40" cy="40" r="2.5" fill="#fff" opacity=".9"/>
+</svg>

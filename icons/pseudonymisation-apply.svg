@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pa" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- DNA helix (clinical trial theme) -->
+  <path d="M28 14C28 14 38 22 38 30C38 38 28 46 28 46" stroke="url(#pa)" stroke-width="1.5" fill="none" opacity=".4"/>
+  <path d="M52 14C52 14 42 22 42 30C42 38 52 46 52 46" stroke="url(#pa)" stroke-width="1.5" fill="none" opacity=".4"/>
+  <!-- Cross bars -->
+  <line x1="32" y1="20" x2="48" y2="20" stroke="url(#pa)" stroke-width="1" opacity=".25"/>
+  <line x1="35" y1="30" x2="45" y2="30" stroke="url(#pa)" stroke-width="1" opacity=".25"/>
+  <line x1="32" y1="40" x2="48" y2="40" stroke="url(#pa)" stroke-width="1" opacity=".25"/>
+  <!-- Stamp / apply seal -->
+  <circle cx="40" cy="58" r="12" stroke="url(#pa)" stroke-width="2" fill="url(#pa)" fill-opacity=".08"/>
+  <path d="M34 58L38 62L46 54" stroke="url(#pa)" stroke-width="2.5" fill="none" opacity=".7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Lock indicator -->
+  <rect x="56" y="14" width="12" height="10" rx="2" fill="url(#pa)" opacity=".25"/>
+  <path d="M59 14V11C59 9 60.5 8 62 8C63.5 8 65 9 65 11V14" stroke="url(#pa)" stroke-width="1" fill="none" opacity=".3"/>
+</svg>

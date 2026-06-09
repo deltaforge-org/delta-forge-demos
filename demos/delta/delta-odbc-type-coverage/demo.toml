@@ -1,0 +1,31 @@
+[demo]
+id = "delta-odbc-type-coverage"
+name = "Global Logistics Shipment Telemetry: Full Type Coverage"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Single Delta table that exercises every primitive and complex data type \
+Delta Forge supports, sized as a real BI workload (200 shipment rows, 34 \
+columns) so ODBC clients such as Power BI, Tableau, DBeaver, and Excel can \
+issue meaningful SELECT, GROUP BY, time-series, struct-projection, and \
+collection-size queries against it. Built specifically as the canonical \
+fixture for ODBC driver type-mapping development: TINYINT/SMALLINT/INT/ \
+BIGINT, FLOAT/DOUBLE, DECIMAL(15,4) and DECIMAL(6,5), STRING/VARCHAR/ \
+CHAR/TEXT/JSON, BOOLEAN, BINARY/BYTES/BYTEA, DATE/TIME/TIME64/TIMESTAMP/ \
+TIMESTAMP_NTZ, ARRAY<INT>/ARRAY<STRING>/ARRAY<DOUBLE>, MAP<STRING,STRING> \
+and MAP<STRING,INT>, plus three STRUCT shapes including one nested with an \
+ARRAY field. Every assertion value is precomputed by generate_data.py and \
+mirrored in queries.sql.
+"""
+categories = ["delta-table", "data-types", "odbc", "bi"]
+tags = ["delta-table", "advanced", "odbc", "powerbi", "data-types", "struct", "array", "map", "decimal", "timestamp", "binary", "bi", "type-mapping", "logistics"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.bi_demos.shipments_full_types"

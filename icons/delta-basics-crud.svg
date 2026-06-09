@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="bc" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Delta triangle -->
+  <path d="M40 8L66 62H14L40 8Z" stroke="url(#bc)" stroke-width="2" fill="url(#bc)" fill-opacity=".12"/>
+  <!-- CRUD arrows: create(+), read(eye), update(↻), delete(×) -->
+  <circle cx="26" cy="44" r="6" stroke="url(#bc)" stroke-width="1.5" fill="none"/>
+  <line x1="26" y1="41" x2="26" y2="47" stroke="url(#bc)" stroke-width="1.5"/>
+  <line x1="23" y1="44" x2="29" y2="44" stroke="url(#bc)" stroke-width="1.5"/>
+  <circle cx="40" cy="36" r="6" stroke="url(#bc)" stroke-width="1.5" fill="none"/>
+  <circle cx="40" cy="36" r="2" fill="url(#bc)" opacity=".8"/>
+  <circle cx="54" cy="44" r="6" stroke="url(#bc)" stroke-width="1.5" fill="none"/>
+  <path d="M51 41L57 47M57 41L51 47" stroke="url(#bc)" stroke-width="1.2"/>
+  <!-- Table lines -->
+  <line x1="20" y1="62" x2="60" y2="62" stroke="url(#bc)" stroke-width="1" opacity=".5"/>
+  <line x1="20" y1="67" x2="60" y2="67" stroke="url(#bc)" stroke-width="1" opacity=".3"/>
+  <line x1="20" y1="72" x2="60" y2="72" stroke="url(#bc)" stroke-width="1" opacity=".2"/>
+</svg>

@@ -1,0 +1,34 @@
+[demo]
+id = "delta-multi-level-partitioning"
+name = "Delta Multi-Level Partitioning — Compound Partition Pruning"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Multi-level partitioning creates a hierarchy of partition directories \
+(e.g., region=us-east/quarter=Q1-2024/) that enables compound pruning: \
+the engine can skip partitions on BOTH dimensions simultaneously. A query \
+filtering on region AND quarter can prune down to 1 of 16 partitions — a \
+93.75% I/O reduction. This demo builds on the dynamic partition pruning \
+concepts by adding a second partition column and showing how multiple \
+dimension tables drive compound pruning decisions.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "partitioning", "partition-pruning", "multi-level", "compound", "join", "analytics"]
+difficulty = "advanced"
+estimated_time_minutes = 12
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.sales_ml"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.region_dim"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.quarter_dim"

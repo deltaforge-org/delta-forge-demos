@@ -1,0 +1,26 @@
+visit_id,pet_name,species,breed,owner_name,visit_date,diagnosis,treatment_cost,weight_kg,vaccinated
+S-1,Sophie,Bird,Cockatiel,Christopher Moore,2025-01-15,Arthritis,105.00,1.01,true
+S-2,Ruby,Dog,Bulldog,Maria Garcia,2025-01-26,Ear infection,95.00,12.61,false
+S-3,Daisy,Cat,British Shorthair,Laura Davis,2025-01-15,Dental cleaning,325.00,3.30,true
+S-4,Lily,Dog,German Shepherd,Sarah Johnson,2025-01-03,,145.00,38.95,true
+S-5,Chloe,Bird,Cockatiel,Amanda Wilson,2025-01-28,Upper respiratory infection,190.00,0.33,true
+S-6,Simba,Bird,Cockatiel,Stephanie Clark,2025-01-10,Upper respiratory infection,160.00,1.12,false
+S-7,Rocky,Cat,,Thomas Anderson,2025-01-07,Annual checkup,80.00,5.17,false
+S-8,Zeus,Dog,Labrador,Daniel Harris,2025-01-17,Eye infection,90.00,43.43,true
+S-9,Penny,Cat,Persian,Emily Rodriguez,2025-01-22,Dental cleaning,230.00,6.77,true
+S-10,Penny,Hamster,Syrian,Emily Rodriguez,2025-01-14,Fracture,395.00,0.09,false
+S-11,Molly,Cat,Maine Coon,Laura Davis,2025-01-13,Skin allergy,200.00,4.20,false
+S-12,Jack,Dog,Labrador,Kevin Young,2025-01-19,Ear infection,80.00,13.53,false
+S-13,Ginger,Cat,Maine Coon,Emily Rodriguez,2025-01-08,Sprain,155.00,4.75,false
+S-14,Willow,Hamster,,Rachel Lewis,2025-01-01,Fracture,455.00,0.07,true
+S-15,Bella,Cat,Maine Coon,David Kim,2025-01-24,Eye infection,90.00,4.13,true
+S-16,Rocky,Rabbit,,Laura Davis,2025-01-17,Parasite treatment,70.00,2.82,true
+S-17,Sophie,Dog,German Shepherd,Laura Davis,2025-01-02,Annual checkup,65.00,10.23,false
+S-18,Lily,Cat,British Shorthair,Christopher Moore,2025-01-18,Annual checkup,55.00,6.78,true
+S-19,Oscar,Hamster,Syrian,William Lee,2025-01-19,Eye infection,90.00,0.05,false
+S-20,Ginger,Rabbit,Holland Lop,William Lee,2025-01-07,Fracture,310.00,1.21,false
+S-21,Simba,Hamster,Syrian,James Brown,2025-01-28,Skin allergy,245.00,0.13,false
+S-22,Ruby,Dog,Beagle,Maria Garcia,2025-01-26,Upper respiratory infection,175.00,39.56,true
+S-23,Willow,Rabbit,Rex,David Kim,2025-01-13,Annual checkup,95.00,1.44,false
+S-24,Oscar,Rabbit,Flemish Giant,James Brown,2025-01-08,Annual checkup,85.00,1.80,false
+S-25,Duke,Dog,Dachshund,William Lee,2025-01-21,Eye infection,115.00,44.25,false

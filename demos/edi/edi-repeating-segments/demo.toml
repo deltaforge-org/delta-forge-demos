@@ -1,0 +1,121 @@
+[demo]
+id = "edi-repeating-segments"
+name = "EDI Repeating Segments — Multi-Occurrence X12 Handling"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates DeltaForge's three strategies for handling repeating X12 \
+segments — Indexed, Concatenate, and ToJson. When EDI transactions contain \
+multiple occurrences of the same segment (e.g., multiple N1 party loops or \
+multiple PO1 line items), the engine can: (1) fan out each occurrence into \
+separate numbered columns (Indexed), (2) pipe-delimit all values into a \
+single column (Concatenate), or (3) produce a JSON array per column (ToJson). \
+Fourteen real-world X12 files covering 850s, 810s, 855s, 856s, 861, 997, \
+and 824 transactions exercise all three modes against N1 party names and \
+PO1 line-item data — proving that multi-occurrence segments are now fully \
+queryable without falling back to df_transaction_json.
+"""
+categories = ["edi", "supply-chain"]
+tags = ["edi", "x12", "repeating-segments", "indexed", "concatenate", "to-json", "multi-occurrence", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Path to the directory containing X12 EDI transaction files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_a.edi"
+format = "edi"
+description = "810 Invoice — Music supply invoice (ABCMUSICSUPPLY, v00401): 6 N1 parties, 2 line items"
+size_bytes = 2255
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_b.edi"
+format = "edi"
+description = "810 Invoice — Music supply invoice with tax (ABCMUSICSUPPLY, v00401): 6 N1 parties, line-level tax"
+size_bytes = 2564
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_c.edi"
+format = "edi"
+description = "810 Invoice — Header-level invoice (ABCMUSICSUPPLY, v00401): 4 N1 parties, allowances and charges"
+size_bytes = 1512
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_d.edi"
+format = "edi"
+description = "810 Invoice — Multi-line header invoice (ABCMUSICSUPPLY, v00401): 6 N1 parties, delivery dates"
+size_bytes = 2205
+
+[[demo.data_files]]
+path = "data/x12_810_invoice_edifabric.edi"
+format = "edi"
+description = "810 Invoice — Aerospace invoice (SENDER1, v00204): 1 N1 party (ABC AEROSPACE CORPORATION)"
+size_bytes = 437
+
+[[demo.data_files]]
+path = "data/x12_824_application_advice.edi"
+format = "edi"
+description = "824 Application Advice — Error notification (SENDER1, v00204): 5 N1 parties (names empty)"
+size_bytes = 581
+
+[[demo.data_files]]
+path = "data/x12_850_purchase_order.edi"
+format = "edi"
+description = "850 Purchase Order — Simple PO (000123456, v00401): 1 N1 party (John Doe), 1 PO1 line item"
+size_bytes = 389
+
+[[demo.data_files]]
+path = "data/x12_850_purchase_order_a.edi"
+format = "edi"
+description = "850 Purchase Order — Complex PO (000123456, v00401): 5 N1 parties, 3 PO1 line items"
+size_bytes = 1760
+
+[[demo.data_files]]
+path = "data/x12_850_purchase_order_edifabric.edi"
+format = "edi"
+description = "850 Purchase Order — Aerospace PO (SENDER1, v00204): 1 N1 party (ABC AEROSPACE), 1 PO1 line item"
+size_bytes = 529
+
+[[demo.data_files]]
+path = "data/x12_855_purchase_order_ack.edi"
+format = "edi"
+description = "855 PO Acknowledgment — Order confirmation (SENDER1, v00204): 2 N1 parties, 3 PO1 line items"
+size_bytes = 532
+
+[[demo.data_files]]
+path = "data/x12_856_ship_bill_notice.edi"
+format = "edi"
+description = "857 Shipment & Billing Notice — Combined ship/bill (SENDER1, v00204): 4 N1 parties (names empty)"
+size_bytes = 607
+
+[[demo.data_files]]
+path = "data/x12_856_ship_notice.edi"
+format = "edi"
+description = "856 Ship Notice — Advance ship notice (SENDER1, v00204): 4 N1 parties (WAL-MART, supplier)"
+size_bytes = 1037
+
+[[demo.data_files]]
+path = "data/x12_861_receiving_advice.edi"
+format = "edi"
+description = "861 Receiving Advice — Receipt confirmation (SENDER1, v00204): 1 N1 party (name empty)"
+size_bytes = 370
+
+[[demo.data_files]]
+path = "data/x12_997_functional_acknowledgment.edi"
+format = "edi"
+description = "997 Functional Acknowledgment — EDI acknowledgment (TO->FROM, v00401): 0 N1 parties"
+size_bytes = 318
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.repeating_indexed"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.repeating_concat"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.edi.repeating_json"

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="os" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <!-- Terminal window frame -->
+  <rect x="4" y="6" width="72" height="68" rx="6" stroke="url(#os)" stroke-width="1.5" fill="url(#os)" fill-opacity=".05"/>
+  <!-- Title bar -->
+  <rect x="4" y="6" width="72" height="16" rx="6" fill="url(#os)" opacity=".12"/>
+  <rect x="4" y="16" width="72" height="6" fill="url(#os)" opacity=".12"/>
+  <!-- Traffic lights -->
+  <circle cx="15" cy="14" r="3" fill="#ef4444" opacity=".7"/>
+  <circle cx="24" cy="14" r="3" fill="#eab308" opacity=".7"/>
+  <circle cx="33" cy="14" r="3" fill="#22c55e" opacity=".7"/>
+  <!-- Log lines -->
+  <rect x="12" y="30" width="34" height="3" rx="1.5" fill="url(#os)" opacity=".5"/>
+  <rect x="12" y="39" width="48" height="3" rx="1.5" fill="url(#os)" opacity=".4"/>
+  <rect x="12" y="48" width="26" height="3" rx="1.5" fill="url(#os)" opacity=".3"/>
+  <rect x="12" y="57" width="40" height="3" rx="1.5" fill="url(#os)" opacity=".45"/>
+  <!-- Blinking cursor -->
+  <rect x="12" y="66" width="7" height="3" rx="1" fill="url(#os)" opacity=".8"/>
+</svg>

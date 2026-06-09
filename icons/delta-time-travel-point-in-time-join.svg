@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="pj" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Clock face (time dimension) -->
+  <circle cx="24" cy="28" r="16" stroke="url(#pj)" stroke-width="1.5" fill="url(#pj)" fill-opacity=".06"/>
+  <line x1="24" y1="28" x2="24" y2="16" stroke="url(#pj)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="24" y1="28" x2="32" y2="24" stroke="url(#pj)" stroke-width="1.2" stroke-linecap="round"/>
+  <circle cx="24" cy="28" r="1.5" fill="url(#pj)"/>
+  <!-- Rate table (dimension) -->
+  <rect x="48" y="12" width="24" height="20" rx="2" stroke="url(#pj)" stroke-width="1.5" fill="url(#pj)" fill-opacity=".1"/>
+  <text x="60" y="20" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pj)" opacity=".8">RATES</text>
+  <line x1="48" y1="22" x2="72" y2="22" stroke="url(#pj)" stroke-width="1" opacity=".3"/>
+  <text x="60" y="28" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#pj)" opacity=".5">V1 V2 V3</text>
+  <!-- JOIN arrow from clock to rate table -->
+  <path d="M38 24L46 20" stroke="url(#pj)" stroke-width="1.5" stroke-dasharray="3 2" opacity=".6"/>
+  <!-- Trades table (fact) -->
+  <rect x="16" y="50" width="48" height="18" rx="2" stroke="url(#pj)" stroke-width="1.5" fill="url(#pj)" fill-opacity=".08"/>
+  <text x="40" y="58" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#pj)" opacity=".7">TRADES</text>
+  <!-- Trade rows with time markers -->
+  <circle cx="24" cy="64" r="2" fill="url(#pj)" opacity=".5"/>
+  <circle cx="36" cy="64" r="2" fill="url(#pj)" opacity=".7"/>
+  <circle cx="48" cy="64" r="2" fill="url(#pj)" opacity=".9"/>
+  <text x="24" y="72" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#pj)" opacity=".4">AM</text>
+  <text x="36" y="72" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#pj)" opacity=".5">MID</text>
+  <text x="48" y="72" text-anchor="middle" font-size="3.5" font-family="monospace" fill="url(#pj)" opacity=".6">PM</text>
+  <!-- JOIN lines from trades to clock -->
+  <path d="M24 50L24 44" stroke="url(#pj)" stroke-width="1" opacity=".4"/>
+  <path d="M36 50L40 38" stroke="url(#pj)" stroke-width="1" opacity=".5"/>
+  <path d="M48 50L56 34" stroke="url(#pj)" stroke-width="1" opacity=".6"/>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#pj)" opacity=".5">AS OF</text>
+</svg>

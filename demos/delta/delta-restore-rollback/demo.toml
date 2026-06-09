@@ -1,0 +1,25 @@
+[demo]
+id = "delta-restore-rollback"
+name = "Delta RESTORE — Rollback to Previous Versions"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+RESTORE is a Delta Lake operation that rewinds a table to any previous \
+version by writing a new commit that recreates the old snapshot. It solves \
+the problem of accidental data loss: a mistaken DELETE or UPDATE can be \
+undone without backup restores or downtime. This demo walks through a \
+product inventory that suffers an accidental deletion, then uses RESTORE \
+TO VERSION to recover the data and continues evolving the table afterward.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "restore", "rollback", "version-history", "recovery", "undo"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.rollback_product_inventory"

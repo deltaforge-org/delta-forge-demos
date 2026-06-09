@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ghtd" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#374151"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer octocat-ish circle -->
+  <circle cx="40" cy="38" r="22" fill="url(#ghtd)" opacity=".18" stroke="url(#ghtd)" stroke-width="1.6"/>
+  <!-- Head -->
+  <circle cx="40" cy="34" r="13" fill="url(#ghtd)" opacity=".6"/>
+  <!-- Body fold -->
+  <path d="M24 48 Q40 60 56 48 L54 58 Q40 68 26 58 Z" fill="url(#ghtd)" opacity=".45"/>
+  <!-- Ears/tabs -->
+  <path d="M28 24 L24 18 L28 22 Z" fill="url(#ghtd)" opacity=".75"/>
+  <path d="M52 24 L56 18 L52 22 Z" fill="url(#ghtd)" opacity=".75"/>
+  <!-- Link-header chain (three links indicating pagination) -->
+  <circle cx="14" cy="68" r="3" fill="none" stroke="url(#ghtd)" stroke-width="1.6"/>
+  <line x1="17" y1="68" x2="23" y2="68" stroke="url(#ghtd)" stroke-width="1.6"/>
+  <circle cx="26" cy="68" r="3" fill="none" stroke="url(#ghtd)" stroke-width="1.6"/>
+  <line x1="29" y1="68" x2="35" y2="68" stroke="url(#ghtd)" stroke-width="1.6"/>
+  <circle cx="38" cy="68" r="3" fill="url(#ghtd)" opacity=".8"/>
+  <!-- Star accent -->
+  <path d="M58 58 L60 63 L65 63 L61 66 L62 71 L58 68 L54 71 L55 66 L51 63 L56 63 Z" fill="url(#ghtd)" opacity=".9"/>
+</svg>

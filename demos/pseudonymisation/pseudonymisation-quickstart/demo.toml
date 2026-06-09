@@ -1,0 +1,26 @@
+[demo]
+id = "pseudonymisation-quickstart"
+name = "Pseudonymisation Quickstart — Banking KYC"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A retail bank must pseudonymise customer PII for its analytics team while \
+keeping account-level aggregations accurate. This basic demo teaches the \
+core concept: CREATE PSEUDONYMISATION RULE protects data at query time \
+without modifying it on disk. Four transform types cover the most common \
+KYC de-identification patterns: redact SSN, mask phone numbers, hash names \
+for linkage, and generalize dates of birth to decade.
+"""
+categories = ["pseudonymisation", "banking"]
+tags = ["pseudonymisation", "basic", "quickstart", "banking", "kyc", "gdpr", "pii"]
+difficulty = "basic"
+estimated_time_minutes = 3
+
+[demo.variables]
+data_path = { description = "Root path where demo data files are stored", required = true }
+zone_name = { description = "Target zone name", required = false }
+current_user = { description = "Username of the current logged-in user", required = true }
+
+[[demo.target_objects]]
+type = "table"
+name = "{{zone_name}}.pseudonymisation.bank_customers"

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="hi" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Version log lines (like a commit history) -->
+  <circle cx="16" cy="14" r="3" fill="url(#hi)" opacity=".25"/>
+  <line x1="16" y1="17" x2="16" y2="22" stroke="url(#hi)" stroke-width="1" opacity=".2"/>
+  <circle cx="16" cy="25" r="3" fill="url(#hi)" opacity=".3"/>
+  <line x1="16" y1="28" x2="16" y2="33" stroke="url(#hi)" stroke-width="1" opacity=".2"/>
+  <circle cx="16" cy="36" r="3" fill="url(#hi)" opacity=".35"/>
+  <line x1="16" y1="39" x2="16" y2="44" stroke="url(#hi)" stroke-width="1" opacity=".2"/>
+  <!-- V4 highlighted red (the bad commit) -->
+  <circle cx="16" cy="47" r="4" fill="url(#hi)" opacity=".7"/>
+  <text x="16" y="49" text-anchor="middle" font-size="3.5" font-family="monospace" fill="#fff" opacity=".9">!</text>
+  <line x1="16" y1="51" x2="16" y2="56" stroke="url(#hi)" stroke-width="1" opacity=".2"/>
+  <circle cx="16" cy="59" r="3" fill="url(#hi)" opacity=".25"/>
+  <!-- Log text lines -->
+  <rect x="23" y="12" width="14" height="4" rx="1" fill="url(#hi)" opacity=".15"/>
+  <rect x="23" y="23" width="18" height="4" rx="1" fill="url(#hi)" opacity=".15"/>
+  <rect x="23" y="34" width="12" height="4" rx="1" fill="url(#hi)" opacity=".15"/>
+  <rect x="23" y="45" width="16" height="4" rx="1" fill="url(#hi)" opacity=".35"/>
+  <rect x="23" y="57" width="14" height="4" rx="1" fill="url(#hi)" opacity=".15"/>
+  <!-- Magnifying glass over the bad commit -->
+  <circle cx="54" cy="36" r="14" stroke="url(#hi)" stroke-width="2.5" fill="url(#hi)" fill-opacity=".08"/>
+  <line x1="64" y1="46" x2="72" y2="54" stroke="url(#hi)" stroke-width="3" stroke-linecap="round"/>
+  <!-- Question mark inside magnifying glass -->
+  <text x="54" y="41" text-anchor="middle" font-size="14" font-family="serif" fill="url(#hi)" opacity=".6">?</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#hi)" opacity=".6">INVESTIGATE</text>
+</svg>

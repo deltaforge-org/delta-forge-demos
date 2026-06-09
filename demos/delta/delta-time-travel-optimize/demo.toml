@@ -1,0 +1,25 @@
+[demo]
+id = "delta-time-travel-optimize"
+name = "Delta Time Travel & OPTIMIZE — Version History"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+OPTIMIZE is a Delta Lake maintenance command that compacts many small \
+Parquet files into fewer, larger ones for dramatically faster read \
+performance. Frequent writes (inserts, updates, deletes) create file \
+fragmentation that degrades query speed. This demo builds a 5-version \
+history through various DML operations, then runs OPTIMIZE to compact \
+the files, showing how versioning and file maintenance work together.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "intermediate", "time-travel", "optimize", "versioning", "history"]
+difficulty = "intermediate"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.inventory"

@@ -1,0 +1,33 @@
+[demo]
+id = "delta-edge-cases"
+name = "Delta Edge Cases — Empty, Wide & Minimal Tables"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Delta tables gracefully handle boundary conditions that often trip up \
+traditional data systems, including single-row tables, wide schemas, \
+and empty tables. Understanding these edge cases is essential for \
+building robust pipelines that do not break on unusual but valid data \
+shapes. This demo exercises a singleton config table updated in-place, \
+a 30-column wide metrics table, and an empty schema-only staging table.
+"""
+categories = ["delta-table"]
+tags = ["delta-table", "advanced", "edge-cases", "singleton", "wide-table", "empty-table", "schema"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.config_singleton"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.wide_metrics"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.empty_staging"

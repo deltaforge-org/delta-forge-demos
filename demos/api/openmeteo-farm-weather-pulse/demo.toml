@@ -1,0 +1,52 @@
+[demo]
+id = "openmeteo-farm-weather-pulse"
+name = "Farm Weather Pulse — Query-Param Overrides via USING"
+version = "1.0.0"
+description = """
+An agritech platform runs a shared weather-monitoring service for its
+3 partner farms across Northern Europe — Oslo (Norway), Hamburg
+(Germany), and Dublin (Ireland). Every hour the platform pulls a live
+observation for each farm's coordinates from Open-Meteo's public
+forecast API and lands them into one bronze table the agronomy team
+queries for yield modeling.
+
+The pivotal feature: the API endpoint is defined **once** with no
+hardcoded latitude/longitude, and each per-farm INVOKE supplies its
+coordinates at runtime via `INVOKE ... USING (query_param.latitude =
+$lat, query_param.longitude = $lon)`. The endpoint carries the shared
+options (`query_param.current`, `query_param.timezone`) once as part
+of its definition; per-call overrides win when they collide. Onboarding
+a new farm is a one-line SET + INVOKE addition — no ALTER API ENDPOINT
+needed, no per-farm endpoint proliferation.
+
+This is the **query_param** analog of the public-holiday-calendar-sync
+demo's **path_param** USING clause. Between the two, runtime override
+coverage is complete across all three OverrideKind variants except
+`header.*`, which the NASA APOD demo exercises.
+
+Demonstrates: INVOKE API ENDPOINT ... USING (query_param.* = $x),
+SET $name = <expr> standalone, multiple INVOKE calls in a single script
+against the same endpoint with different runtime values, and JSON
+flatten over a nested `$.current` block.
+
+NOTE: requires internet. INVOKE issues real GETs against
+https://api.open-meteo.com/v1/forecast. Open-Meteo is a free
+non-commercial weather service with a 10,000 req/day anonymous budget —
+3 requests fits in trivially.
+"""
+categories = ["api", "rest-ingest", "overrides", "weather"]
+tags = ["api", "rest", "ingest", "invoke-using", "query-param-override", "script-params", "set", "open-meteo", "weather", "multi-site", "json", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.openmeteo_api.weather_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.openmeteo_api.weather_silver"

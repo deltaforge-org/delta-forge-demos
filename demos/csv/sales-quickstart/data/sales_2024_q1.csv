@@ -1,0 +1,4 @@
+id,product_name,quantity,unit_price,sale_date,region
+1,Widget A,10,29.99,2024-01-15,North
+2,Widget B,5,49.99,2024-02-10,South
+3,Gadget X,20,15.50,2024-03-22,East

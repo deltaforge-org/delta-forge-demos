@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vss" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Storage bar chart — before (tall) vs after (short) -->
+  <rect x="10" y="14" width="14" height="42" rx="2" fill="url(#vss)" opacity=".4"/>
+  <rect x="10" y="36" width="14" height="20" rx="2" fill="url(#vss)" opacity=".7"/>
+  <!-- Orphaned files (faded blocks inside tall bar) -->
+  <rect x="12" y="16" width="10" height="5" rx="1" fill="url(#vss)" opacity=".2"/>
+  <rect x="12" y="23" width="10" height="5" rx="1" fill="url(#vss)" opacity=".2"/>
+  <rect x="12" y="30" width="10" height="4" rx="1" fill="url(#vss)" opacity=".2"/>
+  <!-- Arrow down — savings -->
+  <path d="M38 26L42 26L40 18Z" fill="url(#vss)" opacity=".3"/>
+  <path d="M38 34L42 34L40 42Z" fill="url(#vss)" opacity=".7"/>
+  <line x1="40" y1="18" x2="40" y2="42" stroke="url(#vss)" stroke-width="1.5" opacity=".5"/>
+  <!-- Dollar sign — cost savings -->
+  <text x="60" y="38" text-anchor="middle" font-size="22" font-family="monospace" font-weight="bold" fill="url(#vss)" opacity=".6">$</text>
+  <path d="M52 44L56 48L68 36" stroke="url(#vss)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+  <!-- Labels -->
+  <text x="17" y="66" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#vss)" opacity=".5">BEFORE</text>
+  <text x="17" y="72" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#vss)" opacity=".5">AFTER</text>
+  <text x="40" y="78" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#vss)" opacity=".6">VACUUM $</text>
+</svg>

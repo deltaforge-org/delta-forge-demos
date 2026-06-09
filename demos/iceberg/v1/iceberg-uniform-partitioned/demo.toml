@@ -1,0 +1,25 @@
+[demo]
+id = "iceberg-uniform-partitioned"
+name = "Iceberg UniForm — Partitioned Tables"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Iceberg UniForm on a partitioned Delta table. The Iceberg \
+metadata includes partition specs that map directly from the Delta partition \
+columns, enabling Iceberg-compatible engines to leverage partition pruning. \
+Shows INSERT, UPDATE, DELETE across partitions, and verifies that Iceberg \
+snapshots correctly track partition-level data changes. Dataset: 24 sales \
+transactions across 3 regions (us-east, us-west, eu-west) and 4 quarters.
+"""
+categories = ["iceberg", "delta-table"]
+tags = ["iceberg", "advanced", "uniform", "partitioning", "partition-pruning", "multi-region"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.iceberg_demos.regional_sales"

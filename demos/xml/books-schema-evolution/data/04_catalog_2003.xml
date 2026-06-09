@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+   <book id="bk110">
+      <author>O'Brien, Tim</author>
+      <title>MSXML3: A Comprehensive Guide</title>
+      <genre>Computer</genre>
+      <price>36.95</price>
+      <publish_date>2003-01-15</publish_date>
+      <isbn>978-0-13-235088-4</isbn>
+      <language>en</language>
+      <publisher>O'Reilly</publisher>
+      <rating>4.6</rating>
+      <edition>2nd</edition>
+      <pages>480</pages>
+   </book>
+   <book id="bk111">
+      <author>Corets, Eva</author>
+      <title>The Sundered Grail</title>
+      <genre>Fantasy</genre>
+      <price>5.95</price>
+      <publish_date>2003-05-10</publish_date>
+      <isbn>978-0-345-45258-6</isbn>
+      <language>en</language>
+      <publisher>Tor</publisher>
+      <rating>4.1</rating>
+      <edition>1st</edition>
+      <pages>320</pages>
+   </book>
+   <book id="bk112">
+      <author>Kress, Peter</author>
+      <title>Quantum Dreams</title>
+      <genre>Science Fiction</genre>
+      <price>7.95</price>
+      <publish_date>2003-11-15</publish_date>
+      <isbn>978-0-441-01256-3</isbn>
+      <language>en</language>
+      <publisher>Ace</publisher>
+      <rating>4.4</rating>
+      <edition>1st</edition>
+      <pages>288</pages>
+   </book>
+</catalog>

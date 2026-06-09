@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cl" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg silhouette -->
+  <path d="M40 6L54 28H26Z" fill="url(#cl)" fill-opacity=".2" stroke="url(#cl)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 30H72" stroke="url(#cl)" stroke-width="1" opacity=".35" stroke-dasharray="3 2"/>
+  <path d="M22 30L18 52L34 64L46 64L62 52L58 30Z" fill="url(#cl)" fill-opacity=".08" stroke="url(#cl)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Lifecycle circle with CRUD arrows -->
+  <circle cx="40" cy="44" r="12" fill="none" stroke="url(#cl)" stroke-width="1.2" opacity=".4" stroke-dasharray="4 3"/>
+  <!-- C (Create) arrow top -->
+  <path d="M40 32L42 35L38 35Z" fill="url(#cl)" opacity=".7"/>
+  <!-- R (Read) arrow right -->
+  <path d="M52 44L49 42L49 46Z" fill="url(#cl)" opacity=".7"/>
+  <!-- U (Update) arrow bottom -->
+  <path d="M40 56L38 53L42 53Z" fill="url(#cl)" opacity=".7"/>
+  <!-- D (Delete) arrow left -->
+  <path d="M28 44L31 46L31 42Z" fill="url(#cl)" opacity=".7"/>
+  <!-- Snapshot dots (versions) -->
+  <circle cx="40" cy="38" r="1.5" fill="url(#cl)" opacity=".8"/>
+  <circle cx="46" cy="44" r="1.5" fill="url(#cl)" opacity=".6"/>
+  <circle cx="40" cy="50" r="1.5" fill="url(#cl)" opacity=".4"/>
+  <circle cx="34" cy="44" r="1.5" fill="url(#cl)" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cl)" opacity=".6">LIFECYCLE</text>
+</svg>

@@ -1,0 +1,83 @@
+[demo]
+id = "iceberg-v3-equality-deletes"
+name = "Iceberg V3 — Equality Delete Files"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Apache Iceberg V3 equality delete file handling using a \
+healthcare EHR platform dataset. The table contains 500 patient visit \
+records across 5 hospitals (Cleveland Clinic, Johns Hopkins, Mass General, \
+Mayo Clinic, Mount Sinai). Four patients exercise their GDPR right to \
+erasure — equality deletes keyed on patient_id remove all 55 records for \
+those patients, leaving 445 visits. Equality deletes are column-value-based \
+(unlike position deletes which reference row positions), matching every row \
+whose patient_id equals the deleted value. Exercises the Iceberg equality \
+delete reader path, V3 metadata chain parsing, and post-delete aggregation \
+correctness.
+"""
+categories = ["iceberg"]
+tags = ["iceberg", "advanced", "read-only", "native-format", "v3", "equality-deletes", "gdpr", "healthcare", "compliance"]
+difficulty = "advanced"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Path to the Iceberg table root (containing metadata/ and data/ subdirectories)", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "patient_visits/data/00000-12-0ecad017-28f7-4693-9e6b-30e4373068cb-0-00001.parquet"
+format = "parquet"
+description = "All 500 patient visit records (single Parquet data file)"
+size_bytes = 8100
+
+[[demo.data_files]]
+path = "patient_visits/data/00000-0-2edc2fd6-63df-47bb-8f0a-b409b08e6129-00001-eq-deletes.parquet"
+format = "parquet"
+description = "Equality delete file — 4 patient_id values for GDPR erasure (removes 55 rows)"
+size_bytes = 485
+
+[[demo.data_files]]
+path = "patient_visits/metadata/v3.metadata.json"
+format = "json"
+description = "Iceberg format v3 metadata — schema, snapshots, partition specs, equality delete tracking"
+size_bytes = 3387
+
+[[demo.data_files]]
+path = "patient_visits/metadata/v2.metadata.json"
+format = "json"
+description = "Iceberg format v3 metadata — intermediate snapshot after initial data load"
+size_bytes = 2330
+
+[[demo.data_files]]
+path = "patient_visits/metadata/v1.metadata.json"
+format = "json"
+description = "Iceberg format v3 metadata — initial table creation"
+size_bytes = 1277
+
+[[demo.data_files]]
+path = "patient_visits/metadata/snap-504844044204044242-1-690f4e5b-f2c8-461f-9824-1ccbd010f4e3.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — snapshot with data file"
+size_bytes = 4758
+
+[[demo.data_files]]
+path = "patient_visits/metadata/snap-504844044204044243-1-3bc929fa-a090-4a52-bbd5-b67826c208a3.avro"
+format = "avro"
+description = "Iceberg manifest list (Avro) — snapshot with equality delete applied"
+size_bytes = 2816
+
+[[demo.data_files]]
+path = "patient_visits/metadata/690f4e5b-f2c8-461f-9824-1ccbd010f4e3-m0.avro"
+format = "avro"
+description = "Iceberg data manifest (Avro) — pointers to Parquet data file"
+size_bytes = 8509
+
+[[demo.data_files]]
+path = "patient_visits/metadata/48bf8c85-6e67-439a-a67b-15d038308df2-m0.avro"
+format = "avro"
+description = "Iceberg delete manifest (Avro) — pointers to equality delete file"
+size_bytes = 5470
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.iceberg_demos.patient_visits"

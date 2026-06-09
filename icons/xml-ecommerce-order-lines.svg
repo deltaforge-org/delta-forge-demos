@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="xe" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="38" width="48" height="30" rx="3" fill="url(#xe)" opacity=".2"/>
+  <rect x="16" y="38" width="48" height="30" rx="3" stroke="url(#xe)" stroke-width="1.5" fill="none"/>
+  <path d="M16 38L8 28L28 32Z" fill="url(#xe)" opacity=".4"/>
+  <path d="M64 38L72 28L52 32Z" fill="url(#xe)" opacity=".4"/>
+  <circle cx="30" cy="20" r="4.5" fill="url(#xe)" opacity=".8"/>
+  <circle cx="40" cy="10" r="4" fill="url(#xe)" opacity=".9"/>
+  <circle cx="52" cy="18" r="4.5" fill="url(#xe)" opacity=".7"/>
+  <line x1="30" y1="14" x2="28" y2="6" stroke="url(#xe)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="40" y1="6" x2="40" y2="0" stroke="url(#xe)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="52" y1="12" x2="56" y2="4" stroke="url(#xe)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <line x1="40" y1="48" x2="40" y2="58" stroke="url(#xe)" stroke-width="1" opacity=".3"/>
+  <line x1="32" y1="53" x2="48" y2="53" stroke="url(#xe)" stroke-width="1" opacity=".2"/>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ra" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2dd4bf"/>
+      <stop offset="1" stop-color="#0d9488"/>
+    </linearGradient>
+  </defs>
+  <!-- Restore circular arrow -->
+  <path d="M40 12C24 12 12 24 12 40C12 56 24 68 40 68C56 68 68 56 68 40C68 28 60 18 50 14" stroke="url(#ra)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M50 8L50 14L56 14" stroke="url(#ra)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Version snapshots inside -->
+  <rect x="26" y="28" width="10" height="8" rx="2" fill="url(#ra)" fill-opacity=".3" stroke="url(#ra)" stroke-width="1"/>
+  <rect x="44" y="28" width="10" height="8" rx="2" fill="url(#ra)" fill-opacity=".15" stroke="url(#ra)" stroke-width="1" stroke-dasharray="2"/>
+  <rect x="35" y="42" width="10" height="8" rx="2" fill="url(#ra)" fill-opacity=".4" stroke="url(#ra)" stroke-width="1.5"/>
+  <!-- Restore arrow pointing to target version -->
+  <path d="M49 36L42 42" stroke="url(#ra)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="3"/>
+  <!-- Version labels -->
+  <text x="31" y="34" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ra)" opacity=".8">V1</text>
+  <text x="49" y="34" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ra)" opacity=".5">V3</text>
+  <text x="40" y="48" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#ra)" opacity=".9">V1</text>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ra)" opacity=".6">RESTORE</text>
+</svg>

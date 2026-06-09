@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gsc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gscEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#818cf8;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:0.6" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="80" height="80" rx="12" fill="url(#gsc)"/>
+  <!-- Left side: SQL table rows -->
+  <rect x="8" y="18" width="26" height="5" rx="1.5" fill="#ffffff" opacity="0.25"/>
+  <rect x="8" y="26" width="26" height="5" rx="1.5" fill="#ffffff" opacity="0.2"/>
+  <rect x="8" y="34" width="26" height="5" rx="1.5" fill="#ffffff" opacity="0.15"/>
+  <rect x="8" y="42" width="26" height="5" rx="1.5" fill="#ffffff" opacity="0.25"/>
+  <rect x="8" y="50" width="26" height="5" rx="1.5" fill="#ffffff" opacity="0.2"/>
+  <!-- Right side: graph nodes and edges -->
+  <line x1="54" y1="22" x2="68" y2="32" stroke="url(#gscEdge)" stroke-width="1.5"/>
+  <line x1="54" y1="22" x2="52" y2="38" stroke="url(#gscEdge)" stroke-width="1.5"/>
+  <line x1="68" y1="32" x2="64" y2="48" stroke="url(#gscEdge)" stroke-width="1.5"/>
+  <line x1="52" y1="38" x2="64" y2="48" stroke="url(#gscEdge)" stroke-width="1.5"/>
+  <line x1="52" y1="38" x2="68" y2="32" stroke="url(#gscEdge)" stroke-width="1.5"/>
+  <circle cx="54" cy="22" r="4" fill="#ffffff" opacity="0.9"/>
+  <circle cx="68" cy="32" r="3.5" fill="#ffffff" opacity="0.85"/>
+  <circle cx="52" cy="38" r="3.5" fill="#ffffff" opacity="0.85"/>
+  <circle cx="64" cy="48" r="4" fill="#ffffff" opacity="0.9"/>
+  <!-- Bridge: bidirectional arrow -->
+  <line x1="36" y1="35" x2="46" y2="35" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
+  <polyline points="43,32 46,35 43,38" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.7"/>
+  <polyline points="39,32 36,35 39,38" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.7"/>
+  <!-- Labels -->
+  <text x="21" y="67" font-family="monospace" font-size="7" fill="#c7d2fe" text-anchor="middle" font-weight="bold">SQL</text>
+  <text x="60" y="67" font-family="monospace" font-size="6" fill="#a5f3fc" text-anchor="middle" font-weight="bold">Cypher</text>
+</svg>

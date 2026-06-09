@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ss" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+  </defs>
+  <!-- Short string: full stats (checkmark) -->
+  <rect x="8" y="12" width="28" height="10" rx="2" fill="url(#ss)" fill-opacity=".2" stroke="url(#ss)" stroke-width="1"/>
+  <text x="12" y="19" font-size="5" font-family="monospace" fill="url(#ss)" opacity=".8">SKU-A001</text>
+  <path d="M40 14L42 18L46 12" stroke="url(#ss)" stroke-width="1.5" fill="none" opacity=".8"/>
+  <!-- Long string: truncated (scissors) -->
+  <rect x="8" y="28" width="62" height="10" rx="2" fill="url(#ss)" fill-opacity=".12" stroke="url(#ss)" stroke-width="1"/>
+  <text x="12" y="35" font-size="4" font-family="monospace" fill="url(#ss)" opacity=".6">https://store.example.com/produ...</text>
+  <!-- Truncation line at 32 chars -->
+  <line x1="50" y1="26" x2="50" y2="40" stroke="url(#ss)" stroke-width="1" stroke-dasharray="2 1" opacity=".6"/>
+  <text x="52" y="26" font-size="3.5" font-family="monospace" fill="url(#ss)" opacity=".5">32</text>
+  <!-- Cross mark for long string -->
+  <path d="M66 30L70 36M70 30L66 36" stroke="url(#ss)" stroke-width="1.5" opacity=".6"/>
+  <!-- Arrow pointing to bloom filter solution -->
+  <path d="M40 44L40 50" stroke="url(#ss)" stroke-width="1" opacity=".5" marker-end="url(#arr)"/>
+  <!-- Bloom filter bit array (solution) -->
+  <rect x="14" y="52" width="52" height="10" rx="3" stroke="url(#ss)" stroke-width="1" fill="url(#ss)" fill-opacity=".08"/>
+  <rect x="16" y="54" width="6" height="6" rx="1" fill="url(#ss)" opacity=".5"/>
+  <rect x="24" y="54" width="6" height="6" rx="1" fill="url(#ss)" opacity=".2"/>
+  <rect x="32" y="54" width="6" height="6" rx="1" fill="url(#ss)" opacity=".5"/>
+  <rect x="40" y="54" width="6" height="6" rx="1" fill="url(#ss)" opacity=".2"/>
+  <rect x="48" y="54" width="6" height="6" rx="1" fill="url(#ss)" opacity=".5"/>
+  <rect x="56" y="54" width="6" height="6" rx="1" fill="url(#ss)" opacity=".2"/>
+  <!-- Labels -->
+  <text x="40" y="74" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#ss)" opacity=".7">STRING</text>
+</svg>

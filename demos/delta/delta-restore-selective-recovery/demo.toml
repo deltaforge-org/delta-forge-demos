@@ -1,0 +1,28 @@
+[demo]
+id = "delta-restore-selective-recovery"
+name = "Delta Selective Recovery — VERSION AS OF Extraction"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Full RESTORE rewinds an entire table to a prior version — but sometimes only \
+part of the data is corrupted while other parts have good changes you want to \
+keep. This demo teaches the selective recovery pattern using VERSION AS OF to \
+extract clean rows from a historical version and surgically replace only the \
+corrupted partition. The scenario follows a wealth management platform where a \
+bad market data feed corrupts one portfolio's prices while two other portfolios \
+have valid rebalancing work that must be preserved. You will learn to diagnose \
+the corruption, understand why full RESTORE would cause collateral damage, and \
+use DELETE + INSERT FROM VERSION AS OF to recover precisely.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "restore", "version-as-of", "time-travel", "selective-recovery", "portfolio", "finance"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.portfolio_positions"

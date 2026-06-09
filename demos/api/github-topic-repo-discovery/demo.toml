@@ -1,0 +1,51 @@
+[demo]
+id = "github-topic-repo-discovery"
+name = "GitHub Topic Repo Discovery — Link-Header Pagination + FULL REFRESH"
+version = "1.0.0"
+description = """
+A data-platform DevRel team tracks the Delta Lake open-source ecosystem.
+They need a current snapshot of every public repo tagged
+`topic:delta-lake` ordered by star count so their quarterly ecosystem
+report shows which projects the community is gravitating toward.
+
+GitHub's search API paginates via the RFC-5988 `Link` header: each
+response body carries the results page and the headers carry
+`<next-url>; rel="next"` until the last page. The ingest engine's
+`pagination = 'link_header'` mode reads those headers and follows
+`rel="next"` without needing to synthesise page/offset math — it's the
+only pagination mode that handles arbitrary cursor shapes the API
+controls.
+
+The ingest is an explicit `INVOKE API ENDPOINT ... FULL REFRESH` — the
+DevRel team wants a fresh snapshot every cadence (weekly), not an
+incremental delta. `FULL REFRESH` reseeds the watermark state so
+downstream consumers know the entire result set was re-fetched, which
+is what the report requires.
+
+Demonstrates: pagination = 'link_header' with max_pages bound,
+INVOKE API ENDPOINT ... FULL REFRESH, `header.*` options carried on
+the endpoint (Accept header with GitHub's media type), JSON flatten
+with `root_path = "$.items"` for search-envelope responses, and a
+nested path `$.owner.login` to prove the flatten descends into
+sub-objects.
+
+NOTE: requires internet. INVOKE issues real GETs against
+https://api.github.com/search/repositories. GitHub's anonymous search
+API allows 10 req/minute; 3 pages well inside the budget.
+"""
+categories = ["api", "rest-ingest", "pagination", "github"]
+tags = ["api", "rest", "ingest", "pagination", "link-header", "full-refresh", "json", "github", "github-search", "topic-filter", "nested-flatten", "oss-intelligence", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.github_search_api.delta_lake_repos_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.github_search_api.delta_lake_repos_silver"

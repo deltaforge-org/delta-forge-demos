@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="mi" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular retry arrow -->
+  <path d="M40 14C52 14 62 24 62 36C62 48 52 58 40 58C28 58 18 48 18 36C18 28 22 21 28 17" stroke="url(#mi)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M24 12L28 17L23 20" stroke="url(#mi)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Equals sign in center (idempotent = same result) -->
+  <line x1="33" y1="33" x2="47" y2="33" stroke="url(#mi)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="33" y1="39" x2="47" y2="39" stroke="url(#mi)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Checkmark -->
+  <path d="M35 48L39 52L47 44" stroke="url(#mi)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <!-- Timestamp guard ticks -->
+  <line x1="14" y1="62" x2="66" y2="62" stroke="url(#mi)" stroke-width="1" opacity=".3"/>
+  <line x1="20" y1="60" x2="20" y2="64" stroke="url(#mi)" stroke-width="1" opacity=".4"/>
+  <line x1="33" y1="60" x2="33" y2="64" stroke="url(#mi)" stroke-width="1" opacity=".4"/>
+  <line x1="46" y1="60" x2="46" y2="64" stroke="url(#mi)" stroke-width="1" opacity=".4"/>
+  <line x1="59" y1="60" x2="59" y2="64" stroke="url(#mi)" stroke-width="1" opacity=".4"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#mi)" opacity=".6">IDEMPOTENT</text>
+</svg>

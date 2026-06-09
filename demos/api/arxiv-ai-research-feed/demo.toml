@@ -1,0 +1,52 @@
+[demo]
+id = "arxiv-ai-research-feed"
+name = "arXiv AI Research Feed — RESPONSE FORMAT XML"
+version = "1.0.0"
+description = """
+A corporate R&D library maintains a rolling feed of the latest cs.AI
+abstracts posted to arXiv so its researchers see what the open community
+is publishing without having to poll an email digest. The ingest fetches
+the 50 most-recently-submitted cs.AI papers using arXiv's public Atom
+query API.
+
+This is the only existing API demo that exercises `RESPONSE FORMAT XML`
+— every other demo uses JSON. arXiv's response is an Atom 1.0 feed
+(<feed><entry>...</entry>...</feed>), which the downstream external
+table flattens via `xml_flatten_config` with a `row_xpath = "//entry"`
+to pivot each entry element into one row. Namespaces (atom:, arxiv:,
+opensearch:) are registered explicitly and stripped at column
+naming time so analyst-friendly names like `title`, `published_at`,
+`summary`, and `author_names` fall out cleanly.
+
+Repeating `<author>` elements per paper are joined into a comma-
+separated string via `default_repeat_handling = "join_comma"` — papers
+with many co-authors land as one row with "Alice, Bob, Carol" style
+concatenation instead of multi-row explosion.
+
+Demonstrates: RESPONSE FORMAT XML on CREATE API ENDPOINT, XML external
+table with xml_flatten_config, namespaces map for Atom-prefixed XML,
+strip_namespace_prefixes for clean column names, join_comma repeat
+handling for multi-author papers, and the 50-row determinism an arXiv
+max_results query gives you.
+
+NOTE: requires internet. INVOKE issues a real GET against
+https://export.arxiv.org/api/query. arXiv allows anonymous access at
+roughly 1 req per 3 seconds; the endpoint pins rate_limit_rps = 0.5 to
+stay well inside the budget.
+"""
+categories = ["api", "rest-ingest", "xml", "research"]
+tags = ["api", "rest", "ingest", "xml", "response-format-xml", "arxiv", "atom", "namespace-stripping", "join-comma", "research-feed", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.arxiv_api.arxiv_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.arxiv_api.arxiv_silver"

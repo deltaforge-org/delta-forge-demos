@@ -1,0 +1,32 @@
+[demo]
+id = "graph-mutations"
+name = "Graph Mutations — Hospital Referral Network DML"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+Tests graph write operations on a hospital patient referral network. 30 physicians \
+across 6 specialties and 3 hospitals are connected by ~75 directed referral edges. \
+The demo exercises INSERT (new physician + referral), UPDATE (referral priorities), \
+and DELETE (completed referrals), then verifies each mutation via Cypher queries. \
+Finishes with PageRank and degree centrality on the modified graph.
+"""
+categories = ["graph"]
+tags = ["graph", "mutations", "dml", "insert", "update", "delete", "cypher", "hospital", "referrals"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "graph"
+name = "{{zone_name}}.hospital_referrals.hospital_referrals"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.hospital_referrals.physicians"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.hospital_referrals.referrals"

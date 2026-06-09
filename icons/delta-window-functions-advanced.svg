@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="wfa" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0284c7"/>
+      <stop offset="1" stop-color="#67e8f9"/>
+    </linearGradient>
+  </defs>
+  <!-- Trophy cup -->
+  <path d="M28 20h24v18c0 8-5 14-12 14s-12-6-12-14V20z" fill="url(#wfa)" opacity=".2" stroke="url(#wfa)" stroke-width="1.5"/>
+  <!-- Trophy handles -->
+  <path d="M28 24c-6 0-10 4-10 8s4 8 10 8" stroke="url(#wfa)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <path d="M52 24c6 0 10 4 10 8s-4 8-10 8" stroke="url(#wfa)" stroke-width="1.5" fill="none" opacity=".5"/>
+  <!-- Trophy base -->
+  <rect x="36" y="52" width="8" height="8" fill="url(#wfa)" opacity=".4"/>
+  <rect x="30" y="60" width="20" height="4" rx="1" fill="url(#wfa)" opacity=".5"/>
+  <!-- Rank stars -->
+  <circle cx="36" cy="32" r="2" fill="url(#wfa)" opacity=".7"/>
+  <circle cx="40" cy="28" r="2.5" fill="url(#wfa)" opacity=".8"/>
+  <circle cx="44" cy="32" r="2" fill="url(#wfa)" opacity=".7"/>
+  <!-- #1 label -->
+  <text x="40" y="44" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#wfa)" opacity=".6">#1</text>
+  <!-- NTILE label -->
+  <text x="40" y="74" text-anchor="middle" font-size="7" font-family="monospace" fill="url(#wfa)" opacity=".6">NTILE</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="msd" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#0891b2"/>
+    </linearGradient>
+  </defs>
+  <!-- Table with rows -->
+  <rect x="12" y="8" width="56" height="50" rx="4" stroke="url(#msd)" stroke-width="1.5" fill="url(#msd)" fill-opacity=".1"/>
+  <line x1="12" y1="18" x2="68" y2="18" stroke="url(#msd)" stroke-width="1" opacity=".5"/>
+  <!-- Active row 1 -->
+  <rect x="16" y="22" width="48" height="8" rx="2" fill="url(#msd)" fill-opacity=".2"/>
+  <circle cx="60" cy="26" r="2.5" fill="#10b981" opacity=".8"/>
+  <!-- Active row 2 -->
+  <rect x="16" y="32" width="48" height="8" rx="2" fill="url(#msd)" fill-opacity=".2"/>
+  <circle cx="60" cy="36" r="2.5" fill="#10b981" opacity=".8"/>
+  <!-- Soft-deleted row (dimmed, strikethrough) -->
+  <rect x="16" y="42" width="48" height="8" rx="2" fill="url(#msd)" fill-opacity=".08" stroke-dasharray="3 2" stroke="url(#msd)" stroke-width=".5"/>
+  <line x1="18" y1="46" x2="54" y2="46" stroke="url(#msd)" stroke-width="1" opacity=".3"/>
+  <circle cx="60" cy="46" r="2.5" fill="#ef4444" opacity=".5"/>
+  <!-- Ghost/flag icon -->
+  <path d="M36 60L36 74" stroke="url(#msd)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <path d="M36 60L48 64L36 68" fill="url(#msd)" fill-opacity=".3" stroke="url(#msd)" stroke-width="1"/>
+  <!-- Label -->
+  <text x="40" y="78" text-anchor="middle" font-size="4" font-family="monospace" fill="url(#msd)" opacity=".5">soft-del</text>
+</svg>

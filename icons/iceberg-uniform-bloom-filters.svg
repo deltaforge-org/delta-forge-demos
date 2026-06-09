@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ubf" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d97706"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <!-- Loyalty card -->
+  <rect x="12" y="20" width="56" height="40" rx="6" fill="url(#ubf)" opacity=".2" stroke="url(#ubf)" stroke-width="1.5"/>
+  <!-- Card stripe -->
+  <rect x="12" y="30" width="56" height="8" fill="url(#ubf)" opacity=".15"/>
+  <!-- Star (loyalty badge) -->
+  <path d="M40 42l4.5 3-1.7-5.2L47 37h-5.3L40 32l-1.7 5H33l4.2 2.8-1.7 5.2z" fill="url(#ubf)" opacity=".6" stroke="url(#ubf)" stroke-width="1"/>
+  <!-- Filter dots (bloom filter visualization) -->
+  <circle cx="24" cy="52" r="3" fill="url(#ubf)" opacity=".4"/>
+  <circle cx="33" cy="52" r="3" fill="url(#ubf)" opacity=".5"/>
+  <circle cx="42" cy="52" r="3" fill="url(#ubf)" opacity=".3"/>
+  <circle cx="51" cy="52" r="3" fill="url(#ubf)" opacity=".5"/>
+  <!-- Search magnifier -->
+  <circle cx="54" cy="26" r="5" stroke="url(#ubf)" stroke-width="1.5" opacity=".5"/>
+  <line x1="58" y1="30" x2="62" y2="34" stroke="url(#ubf)" stroke-width="1.5" opacity=".5" stroke-linecap="round"/>
+</svg>

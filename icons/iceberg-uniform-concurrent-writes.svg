@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="cw" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Iceberg tip -->
+  <path d="M40 6L52 26H28Z" fill="url(#cw)" fill-opacity=".2" stroke="url(#cw)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 28H72" stroke="url(#cw)" stroke-width="1" opacity=".4" stroke-dasharray="3 2"/>
+  <!-- Two parallel write arrows converging -->
+  <path d="M16 36L34 50" stroke="url(#cw)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <path d="M64 36L46 50" stroke="url(#cw)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <!-- Merge point -->
+  <circle cx="40" cy="52" r="5" fill="url(#cw)" fill-opacity=".25" stroke="url(#cw)" stroke-width="1.5"/>
+  <!-- Pipeline labels -->
+  <text x="16" y="34" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cw)" opacity=".7">P1</text>
+  <text x="64" y="34" text-anchor="middle" font-size="5" font-family="monospace" fill="url(#cw)" opacity=".7">P2</text>
+  <!-- Result arrow -->
+  <path d="M40 58L40 66" stroke="url(#cw)" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+  <path d="M37 64L40 67L43 64" stroke="url(#cw)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".5"/>
+  <!-- Label -->
+  <text x="40" y="76" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#cw)" opacity=".6">CONCURRENT</text>
+</svg>

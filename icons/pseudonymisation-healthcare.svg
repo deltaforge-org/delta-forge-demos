@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ph" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34d399"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield background -->
+  <path d="M40 8L14 20V38C14 54 25 67 40 72C55 67 66 54 66 38V20L40 8Z" stroke="url(#ph)" stroke-width="1.5" fill="url(#ph)" fill-opacity=".06"/>
+  <!-- Lock body -->
+  <rect x="30" y="38" width="20" height="16" rx="3" fill="url(#ph)" opacity=".45"/>
+  <!-- Lock shackle -->
+  <path d="M34 38V32C34 28.7 36.7 26 40 26C43.3 26 46 28.7 46 32V38" stroke="url(#ph)" stroke-width="2" fill="none" opacity=".5"/>
+  <!-- Keyhole -->
+  <circle cx="40" cy="45" r="2.5" fill="url(#ph)" opacity=".8"/>
+  <rect x="39" y="46" width="2" height="4" rx="1" fill="url(#ph)" opacity=".8"/>
+  <!-- Medical cross (top-right) -->
+  <rect x="52" y="16" width="10" height="2.5" rx="1.25" fill="url(#ph)" opacity=".4"/>
+  <rect x="55.75" y="12.25" width="2.5" height="10" rx="1.25" fill="url(#ph)" opacity=".4"/>
+  <!-- Data lines (bottom) -->
+  <rect x="24" y="60" width="14" height="2" rx="1" fill="url(#ph)" opacity=".3"/>
+  <rect x="42" y="60" width="10" height="2" rx="1" fill="url(#ph)" opacity=".2"/>
+  <rect x="24" y="64" width="8" height="2" rx="1" fill="url(#ph)" opacity=".15"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="eh" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10b981"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outline (HIPAA compliance) -->
+  <path d="M40 6L14 18V38C14 54 25 67 40 74C55 67 66 54 66 38V18L40 6Z" fill="url(#eh)" opacity=".1"/>
+  <path d="M40 6L14 18V38C14 54 25 67 40 74C55 67 66 54 66 38V18L40 6Z" stroke="url(#eh)" stroke-width="1.5" fill="none"/>
+  <!-- Medical cross -->
+  <rect x="35" y="22" width="10" height="28" rx="2" fill="url(#eh)" opacity=".6"/>
+  <rect x="26" y="31" width="28" height="10" rx="2" fill="url(#eh)" opacity=".6"/>
+  <!-- Document lines (EDI segments) -->
+  <line x1="22" y1="54" x2="38" y2="54" stroke="url(#eh)" stroke-width="1.5" opacity=".35" stroke-linecap="round"/>
+  <line x1="22" y1="59" x2="34" y2="59" stroke="url(#eh)" stroke-width="1" opacity=".25" stroke-linecap="round"/>
+  <line x1="42" y1="54" x2="58" y2="54" stroke="url(#eh)" stroke-width="1.5" opacity=".35" stroke-linecap="round"/>
+  <line x1="46" y1="59" x2="58" y2="59" stroke="url(#eh)" stroke-width="1" opacity=".25" stroke-linecap="round"/>
+  <!-- Data flow arrows (transactions in/out) -->
+  <path d="M6 36L12 36M8 33L12 36L8 39" stroke="url(#eh)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".45"/>
+  <path d="M74 36L68 36M72 33L68 36L72 39" stroke="url(#eh)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".45"/>
+</svg>

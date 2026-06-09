@@ -1,0 +1,63 @@
+[demo]
+id = "iot-sensors"
+name = "Avro IoT Sensors — Smart Building Telemetry"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Demonstrates Avro reading features using 5 building-floor sensor files \
+(2,500 rows) with schema evolution and mixed compression codecs. Three tables \
+exercise multi-file reading, schema evolution (v1→v2 adds battery_pct and \
+firmware_version), file_filter for single-floor extraction, max_rows for \
+sampling, file_metadata for traceability, and Avro's self-describing schema \
+with automatic type detection from file headers.
+"""
+categories = ["avro", "iot"]
+tags = ["avro", "intermediate", "schema-evolution", "compression", "file-filter", "multi-file", "file-metadata"]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Path to the demo directory containing the Avro sensor files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/floor1_sensors.avro"
+format = "avro"
+description = "Floor 1 — 500 readings, schema v1 (8 fields), null codec"
+size_bytes = 27985
+
+[[demo.data_files]]
+path = "data/floor2_sensors.avro"
+format = "avro"
+description = "Floor 2 — 500 readings, schema v1 (8 fields), deflate codec"
+size_bytes = 6691
+
+[[demo.data_files]]
+path = "data/floor3_sensors.avro"
+format = "avro"
+description = "Floor 3 — 500 readings, schema v1 (8 fields), null codec"
+size_bytes = 27985
+
+[[demo.data_files]]
+path = "data/floor4_sensors.avro"
+format = "avro"
+description = "Floor 4 — 500 readings, schema v2 (10 fields), deflate codec"
+size_bytes = 8226
+
+[[demo.data_files]]
+path = "data/floor5_sensors.avro"
+format = "avro"
+description = "Floor 5 — 500 readings, schema v2 (10 fields), null codec"
+size_bytes = 31792
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.avro.all_readings"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.avro.floor4_only"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.avro.readings_sample"
