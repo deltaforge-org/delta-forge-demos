@@ -267,6 +267,52 @@
       ]
     },
     {
+      "id": "api-openbrewerydb-territory-discovery",
+      "path": "demos/api/openbrewerydb-territory-discovery",
+      "iconPath": "icons/api-openbrewerydb-territory-discovery.svg",
+      "name": "Brewery Territory Prospect Catalog: DISCOVER Auto-Registration",
+      "summary": "A craft-beverage distributor's sales-ops team pulls California's brewery directory from Open Brewery DB (public, no auth, no API key, no enforced rate limit) to build an account-prospect catalog, split at the 36th parallel into norcal/socal sales territories. This is the DISCOVER walkthrough demo, the only API demo that does NOT hand-write a CREATE EXTERNAL TABLE with json_flatten_config: after INVOKE lands the raw JSON page, DISCOVER reads the actual bytes, detects the format, synthesizes the flatten options, and registers the bronze table itself. Exercises both modes (PRINT returns the generated DDL for review without registering; EXECUTE registers and returns the summary row with format/confidence/evidence) plus the RECURSIVE = true and FILE_METADATA = true WITH options, with df_file_name provenance read back in the bronze query. Finishes with a bronze→silver promotion into a typed Delta table with CASE-derived territory assignment and a per-territory rollup. Requires internet. INVOKE issues a real GET against https://api.openbrewerydb.org/v1/breweries.",
+      "categories": [
+        "api",
+        "rest-ingest",
+        "discover",
+        "retail"
+      ],
+      "tags": [
+        "api",
+        "advanced",
+        "rest",
+        "ingest",
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "file-metadata",
+        "recursive",
+        "openbrewerydb",
+        "json",
+        "bronze-silver",
+        "territory-planning"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-11T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.openbrewerydb_api.breweries_bronze"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.openbrewerydb_api.brewery_prospects_silver"
+        }
+      ]
+    },
+    {
       "id": "api-openmeteo-farm-weather-pulse",
       "path": "demos/api/openmeteo-farm-weather-pulse",
       "iconPath": "icons/api-openmeteo-farm-weather-pulse.svg",

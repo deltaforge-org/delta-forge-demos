@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="obtd" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#65a30d"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Beer mug body -->
+  <rect x="18" y="26" width="26" height="38" rx="4" fill="url(#obtd)" opacity=".2" stroke="url(#obtd)" stroke-width="2"/>
+  <!-- Mug handle -->
+  <path d="M44 34h6a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6h-6" stroke="url(#obtd)" stroke-width="2"/>
+  <!-- Foam -->
+  <circle cx="23" cy="25" r="5" fill="url(#obtd)" opacity=".45"/>
+  <circle cx="31" cy="22" r="6" fill="url(#obtd)" opacity=".45"/>
+  <circle cx="39" cy="25" r="5" fill="url(#obtd)" opacity=".45"/>
+  <!-- Beer fill line -->
+  <rect x="22" y="40" width="18" height="20" rx="2" fill="url(#obtd)" opacity=".35"/>
+  <!-- Magnifying glass: DISCOVER over the directory -->
+  <circle cx="55" cy="53" r="11" fill="url(#obtd)" opacity=".15" stroke="url(#obtd)" stroke-width="2.5"/>
+  <line x1="63" y1="61" x2="72" y2="70" stroke="url(#obtd)" stroke-width="3" stroke-linecap="round"/>
+  <!-- Detected-rows glint inside the lens -->
+  <line x1="50" y1="50" x2="60" y2="50" stroke="url(#obtd)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+  <line x1="50" y1="54" x2="58" y2="54" stroke="url(#obtd)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+  <line x1="50" y1="58" x2="56" y2="58" stroke="url(#obtd)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+</svg>

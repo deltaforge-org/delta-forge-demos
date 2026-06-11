@@ -1,0 +1,53 @@
+[demo]
+id = "api-openbrewerydb-territory-discovery"
+name = "Brewery Territory Prospect Catalog: DISCOVER Auto-Registration"
+version = "1.0.0"
+description = """
+A craft-beverage distributor's sales-ops team is expanding into
+California. They pull the state's brewery directory from Open Brewery
+DB (public, no auth, no API key, no enforced rate limit) to build an
+account-prospect catalog, then split it at the 36th parallel into
+norcal/socal sales territories for rep assignment.
+
+This is the DISCOVER walkthrough demo. Every other API demo hand-writes
+a CREATE EXTERNAL TABLE with an explicit json_flatten_config over the
+landed files; here a single DISCOVER statement reads the actual bytes
+INVOKE landed, detects the format (text-shape classification, not file
+extension), synthesizes the flatten options, and registers the bronze
+external table on its own. Both modes are exercised:
+
+  • DISCOVER ... PRINT: returns the generated CREATE EXTERNAL TABLE
+    for review WITHOUT registering anything
+  • DISCOVER ... (EXECUTE default): performs the registration and
+    returns the summary row (object, location, format, confidence,
+    action, evidence)
+
+The WITH options are covered too: RECURSIVE = true descends through
+INVOKE's timestamped per-run folder, and FILE_METADATA = true adds the
+df_file_name / df_row_number provenance columns, which Block 6 reads
+back to tie every bronze row to the landed page that produced it.
+The flow finishes with a bronze->silver promotion into a typed Delta
+table with a CASE-derived sales_territory column and a per-territory
+rollup.
+
+NOTE: requires internet. INVOKE issues a real GET against
+https://api.openbrewerydb.org/v1/breweries. Open Brewery DB is a free
+public dataset API; anonymous use has no enforced rate limit but the
+endpoint sets a polite rate_limit_rps = '2'.
+"""
+categories = ["api", "rest-ingest", "discover", "retail"]
+tags = ["api", "advanced", "rest", "ingest", "discover", "format-detection", "auto-registration", "print-mode", "file-metadata", "recursive", "openbrewerydb", "json", "bronze-silver", "territory-planning"]
+difficulty = "advanced"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Reserved by the harness; this demo downloads its data via INVOKE.", required = false }
+zone_name = { description = "Target zone for the bronze landing path. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.openbrewerydb_api.breweries_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.openbrewerydb_api.brewery_prospects_silver"
