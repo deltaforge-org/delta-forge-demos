@@ -685,8 +685,11 @@ ORDER BY members DESC;
 -- comes from the script.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE modularity >= 0.1781
-ASSERT VALUE modularity <= 0.1801
+-- Standard Newman-Girvan Q for Zachary's ground-truth split is 0.358235
+-- (matches networkx `community.modularity`). DeltaForge returns the
+-- unhalved Newman value on both CPU and GPU.
+ASSERT VALUE modularity >= 0.3572
+ASSERT VALUE modularity <= 0.3592
 USE {{zone_name}}.karate_club.karate_club
 CALL algo.modularity({
     communityProperty: [
