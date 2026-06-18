@@ -449,19 +449,3 @@ CREATE GRAPH IF NOT EXISTS {{zone_name}}.gpu_finance_network.gpu_finance_network
 -- after bulk edge loads to refresh the cache. The ZORDER step above ensures
 -- CSR build reads edges in `(src, dst)` order (roughly sequential I/O).
 CREATE GRAPHCSR {{zone_name}}.gpu_finance_network.gpu_finance_network;
-
-
--- ============================================================================
--- WARM GPU CACHE -- Pre-build the .dgpu sidecar (Vulkan-derived buffers)
--- ============================================================================
--- After the CSR is on disk, derive the GPU-side scratch (`w_out` per-vertex
--- weighted out-strength + `in_edge_weights` per-incoming-edge weight aligned
--- to the reverse CSR) and persist it as a `.dgpu` sidecar tagged with the
--- current Delta edge_version / vertex_version. Every weighted GPU algorithm
--- query (PageRank, ArticleRank, Eigenvector, weighted Betweenness, etc.)
--- then loads these buffers from disk in ~100 ms instead of rebuilding them
--- on the GPU per-query (~5 sec on a 10M-node / 48M-edge graph). The
--- sidecar auto-regenerates on Delta version mismatch (e.g. after a bulk
--- edge INSERT or REBUILD GRAPHCSR), so re-running this is idempotent and
--- safe but only required on the initial cold path.
-CREATE GRAPHGPU {{zone_name}}.gpu_finance_network.gpu_finance_network;
