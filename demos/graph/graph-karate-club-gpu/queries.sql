@@ -688,14 +688,14 @@ ASSERT ROW_COUNT = 1
 ASSERT VALUE modularity >= 0.1781
 ASSERT VALUE modularity <= 0.1801
 USE {{zone_name}}.karate_club.karate_club
-CALL algo.modularity({ ON GPU THRESHOLD 1
+CALL algo.modularity({
     communityProperty: [
         0,0,0,0,0,0,0,0,0,1,
         0,0,0,0,1,1,0,0,1,0,
         1,0,1,1,1,1,1,1,1,1,
         1,1,1,1
     ]
-})
+}) ON GPU THRESHOLD 1
 YIELD modularity
 RETURN modularity;
 
@@ -711,14 +711,14 @@ ASSERT VALUE conductance <= 0.1368 WHERE community_id = 0
 ASSERT VALUE conductance >= 0.1457 WHERE community_id = 1
 ASSERT VALUE conductance <= 0.1477 WHERE community_id = 1
 USE {{zone_name}}.karate_club.karate_club
-CALL algo.conductance({ ON GPU THRESHOLD 1
+CALL algo.conductance({
     communityProperty: [
         0,0,0,0,0,0,0,0,0,1,
         0,0,0,0,1,1,0,0,1,0,
         1,0,1,1,1,1,1,1,1,1,
         1,1,1,1
     ]
-})
+}) ON GPU THRESHOLD 1
 YIELD community_id, conductance
 RETURN community_id, conductance
 ORDER BY community_id;

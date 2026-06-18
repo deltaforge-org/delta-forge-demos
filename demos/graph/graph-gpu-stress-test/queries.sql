@@ -304,7 +304,7 @@ RETURN a, r, b;
 
 ASSERT ROW_COUNT = 25
 USE {{zone_name}}.gpu_stress_network.gpu_stress_network
-ON GPU STREAMING CACHE 500000 THRESHOLD 1
+ON GPU THRESHOLD 1 STREAMING CACHE 500000
 CALL algo.pageRank({dampingFactor: 0.85, iterations: 5})
 YIELD node_id, score, rank
 RETURN node_id, score, rank
@@ -319,7 +319,7 @@ LIMIT 25;
 ASSERT ROW_COUNT = 1
 ASSERT VALUE community_size = 1000000
 USE {{zone_name}}.gpu_stress_network.gpu_stress_network
-ON GPU STREAMING CACHE 500000 THRESHOLD 1
+ON GPU THRESHOLD 1 STREAMING CACHE 500000
 CALL algo.connectedComponents()
 YIELD node_id, component_id
 RETURN component_id, count(*) AS community_size
@@ -333,7 +333,7 @@ LIMIT 25;
 
 ASSERT ROW_COUNT = 25
 USE {{zone_name}}.gpu_stress_network.gpu_stress_network
-ON GPU STREAMING CACHE 500000 THRESHOLD 1
+ON GPU THRESHOLD 1 STREAMING CACHE 500000
 CALL algo.triangleCount()
 YIELD node_id, triangle_count
 RETURN node_id, triangle_count
