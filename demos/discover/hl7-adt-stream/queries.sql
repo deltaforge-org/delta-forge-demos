@@ -38,7 +38,7 @@
 -- the df_file_name / df_row_number provenance columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.adt_feed
-    PATH 'hl7-adt-stream'
+    PATH 'discover-hl7-adt-stream'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -53,7 +53,7 @@ DISCOVER {{zone_name}}.discover_demos.adt_feed
 -- HL7 + hl7_config block.
 
 DISCOVER {{zone_name}}.discover_demos.adt_feed
-    PATH 'hl7-adt-stream'
+    PATH 'discover-hl7-adt-stream'
     WITH (FILE_METADATA = true);
 
 
@@ -150,7 +150,8 @@ ORDER BY msh_3;
 -- header (PID patient identity, PV1 visit, EVN event) without a hand-written
 -- materialized_paths config. df_message_id is a stable per-message hash.
 
-ASSERT ROW_COUNT = 6
+ASSERT ROW_COUNT = 1
+ASSERT VALUE row_count = 6
 ASSERT VALUE populated = 6
 SELECT
     COUNT(*)                                   AS row_count,

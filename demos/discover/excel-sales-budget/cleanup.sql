@@ -10,6 +10,6 @@
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.discover_demos.sales_budget WITH FILES;
 
 -- Remove the per-demo landing folder (now empty after the table drop).
-DROP FOLDER 'excel-sales-budget' IF EXISTS IN ZONE {{zone_name}};
+DROP FOLDER 'discover-excel-sales-budget' IF EXISTS IN ZONE {{zone_name}};
 
 DROP SCHEMA IF EXISTS {{zone_name}}.discover_demos;

@@ -19,7 +19,7 @@
 -- df_row_number provenance columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.order_events
-    PATH 'avro-order-events'
+    PATH 'discover-avro-order-events'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -33,7 +33,7 @@ DISCOVER {{zone_name}}.discover_demos.order_events
 -- otherwise have to restate every column type from the embedded schema.
 
 DISCOVER {{zone_name}}.discover_demos.order_events
-    PATH 'avro-order-events'
+    PATH 'discover-avro-order-events'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================

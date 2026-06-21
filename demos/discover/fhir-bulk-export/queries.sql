@@ -3,14 +3,15 @@
 -- ============================================================================
 -- The export folder holds a single FHIR Bulk Data ($export) artifact:
 --   Patient.ndjson - 20 FHIR R4 Patient resources, one resource per line.
--- DISCOVER reads the bytes, classifies the newline-delimited JSON shape, and
--- registers ONE external table over it. Every assertion value below was
--- precomputed from the data file (gen_data.py), not the engine.
+-- DISCOVER reads the bytes, classifies the content as FHIR, and registers ONE
+-- external table USING FHIR over it. Every assertion value below was
+-- precomputed from the data file, not the engine.
 --
--- Column naming: DISCOVER sanitizes each top-level scalar key to a snake_case
--- column. So resourceType -> resource_type, birthDate -> birth_date, and the
--- already-flat keys id / gender / active keep their names. The nested name[]
--- array lands as a JSON string column (name), which is expected and fine.
+-- Column model: the FHIR connector's default schema exposes resourcetype and
+-- id as first-class columns, the full resource as df_resource_json, a stable
+-- df_resource_id hash, and (from FILE_METADATA) df_file_name / df_row_number.
+-- Deeper clinical fields (gender, birthDate, active) live inside the resource
+-- JSON and are read out with json_extract_path_text(df_resource_json, '<key>').
 -- ============================================================================
 
 -- ============================================================================
@@ -18,13 +19,12 @@
 -- ============================================================================
 -- PRINT returns the exact CREATE EXTERNAL TABLE statement DISCOVER would run
 -- WITHOUT registering anything. Detection reads the bytes of the exported
--- file, classifies the text shape (one JSON object per line = NDJSON, which
--- registers USING JSON), and synthesizes the flatten config from the
--- top-level keys. FILE_METADATA adds the df_file_name / df_row_number
--- provenance columns to the generated table.
+-- file, recognises the FHIR content (newline-delimited bulk export), and
+-- registers it USING FHIR with engine defaults. FILE_METADATA adds the
+-- df_file_name / df_row_number provenance columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.patient_export
-    PATH 'fhir-bulk-export'
+    PATH 'discover-fhir-bulk-export'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -33,29 +33,29 @@ DISCOVER {{zone_name}}.discover_demos.patient_export
 -- ============================================================================
 -- The same statement without PRINT performs the registration and returns a
 -- summary row (object, location, format, confidence, action, evidence). This
--- single statement replaces a hand-written CREATE EXTERNAL TABLE plus a
--- json_flatten_config block. The cohort is queryable immediately afterward.
+-- single statement replaces a hand-written CREATE EXTERNAL TABLE USING FHIR.
+-- The cohort is queryable immediately afterward.
 
 DISCOVER {{zone_name}}.discover_demos.patient_export
-    PATH 'fhir-bulk-export'
+    PATH 'discover-fhir-bulk-export'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================
 -- Query 3: The patient cohort - all 20 Patient resources
 -- ============================================================================
--- One row per FHIR Patient resource from the NDJSON bulk export. The
--- discovered schema is the union of the top-level scalar keys, plus the
--- nested name[] array as a JSON string.
+-- One row per FHIR Patient resource from the NDJSON bulk export. resourcetype
+-- and id are first-class columns; gender and birthDate are read from the
+-- resource JSON.
 
 ASSERT ROW_COUNT = 20
-ASSERT VALUE gender = male WHERE id = 'pat-001'
-ASSERT VALUE gender = female WHERE id = 'pat-020'
-ASSERT VALUE resource_type = Patient WHERE id = 'pat-001'
+ASSERT VALUE gender = 'male' WHERE id = 'pat-001'
+ASSERT VALUE gender = 'female' WHERE id = 'pat-020'
+ASSERT VALUE resourcetype = 'Patient' WHERE id = 'pat-001'
 SELECT
     id,
-    resource_type,
-    gender,
-    birth_date,
+    resourcetype,
+    json_extract_path_text(df_resource_json, 'gender')    AS gender,
+    json_extract_path_text(df_resource_json, 'birthDate') AS birth_date,
     df_file_name
 FROM {{zone_name}}.discover_demos.patient_export
 ORDER BY id;
@@ -64,47 +64,49 @@ ORDER BY id;
 -- Query 4: Resource-type homogeneity - every row is a Patient
 -- ============================================================================
 -- A FHIR Patient bulk-export file contains only Patient resources. Grouping on
--- the discovered resource_type column proves the body of every record decoded
--- correctly: exactly one group, exactly 20 rows.
+-- the resourcetype column proves the body of every record decoded correctly:
+-- exactly one group, exactly 20 rows.
 
 ASSERT ROW_COUNT = 1
-ASSERT VALUE resource_count = 20 WHERE resource_type = 'Patient'
+ASSERT VALUE resource_count = 20 WHERE resourcetype = 'Patient'
 SELECT
-    resource_type,
+    resourcetype,
     COUNT(*) AS resource_count
 FROM {{zone_name}}.discover_demos.patient_export
-GROUP BY resource_type;
+GROUP BY resourcetype;
 
 -- ============================================================================
 -- Query 5: Gender distribution - FHIR Patient.gender ValueSet
 -- ============================================================================
 -- FHIR Patient.gender uses the required ValueSet male | female | other |
 -- unknown. This cohort uses three of those values with exact, precomputed
--- counts.
+-- counts, read out of the resource JSON.
 
 ASSERT ROW_COUNT = 3
 ASSERT VALUE patient_count = 7 WHERE gender = 'male'
 ASSERT VALUE patient_count = 7 WHERE gender = 'female'
 ASSERT VALUE patient_count = 6 WHERE gender = 'other'
 SELECT
-    gender,
+    json_extract_path_text(df_resource_json, 'gender') AS gender,
     COUNT(*) AS patient_count
 FROM {{zone_name}}.discover_demos.patient_export
-GROUP BY gender
+GROUP BY json_extract_path_text(df_resource_json, 'gender')
 ORDER BY patient_count DESC, gender;
 
 -- ============================================================================
 -- Query 6: Active flag - how many patient records are active?
 -- ============================================================================
--- FHIR Patient.active is a boolean. Grouping on it proves the discovered
--- active column decoded as a usable value across all 20 rows: exactly two
--- groups, 10 active and 10 inactive.
+-- FHIR Patient.active is a boolean in the resource JSON. Reading it out and
+-- bucketing proves the field decoded across all 20 rows: 10 active, 10 not.
 
 ASSERT ROW_COUNT = 2
 ASSERT VALUE patient_count = 10 WHERE active_label = 'active'
 ASSERT VALUE patient_count = 10 WHERE active_label = 'inactive'
 SELECT
-    CASE WHEN active THEN 'active' ELSE 'inactive' END AS active_label,
+    CASE
+        WHEN json_extract_path_text(df_resource_json, 'active') = 'true' THEN 'active'
+        ELSE 'inactive'
+    END AS active_label,
     COUNT(*) AS patient_count
 FROM {{zone_name}}.discover_demos.patient_export
 GROUP BY 1
@@ -142,8 +144,8 @@ ASSERT VALUE patient_resources = 20
 ASSERT VALUE male_patients = 7
 ASSERT VALUE distinct_source_files = 1
 SELECT
-    COUNT(*)                                              AS total_patients,
-    COUNT(*) FILTER (WHERE resource_type = 'Patient')     AS patient_resources,
-    COUNT(*) FILTER (WHERE gender = 'male')               AS male_patients,
-    COUNT(DISTINCT df_file_name)                          AS distinct_source_files
+    COUNT(*)                                                                            AS total_patients,
+    COUNT(*) FILTER (WHERE resourcetype = 'Patient')                                    AS patient_resources,
+    COUNT(*) FILTER (WHERE json_extract_path_text(df_resource_json, 'gender') = 'male') AS male_patients,
+    COUNT(DISTINCT df_file_name)                                                        AS distinct_source_files
 FROM {{zone_name}}.discover_demos.patient_export;

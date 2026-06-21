@@ -18,7 +18,7 @@
 -- / df_row_number provenance columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.cdn_access_logs
-    PATH 'orc-cdn-logs'
+    PATH 'discover-orc-cdn-logs'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -31,7 +31,7 @@ DISCOVER {{zone_name}}.discover_demos.cdn_access_logs
 -- replaces a hand-written CREATE EXTERNAL TABLE with an explicit column list.
 
 DISCOVER {{zone_name}}.discover_demos.cdn_access_logs
-    PATH 'orc-cdn-logs'
+    PATH 'discover-orc-cdn-logs'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================

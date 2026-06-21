@@ -19,7 +19,7 @@
 -- the df_file_name / df_row_number provenance columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.sales_budget
-    PATH 'excel-sales-budget'
+    PATH 'discover-excel-sales-budget'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -33,7 +33,7 @@ DISCOVER {{zone_name}}.discover_demos.sales_budget
 -- TABLE USING EXCEL with sheet_name and has_header options.
 
 DISCOVER {{zone_name}}.discover_demos.sales_budget
-    PATH 'excel-sales-budget'
+    PATH 'discover-excel-sales-budget'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================

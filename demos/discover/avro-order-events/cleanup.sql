@@ -10,6 +10,6 @@
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.discover_demos.order_events WITH FILES;
 
 -- Remove the per-demo landing folder (now empty after the table drop).
-DROP FOLDER 'avro-order-events' IF EXISTS IN ZONE {{zone_name}};
+DROP FOLDER 'discover-avro-order-events' IF EXISTS IN ZONE {{zone_name}};
 
 DROP SCHEMA IF EXISTS {{zone_name}}.discover_demos;

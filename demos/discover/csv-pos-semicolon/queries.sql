@@ -20,7 +20,7 @@
 -- table. Inspect the printed DDL: the sniffed delimiter is ';'.
 
 DISCOVER {{zone_name}}.discover_demos.pos_receipts
-    PATH 'csv-pos-semicolon'
+    PATH 'discover-csv-pos-semicolon'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -34,7 +34,7 @@ DISCOVER {{zone_name}}.discover_demos.pos_receipts
 -- with an explicit DELIMITER ';' option.
 
 DISCOVER {{zone_name}}.discover_demos.pos_receipts
-    PATH 'csv-pos-semicolon'
+    PATH 'discover-csv-pos-semicolon'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================
@@ -45,7 +45,6 @@ DISCOVER {{zone_name}}.discover_demos.pos_receipts
 -- rows. df_file_name confirms the single source file.
 
 ASSERT ROW_COUNT = 40
-ASSERT VALUE distinct_source_files = 1
 SELECT
     receipt_id,
     store_id,
@@ -107,7 +106,7 @@ ASSERT VALUE units_sold = 22 WHERE store_id = 'S03'
 ASSERT VALUE units_sold = 17 WHERE store_id = 'S04'
 SELECT
     store_id,
-    SUM(quantity) AS units_sold
+    SUM(CAST(quantity AS BIGINT)) AS units_sold
 FROM {{zone_name}}.discover_demos.pos_receipts
 GROUP BY store_id
 ORDER BY units_sold DESC, store_id;
@@ -129,7 +128,7 @@ ASSERT VALUE distinct_products = 5
 ASSERT VALUE distinct_source_files = 1
 SELECT
     COUNT(*)                        AS total_receipts,
-    SUM(quantity)                   AS total_units,
+    SUM(CAST(quantity AS BIGINT))                   AS total_units,
     COUNT(DISTINCT city)            AS distinct_cities,
     COUNT(DISTINCT store_id)        AS distinct_stores,
     COUNT(DISTINCT product_name)    AS distinct_products,

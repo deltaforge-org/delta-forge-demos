@@ -2,7 +2,7 @@
 -- Demo: Product Clickstream Auto-Onboarding - Queries
 -- ============================================================================
 -- The landing folder holds 40 clickstream events across two physical shapes:
---   events_2026_q1.json   - 30 events as a single JSON array (backfill)
+--   events_2026_q1.json    - 30 events as a JSON array (quarterly backfill)
 --   events_2026_apr.ndjson - 10 events as newline-delimited JSON (increment)
 -- DISCOVER registers ONE external table over both. Every assertion value
 -- below was precomputed from the data files, not the engine.
@@ -13,12 +13,13 @@
 -- ============================================================================
 -- PRINT returns the exact CREATE EXTERNAL TABLE statement DISCOVER would run
 -- WITHOUT registering anything. Detection reads the bytes of the landed
--- files, classifies the text shape (JSON array + NDJSON, both USING JSON),
--- and synthesizes the json_flatten_config. FILE_METADATA adds the
--- df_file_name / df_row_number provenance columns to the generated table.
+-- files, classifies the text shape (JSON array and NDJSON, both USING JSON),
+-- and synthesizes the json_flatten_config by unioning the discovered paths
+-- across both files. FILE_METADATA adds the df_file_name / df_row_number
+-- provenance columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.clickstream_events
-    PATH 'json-clickstream'
+    PATH 'discover-json-clickstream'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -27,12 +28,12 @@ DISCOVER {{zone_name}}.discover_demos.clickstream_events
 -- ============================================================================
 -- The same statement without PRINT performs the registration and returns a
 -- summary row (object, location, format, confidence, action, evidence). The
--- evidence column records the format-agreement union across the .json and
--- .ndjson files. This single statement replaces a hand-written CREATE
--- EXTERNAL TABLE + json_flatten_config block.
+-- evidence column records the format agreement across the .json and .ndjson
+-- files. This single statement replaces a hand-written CREATE EXTERNAL TABLE
+-- + json_flatten_config block.
 
 DISCOVER {{zone_name}}.discover_demos.clickstream_events
-    PATH 'json-clickstream'
+    PATH 'discover-json-clickstream'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================

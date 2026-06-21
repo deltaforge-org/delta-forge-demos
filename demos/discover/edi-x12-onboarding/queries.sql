@@ -28,7 +28,7 @@
 -- the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.edi_documents
-    PATH 'edi-x12-onboarding'
+    PATH 'discover-edi-x12-onboarding'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -42,7 +42,7 @@ DISCOVER {{zone_name}}.discover_demos.edi_documents
 -- USING EDI + edi_config block.
 
 DISCOVER {{zone_name}}.discover_demos.edi_documents
-    PATH 'edi-x12-onboarding'
+    PATH 'discover-edi-x12-onboarding'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================

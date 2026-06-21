@@ -4,23 +4,22 @@ name = "Product Clickstream Auto-Onboarding: DISCOVER over JSON + NDJSON"
 version = "1.0.0"
 description = """
 A SaaS product-analytics team lands its web clickstream in one folder: the
-historical backfill as a single JSON array (30 events) and the daily
-increment as newline-delimited JSON (10 events). Two physical shapes, one
-logical feed.
+quarterly backfill as a JSON array (30 events) and the April increment as
+newline-delimited JSON (10 events). Two physical shapes, one logical feed.
 
 This is the JSON entry in the DISCOVER category. Instead of hand-writing a
 CREATE EXTERNAL TABLE with an explicit json_flatten_config, a single
-DISCOVER statement reads the actual bytes, classifies the text shape
-(JSON array and NDJSON both register USING JSON), unions their discovered
-paths into one synthesized config, and registers the external table. Both
-modes are exercised: DISCOVER ... PRINT returns the generated DDL without
-registering anything, and DISCOVER ... (EXECUTE default) performs the
-registration and returns the summary row. FILE_METADATA = true adds the
-df_file_name / df_row_number provenance columns, which the provenance query
-reads back to tie each of the 40 rows to its source file.
+DISCOVER statement reads the actual bytes, classifies the text shape (JSON
+array and NDJSON both register USING JSON), unions their discovered paths into one synthesized config, and
+registers the external table. Both modes are exercised: DISCOVER ... PRINT
+returns the generated DDL without registering anything, and DISCOVER ...
+(EXECUTE default) performs the registration and returns the summary row.
+FILE_METADATA = true adds the df_file_name / df_row_number provenance
+columns, which the provenance query reads back to tie each of the 40 rows to
+its source file.
 """
 categories = ["discover", "json", "analytics"]
-tags = ["discover", "format-detection", "auto-registration", "print-mode", "json", "ndjson", "schema-union", "file-metadata", "clickstream", "intermediate"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "json", "ndjson", "multi-file", "schema-union", "file-metadata", "clickstream", "intermediate"]
 difficulty = "intermediate"
 estimated_time_minutes = 5
 
@@ -31,14 +30,14 @@ zone_name = { description = "Target zone for the landing folder. Defaults to `ex
 [[demo.data_files]]
 path = "data/events_2026_q1.json"
 format = "json"
-description = "30 clickstream events as a single JSON array (historical backfill)."
-size_bytes = 0
+description = "30 clickstream events as a JSON array (quarterly backfill)."
+size_bytes = 6512
 
 [[demo.data_files]]
 path = "data/events_2026_apr.ndjson"
 format = "ndjson"
-description = "10 clickstream events as newline-delimited JSON (daily increment)."
-size_bytes = 0
+description = "10 clickstream events as newline-delimited JSON (April increment)."
+size_bytes = 1786
 
 [[demo.target_objects]]
 type = "external_table"

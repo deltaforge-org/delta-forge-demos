@@ -21,7 +21,7 @@
 -- columns to the generated table.
 
 DISCOVER {{zone_name}}.discover_demos.turbine_telemetry
-    PATH 'parquet-turbine-telemetry'
+    PATH 'discover-parquet-turbine-telemetry'
     WITH (FILE_METADATA = true)
     PRINT;
 
@@ -34,7 +34,7 @@ DISCOVER {{zone_name}}.discover_demos.turbine_telemetry
 -- This single statement replaces a hand-written CREATE EXTERNAL TABLE block.
 
 DISCOVER {{zone_name}}.discover_demos.turbine_telemetry
-    PATH 'parquet-turbine-telemetry'
+    PATH 'discover-parquet-turbine-telemetry'
     WITH (FILE_METADATA = true);
 
 -- ============================================================================
