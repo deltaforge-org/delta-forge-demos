@@ -1,0 +1,71 @@
+[demo]
+id = "discover-edi-x12-onboarding"
+name = "EDI X12 Auto-Onboarding: DISCOVER over X12 EDI documents"
+version = "1.0.0"
+description = """
+A distributor (RIVERBEND DISTRIBUTION) receives X12 EDI documents from its
+trading partners and lands them in a single onboarding folder: 3 purchase
+orders (transaction set 850, outbound to suppliers) and 3 invoices
+(transaction set 810, inbound from suppliers), one transaction per file.
+
+This is the EDI entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE with USING EDI and an explicit edi_config, a single
+DISCOVER statement reads the actual bytes, recognises the ISA/GS/ST
+interchange envelope, classifies the feed as EDI, and auto-detects the X12
+dialect (no edi_config is passed; the connector infers X12 from the ISA
+header). The registered table exposes per-segment columns including st_1 (the
+transaction set code) plus the full parsed message as JSON. Both modes are
+exercised: DISCOVER ... PRINT returns the generated DDL without registering
+anything, and DISCOVER ... (EXECUTE default) performs the registration and
+returns the summary row. FILE_METADATA = true adds the df_file_name /
+df_row_number provenance columns, which the provenance query reads back to tie
+each of the six rows to its source file.
+"""
+categories = ["discover", "edi", "supply-chain"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "edi", "x12", "edi-850", "edi-810", "file-metadata", "supply-chain", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/po_acme_85001.edi"
+format = "edi"
+description = "X12 850 purchase order to ACME PARTS CO (2 line items)."
+size_bytes = 458
+
+[[demo.data_files]]
+path = "data/po_northgear_85002.edi"
+format = "edi"
+description = "X12 850 purchase order to NORTHGEAR LTD (3 line items)."
+size_bytes = 496
+
+[[demo.data_files]]
+path = "data/po_pacificsupply_85003.edi"
+format = "edi"
+description = "X12 850 purchase order to PACIFIC SUPPLY (1 line item)."
+size_bytes = 423
+
+[[demo.data_files]]
+path = "data/inv_acme_81001.edi"
+format = "edi"
+description = "X12 810 invoice from ACME PARTS CO against PO-77001."
+size_bytes = 425
+
+[[demo.data_files]]
+path = "data/inv_northgear_81002.edi"
+format = "edi"
+description = "X12 810 invoice from NORTHGEAR LTD against PO-77002."
+size_bytes = 462
+
+[[demo.data_files]]
+path = "data/inv_pacificsupply_81003.edi"
+format = "edi"
+description = "X12 810 invoice from PACIFIC SUPPLY against PO-77003."
+size_bytes = 386
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.edi_documents"

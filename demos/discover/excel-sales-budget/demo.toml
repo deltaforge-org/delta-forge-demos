@@ -1,0 +1,40 @@
+[demo]
+id = "discover-excel-sales-budget"
+name = "Regional Sales-Budget Auto-Onboarding: DISCOVER over Excel (.xlsx)"
+version = "1.0.0"
+description = """
+A finance team drops the regional sales-budget workbook into a landing folder
+each quarter. The file is an Excel .xlsx workbook: a single sheet with a header
+row then 24 budget rows across four regions, three product lines, and four
+quarters.
+
+This is the Excel entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE USING EXCEL with sheet_name and has_header options, a
+single DISCOVER statement reads the actual bytes, recognises Excel by its
+OOXML/ZIP magic header (PK\\x03\\x04 at the start of the file, not the .xlsx
+extension), opens the first sheet, treats the first row as the header to name
+and type the columns, and registers the external table. Both modes are
+exercised: DISCOVER ... PRINT returns the generated DDL without registering
+anything, and DISCOVER ... (EXECUTE default) performs the registration and
+returns the summary row. FILE_METADATA = true adds the df_file_name /
+df_row_number provenance columns, which the queries read back to confirm the
+single source workbook.
+"""
+categories = ["discover", "excel", "finance"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "excel", "xlsx", "magic-number", "ooxml", "file-metadata", "sales-budget", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/sales_budget_2026.xlsx"
+format = "excel"
+description = "24 regional sales-budget rows on a single sheet with a header row (quarterly finance workbook)."
+size_bytes = 5712
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.sales_budget"

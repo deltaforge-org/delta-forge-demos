@@ -1,0 +1,71 @@
+[demo]
+id = "discover-hl7-adt-stream"
+name = "HL7 v2 ADT Auto-Onboarding: DISCOVER over an HL7 message stream"
+version = "1.0.0"
+description = """
+A regional Health Information Exchange (Northwind HIE) receives HL7 v2 ADT
+(admit / discharge / transfer) messages from three hospital EHRs: Harborview,
+St. Mary's, and Evergreen. Each EHR speaks a different HL7 version (2.3,
+2.5.1, 2.6) and emits a mix of trigger events: three admissions (A01), two
+discharges (A03), and one demographics update (A08), one message per file.
+
+This is the HL7 entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE ... USING HL7 with an explicit hl7_config, a single
+DISCOVER statement reads the actual bytes, recognises the MSH segment header
+that marks an HL7 v2 message, registers the table USING HL7 with the engine
+default mapping, and exposes the MSH header fields (msh_1 .. msh_21) plus
+df_message_json and df_message_id. Both modes are exercised: DISCOVER ...
+PRINT returns the generated DDL without registering anything, and
+DISCOVER ... (EXECUTE default) performs the registration and returns the
+summary row. FILE_METADATA = true adds the df_file_name / df_row_number
+provenance columns, which the queries read back to tie each of the 6 rows to
+its source file.
+"""
+categories = ["discover", "hl7", "healthcare"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "hl7", "hl7v2", "adt", "msh", "file-metadata", "healthcare", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/adt_a01_harborview.hl7"
+format = "hl7"
+description = "ADT^A01 admission, HARBORVIEW_EHR / HARBORVIEW, HL7 v2.5.1."
+size_bytes = 494
+
+[[demo.data_files]]
+path = "data/adt_a01_stmarys.hl7"
+format = "hl7"
+description = "ADT^A01 admission, CERNER_PCC / STMARYS, HL7 v2.6."
+size_bytes = 472
+
+[[demo.data_files]]
+path = "data/adt_a01_evergreen.hl7"
+format = "hl7"
+description = "ADT^A01 admission, MEDITECH_ADT / EVERGREEN, HL7 v2.3."
+size_bytes = 402
+
+[[demo.data_files]]
+path = "data/adt_a03_harborview.hl7"
+format = "hl7"
+description = "ADT^A03 discharge, HARBORVIEW_EHR / HARBORVIEW, HL7 v2.5.1."
+size_bytes = 511
+
+[[demo.data_files]]
+path = "data/adt_a03_stmarys.hl7"
+format = "hl7"
+description = "ADT^A03 discharge, CERNER_PCC / STMARYS, HL7 v2.6."
+size_bytes = 489
+
+[[demo.data_files]]
+path = "data/adt_a08_evergreen.hl7"
+format = "hl7"
+description = "ADT^A08 demographics update, MEDITECH_ADT / EVERGREEN, HL7 v2.3."
+size_bytes = 401
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.adt_feed"

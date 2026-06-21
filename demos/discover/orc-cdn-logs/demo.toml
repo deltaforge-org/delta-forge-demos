@@ -1,0 +1,37 @@
+[demo]
+id = "discover-orc-cdn-logs"
+name = "CDN Edge Access Logs Auto-Onboarding: DISCOVER over ORC"
+version = "1.0.0"
+description = """
+A CDN provider archives its edge access logs in columnar ORC, one rollup file
+per day. ORC carries its own schema in the file footer, so the column names and
+types are known the moment the file lands.
+
+This is the ORC entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE with an explicit column list, a single DISCOVER statement
+reads the actual bytes, recognises ORC by its trailing 'ORC' magic marker (not
+the file extension), lifts the embedded schema, and registers the external
+table from it. Both modes are exercised: DISCOVER ... PRINT returns the
+generated DDL without registering anything, and DISCOVER ... (EXECUTE default)
+performs the registration and returns the summary row. FILE_METADATA = true
+adds the df_file_name / df_row_number provenance columns, which the queries
+read back to tie the 50 rows to their single source file.
+"""
+categories = ["discover", "orc", "observability"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "orc", "columnar", "embedded-schema", "file-metadata", "cdn", "access-logs", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/edge_access_2026_06_21.orc"
+format = "orc"
+description = "50 CDN edge access-log rows in columnar ORC (embedded schema in the footer)."
+size_bytes = 3016
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.cdn_access_logs"

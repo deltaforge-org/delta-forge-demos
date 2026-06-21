@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dol" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#db2777"/>
+    </linearGradient>
+  </defs>
+  <!-- Globe: CDN edge network -->
+  <circle cx="40" cy="38" r="20" fill="url(#dol)" opacity=".12" stroke="url(#dol)" stroke-width="2.5"/>
+  <!-- Latitude lines -->
+  <path d="M21 32h38M22 44h36" stroke="url(#dol)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <!-- Longitude meridian -->
+  <path d="M40 18c-7 6-7 34 0 40c7-6 7-34 0-40z" stroke="url(#dol)" stroke-width="2" opacity=".5"/>
+  <!-- Edge PoP nodes on the network -->
+  <circle cx="28" cy="28" r="3" fill="url(#dol)" opacity=".7"/>
+  <circle cx="52" cy="30" r="3" fill="url(#dol)" opacity=".55"/>
+  <circle cx="33" cy="50" r="3" fill="url(#dol)" opacity=".4"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="55" cy="55" r="11" fill="url(#dol)" opacity=".12" stroke="url(#dol)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#dol)" stroke-width="3" stroke-linecap="round"/>
+</svg>

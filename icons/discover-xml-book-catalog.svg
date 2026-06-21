@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dxc" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d946ef"/>
+      <stop offset="1" stop-color="#9333ea"/>
+    </linearGradient>
+  </defs>
+  <!-- Book: an open catalog -->
+  <path d="M14 22c8-4 16-4 24 0v34c-8-4-16-4-24 0z" fill="url(#dxc)" opacity=".14" stroke="url(#dxc)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M38 22c8-4 16-4 24 0v34c-8-4-16-4-24 0z" fill="url(#dxc)" opacity=".22" stroke="url(#dxc)" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="38" y1="22" x2="38" y2="56" stroke="url(#dxc)" stroke-width="2.5"/>
+  <!-- XML angle brackets / tags on the page -->
+  <path d="M22 32l-4 4 4 4" stroke="url(#dxc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <path d="M30 32l4 4-4 4" stroke="url(#dxc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="55" cy="55" r="11" fill="url(#dxc)" opacity=".12" stroke="url(#dxc)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#dxc)" stroke-width="3" stroke-linecap="round"/>
+</svg>

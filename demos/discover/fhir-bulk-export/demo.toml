@@ -1,0 +1,41 @@
+[demo]
+id = "discover-fhir-bulk-export"
+name = "FHIR Bulk-Export Auto-Onboarding: DISCOVER over Patient NDJSON"
+version = "1.0.0"
+description = """
+A hospital runs a FHIR Bulk Data ($export) job that emits newline-delimited
+JSON (NDJSON) files of Patient resources, one complete FHIR R4 Patient per
+line. Onboarding that cohort normally means hand-writing a CREATE EXTERNAL
+TABLE plus a json_flatten_config before anyone can query it.
+
+This is the FHIR entry in the DISCOVER category. A single DISCOVER statement
+reads the actual bytes of the exported file, classifies the newline-delimited
+JSON shape (one object per line, registers USING JSON), synthesizes the
+flatten config from the top-level scalar keys, and registers the external
+table. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL
+without registering anything, and DISCOVER ... (EXECUTE default) performs the
+registration and returns the summary row. The top-level keys are sanitized to
+columns (resourceType -> resource_type, birthDate -> birth_date; id, gender,
+active keep their names) and the nested name[] array lands as a JSON string.
+FILE_METADATA = true adds the df_file_name / df_row_number provenance columns,
+which the provenance query reads back to tie all 20 rows to the single export
+file.
+"""
+categories = ["discover", "ndjson", "healthcare"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "json", "ndjson", "fhir", "healthcare", "bulk-export", "file-metadata", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the export folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/Patient.ndjson"
+format = "ndjson"
+description = "20 FHIR R4 Patient resources as newline-delimited JSON (one resource per line) from a FHIR Bulk Data ($export) job."
+size_bytes = 3330
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.patient_export"

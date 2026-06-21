@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+  <book>
+    <isbn>978-1-01007-013-1</isbn>
+    <title>Fiction Volume 1</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>10.99</price>
+    <year>2001</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-02014-026-2</isbn>
+    <title>Fiction Volume 2</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>11.99</price>
+    <year>2002</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-03021-039-3</isbn>
+    <title>Fiction Volume 3</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>12.99</price>
+    <year>2003</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-04028-052-4</isbn>
+    <title>Fiction Volume 4</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>13.99</price>
+    <year>2004</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-05035-065-5</isbn>
+    <title>Fiction Volume 5</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>14.99</price>
+    <year>2005</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-06042-078-6</isbn>
+    <title>Fiction Volume 6</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>15.99</price>
+    <year>2006</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-07049-091-7</isbn>
+    <title>Fiction Volume 7</title>
+    <author>Margaret Hale</author>
+    <genre>Fiction</genre>
+    <price>16.99</price>
+    <year>2007</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-08056-104-8</isbn>
+    <title>Mystery Volume 1</title>
+    <author>Arthur Conway</author>
+    <genre>Mystery</genre>
+    <price>17.99</price>
+    <year>2008</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-09063-117-9</isbn>
+    <title>Mystery Volume 2</title>
+    <author>Arthur Conway</author>
+    <genre>Mystery</genre>
+    <price>18.99</price>
+    <year>2009</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-10070-130-0</isbn>
+    <title>Mystery Volume 3</title>
+    <author>Arthur Conway</author>
+    <genre>Mystery</genre>
+    <price>19.99</price>
+    <year>2010</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-11077-143-1</isbn>
+    <title>Mystery Volume 4</title>
+    <author>Arthur Conway</author>
+    <genre>Mystery</genre>
+    <price>20.99</price>
+    <year>2011</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-12084-156-2</isbn>
+    <title>Mystery Volume 5</title>
+    <author>Arthur Conway</author>
+    <genre>Mystery</genre>
+    <price>21.99</price>
+    <year>2012</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-13091-169-3</isbn>
+    <title>Mystery Volume 6</title>
+    <author>Arthur Conway</author>
+    <genre>Mystery</genre>
+    <price>22.99</price>
+    <year>2013</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-14098-182-4</isbn>
+    <title>Science Fiction Volume 1</title>
+    <author>Iris Vega</author>
+    <genre>Science Fiction</genre>
+    <price>23.99</price>
+    <year>2014</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-15105-195-5</isbn>
+    <title>Science Fiction Volume 2</title>
+    <author>Iris Vega</author>
+    <genre>Science Fiction</genre>
+    <price>24.99</price>
+    <year>2015</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-16112-208-6</isbn>
+    <title>Science Fiction Volume 3</title>
+    <author>Iris Vega</author>
+    <genre>Science Fiction</genre>
+    <price>25.99</price>
+    <year>2016</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-17119-221-7</isbn>
+    <title>Science Fiction Volume 4</title>
+    <author>Iris Vega</author>
+    <genre>Science Fiction</genre>
+    <price>26.99</price>
+    <year>2017</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-18126-234-8</isbn>
+    <title>Science Fiction Volume 5</title>
+    <author>Iris Vega</author>
+    <genre>Science Fiction</genre>
+    <price>27.99</price>
+    <year>2018</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-19133-247-9</isbn>
+    <title>Biography Volume 1</title>
+    <author>Daniel Fox</author>
+    <genre>Biography</genre>
+    <price>28.99</price>
+    <year>2019</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-20140-260-0</isbn>
+    <title>Biography Volume 2</title>
+    <author>Daniel Fox</author>
+    <genre>Biography</genre>
+    <price>29.99</price>
+    <year>2020</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-21147-273-1</isbn>
+    <title>Biography Volume 3</title>
+    <author>Daniel Fox</author>
+    <genre>Biography</genre>
+    <price>30.99</price>
+    <year>2021</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-22154-286-2</isbn>
+    <title>Biography Volume 4</title>
+    <author>Daniel Fox</author>
+    <genre>Biography</genre>
+    <price>31.99</price>
+    <year>2022</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-23161-299-3</isbn>
+    <title>History Volume 1</title>
+    <author>Helen Marsh</author>
+    <genre>History</genre>
+    <price>32.99</price>
+    <year>2023</year>
+    <in_stock>true</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-24168-312-4</isbn>
+    <title>History Volume 2</title>
+    <author>Helen Marsh</author>
+    <genre>History</genre>
+    <price>33.99</price>
+    <year>2024</year>
+    <in_stock>false</in_stock>
+  </book>
+  <book>
+    <isbn>978-1-25175-325-5</isbn>
+    <title>History Volume 3</title>
+    <author>Helen Marsh</author>
+    <genre>History</genre>
+    <price>34.99</price>
+    <year>2000</year>
+    <in_stock>true</in_stock>
+  </book>
+</catalog>

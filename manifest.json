@@ -761,109 +761,6 @@
       ]
     },
     {
-      "id": "northwind-database",
-      "path": "demos/csv/northwind-database",
-      "iconPath": "icons/northwind-database.svg",
-      "name": "Northwind Trading Company",
-      "summary": "Classic relational database with customers, orders, products, employees, and suppliers. 13 interconnected tables demonstrating joins, aggregations, and business analytics.",
-      "categories": [
-        "retail",
-        "csv"
-      ],
-      "tags": [
-        "csv",
-        "relational",
-        "joins",
-        "analytics",
-        "northwind",
-        "orders",
-        "products"
-      ],
-      "difficulty": "beginner",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 512000,
-      "fileCount": 11,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-02-11T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_employee_territories"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_territories"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_regions"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_shippers"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_suppliers"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_categories"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_products"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_order_details"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_orders"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_employees"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.nw_customers"
-        }
-      ]
-    },
-    {
-      "id": "sales-quickstart",
-      "path": "demos/csv/sales-quickstart",
-      "iconPath": "icons/sales-quickstart.svg",
-      "name": "Sales Data Quickstart",
-      "summary": "Minimal sales dataset to get started quickly. Two CSV files showing basic queries, filtering, and aggregations.",
-      "categories": [
-        "getting-started",
-        "csv"
-      ],
-      "tags": [
-        "csv",
-        "beginner",
-        "quickstart",
-        "sales"
-      ],
-      "difficulty": "beginner",
-      "estimatedTimeMinutes": 2,
-      "dataSizeBytes": 2048,
-      "fileCount": 2,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-02-11T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.csv.sales"
-        }
-      ]
-    },
-    {
       "id": "csv-veterinary-clinic",
       "path": "demos/csv/veterinary-clinic",
       "iconPath": "icons/csv-veterinary-clinic.svg",
@@ -2984,6 +2881,38 @@
       "verifyScript": "verify_df_output.py"
     },
     {
+      "id": "delta-partition-delete",
+      "path": "demos/iceberg/v3/delta-partition-delete",
+      "iconPath": "icons/delta-partition-delete.svg",
+      "name": "Delta Partition-Scoped DELETE",
+      "summary": "Demonstrates three DELETE patterns on a partitioned Delta table (45 rows, 3 warehouse regions): partition-scoped purge of cancelled orders, cross-partition sweep of returned orders, and conditional delete using computed line-total thresholds. Time-travel queries confirm each mutation. Pure Delta format.",
+      "categories": [
+        "delta-table"
+      ],
+      "tags": [
+        "delta-table",
+        "intermediate",
+        "partitions",
+        "delete",
+        "pruning",
+        "time-travel"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.warehouse_orders"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
       "id": "delta-partition-merge",
       "path": "demos/delta/delta-partition-merge",
       "iconPath": "icons/delta-partition-merge.svg",
@@ -4903,6 +4832,381 @@
       "verifyScript": "verify_df_output.py"
     },
     {
+      "id": "discover-avro-order-events",
+      "path": "demos/discover/avro-order-events",
+      "iconPath": "icons/discover-avro-order-events.svg",
+      "name": "Order-Event Auto-Onboarding: DISCOVER over Avro",
+      "summary": "A retail platform sinks its order-event stream from Kafka to Avro files in object storage (45 events across two Avro objects). Each Avro container carries its own embedded record schema, so the column names and types travel with the data. This is the Avro entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE that restates every column type, a single DISCOVER statement reads the actual bytes, recognises the Avro container magic header (Obj\\x01), parses the embedded schema, derives the columns from it, and registers the external table USING AVRO. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the provenance query reads back to tie each of the 45 rows to its source Avro file.",
+      "categories": [
+        "discover",
+        "avro",
+        "retail"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "avro",
+        "embedded-schema",
+        "file-metadata",
+        "order-events",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 4499,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.order_events"
+        }
+      ]
+    },
+    {
+      "id": "discover-csv-pos-semicolon",
+      "path": "demos/discover/csv-pos-semicolon",
+      "iconPath": "icons/discover-csv-pos-semicolon.svg",
+      "name": "EU Point-of-Sale Onboarding: DISCOVER sniffs semicolon CSV",
+      "summary": "A European retail chain exports its point-of-sale receipts as semicolon-delimited CSV, the common EU convention. The file carries a header row, a '.' decimal point, and 40 receipts across four stores and cities. This is the CSV dialect-detection entry in the DISCOVER category. A naive comma reader pointed at this file would see ONE giant column, because there are no commas to split on. Instead of hand-writing a CREATE EXTERNAL TABLE with an explicit DELIMITER ';' option, a single DISCOVER statement reads the actual bytes, sniffs the dialect (it finds ';' as the consistent field separator and a header row), and emits the matching OPTIONS automatically. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row whose evidence records the sniffed ';' delimiter. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns.",
+      "categories": [
+        "discover",
+        "csv",
+        "retail"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "csv",
+        "dialect-sniffing",
+        "semicolon-delimiter",
+        "file-metadata",
+        "point-of-sale",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 2484,
+      "fileCount": 1,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.pos_receipts"
+        }
+      ]
+    },
+    {
+      "id": "discover-edi-x12-onboarding",
+      "path": "demos/discover/edi-x12-onboarding",
+      "iconPath": "icons/discover-edi-x12-onboarding.svg",
+      "name": "EDI X12 Auto-Onboarding: DISCOVER over X12 EDI documents",
+      "summary": "A distributor (RIVERBEND DISTRIBUTION) receives X12 EDI documents from its trading partners and lands them in a single onboarding folder: 3 purchase orders (transaction set 850, outbound to suppliers) and 3 invoices (transaction set 810, inbound from suppliers), one transaction per file. This is the EDI entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE with USING EDI and an explicit edi_config, a single DISCOVER statement reads the actual bytes, recognises the ISA/GS/ST interchange envelope, classifies the feed as EDI, and auto-detects the X12 dialect (no edi_config is passed; the connector infers X12 from the ISA header). The registered table exposes per-segment columns including st_1 (the transaction set code) plus the full parsed message as JSON. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the provenance query reads back to tie each of the six rows to its source file.",
+      "categories": [
+        "discover",
+        "edi",
+        "supply-chain"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "edi",
+        "x12",
+        "edi-850",
+        "edi-810",
+        "file-metadata",
+        "supply-chain",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 2650,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.edi_documents"
+        }
+      ]
+    },
+    {
+      "id": "discover-excel-sales-budget",
+      "path": "demos/discover/excel-sales-budget",
+      "iconPath": "icons/discover-excel-sales-budget.svg",
+      "name": "Regional Sales-Budget Auto-Onboarding: DISCOVER over Excel (.xlsx)",
+      "summary": "A finance team drops the regional sales-budget workbook into a landing folder each quarter. The file is an Excel .xlsx workbook: a single sheet with a header row then 24 budget rows across four regions, three product lines, and four quarters. This is the Excel entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE USING EXCEL with sheet_name and has_header options, a single DISCOVER statement reads the actual bytes, recognises Excel by its OOXML/ZIP magic header (PK\\x03\\x04 at the start of the file, not the .xlsx extension), opens the first sheet, treats the first row as the header to name and type the columns, and registers the external table. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the queries read back to confirm the single source workbook.",
+      "categories": [
+        "discover",
+        "excel",
+        "finance"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "excel",
+        "xlsx",
+        "magic-number",
+        "ooxml",
+        "file-metadata",
+        "sales-budget",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 5712,
+      "fileCount": 1,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.sales_budget"
+        }
+      ]
+    },
+    {
+      "id": "discover-fhir-bulk-export",
+      "path": "demos/discover/fhir-bulk-export",
+      "iconPath": "icons/discover-fhir-bulk-export.svg",
+      "name": "FHIR Bulk-Export Auto-Onboarding: DISCOVER over Patient NDJSON",
+      "summary": "A hospital runs a FHIR Bulk Data ($export) job that emits newline-delimited JSON (NDJSON) files of Patient resources, one complete FHIR R4 Patient per line. Onboarding that cohort normally means hand-writing a CREATE EXTERNAL TABLE plus a json_flatten_config before anyone can query it. This is the FHIR entry in the DISCOVER category. A single DISCOVER statement reads the actual bytes of the exported file, classifies the newline-delimited JSON shape (one object per line, registers USING JSON), synthesizes the flatten config from the top-level scalar keys, and registers the external table. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. The top-level keys are sanitized to columns (resourceType -> resource_type, birthDate -> birth_date; id, gender, active keep their names) and the nested name[] array lands as a JSON string. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the provenance query reads back to tie all 20 rows to the single export file.",
+      "categories": [
+        "discover",
+        "ndjson",
+        "healthcare"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "json",
+        "ndjson",
+        "fhir",
+        "healthcare",
+        "bulk-export",
+        "file-metadata",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 3330,
+      "fileCount": 1,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.patient_export"
+        }
+      ]
+    },
+    {
+      "id": "discover-hl7-adt-stream",
+      "path": "demos/discover/hl7-adt-stream",
+      "iconPath": "icons/discover-hl7-adt-stream.svg",
+      "name": "HL7 v2 ADT Auto-Onboarding: DISCOVER over an HL7 message stream",
+      "summary": "A regional Health Information Exchange (Northwind HIE) receives HL7 v2 ADT (admit / discharge / transfer) messages from three hospital EHRs: Harborview, St. Mary's, and Evergreen. Each EHR speaks a different HL7 version (2.3, 2.5.1, 2.6) and emits a mix of trigger events: three admissions (A01), two discharges (A03), and one demographics update (A08), one message per file. This is the HL7 entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE ... USING HL7 with an explicit hl7_config, a single DISCOVER statement reads the actual bytes, recognises the MSH segment header that marks an HL7 v2 message, registers the table USING HL7 with the engine default mapping, and exposes the MSH header fields (msh_1 .. msh_21) plus df_message_json and df_message_id. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the queries read back to tie each of the 6 rows to its source file.",
+      "categories": [
+        "discover",
+        "hl7",
+        "healthcare"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "hl7",
+        "hl7v2",
+        "adt",
+        "msh",
+        "file-metadata",
+        "healthcare",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 2769,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.adt_feed"
+        }
+      ]
+    },
+    {
+      "id": "discover-json-clickstream",
+      "path": "demos/discover/json-clickstream",
+      "iconPath": "icons/discover-json-clickstream.svg",
+      "name": "Product Clickstream Auto-Onboarding: DISCOVER over JSON + NDJSON",
+      "summary": "A SaaS product-analytics team lands its web clickstream in one folder: the historical backfill as a single JSON array (30 events) and the daily increment as newline-delimited JSON (10 events). Two physical shapes, one logical feed. This is the JSON entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE with an explicit json_flatten_config, a single DISCOVER statement reads the actual bytes, classifies the text shape (JSON array and NDJSON both register USING JSON), unions their discovered paths into one synthesized config, and registers the external table. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the provenance query reads back to tie each of the 40 rows to its source file.",
+      "categories": [
+        "discover",
+        "json",
+        "analytics"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "json",
+        "ndjson",
+        "schema-union",
+        "file-metadata",
+        "clickstream",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 8298,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.clickstream_events"
+        }
+      ]
+    },
+    {
+      "id": "discover-orc-cdn-logs",
+      "path": "demos/discover/orc-cdn-logs",
+      "iconPath": "icons/discover-orc-cdn-logs.svg",
+      "name": "CDN Edge Access Logs Auto-Onboarding: DISCOVER over ORC",
+      "summary": "A CDN provider archives its edge access logs in columnar ORC, one rollup file per day. ORC carries its own schema in the file footer, so the column names and types are known the moment the file lands. This is the ORC entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE with an explicit column list, a single DISCOVER statement reads the actual bytes, recognises ORC by its trailing 'ORC' magic marker (not the file extension), lifts the embedded schema, and registers the external table from it. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the queries read back to tie the 50 rows to their single source file.",
+      "categories": [
+        "discover",
+        "orc",
+        "observability"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "orc",
+        "columnar",
+        "embedded-schema",
+        "file-metadata",
+        "cdn",
+        "access-logs",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 3016,
+      "fileCount": 1,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.cdn_access_logs"
+        }
+      ]
+    },
+    {
+      "id": "discover-parquet-turbine-telemetry",
+      "path": "demos/discover/parquet-turbine-telemetry",
+      "iconPath": "icons/discover-parquet-turbine-telemetry.svg",
+      "name": "Turbine Telemetry Auto-Onboarding: DISCOVER over Parquet",
+      "summary": "An offshore wind operator lands per-turbine SCADA telemetry as Parquet into one folder: a 06-21 drop of 35 readings (north-bank and south-bank sites) and a 06-22 drop of 15 readings (east-bank site). Fifty self-describing columnar readings, one logical feed. This is the Parquet entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE, a single DISCOVER statement reads the actual bytes, recognises the Parquet binary container by its PAR1 magic number (detection is byte-based, not extension-based), lifts the column names and types straight from the embedded schema, and registers the external table with zero OPTIONS. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns, which the provenance query reads back to tie each of the 50 readings to its source drop.",
+      "categories": [
+        "discover",
+        "parquet",
+        "iot"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "parquet",
+        "magic-number",
+        "embedded-schema",
+        "file-metadata",
+        "scada",
+        "wind-energy",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 5867,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.turbine_telemetry"
+        }
+      ]
+    },
+    {
+      "id": "discover-xml-book-catalog",
+      "path": "demos/discover/xml-book-catalog",
+      "iconPath": "icons/discover-xml-book-catalog.svg",
+      "name": "Book Catalog Auto-Onboarding: DISCOVER over XML",
+      "summary": "A publisher exports its book catalog as a single XML file: 25 books, each a repeating <book> element under a <catalog> root, with flat leaf elements (isbn, title, author, genre, price, year, in_stock). This is the XML entry in the DISCOVER category. Instead of hand-writing a CREATE EXTERNAL TABLE with an explicit xml_flatten_config, a single DISCOVER statement reads the actual bytes, classifies the text shape as XML, picks the repeating <book> element as the row anchor, synthesizes the leaf-element columns, and registers the external table. Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without registering anything, and DISCOVER ... (EXECUTE default) performs the registration and returns the summary row. FILE_METADATA = true adds the df_file_name / df_row_number provenance columns. XML leaf values are all strings, so the assertions use string equality and integer COUNT only.",
+      "categories": [
+        "discover",
+        "xml",
+        "publishing"
+      ],
+      "tags": [
+        "discover",
+        "format-detection",
+        "auto-registration",
+        "print-mode",
+        "xml",
+        "row-anchor",
+        "flatten-config",
+        "file-metadata",
+        "book-catalog",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 5851,
+      "fileCount": 1,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.discover_demos.book_catalog"
+        }
+      ]
+    },
+    {
       "id": "edi-850-purchase-orders-aliased",
       "path": "demos/edi/850-purchase-orders-aliased",
       "iconPath": "icons/edi-850-purchase-orders-aliased.svg",
@@ -5614,6 +5918,45 @@
       ]
     },
     {
+      "id": "excel-multi-sheet-reporting",
+      "path": "demos/excel/multi-sheet-reporting",
+      "iconPath": "icons/excel-multi-sheet-reporting.svg",
+      "name": "Excel Multi-Sheet Reporting — Regional Sales Review",
+      "summary": "Demonstrates Excel multi-sheet reading using quarterly field-office reports from two regions (East and West). Each workbook contains three sheets — Sales transactions, Returns/refunds, and Staff roster. Creates one external table per sheet, then queries across sheets and regions with cross-sheet JOINs, net-revenue calculations, and return-rate analysis. This scenario is unique to Excel — no other format has named sheets.",
+      "categories": [
+        "excel",
+        "retail"
+      ],
+      "tags": [
+        "excel",
+        "intermediate",
+        "multi-sheet",
+        "cross-sheet-join",
+        "regional-analysis"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 14589,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.all_sales"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.all_returns"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.excel.all_staff"
+        }
+      ]
+    },
+    {
       "id": "excel-options-testbench",
       "path": "demos/excel/excel-options-testbench",
       "iconPath": "icons/excel-options-testbench.svg",
@@ -5656,45 +5999,6 @@
         {
           "objectType": "external_table",
           "name": "{{zone_name}}.excel_opts.opt_file_filter"
-        }
-      ]
-    },
-    {
-      "id": "excel-multi-sheet-reporting",
-      "path": "demos/excel/multi-sheet-reporting",
-      "iconPath": "icons/excel-multi-sheet-reporting.svg",
-      "name": "Excel Multi-Sheet Reporting — Regional Sales Review",
-      "summary": "Demonstrates Excel multi-sheet reading using quarterly field-office reports from two regions (East and West). Each workbook contains three sheets — Sales transactions, Returns/refunds, and Staff roster. Creates one external table per sheet, then queries across sheets and regions with cross-sheet JOINs, net-revenue calculations, and return-rate analysis. This scenario is unique to Excel — no other format has named sheets.",
-      "categories": [
-        "excel",
-        "retail"
-      ],
-      "tags": [
-        "excel",
-        "intermediate",
-        "multi-sheet",
-        "cross-sheet-join",
-        "regional-analysis"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 6,
-      "dataSizeBytes": 14589,
-      "fileCount": 2,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-25T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.excel.all_sales"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.excel.all_returns"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.excel.all_staff"
         }
       ]
     },
@@ -5986,6 +6290,91 @@
       ]
     },
     {
+      "id": "gis-emergency-response",
+      "path": "demos/spatial/gis-emergency-response",
+      "iconPath": "icons/gis-emergency-response.svg",
+      "name": "GIS Emergency Response Network — Multi-Step Spatial Analytics",
+      "summary": "Demonstrates complex multi-step GIS analytics using an NYC emergency dispatch scenario. 8 hospitals, 12 incidents, and 4 response zones exercise nearest-neighbor ranking (ROW_NUMBER + st_distance), multi-algorithm distance comparison (haversine/sphere/Vincenty), navigation bearings, geofencing (st_contains/st_within with zone polygons), coordinate round-trips, and geodesic area calculations in layered analytical queries.",
+      "categories": [
+        "geospatial",
+        "analytics"
+      ],
+      "tags": [
+        "spatial",
+        "gis",
+        "postgis",
+        "distance",
+        "bearing",
+        "geofencing",
+        "nearest-neighbor",
+        "delta-table",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.emergency.hospitals"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.emergency.incidents"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.emergency.response_zones"
+        }
+      ]
+    },
+    {
+      "id": "gis-maritime-shipping",
+      "path": "demos/spatial/gis-maritime-shipping",
+      "iconPath": "icons/gis-maritime-shipping.svg",
+      "name": "GIS Maritime Shipping — PostGIS-Compatible Geospatial Functions",
+      "summary": "Tests all 18 PostGIS-compatible st_* functions using a global maritime shipping scenario. 5 cargo vessels navigate between 10 world ports with 40 GPS position records. Exercises st_distance (haversine, Vincenty, spherical), st_bearing, st_azimuth, st_final_bearing, st_contains, st_within, st_make_point, st_x, st_y, and st_area with independently computed proof values.",
+      "categories": [
+        "geospatial",
+        "analytics"
+      ],
+      "tags": [
+        "spatial",
+        "gis",
+        "postgis",
+        "distance",
+        "bearing",
+        "point-in-polygon",
+        "delta-table",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.maritime.ports"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.maritime.vessels"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.maritime.positions"
+        }
+      ]
+    },
+    {
       "id": "graph-advanced-cypher",
       "path": "demos/graph/graph-advanced-cypher",
       "iconPath": "icons/graph-advanced-cypher.svg",
@@ -6156,53 +6545,6 @@
       ]
     },
     {
-      "id": "graph-gpu-stress-test",
-      "path": "demos/graph/graph-gpu-stress-test",
-      "iconPath": "icons/graph-gpu-stress-test.svg",
-      "name": "GPU-Accelerated Enterprise Network — 1M-Node Performance Benchmark",
-      "summary": "GPU-accelerated stress test on 1,000,000-node enterprise network with 5M+ directed edges. All 5 GPU-accelerable algorithms (PageRank, Connected Components, Louvain, Betweenness, Triangle Count) via ON GPU hints. Tests GPU MATCH expansion, GPU + streaming property loading, and GPU MIN THRESHOLD fallback behavior. Proves GPU/CPU equivalence at enterprise scale.",
-      "categories": [
-        "graph",
-        "gpu"
-      ],
-      "tags": [
-        "graph",
-        "gpu",
-        "stress-test",
-        "performance",
-        "benchmark",
-        "million-scale",
-        "cypher",
-        "algorithms",
-        "advanced"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 30,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-04-16T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "graph",
-          "name": "{{zone_name}}.gpu_stress_network.gpu_stress_network"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.gpu_stress_network.gpu_st_edges"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.gpu_stress_network.gpu_st_people"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.gpu_stress_network.gpu_st_departments"
-        }
-      ]
-    },
-    {
       "id": "graph-gpu-10m-finance",
       "path": "demos/graph/graph-gpu-10m-finance",
       "iconPath": "icons/graph-gpu-10m-finance.svg",
@@ -6252,6 +6594,53 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.gpu_finance_network.gfn_banks"
+        }
+      ]
+    },
+    {
+      "id": "graph-gpu-stress-test",
+      "path": "demos/graph/graph-gpu-stress-test",
+      "iconPath": "icons/graph-gpu-stress-test.svg",
+      "name": "GPU-Accelerated Enterprise Network — 1M-Node Performance Benchmark",
+      "summary": "GPU-accelerated stress test on 1,000,000-node enterprise network with 5M+ directed edges. All 5 GPU-accelerable algorithms (PageRank, Connected Components, Louvain, Betweenness, Triangle Count) via ON GPU hints. Tests GPU MATCH expansion, GPU + streaming property loading, and GPU MIN THRESHOLD fallback behavior. Proves GPU/CPU equivalence at enterprise scale.",
+      "categories": [
+        "graph",
+        "gpu"
+      ],
+      "tags": [
+        "graph",
+        "gpu",
+        "stress-test",
+        "performance",
+        "benchmark",
+        "million-scale",
+        "cypher",
+        "algorithms",
+        "advanced"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 30,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-16T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "graph",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_stress_network"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_st_edges"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_st_people"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.gpu_stress_network.gpu_st_departments"
         }
       ]
     },
@@ -6886,6 +7275,125 @@
       ]
     },
     {
+      "id": "h3-gis-delivery-optimization",
+      "path": "demos/spatial/h3-gis-delivery-optimization",
+      "iconPath": "icons/h3-gis-delivery-optimization.svg",
+      "name": "H3+GIS Delivery Optimization — Cross-Function Spatial Analytics",
+      "summary": "Combines H3 hexagonal indexing with GIS geospatial functions for US regional delivery logistics. 3 warehouses serve 15 stores with cross-function queries: H3 cell assignment + GIS distance ranking, grid topology + haversine comparison, multi-resolution hierarchy + bearing calculations, and suboptimal warehouse assignment detection using combined H3 grid_distance and st_distance metrics.",
+      "categories": [
+        "geospatial",
+        "logistics"
+      ],
+      "tags": [
+        "h3",
+        "spatial",
+        "gis",
+        "combined",
+        "distance",
+        "grid-distance",
+        "delivery",
+        "delta-table",
+        "advanced"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-28T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.logistics.warehouses"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.logistics.stores"
+        }
+      ]
+    },
+    {
+      "id": "h3-gps-fleet-tracker",
+      "path": "demos/spatial/h3-gps-fleet-tracker",
+      "iconPath": "icons/h3-gps-fleet-tracker.svg",
+      "name": "H3 GPS Fleet Tracker",
+      "summary": "Demonstrates H3 hexagonal spatial indexing with Delta tables for GPS fleet tracking. Creates 10,000 GPS pings across 5 world cities, defines region boundaries as WKT polygons, and performs O(1) spatial joins via H3 cell matching. Verifies 21 H3 functions with known values: coordinate conversion, grid topology (ring/disk counts), cell hierarchy, area/edge metrics, polyfill, and spatial join accuracy.",
+      "categories": [
+        "geospatial",
+        "iot"
+      ],
+      "tags": [
+        "h3",
+        "spatial",
+        "delta-table",
+        "gps",
+        "polyfill",
+        "geospatial",
+        "advanced",
+        "generate-series"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.gps_points"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.regions"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.landmarks"
+        }
+      ]
+    },
+    {
+      "id": "h3-point-in-polygon",
+      "path": "demos/spatial/h3-point-in-polygon",
+      "iconPath": "icons/h3-point-in-polygon.svg",
+      "name": "H3 Point-in-Polygon — 1M Row Performance",
+      "summary": "Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial indexing. 1,000,000 ride-share driver GPS positions are checked against 12 pricing zones across 8 world cities using O(1) H3 cell matching instead of O(n×m) polygon intersection. Progressive queries build from 'what is H3' to million-row analytics with 10 automated PASS/FAIL checks.",
+      "categories": [
+        "geospatial",
+        "iot"
+      ],
+      "tags": [
+        "h3",
+        "spatial",
+        "delta-table",
+        "point-in-polygon",
+        "performance",
+        "geospatial",
+        "advanced",
+        "generate-series"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-02-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.driver_positions"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.spatial.zones"
+        }
+      ]
+    },
+    {
       "id": "hl7-chemistry-panel-typed",
       "path": "demos/hl7/hl7-chemistry-panel-typed",
       "iconPath": "icons/hl7-chemistry-panel-typed.svg",
@@ -7037,6 +7545,181 @@
           "name": "{{zone_name}}.hl7.adt_materialized"
         }
       ]
+    },
+    {
+      "id": "iceberg-energy-grid-monitoring",
+      "path": "demos/iceberg/v2/energy-grid-monitoring",
+      "iconPath": "icons/iceberg-energy-grid-monitoring.svg",
+      "name": "Iceberg Energy Grid — Native Table Reading",
+      "summary": "Demonstrates native Apache Iceberg table reading using a smart energy grid monitoring dataset (600 meter readings across 3 regions). Exercises Iceberg metadata chain parsing (metadata.json → manifest list → manifest → Parquet data files), schema inference from Iceberg metadata, manifest-based file discovery, region-level aggregations, and Parquet row-group filtering — all without any conversion to Delta format.",
+      "categories": [
+        "iceberg-v2",
+        "energy"
+      ],
+      "tags": [
+        "iceberg",
+        "beginner",
+        "read-only",
+        "native-format",
+        "metadata-chain",
+        "aggregation"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 27933,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.grid_readings"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
+      "id": "iceberg-native-large-manifests",
+      "path": "demos/iceberg/v2/iceberg-native-large-manifests",
+      "iconPath": "icons/iceberg-native-large-manifests.svg",
+      "name": "Iceberg Native — Large Manifests (Web Analytics)",
+      "summary": "Demonstrates native Apache Iceberg format-version 2 table reading with many manifest files created by repeated micro-batch appends. A web analytics dataset of 600 session records is ingested across 10 separate append operations (60 rows each), producing 10 snapshots, 10 manifest lists, and 10 manifest files — each pointing to its own Parquet data file. This exercises the Iceberg metadata chain traversal: the reader must walk the current manifest list, resolve all 10 manifests, and union the data files to reconstruct the full table. Tests metadata parsing performance and correctness at manifest scale.",
+      "categories": [
+        "iceberg"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "read-only",
+        "native-format",
+        "v2",
+        "manifests",
+        "scale-test",
+        "web-analytics",
+        "micro-batch"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 231392,
+      "fileCount": 41,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-29T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.web_analytics"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
+      "id": "iceberg-native-partition-transforms",
+      "path": "demos/iceberg/v2/iceberg-native-partition-transforms",
+      "iconPath": "icons/iceberg-native-partition-transforms.svg",
+      "name": "Iceberg Native — Partition Transforms (Bucket + Day)",
+      "summary": "Demonstrates native Apache Iceberg format-version 2 table reading with Iceberg-native partition transforms: bucket(8, source_ip) and days(capture_time). These transforms are Iceberg-specific and cannot be produced by Delta Lake. The dataset contains 480 network traffic packet records across 3 regions (north-america, europe, asia-pacific), 4 protocols (TCP, UDP, ICMP, DNS), and 4 threat levels (low, medium, high, critical). Data is spread across 10 days of capture times and 78 partitioned Parquet files. Exercises Iceberg partition pruning, bucket-based data layout, and day-based temporal partitioning.",
+      "categories": [
+        "iceberg"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "read-only",
+        "native-format",
+        "v2",
+        "partition-transforms",
+        "bucket",
+        "day",
+        "network",
+        "security"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 259356,
+      "fileCount": 82,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-29T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.network_traffic"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
+      "id": "iceberg-native-schema-evolution",
+      "path": "demos/iceberg/v2/iceberg-native-schema-evolution",
+      "iconPath": "icons/iceberg-native-schema-evolution.svg",
+      "name": "Iceberg Native — Schema Evolution (Add, Rename, Drop)",
+      "summary": "Demonstrates native Apache Iceberg format-version 2 table reading with schema evolution across 4 snapshots. The employee directory table starts with 5 columns and 300 rows, then evolves: ADD COLUMN title, INSERT 60 more employees with titles, ADD COLUMN location with UPDATE, and RENAME COLUMN dept TO department. Exercises Iceberg's field-id stability for column renames, NULL handling for columns added after initial data load, and multi-snapshot metadata chain resolution. The final schema has 7 columns and 360 rows.",
+      "categories": [
+        "iceberg"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "read-only",
+        "native-format",
+        "v2",
+        "schema-evolution",
+        "add-column",
+        "rename-column",
+        "field-id",
+        "employee"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 79560,
+      "fileCount": 17,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-29T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.employee_directory"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
+      "id": "iceberg-native-time-travel",
+      "path": "demos/iceberg/v2/iceberg-native-time-travel",
+      "iconPath": "icons/iceberg-native-time-travel.svg",
+      "name": "Iceberg Native — Time Travel (Stock Prices)",
+      "summary": "Demonstrates native Apache Iceberg V2 table reading after 4 snapshot-producing mutations on a stock price dataset (138 final rows, 23 tickers). Exercises merge-on-read with position delete files across UPDATE (+5% tech correction), INSERT (30 IPO rows), and DELETE (12 delisted rows). Verifies per-ticker averages, sector breakdowns, and absence of deleted data.",
+      "categories": [
+        "iceberg-v2",
+        "time-travel"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "native-format",
+        "v2",
+        "time-travel",
+        "merge-on-read",
+        "position-deletes",
+        "stocks"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 93654,
+      "fileCount": 19,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-27T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.iceberg.stock_prices"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
     },
     {
       "id": "iceberg-uniform-basics",
@@ -7351,6 +8034,85 @@
       "verifyScript": "verify_df_output.py"
     },
     {
+      "id": "iceberg-uniform-equality-deletes",
+      "path": "demos/iceberg/v2/iceberg-uniform-equality-deletes",
+      "iconPath": "icons/iceberg-uniform-equality-deletes.svg",
+      "name": "Iceberg UniForm — Equality Delete Write & Read",
+      "summary": "Full-cycle demonstration of Iceberg equality delete file generation via UniForm. Creates a Delta table with equality delete mode enabled, seeds 10 products, deletes 3 products via standard DELETE, then reads the table back through an Iceberg external table to verify that the equality delete file correctly filters the deleted rows. Exercises the complete write → convert → read pipeline for equality deletes.",
+      "categories": [
+        "iceberg"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "equality-deletes",
+        "write-read",
+        "full-cycle"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-29T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.eq_del_demo.products"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.eq_del_demo.products_iceberg"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
+      "id": "iceberg-uniform-format-versions",
+      "path": "demos/iceberg/v2/iceberg-uniform-format-versions",
+      "iconPath": "icons/iceberg-uniform-format-versions.svg",
+      "name": "Iceberg UniForm — V1, V2, V3 Format Comparison",
+      "summary": "Compares Iceberg format versions V1, V2, and V3 side by side. Creates three identical Delta tables with the same seed data, each configured with a different delta.universalFormat.icebergVersion property. Demonstrates that all three versions produce correct metadata, handle DML, and support time travel — while V3 adds nanosecond timestamp types, deletion vectors, and named references.",
+      "categories": [
+        "iceberg-v2",
+        "delta-table"
+      ],
+      "tags": [
+        "iceberg",
+        "advanced",
+        "uniform",
+        "format-version",
+        "v1",
+        "v2",
+        "v3",
+        "comparison"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 12,
+      "dataSizeBytes": 0,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.sensors_v1"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.sensors_v2"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.iceberg_demos.sensors_v3"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
       "id": "iceberg-uniform-maintenance",
       "path": "demos/iceberg/v1/iceberg-uniform-maintenance",
       "iconPath": "icons/iceberg-uniform-maintenance.svg",
@@ -7520,6 +8282,44 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.iceberg_demos.warehouse_inventory"
+        }
+      ],
+      "verifyScript": "verify_df_output.py"
+    },
+    {
+      "id": "iceberg-uniform-puffin-dv",
+      "path": "demos/iceberg/v3/iceberg-uniform-puffin-dv",
+      "iconPath": "icons/iceberg-uniform-puffin-dv.svg",
+      "name": "Iceberg UniForm — Puffin Deletion Vector Write & Read",
+      "summary": "Full-cycle demonstration of Iceberg V3 Puffin deletion vector generation via UniForm. Creates a Delta table with puffin-v1 delete mode enabled, seeds 10 products, deletes 3 products via standard DELETE, then reads the table back through an Iceberg external table to verify that the Puffin deletion vector (Roaring64Bitmap blob) correctly filters the deleted rows. Exercises the complete write → convert → read pipeline for V3-native deletion vectors.",
+      "categories": [
+        "iceberg"
+      ],
+      "tags": [
+        "iceberg",
+        "intermediate",
+        "uniform",
+        "deletion-vectors",
+        "puffin",
+        "v3",
+        "write-read",
+        "full-cycle"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-29T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.puffin_dv_demo.products"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.puffin_dv_demo.products_iceberg"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -7797,260 +8597,6 @@
         {
           "name": "{{zone_name}}.iceberg.warehouse_inventory",
           "objectType": "external_table"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-energy-grid-monitoring",
-      "path": "demos/iceberg/v2/energy-grid-monitoring",
-      "iconPath": "icons/iceberg-energy-grid-monitoring.svg",
-      "name": "Iceberg Energy Grid — Native Table Reading",
-      "summary": "Demonstrates native Apache Iceberg table reading using a smart energy grid monitoring dataset (600 meter readings across 3 regions). Exercises Iceberg metadata chain parsing (metadata.json → manifest list → manifest → Parquet data files), schema inference from Iceberg metadata, manifest-based file discovery, region-level aggregations, and Parquet row-group filtering — all without any conversion to Delta format.",
-      "categories": [
-        "iceberg-v2",
-        "energy"
-      ],
-      "tags": [
-        "iceberg",
-        "beginner",
-        "read-only",
-        "native-format",
-        "metadata-chain",
-        "aggregation"
-      ],
-      "difficulty": "beginner",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 27933,
-      "fileCount": 6,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-26T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.iceberg.grid_readings"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-native-large-manifests",
-      "path": "demos/iceberg/v2/iceberg-native-large-manifests",
-      "iconPath": "icons/iceberg-native-large-manifests.svg",
-      "name": "Iceberg Native — Large Manifests (Web Analytics)",
-      "summary": "Demonstrates native Apache Iceberg format-version 2 table reading with many manifest files created by repeated micro-batch appends. A web analytics dataset of 600 session records is ingested across 10 separate append operations (60 rows each), producing 10 snapshots, 10 manifest lists, and 10 manifest files — each pointing to its own Parquet data file. This exercises the Iceberg metadata chain traversal: the reader must walk the current manifest list, resolve all 10 manifests, and union the data files to reconstruct the full table. Tests metadata parsing performance and correctness at manifest scale.",
-      "categories": [
-        "iceberg"
-      ],
-      "tags": [
-        "iceberg",
-        "advanced",
-        "read-only",
-        "native-format",
-        "v2",
-        "manifests",
-        "scale-test",
-        "web-analytics",
-        "micro-batch"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 231392,
-      "fileCount": 41,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-29T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.iceberg.web_analytics"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-native-partition-transforms",
-      "path": "demos/iceberg/v2/iceberg-native-partition-transforms",
-      "iconPath": "icons/iceberg-native-partition-transforms.svg",
-      "name": "Iceberg Native — Partition Transforms (Bucket + Day)",
-      "summary": "Demonstrates native Apache Iceberg format-version 2 table reading with Iceberg-native partition transforms: bucket(8, source_ip) and days(capture_time). These transforms are Iceberg-specific and cannot be produced by Delta Lake. The dataset contains 480 network traffic packet records across 3 regions (north-america, europe, asia-pacific), 4 protocols (TCP, UDP, ICMP, DNS), and 4 threat levels (low, medium, high, critical). Data is spread across 10 days of capture times and 78 partitioned Parquet files. Exercises Iceberg partition pruning, bucket-based data layout, and day-based temporal partitioning.",
-      "categories": [
-        "iceberg"
-      ],
-      "tags": [
-        "iceberg",
-        "advanced",
-        "read-only",
-        "native-format",
-        "v2",
-        "partition-transforms",
-        "bucket",
-        "day",
-        "network",
-        "security"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 259356,
-      "fileCount": 82,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-29T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.iceberg.network_traffic"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-native-schema-evolution",
-      "path": "demos/iceberg/v2/iceberg-native-schema-evolution",
-      "iconPath": "icons/iceberg-native-schema-evolution.svg",
-      "name": "Iceberg Native — Schema Evolution (Add, Rename, Drop)",
-      "summary": "Demonstrates native Apache Iceberg format-version 2 table reading with schema evolution across 4 snapshots. The employee directory table starts with 5 columns and 300 rows, then evolves: ADD COLUMN title, INSERT 60 more employees with titles, ADD COLUMN location with UPDATE, and RENAME COLUMN dept TO department. Exercises Iceberg's field-id stability for column renames, NULL handling for columns added after initial data load, and multi-snapshot metadata chain resolution. The final schema has 7 columns and 360 rows.",
-      "categories": [
-        "iceberg"
-      ],
-      "tags": [
-        "iceberg",
-        "advanced",
-        "read-only",
-        "native-format",
-        "v2",
-        "schema-evolution",
-        "add-column",
-        "rename-column",
-        "field-id",
-        "employee"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 79560,
-      "fileCount": 17,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-29T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.iceberg.employee_directory"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-native-time-travel",
-      "path": "demos/iceberg/v2/iceberg-native-time-travel",
-      "iconPath": "icons/iceberg-native-time-travel.svg",
-      "name": "Iceberg Native — Time Travel (Stock Prices)",
-      "summary": "Demonstrates native Apache Iceberg V2 table reading after 4 snapshot-producing mutations on a stock price dataset (138 final rows, 23 tickers). Exercises merge-on-read with position delete files across UPDATE (+5% tech correction), INSERT (30 IPO rows), and DELETE (12 delisted rows). Verifies per-ticker averages, sector breakdowns, and absence of deleted data.",
-      "categories": [
-        "iceberg-v2",
-        "time-travel"
-      ],
-      "tags": [
-        "iceberg",
-        "advanced",
-        "native-format",
-        "v2",
-        "time-travel",
-        "merge-on-read",
-        "position-deletes",
-        "stocks"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 93654,
-      "fileCount": 19,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-27T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.iceberg.stock_prices"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-uniform-equality-deletes",
-      "path": "demos/iceberg/v2/iceberg-uniform-equality-deletes",
-      "iconPath": "icons/iceberg-uniform-equality-deletes.svg",
-      "name": "Iceberg UniForm — Equality Delete Write & Read",
-      "summary": "Full-cycle demonstration of Iceberg equality delete file generation via UniForm. Creates a Delta table with equality delete mode enabled, seeds 10 products, deletes 3 products via standard DELETE, then reads the table back through an Iceberg external table to verify that the equality delete file correctly filters the deleted rows. Exercises the complete write → convert → read pipeline for equality deletes.",
-      "categories": [
-        "iceberg"
-      ],
-      "tags": [
-        "iceberg",
-        "intermediate",
-        "uniform",
-        "equality-deletes",
-        "write-read",
-        "full-cycle"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-29T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.eq_del_demo.products"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.eq_del_demo.products_iceberg"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-uniform-format-versions",
-      "path": "demos/iceberg/v2/iceberg-uniform-format-versions",
-      "iconPath": "icons/iceberg-uniform-format-versions.svg",
-      "name": "Iceberg UniForm — V1, V2, V3 Format Comparison",
-      "summary": "Compares Iceberg format versions V1, V2, and V3 side by side. Creates three identical Delta tables with the same seed data, each configured with a different delta.universalFormat.icebergVersion property. Demonstrates that all three versions produce correct metadata, handle DML, and support time travel — while V3 adds nanosecond timestamp types, deletion vectors, and named references.",
-      "categories": [
-        "iceberg-v2",
-        "delta-table"
-      ],
-      "tags": [
-        "iceberg",
-        "advanced",
-        "uniform",
-        "format-version",
-        "v1",
-        "v2",
-        "v3",
-        "comparison"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 12,
-      "dataSizeBytes": 0,
-      "fileCount": 3,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-26T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.iceberg_demos.sensors_v1"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.iceberg_demos.sensors_v2"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.iceberg_demos.sensors_v3"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -8406,76 +8952,6 @@
         {
           "objectType": "external_table",
           "name": "{{zone_name}}.iceberg.loyalty_members"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "delta-partition-delete",
-      "path": "demos/iceberg/v3/delta-partition-delete",
-      "iconPath": "icons/delta-partition-delete.svg",
-      "name": "Delta Partition-Scoped DELETE",
-      "summary": "Demonstrates three DELETE patterns on a partitioned Delta table (45 rows, 3 warehouse regions): partition-scoped purge of cancelled orders, cross-partition sweep of returned orders, and conditional delete using computed line-total thresholds. Time-travel queries confirm each mutation. Pure Delta format.",
-      "categories": [
-        "delta-table"
-      ],
-      "tags": [
-        "delta-table",
-        "intermediate",
-        "partitions",
-        "delete",
-        "pruning",
-        "time-travel"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-26T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.warehouse_orders"
-        }
-      ],
-      "verifyScript": "verify_df_output.py"
-    },
-    {
-      "id": "iceberg-uniform-puffin-dv",
-      "path": "demos/iceberg/v3/iceberg-uniform-puffin-dv",
-      "iconPath": "icons/iceberg-uniform-puffin-dv.svg",
-      "name": "Iceberg UniForm — Puffin Deletion Vector Write & Read",
-      "summary": "Full-cycle demonstration of Iceberg V3 Puffin deletion vector generation via UniForm. Creates a Delta table with puffin-v1 delete mode enabled, seeds 10 products, deletes 3 products via standard DELETE, then reads the table back through an Iceberg external table to verify that the Puffin deletion vector (Roaring64Bitmap blob) correctly filters the deleted rows. Exercises the complete write → convert → read pipeline for V3-native deletion vectors.",
-      "categories": [
-        "iceberg"
-      ],
-      "tags": [
-        "iceberg",
-        "intermediate",
-        "uniform",
-        "deletion-vectors",
-        "puffin",
-        "v3",
-        "write-read",
-        "full-cycle"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-29T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.puffin_dv_demo.products"
-        },
-        {
-          "objectType": "external_table",
-          "name": "{{zone_name}}.puffin_dv_demo.products_iceberg"
         }
       ],
       "verifyScript": "verify_df_output.py"
@@ -8897,31 +9373,6 @@
       ]
     },
     {
-      "id": "json-subtree-capture",
-      "path": "demos/json/json-subtree-capture",
-      "iconPath": "icons/json-subtree-capture.svg",
-      "name": "JSON Subtree Capture — json_paths",
-      "summary": "Demonstrates json_paths for capturing complex JSON subtrees as serialized string columns instead of flattening. Two tables show the same property listing data: one with location and pricing subtrees captured as JSON blobs (json_paths), one fully flattened for comparison. Covers json_paths, column_mappings, include_paths, and multi-file reading.",
-      "categories": [
-        "json"
-      ],
-      "tags": [
-        "json",
-        "intermediate",
-        "json-paths",
-        "subtree-capture",
-        "column-mappings",
-        "nested-json"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 8,
-      "dataSizeBytes": 5112,
-      "fileCount": 2,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-01T12:00:00Z"
-    },
-    {
       "id": "json-music-catalog",
       "path": "demos/json/music-catalog",
       "iconPath": "icons/json-music-catalog.svg",
@@ -8956,6 +9407,31 @@
           "name": "{{zone_name}}.json.album_summary"
         }
       ]
+    },
+    {
+      "id": "json-subtree-capture",
+      "path": "demos/json/json-subtree-capture",
+      "iconPath": "icons/json-subtree-capture.svg",
+      "name": "JSON Subtree Capture — json_paths",
+      "summary": "Demonstrates json_paths for capturing complex JSON subtrees as serialized string columns instead of flattening. Two tables show the same property listing data: one with location and pricing subtrees captured as JSON blobs (json_paths), one fully flattened for comparison. Covers json_paths, column_mappings, include_paths, and multi-file reading.",
+      "categories": [
+        "json"
+      ],
+      "tags": [
+        "json",
+        "intermediate",
+        "json-paths",
+        "subtree-capture",
+        "column-mappings",
+        "nested-json"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 5112,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-03-01T12:00:00Z"
     },
     {
       "id": "json-typed-billing-events",
@@ -8993,6 +9469,79 @@
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.billing.events_curated"
+        }
+      ]
+    },
+    {
+      "id": "northwind-database",
+      "path": "demos/csv/northwind-database",
+      "iconPath": "icons/northwind-database.svg",
+      "name": "Northwind Trading Company",
+      "summary": "Classic relational database with customers, orders, products, employees, and suppliers. 13 interconnected tables demonstrating joins, aggregations, and business analytics.",
+      "categories": [
+        "retail",
+        "csv"
+      ],
+      "tags": [
+        "csv",
+        "relational",
+        "joins",
+        "analytics",
+        "northwind",
+        "orders",
+        "products"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 512000,
+      "fileCount": 11,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-02-11T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_employee_territories"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_territories"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_regions"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_shippers"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_suppliers"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_categories"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_products"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_order_details"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_orders"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_employees"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.nw_customers"
         }
       ]
     },
@@ -9549,206 +10098,32 @@
       ]
     },
     {
-      "id": "gis-emergency-response",
-      "path": "demos/spatial/gis-emergency-response",
-      "iconPath": "icons/gis-emergency-response.svg",
-      "name": "GIS Emergency Response Network — Multi-Step Spatial Analytics",
-      "summary": "Demonstrates complex multi-step GIS analytics using an NYC emergency dispatch scenario. 8 hospitals, 12 incidents, and 4 response zones exercise nearest-neighbor ranking (ROW_NUMBER + st_distance), multi-algorithm distance comparison (haversine/sphere/Vincenty), navigation bearings, geofencing (st_contains/st_within with zone polygons), coordinate round-trips, and geodesic area calculations in layered analytical queries.",
+      "id": "sales-quickstart",
+      "path": "demos/csv/sales-quickstart",
+      "iconPath": "icons/sales-quickstart.svg",
+      "name": "Sales Data Quickstart",
+      "summary": "Minimal sales dataset to get started quickly. Two CSV files showing basic queries, filtering, and aggregations.",
       "categories": [
-        "geospatial",
-        "analytics"
+        "getting-started",
+        "csv"
       ],
       "tags": [
-        "spatial",
-        "gis",
-        "postgis",
-        "distance",
-        "bearing",
-        "geofencing",
-        "nearest-neighbor",
-        "delta-table",
-        "intermediate"
+        "csv",
+        "beginner",
+        "quickstart",
+        "sales"
       ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 2,
+      "dataSizeBytes": 2048,
+      "fileCount": 2,
       "author": "DeltaForge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-03-28T12:00:00Z",
+      "updatedAt": "2026-02-11T12:00:00Z",
       "targetObjects": [
         {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.emergency.hospitals"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.emergency.incidents"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.emergency.response_zones"
-        }
-      ]
-    },
-    {
-      "id": "gis-maritime-shipping",
-      "path": "demos/spatial/gis-maritime-shipping",
-      "iconPath": "icons/gis-maritime-shipping.svg",
-      "name": "GIS Maritime Shipping — PostGIS-Compatible Geospatial Functions",
-      "summary": "Tests all 18 PostGIS-compatible st_* functions using a global maritime shipping scenario. 5 cargo vessels navigate between 10 world ports with 40 GPS position records. Exercises st_distance (haversine, Vincenty, spherical), st_bearing, st_azimuth, st_final_bearing, st_contains, st_within, st_make_point, st_x, st_y, and st_area with independently computed proof values.",
-      "categories": [
-        "geospatial",
-        "analytics"
-      ],
-      "tags": [
-        "spatial",
-        "gis",
-        "postgis",
-        "distance",
-        "bearing",
-        "point-in-polygon",
-        "delta-table",
-        "intermediate"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-28T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.maritime.ports"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.maritime.vessels"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.maritime.positions"
-        }
-      ]
-    },
-    {
-      "id": "h3-gis-delivery-optimization",
-      "path": "demos/spatial/h3-gis-delivery-optimization",
-      "iconPath": "icons/h3-gis-delivery-optimization.svg",
-      "name": "H3+GIS Delivery Optimization — Cross-Function Spatial Analytics",
-      "summary": "Combines H3 hexagonal indexing with GIS geospatial functions for US regional delivery logistics. 3 warehouses serve 15 stores with cross-function queries: H3 cell assignment + GIS distance ranking, grid topology + haversine comparison, multi-resolution hierarchy + bearing calculations, and suboptimal warehouse assignment detection using combined H3 grid_distance and st_distance metrics.",
-      "categories": [
-        "geospatial",
-        "logistics"
-      ],
-      "tags": [
-        "h3",
-        "spatial",
-        "gis",
-        "combined",
-        "distance",
-        "grid-distance",
-        "delivery",
-        "delta-table",
-        "advanced"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-28T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.logistics.warehouses"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.logistics.stores"
-        }
-      ]
-    },
-    {
-      "id": "h3-gps-fleet-tracker",
-      "path": "demos/spatial/h3-gps-fleet-tracker",
-      "iconPath": "icons/h3-gps-fleet-tracker.svg",
-      "name": "H3 GPS Fleet Tracker",
-      "summary": "Demonstrates H3 hexagonal spatial indexing with Delta tables for GPS fleet tracking. Creates 10,000 GPS pings across 5 world cities, defines region boundaries as WKT polygons, and performs O(1) spatial joins via H3 cell matching. Verifies 21 H3 functions with known values: coordinate conversion, grid topology (ring/disk counts), cell hierarchy, area/edge metrics, polyfill, and spatial join accuracy.",
-      "categories": [
-        "geospatial",
-        "iot"
-      ],
-      "tags": [
-        "h3",
-        "spatial",
-        "delta-table",
-        "gps",
-        "polyfill",
-        "geospatial",
-        "advanced",
-        "generate-series"
-      ],
-      "difficulty": "advanced",
-      "estimatedTimeMinutes": 10,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.spatial.gps_points"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.spatial.regions"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.spatial.landmarks"
-        }
-      ]
-    },
-    {
-      "id": "h3-point-in-polygon",
-      "path": "demos/spatial/h3-point-in-polygon",
-      "iconPath": "icons/h3-point-in-polygon.svg",
-      "name": "H3 Point-in-Polygon — 1M Row Performance",
-      "summary": "Demonstrates blazing-fast point-in-polygon queries using H3 hexagonal spatial indexing. 1,000,000 ride-share driver GPS positions are checked against 12 pricing zones across 8 world cities using O(1) H3 cell matching instead of O(n×m) polygon intersection. Progressive queries build from 'what is H3' to million-row analytics with 10 automated PASS/FAIL checks.",
-      "categories": [
-        "geospatial",
-        "iot"
-      ],
-      "tags": [
-        "h3",
-        "spatial",
-        "delta-table",
-        "point-in-polygon",
-        "performance",
-        "geospatial",
-        "advanced",
-        "generate-series"
-      ],
-      "difficulty": "intermediate",
-      "estimatedTimeMinutes": 12,
-      "dataSizeBytes": 0,
-      "fileCount": 0,
-      "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-02-26T12:00:00Z",
-      "targetObjects": [
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.spatial.driver_positions"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.spatial.zones"
+          "objectType": "external_table",
+          "name": "{{zone_name}}.csv.sales"
         }
       ]
     },

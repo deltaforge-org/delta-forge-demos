@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dex" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97316"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+  </defs>
+  <!-- EDI document -->
+  <rect x="18" y="14" width="30" height="40" rx="3" fill="url(#dex)" opacity=".12" stroke="url(#dex)" stroke-width="2.5"/>
+  <!-- Segment lines on the document -->
+  <line x1="24" y1="23" x2="42" y2="23" stroke="url(#dex)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <line x1="24" y1="30" x2="42" y2="30" stroke="url(#dex)" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+  <line x1="24" y1="37" x2="36" y2="37" stroke="url(#dex)" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+  <!-- Exchange arrows: trading partners -->
+  <path d="M22 46h14l-3-3M36 50H22l3 3" stroke="url(#dex)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="55" cy="55" r="11" fill="url(#dex)" opacity=".12" stroke="url(#dex)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#dex)" stroke-width="3" stroke-linecap="round"/>
+</svg>

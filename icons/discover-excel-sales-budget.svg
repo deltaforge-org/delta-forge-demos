@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="deb" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22c55e"/>
+      <stop offset="1" stop-color="#16a34a"/>
+    </linearGradient>
+  </defs>
+  <!-- Spreadsheet sheet -->
+  <rect x="16" y="14" width="40" height="48" rx="3" fill="url(#deb)" opacity=".12" stroke="url(#deb)" stroke-width="2.5"/>
+  <!-- Grid: header row plus column/row rules -->
+  <line x1="16" y1="26" x2="56" y2="26" stroke="url(#deb)" stroke-width="2" opacity=".7"/>
+  <line x1="16" y1="38" x2="56" y2="38" stroke="url(#deb)" stroke-width="1.5" opacity=".4"/>
+  <line x1="16" y1="50" x2="56" y2="50" stroke="url(#deb)" stroke-width="1.5" opacity=".4"/>
+  <line x1="29" y1="14" x2="29" y2="62" stroke="url(#deb)" stroke-width="1.5" opacity=".4"/>
+  <line x1="43" y1="14" x2="43" y2="62" stroke="url(#deb)" stroke-width="1.5" opacity=".4"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="55" cy="55" r="11" fill="url(#deb)" opacity=".12" stroke="url(#deb)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#deb)" stroke-width="3" stroke-linecap="round"/>
+</svg>

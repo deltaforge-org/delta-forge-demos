@@ -1,0 +1,45 @@
+[demo]
+id = "discover-avro-order-events"
+name = "Order-Event Auto-Onboarding: DISCOVER over Avro"
+version = "1.0.0"
+description = """
+A retail platform sinks its order-event stream from Kafka to Avro files in
+object storage (45 events across two Avro objects). Each Avro container
+carries its own embedded record schema, so the column names and types travel
+with the data.
+
+This is the Avro entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE that restates every column type, a single DISCOVER
+statement reads the actual bytes, recognises the Avro container magic header
+(Obj\\x01), parses the embedded schema, derives the columns from it, and
+registers the external table USING AVRO. Both modes are exercised:
+DISCOVER ... PRINT returns the generated DDL without registering anything, and
+DISCOVER ... (EXECUTE default) performs the registration and returns the
+summary row. FILE_METADATA = true adds the df_file_name / df_row_number
+provenance columns, which the provenance query reads back to tie each of the
+45 rows to its source Avro file.
+"""
+categories = ["discover", "avro", "retail"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "avro", "embedded-schema", "file-metadata", "order-events", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/order_events_part_001.avro"
+format = "avro"
+description = "25 order events as an Avro container with embedded schema (Kafka sink part 1)."
+size_bytes = 2443
+
+[[demo.data_files]]
+path = "data/order_events_part_002.avro"
+format = "avro"
+description = "20 order events as an Avro container with embedded schema (Kafka sink part 2)."
+size_bytes = 2056
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.order_events"

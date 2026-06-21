@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dao" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Shopping bag: the order stream -->
+  <path d="M24 30h32l-3 30a4 4 0 0 1-4 4H31a4 4 0 0 1-4-4z" fill="url(#dao)" opacity=".12" stroke="url(#dao)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Bag handle -->
+  <path d="M33 30v-4a7 7 0 0 1 14 0v4" stroke="url(#dao)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Avro records flowing as stacked rows inside the bag -->
+  <line x1="33" y1="42" x2="47" y2="42" stroke="url(#dao)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <line x1="33" y1="48" x2="47" y2="48" stroke="url(#dao)" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+  <line x1="33" y1="54" x2="42" y2="54" stroke="url(#dao)" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="55" cy="55" r="11" fill="url(#dao)" opacity=".12" stroke="url(#dao)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#dao)" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,38 @@
+[demo]
+id = "discover-csv-pos-semicolon"
+name = "EU Point-of-Sale Onboarding: DISCOVER sniffs semicolon CSV"
+version = "1.0.0"
+description = """
+A European retail chain exports its point-of-sale receipts as
+semicolon-delimited CSV, the common EU convention. The file carries a header
+row, a '.' decimal point, and 40 receipts across four stores and cities.
+
+This is the CSV dialect-detection entry in the DISCOVER category. A naive comma
+reader pointed at this file would see ONE giant column, because there are no
+commas to split on. Instead of hand-writing a CREATE EXTERNAL TABLE with an
+explicit DELIMITER ';' option, a single DISCOVER statement reads the actual
+bytes, sniffs the dialect (it finds ';' as the consistent field separator and a
+header row), and emits the matching OPTIONS automatically. Both modes are
+exercised: DISCOVER ... PRINT returns the generated DDL without registering
+anything, and DISCOVER ... (EXECUTE default) performs the registration and
+returns the summary row whose evidence records the sniffed ';' delimiter.
+FILE_METADATA = true adds the df_file_name / df_row_number provenance columns.
+"""
+categories = ["discover", "csv", "retail"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "csv", "dialect-sniffing", "semicolon-delimiter", "file-metadata", "point-of-sale", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/pos_receipts_2026_q1.csv"
+format = "csv"
+description = "40 point-of-sale receipts as semicolon-delimited CSV with a header row and '.' decimal point (EU export convention)."
+size_bytes = 2484
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.pos_receipts"

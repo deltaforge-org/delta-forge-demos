@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="djc" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- JSON braces -->
+  <path d="M30 20c-6 0-8 3-8 8v6c0 3-2 4-5 4 3 0 5 1 5 4v6c0 5 2 8 8 8" stroke="url(#djc)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M50 20c6 0 8 3 8 8v6c0 3 2 4 5 4-3 0-5 1-5 4v6c0 5-2 8-8 8" stroke="url(#djc)" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+  <!-- Clickstream dots between the braces -->
+  <circle cx="40" cy="30" r="3" fill="url(#djc)" opacity=".6"/>
+  <circle cx="40" cy="40" r="3" fill="url(#djc)" opacity=".45"/>
+  <circle cx="40" cy="50" r="3" fill="url(#djc)" opacity=".3"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="55" cy="55" r="11" fill="url(#djc)" opacity=".12" stroke="url(#djc)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#djc)" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,38 @@
+[demo]
+id = "discover-xml-book-catalog"
+name = "Book Catalog Auto-Onboarding: DISCOVER over XML"
+version = "1.0.0"
+description = """
+A publisher exports its book catalog as a single XML file: 25 books, each a
+repeating <book> element under a <catalog> root, with flat leaf elements
+(isbn, title, author, genre, price, year, in_stock).
+
+This is the XML entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE with an explicit xml_flatten_config, a single DISCOVER
+statement reads the actual bytes, classifies the text shape as XML, picks the
+repeating <book> element as the row anchor, synthesizes the leaf-element
+columns, and registers the external table. Both modes are exercised:
+DISCOVER ... PRINT returns the generated DDL without registering anything, and
+DISCOVER ... (EXECUTE default) performs the registration and returns the
+summary row. FILE_METADATA = true adds the df_file_name / df_row_number
+provenance columns. XML leaf values are all strings, so the assertions use
+string equality and integer COUNT only.
+"""
+categories = ["discover", "xml", "publishing"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "xml", "row-anchor", "flatten-config", "file-metadata", "book-catalog", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/book_catalog.xml"
+format = "xml"
+description = "25 books as repeating <book> elements under a <catalog> root (flat leaf elements)."
+size_bytes = 5851
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.book_catalog"

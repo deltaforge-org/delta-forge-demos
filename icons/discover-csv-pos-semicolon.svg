@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dcd" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eab308"/>
+      <stop offset="1" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+  <!-- Receipt / till slip with a torn bottom edge -->
+  <path d="M20 14h28v44l-4-3-4 3-4-3-4 3-4-3-4 3-4-3z" fill="url(#dcd)" opacity=".12" stroke="url(#dcd)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Receipt line items: the ';' separated fields -->
+  <line x1="26" y1="24" x2="42" y2="24" stroke="url(#dcd)" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+  <line x1="26" y1="32" x2="42" y2="32" stroke="url(#dcd)" stroke-width="2.5" stroke-linecap="round" opacity=".45"/>
+  <line x1="26" y1="40" x2="38" y2="40" stroke="url(#dcd)" stroke-width="2.5" stroke-linecap="round" opacity=".3"/>
+  <!-- Semicolon mark: the sniffed delimiter -->
+  <circle cx="46" cy="30" r="1.6" fill="url(#dcd)" opacity=".7"/>
+  <circle cx="46" cy="38" r="1.6" fill="url(#dcd)" opacity=".7"/>
+  <!-- Magnifying glass: DISCOVER reads the bytes -->
+  <circle cx="54" cy="54" r="12" fill="url(#dcd)" opacity=".12" stroke="url(#dcd)" stroke-width="2.5"/>
+  <line x1="63" y1="63" x2="72" y2="72" stroke="url(#dcd)" stroke-width="3" stroke-linecap="round"/>
+</svg>

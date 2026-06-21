@@ -1,0 +1,45 @@
+[demo]
+id = "discover-parquet-turbine-telemetry"
+name = "Turbine Telemetry Auto-Onboarding: DISCOVER over Parquet"
+version = "1.0.0"
+description = """
+An offshore wind operator lands per-turbine SCADA telemetry as Parquet into
+one folder: a 06-21 drop of 35 readings (north-bank and south-bank sites)
+and a 06-22 drop of 15 readings (east-bank site). Fifty self-describing
+columnar readings, one logical feed.
+
+This is the Parquet entry in the DISCOVER category. Instead of hand-writing a
+CREATE EXTERNAL TABLE, a single DISCOVER statement reads the actual bytes,
+recognises the Parquet binary container by its PAR1 magic number (detection
+is byte-based, not extension-based), lifts the column names and types straight
+from the embedded schema, and registers the external table with zero OPTIONS.
+Both modes are exercised: DISCOVER ... PRINT returns the generated DDL without
+registering anything, and DISCOVER ... (EXECUTE default) performs the
+registration and returns the summary row. FILE_METADATA = true adds the
+df_file_name / df_row_number provenance columns, which the provenance query
+reads back to tie each of the 50 readings to its source drop.
+"""
+categories = ["discover", "parquet", "iot"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "parquet", "magic-number", "embedded-schema", "file-metadata", "scada", "wind-energy", "intermediate"]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folder. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/scada_2026_06_21.parquet"
+format = "parquet"
+description = "35 SCADA telemetry readings (north-bank and south-bank sites) as Parquet."
+size_bytes = 3128
+
+[[demo.data_files]]
+path = "data/scada_2026_06_22.parquet"
+format = "parquet"
+description = "15 SCADA telemetry readings (east-bank site) as Parquet."
+size_bytes = 2739
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.discover_demos.turbine_telemetry"
