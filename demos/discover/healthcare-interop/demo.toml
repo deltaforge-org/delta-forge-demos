@@ -1,0 +1,123 @@
+[demo]
+id = "discover-healthcare-interop"
+name = "Healthcare Interoperability Onboarding: DISCOVER across HL7, FHIR, EDI"
+version = "1.0.0"
+description = """
+A hospital integration team receives clinical and billing data in three
+different healthcare standards, all landing in one bronze zone: HL7 v2 ADT
+messages, FHIR Patient resources (NDJSON bulk export), and X12 EDI claims
+(837 professional/dental/institutional plus an 835 remittance).
+
+This is the healthcare showcase for the DISCOVER command. Instead of
+hand-writing a CREATE EXTERNAL TABLE with the right connector and OPTIONS for
+each standard, the team points DISCOVER at each landing folder. DISCOVER reads
+the actual bytes and recognises HL7 (the MSH segment), FHIR (the resource
+shape), and X12 EDI (the ISA envelope), registering the matching external
+table on its own. The queries then read each bronze feed on the fly and
+convert it into a typed, governed silver Delta table: 6 HL7 admissions, 20
+FHIR patients, and 4 EDI transactions. Both DISCOVER modes are shown (PRINT
+to review the generated DDL, EXECUTE to register), and the bronze-to-silver
+promotion uses CREATE DELTA TABLE plus INSERT ... SELECT.
+"""
+categories = ["discover", "healthcare", "hl7", "fhir", "edi"]
+tags = ["discover", "format-detection", "auto-registration", "print-mode", "hl7", "fhir", "edi", "x12", "ndjson", "delta", "bronze-silver", "interoperability", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Path to the demo data directory (provisioned under the zone root).", required = false }
+zone_name = { description = "Target zone for the landing folders. Defaults to `external`.", required = false }
+
+[[demo.data_files]]
+path = "data/hl7/adt_a01_evergreen.hl7"
+format = "hl7"
+description = "HL7 v2 ADT^A01 admit message (Evergreen EHR)."
+size_bytes = 402
+
+[[demo.data_files]]
+path = "data/hl7/adt_a01_harborview.hl7"
+format = "hl7"
+description = "HL7 v2 ADT^A01 admit message (Harborview EHR)."
+size_bytes = 494
+
+[[demo.data_files]]
+path = "data/hl7/adt_a01_stmarys.hl7"
+format = "hl7"
+description = "HL7 v2 ADT^A01 admit message (St. Marys EHR)."
+size_bytes = 472
+
+[[demo.data_files]]
+path = "data/hl7/adt_a03_harborview.hl7"
+format = "hl7"
+description = "HL7 v2 ADT^A03 discharge message (Harborview EHR)."
+size_bytes = 511
+
+[[demo.data_files]]
+path = "data/hl7/adt_a03_stmarys.hl7"
+format = "hl7"
+description = "HL7 v2 ADT^A03 discharge message (St. Marys EHR)."
+size_bytes = 489
+
+[[demo.data_files]]
+path = "data/hl7/adt_a08_evergreen.hl7"
+format = "hl7"
+description = "HL7 v2 ADT^A08 update message (Evergreen EHR)."
+size_bytes = 401
+
+[[demo.data_files]]
+path = "data/fhir/Patient.ndjson"
+format = "ndjson"
+description = "20 FHIR R4 Patient resources, one per line (Bulk Data export)."
+size_bytes = 3330
+
+[[demo.data_files]]
+path = "data/edi/claim_837_professional.edi"
+format = "edi"
+description = "X12 837 professional health care claim."
+size_bytes = 1197
+
+[[demo.data_files]]
+path = "data/edi/claim_837_dental.edi"
+format = "edi"
+description = "X12 837 dental health care claim."
+size_bytes = 960
+
+[[demo.data_files]]
+path = "data/edi/claim_837_institutional.edi"
+format = "edi"
+description = "X12 837 institutional health care claim."
+size_bytes = 1306
+
+[[demo.data_files]]
+path = "data/edi/remittance_835.edi"
+format = "edi"
+description = "X12 835 remittance advice."
+size_bytes = 830
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.healthcare.adt_bronze"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.healthcare.patients_bronze"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.healthcare.claims_bronze"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.healthcare.hl7_admissions"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.healthcare.fhir_patients"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.healthcare.fhir_patients_shared"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.healthcare.edi_claims"
