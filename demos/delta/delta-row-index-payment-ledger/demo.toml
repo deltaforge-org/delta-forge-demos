@@ -1,0 +1,32 @@
+[demo]
+id = "delta-row-index-payment-ledger"
+name = "Card Payment Ledger - Row-Index Cost / Benefit"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+A fintech card-payment platform decides whether a row-level B+ tree index is \
+worth it. This demo MEASURES the answer instead of asserting it in prose: it \
+uses SHOW STATS ACTUAL to read runtime metrics and DESCRIBE INDEXES to read \
+the index footprint, across read, write, and update. It proves the index turns \
+a 12-file point-lookup scan into a zero-scan index lookup on a high-cardinality, \
+shuffled key (payments.txn_id), and proves the index is NOT worth it for broad \
+scans, for an already-clustered key (settlements.settlement_id, where Delta's \
+own min/max stats prune for free), and on write-heavy tables where every commit \
+pays an index-maintenance pass. Seeds 60 + 30 rows across 18 files.
+"""
+categories = ["index"]
+tags = ["delta-table", "advanced", "row-level-index", "index", "btree", "show-stats", "data-skipping", "benchmark", "update", "merge"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.payments"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.settlements"
