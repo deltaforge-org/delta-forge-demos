@@ -213,9 +213,3 @@ INSERT INTO {{zone_name}}.delta_demos.settlements VALUES
     (800028, '2026-05-06', 'EU', 2400.00, 128),
     (800029, '2026-05-06', 'NA', 2450.00, 129),
     (800030, '2026-05-06', 'AP', 2500.00, 130);
-
--- The tables are created and owned by the user running the demo, so no explicit
--- GRANT is needed (it would also fail if the session user is not a registered
--- catalog entity). DETECT SCHEMA is unnecessary too: CREATE DELTA TABLE declares
--- the schema, and CREATE auto-runs schema discovery. This matches the sibling
--- delta-row-index-* demos, whose setup ends at the seed INSERTs.
