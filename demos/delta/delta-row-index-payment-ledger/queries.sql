@@ -234,3 +234,27 @@ SELECT status, COUNT(*) AS cnt
 FROM {{zone_name}}.delta_demos.payments
 GROUP BY status
 ORDER BY status;
+
+
+-- ============================================================================
+-- WHAT THE NUMBERS SHOWED (simplified results of this demo)
+-- ============================================================================
+--   READ, index helps    Q1 vs Q3, same point lookup: delta_scan_exec_count
+--                         1 -> 0 (a 12-file scan became a zero-scan index lookup).
+--   READ, no help         Q5 broad scan: delta_scan_exec_count stays 1,
+--                         files_touched 12. An index cannot prune a full scan.
+--   READ, redundant       Q6 clustered key: scan_share_count = 1 with NO index;
+--                         Delta data skipping already pruned 5 of 6 files.
+--   WRITE, the cost       Q7 -> Q8: leaf_count 60 -> 63 on append; every commit
+--                         re-indexes the new rows while auto_update = true.
+--   WRITE, mitigation     Q10 / Q11: auto_update off -> status 'stale' (cheap
+--                         write, stale index); REBUILD -> 'current'.
+--   UPDATE                Q9: a keyed UPDATE locates through the index and the
+--                         result is correct. A stale or absent index never
+--                         changes answers, only speed.
+--
+--   RULE OF THUMB: index a high-cardinality, NON-clustered key that is hit by
+--   selective reads or keyed UPDATE / DELETE / MERGE on a multi-file table.
+--   Skip it for clustered keys (data skipping already prunes), broad scans,
+--   tiny tables, and write-heavy tables where maintenance outweighs the read win.
+-- ============================================================================
