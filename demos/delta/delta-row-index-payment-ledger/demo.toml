@@ -1,21 +1,23 @@
 [demo]
 id = "delta-row-index-payment-ledger"
 name = "Card Payment Ledger - Row-Index Cost / Benefit"
-version = "1.0.0"
+version = "2.0.0"
 author = "DeltaForge Team"
 description = """
-A fintech card-payment platform decides whether a row-level B+ tree index is \
-worth it. This demo MEASURES the answer instead of asserting it in prose: it \
-uses SHOW STATS ACTUAL to read runtime metrics and DESCRIBE INDEXES to read \
-the index footprint, across read, write, and update. It proves the index turns \
-a 12-file point-lookup scan into a zero-scan index lookup on a high-cardinality, \
-shuffled key (payments.txn_id), and proves the index is NOT worth it for broad \
-scans, for an already-clustered key (settlements.settlement_id, where Delta's \
-own min/max stats prune for free), and on write-heavy tables where every commit \
-pays an index-maintenance pass. Seeds 60 + 30 rows across 18 files.
+When does a row-level B+ tree index on a Delta table earn its keep, and when \
+does it have no benefit at all? This demo answers it at scale and MEASURES \
+every claim with SHOW STATS, on a 20,000,000-row card-payment ledger across \
+~144 files. The lookup key (txn_id) is a scattered reference, so Delta's per-file \
+min/max stats cannot prune it. The honest signal is rows_consumed: it is NULL \
+only when the index served the row with no scan. The index HELPS exactly two \
+things, an equality point lookup and a keyed point UPDATE, by reading or \
+locating one row instead of decoding the whole ~130k-row group min/max already \
+narrowed to. It has NO benefit for range scans, lookups on a non-indexed column, \
+broad scans, or COUNT. The cost: one sorted leaf per row (20,000,000), built \
+once and maintained on every write. All data generated inline with generate_series.
 """
 categories = ["index"]
-tags = ["delta-table", "advanced", "row-level-index", "index", "btree", "show-stats", "data-skipping", "benchmark", "update", "merge"]
+tags = ["delta-table", "advanced", "row-level-index", "index", "btree", "show-stats", "point-lookup", "20-million-rows", "update", "data-skipping"]
 difficulty = "advanced"
 estimated_time_minutes = 8
 
@@ -26,7 +28,3 @@ zone_name = { description = "Target zone name for tables (defaults to 'external'
 [[demo.target_objects]]
 type = "delta_table"
 name = "{{zone_name}}.delta_demos.payments"
-
-[[demo.target_objects]]
-type = "delta_table"
-name = "{{zone_name}}.delta_demos.settlements"

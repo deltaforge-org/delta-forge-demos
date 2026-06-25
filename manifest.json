@@ -3688,7 +3688,7 @@
       "path": "demos/delta/delta-row-index-payment-ledger",
       "iconPath": "icons/delta-row-index-payment-ledger.svg",
       "name": "Card Payment Ledger - Row-Index Cost / Benefit",
-      "summary": "A fintech card-payment ledger MEASURES when a row-level B+ tree index pays off, using SHOW STATS ACTUAL (runtime read metrics) and DESCRIBE INDEXES (footprint + freshness). Seeds 60 payments across 12 interleaved files plus 30 clustered settlements across 6 files. Proves the index turns a 12-file point-lookup scan into a zero-scan index lookup on a shuffled high-cardinality key, and proves it is NOT worth it for broad scans, for an already-clustered key (Delta min/max prunes for free), or on write-heavy tables where every commit pays index maintenance. Covers read, write, and update.",
+      "summary": "When does a row-level B+ tree index on a Delta table help, and when does it have no benefit? Measured at scale on a 20,000,000-row card-payment ledger across ~144 files, where the lookup key is scattered so Delta min/max cannot prune it. Using SHOW STATS, the honest signal is rows_consumed (NULL only when the index served the row with no scan). The index HELPS exactly two cases: an equality point lookup and a keyed point UPDATE, reading or locating one row instead of decoding the whole ~130k-row group. It has NO benefit for ranges, lookups on a non-indexed column, broad scans, or COUNT. The cost: one sorted leaf per row (20M), built once and maintained on every write.",
       "categories": [
         "index"
       ],
@@ -3699,26 +3699,22 @@
         "index",
         "btree",
         "show-stats",
-        "data-skipping",
-        "benchmark",
+        "point-lookup",
+        "20-million-rows",
         "update",
-        "merge"
+        "data-skipping"
       ],
       "difficulty": "advanced",
       "estimatedTimeMinutes": 8,
       "dataSizeBytes": 0,
       "fileCount": 4,
       "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-06-24T12:00:00Z",
+      "version": "2.0.0",
+      "updatedAt": "2026-06-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
           "name": "{{zone_name}}.delta_demos.payments"
-        },
-        {
-          "objectType": "delta_table",
-          "name": "{{zone_name}}.delta_demos.settlements"
         }
       ]
     },
