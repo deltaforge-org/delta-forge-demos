@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="grv" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10b981"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <!-- DNA double helix: two intertwined strands -->
+  <path d="M30 14 C50 26, 50 38, 30 50 C10 62, 10 74, 30 86"
+        stroke="url(#grv)" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".9"/>
+  <path d="M50 14 C30 26, 30 38, 50 50 C70 62, 70 74, 50 86"
+        stroke="url(#grv)" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".6"/>
+  <!-- Base-pair rungs -->
+  <line x1="33" y1="20" x2="47" y2="20" stroke="url(#grv)" stroke-width="1.5" opacity=".5"/>
+  <line x1="40" y1="27" x2="40" y2="27" stroke="url(#grv)" stroke-width="1.5" opacity=".5"/>
+  <line x1="33" y1="33" x2="47" y2="33" stroke="url(#grv)" stroke-width="1.5" opacity=".5"/>
+  <line x1="33" y1="47" x2="47" y2="47" stroke="url(#grv)" stroke-width="1.5" opacity=".5"/>
+  <line x1="33" y1="60" x2="47" y2="60" stroke="url(#grv)" stroke-width="1.5" opacity=".5"/>
+  <!-- Indexed locus marker: a highlighted base pair -->
+  <circle cx="40" cy="40" r="4.5" fill="url(#grv)" opacity=".3" stroke="url(#grv)" stroke-width="1.5"/>
+  <circle cx="40" cy="40" r="1.6" fill="url(#grv)"/>
+</svg>

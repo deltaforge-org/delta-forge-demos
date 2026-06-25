@@ -1,0 +1,34 @@
+[demo]
+id = "delta-row-index-genomic-variants"
+name = "Genomic Variant Catalog - PGM Learned Index on a Clustered Composite Key"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+The B+ tree is only one of two row-level index algorithms. This demo is about \
+the other one: the PGM (Piecewise Geometric Model) learned index, the DEFAULT, \
+on a MULTI-COLUMN composite key, MEASURED with SHOW STATS on a 24,000,000-row \
+population genomics variant catalog (24 chromosomes, 1,000,000 variants each). \
+The lookup key is the locus (chromosome, position). Unlike a scattered \
+transaction id, a variant catalog is CLUSTERED: positions rise monotonically \
+within each chromosome, exactly the near-linear shape a PGM model captures in a \
+handful of line segments with O(log log n) lookup. The honest signal is \
+rows_consumed: NULL only when the index served the rows with no scan. The \
+learned index HELPS the composite point lookup AND, because the key is \
+clustered, a RANGE scan across a 1-megabase coordinate window, the payoff a \
+scattered key can never give a range query. A position-only window shows the \
+leftmost-prefix rule and graceful fallback. All data generated inline with \
+generate_series. Complements the B+ tree payment-ledger demo by contrasting a \
+learned index on a clustered composite key against a B+ tree on a scattered key.
+"""
+categories = ["index"]
+tags = ["delta-table", "advanced", "row-level-index", "pgm", "learned-index", "composite-index", "leftmost-prefix", "show-stats", "range-scan", "24-million-rows", "genomics"]
+difficulty = "advanced"
+estimated_time_minutes = 8
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.genomic_variants"

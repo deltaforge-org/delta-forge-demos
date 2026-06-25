@@ -3587,6 +3587,42 @@
       ]
     },
     {
+      "id": "delta-row-index-genomic-variants",
+      "path": "demos/delta/delta-row-index-genomic-variants",
+      "iconPath": "icons/delta-row-index-genomic-variants.svg",
+      "name": "Genomic Variant Catalog - PGM Learned Index on a Clustered Composite Key",
+      "summary": "The B+ tree is only one of two row-level index algorithms; this demo is about the other one, the PGM (Piecewise Geometric Model) learned index (the default) on a MULTI-COLUMN composite key. Measured with SHOW STATS on a 24,000,000-row population genomics variant catalog (24 chromosomes, 1,000,000 variants each) keyed on the locus (chromosome, position). Because a variant catalog is clustered, positions rise monotonically within each chromosome, exactly the near-linear shape a PGM model captures in a few line segments with O(log log n) lookup. The honest signal is rows_consumed (NULL only when the index served the rows with no scan). The learned index HELPS the composite point lookup and, because the key is clustered, a RANGE scan across a 1-megabase window, the payoff a scattered key can never give a range query; a position-only window shows the leftmost-prefix rule and graceful fallback. Complements the B+ tree payment-ledger demo by contrasting algorithm and key layout.",
+      "categories": [
+        "index"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "row-level-index",
+        "pgm",
+        "learned-index",
+        "composite-index",
+        "leftmost-prefix",
+        "show-stats",
+        "range-scan",
+        "24-million-rows",
+        "genomics"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 8,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-26T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.genomic_variants"
+        }
+      ]
+    },
+    {
       "id": "delta-row-index-iot-telemetry",
       "path": "demos/delta/delta-row-index-iot-telemetry",
       "iconPath": "icons/delta-row-index-iot-telemetry.svg",
