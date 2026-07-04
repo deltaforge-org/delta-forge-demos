@@ -5,9 +5,12 @@
 --       bypassing the default 7-day retention period.
 -- WHY:  Copy-on-write DML (UPDATE, DELETE) orphans old files on every mutation.
 --       On cloud storage (S3, ADLS, GCS), these orphans silently inflate costs.
--- HOW:  Use DESCRIBE DETAIL to measure file counts before and after VACUUM,
---       quantifying the exact storage reclaimed — while proving every row of
---       data remains perfectly intact.
+--       This table disables deletion vectors so mutations truly rewrite whole
+--       files, producing the orphans that make the reclaim real and non-zero.
+-- HOW:  VACUUM DRY RUN previews the reclaim, then VACUUM RETAIN 0 HOURS frees
+--       it. Both return a (files_deleted, bytes_freed) result set that we assert
+--       is > 0, the direct proof storage was reclaimed. A final VACUUM asserts
+--       0 files / 0 bytes, and every data check proves not one row was lost.
 -- ============================================================================
 
 
@@ -19,8 +22,11 @@
 -- copy-on-write, orphaning old versions. DESCRIBE DETAIL reveals how many
 -- files currently exist on disk — including those no longer referenced.
 
--- Non-deterministic: num_files depends on engine write strategy
-ASSERT WARNING ROW_COUNT >= 10
+-- DESCRIBE DETAIL returns a single metadata row for the table. Its num_files
+-- column counts only ACTIVE (referenced) files, so it is context here, not the
+-- savings proof. VACUUM reclaims orphans, which never appear in this count.
+-- The real proof is the VACUUM result set asserted below.
+ASSERT ROW_COUNT = 1
 DESCRIBE DETAIL {{zone_name}}.delta_demos.billing_transactions;
 
 
@@ -81,13 +87,37 @@ ORDER BY id;
 
 
 -- ============================================================================
+-- PREVIEW: VACUUM DRY RUN, how much can we reclaim?
+-- ============================================================================
+-- DRY RUN inspects the table WITHOUT deleting anything and returns the exact
+-- reclaim it WOULD perform. Because the table forces copy-on-write (deletion
+-- vectors are disabled), every UPDATE and DELETE above orphaned the previous
+-- file version, so there is real dead weight on disk. The result set has two
+-- rows: files_deleted and bytes_freed. Both must be > 0, this is the headline
+-- proof that VACUUM has genuine storage to reclaim.
+
+ASSERT ROW_COUNT = 2
+ASSERT VALUE value > 0 WHERE metric = 'files_deleted'
+ASSERT VALUE value > 0 WHERE metric = 'bytes_freed'
+VACUUM {{zone_name}}.delta_demos.billing_transactions RETAIN 0 HOURS DRY RUN;
+
+
+-- ============================================================================
 -- VACUUM RETAIN 0 HOURS — reclaim all orphaned storage immediately
 -- ============================================================================
 -- Default retention is 7 days, which protects time-travel queries to recent
--- versions. RETAIN 0 HOURS overrides this, removing ALL files not referenced
--- by the current table version. Use this when you explicitly choose storage
--- savings over time-travel capability.
+-- versions. RETAIN 0 HOURS overrides this, physically deleting ALL files not
+-- referenced by the current table version. Use this when you explicitly choose
+-- storage savings over time-travel capability.
+--
+-- The same two-row result set now reports what was ACTUALLY freed. Asserting
+-- files_deleted > 0 and bytes_freed > 0 proves the disk was really reclaimed,
+-- not just measured. (Exact counts depend on the engine's write bin-packing,
+-- so we assert the reclaim happened rather than pinning a brittle file count.)
 
+ASSERT ROW_COUNT = 2
+ASSERT VALUE value > 0 WHERE metric = 'files_deleted'
+ASSERT VALUE value > 0 WHERE metric = 'bytes_freed'
 VACUUM {{zone_name}}.delta_demos.billing_transactions RETAIN 0 HOURS;
 
 
@@ -98,8 +128,11 @@ VACUUM {{zone_name}}.delta_demos.billing_transactions RETAIN 0 HOURS;
 -- table version has not changed — VACUUM is a physical-only operation.
 -- Only the files referenced by the current version remain on disk.
 
--- Non-deterministic: num_files depends on engine write strategy
-ASSERT WARNING ROW_COUNT >= 10
+-- DESCRIBE DETAIL returns a single metadata row for the table. Its num_files
+-- column counts only ACTIVE (referenced) files, so it is context here, not the
+-- savings proof. VACUUM reclaims orphans, which never appear in this count.
+-- The real proof is the VACUUM result set asserted just above.
+ASSERT ROW_COUNT = 1
 DESCRIBE DETAIL {{zone_name}}.delta_demos.billing_transactions;
 
 
@@ -136,6 +169,20 @@ SELECT plan,
 FROM {{zone_name}}.delta_demos.billing_transactions
 GROUP BY plan
 ORDER BY plan;
+
+
+-- ============================================================================
+-- LEARN: VACUUM is idempotent: a second pass reclaims nothing
+-- ============================================================================
+-- After the first VACUUM removed every orphan, only files referenced by the
+-- current version remain. Running VACUUM again therefore frees ZERO files and
+-- ZERO bytes. This is the closing proof that the earlier reclaim was real: the
+-- dead weight is gone and there is nothing left to delete.
+
+ASSERT ROW_COUNT = 2
+ASSERT VALUE value = 0 WHERE metric = 'files_deleted'
+ASSERT VALUE value = 0 WHERE metric = 'bytes_freed'
+VACUUM {{zone_name}}.delta_demos.billing_transactions RETAIN 0 HOURS;
 
 
 -- ============================================================================

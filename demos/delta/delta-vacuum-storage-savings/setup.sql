@@ -6,8 +6,17 @@
 -- and cancellations. Each DML operation creates new files via copy-on-write,
 -- orphaning the previous versions.
 --
+-- The table sets delta.enableDeletionVectors = 'false' ON PURPOSE. With
+-- deletion vectors (the engine default), UPDATE and DELETE keep the original
+-- Parquet file active and record the removed rows in a tiny .bin sidecar, so
+-- NO whole file is ever orphaned and VACUUM has nothing to reclaim. Disabling
+-- them forces true copy-on-write: every UPDATE/DELETE rewrites the affected
+-- file in full and marks the previous version "removed", which is exactly the
+-- orphan that VACUUM reclaims. This is what makes the storage-savings payoff
+-- real and measurable instead of always zero.
+--
 -- Operations:
---   1. CREATE DELTA TABLE + INSERT 30 billing transactions (3 months)
+--   1. CREATE DELTA TABLE (deletion vectors OFF) + INSERT 30 billing transactions (3 months)
 --   2. UPDATE — 15% price increase on Enterprise plan (12 rows rewritten)
 --   3. UPDATE — refund 5 January transactions (status → 'refunded')
 --   4. DELETE — remove 3 cancelled transactions
@@ -40,7 +49,8 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.delta_demos.billing_transactions 
     amount          DOUBLE,
     status          VARCHAR,
     created_date    VARCHAR
-) LOCATION 'delta-vacuum-storage-savings/billing_transactions';
+) LOCATION 'delta-vacuum-storage-savings/billing_transactions'
+TBLPROPERTIES ('delta.enableDeletionVectors' = 'false');
 
 
 -- STEP 2: Insert 30 billing transactions across 3 months (Jan/Feb/Mar 2025)

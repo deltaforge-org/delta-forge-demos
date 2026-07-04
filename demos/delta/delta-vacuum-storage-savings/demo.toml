@@ -1,19 +1,20 @@
 [demo]
 id = "delta-vacuum-storage-savings"
-name = "Delta VACUUM — Storage Cost Savings"
-version = "1.0.0"
+name = "Delta VACUUM: Storage Cost Savings"
+version = "1.1.0"
 author = "DeltaForge Team"
 description = """
-Every UPDATE, DELETE, and MERGE in Delta Lake uses copy-on-write, creating \
+Every UPDATE, DELETE, and MERGE in Delta Lake can use copy-on-write, creating \
 new Parquet files while leaving old ones orphaned on disk. Without VACUUM, \
 cloud storage costs grow unboundedly even as the logical table size stays flat. \
-This demo uses a SaaS billing system with price adjustments, refunds, and \
-cancellations to show how orphaned files accumulate — then uses DESCRIBE DETAIL \
-to measure file counts before and after VACUUM RETAIN 0 HOURS, proving that \
-VACUUM reclaims storage while preserving every row perfectly intact.
+This demo uses a SaaS billing table with deletion vectors deliberately disabled \
+(so mutations truly rewrite whole files and orphan the old versions), then runs \
+VACUUM DRY RUN and VACUUM RETAIN 0 HOURS and asserts the (files_deleted, \
+bytes_freed) result set is greater than zero, proving real storage was reclaimed \
+while before and after integrity checks confirm every row stayed intact.
 """
 categories = ["delta-table", "delta-versioning"]
-tags = ["delta-table", "advanced", "vacuum", "storage", "maintenance", "describe-detail", "cost-optimization", "retain"]
+tags = ["delta-table", "advanced", "vacuum", "storage", "maintenance", "copy-on-write", "deletion-vectors", "cost-optimization", "retain"]
 difficulty = "advanced"
 estimated_time_minutes = 10
 

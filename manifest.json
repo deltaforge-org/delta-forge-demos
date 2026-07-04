@@ -4726,8 +4726,8 @@
       "id": "delta-vacuum-storage-savings",
       "path": "demos/delta/delta-vacuum-storage-savings",
       "iconPath": "icons/delta-vacuum-storage-savings.svg",
-      "name": "Delta VACUUM — Storage Cost Savings",
-      "summary": "Every UPDATE and DELETE in Delta Lake orphans old Parquet files via copy-on-write, silently inflating cloud storage costs. This demo uses a SaaS billing system to show how DESCRIBE DETAIL measures file accumulation and VACUUM RETAIN 0 HOURS reclaims storage — proving zero data change through before/after integrity checks.",
+      "name": "Delta VACUUM: Storage Cost Savings",
+      "summary": "A SaaS billing table with deletion vectors deliberately disabled so every UPDATE and DELETE truly rewrites whole Parquet files, orphaning the old versions. VACUUM DRY RUN previews the reclaim and VACUUM RETAIN 0 HOURS frees it, and the demo asserts the (files_deleted, bytes_freed) result set is > 0, then 0 on a second pass, while before/after integrity checks prove not one row changed.",
       "categories": [
         "delta-table",
         "delta-versioning"
@@ -4738,7 +4738,8 @@
         "vacuum",
         "storage",
         "maintenance",
-        "describe-detail",
+        "copy-on-write",
+        "deletion-vectors",
         "cost-optimization",
         "retain"
       ],
@@ -4747,8 +4748,8 @@
       "dataSizeBytes": 0,
       "fileCount": 4,
       "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-03-25T12:00:00Z",
+      "version": "1.1.0",
+      "updatedAt": "2026-07-05T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "delta_table",
