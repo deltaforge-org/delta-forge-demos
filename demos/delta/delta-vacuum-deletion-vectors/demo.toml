@@ -1,0 +1,28 @@
+[demo]
+id = "delta-vacuum-deletion-vectors"
+name = "Delta VACUUM: Deletion Vectors and Reclaim"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """
+The companion to delta-vacuum-storage-savings, showing the OTHER half of the \
+VACUUM story. This warehouse order-fulfilment table ENABLES deletion vectors, \
+so UPDATE and DELETE do not rewrite whole Parquet files: they record affected \
+rows in tiny .bin sidecars and keep the original files active. The result is \
+that VACUUM RETAIN 0 HOURS reclaims ZERO files even after many mutations, \
+because nothing was orphaned. The queries assert the 0-file reclaim, explain \
+in comments exactly why deletion vectors defer the space, then run OPTIMIZE \
+(which physically rewrites the files and drops the vectors) so a second VACUUM \
+finally reclaims the now-orphaned originals.
+"""
+categories = ["delta-table", "delta-versioning"]
+tags = ["delta-table", "advanced", "vacuum", "deletion-vectors", "optimize", "storage", "maintenance", "retain"]
+difficulty = "advanced"
+estimated_time_minutes = 10
+
+[demo.variables]
+data_path = { description = "Root path where Delta table data is stored", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.delta_demos.fulfillment_orders"

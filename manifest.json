@@ -4619,6 +4619,40 @@
       "verifyScript": "verify_df_output.py"
     },
     {
+      "id": "delta-vacuum-deletion-vectors",
+      "path": "demos/delta/delta-vacuum-deletion-vectors",
+      "iconPath": "icons/delta-vacuum-deletion-vectors.svg",
+      "name": "Delta VACUUM: Deletion Vectors and Reclaim",
+      "summary": "The companion to delta-vacuum-storage-savings, showing why VACUUM sometimes reclaims nothing. A warehouse order-fulfilment table with deletion vectors ENABLED takes two UPDATEs and a DELETE, yet VACUUM RETAIN 0 HOURS reclaims 0 files because deletion vectors record removed rows in .bin sidecars and keep the original Parquet files active. The demo asserts the 0-file reclaim, explains why in comments, then runs OPTIMIZE (which rewrites the files and drops the vectors) so a second VACUUM reclaims the 3 now-orphaned files, all with 25 rows kept intact.",
+      "categories": [
+        "delta-table",
+        "delta-versioning"
+      ],
+      "tags": [
+        "delta-table",
+        "advanced",
+        "vacuum",
+        "deletion-vectors",
+        "optimize",
+        "storage",
+        "maintenance",
+        "retain"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 10,
+      "dataSizeBytes": 0,
+      "fileCount": 4,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-07-05T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.delta_demos.fulfillment_orders"
+        }
+      ]
+    },
+    {
       "id": "delta-vacuum-optimize-maintenance",
       "path": "demos/delta/delta-vacuum-optimize-maintenance",
       "iconPath": "icons/delta-vacuum-optimize-maintenance.svg",

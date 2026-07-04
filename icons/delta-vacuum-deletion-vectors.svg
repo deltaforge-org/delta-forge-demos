@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="vdv" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#84cc16"/>
+      <stop offset="1" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+  <!-- Data file: active Parquet holding rows -->
+  <rect x="14" y="12" width="34" height="44" rx="3" fill="url(#vdv)" opacity=".18" stroke="url(#vdv)" stroke-width="1.5"/>
+  <!-- Live rows -->
+  <rect x="19" y="18" width="24" height="4" rx="1" fill="url(#vdv)" opacity=".7"/>
+  <rect x="19" y="32" width="24" height="4" rx="1" fill="url(#vdv)" opacity=".7"/>
+  <rect x="19" y="46" width="24" height="4" rx="1" fill="url(#vdv)" opacity=".7"/>
+  <!-- Deletion-vector masked rows (faded + struck through) -->
+  <rect x="19" y="25" width="24" height="4" rx="1" fill="url(#vdv)" opacity=".22"/>
+  <rect x="19" y="39" width="24" height="4" rx="1" fill="url(#vdv)" opacity=".22"/>
+  <line x1="19" y1="27" x2="43" y2="27" stroke="url(#vdv)" stroke-width="1.2" opacity=".55"/>
+  <line x1="19" y1="41" x2="43" y2="41" stroke="url(#vdv)" stroke-width="1.2" opacity=".55"/>
+  <!-- .bin deletion-vector sidecar tag -->
+  <rect x="40" y="52" width="16" height="10" rx="2" fill="url(#vdv)" opacity=".35"/>
+  <text x="48" y="59" text-anchor="middle" font-size="4.5" font-family="monospace" fill="url(#vdv)" opacity=".85">.bin</text>
+  <!-- Reclaim arrow: OPTIMIZE + VACUUM frees the masked space -->
+  <path d="M58 24 A12 12 0 1 1 57 22" stroke="url(#vdv)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+  <path d="M57 16 L58 24 L50 23 Z" fill="url(#vdv)" opacity=".8"/>
+  <text x="62" y="52" text-anchor="middle" font-size="5" font-family="monospace" font-weight="bold" fill="url(#vdv)" opacity=".65">DV</text>
+</svg>
