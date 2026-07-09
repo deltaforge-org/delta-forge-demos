@@ -1,0 +1,68 @@
+[demo]
+id = "support-ticket-intelligence"
+name = "Support Ticket Intelligence — Bring the LLM to Your Data"
+version = "1.0.0"
+description = """
+A support team turns a raw ticket queue into an analytics-ready, triaged,
+searchable dataset without ever leaving SQL. No export to Python, no
+external agent, no pipeline glue: the LLM runs as a function inside the
+query, on the node where the Delta table lives.
+
+The workflow reads as one story:
+
+1. Register a chat model and an embeddings model with CREATE MODEL. The
+   provider API key stays in the vault (OpenAIKey credential); the model
+   row holds only non-secret config and the token is resolved server-side.
+2. Bring the LLM to the data: a single INSERT ... SELECT enriches every
+   ticket with a queue (AI_CLASSIFY), sentiment (AI_ANALYZE_SENTIMENT),
+   urgency (AI_GENERATE), and a one-line summary (AI_SUMMARIZE), written
+   into a gold Delta table.
+3. Those AI-derived columns are now first-class SQL: route the queue by
+   volume and unhappiness, auto-prioritize a hot list of negative + high
+   urgency tickets, and extract machine-usable JSON (refund amount, order
+   id) with AI_EXTRACT.
+4. Semantic search over ticket embeddings (AI_GENERATE_EMBEDDINGS +
+   array_to_vector + cosine_distance) surfaces the production-outage ticket
+   by meaning, not keywords. The same vectors feed CREATE INDEX USING HNSW
+   at scale.
+5. Localize for a global team with AI_TRANSLATE and AI_FIX_GRAMMAR, using
+   the SQL-Server-style `expr USE MODEL name` sugar.
+
+Demonstrates the full LLM-from-SQL surface: CREATE / ALTER / SHOW /
+DESCRIBE / DROP MODEL, AI_GENERATE, AI_GENERATE_EMBEDDINGS, AI_CLASSIFY,
+AI_EXTRACT, AI_ANALYZE_SENTIMENT, AI_TRANSLATE, AI_FIX_GRAMMAR,
+AI_SUMMARIZE, the USE MODEL sugar, materializing AI output into Delta
+tables, and semantic search with the vector distance kernels.
+
+OpenAI-shaped by default; setup.sql documents the one-line changes for
+Anthropic, Azure OpenAI, or a local Ollama runtime.
+
+NOTE: requires internet and a vault credential named OpenAIKey holding a
+valid provider API key (created once via the GUI or CREATE CREDENTIAL,
+reused idempotently). Every AI_* call is a real, metered HTTPS request per
+row; the dataset is deliberately tiny.
+"""
+categories = ["ai", "llm", "genai", "vectors"]
+tags = ["ai", "llm", "create-model", "ai-generate", "embeddings", "semantic-search", "vault", "credential", "openai", "rag", "sentiment", "classify", "support", "advanced"]
+difficulty = "advanced"
+estimated_time_minutes = 6
+
+[demo.variables]
+api_key = { description = "Provider API token (e.g. an OpenAI sk-... key). Only consumed the FIRST time, when the OpenAIKey vault credential does not yet exist (CREATE CREDENTIAL IF NOT EXISTS). If an admin already created OpenAIKey, leave this unset; the existing key is reused and the token never passes through the demo. Never committed.", required = false }
+zone_name = { description = "Target Delta zone for the demo tables. Defaults to `bronze`.", required = false }
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.support.tickets"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.support.ticket_enriched"
+
+[[demo.target_objects]]
+type = "model"
+name = "ticket_assistant"
+
+[[demo.target_objects]]
+type = "model"
+name = "ticket_embedder"
