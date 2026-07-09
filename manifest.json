@@ -3,6 +3,60 @@
   "generatedAt": "2026-03-29T12:00:00Z",
   "demos": [
     {
+      "id": "ai-support-ticket-intelligence",
+      "path": "demos/ai/support-ticket-intelligence",
+      "iconPath": "icons/ai-support-ticket-intelligence.svg",
+      "name": "Support Ticket Intelligence — Bring the LLM to Your Data",
+      "summary": "A support team turns a raw ticket queue into an analytics-ready, triaged, searchable dataset without leaving SQL: no export to Python, no external agent, the LLM runs as a function inside the query where the Delta table lives. Register a chat model and an embeddings model with CREATE MODEL (the API key stays in the OpenAIKey vault credential, resolved server-side). Then one INSERT ... SELECT enriches every ticket with a queue (AI_CLASSIFY), sentiment (AI_ANALYZE_SENTIMENT), urgency (AI_GENERATE), and a one-line summary (AI_SUMMARIZE) into a gold Delta table. Those AI-derived columns become first-class SQL: route the queue by volume and unhappiness, auto-prioritize a hot list, and extract machine-usable JSON with AI_EXTRACT. Semantic search over ticket embeddings (AI_GENERATE_EMBEDDINGS + array_to_vector + cosine_distance) surfaces the production-outage ticket by meaning; the same vectors feed CREATE INDEX USING HNSW at scale. Finishes by localizing a messy ticket with AI_TRANSLATE and AI_FIX_GRAMMAR using the expr USE MODEL sugar. Covers the full LLM-from-SQL surface end to end. OpenAI-shaped; setup.sql documents Anthropic, Azure OpenAI, and Ollama variants. Requires internet and the OpenAIKey vault credential; the dataset is deliberately tiny and every AI_* call is a real metered request per row.",
+      "categories": [
+        "ai",
+        "llm",
+        "genai",
+        "vectors"
+      ],
+      "tags": [
+        "ai",
+        "advanced",
+        "llm",
+        "create-model",
+        "ai-generate",
+        "embeddings",
+        "semantic-search",
+        "vault",
+        "credential",
+        "openai",
+        "rag",
+        "sentiment",
+        "classify",
+        "support"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 0,
+      "fileCount": 0,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-07-09T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.support.tickets"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.support.ticket_enriched"
+        },
+        {
+          "objectType": "model",
+          "name": "ticket_assistant"
+        },
+        {
+          "objectType": "model",
+          "name": "ticket_embedder"
+        }
+      ]
+    },
+    {
       "id": "api-arxiv-ai-research-feed",
       "path": "demos/api/arxiv-ai-research-feed",
       "iconPath": "icons/api-arxiv-ai-research-feed.svg",
