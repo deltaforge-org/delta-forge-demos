@@ -30,7 +30,7 @@
 -- ============================================================================
 
 DISCOVER {{zone_name}}.survey_navigation.navigation_lines
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true)
     PRINT;
 

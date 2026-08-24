@@ -44,7 +44,7 @@ difficulty = "beginner"
 estimated_time_minutes = 5
 
 [demo.variables]
-data_path = { description = "Zone-relative path to the staged demo data", required = true }
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
 zone_name = { description = "Target zone name (defaults to 'external')", required = false }
 
 [[demo.data_files]]

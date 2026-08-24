@@ -54,13 +54,13 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.petrophysics
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.petrophysics.lwd_composite;
 
 DISCOVER {{zone_name}}.petrophysics.lwd_composite
-    PATH '{{data_path}}/landing/lwd'
+    PATH '{{data_subdir}}/landing/lwd'
     WITH (FILE_METADATA = true);
 
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.petrophysics.wireline_composite;
 
 DISCOVER {{zone_name}}.petrophysics.wireline_composite
-    PATH '{{data_path}}/landing/wireline'
+    PATH '{{data_subdir}}/landing/wireline'
     WITH (FILE_METADATA = true);
 
 
@@ -91,4 +91,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.petrophysics.well_logs (
     rmed            DOUBLE,
     rop             DOUBLE,
     bs              DOUBLE
-) LOCATION '{{data_path}}/curated/well_logs';
+) LOCATION '{{data_subdir}}/curated/well_logs';

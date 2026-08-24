@@ -28,7 +28,7 @@
 -- ============================================================================
 
 DISCOVER {{zone_name}}.log_library.log_files
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true)
     PRINT;
 

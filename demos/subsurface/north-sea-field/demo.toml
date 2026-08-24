@@ -30,8 +30,8 @@ tags = [
 difficulty = "intermediate"
 
 [demo.variables]
-data_path = { description = "Path to the demo directory containing the subsurface files", required = true }
-zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
 
 [[demo.data_files]]
 path = "data/demo_survey.segy"

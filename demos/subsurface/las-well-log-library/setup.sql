@@ -53,7 +53,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.log_library
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.log_library.log_files;
 
 DISCOVER {{zone_name}}.log_library.log_files
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true);
 
 
@@ -79,4 +79,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.log_library.log_library (
     rhob          DOUBLE,
     drho          DOUBLE,
     nphi          DOUBLE
-) LOCATION '{{data_path}}/curated/log_library';
+) LOCATION '{{data_subdir}}/curated/log_library';

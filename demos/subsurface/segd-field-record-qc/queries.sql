@@ -34,7 +34,7 @@
 -- through unchanged.
 
 DISCOVER {{zone_name}}.seismic_acquisition.field_records
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (
         FILE_METADATA = true,
         include_samples = 'false'

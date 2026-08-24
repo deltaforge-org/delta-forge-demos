@@ -51,7 +51,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.seismic_survey
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.seismic_survey.survey_lines;
 
 DISCOVER {{zone_name}}.seismic_survey.survey_lines
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (
         FILE_METADATA = true,
         include_samples = 'false'
@@ -82,4 +82,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.seismic_survey.cdp_index (
     source_y            DOUBLE,
     sample_count        INTEGER,
     sample_interval_us  INTEGER
-) LOCATION '{{data_path}}/curated/cdp_index';
+) LOCATION '{{data_subdir}}/curated/cdp_index';

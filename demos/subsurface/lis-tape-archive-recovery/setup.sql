@@ -60,13 +60,13 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.log_archive
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.log_archive.volve_composite;
 
 DISCOVER {{zone_name}}.log_archive.volve_composite
-    PATH '{{data_path}}/landing/volve'
+    PATH '{{data_subdir}}/landing/volve'
     WITH (FILE_METADATA = true);
 
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.log_archive.reprocessed_composite;
 
 DISCOVER {{zone_name}}.log_archive.reprocessed_composite
-    PATH '{{data_path}}/landing/reprocessed'
+    PATH '{{data_subdir}}/landing/reprocessed'
     WITH (FILE_METADATA = true);
 
 
@@ -99,4 +99,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.log_archive.tape_archive (
     neu            DOUBLE,
     ac             DOUBLE,
     bs             DOUBLE
-) LOCATION '{{data_path}}/curated/tape_archive';
+) LOCATION '{{data_subdir}}/curated/tape_archive';

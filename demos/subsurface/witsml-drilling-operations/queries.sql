@@ -33,7 +33,7 @@
 -- the word is not one.
 
 DISCOVER {{zone_name}}.drilling.survey_documents
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true)
     PRINT;
 

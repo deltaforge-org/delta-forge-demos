@@ -51,7 +51,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.survey_navigation
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.survey_navigation.navigation_lines;
 
 DISCOVER {{zone_name}}.survey_navigation.navigation_lines
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true);
 
 
@@ -75,4 +75,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.survey_navigation.shot_point_inde
     longitude     DOUBLE,
     easting       DOUBLE,
     northing      DOUBLE
-) LOCATION '{{data_path}}/curated/shot_point_index';
+) LOCATION '{{data_subdir}}/curated/shot_point_index';

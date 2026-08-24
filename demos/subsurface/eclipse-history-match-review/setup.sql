@@ -50,7 +50,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.simulation
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.simulation.sim_arrays;
 
 DISCOVER {{zone_name}}.simulation.sim_arrays
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true);
 
 
@@ -77,4 +77,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.simulation.cell_pressure (
     pressure      DOUBLE,
     swat          DOUBLE,
     poro          DOUBLE
-) LOCATION '{{data_path}}/curated/cell_pressure';
+) LOCATION '{{data_subdir}}/curated/cell_pressure';

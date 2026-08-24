@@ -56,7 +56,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.seismic_acquisition
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.seismic_acquisition.field_records;
 
 DISCOVER {{zone_name}}.seismic_acquisition.field_records
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (
         FILE_METADATA = true,
         include_samples = 'false'
@@ -74,7 +74,7 @@ DISCOVER {{zone_name}}.seismic_acquisition.field_records
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.seismic_acquisition.record_1043;
 
 DISCOVER {{zone_name}}.seismic_acquisition.record_1043
-    PATH '{{data_path}}/landing/2026-03-11_fr_1043.segd';
+    PATH '{{data_subdir}}/landing/2026-03-11_fr_1043.segd';
 
 
 -- ----------------------------------------------------------------------------
@@ -95,4 +95,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.seismic_acquisition.trace_invento
     trace_number       INTEGER,
     sample_count       INTEGER,
     sample_interval_us INTEGER
-) LOCATION '{{data_path}}/curated/trace_inventory';
+) LOCATION '{{data_subdir}}/curated/trace_inventory';

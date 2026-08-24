@@ -34,7 +34,7 @@
 -- ============================================================================
 
 DISCOVER {{zone_name}}.log_archive.volve_composite
-    PATH '{{data_path}}/landing/volve'
+    PATH '{{data_subdir}}/landing/volve'
     WITH (FILE_METADATA = true)
     PRINT;
 

@@ -36,7 +36,7 @@
 -- metadata that preceded it.
 
 DISCOVER {{zone_name}}.petrophysics.wireline_composite
-    PATH '{{data_path}}/landing/wireline'
+    PATH '{{data_subdir}}/landing/wireline'
     WITH (FILE_METADATA = true)
     PRINT;
 

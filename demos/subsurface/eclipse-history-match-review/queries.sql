@@ -22,7 +22,7 @@
 -- ============================================================================
 
 DISCOVER {{zone_name}}.simulation.sim_arrays
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true)
     PRINT;
 

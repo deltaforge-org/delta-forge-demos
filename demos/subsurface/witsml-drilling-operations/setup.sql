@@ -47,7 +47,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.drilling
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.drilling.survey_documents;
 
 DISCOVER {{zone_name}}.drilling.survey_documents
-    PATH '{{data_path}}/landing'
+    PATH '{{data_subdir}}/landing'
     WITH (FILE_METADATA = true);
 
 
@@ -77,4 +77,4 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.drilling.survey_stations (
     azimuth_deg      DOUBLE,
     north_m          DOUBLE,
     east_m           DOUBLE
-) LOCATION '{{data_path}}/curated/survey_stations';
+) LOCATION '{{data_subdir}}/curated/survey_stations';
