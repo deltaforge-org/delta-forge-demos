@@ -23,6 +23,7 @@ look right the first time.
 | [eclipse-history-match-review](eclipse-history-match-review/) | ECLIPSE binary | written for the demo | Two history-match runs of simulator output. Long form in, pivoted to one row per cell per report step. Every array spans two records because 1152 cells beats the format's 1000-element limit. |
 | [witsml-drilling-operations](witsml-drilling-operations/) | WITSML | written for the demo | Definitive surveys from one platform template, read through the XML engine under a curated profile so nobody writes an XPath. Ends on a real anti-collision scan: two wells within 3 m at 550 m TVD. |
 | [prodml-production-allocation](prodml-production-allocation/) | PRODML | written for the demo | A year of monthly regulator returns per facility. Water volumes follow from the oil and the cut, so the 50 percent crossover the demo finds is real: May for the mature facility, December for another, never for the third. |
+| [geojson-licence-blocks](geojson-licence-blocks/) | GeoJSON | written for the demo | Licence awards on the real Norwegian quadrant grid. The profile keeps geometry whole, because a flattened polygon would be a column per vertex. Ends on the relinquishment schedule. |
 | [north-sea-field](north-sea-field/) | SEG-Y, LAS, ZMAP+, GRDECL, UKOOA P1/90 | written for the demo | The cross-format integration demo: five formats over one field, joined on real coordinates. |
 
 ## Where the data comes from

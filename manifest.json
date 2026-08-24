@@ -6610,6 +6610,51 @@
       ]
     },
     {
+      "id": "geojson-licence-blocks",
+      "path": "demos/subsurface/geojson-licence-blocks",
+      "iconPath": "icons/geojson-licence-blocks.svg",
+      "name": "Licence Block Acreage and Relinquishment",
+      "summary": "A licensing authority publishes the blocks awarded in each round as GeoJSON, and an operator loads them to track the acreage it holds and the relinquishment obligations attached to it: a licence hands acreage back at the end of its term, and missing that date costs the block rather than the obligation. Two rounds over two days, 12 blocks, 12795 square kilometres. The blocks sit on the real Norwegian quadrant grid, one degree of latitude by two of longitude divided into twelve, so each is a genuine graticule rectangle and its area is the area that rectangle has at that latitude. GeoJSON is read through the JSON engine under a curated profile rather than a parser of its own, and detection needs the type declaration and a geometry rather than the extension, which these files share with every other JSON file on disk. The profile keeps geometry whole, which is the point: a polygon's coordinate array flattened would produce a column per vertex, and a schema that changes shape with the number of corners in a block is not a schema. The closing queries are the ones a licence manager runs: acreage by operator, and what falls due for relinquishment first.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "geojson",
+        "geospatial",
+        "licensing",
+        "acreage",
+        "relinquishment",
+        "json-profile",
+        "opaque-geometry",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "beginner"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 10967,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.licensing.block_awards"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.licensing.licence_blocks"
+        }
+      ]
+    },
+    {
       "id": "gis-emergency-response",
       "path": "demos/spatial/gis-emergency-response",
       "iconPath": "icons/gis-emergency-response.svg",

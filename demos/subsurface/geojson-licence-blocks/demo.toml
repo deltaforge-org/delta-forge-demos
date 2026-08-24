@@ -1,0 +1,56 @@
+[demo]
+id = "geojson-licence-blocks"
+name = "Licence Block Acreage and Relinquishment"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A licensing authority publishes the blocks awarded in each round as GeoJSON, and an operator loads them to track the acreage it holds and the relinquishment obligations attached to it: a licence hands acreage back at the end of its term, and missing that date costs the block rather than the obligation. Two rounds over two days, 12 blocks, 12795 square kilometres. The blocks sit on the real Norwegian quadrant grid, one degree of latitude by two of longitude divided into twelve, so each is a genuine graticule rectangle and its area is the area that rectangle has at that latitude. GeoJSON is read through the JSON engine under a curated profile rather than a parser of its own, and detection needs the type declaration and a geometry rather than the extension, which these files share with every other JSON file on disk. The profile keeps geometry whole, which is the point: a polygon's coordinate array flattened would produce a column per vertex, and a schema that changes shape with the number of corners in a block is not a schema. The closing queries are the ones a licence manager runs: acreage by operator, and what falls due for relinquishment first.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "geojson",
+    "geospatial",
+    "licensing",
+    "acreage",
+    "relinquishment",
+    "json-profile",
+    "opaque-geometry",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "beginner",
+]
+difficulty = "beginner"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_APA-2025_quadrant_15.geojson"
+format = "geojson"
+description = "APA-2025 awards in quadrant 15, 4 blocks, 4316.5 km2"
+size_bytes = 3626
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_APA-2025_quadrant_16.geojson"
+format = "geojson"
+description = "APA-2025 awards in quadrant 16, 3 blocks, 3218.2 km2"
+size_bytes = 2751
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_APA-2026_quadrant_25.geojson"
+format = "geojson"
+description = "APA-2026 awards in quadrant 25, 5 blocks, 5260.7 km2"
+size_bytes = 4590
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.licensing.block_awards"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.licensing.licence_blocks"

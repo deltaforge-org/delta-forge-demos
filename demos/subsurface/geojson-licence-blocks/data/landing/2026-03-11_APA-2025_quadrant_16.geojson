@@ -1,0 +1,134 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 5,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              3.0,
+              58.75
+            ],
+            [
+              3.6666666666666665,
+              58.75
+            ],
+            [
+              3.6666666666666665,
+              59.0
+            ],
+            [
+              3.0,
+              59.0
+            ],
+            [
+              3.0,
+              58.75
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "block": "16/1",
+        "quadrant": 16,
+        "licence": "PL-1210",
+        "operator": "Havlys Exploration",
+        "licence_round": "APA-2025",
+        "awarded_year": 2025,
+        "term_years": 4,
+        "relinquish_by": 2029,
+        "work_commitment": "Seismic reprocessing",
+        "area_km2": 1067.6
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 6,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              3.6666666666666665,
+              58.75
+            ],
+            [
+              4.333333333333333,
+              58.75
+            ],
+            [
+              4.333333333333333,
+              59.0
+            ],
+            [
+              3.6666666666666665,
+              59.0
+            ],
+            [
+              3.6666666666666665,
+              58.75
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "block": "16/2",
+        "quadrant": 16,
+        "licence": "PL-1210",
+        "operator": "Havlys Exploration",
+        "licence_round": "APA-2025",
+        "awarded_year": 2025,
+        "term_years": 4,
+        "relinquish_by": 2029,
+        "work_commitment": "Seismic reprocessing",
+        "area_km2": 1067.6
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 7,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              3.0,
+              58.25
+            ],
+            [
+              3.6666666666666665,
+              58.25
+            ],
+            [
+              3.6666666666666665,
+              58.5
+            ],
+            [
+              3.0,
+              58.5
+            ],
+            [
+              3.0,
+              58.25
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "block": "16/7",
+        "quadrant": 16,
+        "licence": "PL-1213",
+        "operator": "DeltaForge Energy",
+        "licence_round": "APA-2025",
+        "awarded_year": 2025,
+        "term_years": 6,
+        "relinquish_by": 2031,
+        "work_commitment": "Two firm wells",
+        "area_km2": 1083.0
+      }
+    }
+  ]
+}
