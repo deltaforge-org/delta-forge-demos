@@ -1,0 +1,94 @@
+[demo]
+id = "north-sea-field"
+name = "Subsurface: North Sea Demo Field"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Reads five upstream energy formats over one synthetic field, with no export \
+step: a SEG-Y seismic volume, two LAS well logs, a ZMAP+ top-reservoir depth \
+grid, an ECLIPSE GRDECL corner-point model, and UKOOA P1/90 survey \
+navigation. Each format keeps its own natural row shape (one row per trace, \
+per depth step, per grid node, per cell, per shot point), and the queries \
+join across them, which is the point: seismic geometry, well positions and \
+model cells all become ordinary SQL over the files as they were delivered.
+"""
+categories = ["subsurface", "energy"]
+tags = [
+    "subsurface",
+    "seismic",
+    "segy",
+    "well-logs",
+    "las",
+    "zmap",
+    "grdecl",
+    "eclipse",
+    "ukooa",
+    "navigation",
+    "intermediate",
+    "external-tables",
+]
+difficulty = "intermediate"
+
+[demo.variables]
+data_path = { description = "Path to the demo directory containing the subsurface files", required = true }
+zone_name = { description = "Target zone name for tables (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/demo_survey.segy"
+format = "segy"
+description = "Synthetic 3D volume, 120 traces (12 inlines x 10 crosslines), 100 samples per trace, IBM float, UTM 31N"
+size_bytes = 80400
+
+[[demo.data_files]]
+path = "data/well_15_9_F_1.las"
+format = "las"
+description = "LAS 2.0 well log, 300 depth steps, GR/RHOB/NPHI/DT, with a washed-out density interval"
+size_bytes = 16415
+
+[[demo.data_files]]
+path = "data/well_15_9_F_2.las"
+format = "las"
+description = "LAS 2.0 well log, 300 depth steps, same curve set, second well"
+size_bytes = 16415
+
+[[demo.data_files]]
+path = "data/top_reservoir.zmap"
+format = "zmap"
+description = "ZMAP+ depth grid, 40 rows x 50 columns, dome blanked outside its ellipse"
+size_bytes = 30602
+
+[[demo.data_files]]
+path = "data/demo_model.grdecl"
+format = "grdecl"
+description = "ECLIPSE corner-point deck, 20 x 15 x 8 cells with PORO, PERMX, ACTNUM and SATNUM"
+size_bytes = 38407
+
+[[demo.data_files]]
+path = "data/demo_survey.p190"
+format = "ukooa"
+description = "UKOOA P1/90 navigation, 4 lines of 60 shot points, packed geographic coordinates"
+size_bytes = 19533
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.subsurface.seismic_traces"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.subsurface.seismic_headers"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.subsurface.well_logs"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.subsurface.top_reservoir"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.subsurface.reservoir_model"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.subsurface.survey_navigation"
