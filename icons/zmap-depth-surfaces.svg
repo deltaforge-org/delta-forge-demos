@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="zds" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+  </defs>
+  <!-- Contoured dome: the mapped structure, closing on its crest -->
+  <ellipse cx="40" cy="42" rx="32" ry="22" fill="url(#zds)" opacity=".1" stroke="url(#zds)" stroke-width="1.4"/>
+  <ellipse cx="40" cy="42" rx="24" ry="16" fill="url(#zds)" opacity=".14" stroke="url(#zds)" stroke-width="1.4"/>
+  <ellipse cx="40" cy="42" rx="16" ry="10" fill="url(#zds)" opacity=".2" stroke="url(#zds)" stroke-width="1.4"/>
+  <ellipse cx="40" cy="42" rx="8" ry="5" fill="url(#zds)" opacity=".35" stroke="url(#zds)" stroke-width="1.4"/>
+  <!-- The crest -->
+  <circle cx="40" cy="42" r="2.5" fill="url(#zds)"/>
+  <!-- Grid nodes, on the regular spacing the format stores -->
+  <path d="M16 24h48M16 42h48M16 60h48" stroke="url(#zds)" stroke-width="1" opacity=".28"/>
+  <path d="M22 16v52M40 16v52M58 16v52" stroke="url(#zds)" stroke-width="1" opacity=".28"/>
+  <!-- Blank nodes outside the mapped polygon, drawn hollow -->
+  <circle cx="22" cy="24" r="2" fill="none" stroke="url(#zds)" stroke-width="1.2" opacity=".5"/>
+  <circle cx="58" cy="60" r="2" fill="none" stroke="url(#zds)" stroke-width="1.2" opacity=".5"/>
+  <!-- Mapped nodes, filled -->
+  <circle cx="40" cy="24" r="2" fill="url(#zds)" opacity=".7"/>
+  <circle cx="22" cy="42" r="2" fill="url(#zds)" opacity=".7"/>
+  <circle cx="58" cy="42" r="2" fill="url(#zds)" opacity=".7"/>
+  <circle cx="40" cy="60" r="2" fill="url(#zds)" opacity=".7"/>
+</svg>

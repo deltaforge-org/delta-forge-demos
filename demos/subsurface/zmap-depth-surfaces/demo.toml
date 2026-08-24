@@ -1,0 +1,59 @@
+[demo]
+id = "zmap-depth-surfaces"
+name = "Depth Surface Handover and Gross Rock Volume"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A geophysicist depth-converts a seismic interpretation and hands the result to the mapping team as ZMAP+ grids, who load them to compute gross rock volume, the number a prospect is sized on. Three grids over two days: a first pass at the top reservoir, then a revised top after the velocity model was corrected, and the base surface that turns the pair into a volume. Each grid is 45 rows by 60 columns on a 200 m spacing, so 2700 nodes of which 1441 fall inside the mapped polygon. Two properties of the format decide whether a reader gets it right and both are asserted: values run column by column rather than row by row, so a row-major reader produces a grid of exactly the right size where every node holds a neighbour's value, and nodes outside the polygon carry a 1e30 sentinel which, read as a number, does not merely skew an average but obliterates it. The grid is 45 by 60 rather than square on purpose, so a transposed read runs off the end instead of quietly succeeding. The file holds no coordinates at all, only a corner and an extent, so the demo checks the arithmetic the reader does. It closes on two billion cubic metres of rock, computed against the corrected top: run against the first pass the answer would be a thousand million cubic metres too large.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "zmap",
+    "depth-conversion",
+    "surfaces",
+    "gross-rock-volume",
+    "grid",
+    "null-handling",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_top_hugin_v1.zmap"
+format = "zmap"
+description = "Top Hugin depth grid, first depth conversion, 2700 nodes of which 1441 are mapped"
+size_bytes = 54734
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_base_hugin.zmap"
+format = "zmap"
+description = "Base Hugin depth grid, the surface that turns the top into a volume"
+size_bytes = 54730
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_top_hugin_v2.zmap"
+format = "zmap"
+description = "Top Hugin after the velocity correction: the same structure 18 m deeper at every node"
+size_bytes = 54734
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.mapping.depth_grids"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.mapping.all_nodes"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.mapping.depth_surfaces"
