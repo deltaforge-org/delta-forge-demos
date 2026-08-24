@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="rmh" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f0abfc"/>
+      <stop offset="1" stop-color="#86198f"/>
+    </linearGradient>
+  </defs>
+  <!-- Package -->
+  <path d="M40 8l28 14v36L40 72 12 58V22z" fill="url(#rmh)" opacity=".16" stroke="url(#rmh)" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- The seam that makes it a package rather than a solid -->
+  <path d="M12 22l28 14 28-14M40 36v36" stroke="url(#rmh)" stroke-width="1.5" opacity=".5" stroke-linejoin="round"/>
+  <!-- Parts inside: a horizon and two property blocks -->
+  <path d="M20 44q10-6 18 0t18-4" stroke="url(#rmh)" stroke-width="1.8" fill="none" opacity=".55" stroke-linecap="round"/>
+  <rect x="26" y="52" width="12" height="9" rx="1" fill="url(#rmh)" opacity=".4"/>
+  <rect x="43" y="50" width="12" height="9" rx="1" fill="url(#rmh)" opacity=".3"/>
+  <!-- External array reference leaving the package -->
+  <path d="M68 40h8" stroke="url(#rmh)" stroke-width="1.8" opacity=".7" stroke-linecap="round" stroke-dasharray="3 3"/>
+</svg>

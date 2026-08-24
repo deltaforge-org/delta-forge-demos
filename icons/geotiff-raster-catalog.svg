@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="grc" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c4b5fd"/>
+      <stop offset="1" stop-color="#5b21b6"/>
+    </linearGradient>
+  </defs>
+  <!-- Full resolution tile grid -->
+  <rect x="10" y="44" width="44" height="28" rx="2" fill="url(#grc)" opacity=".2" stroke="url(#grc)" stroke-width="1.5"/>
+  <path d="M24 44v28M39 44v28M10 54h44M10 63h44" stroke="url(#grc)" stroke-width="1" opacity=".4"/>
+  <!-- First overview -->
+  <rect x="22" y="26" width="34" height="20" rx="2" fill="url(#grc)" opacity=".26" stroke="url(#grc)" stroke-width="1.5"/>
+  <path d="M39 26v20M22 36h34" stroke="url(#grc)" stroke-width="1" opacity=".4"/>
+  <!-- Second overview -->
+  <rect x="34" y="10" width="24" height="14" rx="2" fill="url(#grc)" opacity=".34" stroke="url(#grc)" stroke-width="1.5"/>
+  <path d="M46 10v14" stroke="url(#grc)" stroke-width="1" opacity=".4"/>
+  <!-- Tie point: the georeference the catalogue keys on -->
+  <circle cx="66" cy="60" r="4" fill="none" stroke="url(#grc)" stroke-width="1.8" opacity=".8"/>
+  <path d="M66 52v16M58 60h16" stroke="url(#grc)" stroke-width="1.2" opacity=".55" stroke-linecap="round"/>
+</svg>

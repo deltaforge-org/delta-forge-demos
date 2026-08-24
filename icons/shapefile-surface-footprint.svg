@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ssf" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#bef264"/>
+      <stop offset="1" stop-color="#4d7c0f"/>
+    </linearGradient>
+  </defs>
+  <!-- Lease tract polygon -->
+  <path d="M10 22l26-10 34 8-4 40-30 10-26-14z" fill="url(#ssf)" opacity=".18" stroke="url(#ssf)" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Vertices, because a shapefile polygon is its ring of points -->
+  <circle cx="10" cy="22" r="2.5" fill="url(#ssf)" opacity=".8"/>
+  <circle cx="36" cy="12" r="2.5" fill="url(#ssf)" opacity=".8"/>
+  <circle cx="70" cy="20" r="2.5" fill="url(#ssf)" opacity=".8"/>
+  <circle cx="66" cy="60" r="2.5" fill="url(#ssf)" opacity=".8"/>
+  <circle cx="36" cy="70" r="2.5" fill="url(#ssf)" opacity=".8"/>
+  <circle cx="10" cy="56" r="2.5" fill="url(#ssf)" opacity=".8"/>
+  <!-- Well pad inside the tract -->
+  <rect x="30" y="32" width="20" height="16" rx="2" fill="url(#ssf)" opacity=".35" stroke="url(#ssf)" stroke-width="1.5"/>
+  <!-- Wellhead -->
+  <circle cx="40" cy="40" r="3.5" fill="url(#ssf)" opacity=".85"/>
+  <path d="M40 32v-6" stroke="url(#ssf)" stroke-width="1.5" opacity=".6" stroke-linecap="round"/>
+</svg>
