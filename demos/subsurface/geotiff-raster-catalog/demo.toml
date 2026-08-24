@@ -1,0 +1,75 @@
+[demo]
+id = "geotiff-raster-catalog"
+name = "Aerial Survey Raster Catalogue"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """An environmental baseline survey delivers orthophoto and elevation tiles for a licence area, and before anything is processed the GIS team has to know what arrived: how much ground it covers, at what resolution, and whether every tile is in the same coordinate system. Six tiles over two days, eighteen image directories, and not one pixel read. A TIFF is a header pointing at a chain of image file directories, and an overview pyramid is simply more directories in the same file, so each tile yields three rows: full resolution and two overviews. A reader that follows only the first directory returns six rows and looks perfectly reasonable. Both classic TIFF and BigTIFF are in the delivery and chain identically. Two faults are planted in the second delivery and the catalogue finds both: one tile was delivered in UTM zone 14N while the survey is 13N, so its coordinates are perfectly valid numbers that put it several hundred kilometres east of where it belongs, and one tile is at half the resolution of the others, which a file listing cannot see and a tag directory can. The coverage query is restricted to full resolution and the correct zone, because the overviews would count the same ground three times and the wrong zone would stretch the extent across a zone boundary.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "geotiff",
+    "bigtiff",
+    "geospatial",
+    "raster",
+    "catalogue",
+    "overview-pyramid",
+    "metadata-only",
+    "crs",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_ortho_n01e01.tif"
+format = "geotiff"
+description = "Orthophoto tile, 20000x20000 at 0.25 m, EPSG 32613, three image directories"
+size_bytes = 650
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_ortho_n01e02.tif"
+format = "geotiff"
+description = "Orthophoto tile, 20000x20000 at 0.25 m, EPSG 32613, three image directories"
+size_bytes = 650
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_ortho_n02e01.tif"
+format = "geotiff"
+description = "Orthophoto tile, 20000x20000 at 0.25 m, EPSG 32613, three image directories"
+size_bytes = 650
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_dem_n01e01.tif"
+format = "geotiff"
+description = "Elevation model, BigTIFF, 40000x40000, one band of 32-bit samples"
+size_bytes = 928
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_ortho_n02e02.tif"
+format = "geotiff"
+description = "Orthophoto tile delivered in EPSG 32614 while the survey is 32613: the coordinate system outlier"
+size_bytes = 650
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_ortho_n03e01.tif"
+format = "geotiff"
+description = "Orthophoto tile at 0.50 m rather than 0.25 m: the resolution outlier"
+size_bytes = 650
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.raster_survey.raster_tiles"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.raster_survey.raster_catalog"

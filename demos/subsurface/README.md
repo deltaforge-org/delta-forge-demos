@@ -25,6 +25,7 @@ look right the first time.
 | [prodml-production-allocation](prodml-production-allocation/) | PRODML | written for the demo | A year of monthly regulator returns per facility. Water volumes follow from the oil and the cut, so the 50 percent crossover the demo finds is real: May for the mature facility, December for another, never for the third. |
 | [geojson-licence-blocks](geojson-licence-blocks/) | GeoJSON | written for the demo | Licence awards on the real Norwegian quadrant grid. The profile keeps geometry whole, because a flattened polygon would be a column per vertex. Ends on the relinquishment schedule. |
 | [shapefile-surface-footprint](shapefile-surface-footprint/) | Shapefile | written for the demo | Well pads against lease tracts. The .shp/.dbf pairing has no key, so the demo asserts they line up. Built with a LEFT join, which is what finds the two pads on unleased ground. |
+| [geotiff-raster-catalog](geotiff-raster-catalog/) | GeoTIFF | written for the demo | Six tiles catalogued from their tag directories without reading a pixel. Overview pyramids give three rows per file; finds a tile in the wrong UTM zone and one at half resolution. |
 | [north-sea-field](north-sea-field/) | SEG-Y, LAS, ZMAP+, GRDECL, UKOOA P1/90 | written for the demo | The cross-format integration demo: five formats over one field, joined on real coordinates. |
 
 ## Where the data comes from
