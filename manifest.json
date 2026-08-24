@@ -10791,6 +10791,55 @@
       ]
     },
     {
+      "id": "shapefile-surface-footprint",
+      "path": "demos/subsurface/shapefile-surface-footprint",
+      "iconPath": "icons/shapefile-surface-footprint.svg",
+      "name": "Well Pad Lease Compliance",
+      "summary": "An onshore operator has to prove that every well pad it has built sits inside a tract it actually leases. The land department holds the lease tracts as polygons and the drilling department holds the pads as points, and until both are in the same place nobody can answer the question. Two shapefile deliveries: 8 pads on one day, 4 tracts covering 6326 acres the next. A shapefile is three files that travel together and the demo needs all three: the .shp holds geometry as big-endian record headers wrapped around little-endian coordinates, which is the format's own inconsistency and the detail that catches naive readers; the .dbf is a dBase III table with one attribute row per shape, in file order, with no key joining them; the .prj states the coordinate system. That missing key is asserted directly, because if geometry and attributes went out of step the table would still read and every pad would carry somebody else's identifier. The register is built with a LEFT join on purpose: an inner join would list the pads that ARE compliant and say nothing about the two that are not, which is the half of the answer that matters.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "shapefile",
+        "geospatial",
+        "esri",
+        "dbf",
+        "land-management",
+        "compliance",
+        "left-join",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 3226,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.surface_land.well_pads"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.surface_land.lease_tracts"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.surface_land.pad_compliance"
+        }
+      ]
+    },
+    {
       "id": "ukooa-survey-navigation",
       "path": "demos/subsurface/ukooa-survey-navigation",
       "iconPath": "icons/ukooa-survey-navigation.svg",
