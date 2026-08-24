@@ -5483,6 +5483,50 @@
       ]
     },
     {
+      "id": "eclipse-history-match-review",
+      "path": "demos/subsurface/eclipse-history-match-review",
+      "iconPath": "icons/eclipse-history-match-review.svg",
+      "name": "Reservoir Simulation History Match Review",
+      "summary": "A reservoir engineer history matches a field before a development plan goes in. Each iteration is a full simulation run, and the simulator writes a set of files sharing one base name: an EGRID of geometry, an INIT of static properties, a UNRST restart file with one set of arrays per report step, and a SMSPEC naming the well vectors. Two runs land a day apart, four files each, 37248 array elements in total. One reader serves all four file types because the rows are long form, one per array element carrying its keyword, occurrence and index: a wide table would need a column per keyword and there is no fixed set of them. The load pivots that into one row per cell per report step, joining the restart file's pressure to the initialisation file's porosity on the element index, because the element index IS the cell index. The grid is 1152 cells against a 1000-element record limit, so every property array spans two records: a reader that assumes one returns the first thousand cells and no error. The review is the last query. HM12 has the aquifer too weak and misses the observed decline by 20 bar on average and 37 at the final step; HM13 lands within 4 and 8.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "eclipse",
+        "reservoir-simulation",
+        "history-match",
+        "long-form",
+        "pivot",
+        "restart-file",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "advanced"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 7,
+      "dataSizeBytes": 151320,
+      "fileCount": 8,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.simulation.sim_arrays"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.simulation.cell_pressure"
+        }
+      ]
+    },
+    {
       "id": "edi-850-purchase-orders-aliased",
       "path": "demos/edi/850-purchase-orders-aliased",
       "iconPath": "icons/edi-850-purchase-orders-aliased.svg",

@@ -1,0 +1,85 @@
+[demo]
+id = "eclipse-history-match-review"
+name = "Reservoir Simulation History Match Review"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A reservoir engineer history matches a field before a development plan goes in. Each iteration is a full simulation run, and the simulator writes a set of files sharing one base name: an EGRID of geometry, an INIT of static properties, a UNRST restart file with one set of arrays per report step, and a SMSPEC naming the well vectors. Two runs land a day apart, four files each, 37248 array elements in total. One reader serves all four file types because the rows are long form, one per array element carrying its keyword, occurrence and index: a wide table would need a column per keyword and there is no fixed set of them. The load then pivots that into one row per cell per report step, joining the restart file's pressure to the initialisation file's porosity on the element index, because the element index IS the cell index and that is the contract the format guarantees. The grid is 12 x 12 x 8, which is 1152 cells against a 1000-element record limit, so every property array spans two records: a reader that assumes one returns the first thousand cells and no error. The review itself is the last query. Run HM12 has the aquifer too weak and misses the observed decline by 20 bar on average and 37 at the final step; HM13 lands within 4 and 8.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "eclipse",
+    "reservoir-simulation",
+    "history-match",
+    "long-form",
+    "pivot",
+    "restart-file",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "advanced",
+]
+difficulty = "advanced"
+estimated_time_minutes = 7
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_HM12.EGRID"
+format = "eclipse"
+description = "Run HM12 grid geometry and the active-cell flags, 2366 array elements"
+size_bytes = 9608
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_HM12.INIT"
+format = "eclipse"
+description = "Run HM12 static porosity and permeability, 2399 array elements"
+size_bytes = 9708
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_HM12.SMSPEC"
+format = "eclipse"
+description = "Run HM12 summary specification naming three wells and three vectors, 29 array elements"
+size_bytes = 352
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_HM12.UNRST"
+format = "eclipse"
+description = "Run HM12 restart file, six report steps of pressure and saturation, 13830 array elements"
+size_bytes = 55992
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_HM13.EGRID"
+format = "eclipse"
+description = "Run HM13 grid geometry and the active-cell flags, 2366 array elements"
+size_bytes = 9608
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_HM13.INIT"
+format = "eclipse"
+description = "Run HM13 static porosity and permeability, 2399 array elements"
+size_bytes = 9708
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_HM13.SMSPEC"
+format = "eclipse"
+description = "Run HM13 summary specification naming three wells and three vectors, 29 array elements"
+size_bytes = 352
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_HM13.UNRST"
+format = "eclipse"
+description = "Run HM13 restart file, six report steps of pressure and saturation, 13830 array elements"
+size_bytes = 55992
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.simulation.sim_arrays"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.simulation.cell_pressure"

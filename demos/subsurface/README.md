@@ -20,6 +20,7 @@ look right the first time.
 | [segy-2d-survey-index](segy-2d-survey-index/) | SEG-Y | **real Volve** | A 2D survey delivered line by line into a CDP index. 12 MB per line, read as 240 bytes per trace. 186 traces carry no source coordinate and the loader nulls them once. |
 | [ukooa-survey-navigation](ukooa-survey-navigation/) | UKOOA P1/90 | **real Volve** | Navigation delivered per line into a shot-point database. Found two reader bugs: C records dropped as comments, and right-justified degrees parsed from the left. |
 | [las-well-log-library](las-well-log-library/) | LAS 2.0 | **real NLOG** | Seven Dutch wells logged 1958 to 1990, whose curve sets differ by thirty years of tool development. One table over the union; the well header rides on every row so the library groups by well and field with no join. |
+| [eclipse-history-match-review](eclipse-history-match-review/) | ECLIPSE binary | written for the demo | Two history-match runs of simulator output. Long form in, pivoted to one row per cell per report step. Every array spans two records because 1152 cells beats the format's 1000-element limit. |
 | [north-sea-field](north-sea-field/) | SEG-Y, LAS, ZMAP+, GRDECL, UKOOA P1/90 | written for the demo | The cross-format integration demo: five formats over one field, joined on real coordinates. |
 
 ## Where the data comes from
