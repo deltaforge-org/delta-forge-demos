@@ -17,6 +17,8 @@ look right the first time.
 | [dlis-wireline-petrophysics](dlis-wireline-petrophysics/) | DLIS | **real Volve** | Two deliveries, the second six channels wider, so the load widens the table. Depth in two different units across one drop; the -999.25 sentinel becomes a real NULL. Ends on net pay in the Hugin Formation. |
 | [lis-tape-archive-recovery](lis-tape-archive-recovery/) | LIS-79 | **real Volve** plus one written tape | Tape Image Format stripped, the curve list found in record type 64, a specification split across two physical records rejoined. The real tape has no null convention and carries a density correction of minus 57338, so the load applies physical validity rules. |
 | [segd-field-record-qc](segd-field-record-qc/) | SEG-D | written for the demo | A crew's daily field records, with two planted faults the QC finds: one record short six channels, one recorded at the wrong sample interval. Binary-coded-decimal headers throughout. |
+| [segy-2d-survey-index](segy-2d-survey-index/) | SEG-Y | **real Volve** | A 2D survey delivered line by line into a CDP index. 12 MB per line, read as 240 bytes per trace. 186 traces carry no source coordinate and the loader nulls them once. |
+| [ukooa-survey-navigation](ukooa-survey-navigation/) | UKOOA P1/90 | **real Volve** | Navigation delivered per line into a shot-point database. Found two reader bugs: C records dropped as comments, and right-justified degrees parsed from the left. |
 | [north-sea-field](north-sea-field/) | SEG-Y, LAS, ZMAP+, GRDECL, UKOOA P1/90 | written for the demo | The cross-format integration demo: five formats over one field, joined on real coordinates. |
 
 ## Where the data comes from

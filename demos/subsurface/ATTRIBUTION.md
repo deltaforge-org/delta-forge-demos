@@ -36,6 +36,12 @@ terms as well as OSDU's:
 | `dlis-wireline-petrophysics` | `landing/lwd/2026-03-11_15_9-F-11_WLC_COMPOSITE_1.dlis` | `open-test-data/v2019-09-13/1-data/2-wip/volve/Well Logs/15_9-F-11 WLC_COMPOSITE_1.DLIS` |
 | `dlis-wireline-petrophysics` | `landing/wireline/2026-03-12_15_9-F-15C_WLC_COMPOSITE_2.dlis` | `open-test-data/v2019-09-13/1-data/2-wip/volve/Well Logs/15_9-F-15 C WLC_COMPOSITE_2.DLIS` |
 | `lis-tape-archive-recovery` | `landing/volve/2026-03-11_15_9-F-4_WLC_COMPOSITE_1.lis` | `open-test-data/v2019-09-13/1-data/2-wip/volve/Well Logs/15_9-F-4 WLC_COMPOSITE_1.LIS` |
+| `segy-2d-survey-index` | `landing/2026-03-11_ST0299-05005_MIG_FIN.segy` | `s3://osdu-seismic-test-data/volve/seismic/st0299/ST0299-05005+MIG_FIN.segy` |
+| `segy-2d-survey-index` | `landing/2026-03-12_ST0299-15010_MIG_FIN.segy` | `s3://osdu-seismic-test-data/volve/seismic/st0299/ST0299-15010+MIG_FIN.segy` |
+| `ukooa-survey-navigation` | `landing/2026-03-11_ST0299-CMP-05002.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05002.p190` |
+| `ukooa-survey-navigation` | `landing/2026-03-11_ST0299-CMP-05003.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05003.p190` |
+| `ukooa-survey-navigation` | `landing/2026-03-12_ST0299-CMP-05004.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05004.p190` |
+| `ukooa-survey-navigation` | `landing/2026-03-12_ST0299-CMP-05005.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05005.p190` |
 
 **The only change made to any of them is the file name.** The bytes are
 unmodified. Each is prefixed with the delivery date the demo's landing zone
@@ -43,6 +49,26 @@ uses, and the extension is lower-cased, because the demos model a landing
 folder where a scheduled loader keys its run on the drop date. Nothing inside
 the files was touched, which is why the counts the demos assert are
 properties of the released data and not of anything done here.
+
+## What reading the real files found
+
+Real data is not just more convincing, it is a better test. Reading these
+files turned up defects in the readers that every generated fixture had
+passed, because a generator and a reader written from the same reading of a
+specification agree with each other:
+
+- **P1/90 `C` records were dropped as comments.** A CMP deliverable carries no
+  `S` or `R` records at all, so the whole class of file returned zero rows,
+  silently. Volve's ST0299 navigation is exactly this shape.
+- **P1/90 packed longitudes were parsed from the left.** The degrees are right
+  justified in their field, so a survey at 1 degree 56 minutes east reads as
+  156 degrees: the North Sea relocated to central Siberia, with no error.
+- **Two Volve DLIS composites record depth in different units**, tenths of an
+  inch and millimetres, three orders of magnitude apart with nothing in the
+  numbers saying so.
+- **The Volve LIS tape has no null convention.** All 21505 frames claim a
+  density and 4808 are physically possible, and 1114 density corrections are
+  below -1 g/cc with the worst at -57338.
 
 ## What OSDU does not publish
 

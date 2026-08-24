@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sqi" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fca5a5"/>
+      <stop offset="1" stop-color="#7f1d1d"/>
+    </linearGradient>
+  </defs>
+  <!-- Seismic section frame -->
+  <rect x="8" y="14" width="64" height="42" rx="2" fill="url(#sqi)" opacity=".12" stroke="url(#sqi)" stroke-width="1.5"/>
+  <!-- Reflectors -->
+  <path d="M10 24q16-6 31 0t31 0" stroke="url(#sqi)" stroke-width="1.8" fill="none" opacity=".7" stroke-linecap="round"/>
+  <path d="M10 34q16-7 31 0t31 0" stroke="url(#sqi)" stroke-width="1.5" fill="none" opacity=".5" stroke-linecap="round"/>
+  <path d="M10 44q16-5 31 0t31 0" stroke="url(#sqi)" stroke-width="1.5" fill="none" opacity=".35" stroke-linecap="round"/>
+  <!-- CDP ticks along the line, which is what the index holds -->
+  <path d="M14 60v8M24 60v8M34 60v8M44 60v8M54 60v8M64 60v8" stroke="url(#sqi)" stroke-width="1.8" opacity=".75" stroke-linecap="round"/>
+  <path d="M8 60h64" stroke="url(#sqi)" stroke-width="1.5" opacity=".5" stroke-linecap="round"/>
+  <!-- The one CDP the query asked for -->
+  <circle cx="44" cy="64" r="3.5" fill="url(#sqi)"/>
+</svg>

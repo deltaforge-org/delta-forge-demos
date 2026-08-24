@@ -1,0 +1,34 @@
+# Subsurface and energy data files are byte-exact source material.
+#
+# Several of these formats are fixed-width positional TEXT: UKOOA P1/90 and
+# SEG-P1 navigation, LAS well logs, ZMAP+ grids and ECLIPSE GRDECL decks. Git
+# would otherwise treat them as text and normalise their line endings, which
+# rewrites the bytes of files this repository ships as real, unmodified
+# third-party data and whose provenance ATTRIBUTION.md asserts. A P1/90 file
+# lost 134 bytes to that normalisation before this file existed.
+#
+# The binary ones (SEG-Y, SEG-D, DLIS, LIS, shapefiles, GeoTIFF, ECLIPSE
+# output, RESQML packages) are detected as binary by content, but they are
+# listed anyway so the rule is stated rather than relied upon.
+*.p190  -text
+*.p1    -text
+*.segp1 -text
+*.sgp   -text
+*.las   -text
+*.zmap  -text
+*.grdecl -text
+*.segy  -text binary
+*.sgy   -text binary
+*.segd  -text binary
+*.dlis  -text binary
+*.lis   -text binary
+*.epc   -text binary
+*.shp   -text binary
+*.shx   -text binary
+*.dbf   -text binary
+*.tif   -text binary
+*.tiff  -text binary
+*.egrid -text binary
+*.init  -text binary
+*.unrst -text binary
+*.smspec -text binary

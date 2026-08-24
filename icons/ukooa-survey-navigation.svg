@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="usn" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#99f6e4"/>
+      <stop offset="1" stop-color="#115e59"/>
+    </linearGradient>
+  </defs>
+  <!-- Sea surface -->
+  <path d="M4 30h72" stroke="url(#usn)" stroke-width="1.5" opacity=".45" stroke-linecap="round"/>
+  <!-- Survey vessel -->
+  <path d="M52 30l4-8h10l4 8z" fill="url(#usn)" opacity=".6" stroke="url(#usn)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M61 22v-8" stroke="url(#usn)" stroke-width="1.5" opacity=".6" stroke-linecap="round"/>
+  <!-- Streamer trailing behind -->
+  <path d="M52 30q-16 3-30 2" stroke="url(#usn)" stroke-width="1.5" fill="none" opacity=".5" stroke-dasharray="3 3"/>
+  <!-- The shot point track, which is what P1/90 records -->
+  <path d="M8 56q18-8 34 0t30-4" stroke="url(#usn)" stroke-width="1.8" fill="none" opacity=".7" stroke-linecap="round"/>
+  <circle cx="10" cy="55" r="2.5" fill="url(#usn)" opacity=".85"/>
+  <circle cx="24" cy="51" r="2.5" fill="url(#usn)" opacity=".85"/>
+  <circle cx="40" cy="53" r="2.5" fill="url(#usn)" opacity=".85"/>
+  <circle cx="55" cy="55" r="2.5" fill="url(#usn)" opacity=".85"/>
+  <circle cx="70" cy="51" r="2.5" fill="url(#usn)" opacity=".85"/>
+  <!-- Grid reference beneath -->
+  <path d="M8 66h64M20 62v8M44 62v8M64 62v8" stroke="url(#usn)" stroke-width="1" opacity=".35"/>
+</svg>

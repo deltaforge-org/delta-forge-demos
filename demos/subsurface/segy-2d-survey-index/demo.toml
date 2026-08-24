@@ -1,0 +1,69 @@
+[demo]
+id = "segy-2d-survey-index"
+name = "2D Survey CDP Navigation Index"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+A processing centre delivers a reprocessed 2D seismic survey one line at a \
+time, and each line is indexed into a curated Delta table so an interpreter \
+can ask which lines cross a prospect without opening any of them. The lines \
+are real: two of the 34 lines of Equinor's Volve ST0299 survey as the OSDU \
+Forum redistributes them, 984 and 1030 traces, IBM floating point, 3000 \
+samples at 1 ms. Each file is about 12 MB and the index never reads a byte \
+beyond the trace headers, because include_samples = 'false' turns a 12 MB \
+line into a 240-byte read per trace; that is the same arithmetic that makes \
+indexing a 40 GB volume cost the headers rather than the volume. DISCOVER \
+identifies SEG-Y from the binary reel header rather than the extension, \
+which matters because a CSV export of trace attributes named .segy is a real \
+thing that lands in real folders. The data brings its own awkwardness: 95 \
+traces on the first line and 91 on the second carry a source coordinate of \
+exactly zero, which the loader turns into NULL once rather than leaving \
+every downstream query to notice, and every offset in the survey is \
+negative. The loader keys on the source file, so the demo indexes one line \
+twice and asserts the trace count did not move. See ATTRIBUTION.md.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "segy",
+    "seismic",
+    "2d-survey",
+    "navigation",
+    "cdp",
+    "volve",
+    "osdu",
+    "real-data",
+    "discover",
+    "incremental",
+    "idempotent",
+    "header-only-scan",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_ST0299-05005_MIG_FIN.segy"
+format = "segy"
+description = "Volve ST0299 2D line 05005, 984 traces, 3000 samples, IBM float, 95 traces without source coordinates"
+size_bytes = 12047760
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_ST0299-15010_MIG_FIN.segy"
+format = "segy"
+description = "Volve ST0299 2D line 15010, 1030 traces, 3000 samples, IBM float, 91 traces without source coordinates"
+size_bytes = 12610800
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.seismic_survey.survey_lines"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.seismic_survey.cdp_index"

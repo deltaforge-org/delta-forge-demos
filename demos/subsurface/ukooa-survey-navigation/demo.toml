@@ -1,0 +1,82 @@
+[demo]
+id = "ukooa-survey-navigation"
+name = "Survey Navigation Shot Point Database"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+A survey contractor delivers 2D navigation as UKOOA P1/90, one file per \
+line, and the client builds a shot-point database from it incrementally. \
+The files are real: four ST0299 CMP navigation files from Equinor's Volve \
+release as the OSDU Forum redistributes them, shot in April 2002 by Fugro \
+from the Geo Searcher with a 4x40 cubic inch gun array, and the header \
+records still say so. 95 positions per line, 380 in total, delivered in two \
+batches of two. P1/90 is fixed-width positional text with no delimiter and \
+no header row to infer, and its coordinates are packed as degrees, minutes \
+and seconds run together with a hemisphere letter. Two properties of these \
+files broke the reader when it first met them and are now asserted here: \
+every position is a C record, because a CMP deliverable has no S or R \
+records at all, and the longitudes are a single degree east written right \
+justified in the degrees field. The first returned an empty table and the \
+second a full one that put a North Sea survey in central Siberia; neither \
+raised an error. The demo also proves the geographic and grid coordinates \
+agree, which is real evidence because the two were written independently \
+and share no failure mode. See ATTRIBUTION.md.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "ukooa",
+    "p190",
+    "navigation",
+    "seismic",
+    "shot-points",
+    "fixed-width",
+    "volve",
+    "osdu",
+    "real-data",
+    "discover",
+    "incremental",
+    "idempotent",
+    "coordinates",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_ST0299-CMP-05002.p190"
+format = "ukooa"
+description = "Volve ST0299 line 05002 CMP navigation, 40 header records and 95 C positions"
+size_bytes = 10118
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_ST0299-CMP-05003.p190"
+format = "ukooa"
+description = "Volve ST0299 line 05003 CMP navigation, 95 positions"
+size_bytes = 10118
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_ST0299-CMP-05004.p190"
+format = "ukooa"
+description = "Volve ST0299 line 05004 CMP navigation, 95 positions"
+size_bytes = 10118
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_ST0299-CMP-05005.p190"
+format = "ukooa"
+description = "Volve ST0299 line 05005 CMP navigation, 95 positions, geometry matching the SEG-Y demo's line 05005"
+size_bytes = 10118
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.survey_navigation.navigation_lines"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.survey_navigation.shot_point_index"

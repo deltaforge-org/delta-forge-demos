@@ -10563,6 +10563,101 @@
       ]
     },
     {
+      "id": "segy-2d-survey-index",
+      "path": "demos/subsurface/segy-2d-survey-index",
+      "iconPath": "icons/segy-2d-survey-index.svg",
+      "name": "2D Survey CDP Navigation Index",
+      "summary": "A processing centre delivers a reprocessed 2D seismic survey one line at a time, and each line is indexed into a curated Delta table so an interpreter can ask which lines cross a prospect without opening any of them. The lines are real: two of the 34 lines of Equinor's Volve ST0299 survey as the OSDU Forum redistributes them, 984 and 1030 traces, IBM floating point, 3000 samples at 1 ms. Each file is about 12 MB and the index never reads a byte beyond the trace headers, because include_samples = false turns a 12 MB line into a 240-byte read per trace; that is the same arithmetic that makes indexing a 40 GB volume cost the headers rather than the volume. DISCOVER identifies SEG-Y from the binary reel header rather than the extension, which matters because a CSV export of trace attributes named .segy is a real thing that lands in real folders. The data brings its own awkwardness: 95 traces on the first line and 91 on the second carry a source coordinate of exactly zero, which the loader turns into NULL once rather than leaving every downstream query to notice, and every offset in the survey is negative. The loader keys on the source file, so the demo indexes one line twice and asserts the trace count did not move.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "segy",
+        "seismic",
+        "2d-survey",
+        "navigation",
+        "cdp",
+        "volve",
+        "osdu",
+        "real-data",
+        "discover",
+        "incremental",
+        "idempotent",
+        "header-only-scan",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 24658560,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.seismic_survey.survey_lines"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.seismic_survey.cdp_index"
+        }
+      ]
+    },
+    {
+      "id": "ukooa-survey-navigation",
+      "path": "demos/subsurface/ukooa-survey-navigation",
+      "iconPath": "icons/ukooa-survey-navigation.svg",
+      "name": "Survey Navigation Shot Point Database",
+      "summary": "A survey contractor delivers 2D navigation as UKOOA P1/90, one file per line, and the client builds a shot-point database from it incrementally. The files are real: four ST0299 CMP navigation files from Equinor's Volve release as the OSDU Forum redistributes them, shot in April 2002 by Fugro from the Geo Searcher with a 4x40 cubic inch gun array, and the header records still say so. 95 positions per line, 380 in total, delivered in two batches of two. P1/90 is fixed-width positional text with no delimiter and no header row to infer, and its coordinates are packed as degrees, minutes and seconds run together with a hemisphere letter. Two properties of these files broke the reader when it first met them and are now asserted here: every position is a C record, because a CMP deliverable has no S or R records at all, and the longitudes are a single degree east written right justified in the degrees field. The first returned an empty table and the second a full one that put a North Sea survey in central Siberia; neither raised an error. The demo also proves the geographic and grid coordinates agree, which is real evidence because the two were written independently and share no failure mode.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "ukooa",
+        "p190",
+        "navigation",
+        "seismic",
+        "shot-points",
+        "fixed-width",
+        "volve",
+        "osdu",
+        "real-data",
+        "discover",
+        "incremental",
+        "idempotent",
+        "coordinates",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 40472,
+      "fileCount": 4,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.survey_navigation.navigation_lines"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.survey_navigation.shot_point_index"
+        }
+      ]
+    },
+    {
       "id": "xml-books-schema-evolution",
       "path": "demos/xml/books-schema-evolution",
       "iconPath": "icons/xml-books-schema-evolution.svg",
