@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="ltr" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fda4af"/>
+      <stop offset="1" stop-color="#9f1239"/>
+    </linearGradient>
+  </defs>
+  <!-- Reel body -->
+  <circle cx="40" cy="40" r="28" fill="url(#ltr)" opacity=".16" stroke="url(#ltr)" stroke-width="1.8"/>
+  <!-- Wound tape -->
+  <circle cx="40" cy="40" r="20" fill="none" stroke="url(#ltr)" stroke-width="1.2" opacity=".45"/>
+  <circle cx="40" cy="40" r="14" fill="none" stroke="url(#ltr)" stroke-width="1.2" opacity=".35"/>
+  <!-- Hub -->
+  <circle cx="40" cy="40" r="7" fill="url(#ltr)" opacity=".55"/>
+  <circle cx="40" cy="40" r="2.5" fill="url(#ltr)"/>
+  <!-- Reel spokes -->
+  <path d="M40 12v10M40 58v10M12 40h10M58 40h10" stroke="url(#ltr)" stroke-width="2" opacity=".5" stroke-linecap="round"/>
+  <!-- Tape leaving the reel for the reader -->
+  <path d="M68 40q6 2 6 14" stroke="url(#ltr)" stroke-width="2" fill="none" opacity=".7" stroke-linecap="round"/>
+  <rect x="66" y="56" width="12" height="6" rx="1.5" fill="url(#ltr)" opacity=".45"/>
+</svg>

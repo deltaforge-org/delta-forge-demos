@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="nsf" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#0c4a6e"/>
+    </linearGradient>
+  </defs>
+  <!-- Sea surface with the survey vessel that shot the navigation -->
+  <path d="M4 16h72" stroke="url(#nsf)" stroke-width="1.5" opacity=".5" stroke-linecap="round"/>
+  <path d="M28 16l4-5h10l3 5z" fill="url(#nsf)" opacity=".7"/>
+  <!-- Seismic section: the reflectors under it -->
+  <path d="M6 30q17-7 34 0t34 0" stroke="url(#nsf)" stroke-width="1.8" fill="none" opacity=".65" stroke-linecap="round"/>
+  <path d="M6 40q17-7 34 0t34 0" stroke="url(#nsf)" stroke-width="1.5" fill="none" opacity=".45" stroke-linecap="round"/>
+  <!-- Top reservoir, the mapped surface -->
+  <path d="M6 52q17-11 34 0t34 0" stroke="url(#nsf)" stroke-width="2" fill="none" opacity=".85" stroke-linecap="round"/>
+  <!-- The reservoir model cells beneath it -->
+  <path d="M6 52q17-11 34 0t34 0v18H6z" fill="url(#nsf)" opacity=".2"/>
+  <path d="M23 55v15M40 47v23M57 55v15M6 62h68" stroke="url(#nsf)" stroke-width="1" opacity=".35"/>
+  <!-- The two wells, tied to the same section -->
+  <path d="M30 16v40M50 16v36" stroke="url(#nsf)" stroke-width="1.8" opacity=".8" stroke-linecap="round"/>
+  <circle cx="30" cy="56" r="2.5" fill="url(#nsf)"/>
+  <circle cx="50" cy="52" r="2.5" fill="url(#nsf)"/>
+</svg>

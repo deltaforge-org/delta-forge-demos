@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="sfq" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fdba74"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+  </defs>
+  <!-- Truck cab -->
+  <path d="M10 46h14l6-10h10v20H10z" fill="url(#sfq)" opacity=".25" stroke="url(#sfq)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Truck bed carrying the vibrator -->
+  <rect x="40" y="30" width="30" height="26" rx="2" fill="url(#sfq)" opacity=".2" stroke="url(#sfq)" stroke-width="1.5"/>
+  <!-- Baseplate pressed to the ground -->
+  <rect x="46" y="58" width="18" height="4" rx="1" fill="url(#sfq)" opacity=".6"/>
+  <rect x="53" y="50" width="4" height="9" fill="url(#sfq)" opacity=".5"/>
+  <!-- Wheels -->
+  <circle cx="21" cy="62" r="6" fill="url(#sfq)" opacity=".3" stroke="url(#sfq)" stroke-width="1.5"/>
+  <circle cx="70" cy="62" r="6" fill="url(#sfq)" opacity=".3" stroke="url(#sfq)" stroke-width="1.5"/>
+  <!-- The sweep travelling out through the ground -->
+  <path d="M6 72q5-9 10 0t10 0 10 0 10 0 10 0 10 0" stroke="url(#sfq)" stroke-width="1.8" fill="none" opacity=".7" stroke-linecap="round"/>
+  <!-- Cab window -->
+  <rect x="24" y="39" width="8" height="6" rx="1" fill="url(#sfq)" opacity=".5"/>
+</svg>

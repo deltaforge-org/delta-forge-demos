@@ -1,0 +1,77 @@
+[demo]
+id = "dlis-wireline-petrophysics"
+name = "Volve Composite Log Ingestion"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+Real Volve DLIS composite logs, ingested incrementally into an \
+analysis-ready Delta table. The logs arrive in two deliveries: LWD \
+composites for 15/9-F-9 and 15/9-F-11 on 11 March (six channels each), then \
+the wireline composite for 15/9-F-15 C on 12 March, which is six channels \
+wider and forces the curated table to grow. DISCOVER registers each drop, \
+recognising DLIS from its storage unit label rather than its extension, and \
+the channel names come from the CHANNEL and FRAME sets inside the file, \
+which is the only place a DLIS frame's meaning is written down. Three real \
+properties of this data drive the demo: the wireline delivery is wider than \
+the LWD one, DEPTH is recorded in tenths of an inch in two files and in \
+millimetres in the third, and every channel writes -999.25 where no reading \
+was taken. The loader resolves all three on the way in, keys on the source \
+file so re-running a delivery is a no-op, and the evaluation at the end \
+finds 280 net pay samples between 3126 and 3220 m, which is the Hugin \
+Formation. The data is Equinor's Volve release as redistributed by the OSDU \
+Forum; see ATTRIBUTION.md.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "dlis",
+    "rp66",
+    "well-logs",
+    "petrophysics",
+    "volve",
+    "osdu",
+    "real-data",
+    "discover",
+    "incremental",
+    "idempotent",
+    "schema-evolution",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/lwd/2026-03-11_15_9-F-9_WLC_COMPOSITE_1.dlis"
+format = "dlis"
+description = "Volve 15/9-F-9 LWD composite, 1204 frames, 6 channels, depth in tenths of an inch"
+size_bytes = 43824
+
+[[demo.data_files]]
+path = "data/landing/lwd/2026-03-11_15_9-F-11_WLC_COMPOSITE_1.dlis"
+format = "dlis"
+description = "Volve 15/9-F-11 LWD composite, 1637 frames, 6 channels, depth in millimetres"
+size_bytes = 57394
+
+[[demo.data_files]]
+path = "data/landing/wireline/2026-03-12_15_9-F-15C_WLC_COMPOSITE_2.dlis"
+format = "dlis"
+description = "Volve 15/9-F-15 C wireline composite, 19791 frames, 12 channels including density, neutron and sonic"
+size_bytes = 1158416
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.petrophysics.lwd_composite"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.petrophysics.wireline_composite"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.petrophysics.well_logs"

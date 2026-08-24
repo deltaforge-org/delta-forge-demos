@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="dwp" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <!-- Borehole walls -->
+  <path d="M22 8v64M58 8v64" stroke="url(#dwp)" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+  <rect x="22" y="8" width="36" height="64" fill="url(#dwp)" opacity=".08"/>
+  <!-- Wireline cable -->
+  <path d="M40 8v18" stroke="url(#dwp)" stroke-width="2" opacity=".8" stroke-linecap="round"/>
+  <!-- Tool string: three sondes -->
+  <rect x="34" y="26" width="12" height="14" rx="2" fill="url(#dwp)" opacity=".45" stroke="url(#dwp)" stroke-width="1.5"/>
+  <rect x="34" y="42" width="12" height="12" rx="2" fill="url(#dwp)" opacity=".35" stroke="url(#dwp)" stroke-width="1.5"/>
+  <rect x="34" y="56" width="12" height="10" rx="2" fill="url(#dwp)" opacity=".25" stroke="url(#dwp)" stroke-width="1.5"/>
+  <!-- The curve the tool records, running down its own track -->
+  <path d="M66 12c-5 8 5 12 0 20s5 12 0 20-4 10-1 16" stroke="url(#dwp)" stroke-width="2" fill="none" opacity=".75" stroke-linecap="round"/>
+  <!-- Caliper arms -->
+  <path d="M34 33l-9 4M46 33l9 4" stroke="url(#dwp)" stroke-width="1.5" opacity=".55" stroke-linecap="round"/>
+</svg>

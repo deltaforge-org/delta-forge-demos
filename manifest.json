@@ -5433,6 +5433,56 @@
       ]
     },
     {
+      "id": "dlis-wireline-petrophysics",
+      "path": "demos/subsurface/dlis-wireline-petrophysics",
+      "iconPath": "icons/dlis-wireline-petrophysics.svg",
+      "name": "Volve Composite Log Ingestion",
+      "summary": "Real Volve DLIS composite logs, ingested incrementally into an analysis-ready Delta table. Two deliveries: LWD composites for 15/9-F-9 (1204 frames) and 15/9-F-11 (1637 frames) on 11 March, then the wireline composite for 15/9-F-15 C (19791 frames) on 12 March, which is six channels wider and forces an ALTER TABLE ADD COLUMN before it can land. DISCOVER registers each drop, recognising DLIS from its storage unit label rather than its extension; the channel names come from the CHANNEL and FRAME sets inside the file, which is the only place a DLIS frame's meaning is written down. Three real properties of the data drive the demo: the second delivery is wider than the first, DEPTH is recorded in tenths of an inch in two files and millimetres in the third, and every channel writes -999.25 where no reading was taken. The loader resolves all three on the way in and keys on the source file, so the demo runs one delivery twice and asserts the count did not move. Finishes with a petrophysical evaluation: 280 net pay samples between 3126 and 3220 m, which is the Hugin Formation. Data from the OSDU Forum open test data; see ATTRIBUTION.md.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "dlis",
+        "rp66",
+        "well-logs",
+        "petrophysics",
+        "volve",
+        "osdu",
+        "real-data",
+        "discover",
+        "incremental",
+        "idempotent",
+        "schema-evolution",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 1259634,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.petrophysics.lwd_composite"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.petrophysics.wireline_composite"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.petrophysics.well_logs"
+        }
+      ]
+    },
+    {
       "id": "edi-850-purchase-orders-aliased",
       "path": "demos/edi/850-purchase-orders-aliased",
       "iconPath": "icons/edi-850-purchase-orders-aliased.svg",
@@ -9699,6 +9749,118 @@
       ]
     },
     {
+      "id": "lis-tape-archive-recovery",
+      "path": "demos/subsurface/lis-tape-archive-recovery",
+      "iconPath": "icons/lis-tape-archive-recovery.svg",
+      "name": "Well Log Tape Archive Recovery",
+      "summary": "An operator's data-management team brings a LIS-79 well-log tape archive into the lake without a vendor conversion, one digitisation batch at a time. The 11 March batch is the real Volve 15/9-F-4 composite as OSDU redistributes it: 12 curves, 21505 frames, wrapped in Tape Image Format. The 12 March batch is a 26-curve reprocessed composite whose specification record does not fit in one 1024-byte physical record and so arrives split with the successor and predecessor bits set. Three things have to be right for the frame arithmetic to close with nothing left over: the tape framing is stripped, the curve list is found in logical record type 64 rather than 34, and the split specification is rejoined. The real tape has no null convention, so a curve the tool was not running reads as a number, and 1114 of its density-correction readings are below minus one gram per cubic centimetre with the worst at minus 57338. The loader applies one physical validity rule per curve and keys on the source file, so re-running a batch is a no-op. Recovers the well's casing programme from the bit-size curve and finds 1096 net pay frames between 2772 and 3423 m. See ATTRIBUTION.md.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "lis",
+        "lis79",
+        "well-logs",
+        "tape-archive",
+        "tape-image-format",
+        "legacy-data",
+        "volve",
+        "osdu",
+        "real-data",
+        "discover",
+        "incremental",
+        "idempotent",
+        "data-quality",
+        "delta",
+        "time-travel",
+        "advanced"
+      ],
+      "difficulty": "advanced",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 1185283,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.log_archive.volve_composite"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.log_archive.reprocessed_composite"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.log_archive.tape_archive"
+        }
+      ]
+    },
+    {
+      "id": "north-sea-field",
+      "path": "demos/subsurface/north-sea-field",
+      "iconPath": "icons/north-sea-field.svg",
+      "name": "North Sea Demo Field, Five Formats Joined",
+      "summary": "Five upstream energy formats over one field, read in place with no export step, and then joined: a SEG-Y seismic volume (120 traces), two LAS well logs (600 depth steps), a ZMAP+ top-reservoir depth grid (1164 live nodes of 2000), an ECLIPSE GRDECL corner-point model (1664 active cells of 2400) and UKOOA P1/90 survey navigation (240 shot points). Each format keeps its own natural row shape, because a trace, a depth step, a grid node and a cell are different things and flattening them into one shape would lose what makes each queryable. The point is the joins: seismic geometry and survey navigation meet on real UTM coordinates, and the model meets the mapped surface, because reading the formats in place leaves the geometry already comparable. Also proves the details that silently go wrong: the SEG-Y coordinate scalar is applied, the LAS NULL sentinel reads as a real NULL, GRDECL run-length encoding expands correctly and ACTNUM is honoured, the ZMAP grid is not transposed, and packed P1/90 latitudes arrive as decimal degrees. This is the cross-format integration demo; each format also has a dedicated demo of its own.",
+      "categories": [
+        "subsurface",
+        "energy"
+      ],
+      "tags": [
+        "subsurface",
+        "seismic",
+        "segy",
+        "well-logs",
+        "las",
+        "zmap",
+        "grdecl",
+        "eclipse",
+        "ukooa",
+        "navigation",
+        "cross-format",
+        "join",
+        "external-tables",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 201772,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.subsurface.seismic_traces"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.subsurface.seismic_headers"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.subsurface.well_logs"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.subsurface.top_reservoir"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.subsurface.reservoir_model"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.subsurface.survey_navigation"
+        }
+      ]
+    },
+    {
       "id": "northwind-database",
       "path": "demos/csv/northwind-database",
       "iconPath": "icons/northwind-database.svg",
@@ -10350,6 +10512,53 @@
         {
           "objectType": "external_table",
           "name": "{{zone_name}}.csv.sales"
+        }
+      ]
+    },
+    {
+      "id": "segd-field-record-qc",
+      "path": "demos/subsurface/segd-field-record-qc",
+      "iconPath": "icons/segd-field-record-qc.svg",
+      "name": "Seismic Crew Field Record QC",
+      "summary": "A land seismic crew drops one folder of SEG-D field records per acquisition day, and a scheduled loader reads each day's drop in place and appends it to a curated Delta table the QC desk works from. Six records, 138 traces across two acquisition days. DISCOVER registers the landing folder, recognising SEG-D from its general header rather than its extension, and passes include_samples = false through so a QC pass over a whole day never touches the sample payload. The loader keys on the record's own file name, so the demo runs the 11 March load twice and asserts the trace count did not move. Two faults are planted in the second day's drop and the QC queries find both: one record captured 18 of the 24 channels because a receiver line went down, and one came off the crew's second truck still configured for a 2 ms sample interval on channel set 2. SEG-D headers are binary-coded decimal, so file number 1041 is stored as the bytes 0x10 0x41 and reads as 4161 to anything treating them as an integer, which one query asserts against directly.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "segd",
+        "seismic",
+        "acquisition",
+        "field-records",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "binary-coded-decimal",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 169032,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.seismic_acquisition.field_records"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.seismic_acquisition.record_1043"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.seismic_acquisition.trace_inventory"
         }
       ]
     },

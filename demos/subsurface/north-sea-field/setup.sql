@@ -38,7 +38,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.subsurface
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.subsurface.seismic_traces
 USING SEGY
-LOCATION '{{data_path}}/data/demo_survey.segy';
+LOCATION '{{data_path}}/demo_survey.segy';
 
 
 -- ============================================================================
@@ -50,7 +50,7 @@ LOCATION '{{data_path}}/data/demo_survey.segy';
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.subsurface.seismic_headers
 USING SEGY
-LOCATION '{{data_path}}/data/demo_survey.segy'
+LOCATION '{{data_path}}/demo_survey.segy'
 OPTIONS (
     include_samples = 'false'
 );
@@ -69,7 +69,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.subsurface.well_logs
 USING LAS
-LOCATION '{{data_path}}/data/*.las'
+LOCATION '{{data_path}}/*.las'
 OPTIONS (
     file_metadata = '{"columns":["df_file_name"]}'
 );
@@ -91,7 +91,7 @@ OPTIONS (
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.subsurface.top_reservoir
 USING ZMAP
-LOCATION '{{data_path}}/data/top_reservoir.zmap';
+LOCATION '{{data_path}}/top_reservoir.zmap';
 
 
 -- ============================================================================
@@ -109,7 +109,7 @@ LOCATION '{{data_path}}/data/top_reservoir.zmap';
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.subsurface.reservoir_model
 USING GRDECL
-LOCATION '{{data_path}}/data/demo_model.grdecl';
+LOCATION '{{data_path}}/demo_model.grdecl';
 
 
 -- ============================================================================
@@ -125,4 +125,4 @@ LOCATION '{{data_path}}/data/demo_model.grdecl';
 -- ============================================================================
 CREATE EXTERNAL TABLE IF NOT EXISTS {{zone_name}}.subsurface.survey_navigation
 USING UKOOA
-LOCATION '{{data_path}}/data/demo_survey.p190';
+LOCATION '{{data_path}}/demo_survey.p190';

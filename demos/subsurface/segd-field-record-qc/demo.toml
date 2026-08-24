@@ -1,0 +1,87 @@
+[demo]
+id = "segd-field-record-qc"
+name = "Seismic Crew Field Record QC"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+A land seismic crew drops one folder of SEG-D field records per acquisition \
+day. A scheduled loader reads each day's drop in place, with no conversion \
+step, and appends it to a curated Delta table the QC desk works from. The \
+loader keys on the record's own file name, so re-running a day is a no-op \
+rather than a duplicate: the demo runs the 11 March load twice and asserts \
+the trace count did not move. DISCOVER registers the landing folder, \
+recognising SEG-D from its general header rather than from the file \
+extension. Two faults are planted in the second day's drop and the QC \
+queries find both: one record captured 18 of the 24 channels because a \
+receiver line went down, and one came off the crew's second truck still \
+configured for a 2 ms sample interval on channel set 2.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "segd",
+    "seismic",
+    "acquisition",
+    "field-records",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "binary-coded-decimal",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_fr_1041.segd"
+format = "segd"
+description = "Field record 1041, 24 channels, 512 samples at 4 ms, int16"
+size_bytes = 25120
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_fr_1042.segd"
+format = "segd"
+description = "Field record 1042, 24 channels, 512 samples at 4 ms, int16"
+size_bytes = 25120
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_fr_1043.segd"
+format = "segd"
+description = "Field record 1043, 24 channels, 512 samples at 4 ms, int16"
+size_bytes = 25120
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_fr_1044.segd"
+format = "segd"
+description = "Field record 1044, only 18 channels: a receiver line went down mid-swath"
+size_bytes = 18856
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_fr_1045.segd"
+format = "segd"
+description = "Field record 1045 from the second truck, 1024 samples at 2 ms on channel set 2"
+size_bytes = 49696
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_fr_1046.segd"
+format = "segd"
+description = "Field record 1046, 24 channels, 512 samples at 4 ms, int16"
+size_bytes = 25120
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.seismic_acquisition.field_records"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.seismic_acquisition.record_1043"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.seismic_acquisition.trace_inventory"

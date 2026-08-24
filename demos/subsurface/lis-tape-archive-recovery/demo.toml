@@ -1,0 +1,74 @@
+[demo]
+id = "lis-tape-archive-recovery"
+name = "Well Log Tape Archive Recovery"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+An operator's data-management team brings a LIS-79 well-log tape archive \
+into the lake without paying for a vendor conversion, one digitisation batch \
+at a time. The 11 March batch is the real Volve 15/9-F-4 composite as OSDU \
+redistributes it: 12 curves, 21505 frames, wrapped in Tape Image Format. The \
+12 March batch is a 26-curve reprocessed composite whose specification \
+record does not fit in one 1024-byte physical record and so arrives split \
+with the successor and predecessor bits set, which is the shape that returns \
+plausible nonsense from a reader that stops at the first piece. Three things \
+have to be right for the frame arithmetic to close with nothing left over: \
+the tape framing is stripped, the curve list is found in logical record type \
+64 rather than 34, and the split specification is rejoined. The real tape \
+also has no null convention, so a curve the tool was not running reads as a \
+number, and 1114 of its density-correction readings are below minus one \
+gram per cubic centimetre with the worst at minus 57338. The loader applies \
+one physical validity rule per curve, keys on the source file so re-running \
+a batch is a no-op, and the evaluation at the end finds 1096 net pay frames \
+between 2772 and 3423 m. See ATTRIBUTION.md for provenance.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "lis",
+    "lis79",
+    "well-logs",
+    "tape-archive",
+    "tape-image-format",
+    "legacy-data",
+    "volve",
+    "osdu",
+    "real-data",
+    "discover",
+    "incremental",
+    "idempotent",
+    "data-quality",
+    "delta",
+    "time-travel",
+    "advanced",
+]
+difficulty = "advanced"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/volve/2026-03-11_15_9-F-4_WLC_COMPOSITE_1.lis"
+format = "lis"
+description = "Volve 15/9-F-4 composite log, real, tape image framed, 12 curves, 21505 frames"
+size_bytes = 1105958
+
+[[demo.data_files]]
+path = "data/landing/reprocessed/2026-03-12_15_9-F-4A_REPROCESSED.lis"
+format = "lis"
+description = "Reprocessed 26-curve composite whose specification record spans two physical records"
+size_bytes = 79325
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.log_archive.volve_composite"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.log_archive.reprocessed_composite"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.log_archive.tape_archive"
