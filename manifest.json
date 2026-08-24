@@ -10748,6 +10748,51 @@
       ]
     },
     {
+      "id": "witsml-drilling-operations",
+      "path": "demos/subsurface/witsml-drilling-operations",
+      "iconPath": "icons/witsml-drilling-operations.svg",
+      "name": "Drilling Survey Anti-Collision",
+      "summary": "A directional driller hands over the definitive survey at the end of each bit run, as WITSML, and the well engineer loads it to run anti-collision checks against the wells already drilled from the same platform template. Three wells over two days, 120 survey stations. WITSML is XML, and DeltaForge reads it through the XML engine under a curated profile rather than a parser of its own: the profile knows that //well is the row and //trajectoryStation explodes, so nobody writes an XPath, and detection is on the document's namespace and elements rather than its extension because these dialects all ship as plain .xml. The flattened columns are the document's full element paths, so a measured depth arrives as wells_well_trajectory_trajectory_station_md; renaming those is most of what the curated Delta layer is for. The trajectories are computed with minimum curvature, so the depths and offsets are internally consistent rather than decorative, and the demo checks it: TVD never exceeds MD, and where inclination is zero the two are equal. The payoff is a real anti-collision scan. Two wells from the same slot pattern come within 3 m of each other at 550 m TVD, just below the template, which is where wells on a template are always closest and always most at risk.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "witsml",
+        "drilling",
+        "trajectory",
+        "anti-collision",
+        "energistics",
+        "xml-profile",
+        "explode",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 37287,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.drilling.survey_documents"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.drilling.survey_stations"
+        }
+      ]
+    },
+    {
       "id": "xml-books-schema-evolution",
       "path": "demos/xml/books-schema-evolution",
       "iconPath": "icons/xml-books-schema-evolution.svg",

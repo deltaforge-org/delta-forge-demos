@@ -1,0 +1,56 @@
+[demo]
+id = "witsml-drilling-operations"
+name = "Drilling Survey Anti-Collision"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A directional driller hands over the definitive survey at the end of each bit run, as WITSML, and the well engineer loads it to run anti-collision checks against the wells already drilled from the same platform template. Three wells over two days, 120 survey stations. WITSML is XML, and DeltaForge reads it through the XML engine under a curated profile rather than a parser of its own: the profile already knows that //well is the row and that //trajectoryStation explodes, so nobody writes an XPath, and detection is on the document's namespace and elements rather than its extension because these dialects all ship as plain .xml. The flattened columns are the document's full element paths, so a measured depth arrives as wells_well_trajectory_trajectory_station_md; renaming those is most of what the curated Delta layer is for. The trajectories are computed with minimum curvature, so the true vertical depths and north/east offsets are internally consistent rather than decorative, and the demo checks it: TVD never exceeds MD, and where inclination is zero the two are equal. The payoff is a real anti-collision scan. Two wells from the same slot pattern come within 3 m of each other at 550 m TVD, just below the template, which is where wells on a template are always closest and always most at risk.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "witsml",
+    "drilling",
+    "trajectory",
+    "anti-collision",
+    "energistics",
+    "xml-profile",
+    "explode",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_path = { description = "Zone-relative path to the staged demo data", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_15_9-F-11.witsml"
+format = "witsml"
+description = "WITSML definitive survey for 15/9-F-11, 40 stations building to 62 degrees"
+size_bytes = 12440
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_15_9-F-11A.witsml"
+format = "witsml"
+description = "WITSML definitive survey for 15/9-F-11 A, 32 stations building to 74 degrees"
+size_bytes = 10093
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_15_9-F-12.witsml"
+format = "witsml"
+description = "WITSML definitive survey for 15/9-F-12, 48 stations building to 48 degrees"
+size_bytes = 14754
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.drilling.survey_documents"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.drilling.survey_stations"

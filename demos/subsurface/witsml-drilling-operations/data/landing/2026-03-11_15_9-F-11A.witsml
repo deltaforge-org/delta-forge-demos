@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wells xmlns="http://www.witsml.org/schemas/1series" version="1.4.1.1">
+  <well uid="w-15-9-F-11A">
+    <name>15/9-F-11 A</name>
+    <field>VOLVE-DEMO</field>
+    <country>NO</country>
+    <operator>DeltaForge Energy</operator>
+    <trajectory uid="w-15-9-F-11A-def">
+      <name>Definitive Survey</name>
+      <trajectoryStation uid="w-15-9-F-11A-ts-000">
+        <md uom="m">490.00</md>
+        <tvd uom="m">490.00</tvd>
+        <incl uom="dega">0.00</incl>
+        <azi uom="dega">0.00</azi>
+        <dispNs uom="m">0.00</dispNs>
+        <dispEw uom="m">4.50</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-001">
+        <md uom="m">520.00</md>
+        <tvd uom="m">520.00</tvd>
+        <incl uom="dega">0.00</incl>
+        <azi uom="dega">0.00</azi>
+        <dispNs uom="m">0.00</dispNs>
+        <dispEw uom="m">4.50</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-002">
+        <md uom="m">550.00</md>
+        <tvd uom="m">550.00</tvd>
+        <incl uom="dega">0.00</incl>
+        <azi uom="dega">0.00</azi>
+        <dispNs uom="m">0.00</dispNs>
+        <dispEw uom="m">4.50</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-003">
+        <md uom="m">580.00</md>
+        <tvd uom="m">580.00</tvd>
+        <incl uom="dega">0.00</incl>
+        <azi uom="dega">0.00</azi>
+        <dispNs uom="m">0.00</dispNs>
+        <dispEw uom="m">4.50</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-004">
+        <md uom="m">610.00</md>
+        <tvd uom="m">609.99</tvd>
+        <incl uom="dega">3.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-0.68</dispNs>
+        <dispEw uom="m">4.11</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-005">
+        <md uom="m">640.00</md>
+        <tvd uom="m">639.90</tvd>
+        <incl uom="dega">6.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-2.72</dispNs>
+        <dispEw uom="m">2.93</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-006">
+        <md uom="m">670.00</md>
+        <tvd uom="m">669.64</tvd>
+        <incl uom="dega">9.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-6.11</dispNs>
+        <dispEw uom="m">0.97</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-007">
+        <md uom="m">700.00</md>
+        <tvd uom="m">699.14</tvd>
+        <incl uom="dega">12.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-10.84</dispNs>
+        <dispEw uom="m">-1.76</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-008">
+        <md uom="m">730.00</md>
+        <tvd uom="m">728.31</tvd>
+        <incl uom="dega">15.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-16.91</dispNs>
+        <dispEw uom="m">-5.26</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-009">
+        <md uom="m">760.00</md>
+        <tvd uom="m">757.07</tvd>
+        <incl uom="dega">18.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-24.29</dispNs>
+        <dispEw uom="m">-9.52</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-010">
+        <md uom="m">790.00</md>
+        <tvd uom="m">785.35</tvd>
+        <incl uom="dega">21.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-32.96</dispNs>
+        <dispEw uom="m">-14.53</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-011">
+        <md uom="m">820.00</md>
+        <tvd uom="m">813.07</tvd>
+        <incl uom="dega">24.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-42.90</dispNs>
+        <dispEw uom="m">-20.27</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-012">
+        <md uom="m">850.00</md>
+        <tvd uom="m">840.15</tvd>
+        <incl uom="dega">27.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-54.09</dispNs>
+        <dispEw uom="m">-26.73</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-013">
+        <md uom="m">880.00</md>
+        <tvd uom="m">866.51</tvd>
+        <incl uom="dega">30.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-66.49</dispNs>
+        <dispEw uom="m">-33.89</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-014">
+        <md uom="m">910.00</md>
+        <tvd uom="m">892.09</tvd>
+        <incl uom="dega">33.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-80.06</dispNs>
+        <dispEw uom="m">-41.72</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-015">
+        <md uom="m">940.00</md>
+        <tvd uom="m">916.81</tvd>
+        <incl uom="dega">36.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-94.78</dispNs>
+        <dispEw uom="m">-50.22</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-016">
+        <md uom="m">970.00</md>
+        <tvd uom="m">940.62</tvd>
+        <incl uom="dega">39.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-110.59</dispNs>
+        <dispEw uom="m">-59.35</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-017">
+        <md uom="m">1000.00</md>
+        <tvd uom="m">963.43</tvd>
+        <incl uom="dega">42.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-127.47</dispNs>
+        <dispEw uom="m">-69.09</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-018">
+        <md uom="m">1030.00</md>
+        <tvd uom="m">985.19</tvd>
+        <incl uom="dega">45.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-145.35</dispNs>
+        <dispEw uom="m">-79.42</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-019">
+        <md uom="m">1060.00</md>
+        <tvd uom="m">1005.84</tvd>
+        <incl uom="dega">48.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-164.19</dispNs>
+        <dispEw uom="m">-90.30</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-020">
+        <md uom="m">1090.00</md>
+        <tvd uom="m">1025.32</tvd>
+        <incl uom="dega">51.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-183.95</dispNs>
+        <dispEw uom="m">-101.70</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-021">
+        <md uom="m">1120.00</md>
+        <tvd uom="m">1043.59</tvd>
+        <incl uom="dega">54.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-204.56</dispNs>
+        <dispEw uom="m">-113.60</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-022">
+        <md uom="m">1150.00</md>
+        <tvd uom="m">1060.58</tvd>
+        <incl uom="dega">57.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-225.97</dispNs>
+        <dispEw uom="m">-125.97</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-023">
+        <md uom="m">1180.00</md>
+        <tvd uom="m">1076.25</tvd>
+        <incl uom="dega">60.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-248.13</dispNs>
+        <dispEw uom="m">-138.76</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-024">
+        <md uom="m">1210.00</md>
+        <tvd uom="m">1090.57</tvd>
+        <incl uom="dega">63.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-270.96</dispNs>
+        <dispEw uom="m">-151.94</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-025">
+        <md uom="m">1240.00</md>
+        <tvd uom="m">1103.48</tvd>
+        <incl uom="dega">66.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-294.41</dispNs>
+        <dispEw uom="m">-165.48</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-026">
+        <md uom="m">1270.00</md>
+        <tvd uom="m">1114.96</tvd>
+        <incl uom="dega">69.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-318.41</dispNs>
+        <dispEw uom="m">-179.34</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-027">
+        <md uom="m">1300.00</md>
+        <tvd uom="m">1124.98</tvd>
+        <incl uom="dega">72.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-342.90</dispNs>
+        <dispEw uom="m">-193.47</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-028">
+        <md uom="m">1330.00</md>
+        <tvd uom="m">1133.75</tvd>
+        <incl uom="dega">74.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-367.75</dispNs>
+        <dispEw uom="m">-207.82</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-029">
+        <md uom="m">1360.00</md>
+        <tvd uom="m">1142.02</tvd>
+        <incl uom="dega">74.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-392.72</dispNs>
+        <dispEw uom="m">-222.24</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-030">
+        <md uom="m">1390.00</md>
+        <tvd uom="m">1150.29</tvd>
+        <incl uom="dega">74.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-417.70</dispNs>
+        <dispEw uom="m">-236.66</dispEw>
+      </trajectoryStation>
+      <trajectoryStation uid="w-15-9-F-11A-ts-031">
+        <md uom="m">1420.00</md>
+        <tvd uom="m">1158.56</tvd>
+        <incl uom="dega">74.00</incl>
+        <azi uom="dega">210.00</azi>
+        <dispNs uom="m">-442.67</dispNs>
+        <dispEw uom="m">-251.08</dispEw>
+      </trajectoryStation>
+    </trajectory>
+    <commonData>
+      <comments>Definitive survey, minimum curvature</comments>
+    </commonData>
+  </well>
+</wells>
