@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<productVolume xmlns="http://www.energistics.org/energyml/data/prodmlv2">
+  <name>GUDRUN-B monthly production 2026</name>
+  <dTimStart>2026-01-01T00:00:00Z</dTimStart>
+  <dTimEnd>2026-12-31T23:59:59Z</dTimEnd>
+  <facility uid="f-gudrun-b">
+    <name>GUDRUN-B</name>
+    <product>oil</product>
+    <period>
+      <dTimStart>2026-01-01T00:00:00Z</dTimStart>
+      <volume uom="m3">30380.0</volume>
+      <waterVolume uom="m3">23870.0</waterVolume>
+      <gasVolume uom="m3">6227900.0</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-02-01T00:00:00Z</dTimStart>
+      <volume uom="m3">26918.6</volume>
+      <waterVolume uom="m3">22655.3</waterVolume>
+      <gasVolume uom="m3">5604460.8</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-03-01T00:00:00Z</dTimStart>
+      <volume uom="m3">29236.5</volume>
+      <waterVolume uom="m3">26346.2</waterVolume>
+      <gasVolume uom="m3">6180601.8</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-04-01T00:00:00Z</dTimStart>
+      <volume uom="m3">27755.8</volume>
+      <waterVolume uom="m3">26774.3</waterVolume>
+      <gasVolume uom="m3">5956403.0</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-05-01T00:00:00Z</dTimStart>
+      <volume uom="m3">28136.1</volume>
+      <waterVolume uom="m3">29051.1</waterVolume>
+      <gasVolume uom="m3">6128041.2</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-06-01T00:00:00Z</dTimStart>
+      <volume uom="m3">26711.1</volume>
+      <waterVolume uom="m3">29522.8</waterVolume>
+      <gasVolume uom="m3">5903161.2</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-07-01T00:00:00Z</dTimStart>
+      <volume uom="m3">27077.1</volume>
+      <waterVolume uom="m3">32043.2</waterVolume>
+      <gasVolume uom="m3">6070681.1</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-08-01T00:00:00Z</dTimStart>
+      <volume uom="m3">26562.6</volume>
+      <waterVolume uom="m3">33670.1</waterVolume>
+      <gasVolume uom="m3">6040338.6</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-09-01T00:00:00Z</dTimStart>
+      <volume uom="m3">25217.3</volume>
+      <waterVolume uom="m3">34257.5</waterVolume>
+      <gasVolume uom="m3">5815120.2</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-10-01T00:00:00Z</dTimStart>
+      <volume uom="m3">25562.8</volume>
+      <waterVolume uom="m3">37245.1</waterVolume>
+      <gasVolume uom="m3">5976588.3</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-11-01T00:00:00Z</dTimStart>
+      <volume uom="m3">24268.2</volume>
+      <waterVolume uom="m3">37957.9</waterVolume>
+      <gasVolume uom="m3">5751561.3</gasVolume>
+    </period>
+    <period>
+      <dTimStart>2026-12-01T00:00:00Z</dTimStart>
+      <volume uom="m3">24600.7</volume>
+      <waterVolume uom="m3">41352.9</waterVolume>
+      <gasVolume uom="m3">5909079.8</gasVolume>
+    </period>
+  </facility>
+  <commonData>
+    <comments>Monthly allocated volumes, regulator return</comments>
+  </commonData>
+</productVolume>

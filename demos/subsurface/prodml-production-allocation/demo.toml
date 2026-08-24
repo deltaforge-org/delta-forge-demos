@@ -1,0 +1,57 @@
+[demo]
+id = "prodml-production-allocation"
+name = "Monthly Production Allocation"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """An operator files monthly produced volumes per facility with the regulator as PRODML, one document per facility per reporting year, and the production engineer loads them to track decline, watch the water cut and total the year for the annual statement. Three facilities over two days, 36 monthly periods. PRODML is XML, read through the XML engine under a curated profile rather than a parser of its own: the profile names //productVolume as the row and explodes //period, so one row comes out per reporting month with the facility's fields repeated down it, and detection is on the Energistics namespace rather than the extension. The volumes are internally consistent rather than decorative, because each month's water volume follows from that month's oil volume and the water cut, so the crossover the demo finds is a real property of the data: GUDRUN-B is the mature facility and passes 50 percent water in May, SLEIPNER-A only reaches it in December, and UTGARD-C never does. The last queries are the ones a production engineer actually runs: the annual statement per facility, the month each one starts lifting more water than oil, and the decline from January to December.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "prodml",
+    "production",
+    "allocation",
+    "water-cut",
+    "decline",
+    "energistics",
+    "xml-profile",
+    "explode",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "beginner",
+]
+difficulty = "beginner"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_GUDRUN-B_2026.prodml"
+format = "prodml"
+description = "GUDRUN-B 2026 monthly return, 12 periods, the mature facility, water cut crosses 50 percent in May"
+size_bytes = 3043
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_SLEIPNER-A_2026.prodml"
+format = "prodml"
+description = "SLEIPNER-A 2026 monthly return, 12 periods, 570752 m3 oil, water cut crosses 50 percent in December"
+size_bytes = 3049
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_UTGARD-C_2026.prodml"
+format = "prodml"
+description = "UTGARD-C 2026 monthly return, 12 periods, the steepest decline at 38 percent over the year"
+size_bytes = 3042
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.production.production_reports"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.production.production_history"

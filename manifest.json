@@ -10314,6 +10314,52 @@
       ]
     },
     {
+      "id": "prodml-production-allocation",
+      "path": "demos/subsurface/prodml-production-allocation",
+      "iconPath": "icons/prodml-production-allocation.svg",
+      "name": "Monthly Production Allocation",
+      "summary": "An operator files monthly produced volumes per facility with the regulator as PRODML, one document per facility per reporting year, and the production engineer loads them to track decline, watch the water cut and total the year for the annual statement. Three facilities over two days, 36 monthly periods. PRODML is XML, read through the XML engine under a curated profile rather than a parser of its own: the profile names //productVolume as the row and explodes //period, so one row comes out per reporting month with the facility's fields repeated down it, and detection is on the Energistics namespace rather than the extension. The volumes are internally consistent rather than decorative, because each month's water volume follows from that month's oil volume and the water cut, so the crossover the demo finds is a real property of the data: GUDRUN-B is the mature facility and passes 50 percent water in May, SLEIPNER-A only reaches it in December, and UTGARD-C never does. The last queries are the ones a production engineer actually runs: the annual statement per facility, the month each starts lifting more water than oil, and the decline from January to December.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "prodml",
+        "production",
+        "allocation",
+        "water-cut",
+        "decline",
+        "energistics",
+        "xml-profile",
+        "explode",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "beginner"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 9134,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.production.production_reports"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.production.production_history"
+        }
+      ]
+    },
+    {
       "id": "protobuf-addressbook-contacts",
       "path": "demos/protobuf/addressbook-contacts",
       "iconPath": "icons/protobuf-addressbook-contacts.svg",
