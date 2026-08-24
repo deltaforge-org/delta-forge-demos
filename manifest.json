@@ -9749,6 +9749,52 @@
       ]
     },
     {
+      "id": "las-well-log-library",
+      "path": "demos/subsurface/las-well-log-library",
+      "iconPath": "icons/las-well-log-library.svg",
+      "name": "Well Log Library Consolidation",
+      "summary": "An operator takes a position in Dutch acreage and receives the regulator's public log package with it: seven wells logged between 1958 and 1990, in LAS 2.0, arriving in two tranches. The logs are real NLOG composite logs as the OSDU Forum redistributes them, 4376 depth steps in total. One external table spans the whole library even though the curve sets differ by thirty years of tool development, because the reader merges the per-file schemas into a union: gamma ray on all seven wells, sonic and density on three, and one 1990 well carrying nothing but a gamma ray. A well whose tool never recorded a sonic gets NULL for it, which is the truthful answer and not a zero. What this demo shows that the DLIS and LIS ones cannot is that the LAS well-information section rides on every row: the library is queryable by well, field and vintage with no join to a header table anywhere, and the well name comes out of the file's own header rather than its name. The load also turns the literal string UNKNOWN, which NLOG writes for an unattributed field, into a real NULL so it stops grouping as though it were a field. The loader keys on the source file, so one tranche is run twice and the count asserted unchanged.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "las",
+        "well-logs",
+        "log-library",
+        "schema-union",
+        "nlog",
+        "osdu",
+        "real-data",
+        "discover",
+        "incremental",
+        "idempotent",
+        "null-handling",
+        "delta",
+        "time-travel",
+        "beginner"
+      ],
+      "difficulty": "beginner",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 231939,
+      "fileCount": 7,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.log_library.log_files"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.log_library.log_library"
+        }
+      ]
+    },
+    {
       "id": "lis-tape-archive-recovery",
       "path": "demos/subsurface/lis-tape-archive-recovery",
       "iconPath": "icons/lis-tape-archive-recovery.svg",

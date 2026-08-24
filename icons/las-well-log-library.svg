@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="lwl" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#92400e"/>
+    </linearGradient>
+  </defs>
+  <!-- Three log tracks side by side, which is how a composite log is read -->
+  <rect x="8" y="10" width="18" height="60" rx="2" fill="url(#lwl)" opacity=".12" stroke="url(#lwl)" stroke-width="1.4"/>
+  <rect x="31" y="10" width="18" height="60" rx="2" fill="url(#lwl)" opacity=".12" stroke="url(#lwl)" stroke-width="1.4"/>
+  <rect x="54" y="10" width="18" height="60" rx="2" fill="url(#lwl)" opacity=".12" stroke="url(#lwl)" stroke-width="1.4"/>
+  <!-- Gamma ray: on every well in the library -->
+  <path d="M17 12c-6 8 6 12 0 20s6 12 0 20 4 10 1 16" stroke="url(#lwl)" stroke-width="1.8" fill="none" opacity=".85" stroke-linecap="round"/>
+  <!-- Sonic: only on some -->
+  <path d="M40 12c5 9-5 13 0 21s-5 13 0 21 3 11 0 16" stroke="url(#lwl)" stroke-width="1.8" fill="none" opacity=".55" stroke-linecap="round"/>
+  <!-- Density: the track that is empty for the older wells -->
+  <path d="M63 12v22" stroke="url(#lwl)" stroke-width="1.8" fill="none" opacity=".45" stroke-linecap="round"/>
+  <path d="M63 40v30" stroke="url(#lwl)" stroke-width="1.5" fill="none" opacity=".2" stroke-linecap="round" stroke-dasharray="3 4"/>
+  <!-- Depth ticks down the left edge -->
+  <path d="M4 20h4M4 34h4M4 48h4M4 62h4" stroke="url(#lwl)" stroke-width="1.4" opacity=".55" stroke-linecap="round"/>
+</svg>

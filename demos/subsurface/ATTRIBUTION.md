@@ -42,6 +42,18 @@ terms as well as OSDU's:
 | `ukooa-survey-navigation` | `landing/2026-03-11_ST0299-CMP-05003.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05003.p190` |
 | `ukooa-survey-navigation` | `landing/2026-03-12_ST0299-CMP-05004.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05004.p190` |
 | `ukooa-survey-navigation` | `landing/2026-03-12_ST0299-CMP-05005.p190` | `s3://osdu-seismic-test-data/volve/seismic/st0299/navigation_2D/ST0299-CMP-05005.p190` |
+| `las-well-log-library` | `landing/2026-03-11_1958_MED-01.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/1601_med01_1958_comp.las` |
+| `las-well-log-library` | `landing/2026-03-11_1961_WAS-25.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/2406_was25_1961_comp.las` |
+| `las-well-log-library` | `landing/2026-03-11_1963_MED-05.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/1605_med05_1963_comp.las` |
+| `las-well-log-library` | `landing/2026-03-12_1969_D15-01.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/7019_d1501_1969_comp.las` |
+| `las-well-log-library` | `landing/2026-03-12_1972_K08-02.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/7104_k0802_1972_comp.las` |
+| `las-well-log-library` | `landing/2026-03-12_1979_GRW-01.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/1348_grw01_1979_comp.las` |
+| `las-well-log-library` | `landing/2026-03-12_1990_L09-06.las` | `s3://osdu-seismic-test-data/r1/data/provided/well-logs/8802_l0906_1990_comp.las` |
+
+The LAS files are additionally renamed to carry the well and the logging
+year, because the demo's loader reads the vintage out of the delivery name:
+that is the data manager's convention, not something in the file. The well
+name itself still comes from each file's own `~W` block.
 
 **The only change made to any of them is the file name.** The bytes are
 unmodified. Each is prefixed with the delivery date the demo's landing zone
