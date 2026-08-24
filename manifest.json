@@ -7686,6 +7686,58 @@
       ]
     },
     {
+      "id": "grdecl-static-model",
+      "path": "demos/subsurface/grdecl-static-model",
+      "iconPath": "icons/grdecl-static-model.svg",
+      "name": "Static Model Deck Ingestion",
+      "summary": "A geomodeller exports the static reservoir model as an ECLIPSE GRDECL deck and hands it to the simulation team, who load it to check the property distributions before building a run from it. Two versions over two days: the second adds net-to-gross, which is the usual next step once someone asks why the volumes look optimistic. The grid is 30 by 24 by 10, so 7200 cells of which 7152 are inside the fault block, and each deck is about a kilobyte. That size is the point: a GRDECL property is run-length encoded, so a whole property here is ten tokens and the first of them is 720*0.263. A reader that does not expand the repeats produces a model of forty-eight cells and no error at all. Inactive cells are dropped by default because a cell outside the fault block has values in the file and no meaning, and a second table with include_inactive shows the full extent, which is a different question with a different answer. The i, j and k indices are derived from SPECGRID rather than read, so several properties of one model line up on the same cell without a join. It closes on what the revision was for: net-to-gross takes 24 percent off the pore volume.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "grdecl",
+        "eclipse",
+        "static-model",
+        "corner-point-grid",
+        "run-length-encoding",
+        "properties",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 2099,
+      "fileCount": 2,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.static_modelling.model_v1"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.static_modelling.model_v2"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.static_modelling.all_cells"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.static_modelling.static_model"
+        }
+      ]
+    },
+    {
       "id": "h3-gis-delivery-optimization",
       "path": "demos/spatial/h3-gis-delivery-optimization",
       "iconPath": "icons/h3-gis-delivery-optimization.svg",

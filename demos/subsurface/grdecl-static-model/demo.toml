@@ -1,0 +1,57 @@
+[demo]
+id = "grdecl-static-model"
+name = "Static Model Deck Ingestion"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A geomodeller exports the static reservoir model as an ECLIPSE GRDECL deck and hands it to the simulation team, who load it to check the property distributions before building a run from it. Two versions over two days: the second adds net-to-gross, which is the usual next step once someone asks why the volumes look optimistic. The grid is 30 by 24 by 10, so 7200 cells of which 7152 are inside the fault block, and each deck is about a kilobyte. That size is the point: a GRDECL property is run-length encoded, so a whole property here is ten tokens and the first of them is 720*0.263. A reader that does not expand the repeats produces a model of forty-eight cells and no error at all. Inactive cells are dropped by default because a cell outside the fault block has values in the file and no meaning, and a second table with include_inactive shows the full extent, which is a different question with a different answer. The i, j and k indices are derived from SPECGRID rather than read, so several properties of one model line up on the same cell without a join, and the demo checks that derivation covers the grid exactly. It closes on what the revision was for: net-to-gross takes 24 percent off the pore volume.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "grdecl",
+    "eclipse",
+    "static-model",
+    "corner-point-grid",
+    "run-length-encoding",
+    "properties",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_static_model_v1.grdecl"
+format = "grdecl"
+description = "Static model deck, 30x24x10, ACTNUM PORO PERMX SATNUM, 48 run-length tokens for 7200 cells each"
+size_bytes = 957
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_static_model_v2.grdecl"
+format = "grdecl"
+description = "The revision, adding NTG after the volumes looked optimistic"
+size_bytes = 1142
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.static_modelling.model_v1"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.static_modelling.model_v2"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.static_modelling.all_cells"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.static_modelling.static_model"

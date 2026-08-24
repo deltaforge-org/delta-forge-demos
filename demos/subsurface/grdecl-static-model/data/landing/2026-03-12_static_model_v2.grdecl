@@ -1,0 +1,40 @@
+-- ====================================================================
+-- Static reservoir model, corner point grid
+-- Exported for the simulation team
+-- ====================================================================
+
+SPECGRID
+  30 24 10 1 F /
+
+-- Cells the simulator solves. A wedge on the eastern flank of the top two layers is outside the fault block.
+ACTNUM
+  566*1  4*0  26*1  4*0  26*1  4*0
+  26*1  4*0  26*1  4*0  26*1  4*0
+  566*1  4*0  26*1  4*0  26*1  4*0
+  26*1  4*0  26*1  4*0  26*1  4*0
+  5760*1
+/
+
+-- Porosity, constant within each layer and falling with depth.
+PORO
+  720*0.263  720*0.251  720*0.244  720*0.229  720*0.218  720*0.203
+  720*0.191  720*0.176  720*0.162  720*0.148
+/
+
+-- Horizontal permeability, following porosity.
+PERMX
+  720*1850.0  720*1420.0  720*1180.0  720*830.0  720*640.0  720*430.0
+  720*310.0  720*190.0  720*115.0  720*72.0
+/
+
+-- Saturation regions: three of them, stacked.
+SATNUM
+  2880*1  2880*2  1440*3
+/
+
+-- Net to gross, added in the revision after the volumes looked optimistic.
+NTG
+  720*0.94  720*0.92  720*0.90  720*0.86  720*0.81  720*0.74
+  720*0.68  720*0.59  720*0.47  720*0.38
+/
+

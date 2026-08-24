@@ -28,6 +28,7 @@ look right the first time.
 | [geotiff-raster-catalog](geotiff-raster-catalog/) | GeoTIFF | written for the demo | Six tiles catalogued from their tag directories without reading a pixel. Overview pyramids give three rows per file; finds a tile in the wrong UTM zone and one at half resolution. |
 | [resqml-model-handover](resqml-model-handover/) | RESQML | written for the demo | Two .epc model versions audited for what they depend on. The reader records the HDF5 arrays an object names without following them, so a missing companion file is a row rather than a grid with no geometry. |
 | [zmap-depth-surfaces](zmap-depth-surfaces/) | ZMAP+ | written for the demo | Two depth-conversion iterations and a base surface. Asserts the column-major node order and the 1e30 sentinel, then computes two billion cubic metres of gross rock volume. |
+| [grdecl-static-model](grdecl-static-model/) | GRDECL | written for the demo | Two static model decks. A kilobyte of run-length-encoded text describing 7200 cells five times over, so a reader that skips the expansion returns 48 cells and no error. |
 | [north-sea-field](north-sea-field/) | SEG-Y, LAS, ZMAP+, GRDECL, UKOOA P1/90 | written for the demo | The cross-format integration demo: five formats over one field, joined on real coordinates. |
 
 ## Where the data comes from
