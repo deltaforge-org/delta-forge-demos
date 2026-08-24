@@ -1,0 +1,61 @@
+[demo]
+id = "resqml-model-handover"
+name = "Reservoir Model Handover Audit"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A partner delivers a static reservoir model for a unitisation study as a RESQML package, and before the asset team loads it into the modelling software somebody has to audit what actually arrived. The question that matters is not how many objects there are: it is which of them point at bulk arrays living in a companion HDF5 file that may or may not have been delivered. That is the classic handover failure, because it fails quietly: the .epc opens, every object is present, every citation is filled in, and the grid has no geometry because the .h5 it names never arrived. RESQML records the reference rather than following it, so the dependency is a row here instead of an absence there. Two versions over two days, 14 objects then 18, plus one object exchanged unpacked to show the same reader handles both shapes. An .epc is an Open Packaging Conventions ZIP and DeltaForge opens the archive itself rather than handing it to the XML engine, which matters because a ZIP holding XML parts is also what an .xlsx is: a detector that stops at the ZIP header calls a reservoir model a spreadsheet. The closing queries are the audit itself: every UUID unique, what the revision added, and the HDF5 dependency list that goes back to the partner as the question of what else is needed.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "resqml",
+    "epc",
+    "energistics",
+    "reservoir-model",
+    "handover",
+    "audit",
+    "hdf5",
+    "opc-package",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/packages/2026-03-11_static_model_v1.epc"
+format = "resqml"
+description = "Initial static model handover, 14 object parts, 7 naming external HDF5 arrays"
+size_bytes = 13336
+
+[[demo.data_files]]
+path = "data/landing/packages/2026-03-12_static_model_v2.epc"
+format = "resqml"
+description = "Revised model, 18 object parts, 10 naming external HDF5 arrays"
+size_bytes = 17432
+
+[[demo.data_files]]
+path = "data/landing/unpacked/2026-03-12_top_hugin_unpacked.xml"
+format = "resqml"
+description = "A single RESQML object exchanged unpacked rather than in a package"
+size_bytes = 1061
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.model_handover.model_packages"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.model_handover.unpacked_parts"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.model_handover.model_inventory"

@@ -10713,6 +10713,56 @@
       ]
     },
     {
+      "id": "resqml-model-handover",
+      "path": "demos/subsurface/resqml-model-handover",
+      "iconPath": "icons/resqml-model-handover.svg",
+      "name": "Reservoir Model Handover Audit",
+      "summary": "A partner delivers a static reservoir model for a unitisation study as a RESQML package, and before the asset team loads it into the modelling software somebody has to audit what actually arrived. The question that matters is not how many objects there are: it is which of them point at bulk arrays living in a companion HDF5 file that may or may not have been delivered. That is the classic handover failure, because it fails quietly: the .epc opens, every object is present, every citation is filled in, and the grid has no geometry because the .h5 it names never arrived. RESQML records the reference rather than following it, so the dependency is a row here instead of an absence there. Two versions over two days, 14 objects then 18, plus one object exchanged unpacked to show the same reader handles both shapes. An .epc is an Open Packaging Conventions ZIP and DeltaForge opens the archive itself rather than handing it to the XML engine, which matters because a ZIP holding XML parts is also what an .xlsx is: a detector that stops at the ZIP header calls a reservoir model a spreadsheet. The closing queries are the audit itself: every UUID unique, what the revision added, and the HDF5 dependency list.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "resqml",
+        "epc",
+        "energistics",
+        "reservoir-model",
+        "handover",
+        "audit",
+        "hdf5",
+        "opc-package",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 31829,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.model_handover.model_packages"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.model_handover.unpacked_parts"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.model_handover.model_inventory"
+        }
+      ]
+    },
+    {
       "id": "sales-quickstart",
       "path": "demos/csv/sales-quickstart",
       "iconPath": "icons/sales-quickstart.svg",

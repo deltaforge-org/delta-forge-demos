@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resqml2:obj_Grid2dRepresentation
+    xmlns:resqml2="http://www.energistics.org/energyml/data/resqmlv2"
+    xmlns:eml="http://www.energistics.org/energyml/data/commonv2"
+    schemaVersion="2.0"
+    uuid="cccccccc-0000-0000-0000-000000000013">
+  <eml:Citation>
+    <eml:Title>Top Hugin depth surface, unpacked</eml:Title>
+    <eml:Originator>Nordfjell Petroleum</eml:Originator>
+    <eml:Creation>2026-03-09T14:22:00Z</eml:Creation>
+  </eml:Citation>
+  <resqml2:RepresentedInterpretation>
+    <eml:DataObjectReference uuid="44444444-0000-0000-0000-000000000005"/>
+  </resqml2:RepresentedInterpretation>
+  <resqml2:RepresentedInterpretation>
+    <eml:DataObjectReference uuid="11111111-0000-0000-0000-000000000001"/>
+  </resqml2:RepresentedInterpretation>
+  <resqml2:Geometry>
+    <resqml2:Points>
+      <eml:PathInExternalFile>/RESQML/top_hugin/points</eml:PathInExternalFile>
+      <eml:HdfProxy uuid="22222222-0000-0000-0000-000000000002"/>
+    </resqml2:Points>
+  </resqml2:Geometry>
+</resqml2:obj_Grid2dRepresentation>
