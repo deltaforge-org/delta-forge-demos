@@ -10975,6 +10975,12 @@
       "description": "Graph property storage mode demos with flattened, JSON, and hybrid vertex/edge tables, traversal, centrality, and social network analytics"
     },
     {
+      "id": "subsurface",
+      "name": "Subsurface & Energy",
+      "icon": "mountain",
+      "description": "Upstream energy formats read in place: SEG-Y and SEG-D seismic, LAS, DLIS and LIS well logs, UKOOA P1/90 navigation, ZMAP+ grids, GRDECL and ECLIPSE simulation, RESQML models, WITSML drilling, PRODML production, and shapefile, GeoJSON and GeoTIFF geospatial. Each demo is an incremental load from a landing folder into Delta, several on real Volve and NLOG data."
+    },
+    {
       "id": "delta-table",
       "name": "Delta Table",
       "icon": "triangle",
