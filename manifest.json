@@ -11198,6 +11198,54 @@
       "author": "DeltaForge Team",
       "version": "1.0.0",
       "updatedAt": "2026-03-01T12:00:00Z"
+    },
+    {
+      "id": "zmap-depth-surfaces",
+      "path": "demos/subsurface/zmap-depth-surfaces",
+      "iconPath": "icons/zmap-depth-surfaces.svg",
+      "name": "Depth Surface Handover and Gross Rock Volume",
+      "summary": "A geophysicist depth-converts a seismic interpretation and hands the result to the mapping team as ZMAP+ grids, who load them to compute gross rock volume, the number a prospect is sized on. Three grids over two days: a first pass at the top reservoir, then a revised top after the velocity model was corrected, and the base surface that turns the pair into a volume. Each grid is 45 rows by 60 columns on a 200 m spacing, so 2700 nodes of which 1441 fall inside the mapped polygon. Two properties of the format decide whether a reader gets it right and both are asserted: values run column by column rather than row by row, so a row-major reader produces a grid of exactly the right size where every node holds a neighbour's value, and nodes outside the polygon carry a 1e30 sentinel which, read as a number, does not merely skew an average but obliterates it. The grid is 45 by 60 rather than square on purpose, so a transposed read runs off the end instead of quietly succeeding. The file holds no coordinates at all, only a corner and an extent, so the demo checks the arithmetic the reader does. It closes on two billion cubic metres of rock, computed against the corrected top.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "zmap",
+        "depth-conversion",
+        "surfaces",
+        "gross-rock-volume",
+        "grid",
+        "null-handling",
+        "discover",
+        "incremental",
+        "idempotent",
+        "delta",
+        "time-travel",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 164198,
+      "fileCount": 3,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-25T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.mapping.depth_grids"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.mapping.all_nodes"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.mapping.depth_surfaces"
+        }
+      ]
     }
   ],
   "categories": [
