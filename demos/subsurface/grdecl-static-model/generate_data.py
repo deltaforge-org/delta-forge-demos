@@ -1,15 +1,16 @@
-"""Write the GRDECL static-model decks this demo reads.
+"""Write the coarse sector deck this demo reads alongside the real Norne model.
 
-Scenario: a geomodeller exports the static reservoir model as an ECLIPSE
-GRDECL deck and hands it to the simulation team. The deck is plain text, and
-the simulation team loads it to check the property distributions before
-building a run from it: is the porosity sensible layer by layer, does the
-permeability follow it, and how many cells does the model actually solve.
+Scenario: a static-model archive receives decks from two places. The field's
+own full model arrives as the operator exported it, one value per cell and no
+compression at all. A coarse sector model, built for a quick sensitivity run,
+arrives run-length encoded, which is how a GRDECL deck is normally written.
 
-Two versions over two days. The revision adds a net-to-gross property, which
-is the usual next step once someone asks why the volumes look optimistic.
+This generator writes the second of those. The first is the real Norne model
+and is not generated at all: it is the published Norne deck under the Open
+Database License, assembled from the property files it ships as separate
+INCLUDE files. See ATTRIBUTION.md in the parent folder.
 
-Deterministic: rerunning produces byte identical files.
+Deterministic: rerunning produces a byte identical file.
 
     python generate_data.py
 
@@ -18,12 +19,14 @@ Deterministic: rerunning produces byte identical files.
 A GRDECL deck is a keyword followed by numbers followed by a slash. The
 numbers use RUN-LENGTH ENCODING: `720*0.18` means seven hundred and twenty
 cells of 0.18, not one cell holding the string. A deck of 7200 cells is
-routinely a few hundred tokens, and a reader that does not expand the
-repeats produces a model with a few hundred cells and no error.
+routinely a few dozen tokens, and a reader that does not expand the repeats
+produces a model with a few dozen cells and no error.
 
 This generator deliberately writes long runs, so the token count and the cell
 count are wildly different numbers and the expansion is actually exercised.
-Comments (`--`) are scattered through the deck for the same reason.
+Comments (`--`) are scattered through the deck for the same reason. The Norne
+deck exercises the opposite path: 453,376 values with not one repeat among
+them, where the same parser has to not invent a run that is not there.
 """
 import math
 import os
@@ -110,8 +113,8 @@ def keyword_block(name, tokens, comment, per_line=6):
 def deck(with_ntg):
     lines = []
     lines.append('-- ' + '=' * 68)
-    lines.append('-- Static reservoir model, corner point grid')
-    lines.append('-- Exported for the simulation team')
+    lines.append('-- Coarse sector model, corner point grid')
+    lines.append('-- Built for a sensitivity run alongside the full field model')
     lines.append('-- ' + '=' * 68)
     lines.append('')
     lines.append('SPECGRID')
@@ -161,9 +164,11 @@ def main():
     active = sum(actnum())
     total = 0
 
+    # One deck. The other half of this demo's landing folder is the real
+    # Norne model, which ships uncompressed, so this is the deck that carries
+    # the run-length encoding the reader has to undo.
     for day, name, with_ntg in [
-        ('2026-03-11', 'static_model_v1', False),
-        ('2026-03-12', 'static_model_v2', True),
+        ('2026-03-12', 'sector_model', True),
     ]:
         text, token_counts = deck(with_ntg)
         file_name = '%s_%s.grdecl' % (day, name)

@@ -116,24 +116,83 @@ specification agree with each other:
   density and 4808 are physically possible, and 1114 density corrections are
   below -1 g/cc with the worst at -57338.
 
+## Norne, and what a real reservoir model brought with it
+
+`demos/subsurface/grdecl-static-model` reads the published static model of the
+Norne field, offshore Norway.
+
+| | |
+|---|---|
+| Source | `OPM/opm-data`, the Open Porous Media data repository |
+| Files used | `NORNE_ATW2013.DATA` (grid dimensions), `INCLUDE/GRID/ACTNUM_0704.prop`, `INCLUDE/PETRO/PORO_0704.prop`, `INCLUDE/PETRO/PERM_0704.prop`, `INCLUDE/PETRO/NTG_0704.prop` |
+| Licence | Open Database License 1.0, contents under the Database Contents License 1.0 |
+| Copyright | Copyright (C) 2015 Statoil |
+
+**What was done to the files.** The Norne deck distributes its properties as
+separate files pulled in by `INCLUDE` statements, and the demo's reader treats
+`INCLUDE` as a grid keyword to skip rather than a file to follow, so the four
+property files were concatenated behind a `DIMENS 46 112 22 /` header taken
+from the master deck. That is exactly what a simulator holds in memory once it
+has resolved those includes. Each property block is byte for byte the file it
+came from, including the ODbL notice and the Statoil copyright line that each
+one carries inline. No value was edited, reordered, resampled or rounded.
+
+**Every asserted number was computed by an independent GRDECL reader** written
+for the purpose, not by the engine. 37 of them, all reproducing from the
+shipped bytes.
+
+**What the real model turned out to contain**, none of which a generated deck
+would have produced:
+
+- Only 44,927 of its 113,344 cells are active. Three cells in five are outside
+  the simulated volume, so whether inactive cells are dropped is the
+  difference between a mean porosity of 24 percent and a meaningless one.
+- **Layer 3 is entirely inactive.** All 5152 of its cells sit in the grid and
+  not one is solved, so a `GROUP BY k` over the active model returns 21 groups
+  and not 22. A generated deck would have had no reason to contain that.
+- **Nothing repeats.** Layer 0 holds 2221 active cells with 2221 distinct
+  porosities, 2220 distinct permeabilities (exactly one pair collides), and
+  1981 distinct net-to-gross values. The deck is 5.7 MB precisely because
+  run-length encoding has nothing to compress, which is the opposite of what
+  GRDECL is usually shaped like.
+
+That last point is why the demo did not simply replace its written deck. The
+coarse sector model beside Norne writes 36,000 values as 62 numeric tokens,
+and the run-length expansion is the failure mode that silently turns a model
+into a few dozen cells. Norne does not exercise it at all. The two decks sit
+in one landing folder and one curated table because between them they cover
+both halves of the format, and neither alone does.
+
 ## The demos that still ship written data
 
-SEG-D, ECLIPSE binary, GRDECL, ZMAP+, WITSML, PRODML, GeoJSON, Shapefile and
-GeoTIFF currently ship data written by a generator committed beside them. For
-several of these, open sources DO exist and are being migrated onto:
+SEG-D, ECLIPSE binary, ZMAP+, WITSML, PRODML, GeoJSON, Shapefile and GeoTIFF
+currently ship data written by a generator committed beside them. GRDECL no
+longer does; see the Norne section below. For the rest:
 
 | Format | Candidate source | Licence | Status |
 |---|---|---|---|
-| GRDECL | Norne field, `OPM/opm-data` | ODbL 1.0 + DbCL 1.0 | Approved, migration pending |
-| GeoTIFF | GDAL `autotest/gcore/data` | MIT/X11 | Migration pending |
-| Shapefile, GeoJSON | Natural Earth | Public domain | Migration pending |
+| GeoTIFF | GDAL `autotest/gcore/data` | MIT/X11 | Examined, not adopted |
+| Shapefile, GeoJSON | Natural Earth | Public domain | Examined, not adopted |
 | WITSML, PRODML | `F2I-Consulting/fesapi`, `geosiris/energyml-*` | Apache-2.0 | Not yet examined |
 | ECLIPSE binary | Not found: `opm-data` ships input decks, not simulator output | | Open |
 | SEG-D, ZMAP+ | Not found | | Open |
 
-**ODbL is share-alike on the database.** Norne is approved for use here, but
-that obligation attaches to it and does not attach to the MIT, Apache-2.0 and
-public-domain sources above. It is recorded so nobody has to rediscover it.
+**Why GeoTIFF and Natural Earth were examined and not adopted.** GDAL's
+`autotest` tree is 235 TIFF files, and they are other people's synthetic test
+fixtures (`sasha.tif`, `stefan_full_rgba.tif`, `quad-lzw-old-style.tif`),
+not survey rasters. Swapping to them would trade a coherent subsurface
+scenario, with its deliberate CRS and resolution outliers, for files that are
+real bytes but not real subsurface data, which is not the property that was
+wanted. Natural Earth is genuinely real and genuinely public domain, but it is
+world political geography: adopting it would move the Shapefile and GeoJSON
+demos off well pads and licence blocks and onto country borders. On-domain
+alternatives were tried and did not serve: Sodir returned 500, NLOG 404, and
+BOEM served HTML rather than the archive. Both remain open if an on-domain
+source appears.
+
+**ODbL is share-alike on the database.** That obligation attaches to Norne and
+does not attach to the MIT, Apache-2.0 and public-domain sources above. It is
+recorded so nobody has to rediscover it.
 
 A generated file still has one real advantage worth stating: a test can assert
 an exact count that was known before any reader saw the bytes, where a

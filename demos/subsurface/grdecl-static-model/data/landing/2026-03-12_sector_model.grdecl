@@ -1,6 +1,6 @@
 -- ====================================================================
--- Static reservoir model, corner point grid
--- Exported for the simulation team
+-- Coarse sector model, corner point grid
+-- Built for a sensitivity run alongside the full field model
 -- ====================================================================
 
 SPECGRID

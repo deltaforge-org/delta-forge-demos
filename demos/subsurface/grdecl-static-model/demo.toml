@@ -3,7 +3,7 @@ id = "grdecl-static-model"
 name = "Static Model Deck Ingestion"
 version = "1.0.0"
 author = "DeltaForge Team"
-description = """A geomodeller exports the static reservoir model as an ECLIPSE GRDECL deck and hands it to the simulation team, who load it to check the property distributions before building a run from it. Two versions over two days: the second adds net-to-gross, which is the usual next step once someone asks why the volumes look optimistic. The grid is 30 by 24 by 10, so 7200 cells of which 7152 are inside the fault block, and each deck is about a kilobyte. That size is the point: a GRDECL property is run-length encoded, so a whole property here is ten tokens and the first of them is 720*0.263. A reader that does not expand the repeats produces a model of forty-eight cells and no error at all. Inactive cells are dropped by default because a cell outside the fault block has values in the file and no meaning, and a second table with include_inactive shows the full extent, which is a different question with a different answer. The i, j and k indices are derived from SPECGRID rather than read, so several properties of one model line up on the same cell without a join, and the demo checks that derivation covers the grid exactly. It closes on what the revision was for: net-to-gross takes 24 percent off the pore volume.
+description = """A static-model archive receives ECLIPSE GRDECL decks from two places and the simulation team loads both to check the property distributions before building a run. The first is real: the published model of the Norne field, offshore Norway, under the Open Database License, 46 by 112 by 22 and 113,344 cells of which only 44,927 are solved. The second is a coarse sector model, 30 by 24 by 10. They are written in opposite styles, which is why one reader handling both is the thing worth showing. A GRDECL property is run-length encoded, so 720*0.263 is seven hundred and twenty cells rather than one; the sector deck writes 36,000 values as 62 numeric tokens in 1.1 kB, and the Norne deck uses no repeats at all, writing 453,376 values as 453,376 tokens in 5.7 MB. A reader that skips the expansion gets Norne exactly right and turns the sector model into 62 cells with no error. Real data brings real structure with it: layer 3 of Norne is entirely inactive, and layer 0 holds 2221 cells with 2221 distinct porosity values, so no two share a number. Inactive cells are dropped by default because their values are in the file and mean nothing, and a second table with include_inactive answers the different question of what the model covers. The i, j and k indices are derived from the grid header rather than read, so separate keywords line up on the same cell without a join. It closes on the number a static model exists to produce: net-to-gross takes 13 percent off Norne's pore volume and 24 percent off the sector model's.
 """
 categories = ["subsurface", "energy", "incremental-load"]
 tags = [
@@ -12,6 +12,8 @@ tags = [
     "eclipse",
     "static-model",
     "corner-point-grid",
+    "norne",
+    "open-data",
     "run-length-encoding",
     "properties",
     "discover",
@@ -29,28 +31,28 @@ data_subdir = { description = "Zone-relative path to the staged demo data. DISCO
 zone_name = { description = "Target zone name (defaults to 'external')", required = false }
 
 [[demo.data_files]]
-path = "data/landing/2026-03-11_static_model_v1.grdecl"
+path = "data/landing/2026-03-11_norne_2004.grdecl"
 format = "grdecl"
-description = "Static model deck, 30x24x10, ACTNUM PORO PERMX SATNUM, 48 run-length tokens for 7200 cells each"
-size_bytes = 957
+description = "The real Norne field model, 46x112x22, ACTNUM PORO PERMX NTG, 453,376 values written one per cell with no repeats. Open Database License, Copyright (C) 2015 Statoil. See ATTRIBUTION.md."
+size_bytes = 5746115
 
 [[demo.data_files]]
-path = "data/landing/2026-03-12_static_model_v2.grdecl"
+path = "data/landing/2026-03-12_sector_model.grdecl"
 format = "grdecl"
-description = "The revision, adding NTG after the volumes looked optimistic"
-size_bytes = 1142
+description = "Coarse sector model, 30x24x10, ACTNUM PORO PERMX SATNUM NTG, 36,000 values written as 62 run-length tokens"
+size_bytes = 1165
 
 [[demo.target_objects]]
 type = "external_table"
-name = "{{zone_name}}.static_modelling.model_v1"
+name = "{{zone_name}}.static_modelling.norne"
 
 [[demo.target_objects]]
 type = "external_table"
-name = "{{zone_name}}.static_modelling.model_v2"
+name = "{{zone_name}}.static_modelling.norne_all"
 
 [[demo.target_objects]]
 type = "external_table"
-name = "{{zone_name}}.static_modelling.all_cells"
+name = "{{zone_name}}.static_modelling.sector"
 
 [[demo.target_objects]]
 type = "delta_table"

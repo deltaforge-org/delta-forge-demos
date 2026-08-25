@@ -28,7 +28,7 @@ look right the first time.
 | [geotiff-raster-catalog](geotiff-raster-catalog/) | GeoTIFF | written for the demo | Six tiles catalogued from their tag directories without reading a pixel. Overview pyramids give three rows per file; finds a tile in the wrong UTM zone and one at half resolution. |
 | [resqml-model-handover](resqml-model-handover/) | RESQML | written for the demo | Two .epc model versions audited for what they depend on. The reader records the HDF5 arrays an object names without following them, so a missing companion file is a row rather than a grid with no geometry. |
 | [zmap-depth-surfaces](zmap-depth-surfaces/) | ZMAP+ | written for the demo | Two depth-conversion iterations and a base surface. Asserts the column-major node order and the 1e30 sentinel, then computes two billion cubic metres of gross rock volume. |
-| [grdecl-static-model](grdecl-static-model/) | GRDECL | written for the demo | Two static model decks. A kilobyte of run-length-encoded text describing 7200 cells five times over, so a reader that skips the expansion returns 48 cells and no error. |
+| [grdecl-static-model](grdecl-static-model/) | GRDECL | Norne field, `OPM/opm-data` (ODbL) + written | Two decks written in opposite styles. The real Norne model spends 5.7 MB on 453,376 values with no repeats and one wholly inactive layer; a coarse sector deck writes 36,000 values as 62 tokens, so a reader that skips the run-length expansion returns 62 cells and no error. |
 | [north-sea-field](north-sea-field/) | SEG-Y, LAS, ZMAP+, GRDECL, UKOOA P1/90 | written for the demo | The cross-format integration demo: five formats over one field, joined on real coordinates. |
 
 ## Where the data comes from
@@ -39,10 +39,16 @@ and the exact original path of every real file.
 
 The short version: the OSDU Forum's open test data covers SEG-Y, LAS, UKOOA
 P1/90, SEG-P1, DLIS and LIS, and those demos use it. It publishes nothing in
-SEG-D, ECLIPSE binary, GRDECL, ZMAP+, RESQML, WITSML, PRODML, GeoJSON,
-Shapefile or GeoTIFF, and no other open corpus covers that set, so those demos
-ship data written by a generator committed beside them. Each generator names
-the real scenario it reproduces and the specification behaviour it exercises.
+the remaining formats, but other open corpora do cover some of them, and those
+demos use those instead: RESQML reads the example packages from `bp/resqpy`
+under MIT, and GRDECL reads the published Norne field model from
+`OPM/opm-data` under the Open Database License.
+
+SEG-D, ECLIPSE binary, ZMAP+, WITSML, PRODML, GeoJSON, Shapefile and GeoTIFF
+still ship data written by a generator committed beside them. Each generator
+names the real scenario it reproduces and the specification behaviour it
+exercises. ATTRIBUTION.md records which open sources were examined for these
+and why the ones that exist were or were not adopted.
 
 ## Regenerating the written data
 
