@@ -52,8 +52,9 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.surface_land
 -- Those names are worth looking at, because they are the format speaking
 -- rather than a naming choice. DBF truncates every field name to TEN
 -- characters: LEASE_NUMBER becomes lease_numb, SALE_NUMBER becomes sale_numbe,
--- CURRENT_AREA becomes current_ar, and LEASE_EFF_DATE becomes lease_eff_ with
--- the underscore left dangling where the cut landed. This is what real
+-- CURRENT_AREA becomes current_ar, and LEASE_EFF_DATE becomes lease_eff: the
+-- cut landed mid-word and left DBF holding LEASE_EFF_, whose trailing
+-- underscore is dropped when the name is normalised. This is what real
 -- shapefile columns look like.
 -- ----------------------------------------------------------------------------
 

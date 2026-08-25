@@ -52,13 +52,13 @@ FROM {{zone_name}}.log_library.log_files;
 -- grouping the library by well is grouping the rows themselves.
 
 ASSERT ROW_COUNT = 7
-ASSERT VALUE steps = 620 WHERE well_well = 'MED-01'
-ASSERT VALUE steps = 407 WHERE well_well = 'WAS-25'
-ASSERT VALUE steps = 558 WHERE well_well = 'MED-05'
-ASSERT VALUE steps = 456 WHERE well_well = 'D15-01'
-ASSERT VALUE steps = 465 WHERE well_well = 'K08-02'
-ASSERT VALUE steps = 842 WHERE well_well = 'GRW-01'
-ASSERT VALUE steps = 1028 WHERE well_well = 'L09-06'
+ASSERT VALUE steps = 620 WHERE well = 'MED-01'
+ASSERT VALUE steps = 407 WHERE well = 'WAS-25'
+ASSERT VALUE steps = 558 WHERE well = 'MED-05'
+ASSERT VALUE steps = 456 WHERE well = 'D15-01'
+ASSERT VALUE steps = 465 WHERE well = 'K08-02'
+ASSERT VALUE steps = 842 WHERE well = 'GRW-01'
+ASSERT VALUE steps = 1028 WHERE well = 'L09-06'
 SELECT well_well AS well,
        well_fld  AS field,
        COUNT(*)  AS steps
@@ -225,7 +225,7 @@ ASSERT VALUE steps = 465 WHERE well = 'K08-02'
 ASSERT VALUE live_rhob = 465 WHERE well = 'K08-02'
 ASSERT VALUE steps = 842 WHERE well = 'GRW-01'
 ASSERT VALUE vintage = 1979 WHERE well = 'GRW-01'
-ASSERT VALUE field = '101 ROTLIEGEND' WHERE well = 'GRW-01'
+ASSERT VALUE field = 'LEEUWARDEN 101 ROTLIEGEND' WHERE well = 'GRW-01'
 ASSERT VALUE steps = 1028 WHERE well = 'L09-06'
 ASSERT VALUE vintage = 1990 WHERE well = 'L09-06'
 ASSERT VALUE live_gr = 1020 WHERE well = 'L09-06'

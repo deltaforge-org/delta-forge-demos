@@ -13,7 +13,8 @@
 --
 -- The thing real data brings here is names. DBF truncates every field name to
 -- TEN characters, so the columns are lease_numb, sale_numbe, current_ar and
--- lease_eff_, the last with its underscore left dangling where the cut landed.
+-- lease_eff, the last of them cut mid-word: DBF kept LEASE_EFF_ and the
+-- trailing underscore is dropped when the column name is normalised.
 -- The demo asserts those names as they are. A written fixture would have had
 -- tidy ones and proved nothing.
 -- ============================================================================
@@ -93,7 +94,7 @@ SELECT '2026-03-11'                        AS delivered_on,
        l.lease_numb                        AS lease_number,
        l.mineral_ty                        AS mineral_type,
        l.lease_stat                        AS lease_status,
-       l.lease_eff_                        AS effective_date,
+       l.lease_eff                         AS effective_date,
        CAST(l.royalty_ra AS DOUBLE)        AS royalty_rate,
        CAST(l.current_ar AS DOUBLE)        AS current_area,
        l.geometry_type
@@ -198,7 +199,7 @@ SELECT '2026-03-11'                        AS delivered_on,
        l.lease_numb                        AS lease_number,
        l.mineral_ty                        AS mineral_type,
        l.lease_stat                        AS lease_status,
-       l.lease_eff_                        AS effective_date,
+       l.lease_eff                         AS effective_date,
        CAST(l.royalty_ra AS DOUBLE)        AS royalty_rate,
        CAST(l.current_ar AS DOUBLE)        AS current_area,
        l.geometry_type
