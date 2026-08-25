@@ -10,6 +10,13 @@ before it. Those are not faults anyone would think to invent.
 This file records where each file came from and under what terms. Every demo
 that ships third-party data links here.
 
+## A correction
+
+An earlier version of this file said that no open corpus covers the formats
+OSDU does not publish. **That was wrong, and it was written without searching
+properly.** Open, redistributable data exists for several of them, and the
+demos are being moved onto it. What follows is what was actually found.
+
 ## OSDU Forum open test data
 
 Redistributed by The Open Group's OSDU Forum from
@@ -55,6 +62,24 @@ year, because the demo's loader reads the vintage out of the delivery name:
 that is the data manager's convention, not something in the file. The well
 name itself still comes from each file's own `~W` block.
 
+## resqpy example models
+
+From the **bp/resqpy** project's `example_data` directory,
+
+    https://github.com/bp/resqpy
+
+under the **MIT License**. Written by resqpy itself, and shipped here with the
+`.h5` companions they name, so the handover the demo audits is a complete one.
+
+| Demo | File as shipped | Original |
+|---|---|---|
+| `resqml-model-handover` | `landing/packages/2026-03-11_block.epc` | `example_data/block.epc` |
+| `resqml-model-handover` | `landing/arrays/2026-03-11_block.h5` | `example_data/block.h5` |
+| `resqml-model-handover` | `landing/packages/2026-03-12_s_bend.epc` | `example_data/s_bend.epc` |
+| `resqml-model-handover` | `landing/arrays/2026-03-12_s_bend.h5` | `example_data/s_bend.h5` |
+| `resqml-model-handover` | `landing/packages/2026-03-12_tic_tac_toe.epc` | `example_data/tic_tac_toe.epc` |
+| `resqml-model-handover` | `landing/arrays/2026-03-12_tic_tac_toe.h5` | `example_data/tic_tac_toe.h5` |
+
 **The only change made to any of them is the file name.** The bytes are
 unmodified. Each is prefixed with the delivery date the demo's landing zone
 uses, and the extension is lower-cased, because the demos model a landing
@@ -75,6 +100,15 @@ specification agree with each other:
 - **P1/90 packed longitudes were parsed from the left.** The degrees are right
   justified in their field, so a survey at 1 degree 56 minutes east reads as
   156 degrees: the North Sea relocated to central Siberia, with no error.
+- **RESQML emitted package metadata as an object.** `docProps/core.xml` is
+  Open Packaging Conventions metadata about the package, and it ends in `.xml`
+  outside `_rels/`, so it satisfied every condition the reader tested. One
+  spurious row per package, in a table whose whole purpose is an inventory.
+- **RESQML read no references at all.** A DataObjectReference names its target
+  in an `<eml:UUID>` child element, not a `uuid` attribute. Reading only the
+  attribute form left `reference_count` at zero for all 56 objects in these
+  three packages, so the reference graph was empty while every other column
+  was correct.
 - **Two Volve DLIS composites record depth in different units**, tenths of an
   inch and millimetres, three orders of magnitude apart with nothing in the
   numbers saying so.
@@ -82,18 +116,27 @@ specification agree with each other:
   density and 4808 are physically possible, and 1114 density corrections are
   below -1 g/cc with the worst at -57338.
 
-## What OSDU does not publish
+## The demos that still ship written data
 
-The OSDU open test data covers SEG-Y, LAS, UKOOA P1/90, SEG-P1, DLIS and LIS.
-It publishes nothing in SEG-D, ECLIPSE binary, GRDECL, ZMAP+, RESQML, WITSML,
-PRODML, GeoJSON, Shapefile or GeoTIFF, and no other open corpus covers that
-set either.
+SEG-D, ECLIPSE binary, GRDECL, ZMAP+, WITSML, PRODML, GeoJSON, Shapefile and
+GeoTIFF currently ship data written by a generator committed beside them. For
+several of these, open sources DO exist and are being migrated onto:
 
-The demos for those formats therefore ship data written for the demo by a
-generator committed alongside it, from a literal description of what the file
-should contain. That is a deliberate trade rather than a shortcut: a generated
-file lets a test assert an exact count that was known before any reader saw
-the bytes, where a downloaded file's expected values would have to come from
-our own reader and the assertion would pass whatever that reader did. Each
-generator names the real-world scenario it is reproducing and the real
-specification behaviour it is exercising.
+| Format | Candidate source | Licence | Status |
+|---|---|---|---|
+| GRDECL | Norne field, `OPM/opm-data` | ODbL 1.0 + DbCL 1.0 | Approved, migration pending |
+| GeoTIFF | GDAL `autotest/gcore/data` | MIT/X11 | Migration pending |
+| Shapefile, GeoJSON | Natural Earth | Public domain | Migration pending |
+| WITSML, PRODML | `F2I-Consulting/fesapi`, `geosiris/energyml-*` | Apache-2.0 | Not yet examined |
+| ECLIPSE binary | Not found: `opm-data` ships input decks, not simulator output | | Open |
+| SEG-D, ZMAP+ | Not found | | Open |
+
+**ODbL is share-alike on the database.** Norne is approved for use here, but
+that obligation attaches to it and does not attach to the MIT, Apache-2.0 and
+public-domain sources above. It is recorded so nobody has to rediscover it.
+
+A generated file still has one real advantage worth stating: a test can assert
+an exact count that was known before any reader saw the bytes, where a
+downloaded file's expected values have to be established by reading it. Every
+count asserted against real data in these demos was therefore computed by an
+independent parser written for the purpose, never by the engine's own reader.

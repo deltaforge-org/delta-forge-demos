@@ -10794,10 +10794,10 @@
       ],
       "difficulty": "intermediate",
       "estimatedTimeMinutes": 6,
-      "dataSizeBytes": 31829,
-      "fileCount": 3,
+      "dataSizeBytes": 1037978,
+      "fileCount": 6,
       "author": "DeltaForge Team",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-25T12:00:00Z",
       "targetObjects": [
         {

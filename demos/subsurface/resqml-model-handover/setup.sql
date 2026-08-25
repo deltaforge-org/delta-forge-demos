@@ -1,22 +1,22 @@
 -- ============================================================================
 -- Reservoir Model Handover Audit - Setup Script
 -- ============================================================================
--- A partner delivers a static reservoir model for a unitisation study as a
--- RESQML package. Before the asset team loads it into the modelling software
--- somebody has to audit what actually arrived, and the question that matters
--- is not how many objects there are: it is which of them point at bulk arrays
--- living in a companion HDF5 file that may or may not have been delivered.
+-- A partner delivers reservoir models as RESQML packages. Before the asset
+-- team loads them into the modelling software somebody has to audit what
+-- actually arrived: what objects, how they reference each other, and which of
+-- them point at bulk arrays living in a companion HDF5 file.
 --
--- That is the classic handover failure. The .epc opens, every object is
--- present, every citation is filled in, and the grid has no geometry because
--- the .h5 it names never arrived.
+--   11 March   block          26 objects
+--   12 March   s_bend         24 objects
+--              tic_tac_toe     6 objects
 --
---   11 March   static_model_v1   14 objects
---   12 March   static_model_v2   18 objects, plus one unpacked loose part
+-- The packages are REAL. They are the example models from the resqpy project
+-- (bp/resqpy, MIT), written by resqpy itself, and their .h5 companions are
+-- delivered alongside so the handover is complete rather than illustrative.
+-- See ATTRIBUTION.md in the parent folder.
 --
 --   1. model_packages   external, DISCOVER over the .epc deliveries
---   2. unpacked_parts   external, DISCOVER over the loose part
---   3. model_inventory  DELTA, the audit register
+--   2. model_inventory  DELTA, the audit register
 -- ============================================================================
 
 -- ----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.model_handover
 
 
 -- ----------------------------------------------------------------------------
--- STEP 2: Register both shapes with DISCOVER
+-- STEP 2: Register the packages with DISCOVER
 -- ----------------------------------------------------------------------------
 -- An .epc is an Open Packaging Conventions ZIP, and DeltaForge opens the
 -- archive itself rather than handing it to the XML engine, because an XML
@@ -42,21 +42,15 @@ CREATE SCHEMA IF NOT EXISTS {{zone_name}}.model_handover
 -- model a spreadsheet. RESQML is claimed by its own signature before the
 -- Office Open XML check ever runs.
 --
--- The loose part is registered separately. RESQML is also exchanged unpacked,
--- one object per .xml file, and a bare .xml sitting next to .epc files would
--- not be picked up by a scan that filters on the package extension.
+-- The .h5 companions sit in a folder of their own. They are the bulk arrays
+-- these packages name, they are delivered with them, and nothing here reads
+-- them: RESQML records the reference and the reader records it too.
 -- ----------------------------------------------------------------------------
 
 DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.model_handover.model_packages;
 
 DISCOVER {{zone_name}}.model_handover.model_packages
     PATH '{{data_subdir}}/landing/packages'
-    WITH (FILE_METADATA = true);
-
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.model_handover.unpacked_parts;
-
-DISCOVER {{zone_name}}.model_handover.unpacked_parts
-    PATH '{{data_subdir}}/landing/unpacked'
     WITH (FILE_METADATA = true);
 
 
@@ -70,7 +64,7 @@ DISCOVER {{zone_name}}.model_handover.unpacked_parts
 -- ----------------------------------------------------------------------------
 
 CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.model_handover.model_inventory (
-    model_version         VARCHAR,
+    model                 VARCHAR,
     delivered_on          VARCHAR,
     source_file           VARCHAR,
     part_name             VARCHAR,
@@ -78,6 +72,7 @@ CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.model_handover.model_inventory (
     uuid                  VARCHAR,
     title                 VARCHAR,
     originator            VARCHAR,
+    schema_version        VARCHAR,
     reference_count       INTEGER,
     external_array_count  INTEGER,
     external_arrays       VARCHAR
