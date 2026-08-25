@@ -1,20 +1,21 @@
 [demo]
 id = "shapefile-surface-footprint"
-name = "Well Pad Lease Compliance"
-version = "1.0.0"
+name = "Offshore Lease Footprint"
+version = "2.0.0"
 author = "DeltaForge Team"
-description = """An onshore operator has to prove that every well pad it has built sits inside a tract it actually leases. The land department holds the lease tracts as polygons and the drilling department holds the pads as points, and until both are in the same place nobody can answer the question. Two shapefile deliveries: 8 pads on one day, 4 tracts covering 6326 acres the next. A shapefile is three files that travel together, and the demo needs all three: the .shp holds geometry as big-endian record headers wrapped around little-endian coordinates, which is the format's own inconsistency and the detail that catches naive readers; the .dbf is a dBase III table with one attribute row per shape, in file order, with no key joining them; the .prj states the coordinate system. That missing key is asserted directly, because if geometry and attributes ever went out of step the table would still read and every pad would carry somebody else's identifier. The register is built with a LEFT join on purpose: an inner join would list the pads that ARE compliant and say nothing about the two that are not, which is the half of the answer that matters. PAD-06 was permitted north-east of the acreage and PAD-07 was drilled south-west of it in 2022 and has since been plugged.
+description = """Every active oil and gas lease on the United States Outer Continental Shelf, as the Bureau of Ocean Energy Management publishes it, loaded against the official block grid it is measured on. The data is real and in the public domain: 1870 lease polygons carrying lease number, mineral type, royalty rate, effective date, status and current area, and 29,186 block polygons across the three Gulf of Mexico planning areas. A shapefile is not one file but a set, and the demo reads the .shp for geometry, the .dbf for attributes and the .prj for the coordinate system as one table. Real data brings constraints a written fixture never would. The DBF format truncates every field name to ten characters, so LEASE_NUMBER arrives as lease_numb and SALE_NUMBER as sale_numbe, and some names end in a bare underscore where the truncation landed on one; the demo asserts these names rather than pretending they are tidy. The coordinate system is NAD27 rather than the WGS84 most tools assume, which is a real datum mismatch worth seeing. And the register spans ninety years: 138 leases still active today took effect before 1970, the oldest in February 1936, which is the kind of range that breaks a date parser written against a decade of synthetic dates.
 """
 categories = ["subsurface", "energy", "incremental-load"]
 tags = [
     "subsurface",
     "shapefile",
     "geospatial",
-    "esri",
+    "boem",
+    "leases",
+    "open-data",
+    "real-data",
     "dbf",
-    "land-management",
-    "compliance",
-    "left-join",
+    "well-known-binary",
     "discover",
     "incremental",
     "idempotent",
@@ -23,56 +24,80 @@ tags = [
     "intermediate",
 ]
 difficulty = "intermediate"
-estimated_time_minutes = 5
+estimated_time_minutes = 6
 
 [demo.variables]
 data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
 zone_name = { description = "Target zone name (defaults to 'external')", required = false }
 
 [[demo.data_files]]
-path = "data/landing/2026-03-11_well_pads.dbf"
+path = "data/landing/leases.shp"
 format = "shapefile"
-description = "Well pad attributes: identifier, operator, spud year, status and surface coordinates"
-size_bytes = 794
+description = "BOEM active oil and gas leases, 1870 polygons (SHP component). Public domain, a work of the United States government."
+size_bytes = 383128
 
 [[demo.data_files]]
-path = "data/landing/2026-03-11_well_pads.prj"
+path = "data/landing/leases.shx"
 format = "shapefile"
-description = "Coordinate system for the pad layer, as well-known text"
-size_bytes = 393
+description = "BOEM active oil and gas leases, 1870 polygons (SHX component). Public domain, a work of the United States government."
+size_bytes = 15060
 
 [[demo.data_files]]
-path = "data/landing/2026-03-11_well_pads.shp"
+path = "data/landing/leases.dbf"
 format = "shapefile"
-description = "Well pad point geometry, 8 shapes, NAD83 UTM zone 13N"
-size_bytes = 324
+description = "BOEM active oil and gas leases, 1870 polygons (DBF component). Public domain, a work of the United States government."
+size_bytes = 990256
 
 [[demo.data_files]]
-path = "data/landing/2026-03-12_lease_tracts.dbf"
+path = "data/landing/leases.prj"
 format = "shapefile"
-description = "Lease tract attributes: identifier, lessor, expiry, bounding box and acres"
-size_bytes = 678
+description = "BOEM active oil and gas leases, 1870 polygons (PRJ component). Public domain, a work of the United States government."
+size_bytes = 168
 
 [[demo.data_files]]
-path = "data/landing/2026-03-12_lease_tracts.prj"
+path = "data/landing/leases.cpg"
 format = "shapefile"
-description = "Coordinate system for the tract layer, as well-known text"
-size_bytes = 393
+description = "BOEM active oil and gas leases, 1870 polygons (CPG component). Public domain, a work of the United States government."
+size_bytes = 5
 
 [[demo.data_files]]
-path = "data/landing/2026-03-12_lease_tracts.shp"
+path = "data/landing/blocks.shp"
 format = "shapefile"
-description = "Lease tract polygon geometry, 4 closed rings"
-size_bytes = 644
+description = "BOEM Outer Continental Shelf lease blocks, 29,186 polygons (SHP component). Public domain, a work of the United States government."
+size_bytes = 5947096
+
+[[demo.data_files]]
+path = "data/landing/blocks.shx"
+format = "shapefile"
+description = "BOEM Outer Continental Shelf lease blocks, 29,186 polygons (SHX component). Public domain, a work of the United States government."
+size_bytes = 233588
+
+[[demo.data_files]]
+path = "data/landing/blocks.dbf"
+format = "shapefile"
+description = "BOEM Outer Continental Shelf lease blocks, 29,186 polygons (DBF component). Public domain, a work of the United States government."
+size_bytes = 2218522
+
+[[demo.data_files]]
+path = "data/landing/blocks.prj"
+format = "shapefile"
+description = "BOEM Outer Continental Shelf lease blocks, 29,186 polygons (PRJ component). Public domain, a work of the United States government."
+size_bytes = 168
+
+[[demo.data_files]]
+path = "data/landing/blocks.cpg"
+format = "shapefile"
+description = "BOEM Outer Continental Shelf lease blocks, 29,186 polygons (CPG component). Public domain, a work of the United States government."
+size_bytes = 5
 
 [[demo.target_objects]]
 type = "external_table"
-name = "{{zone_name}}.surface_land.well_pads"
+name = "{{zone_name}}.surface_land.leases"
 
 [[demo.target_objects]]
 type = "external_table"
-name = "{{zone_name}}.surface_land.lease_tracts"
+name = "{{zone_name}}.surface_land.blocks"
 
 [[demo.target_objects]]
 type = "delta_table"
-name = "{{zone_name}}.surface_land.pad_compliance"
+name = "{{zone_name}}.surface_land.lease_register"

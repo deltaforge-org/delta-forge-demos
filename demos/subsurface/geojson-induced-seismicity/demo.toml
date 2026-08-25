@@ -1,0 +1,57 @@
+[demo]
+id = "geojson-induced-seismicity"
+name = "Induced Seismicity Monitoring"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """Produced water from oil and gas production is disposed of by injecting it back underground, and in Oklahoma and the Permian Basin that injection is linked to earthquakes. A monitoring team pulls the USGS catalogue for the play each month into a register that accumulates rather than being replaced, because a magnitude threshold being crossed is what triggers a rate reduction or a shut-in. The data is real: the USGS earthquake catalogue queried for magnitude 2.5 and above between 31.0 and 37.0 north and 104.5 and 94.4 west, which is public domain as a work of the United States government. Three monthly pulls, 34 then 47 then 64 events, and the trend is the point. GeoJSON is JSON read through a curated profile rather than a parser of its own, and two properties of that profile decide the table: the feature array is both the row path and an explode path, so one feature becomes one row instead of the whole collection becoming one, and the geometry is opaque, so a coordinate array stays a single value rather than exploding into a column per ordinate, which for a polygon layer would mean a column per vertex. Column names come from the feature, and a camelCase property is split, so the USGS magType lands as properties_mag_type. The demo asserts what a real catalogue contains and a written one would not: three magnitude scales mixed in 145 events, 137 of them on the Texas and Oklahoma regional networks because that is where the injection is, and exactly one event at magnitude 4.0 or above.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "geojson",
+    "geospatial",
+    "seismicity",
+    "induced-seismicity",
+    "usgs",
+    "open-data",
+    "real-data",
+    "carrier-profile",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "time-travel",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_seismicity_2026-01.geojson"
+format = "geojson"
+description = "USGS earthquake catalogue, 2026-01, magnitude 2.5 and above over the Oklahoma seismic zone and the Permian Basin. Public domain, a work of the United States government."
+size_bytes = 24806
+
+[[demo.data_files]]
+path = "data/landing/2026-03-11_seismicity_2026-02.geojson"
+format = "geojson"
+description = "USGS earthquake catalogue, 2026-02, magnitude 2.5 and above over the Oklahoma seismic zone and the Permian Basin. Public domain, a work of the United States government."
+size_bytes = 34200
+
+[[demo.data_files]]
+path = "data/landing/2026-03-12_seismicity_2026-03.geojson"
+format = "geojson"
+description = "USGS earthquake catalogue, 2026-03, magnitude 2.5 and above over the Oklahoma seismic zone and the Permian Basin. Public domain, a work of the United States government."
+size_bytes = 46696
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.seismicity.seismic_feed"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.seismicity.seismic_register"

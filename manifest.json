@@ -6610,11 +6610,11 @@
       ]
     },
     {
-      "id": "geojson-licence-blocks",
-      "path": "demos/subsurface/geojson-licence-blocks",
-      "iconPath": "icons/geojson-licence-blocks.svg",
-      "name": "Licence Block Acreage and Relinquishment",
-      "summary": "A licensing authority publishes the blocks awarded in each round as GeoJSON, and an operator loads them to track the acreage it holds and the relinquishment obligations attached to it: a licence hands acreage back at the end of its term, and missing that date costs the block rather than the obligation. Two rounds over two days, 12 blocks, 12795 square kilometres. The blocks sit on the real Norwegian quadrant grid, one degree of latitude by two of longitude divided into twelve, so each is a genuine graticule rectangle and its area is the area that rectangle has at that latitude. GeoJSON is read through the JSON engine under a curated profile rather than a parser of its own, and detection needs the type declaration and a geometry rather than the extension, which these files share with every other JSON file on disk. The profile keeps geometry whole, which is the point: a polygon's coordinate array flattened would produce a column per vertex, and a schema that changes shape with the number of corners in a block is not a schema. The closing queries are the ones a licence manager runs: acreage by operator, and what falls due for relinquishment first.",
+      "id": "geojson-induced-seismicity",
+      "path": "demos/subsurface/geojson-induced-seismicity",
+      "iconPath": "icons/geojson-induced-seismicity.svg",
+      "name": "Induced Seismicity Monitoring",
+      "summary": "Produced water from oil and gas production is disposed of by injecting it back underground, and in Oklahoma and the Permian Basin that injection is linked to earthquakes. A monitoring team pulls the USGS catalogue for the play each month into a register that accumulates rather than being replaced, because a magnitude threshold being crossed is what triggers a rate reduction or a shut-in. The data is real and public domain: the USGS earthquake catalogue queried for magnitude 2.5 and above between 31.0 and 37.0 north and 104.5 and 94.4 west. Three monthly pulls of 34, 47 and 64 events, and the trend is the point. GeoJSON is JSON read under a curated profile rather than a parser of its own, and two properties of that profile decide the table: the feature array is both the row path and an explode path, so one feature becomes one row instead of the whole collection becoming one, and the geometry is opaque, so a coordinate array stays a single value rather than exploding into a column per ordinate, which for a polygon layer would mean a column per vertex. A camelCase property is split, so the USGS magType lands as properties_mag_type. It asserts what a real catalogue holds and a written one would not: three magnitude scales mixed across 145 events, 137 of them on the Texas and Oklahoma regional networks because that is where the injection is, and exactly one event at magnitude 4.0 or above.",
       "categories": [
         "subsurface",
         "energy",
@@ -6624,33 +6624,34 @@
         "subsurface",
         "geojson",
         "geospatial",
-        "licensing",
-        "acreage",
-        "relinquishment",
-        "json-profile",
-        "opaque-geometry",
+        "seismicity",
+        "induced-seismicity",
+        "usgs",
+        "open-data",
+        "real-data",
+        "carrier-profile",
         "discover",
         "incremental",
         "idempotent",
         "delta",
         "time-travel",
-        "beginner"
+        "intermediate"
       ],
-      "difficulty": "beginner",
-      "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 10967,
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 105702,
       "fileCount": 3,
       "author": "DeltaForge Team",
       "version": "1.0.0",
-      "updatedAt": "2026-08-24T12:00:00Z",
+      "updatedAt": "2026-08-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.licensing.block_awards"
+          "name": "{{zone_name}}.seismicity.seismic_feed"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.licensing.licence_blocks"
+          "name": "{{zone_name}}.seismicity.seismic_register"
         }
       ]
     },
@@ -10944,8 +10945,8 @@
       "id": "shapefile-surface-footprint",
       "path": "demos/subsurface/shapefile-surface-footprint",
       "iconPath": "icons/shapefile-surface-footprint.svg",
-      "name": "Well Pad Lease Compliance",
-      "summary": "An onshore operator has to prove that every well pad it has built sits inside a tract it actually leases. The land department holds the lease tracts as polygons and the drilling department holds the pads as points, and until both are in the same place nobody can answer the question. Two shapefile deliveries: 8 pads on one day, 4 tracts covering 6326 acres the next. A shapefile is three files that travel together and the demo needs all three: the .shp holds geometry as big-endian record headers wrapped around little-endian coordinates, which is the format's own inconsistency and the detail that catches naive readers; the .dbf is a dBase III table with one attribute row per shape, in file order, with no key joining them; the .prj states the coordinate system. That missing key is asserted directly, because if geometry and attributes went out of step the table would still read and every pad would carry somebody else's identifier. The register is built with a LEFT join on purpose: an inner join would list the pads that ARE compliant and say nothing about the two that are not, which is the half of the answer that matters.",
+      "name": "Offshore Lease Footprint",
+      "summary": "Every active oil and gas lease on the United States Outer Continental Shelf, as the Bureau of Ocean Energy Management publishes it, loaded against the official block grid it is measured on. The data is real and public domain: 1870 lease polygons carrying lease number, mineral type, royalty rate, effective date, status and current area, and 29,186 block polygons across the three Gulf of Mexico planning areas. A shapefile is not one file but a set, and the demo reads the .shp for geometry, the .dbf for attributes and the .prj for the coordinate system as one table. Real data brings constraints a written fixture never would. DBF truncates every field name to ten characters, so LEASE_NUMBER arrives as lease_numb and CURRENT_AREA as current_ar, some ending in a bare underscore where the cut landed, and the demo asserts those names rather than pretending they are tidy. Every attribute arrives as the file's own text with the dBase type recorded in metadata rather than applied, so casting is the caller's decision and the demo casts explicitly. The coordinate system is NAD27 rather than the WGS84 most tools assume. And the register spans ninety years: 138 leases still active took effect before 1970, the oldest in February 1936, while every lease still in its primary term began in 2016 or later, two populations that do not overlap at all.",
       "categories": [
         "subsurface",
         "energy",
@@ -10955,11 +10956,12 @@
         "subsurface",
         "shapefile",
         "geospatial",
-        "esri",
+        "boem",
+        "leases",
+        "open-data",
+        "real-data",
         "dbf",
-        "land-management",
-        "compliance",
-        "left-join",
+        "well-known-binary",
         "discover",
         "incremental",
         "idempotent",
@@ -10969,23 +10971,23 @@
       ],
       "difficulty": "intermediate",
       "estimatedTimeMinutes": 5,
-      "dataSizeBytes": 3226,
-      "fileCount": 6,
+      "dataSizeBytes": 9787996,
+      "fileCount": 10,
       "author": "DeltaForge Team",
-      "version": "1.0.0",
-      "updatedAt": "2026-08-24T12:00:00Z",
+      "version": "2.0.0",
+      "updatedAt": "2026-08-25T12:00:00Z",
       "targetObjects": [
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.surface_land.well_pads"
+          "name": "{{zone_name}}.surface_land.leases"
         },
         {
           "objectType": "external_table",
-          "name": "{{zone_name}}.surface_land.lease_tracts"
+          "name": "{{zone_name}}.surface_land.blocks"
         },
         {
           "objectType": "delta_table",
-          "name": "{{zone_name}}.surface_land.pad_compliance"
+          "name": "{{zone_name}}.surface_land.lease_register"
         }
       ]
     },

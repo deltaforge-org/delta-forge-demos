@@ -163,32 +163,113 @@ into a few dozen cells. Norne does not exercise it at all. The two decks sit
 in one landing folder and one curated table because between them they cover
 both halves of the format, and neither alone does.
 
+## BOEM offshore leases, and what a real land register contains
+
+`demos/subsurface/shapefile-surface-footprint` reads the Bureau of Ocean
+Energy Management's published shapefiles of the United States Outer
+Continental Shelf.
+
+| | |
+|---|---|
+| Source | `https://www.data.boem.gov/Mapping/Files/actlease.zip` and `blk_clip.zip` |
+| Licence | Public domain, works of the United States government |
+| Retrieved | 2026-08-25, lease extract stamped `al_20260803` |
+
+**What was done to the files.** The `.shp`, `.shx`, `.dbf`, `.prj` and `.cpg`
+members were extracted from each archive and renamed to `leases.*` and
+`blocks.*` so the demo can name them stably. Not one byte inside any member was
+altered.
+
+**What the real register turned out to contain**, none of which a generated
+fixture would have produced:
+
+- **DBF truncates every field name to ten characters.** `LEASE_NUMBER` is
+  `lease_numb`, `SALE_NUMBER` is `sale_numbe`, `CURRENT_AREA` is `current_ar`,
+  and `LEASE_EFF_DATE` is `lease_eff_` with the underscore left dangling where
+  the cut landed. The demo asserts these names as they are.
+- **Attributes arrive as the file's own text.** The reader records the declared
+  dBase type in column metadata rather than applying it, because dBase numerics
+  are fixed-width ASCII that routinely carry blanks and overflow markers.
+  `LEASE_EFF_DATE` is declared dBase type `D` and still arrives as eight
+  characters. Casting is the caller's decision, and the demo casts explicitly.
+- **The coordinate system is NAD27**, not the WGS84 most tools assume.
+- **Ninety years of still-active leases.** The oldest took effect on 7 February
+  1936 and the newest on 1 June 2026. 138 active leases predate 1970.
+- **The lifecycle is visible and the populations do not overlap.** Producing
+  leases run from 1946 to 2023; every lease still in its primary term began in
+  2016 or later.
+- Five royalty rates only, because the rate is set by sale terms: 18.75 percent
+  on 970 leases, 12.5 on 639, 16.67 on 256, zero on four and 33.33 on exactly
+  one.
+
+## USGS induced seismicity
+
+`demos/subsurface/geojson-induced-seismicity` reads the USGS earthquake
+catalogue, which is published as GeoJSON natively rather than converted.
+
+| | |
+|---|---|
+| Source | `https://earthquake.usgs.gov/fdsnws/event/1/query` |
+| Query | `format=geojson`, `minmagnitude=2.5`, `minlatitude=31.0`, `maxlatitude=37.0`, `minlongitude=-104.5`, `maxlongitude=-94.4`, one calendar month per file |
+| Licence | Public domain, a work of the United States government |
+| Retrieved | 2026-08-25, for the months 2026-01, 2026-02 and 2026-03 |
+
+The bounding box covers the Oklahoma seismic zone and the Permian Basin, where
+produced water disposal is linked to seismicity, which is why this is an
+on-domain scenario rather than general geoscience. The files are the query
+responses unmodified.
+
+What the real catalogue holds: 145 events over three months, rising 34, 47, 64.
+Three magnitude scales mixed in one register (`ml` on 141, `mwr` on three,
+`mb_lg` on one). 117 events on the Texas network and 20 on Oklahoma's, which is
+where the injection is. Exactly one event at magnitude 4.0 or above.
+
 ## The demos that still ship written data
 
-SEG-D, ECLIPSE binary, ZMAP+, WITSML, PRODML, GeoJSON, Shapefile and GeoTIFF
-currently ship data written by a generator committed beside them. GRDECL no
-longer does; see the Norne section below. For the rest:
+SEG-D, ECLIPSE binary, ZMAP+, WITSML, PRODML and GeoTIFF currently ship data
+written by a generator committed beside them. GRDECL, Shapefile and GeoJSON no
+longer do; see the Norne, BOEM and USGS sections. For the rest:
 
 | Format | Candidate source | Licence | Status |
 |---|---|---|---|
 | GeoTIFF | GDAL `autotest/gcore/data` | MIT/X11 | Examined, not adopted |
-| Shapefile, GeoJSON | Natural Earth | Public domain | Examined, not adopted |
-| WITSML, PRODML | `F2I-Consulting/fesapi`, `geosiris/energyml-*` | Apache-2.0 | Not yet examined |
-| ECLIPSE binary | Not found: `opm-data` ships input decks, not simulator output | | Open |
+| WITSML, PRODML | `hashmapinc/witsml-client`, `equinor/witsml-explorer` | Apache-2.0 | Examined, not adopted |
+| ECLIPSE binary | `OPM/opm-tests` | **none at all** | Blocked on licensing |
 | SEG-D, ZMAP+ | Not found | | Open |
 
-**Why GeoTIFF and Natural Earth were examined and not adopted.** GDAL's
-`autotest` tree is 235 TIFF files, and they are other people's synthetic test
-fixtures (`sasha.tif`, `stefan_full_rgba.tif`, `quad-lzw-old-style.tif`),
-not survey rasters. Swapping to them would trade a coherent subsurface
-scenario, with its deliberate CRS and resolution outliers, for files that are
-real bytes but not real subsurface data, which is not the property that was
-wanted. Natural Earth is genuinely real and genuinely public domain, but it is
-world political geography: adopting it would move the Shapefile and GeoJSON
-demos off well pads and licence blocks and onto country borders. On-domain
-alternatives were tried and did not serve: Sodir returned 500, NLOG 404, and
-BOEM served HTML rather than the archive. Both remain open if an on-domain
-source appears.
+**Why GeoTIFF was examined and not adopted.** GDAL's `autotest` tree is 235
+TIFF files, and they are other people's synthetic test fixtures (`sasha.tif`,
+`stefan_full_rgba.tif`, `quad-lzw-old-style.tif`), not survey rasters. Swapping
+to them would trade a coherent subsurface scenario, with its deliberate CRS and
+resolution outliers, for files that are real bytes but not real subsurface
+data, which is not the property that was wanted.
+
+**Why WITSML and PRODML were examined and not adopted.**
+`F2I-Consulting/fesapi` is a library, not a corpus: 77 WITSML and PRODML paths,
+all C++ source, and zero instance documents. `hashmapinc/witsml-client`
+(Apache-2.0) does carry instance documents, and they are the Energistics
+specification examples, which say so in their own XML comments: "These examples
+are only intended to demonstrate the type of data that can be exchanged. They
+totally artificial and are not intended to demonstrate best practices."
+`equinor/witsml-explorer` (Apache-2.0) has real-looking test fixtures, but each
+carries exactly ONE `trajectoryStation`, and its `templates/` files are empty
+query skeletons with no measured values at all. The demo's written data ships
+120 stations across three Volve wells, so it is strictly better coverage than
+either. Adopting someone else's generator output in place of ours buys nothing.
+
+**Why ECLIPSE binary is blocked rather than open.** `OPM/opm-tests` (4.5 GB) is
+the obvious home for `.UNRST`, `.SMSPEC` and `.EGRID` outputs. It has **no
+licence file at all**: no `LICENSE`, `LICENSE.md` or `COPYING`, and the GitHub
+API reports `license: null`. Default copyright therefore applies and its bytes
+cannot be committed here. Its `norne/` directory holds only text `.DATA` decks
+in any case.
+
+**Correction.** An earlier revision of this file said the Shapefile and GeoJSON
+demos had no on-domain source and offered only Natural Earth, whose world
+political geography would have moved them off licence blocks and onto country
+borders. That was wrong, and it was wrong for an avoidable reason: the BOEM
+request that "served HTML rather than the archive" was a mistyped path. The
+correct path returns a real archive, and both demos now use real data.
 
 **ODbL is share-alike on the database.** That obligation attaches to Norne and
 does not attach to the MIT, Apache-2.0 and public-domain sources above. It is

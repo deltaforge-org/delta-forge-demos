@@ -23,8 +23,8 @@ look right the first time.
 | [eclipse-history-match-review](eclipse-history-match-review/) | ECLIPSE binary | written for the demo | Two history-match runs of simulator output. Long form in, pivoted to one row per cell per report step. Every array spans two records because 1152 cells beats the format's 1000-element limit. |
 | [witsml-drilling-operations](witsml-drilling-operations/) | WITSML | written for the demo | Definitive surveys from one platform template, read through the XML engine under a curated profile so nobody writes an XPath. Ends on a real anti-collision scan: two wells within 3 m at 550 m TVD. |
 | [prodml-production-allocation](prodml-production-allocation/) | PRODML | written for the demo | A year of monthly regulator returns per facility. Water volumes follow from the oil and the cut, so the 50 percent crossover the demo finds is real: May for the mature facility, December for another, never for the third. |
-| [geojson-licence-blocks](geojson-licence-blocks/) | GeoJSON | written for the demo | Licence awards on the real Norwegian quadrant grid. The profile keeps geometry whole, because a flattened polygon would be a column per vertex. Ends on the relinquishment schedule. |
-| [shapefile-surface-footprint](shapefile-surface-footprint/) | Shapefile | written for the demo | Well pads against lease tracts. The .shp/.dbf pairing has no key, so the demo asserts they line up. Built with a LEFT join, which is what finds the two pads on unleased ground. |
+| [geojson-induced-seismicity](geojson-induced-seismicity/) | GeoJSON | USGS earthquake catalogue (public domain) | Induced seismicity near produced-water disposal in Oklahoma and the Permian. Three real monthly pulls, 34 then 47 then 64 events, three magnitude scales mixed, geometry kept whole so a coordinate array does not become a column per ordinate. |
+| [shapefile-surface-footprint](shapefile-surface-footprint/) | Shapefile | BOEM leases and blocks (public domain) | Every active oil and gas lease on the US Outer Continental Shelf against the official block grid. 1870 lease polygons and 29,186 blocks, DBF names truncated to ten characters, NAD27 rather than WGS84, and ninety years of still-active leases. |
 | [geotiff-raster-catalog](geotiff-raster-catalog/) | GeoTIFF | written for the demo | Six tiles catalogued from their tag directories without reading a pixel. Overview pyramids give three rows per file; finds a tile in the wrong UTM zone and one at half resolution. |
 | [resqml-model-handover](resqml-model-handover/) | RESQML | written for the demo | Two .epc model versions audited for what they depend on. The reader records the HDF5 arrays an object names without following them, so a missing companion file is a row rather than a grid with no geometry. |
 | [zmap-depth-surfaces](zmap-depth-surfaces/) | ZMAP+ | written for the demo | Two depth-conversion iterations and a base surface. Asserts the column-major node order and the 1e30 sentinel, then computes two billion cubic metres of gross rock volume. |
@@ -39,16 +39,21 @@ and the exact original path of every real file.
 
 The short version: the OSDU Forum's open test data covers SEG-Y, LAS, UKOOA
 P1/90, SEG-P1, DLIS and LIS, and those demos use it. It publishes nothing in
-the remaining formats, but other open corpora do cover some of them, and those
-demos use those instead: RESQML reads the example packages from `bp/resqpy`
-under MIT, and GRDECL reads the published Norne field model from
-`OPM/opm-data` under the Open Database License.
+the remaining formats, but other open corpora do cover several of them:
 
-SEG-D, ECLIPSE binary, ZMAP+, WITSML, PRODML, GeoJSON, Shapefile and GeoTIFF
-still ship data written by a generator committed beside them. Each generator
-names the real scenario it reproduces and the specification behaviour it
-exercises. ATTRIBUTION.md records which open sources were examined for these
-and why the ones that exist were or were not adopted.
+| Format | Source | Licence |
+|---|---|---|
+| RESQML | `bp/resqpy` example packages | MIT |
+| GRDECL | Norne field model, `OPM/opm-data` | ODbL 1.0 + DbCL 1.0 |
+| Shapefile | BOEM lease and block layers | US public domain |
+| GeoJSON | USGS earthquake catalogue | US public domain |
+
+SEG-D, ECLIPSE binary, ZMAP+, WITSML, PRODML and GeoTIFF still ship data
+written by a generator committed beside them. Each generator names the real
+scenario it reproduces and the specification behaviour it exercises.
+ATTRIBUTION.md records which open sources were examined for these and why the
+ones that exist were or were not adopted, including the one that is blocked on
+having no licence at all.
 
 ## Regenerating the written data
 

@@ -1,25 +1,30 @@
 -- ============================================================================
--- Well Pad Lease Compliance - Setup Script
+-- Offshore Lease Footprint - Setup Script
 -- ============================================================================
--- An onshore operator has to prove that every well pad it has built sits
--- inside a tract it actually leases. The land department holds the lease
--- tracts as polygons and the drilling department holds the pads as points,
--- and until both are in the same place nobody can answer the question.
+-- Every active oil and gas lease on the United States Outer Continental Shelf,
+-- as the Bureau of Ocean Energy Management publishes it, loaded against the
+-- official block grid the leases are measured on.
 --
---   11 March   well_pads      8 points, NAD83 UTM zone 13N
---   12 March   lease_tracts   4 polygons, the same projection
+--   11 March   leases   1870 lease polygons
+--   12 March   blocks   29,186 block polygons, the reference grid
 --
--- A shapefile is three files that have to travel together. The .shp holds
--- geometry as big-endian record headers wrapped around little-endian
--- coordinates, which is the format's own inconsistency and the detail that
--- catches naive readers. The .dbf is a dBase III table with one attribute row
--- per shape, in file order, with no key joining them. The .prj states the
--- coordinate system. Lose the .dbf and you have geometry with no attributes;
--- lose the .prj and you have coordinates with no meaning.
+-- The data is REAL and is in the public domain, being a work of the United
+-- States government. See ATTRIBUTION.md in the parent folder.
 --
---   1. well_pads      external, DISCOVER over the pad delivery
---   2. lease_tracts   external, DISCOVER over the tract delivery
---   3. pad_compliance DELTA, every pad with the tract it sits in, or none
+-- A shapefile is not one file. It is a set that must be read together:
+--
+--   .shp   the geometry, as a record per shape
+--   .dbf   the attributes, as a dBASE III table, one row per shape in order
+--   .shx   the index from record number to byte offset in the .shp
+--   .prj   the coordinate reference system, as WKT
+--   .cpg   the code page the .dbf strings are in
+--
+-- The reader opens the .shp and pulls its siblings in beside it, which is why
+-- DISCOVER is pointed at the .shp and the rest are found rather than named.
+--
+--   1. leases         external, DISCOVER over the lease geometry
+--   2. blocks         external, DISCOVER over the block grid
+--   3. lease_register DELTA, the curated register
 -- ============================================================================
 
 -- ----------------------------------------------------------------------------
@@ -30,55 +35,61 @@ CREATE ZONE IF NOT EXISTS {{zone_name}} TYPE EXTERNAL
     COMMENT 'External tables - demo datasets and file-backed data';
 
 CREATE SCHEMA IF NOT EXISTS {{zone_name}}.surface_land
-    COMMENT 'Shapefile pads and lease tracts read in place, curated into Delta';
+    COMMENT 'BOEM lease and block shapefiles read in place, curated into Delta';
 
 
 -- ----------------------------------------------------------------------------
--- STEP 2: Register both deliveries with DISCOVER
+-- STEP 2: Register both layers with DISCOVER
 -- ----------------------------------------------------------------------------
--- A shapefile is recognised from the .shp header's file code and shape type,
--- a two-field agreement no other format produces. The reader opens the
--- companion .dbf beside it, so the attribute columns arrive without being
--- asked for.
+-- A shapefile is recognised from the .shp header's file code and shape type, a
+-- two-field agreement no other format produces. Both of these are file code
+-- 9994 and shape type 5, which is Polygon.
 --
--- The two layers are registered separately because they are different
--- geometries with different attributes: points with a pad identifier, and
--- polygons with a lease. Nothing would be gained by forcing them into one
--- table and the geometry column would have to hold both.
+-- Three columns come from the geometry side (record_index, geometry_type and
+-- geometry as OGC well-known binary) and the rest come from the .dbf, with
+-- their names lowercased.
+--
+-- Those names are worth looking at, because they are the format speaking
+-- rather than a naming choice. DBF truncates every field name to TEN
+-- characters: LEASE_NUMBER becomes lease_numb, SALE_NUMBER becomes sale_numbe,
+-- CURRENT_AREA becomes current_ar, and LEASE_EFF_DATE becomes lease_eff_ with
+-- the underscore left dangling where the cut landed. This is what real
+-- shapefile columns look like.
 -- ----------------------------------------------------------------------------
 
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.surface_land.well_pads;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.surface_land.leases;
 
-DISCOVER {{zone_name}}.surface_land.well_pads
-    PATH '{{data_subdir}}/landing/2026-03-11_well_pads.shp'
+DISCOVER {{zone_name}}.surface_land.leases
+    PATH '{{data_subdir}}/landing/leases.shp'
     WITH (FILE_METADATA = true);
 
-DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.surface_land.lease_tracts;
+DROP EXTERNAL TABLE IF EXISTS {{zone_name}}.surface_land.blocks;
 
-DISCOVER {{zone_name}}.surface_land.lease_tracts
-    PATH '{{data_subdir}}/landing/2026-03-12_lease_tracts.shp'
+DISCOVER {{zone_name}}.surface_land.blocks
+    PATH '{{data_subdir}}/landing/blocks.shp'
     WITH (FILE_METADATA = true);
 
 
 -- ----------------------------------------------------------------------------
--- STEP 3: The curated Delta compliance register
+-- STEP 3: The curated register
 -- ----------------------------------------------------------------------------
--- One row per pad, carrying the tract it sits in or NULL where it sits in
--- none. The NULL is the whole point of the table: a compliance register that
--- silently dropped the pads it could not place would report full compliance.
+-- The truncated DBF names are given readable ones here, which is the right
+-- place to do it: the external table shows the file as it is, and the curated
+-- table is where a naming decision belongs.
+--
+-- effective_date stays a VARCHAR because BOEM writes it as YYYYMMDD and the
+-- range is genuinely ninety years, from 1936 to 2026. Parsing it into a date
+-- is a decision with an error mode, and this register does not need it.
 -- ----------------------------------------------------------------------------
 
-CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.surface_land.pad_compliance (
-    pad_id        VARCHAR,
-    operator      VARCHAR,
-    spud_year     INTEGER,
-    status        VARCHAR,
-    easting       DOUBLE,
-    northing      DOUBLE,
-    tract_id      VARCHAR,
-    lessor        VARCHAR,
-    lease_expiry  INTEGER,
-    compliant     BOOLEAN,
-    delivered_on  VARCHAR,
-    source_file   VARCHAR
-) LOCATION '{{data_subdir}}/curated/pad_compliance';
+CREATE DELTA TABLE IF NOT EXISTS {{zone_name}}.surface_land.lease_register (
+    delivered_on    VARCHAR,
+    source_file     VARCHAR,
+    lease_number    VARCHAR,
+    mineral_type    VARCHAR,
+    lease_status    VARCHAR,
+    effective_date  VARCHAR,
+    royalty_rate    DOUBLE,
+    current_area    DOUBLE,
+    geometry_type   VARCHAR
+) LOCATION '{{data_subdir}}/curated/lease_register';
