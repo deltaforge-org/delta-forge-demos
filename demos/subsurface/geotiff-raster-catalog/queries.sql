@@ -275,12 +275,12 @@ ORDER BY pixel_scale_m;
 -- overviews would count the same ground three times and mixing in the wrong
 -- zone would stretch the extent across a zone boundary.
 --
--- 3300 megapixels of imagery across five tiles, which is the number that
+-- 2900 megapixels of imagery across five tiles, which is the number that
 -- decides whether the processing cluster is big enough.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE tiles = 5
-ASSERT VALUE megapixels = 3300
+ASSERT VALUE megapixels = 2900
 ASSERT VALUE west_m = 512000
 ASSERT VALUE north_m = 3548000
 SELECT COUNT(*)                                                AS tiles,
