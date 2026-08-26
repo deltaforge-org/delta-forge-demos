@@ -77,26 +77,40 @@ ORDER BY df_file_name;
 -- ============================================================================
 -- 4. LOAD THE 11 MARCH DROP
 -- ============================================================================
--- The scheduled run for one acquisition date. NOT EXISTS against the curated
--- table is the watermark: a record whose traces are already present is
--- skipped whole, so the loader never has to know what it did last time.
+-- The scheduled run for one acquisition date. MERGE keys on what SEG-D says
+-- makes a trace unique, and all five parts are needed: the file, then the
+-- field record number, the scan type, the channel set and the trace number.
+-- Dropping the scan type or the channel set would merge an auxiliary trace
+-- onto a seismic one with the same channel number, which is the failure that
+-- still looks like a plausible record until somebody stacks it.
 
-INSERT INTO {{zone_name}}.seismic_acquisition.trace_inventory
-SELECT '2026-03-11'   AS acquisition_date,
-       l.df_file_name AS source_file,
-       l.file_number,
-       l.scan_type,
-       l.channel_set,
-       l.trace_number,
-       l.sample_count,
-       l.sample_interval_us
-FROM {{zone_name}}.seismic_acquisition.field_records l
-WHERE l.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.seismic_acquisition.trace_inventory c
-      WHERE c.source_file = l.df_file_name
-  );
+MERGE INTO {{zone_name}}.seismic_acquisition.trace_inventory AS t
+USING (
+    SELECT '2026-03-11'   AS acquisition_date,
+           l.df_file_name AS source_file,
+           l.file_number,
+           l.scan_type,
+           l.channel_set,
+           l.trace_number,
+           l.sample_count,
+           l.sample_interval_us
+    FROM {{zone_name}}.seismic_acquisition.field_records l
+    WHERE l.df_file_name LIKE '2026-03-11%'
+) AS s
+ON  t.source_file  = s.source_file
+AND t.file_number  = s.file_number
+AND t.scan_type    = s.scan_type
+AND t.channel_set  = s.channel_set
+AND t.trace_number = s.trace_number
+WHEN MATCHED THEN
+    UPDATE SET acquisition_date   = s.acquisition_date,
+               sample_count       = s.sample_count,
+               sample_interval_us = s.sample_interval_us
+WHEN NOT MATCHED THEN
+    INSERT (acquisition_date, source_file, file_number, scan_type, channel_set,
+            trace_number, sample_count, sample_interval_us)
+    VALUES (s.acquisition_date, s.source_file, s.file_number, s.scan_type,
+            s.channel_set, s.trace_number, s.sample_count, s.sample_interval_us);
 
 
 -- ============================================================================
@@ -118,30 +132,51 @@ WHERE acquisition_date = '2026-03-11';
 -- 6. THE SAME RUN AGAIN
 -- ============================================================================
 -- Byte for byte the statement from step 4. A loader that reloads its source
--- would put 144 traces on 11 March; an incremental one leaves 72.
+-- would put 144 traces on 11 March; this one leaves 72, because every source
+-- row matches a row already there and updates it in place.
+--
+-- This is the part a file-level guard could not do. Skipping a file whose
+-- traces are already present makes the re-run harmless, but it also makes a
+-- CORRECTED re-delivery harmless: a record re-shot with a different sample
+-- interval, or re-cut with a corrected channel map, would be silently
+-- ignored. Keying on the trace means a re-delivery is applied rather than
+-- skipped, and the row count still does not move.
 
-INSERT INTO {{zone_name}}.seismic_acquisition.trace_inventory
-SELECT '2026-03-11'   AS acquisition_date,
-       l.df_file_name AS source_file,
-       l.file_number,
-       l.scan_type,
-       l.channel_set,
-       l.trace_number,
-       l.sample_count,
-       l.sample_interval_us
-FROM {{zone_name}}.seismic_acquisition.field_records l
-WHERE l.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.seismic_acquisition.trace_inventory c
-      WHERE c.source_file = l.df_file_name
-  );
+MERGE INTO {{zone_name}}.seismic_acquisition.trace_inventory AS t
+USING (
+    SELECT '2026-03-11'   AS acquisition_date,
+           l.df_file_name AS source_file,
+           l.file_number,
+           l.scan_type,
+           l.channel_set,
+           l.trace_number,
+           l.sample_count,
+           l.sample_interval_us
+    FROM {{zone_name}}.seismic_acquisition.field_records l
+    WHERE l.df_file_name LIKE '2026-03-11%'
+) AS s
+ON  t.source_file  = s.source_file
+AND t.file_number  = s.file_number
+AND t.scan_type    = s.scan_type
+AND t.channel_set  = s.channel_set
+AND t.trace_number = s.trace_number
+WHEN MATCHED THEN
+    UPDATE SET acquisition_date   = s.acquisition_date,
+               sample_count       = s.sample_count,
+               sample_interval_us = s.sample_interval_us
+WHEN NOT MATCHED THEN
+    INSERT (acquisition_date, source_file, file_number, scan_type, channel_set,
+            trace_number, sample_count, sample_interval_us)
+    VALUES (s.acquisition_date, s.source_file, s.file_number, s.scan_type,
+            s.channel_set, s.trace_number, s.sample_count, s.sample_interval_us);
 
 
 -- ============================================================================
 -- 7. THE RE-RUN ADDED NOTHING
 -- ============================================================================
--- The assertion the whole demo turns on.
+-- The assertion the whole demo turns on. Seventy-two traces before the re-run
+-- and seventy-two after: the second MERGE matched all of them and updated
+-- them where they stood.
 
 ASSERT ROW_COUNT = 1
 ASSERT VALUE traces = 72
@@ -155,24 +190,36 @@ WHERE acquisition_date = '2026-03-11';
 -- ============================================================================
 -- 8. LOAD THE 12 MARCH DROP
 -- ============================================================================
--- The next day's scheduled run. Same statement, different date.
+-- The next day's scheduled run. Same statement, different date. These are
+-- different field records, so every source row is unmatched and inserts.
 
-INSERT INTO {{zone_name}}.seismic_acquisition.trace_inventory
-SELECT '2026-03-12'   AS acquisition_date,
-       l.df_file_name AS source_file,
-       l.file_number,
-       l.scan_type,
-       l.channel_set,
-       l.trace_number,
-       l.sample_count,
-       l.sample_interval_us
-FROM {{zone_name}}.seismic_acquisition.field_records l
-WHERE l.df_file_name LIKE '2026-03-12%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.seismic_acquisition.trace_inventory c
-      WHERE c.source_file = l.df_file_name
-  );
+MERGE INTO {{zone_name}}.seismic_acquisition.trace_inventory AS t
+USING (
+    SELECT '2026-03-12'   AS acquisition_date,
+           l.df_file_name AS source_file,
+           l.file_number,
+           l.scan_type,
+           l.channel_set,
+           l.trace_number,
+           l.sample_count,
+           l.sample_interval_us
+    FROM {{zone_name}}.seismic_acquisition.field_records l
+    WHERE l.df_file_name LIKE '2026-03-12%'
+) AS s
+ON  t.source_file  = s.source_file
+AND t.file_number  = s.file_number
+AND t.scan_type    = s.scan_type
+AND t.channel_set  = s.channel_set
+AND t.trace_number = s.trace_number
+WHEN MATCHED THEN
+    UPDATE SET acquisition_date   = s.acquisition_date,
+               sample_count       = s.sample_count,
+               sample_interval_us = s.sample_interval_us
+WHEN NOT MATCHED THEN
+    INSERT (acquisition_date, source_file, file_number, scan_type, channel_set,
+            trace_number, sample_count, sample_interval_us)
+    VALUES (s.acquisition_date, s.source_file, s.file_number, s.scan_type,
+            s.channel_set, s.trace_number, s.sample_count, s.sample_interval_us);
 
 
 -- ============================================================================

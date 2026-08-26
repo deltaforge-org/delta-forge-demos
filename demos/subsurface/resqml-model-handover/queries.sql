@@ -116,27 +116,51 @@ FROM {{zone_name}}.model_handover.model_packages;
 -- ============================================================================
 -- 6. LOAD THE FIRST HANDOVER
 -- ============================================================================
+-- The key is the UUID and nothing else. RESQML is the only format in this
+-- family where that is enough: Energistics requires a stable UUID on every
+-- data object and every reference between objects is made through it, so the
+-- same grid exported into a second package is the same object and updates
+-- rather than duplicating. Step 8 proves the key holds for this data: 26
+-- objects, 26 distinct UUIDs, and no collision across three independently
+-- written packages.
 
-INSERT INTO {{zone_name}}.model_handover.model_inventory
-SELECT 'block'               AS model,
-       '2026-03-11'          AS delivered_on,
-       p.df_file_name        AS source_file,
-       p.part_name,
-       p.object_type,
-       p.uuid,
-       p.title,
-       p.originator,
-       p.schema_version,
-       p.reference_count,
-       p.external_array_count,
-       p.external_arrays
-FROM {{zone_name}}.model_handover.model_packages p
-WHERE p.df_file_name = '2026-03-11_block.epc'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.model_handover.model_inventory i
-      WHERE i.source_file = p.df_file_name
-  );
+MERGE INTO {{zone_name}}.model_handover.model_inventory AS t
+USING (
+    SELECT 'block'               AS model,
+           '2026-03-11'          AS delivered_on,
+           p.df_file_name        AS source_file,
+           p.part_name,
+           p.object_type,
+           p.uuid,
+           p.title,
+           p.originator,
+           p.schema_version,
+           p.reference_count,
+           p.external_array_count,
+           p.external_arrays
+    FROM {{zone_name}}.model_handover.model_packages p
+    WHERE p.df_file_name = '2026-03-11_block.epc'
+) AS s
+ON t.uuid = s.uuid
+WHEN MATCHED THEN
+    UPDATE SET model                = s.model,
+               delivered_on         = s.delivered_on,
+               source_file          = s.source_file,
+               part_name            = s.part_name,
+               object_type          = s.object_type,
+               title                = s.title,
+               originator           = s.originator,
+               schema_version       = s.schema_version,
+               reference_count      = s.reference_count,
+               external_array_count = s.external_array_count,
+               external_arrays      = s.external_arrays
+WHEN NOT MATCHED THEN
+    INSERT (model, delivered_on, source_file, part_name, object_type, uuid,
+            title, originator, schema_version, reference_count,
+            external_array_count, external_arrays)
+    VALUES (s.model, s.delivered_on, s.source_file, s.part_name, s.object_type,
+            s.uuid, s.title, s.originator, s.schema_version, s.reference_count,
+            s.external_array_count, s.external_arrays);
 
 
 -- ============================================================================
@@ -175,27 +199,48 @@ HAVING COUNT(*) > 1;
 -- ============================================================================
 -- 9. THE SAME HANDOVER AGAIN
 -- ============================================================================
+-- Every object matches on its UUID and updates where it stands. A package
+-- re-exported after a modelling change keeps its UUIDs, so this is also what
+-- makes a corrected handover land on the objects it corrects instead of beside
+-- them.
 
-INSERT INTO {{zone_name}}.model_handover.model_inventory
-SELECT 'block'               AS model,
-       '2026-03-11'          AS delivered_on,
-       p.df_file_name        AS source_file,
-       p.part_name,
-       p.object_type,
-       p.uuid,
-       p.title,
-       p.originator,
-       p.schema_version,
-       p.reference_count,
-       p.external_array_count,
-       p.external_arrays
-FROM {{zone_name}}.model_handover.model_packages p
-WHERE p.df_file_name = '2026-03-11_block.epc'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.model_handover.model_inventory i
-      WHERE i.source_file = p.df_file_name
-  );
+MERGE INTO {{zone_name}}.model_handover.model_inventory AS t
+USING (
+    SELECT 'block'               AS model,
+           '2026-03-11'          AS delivered_on,
+           p.df_file_name        AS source_file,
+           p.part_name,
+           p.object_type,
+           p.uuid,
+           p.title,
+           p.originator,
+           p.schema_version,
+           p.reference_count,
+           p.external_array_count,
+           p.external_arrays
+    FROM {{zone_name}}.model_handover.model_packages p
+    WHERE p.df_file_name = '2026-03-11_block.epc'
+) AS s
+ON t.uuid = s.uuid
+WHEN MATCHED THEN
+    UPDATE SET model                = s.model,
+               delivered_on         = s.delivered_on,
+               source_file          = s.source_file,
+               part_name            = s.part_name,
+               object_type          = s.object_type,
+               title                = s.title,
+               originator           = s.originator,
+               schema_version       = s.schema_version,
+               reference_count      = s.reference_count,
+               external_array_count = s.external_array_count,
+               external_arrays      = s.external_arrays
+WHEN NOT MATCHED THEN
+    INSERT (model, delivered_on, source_file, part_name, object_type, uuid,
+            title, originator, schema_version, reference_count,
+            external_array_count, external_arrays)
+    VALUES (s.model, s.delivered_on, s.source_file, s.part_name, s.object_type,
+            s.uuid, s.title, s.originator, s.schema_version, s.reference_count,
+            s.external_array_count, s.external_arrays);
 
 
 -- ============================================================================
@@ -213,27 +258,44 @@ WHERE model = 'block';
 -- 11. LOAD THE SECOND DELIVERY
 -- ============================================================================
 
-INSERT INTO {{zone_name}}.model_handover.model_inventory
-SELECT CASE WHEN STRPOS(p.df_file_name, 's_bend') > 0
-            THEN 's_bend' ELSE 'tic_tac_toe' END     AS model,
-       '2026-03-12'          AS delivered_on,
-       p.df_file_name        AS source_file,
-       p.part_name,
-       p.object_type,
-       p.uuid,
-       p.title,
-       p.originator,
-       p.schema_version,
-       p.reference_count,
-       p.external_array_count,
-       p.external_arrays
-FROM {{zone_name}}.model_handover.model_packages p
-WHERE p.df_file_name LIKE '2026-03-12%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.model_handover.model_inventory i
-      WHERE i.source_file = p.df_file_name
-  );
+MERGE INTO {{zone_name}}.model_handover.model_inventory AS t
+USING (
+    SELECT CASE WHEN STRPOS(p.df_file_name, 's_bend') > 0
+                THEN 's_bend' ELSE 'tic_tac_toe' END     AS model,
+           '2026-03-12'          AS delivered_on,
+           p.df_file_name        AS source_file,
+           p.part_name,
+           p.object_type,
+           p.uuid,
+           p.title,
+           p.originator,
+           p.schema_version,
+           p.reference_count,
+           p.external_array_count,
+           p.external_arrays
+    FROM {{zone_name}}.model_handover.model_packages p
+    WHERE p.df_file_name LIKE '2026-03-12%'
+) AS s
+ON t.uuid = s.uuid
+WHEN MATCHED THEN
+    UPDATE SET model                = s.model,
+               delivered_on         = s.delivered_on,
+               source_file          = s.source_file,
+               part_name            = s.part_name,
+               object_type          = s.object_type,
+               title                = s.title,
+               originator           = s.originator,
+               schema_version       = s.schema_version,
+               reference_count      = s.reference_count,
+               external_array_count = s.external_array_count,
+               external_arrays      = s.external_arrays
+WHEN NOT MATCHED THEN
+    INSERT (model, delivered_on, source_file, part_name, object_type, uuid,
+            title, originator, schema_version, reference_count,
+            external_array_count, external_arrays)
+    VALUES (s.model, s.delivered_on, s.source_file, s.part_name, s.object_type,
+            s.uuid, s.title, s.originator, s.schema_version, s.reference_count,
+            s.external_array_count, s.external_arrays);
 
 
 -- ============================================================================

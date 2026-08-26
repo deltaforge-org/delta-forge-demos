@@ -77,29 +77,55 @@ ORDER BY wells_well_name;
 -- ============================================================================
 -- 4. LOAD THE 11 MARCH SURVEYS
 -- ============================================================================
+-- The key is the WITSML uid chain: the well uid, then the station uid. Both
+-- are needed, because a station uid is only unique within its own trajectory,
+-- so two wells surveyed on the same day would collide on station "1".
+--
+-- This is a real business key and it excludes the file on purpose. A daily
+-- survey report re-sends the stations already reported plus the new ones, so
+-- the same station arrives many times over the life of a well. Keyed on the
+-- uid chain each station is written once and corrected in place when the
+-- directional contractor revises it; keyed on the file, one well would
+-- accumulate a copy of its whole trajectory per report.
 -- The rename that makes the rest of this file readable, and the casts an
 -- anti-collision calculation needs.
 
-INSERT INTO {{zone_name}}.drilling.survey_stations
-SELECT d.wells_well_name                                                 AS well,
-       d.wells_well_attr_uid                                             AS well_uid,
-       d.wells_well_field                                                AS field,
-       '2026-03-11'                                                      AS delivered_on,
-       d.df_file_name                                                    AS source_file,
-       d.wells_well_trajectory_trajectory_station_attr_uid               AS station_uid,
-       CAST(d.wells_well_trajectory_trajectory_station_md   AS DOUBLE)   AS md_m,
-       CAST(d.wells_well_trajectory_trajectory_station_tvd  AS DOUBLE)   AS tvd_m,
-       CAST(d.wells_well_trajectory_trajectory_station_incl AS DOUBLE)   AS inclination_deg,
-       CAST(d.wells_well_trajectory_trajectory_station_azi  AS DOUBLE)   AS azimuth_deg,
-       CAST(d.wells_well_trajectory_trajectory_station_disp_ns AS DOUBLE) AS north_m,
-       CAST(d.wells_well_trajectory_trajectory_station_disp_ew AS DOUBLE) AS east_m
-FROM {{zone_name}}.drilling.survey_documents d
-WHERE d.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.drilling.survey_stations s
-      WHERE s.source_file = d.df_file_name
-  );
+MERGE INTO {{zone_name}}.drilling.survey_stations AS t
+USING (
+    SELECT d.wells_well_name                                                 AS well,
+           d.wells_well_attr_uid                                             AS well_uid,
+           d.wells_well_field                                                AS field,
+           '2026-03-11'                                                      AS delivered_on,
+           d.df_file_name                                                    AS source_file,
+           d.wells_well_trajectory_trajectory_station_attr_uid               AS station_uid,
+           CAST(d.wells_well_trajectory_trajectory_station_md   AS DOUBLE)   AS md_m,
+           CAST(d.wells_well_trajectory_trajectory_station_tvd  AS DOUBLE)   AS tvd_m,
+           CAST(d.wells_well_trajectory_trajectory_station_incl AS DOUBLE)   AS inclination_deg,
+           CAST(d.wells_well_trajectory_trajectory_station_azi  AS DOUBLE)   AS azimuth_deg,
+           CAST(d.wells_well_trajectory_trajectory_station_disp_ns AS DOUBLE) AS north_m,
+           CAST(d.wells_well_trajectory_trajectory_station_disp_ew AS DOUBLE) AS east_m
+    FROM {{zone_name}}.drilling.survey_documents d
+    WHERE d.df_file_name LIKE '2026-03-11%'
+) AS s
+ON  t.well_uid    = s.well_uid
+AND t.station_uid = s.station_uid
+WHEN MATCHED THEN
+    UPDATE SET well            = s.well,
+               field           = s.field,
+               delivered_on    = s.delivered_on,
+               source_file     = s.source_file,
+               md_m            = s.md_m,
+               tvd_m           = s.tvd_m,
+               inclination_deg = s.inclination_deg,
+               azimuth_deg     = s.azimuth_deg,
+               north_m         = s.north_m,
+               east_m          = s.east_m
+WHEN NOT MATCHED THEN
+    INSERT (well, well_uid, field, delivered_on, source_file, station_uid,
+            md_m, tvd_m, inclination_deg, azimuth_deg, north_m, east_m)
+    VALUES (s.well, s.well_uid, s.field, s.delivered_on, s.source_file,
+            s.station_uid, s.md_m, s.tvd_m, s.inclination_deg, s.azimuth_deg,
+            s.north_m, s.east_m);
 
 
 -- ============================================================================
@@ -131,27 +157,46 @@ ORDER BY well;
 -- ============================================================================
 -- 6. THE SAME DELIVERY AGAIN
 -- ============================================================================
+-- Every station matches on its uid chain and updates where it stands, so the
+-- count does not move and a revised inclination would land on the station it
+-- revises.
 
-INSERT INTO {{zone_name}}.drilling.survey_stations
-SELECT d.wells_well_name                                                 AS well,
-       d.wells_well_attr_uid                                             AS well_uid,
-       d.wells_well_field                                                AS field,
-       '2026-03-11'                                                      AS delivered_on,
-       d.df_file_name                                                    AS source_file,
-       d.wells_well_trajectory_trajectory_station_attr_uid               AS station_uid,
-       CAST(d.wells_well_trajectory_trajectory_station_md   AS DOUBLE)   AS md_m,
-       CAST(d.wells_well_trajectory_trajectory_station_tvd  AS DOUBLE)   AS tvd_m,
-       CAST(d.wells_well_trajectory_trajectory_station_incl AS DOUBLE)   AS inclination_deg,
-       CAST(d.wells_well_trajectory_trajectory_station_azi  AS DOUBLE)   AS azimuth_deg,
-       CAST(d.wells_well_trajectory_trajectory_station_disp_ns AS DOUBLE) AS north_m,
-       CAST(d.wells_well_trajectory_trajectory_station_disp_ew AS DOUBLE) AS east_m
-FROM {{zone_name}}.drilling.survey_documents d
-WHERE d.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.drilling.survey_stations s
-      WHERE s.source_file = d.df_file_name
-  );
+MERGE INTO {{zone_name}}.drilling.survey_stations AS t
+USING (
+    SELECT d.wells_well_name                                                 AS well,
+           d.wells_well_attr_uid                                             AS well_uid,
+           d.wells_well_field                                                AS field,
+           '2026-03-11'                                                      AS delivered_on,
+           d.df_file_name                                                    AS source_file,
+           d.wells_well_trajectory_trajectory_station_attr_uid               AS station_uid,
+           CAST(d.wells_well_trajectory_trajectory_station_md   AS DOUBLE)   AS md_m,
+           CAST(d.wells_well_trajectory_trajectory_station_tvd  AS DOUBLE)   AS tvd_m,
+           CAST(d.wells_well_trajectory_trajectory_station_incl AS DOUBLE)   AS inclination_deg,
+           CAST(d.wells_well_trajectory_trajectory_station_azi  AS DOUBLE)   AS azimuth_deg,
+           CAST(d.wells_well_trajectory_trajectory_station_disp_ns AS DOUBLE) AS north_m,
+           CAST(d.wells_well_trajectory_trajectory_station_disp_ew AS DOUBLE) AS east_m
+    FROM {{zone_name}}.drilling.survey_documents d
+    WHERE d.df_file_name LIKE '2026-03-11%'
+) AS s
+ON  t.well_uid    = s.well_uid
+AND t.station_uid = s.station_uid
+WHEN MATCHED THEN
+    UPDATE SET well            = s.well,
+               field           = s.field,
+               delivered_on    = s.delivered_on,
+               source_file     = s.source_file,
+               md_m            = s.md_m,
+               tvd_m           = s.tvd_m,
+               inclination_deg = s.inclination_deg,
+               azimuth_deg     = s.azimuth_deg,
+               north_m         = s.north_m,
+               east_m          = s.east_m
+WHEN NOT MATCHED THEN
+    INSERT (well, well_uid, field, delivered_on, source_file, station_uid,
+            md_m, tvd_m, inclination_deg, azimuth_deg, north_m, east_m)
+    VALUES (s.well, s.well_uid, s.field, s.delivered_on, s.source_file,
+            s.station_uid, s.md_m, s.tvd_m, s.inclination_deg, s.azimuth_deg,
+            s.north_m, s.east_m);
 
 
 -- ============================================================================
@@ -172,26 +217,42 @@ WHERE delivered_on = '2026-03-11';
 -- 8. LOAD THE 12 MARCH SURVEY
 -- ============================================================================
 
-INSERT INTO {{zone_name}}.drilling.survey_stations
-SELECT d.wells_well_name                                                 AS well,
-       d.wells_well_attr_uid                                             AS well_uid,
-       d.wells_well_field                                                AS field,
-       '2026-03-12'                                                      AS delivered_on,
-       d.df_file_name                                                    AS source_file,
-       d.wells_well_trajectory_trajectory_station_attr_uid               AS station_uid,
-       CAST(d.wells_well_trajectory_trajectory_station_md   AS DOUBLE)   AS md_m,
-       CAST(d.wells_well_trajectory_trajectory_station_tvd  AS DOUBLE)   AS tvd_m,
-       CAST(d.wells_well_trajectory_trajectory_station_incl AS DOUBLE)   AS inclination_deg,
-       CAST(d.wells_well_trajectory_trajectory_station_azi  AS DOUBLE)   AS azimuth_deg,
-       CAST(d.wells_well_trajectory_trajectory_station_disp_ns AS DOUBLE) AS north_m,
-       CAST(d.wells_well_trajectory_trajectory_station_disp_ew AS DOUBLE) AS east_m
-FROM {{zone_name}}.drilling.survey_documents d
-WHERE d.df_file_name LIKE '2026-03-12%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.drilling.survey_stations s
-      WHERE s.source_file = d.df_file_name
-  );
+MERGE INTO {{zone_name}}.drilling.survey_stations AS t
+USING (
+    SELECT d.wells_well_name                                                 AS well,
+           d.wells_well_attr_uid                                             AS well_uid,
+           d.wells_well_field                                                AS field,
+           '2026-03-12'                                                      AS delivered_on,
+           d.df_file_name                                                    AS source_file,
+           d.wells_well_trajectory_trajectory_station_attr_uid               AS station_uid,
+           CAST(d.wells_well_trajectory_trajectory_station_md   AS DOUBLE)   AS md_m,
+           CAST(d.wells_well_trajectory_trajectory_station_tvd  AS DOUBLE)   AS tvd_m,
+           CAST(d.wells_well_trajectory_trajectory_station_incl AS DOUBLE)   AS inclination_deg,
+           CAST(d.wells_well_trajectory_trajectory_station_azi  AS DOUBLE)   AS azimuth_deg,
+           CAST(d.wells_well_trajectory_trajectory_station_disp_ns AS DOUBLE) AS north_m,
+           CAST(d.wells_well_trajectory_trajectory_station_disp_ew AS DOUBLE) AS east_m
+    FROM {{zone_name}}.drilling.survey_documents d
+    WHERE d.df_file_name LIKE '2026-03-12%'
+) AS s
+ON  t.well_uid    = s.well_uid
+AND t.station_uid = s.station_uid
+WHEN MATCHED THEN
+    UPDATE SET well            = s.well,
+               field           = s.field,
+               delivered_on    = s.delivered_on,
+               source_file     = s.source_file,
+               md_m            = s.md_m,
+               tvd_m           = s.tvd_m,
+               inclination_deg = s.inclination_deg,
+               azimuth_deg     = s.azimuth_deg,
+               north_m         = s.north_m,
+               east_m          = s.east_m
+WHEN NOT MATCHED THEN
+    INSERT (well, well_uid, field, delivered_on, source_file, station_uid,
+            md_m, tvd_m, inclination_deg, azimuth_deg, north_m, east_m)
+    VALUES (s.well, s.well_uid, s.field, s.delivered_on, s.source_file,
+            s.station_uid, s.md_m, s.tvd_m, s.inclination_deg, s.azimuth_deg,
+            s.north_m, s.east_m);
 
 
 -- ============================================================================

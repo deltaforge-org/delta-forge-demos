@@ -85,24 +85,42 @@ FROM {{zone_name}}.survey_navigation.navigation_lines;
 -- ============================================================================
 -- 5. LOAD THE 11 MARCH BATCH
 -- ============================================================================
+-- The key is the line, the point number and the record type, and it does NOT
+-- include the file. That is deliberate and it is what P1/90 makes possible: a
+-- deliverable names its lines, so the same line and the same point in a second
+-- delivery is the SAME position on the earth and has to update rather than
+-- appear twice. The record type is needed because a source, a receiver and a
+-- midpoint at point 500 are three different positions.
 
-INSERT INTO {{zone_name}}.survey_navigation.shot_point_index
-SELECT n.line_name    AS line,
-       '2026-03-11'   AS delivered_on,
-       n.df_file_name AS source_file,
-       n.record_type,
-       n.point_number,
-       n.latitude,
-       n.longitude,
-       n.easting,
-       n.northing
-FROM {{zone_name}}.survey_navigation.navigation_lines n
-WHERE n.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.survey_navigation.shot_point_index s
-      WHERE s.source_file = n.df_file_name
-  );
+MERGE INTO {{zone_name}}.survey_navigation.shot_point_index AS t
+USING (
+    SELECT n.line_name    AS line,
+           '2026-03-11'   AS delivered_on,
+           n.df_file_name AS source_file,
+           n.record_type,
+           n.point_number,
+           n.latitude,
+           n.longitude,
+           n.easting,
+           n.northing
+    FROM {{zone_name}}.survey_navigation.navigation_lines n
+    WHERE n.df_file_name LIKE '2026-03-11%'
+) AS s
+ON  t.line         = s.line
+AND t.point_number = s.point_number
+AND t.record_type  = s.record_type
+WHEN MATCHED THEN
+    UPDATE SET delivered_on = s.delivered_on,
+               source_file  = s.source_file,
+               latitude     = s.latitude,
+               longitude    = s.longitude,
+               easting      = s.easting,
+               northing     = s.northing
+WHEN NOT MATCHED THEN
+    INSERT (line, delivered_on, source_file, record_type, point_number,
+            latitude, longitude, easting, northing)
+    VALUES (s.line, s.delivered_on, s.source_file, s.record_type, s.point_number,
+            s.latitude, s.longitude, s.easting, s.northing);
 
 
 -- ============================================================================
@@ -131,24 +149,46 @@ ORDER BY line;
 -- ============================================================================
 -- 7. THE SAME BATCH AGAIN
 -- ============================================================================
+-- Byte for byte the statement from step 5. Every source row matches a position
+-- already in the index and updates it where it stands, so the count does not
+-- move.
+--
+-- The point is what happens when the delivery is NOT identical. A line
+-- reprocessed with a corrected geodetic datum arrives under a new file name
+-- with the same line and point numbers and different coordinates. Keyed on the
+-- position it corrects the index; keyed on the file it would have produced a
+-- second copy of every shot point, and a navigation index with two answers for
+-- one point is worse than no index.
 
-INSERT INTO {{zone_name}}.survey_navigation.shot_point_index
-SELECT n.line_name    AS line,
-       '2026-03-11'   AS delivered_on,
-       n.df_file_name AS source_file,
-       n.record_type,
-       n.point_number,
-       n.latitude,
-       n.longitude,
-       n.easting,
-       n.northing
-FROM {{zone_name}}.survey_navigation.navigation_lines n
-WHERE n.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.survey_navigation.shot_point_index s
-      WHERE s.source_file = n.df_file_name
-  );
+MERGE INTO {{zone_name}}.survey_navigation.shot_point_index AS t
+USING (
+    SELECT n.line_name    AS line,
+           '2026-03-11'   AS delivered_on,
+           n.df_file_name AS source_file,
+           n.record_type,
+           n.point_number,
+           n.latitude,
+           n.longitude,
+           n.easting,
+           n.northing
+    FROM {{zone_name}}.survey_navigation.navigation_lines n
+    WHERE n.df_file_name LIKE '2026-03-11%'
+) AS s
+ON  t.line         = s.line
+AND t.point_number = s.point_number
+AND t.record_type  = s.record_type
+WHEN MATCHED THEN
+    UPDATE SET delivered_on = s.delivered_on,
+               source_file  = s.source_file,
+               latitude     = s.latitude,
+               longitude    = s.longitude,
+               easting      = s.easting,
+               northing     = s.northing
+WHEN NOT MATCHED THEN
+    INSERT (line, delivered_on, source_file, record_type, point_number,
+            latitude, longitude, easting, northing)
+    VALUES (s.line, s.delivered_on, s.source_file, s.record_type, s.point_number,
+            s.latitude, s.longitude, s.easting, s.northing);
 
 
 -- ============================================================================
@@ -168,23 +208,35 @@ WHERE delivered_on = '2026-03-11';
 -- 9. LOAD THE 12 MARCH BATCH
 -- ============================================================================
 
-INSERT INTO {{zone_name}}.survey_navigation.shot_point_index
-SELECT n.line_name    AS line,
-       '2026-03-12'   AS delivered_on,
-       n.df_file_name AS source_file,
-       n.record_type,
-       n.point_number,
-       n.latitude,
-       n.longitude,
-       n.easting,
-       n.northing
-FROM {{zone_name}}.survey_navigation.navigation_lines n
-WHERE n.df_file_name LIKE '2026-03-12%'
-  AND NOT EXISTS (
-      SELECT 1
-      FROM {{zone_name}}.survey_navigation.shot_point_index s
-      WHERE s.source_file = n.df_file_name
-  );
+MERGE INTO {{zone_name}}.survey_navigation.shot_point_index AS t
+USING (
+    SELECT n.line_name    AS line,
+           '2026-03-12'   AS delivered_on,
+           n.df_file_name AS source_file,
+           n.record_type,
+           n.point_number,
+           n.latitude,
+           n.longitude,
+           n.easting,
+           n.northing
+    FROM {{zone_name}}.survey_navigation.navigation_lines n
+    WHERE n.df_file_name LIKE '2026-03-12%'
+) AS s
+ON  t.line         = s.line
+AND t.point_number = s.point_number
+AND t.record_type  = s.record_type
+WHEN MATCHED THEN
+    UPDATE SET delivered_on = s.delivered_on,
+               source_file  = s.source_file,
+               latitude     = s.latitude,
+               longitude    = s.longitude,
+               easting      = s.easting,
+               northing     = s.northing
+WHEN NOT MATCHED THEN
+    INSERT (line, delivered_on, source_file, record_type, point_number,
+            latitude, longitude, easting, northing)
+    VALUES (s.line, s.delivered_on, s.source_file, s.record_type, s.point_number,
+            s.latitude, s.longitude, s.easting, s.northing);
 
 
 -- ============================================================================

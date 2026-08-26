@@ -77,29 +77,51 @@ FROM {{zone_name}}.seismicity.seismic_feed;
 -- ============================================================================
 -- 5. LOAD THE FIRST TWO PULLS
 -- ============================================================================
--- Both January and February arrived on 11 March, so both load together and
--- the watermark is the file rather than the date.
+-- Both January and February arrived on 11 March, so both load together.
+--
+-- The key is the event id, which RFC 7946 provides for exactly this purpose
+-- and this feed sets. The file is not part of it: a catalogue is routinely
+-- re-issued with a revised magnitude once an event has been reviewed, and
+-- keying on the event means the revision lands on the event rather than beside
+-- it.
 
-INSERT INTO {{zone_name}}.seismicity.seismic_register
-SELECT SUBSTRING(f.df_file_name, 23, 7)   AS catalogue_month,
-       SUBSTRING(f.df_file_name, 1, 10)   AS delivered_on,
-       f.df_file_name                     AS source_file,
-       f.id                               AS event_id,
-       f.properties_mag                   AS magnitude,
-       f.properties_mag_type              AS magnitude_type,
-       f.properties_place                 AS place,
-       f.properties_time                  AS event_time,
-       f.properties_sig                   AS significance,
-       f.properties_net                   AS network,
-       f.properties_type                  AS event_type,
-       f.geometry
-FROM {{zone_name}}.seismicity.seismic_feed f
-WHERE f.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-    SELECT 1
-    FROM {{zone_name}}.seismicity.seismic_register r
-    WHERE r.source_file = f.df_file_name
-);
+MERGE INTO {{zone_name}}.seismicity.seismic_register AS t
+USING (
+    SELECT SUBSTRING(f.df_file_name, 23, 7)   AS catalogue_month,
+           SUBSTRING(f.df_file_name, 1, 10)   AS delivered_on,
+           f.df_file_name                     AS source_file,
+           f.id                               AS event_id,
+           f.properties_mag                   AS magnitude,
+           f.properties_mag_type              AS magnitude_type,
+           f.properties_place                 AS place,
+           f.properties_time                  AS event_time,
+           f.properties_sig                   AS significance,
+           f.properties_net                   AS network,
+           f.properties_type                  AS event_type,
+           f.geometry
+    FROM {{zone_name}}.seismicity.seismic_feed f
+    WHERE f.df_file_name LIKE '2026-03-11%'
+) AS s
+ON t.event_id = s.event_id
+WHEN MATCHED THEN
+    UPDATE SET catalogue_month = s.catalogue_month,
+               delivered_on    = s.delivered_on,
+               source_file     = s.source_file,
+               magnitude       = s.magnitude,
+               magnitude_type  = s.magnitude_type,
+               place           = s.place,
+               event_time      = s.event_time,
+               significance    = s.significance,
+               network         = s.network,
+               event_type      = s.event_type,
+               geometry        = s.geometry
+WHEN NOT MATCHED THEN
+    INSERT (catalogue_month, delivered_on, source_file, event_id, magnitude,
+            magnitude_type, place, event_time, significance, network,
+            event_type, geometry)
+    VALUES (s.catalogue_month, s.delivered_on, s.source_file, s.event_id,
+            s.magnitude, s.magnitude_type, s.place, s.event_time,
+            s.significance, s.network, s.event_type, s.geometry);
 
 
 -- ============================================================================
@@ -126,27 +148,47 @@ ORDER BY catalogue_month;
 -- ============================================================================
 -- 7. THE SAME TWO PULLS AGAIN
 -- ============================================================================
+-- Every event matches the one already registered and updates in place, so the
+-- register does not grow. A revised magnitude in a re-issued catalogue would
+-- land the same way: on the event, not beside it.
 
-INSERT INTO {{zone_name}}.seismicity.seismic_register
-SELECT SUBSTRING(f.df_file_name, 23, 7)   AS catalogue_month,
-       SUBSTRING(f.df_file_name, 1, 10)   AS delivered_on,
-       f.df_file_name                     AS source_file,
-       f.id                               AS event_id,
-       f.properties_mag                   AS magnitude,
-       f.properties_mag_type              AS magnitude_type,
-       f.properties_place                 AS place,
-       f.properties_time                  AS event_time,
-       f.properties_sig                   AS significance,
-       f.properties_net                   AS network,
-       f.properties_type                  AS event_type,
-       f.geometry
-FROM {{zone_name}}.seismicity.seismic_feed f
-WHERE f.df_file_name LIKE '2026-03-11%'
-  AND NOT EXISTS (
-    SELECT 1
-    FROM {{zone_name}}.seismicity.seismic_register r
-    WHERE r.source_file = f.df_file_name
-);
+MERGE INTO {{zone_name}}.seismicity.seismic_register AS t
+USING (
+    SELECT SUBSTRING(f.df_file_name, 23, 7)   AS catalogue_month,
+           SUBSTRING(f.df_file_name, 1, 10)   AS delivered_on,
+           f.df_file_name                     AS source_file,
+           f.id                               AS event_id,
+           f.properties_mag                   AS magnitude,
+           f.properties_mag_type              AS magnitude_type,
+           f.properties_place                 AS place,
+           f.properties_time                  AS event_time,
+           f.properties_sig                   AS significance,
+           f.properties_net                   AS network,
+           f.properties_type                  AS event_type,
+           f.geometry
+    FROM {{zone_name}}.seismicity.seismic_feed f
+    WHERE f.df_file_name LIKE '2026-03-11%'
+) AS s
+ON t.event_id = s.event_id
+WHEN MATCHED THEN
+    UPDATE SET catalogue_month = s.catalogue_month,
+               delivered_on    = s.delivered_on,
+               source_file     = s.source_file,
+               magnitude       = s.magnitude,
+               magnitude_type  = s.magnitude_type,
+               place           = s.place,
+               event_time      = s.event_time,
+               significance    = s.significance,
+               network         = s.network,
+               event_type      = s.event_type,
+               geometry        = s.geometry
+WHEN NOT MATCHED THEN
+    INSERT (catalogue_month, delivered_on, source_file, event_id, magnitude,
+            magnitude_type, place, event_time, significance, network,
+            event_type, geometry)
+    VALUES (s.catalogue_month, s.delivered_on, s.source_file, s.event_id,
+            s.magnitude, s.magnitude_type, s.place, s.event_time,
+            s.significance, s.network, s.event_type, s.geometry);
 
 
 -- ============================================================================
@@ -163,26 +205,43 @@ FROM {{zone_name}}.seismicity.seismic_register;
 -- 9. LOAD MARCH
 -- ============================================================================
 
-INSERT INTO {{zone_name}}.seismicity.seismic_register
-SELECT SUBSTRING(f.df_file_name, 23, 7)   AS catalogue_month,
-       SUBSTRING(f.df_file_name, 1, 10)   AS delivered_on,
-       f.df_file_name                     AS source_file,
-       f.id                               AS event_id,
-       f.properties_mag                   AS magnitude,
-       f.properties_mag_type              AS magnitude_type,
-       f.properties_place                 AS place,
-       f.properties_time                  AS event_time,
-       f.properties_sig                   AS significance,
-       f.properties_net                   AS network,
-       f.properties_type                  AS event_type,
-       f.geometry
-FROM {{zone_name}}.seismicity.seismic_feed f
-WHERE f.df_file_name LIKE '2026-03-12%'
-  AND NOT EXISTS (
-    SELECT 1
-    FROM {{zone_name}}.seismicity.seismic_register r
-    WHERE r.source_file = f.df_file_name
-);
+MERGE INTO {{zone_name}}.seismicity.seismic_register AS t
+USING (
+    SELECT SUBSTRING(f.df_file_name, 23, 7)   AS catalogue_month,
+           SUBSTRING(f.df_file_name, 1, 10)   AS delivered_on,
+           f.df_file_name                     AS source_file,
+           f.id                               AS event_id,
+           f.properties_mag                   AS magnitude,
+           f.properties_mag_type              AS magnitude_type,
+           f.properties_place                 AS place,
+           f.properties_time                  AS event_time,
+           f.properties_sig                   AS significance,
+           f.properties_net                   AS network,
+           f.properties_type                  AS event_type,
+           f.geometry
+    FROM {{zone_name}}.seismicity.seismic_feed f
+    WHERE f.df_file_name LIKE '2026-03-12%'
+) AS s
+ON t.event_id = s.event_id
+WHEN MATCHED THEN
+    UPDATE SET catalogue_month = s.catalogue_month,
+               delivered_on    = s.delivered_on,
+               source_file     = s.source_file,
+               magnitude       = s.magnitude,
+               magnitude_type  = s.magnitude_type,
+               place           = s.place,
+               event_time      = s.event_time,
+               significance    = s.significance,
+               network         = s.network,
+               event_type      = s.event_type,
+               geometry        = s.geometry
+WHEN NOT MATCHED THEN
+    INSERT (catalogue_month, delivered_on, source_file, event_id, magnitude,
+            magnitude_type, place, event_time, significance, network,
+            event_type, geometry)
+    VALUES (s.catalogue_month, s.delivered_on, s.source_file, s.event_id,
+            s.magnitude, s.magnitude_type, s.place, s.event_time,
+            s.significance, s.network, s.event_type, s.geometry);
 
 
 -- ============================================================================
