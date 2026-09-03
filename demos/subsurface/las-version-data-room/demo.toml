@@ -1,0 +1,93 @@
+[demo]
+id = "las-version-data-room"
+name = "Licence Divestment Data Room"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """\
+A buyer's subsurface team has three weeks with the data room for Dutch block \
+P/12 before the bid is due, and the log package in it was written across \
+forty-five years by whatever software was current at the time: six wells in \
+three different versions of the Log ASCII Standard, 1020 depth steps, read \
+as one table. The versions are not cosmetic. LAS 1.2 puts a non-numeric well \
+entry's label before the colon and its value after, the opposite of every \
+later version, so a reader that assumes 2.0 does not fail on the two oldest \
+wells, it answers WELL for the name of the well and FIELD for the field, \
+uniformly and silently. LAS 3.0 names its sections by topic rather than by \
+first letter, may separate its readings with a comma or a tab instead of \
+whitespace, may declare a curve to be text rather than a number, and may \
+carry a second topic in the same file at a completely different grain: the \
+2024 well ships its core analysis alongside its log, and those twelve rows \
+are not depth steps. The demo also proves the three different ways LAS says \
+a reading is missing, all of which have to become the same NULL: the -999.25 \
+sentinel, an empty field between two delimiters, and a curve the tool never \
+ran. Where las-well-log-library merges differing curve sets within LAS 2.0, \
+this demo holds the curve sets ordinary so the version is the only variable. \
+The files were written for this demo from the CWLS standards; no third-party \
+data is shipped.
+"""
+categories = ["subsurface", "energy", "schema-evolution"]
+tags = [
+    "subsurface",
+    "las",
+    "las-1.2",
+    "las-3.0",
+    "well-logs",
+    "format-versions",
+    "delimiters",
+    "null-handling",
+    "schema-union",
+    "data-room",
+    "discover",
+    "delta",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 5
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/data_room/P12-01_1979_v1_2.las"
+format = "las"
+description = "LAS 1.2, 1979 tape conversion, gamma ray only, 120 depth steps, twelve readings written as the -999.25 sentinel"
+size_bytes = 3206
+
+[[demo.data_files]]
+path = "data/data_room/P12-03_1984_v1_2.las"
+format = "las"
+description = "LAS 1.2, 1984, gamma ray and sonic, 140 depth steps"
+size_bytes = 4876
+
+[[demo.data_files]]
+path = "data/data_room/P12-07_2003_v2_0.las"
+format = "las"
+description = "LAS 2.0, 2003, triple combo, 160 depth steps"
+size_bytes = 8058
+
+[[demo.data_files]]
+path = "data/data_room/P12-09_2007_v2_0.las"
+format = "las"
+description = "LAS 2.0, 2007, triple combo, 180 depth steps"
+size_bytes = 8958
+
+[[demo.data_files]]
+path = "data/data_room/P12-11_2021_v3_0.las"
+format = "las"
+description = "LAS 3.0, 2021, comma delimited, ~Log_Definition and ~Log_Data sections, an {S} lithology curve including a quoted value carrying the delimiter, and 38 readings written as an empty field, 200 depth steps"
+size_bytes = 10578
+
+[[demo.data_files]]
+path = "data/data_room/P12-14_2024_v3_0.las"
+format = "las"
+description = "LAS 3.0, 2024, tab delimited, an {S} lithology curve, and a ~Core_Definition / ~Core_Data topic of twelve core rows after the log, 220 depth steps"
+size_bytes = 12256
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.data_room.log_files"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.data_room.room_audit"

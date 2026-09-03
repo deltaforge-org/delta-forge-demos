@@ -9939,6 +9939,50 @@
       ]
     },
     {
+      "id": "las-version-data-room",
+      "path": "demos/subsurface/las-version-data-room",
+      "iconPath": "icons/las-version-data-room.svg",
+      "name": "Licence Divestment Data Room",
+      "summary": "A buyer's subsurface team has three weeks with the data room for Dutch block P/12 before the bid is due, and the log package in it was written across forty-five years by whatever software was current at the time: six wells in three different versions of the Log ASCII Standard, 1020 depth steps, read as one table. The versions are not cosmetic. LAS 1.2 puts a non-numeric well entry's label before the colon and its value after, the opposite of every later version, so a reader that assumes 2.0 does not fail on the two oldest wells: it answers WELL for the name of the well and FIELD for the field, uniformly and silently. LAS 3.0 names its sections by topic rather than by first letter, may separate its readings with a comma or a tab instead of whitespace, may declare a curve to be text rather than a number, and may carry a second topic in the same file at a completely different grain: the 2024 well ships twelve rows of core analysis alongside its log, and those are not depth steps. Eleven queries and sixty assertions, including the three different ways LAS says a reading is missing (the -999.25 sentinel, an empty field between two delimiters, and a curve the tool never ran), all of which have to become the same NULL. Where las-well-log-library merges differing curve sets within LAS 2.0, this demo holds the curve sets ordinary so the version is the only variable.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "schema-evolution"
+      ],
+      "tags": [
+        "subsurface",
+        "las",
+        "las-1.2",
+        "las-3.0",
+        "well-logs",
+        "format-versions",
+        "delimiters",
+        "null-handling",
+        "schema-union",
+        "data-room",
+        "discover",
+        "delta",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 5,
+      "dataSizeBytes": 47932,
+      "fileCount": 6,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-09-03T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.data_room.log_files"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.data_room.room_audit"
+        }
+      ]
+    },
+    {
       "id": "las-well-log-library",
       "path": "demos/subsurface/las-well-log-library",
       "iconPath": "icons/las-well-log-library.svg",
