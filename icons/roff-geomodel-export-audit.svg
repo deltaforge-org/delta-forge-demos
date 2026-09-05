@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gea" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#065f46"/>
+    </linearGradient>
+  </defs>
+  <!-- The audit itself, over the pair of models -->
+  <circle cx="40" cy="18" r="9" fill="url(#gea)" opacity=".2" stroke="url(#gea)" stroke-width="1.6"/>
+  <path d="M46.4 24.4L52 30" stroke="url(#gea)" stroke-width="2" stroke-linecap="round"/>
+  <!-- The model RMS holds -->
+  <path d="M6 50l14-8 14 8-14 8z" fill="url(#gea)" opacity=".42" stroke="url(#gea)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M6 50v10l14 8 14-8V50l-14 8z" fill="url(#gea)" opacity=".2" stroke="url(#gea)" stroke-width="1.4" stroke-linejoin="round"/>
+  <!-- Its cells run one way -->
+  <path d="M10.67 52.67l14-8M15.33 55.33l14-8" stroke="url(#gea)" stroke-width="1" opacity=".55"/>
+  <!-- The export, whose cells run the other way -->
+  <path d="M46 50l14-8 14 8-14 8z" fill="url(#gea)" opacity=".42" stroke="url(#gea)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M46 50v10l14 8 14-8V50l-14 8z" fill="url(#gea)" opacity=".2" stroke="url(#gea)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M50.67 47.33l14 8M55.33 44.67l14 8" stroke="url(#gea)" stroke-width="1" opacity=".55"/>
+</svg>

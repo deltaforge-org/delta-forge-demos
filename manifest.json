@@ -10862,6 +10862,72 @@
       ]
     },
     {
+      "id": "roff-geomodel-export-audit",
+      "path": "demos/subsurface/roff-geomodel-export-audit",
+      "iconPath": "icons/roff-geomodel-export-audit.svg",
+      "name": "Geomodel Export Audit",
+      "summary": "A geomodeller finishes a reservoir model in RMS and hands it to the simulation team, who are about to spend weeks history matching against it. Before they start they audit the handover: is the GRDECL export the same model as the ROFF file RMS holds? Four files describe one 20 by 15 by 8 grid of 2400 cells, 1540 of which the simulator solves. ROFF is what a modelling package keeps a model in and GRDECL is what leaves for the simulator, and the two number their cells in opposite directions: ROFF varies K fastest and I slowest, ECLIPSE runs I fastest and K slowest, so cell (0,0,1) is ordinal 1 in one file and ordinal 300 in the other. Joined on i, j and k the export is faithful across 1519 cells, the largest disagreement being fifteen billionths, which is the width of a four-byte float and nothing else. The same audit joined on the cell ordinal, which is how it gets written when nobody has checked, returns 968 rows that compare a cell in the model to a different cell in the export, and not one of the 968 lines up. It runs, it produces plausible reservoir numbers and it means nothing. The export is faithful about the numbers and still loses two things GRDECL has nowhere to put: the 21 cells RMS left undefined arrive as the marker -999 rather than as null, and the facies code names, so shale, sand and silt are simply not in the deck. The binary model and the ASCII copy the modeller sent for review are asserted identical cell by cell, and a depth surface, which carries no grid at all, reads in long form instead of being refused.",
+      "categories": [
+        "subsurface",
+        "energy",
+        "incremental-load"
+      ],
+      "tags": [
+        "subsurface",
+        "roff",
+        "grdecl",
+        "rms",
+        "reservoir-model",
+        "corner-point-grid",
+        "cell-ordering",
+        "handover",
+        "reconciliation",
+        "facies",
+        "null-handling",
+        "discover",
+        "cross-format",
+        "delta",
+        "intermediate"
+      ],
+      "difficulty": "intermediate",
+      "estimatedTimeMinutes": 6,
+      "dataSizeBytes": 154395,
+      "fileCount": 4,
+      "author": "DeltaForge Team",
+      "version": "1.0.0",
+      "updatedAt": "2026-09-06T12:00:00Z",
+      "targetObjects": [
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.handover.model"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.handover.model_all"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.handover.model_ascii"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.handover.grid_export"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.handover.grid_export_all"
+        },
+        {
+          "objectType": "external_table",
+          "name": "{{zone_name}}.handover.top_reservoir"
+        },
+        {
+          "objectType": "delta_table",
+          "name": "{{zone_name}}.handover.audited_model"
+        }
+      ]
+    },
+    {
       "id": "sales-quickstart",
       "path": "demos/csv/sales-quickstart",
       "iconPath": "icons/sales-quickstart.svg",

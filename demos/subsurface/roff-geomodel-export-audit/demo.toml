@@ -1,0 +1,83 @@
+[demo]
+id = "roff-geomodel-export-audit"
+name = "Geomodel Export Audit"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A geomodeller finishes a reservoir model in RMS and hands it to the simulation team, who are about to spend weeks history matching against it. Before they start they audit the handover: is the GRDECL export the same model as the ROFF file RMS holds? Four files describe one 20 by 15 by 8 grid of 2400 cells, 1540 of which the simulator solves. ROFF is what a modelling package keeps a model in and GRDECL is what leaves for the simulator, and the two number their cells in opposite directions: ROFF varies K fastest and I slowest, ECLIPSE runs I fastest and K slowest, so cell (0,0,1) is ordinal 1 in one file and ordinal 300 in the other. The audit joined on i, j and k finds the export faithful across 1519 cells, the largest disagreement being fifteen billionths, which is the width of a four-byte float and nothing else. The same audit joined on the cell ordinal, which is how it gets written when nobody has checked, returns 968 rows that compare a cell in the model to a different cell in the export, and not one of the 968 lines up. It runs, it produces plausible reservoir numbers and it means nothing. The export is faithful about the numbers and still loses two things GRDECL has nowhere to put: the 21 cells RMS left undefined arrive as the marker -999 rather than as null, and the facies code names, so shale, sand and silt are simply not in the deck. The binary model and the ASCII copy the modeller sent for review are asserted identical cell by cell, and a depth surface, which carries no grid at all, reads in long form instead of being refused.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "roff",
+    "grdecl",
+    "rms",
+    "reservoir-model",
+    "corner-point-grid",
+    "cell-ordering",
+    "handover",
+    "reconciliation",
+    "facies",
+    "null-handling",
+    "discover",
+    "cross-format",
+    "delta",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-04-02_reservoir_model.roff"
+format = "roff"
+description = "The RMS model in binary ROFF: 20x15x8, an active array, a subgrids tag of three zones, and PORO, PERMX, NTG and a discrete FACIES with its code names. Synthetic."
+size_bytes = 34305
+
+[[demo.data_files]]
+path = "data/landing/2026-04-02_reservoir_model.roffasc"
+format = "roff"
+description = "The same model in the ASCII form of ROFF, value for value, which is what a modeller sends when a colleague has to read the file. Synthetic."
+size_bytes = 58610
+
+[[demo.data_files]]
+path = "data/landing/2026-04-03_grid_export.grdecl"
+format = "grdecl"
+description = "The GRDECL export of that model, written in ECLIPSE cell order with SPECGRID, ACTNUM, PORO, PERMX, NTG and FACIES. Synthetic."
+size_bytes = 58677
+
+[[demo.data_files]]
+path = "data/landing/2026-04-04_top_reservoir.roffasc"
+format = "roff"
+description = "A depth surface in ROFF, 300 nodes, which carries no dimensions tag and so has no cells to hang rows on. Synthetic."
+size_bytes = 2803
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.handover.model"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.handover.model_all"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.handover.model_ascii"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.handover.grid_export"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.handover.grid_export_all"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.handover.top_reservoir"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.handover.audited_model"
