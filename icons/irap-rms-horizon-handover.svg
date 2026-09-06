@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="irh" x1="0" y1="80" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67e8f9"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+  </defs>
+  <!-- The rotated grid: Irap declares a rotation, so the mesh does not sit
+       square to the map. -->
+  <g transform="rotate(-24 40 40)">
+    <path d="M12 22h56M12 34h56M12 46h56M12 58h56" stroke="url(#irh)" stroke-width="1" opacity=".26"/>
+    <path d="M20 14v52M34 14v52M48 14v52M62 14v52" stroke="url(#irh)" stroke-width="1" opacity=".26"/>
+    <rect x="12" y="22" width="56" height="36" rx="1.5" fill="none" stroke="url(#irh)" stroke-width="1.3" opacity=".55"/>
+    <!-- Node (0, 0): the origin, at the SOUTH-WEST corner. -->
+    <circle cx="12" cy="58" r="2.6" fill="url(#irh)"/>
+  </g>
+  <!-- Two horizons in section, top and base, and the rock between them. -->
+  <path d="M10 44c8-9 20-13 30-13s22 4 30 13" stroke="url(#irh)" stroke-width="1.8" fill="none"/>
+  <path d="M10 60c8-9 20-13 30-13s22 4 30 13" stroke="url(#irh)" stroke-width="1.8" fill="none"/>
+  <path d="M10 44c8-9 20-13 30-13s22 4 30 13v16c-8-9-20-13-30-13s-22 4-30 13z" fill="url(#irh)" opacity=".16"/>
+</svg>

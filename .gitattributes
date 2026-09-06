@@ -8,8 +8,11 @@
 # lost 134 bytes to that normalisation before this file existed.
 #
 # The binary ones (SEG-Y, SEG-D, DLIS, LIS, shapefiles, GeoTIFF, ECLIPSE
-# output, RESQML packages) are detected as binary by content, but they are
-# listed anyway so the rule is stated rather than relied upon.
+# output, RESQML packages, ROFF and Irap binary) are detected as binary by
+# content, but they are listed anyway so the rule is stated rather than
+# relied upon. Irap binary matters more than most: the demo asserts that its
+# .gri fixture is byte-for-byte what Equinor's xtgeo writes for that surface,
+# and content detection is not the place to rest a claim like that.
 *.p190  -text
 *.p1    -text
 *.segp1 -text
@@ -17,6 +20,9 @@
 *.las   -text
 *.zmap  -text
 *.grdecl -text
+*.irap  -text
+*.irapasc -text
+*.roffasc -text
 *.segy  -text binary
 *.sgy   -text binary
 *.segd  -text binary
@@ -32,3 +38,5 @@
 *.init  -text binary
 *.unrst -text binary
 *.smspec -text binary
+*.gri   -text binary
+*.roff  -text binary

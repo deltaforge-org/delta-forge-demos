@@ -1,0 +1,60 @@
+[demo]
+id = "irap-rms-horizon-handover"
+name = "RMS Horizon Handover: Irap Surfaces in Both Containers"
+version = "1.0.0"
+author = "DeltaForge Team"
+description = """A geomodeller finishes a structural model in RMS and hands the horizons to the subsurface team. RMS writes surfaces as Irap, and a handover routinely carries the same surface twice: the binary .gri the project stores, and a classic ASCII export made for a tool that only reads text. The team loads both, checks they agree node for node, and computes gross rock volume from the top and base pair. Each surface is 60 columns by 45 rows on a 200 m spacing, rotated 24 degrees counter-clockwise from east: 2700 nodes of which 1508 are mapped. Four properties of Irap decide whether a reader gets it right and all four are asserted. The value block runs X fastest, one whole row of constant Y at a time, which is the reverse of ZMAP+, so a column-major read transposes the map without changing the node count. The ASCII header is not in the binary header's field order, which is why shipping the same surface in both containers is the check no single-file test can make: a reader that shares one field table between them lands the ASCII copy at the coordinate 200, 200. The undefined sentinel is a threshold rather than an exact number and it is a different number per container, so read against the wrong one a blank node becomes a real depth of nearly ten million metres. And row zero is the south edge, the opposite of ZMAP+. It closes on 12169 million cubic metres of rock, a number that depends on every one of those being right. Every expected value was decoded from the files by Equinor's xtgeo 4.25.1 before the engine saw them.
+"""
+categories = ["subsurface", "energy", "incremental-load"]
+tags = [
+    "subsurface",
+    "irap",
+    "rms",
+    "surfaces",
+    "horizons",
+    "gross-rock-volume",
+    "grid",
+    "rotation",
+    "null-handling",
+    "discover",
+    "incremental",
+    "idempotent",
+    "delta",
+    "intermediate",
+]
+difficulty = "intermediate"
+estimated_time_minutes = 6
+
+[demo.variables]
+data_subdir = { description = "Zone-relative path to the staged demo data. DISCOVER's PATH and every LOCATION clause use this rather than the absolute data_path, because DISCOVER rejects an absolute path outright and a zone-relative one resolves under the zone's storage root wherever that is.", required = true }
+zone_name = { description = "Target zone name (defaults to 'external')", required = false }
+
+[[demo.data_files]]
+path = "data/landing/2026-04-08_top_hugin.gri"
+format = "irap"
+description = "Top Hugin depth surface, Irap binary as RMS stores it: 2700 nodes of which 1508 are mapped"
+size_bytes = 11260
+
+[[demo.data_files]]
+path = "data/landing/2026-04-08_top_hugin.irap"
+format = "irap"
+description = "The same Top Hugin surface exported as Irap classic ASCII, whose header field order differs from the binary one"
+size_bytes = 30702
+
+[[demo.data_files]]
+path = "data/landing/2026-04-09_base_hugin.gri"
+format = "irap"
+description = "Base Hugin depth surface on the same grid definition, which turns the top into a volume"
+size_bytes = 11260
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.geomodel.horizons"
+
+[[demo.target_objects]]
+type = "external_table"
+name = "{{zone_name}}.geomodel.all_nodes"
+
+[[demo.target_objects]]
+type = "delta_table"
+name = "{{zone_name}}.geomodel.surfaces"
